@@ -1,7 +1,7 @@
 {
   "app": "011-gitea-main-2",
   "number": "011",
-  "startedAt": "2026-09-23T06:07:52.107Z",
+  "startedAt": "2026-09-23T06:33:02.473Z",
   "stages": [
     {
       "stage": 0,
@@ -13,19 +13,19 @@
       "stage": 1,
       "name": "build",
       "status": "pass",
-      "detail": "2 step(s), 4s"
+      "detail": "2 step(s), 5s"
     },
     {
       "stage": 2,
       "name": "serve",
       "status": "pass",
-      "detail": "exec ../start.sh \"$DATA\" $PORT → http://127.0.0.1:43431"
+      "detail": "exec ../start.sh \"$DATA\" $PORT → http://127.0.0.1:41973"
     },
     {
       "stage": 3,
       "name": "proxy",
       "status": "pass",
-      "detail": "http://127.0.0.1:33731 → http://127.0.0.1:43431"
+      "detail": "http://127.0.0.1:36675 → http://127.0.0.1:41973"
     },
     {
       "stage": 4,
@@ -135,5 +135,5 @@
   "consoleErrors": [],
   "pageErrors": [],
   "verdict": "WARN",
-  "finishedAt": "2026-09-23T06:08:04.190Z"
+  "finishedAt": "2026-09-23T06:33:27.349Z"
 }

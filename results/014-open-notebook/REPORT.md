@@ -1,6 +1,6 @@
-# 014-open-notebook — FAIL
+# 014-open-notebook — WARN
 
-Run: 2026-09-23T06:10:41.902Z
+Run: 2026-09-23T06:33:27.352Z
 
 > open-notebook: FastAPI API + background worker (uv) + Next.js frontend (standalone build), with SurrealDB v2 in the official container (in-memory for tests). Started as its supervisord does (start.sh); the browser only talks to the Next.js server, which forwards /api to the API on 5055.
 
@@ -9,10 +9,10 @@ Run: 2026-09-23T06:10:41.902Z
 | # | Stage | Status | Detail |
 |---|---|---|---|
 | 0 | intake | PASS | no bundle shipped; canonical files used |
-| 1 | build | PASS | 4 step(s), 22s |
-| 2 | serve | PASS | PATH=$HOME/.local/bin:$PATH exec ../start.sh "$DATA" $PORT → http://127.0.0.1:37643 |
-| 3 | proxy | PASS | http://127.0.0.1:33989 → http://127.0.0.1:37643 |
-| 4 | playwright | FAIL | 15/16 not failing |
+| 1 | build | PASS | 4 step(s), 19s |
+| 2 | serve | PASS | PATH=$HOME/.local/bin:$PATH exec ../start.sh "$DATA" $PORT → http://127.0.0.1:42169 |
+| 3 | proxy | PASS | http://127.0.0.1:39291 → http://127.0.0.1:42169 |
+| 4 | playwright | PASS | 16/16 not failing |
 
 ## Playwright checks
 
@@ -32,7 +32,7 @@ Run: 2026-09-23T06:10:41.902Z
 | C12 | No new uncaught errors with the Port | PASS | none (0 uncaught error(s) seen, all also raised by the app without the Port) |
 | C13 | App CSP lets the Port run | PASS | no CSP header |
 | C14 | Redirects and links stay on the proxy | PASS | GET / → 307 /notebooks |
-| C15 | Customer skins through the proxy | FAIL | acme→skin-002 "Minimal Neutral": NOT applied (link=false, rules=0); globex→skin-003 "Bold Contrast": NOT applied (link=false, rules=0); initech→skin-004 "Warm Editorial": NOT applied (link=false, rules=0); umbrella→skin-005 "Soft Rounded": NOT applied (link=false, rules=0); no header → original look |
+| C15 | Customer skins through the proxy | PASS | acme→skin-002 "Minimal Neutral": applied (13 rules); globex→skin-003 "Bold Contrast": applied (13 rules); initech→skin-004 "Warm Editorial": applied (13 rules); umbrella→skin-005 "Soft Rounded": applied (13 rules); no header → original look |
 | C16 | Sticky-notes capability on the live page | PASS | pinned=true ("Pinned by ATTa×", visible=true), after reload=true, clear=true |
 
 Screenshots: `screenshot-moved.png` (Move on, controls dragged, drawer closed), `screenshot-drawer.png` (Port drawer open).

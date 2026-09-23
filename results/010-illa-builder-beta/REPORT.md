@@ -1,6 +1,6 @@
 # 010-illa-builder-beta — WARN
 
-Run: 2026-09-23T06:06:10.539Z
+Run: 2026-09-23T06:31:17.494Z
 
 > ILLA Builder frontend (pnpm/turbo monorepo, Vite). The zip ships its two git submodules (packages/illa-design, packages/illa-public-component) empty, as GitHub zips always do, so setup clones them from their upstream repos (illa-public-component at branch beta, per .gitmodules). Self-host build served as a static SPA. ILLA's backend services are separate projects and not part of this zip, so pages that need the API show their not-connected state.
 
@@ -9,9 +9,9 @@ Run: 2026-09-23T06:06:10.539Z
 | # | Stage | Status | Detail |
 |---|---|---|---|
 | 0 | intake | PASS | no bundle shipped; canonical files used |
-| 1 | build | PASS | 4 step(s), 90s |
-| 2 | serve | PASS | static apps/builder/dist → http://127.0.0.1:42947 |
-| 3 | proxy | PASS | http://127.0.0.1:34533 → http://127.0.0.1:42947 |
+| 1 | build | PASS | 4 step(s), 89s |
+| 2 | serve | PASS | static apps/builder/dist → http://127.0.0.1:46535 |
+| 3 | proxy | PASS | http://127.0.0.1:37473 → http://127.0.0.1:46535 |
 | 4 | playwright | PASS | 16/16 not failing |
 
 ## Playwright checks

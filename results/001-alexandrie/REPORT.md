@@ -1,6 +1,6 @@
 # 001-alexandrie — PASS
 
-Run: 2026-09-23T04:31:53.664Z
+Run: 2026-09-23T06:19:01.164Z
 
 > Alexandrie: Nuxt 4 frontend only (SSR, Nitro server). The Go backend needs MySQL + S3 storage, which this environment doesn't have, so NUXT_PUBLIC_BASE_API points at an unused port — pages that only render work, anything that calls the API does not.
 
@@ -9,11 +9,10 @@ Run: 2026-09-23T04:31:53.664Z
 | # | Stage | Status | Detail |
 |---|---|---|---|
 | 0 | intake | PASS | bundled proxy.js, port.js, mover.mjs match canonical |
-| 1 | build | PASS | 2 step(s), 66s |
-| 2 | serve | PASS | cd frontend && NODE_ENV=production exec node .output/server/index.mjs → http://127.0.0.1:38269 |
-| 3 | proxy | PASS | http://127.0.0.1:45235 → http://127.0.0.1:38269 |
+| 1 | build | PASS | 2 step(s), 61s |
+| 2 | serve | PASS | cd frontend && NODE_ENV=production exec node .output/server/index.mjs → http://127.0.0.1:39959 |
+| 3 | proxy | PASS | http://127.0.0.1:40277 → http://127.0.0.1:39959 |
 | 4 | playwright | PASS | 16/16 not failing |
-| 5 | video | PASS | 14 steps → demo.mp4, demo.webm |
 
 ## Playwright checks
 
@@ -33,26 +32,7 @@ Run: 2026-09-23T04:31:53.664Z
 | C12 | No new uncaught errors with the Port | PASS | none (0 uncaught error(s) seen, all also raised by the app without the Port) |
 | C13 | App CSP lets the Port run | PASS | no CSP header |
 | C14 | Redirects and links stay on the proxy | PASS | no redirects; no upstream URLs in page |
-| C15 | Customer skins through the proxy | PASS | acme→midnight: applied; globex→sunrise: applied; initech→blueprint: applied; no header → original look |
+| C15 | Customer skins through the proxy | PASS | acme→skin-002 "Minimal Neutral": applied (13 rules); globex→skin-003 "Bold Contrast": applied (13 rules); initech→skin-004 "Warm Editorial": applied (13 rules); umbrella→skin-005 "Soft Rounded": applied (13 rules); no header → original look |
 | C16 | Sticky-notes capability on the live page | PASS | pinned=true ("Pinned by ATTa×", visible=true), after reload=true, clear=true |
 
 Screenshots: `screenshot-moved.png` (Move on, controls dragged, drawer closed), `screenshot-drawer.png` (Port drawer open).
-
-## Demo video
-
-[`demo.mp4`](demo.mp4) · [`demo.webm`](demo.webm)
-
-1. the app, served through ui-bridge/proxy.js
-2. Capability Port (injected before </head>) — attach the button mover
-3. button-mover attached in the drawer slot
-4. Move: on — every button and link is now draggable
-5. button "01 Capture Ideas Instant" moved
-6. link "Get Started" moved
-7. "Get Started" renamed to "Renamed by ATTa"
-8. sticky-notes capability attached — pin a note
-9. note pinned on the live app and dragged into place
-10. customer "acme" → skin "midnight" (moves, names and notes kept)
-11. customer "globex" → skin "sunrise" (moves, names and notes kept)
-12. customer "initech" → skin "blueprint" (moves, names and notes kept)
-13. no customer header → original look
-14. Reset + Clear — app back exactly as it was

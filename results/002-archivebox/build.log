@@ -158,12 +158,12 @@ http://admin.archivebox.localhost:5797/admin/
         archivebox help
 
 Hint: Open the Admin UI to create the first admin and finish web setup:
-      http://admin.archivebox.localhost:38649/admin/
+      http://admin.archivebox.localhost:44239/admin/
 
 [+] Starting ArchiveBox webserver...
-    > Starting ArchiveBox webserver on BIND_ADDR http://127.0.0.1:38649
+    > Starting ArchiveBox webserver on BIND_ADDR http://127.0.0.1:44239
     > Log in to ArchiveBox Admin UI on BASE_URL  
-http://archivebox.localhost:38649/admin/
+http://archivebox.localhost:44239/admin/
     > Writing ArchiveBox error log to ./logs/errors.log
 
 [!] BASE_URL is not set. Generated URLs will fall back to 
@@ -179,20 +179,20 @@ behind
     > Using supervisord config file: ./tmp/1c5fc3d8/supervisord.conf
     > Using supervisord UNIX socket: ./tmp/1c5fc3d8/supervisord.sock
 
-[🦸‍♂️] Supervisord connected (pid=6800) via 
+[🦸‍♂️] Supervisord connected (pid=12847) via 
 unix://./tmp/1c5fc3d8/supervisord.sock.
 [1;33m[[0m[33m![0m[1;33m][0m[33m Could not get supervisord worker worker_sonic: [0m[1;33m<[0m[1;33mFault[0m[33m [0m[1;33m10[0m[33m: [0m[33m'BAD_NAME: worker_sonic'[0m[1;33m>[0m
-[*] Starting orchestrator, server, sonic in this process (pid=6793)...
+[*] Starting orchestrator, server, sonic in this process (pid=12840)...
 
 [🦸‍♂️] Supervisord syncing subprocess worker: worker_daphne...
-     - Worker worker_daphne: started RUNNING (pid 6814, uptime 0:00:00)
+     - Worker worker_daphne: started RUNNING (pid 12851, uptime 0:00:00)
 [🦸‍♂️] Supervisord syncing subprocess worker: worker_sonic...
-     - Worker worker_sonic: started RUNNING (pid 6815, uptime 0:00:00)
+     - Worker worker_sonic: started RUNNING (pid 12852, uptime 0:00:00)
 [🦸‍♂️] Supervisord syncing subprocess worker: worker_runner...
-     - Worker worker_runner: started RUNNING (pid 6816, uptime 0:00:00)
+     - Worker worker_runner: started RUNNING (pid 12853, uptime 0:00:00)
 [🦸‍♂️] Supervisord syncing subprocess worker: 
 worker_supervisord_parent_watchdog...
-     - Worker worker_supervisord_parent_watchdog: started RUNNING (pid 6821, 
+     - Worker worker_supervisord_parent_watchdog: started RUNNING (pid 12854, 
 uptime 0:00:00)
 
 Tailing worker logs (Ctrl+C to stop)...
@@ -201,44 +201,36 @@ Tailing worker logs (Ctrl+C to stop)...
     
     
 
-[2026-09-23 04:14:46] INFO     daphne.cli Starting server at          cli.py:284
-                               tcp:port=38649:interface=127.0.0.1
+[2026-09-23 06:21:56] INFO     daphne.cli Starting server at          cli.py:284
+                               tcp:port=44239:interface=127.0.0.1
                       INFO     daphne.server HTTP/2 support not    server.py:126
                                enabled (install the http2 and tls
                                Twisted extras)
                       INFO     daphne.server Configuring endpoint  server.py:135
-                               tcp:port=38649:interface=127.0.0.1
+                               tcp:port=44239:interface=127.0.0.1
                       INFO     daphne.server Listening on TCP      server.py:166
-                               address 127.0.0.1:38649
-2026-09-23 04:14:47 HTTP     GET / 302 localhost
-2026-09-23 04:14:47 HTTP     GET / 302 localhost
-2026-09-23 04:14:47 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:14:48 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:14:49 HTTP     GET / 302 localhost
-2026-09-23 04:14:49 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:14:51 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:14:53 HTTP     GET / 302 localhost
-2026-09-23 04:14:53 HTTP     GET / 302 localhost
-2026-09-23 04:14:53 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:14:53 HTTP     GET / 302 localhost
-2026-09-23 04:14:53 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:14:53 HTTP     GET / 302 localhost
-2026-09-23 04:14:53 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:14:53 HTTP     GET / 302 localhost
-2026-09-23 04:14:53 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:14:53 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:14:53 HTTP     GET / 302 localhost
-2026-09-23 04:14:53 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:15:15 HTTP     GET / 302 localhost
-2026-09-23 04:15:15 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:15:20 HTTP     GET / 302 localhost
-2026-09-23 04:15:20 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:15:24 HTTP     GET / 302 localhost
-2026-09-23 04:15:24 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:15:29 HTTP     GET / 302 localhost
-2026-09-23 04:15:29 HTTP     GET /admin/login/?next=/ 200 localhost
+                               address 127.0.0.1:44239
+2026-09-23 06:21:56 HTTP     GET / 302 localhost
+2026-09-23 06:21:57 HTTP     GET / 302 localhost
+2026-09-23 06:21:57 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 06:21:57 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 06:21:58 HTTP     GET / 302 localhost
+2026-09-23 06:21:58 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 06:22:01 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 06:22:03 HTTP     GET / 302 localhost
+2026-09-23 06:22:03 HTTP     GET / 302 localhost
+2026-09-23 06:22:03 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 06:22:03 HTTP     GET / 302 localhost
+2026-09-23 06:22:03 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 06:22:04 HTTP     GET / 302 localhost
+2026-09-23 06:22:04 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 06:22:05 HTTP     GET / 302 localhost
+2026-09-23 06:22:05 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 06:22:05 HTTP     GET / 302 localhost
+2026-09-23 06:22:05 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 06:22:05 HTTP     GET /admin/login/?next=/ 200 localhost
 
 [🛑] Got SIGTERM, stopping gracefully...
-[🦸‍♂️] Stopping supervisord process (pid=6800)...
+[🦸‍♂️] Stopping supervisord process (pid=12847)...
 
 [🟩] ArchiveBox server shut down gracefully.

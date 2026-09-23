@@ -1,7 +1,7 @@
 {
   "app": "010-illa-builder-beta",
   "number": "010",
-  "startedAt": "2026-09-23T06:06:10.539Z",
+  "startedAt": "2026-09-23T06:31:17.494Z",
   "stages": [
     {
       "stage": 0,
@@ -13,19 +13,19 @@
       "stage": 1,
       "name": "build",
       "status": "pass",
-      "detail": "4 step(s), 90s"
+      "detail": "4 step(s), 89s"
     },
     {
       "stage": 2,
       "name": "serve",
       "status": "pass",
-      "detail": "static apps/builder/dist → http://127.0.0.1:42947"
+      "detail": "static apps/builder/dist → http://127.0.0.1:46535"
     },
     {
       "stage": 3,
       "name": "proxy",
       "status": "pass",
-      "detail": "http://127.0.0.1:34533 → http://127.0.0.1:42947"
+      "detail": "http://127.0.0.1:37473 → http://127.0.0.1:46535"
     },
     {
       "stage": 4,
@@ -135,5 +135,5 @@
   "consoleErrors": [],
   "pageErrors": [],
   "verdict": "WARN",
-  "finishedAt": "2026-09-23T06:07:52.106Z"
+  "finishedAt": "2026-09-23T06:33:02.471Z"
 }

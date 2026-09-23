@@ -1,7 +1,7 @@
 {
   "app": "007-archivebox-dev3",
   "number": "007",
-  "startedAt": "2026-09-23T04:20:54.969Z",
+  "startedAt": "2026-09-23T06:30:06.833Z",
   "stages": [
     {
       "stage": 0,
@@ -19,25 +19,19 @@
       "stage": 2,
       "name": "serve",
       "status": "pass",
-      "detail": "cd \"$DATA\" && exec \"$SRC/.venv/bin/archivebox\" server 127.0.0.1:$PORT → http://127.0.0.1:43253"
+      "detail": "cd \"$DATA\" && exec \"$SRC/.venv/bin/archivebox\" server 127.0.0.1:$PORT → http://127.0.0.1:38489"
     },
     {
       "stage": 3,
       "name": "proxy",
       "status": "pass",
-      "detail": "http://127.0.0.1:35319 → http://127.0.0.1:43253"
+      "detail": "http://127.0.0.1:41961 → http://127.0.0.1:38489"
     },
     {
       "stage": 4,
       "name": "playwright",
       "status": "fail",
       "detail": "15/16 not failing"
-    },
-    {
-      "stage": 5,
-      "name": "video",
-      "status": "pass",
-      "detail": "14 steps → demo.mp4, demo.webm"
     }
   ],
   "checks": [
@@ -129,7 +123,7 @@
       "id": "C15",
       "name": "Customer skins through the proxy",
       "status": "pass",
-      "detail": "acme→midnight: applied; globex→sunrise: applied; initech→blueprint: applied; no header → original look"
+      "detail": "acme→skin-002 \"Minimal Neutral\": applied (13 rules); globex→skin-003 \"Bold Contrast\": applied (13 rules); initech→skin-004 \"Warm Editorial\": applied (13 rules); umbrella→skin-005 \"Soft Rounded\": applied (13 rules); no header → original look"
     },
     {
       "id": "C16",
@@ -140,28 +134,6 @@
   ],
   "consoleErrors": [],
   "pageErrors": [],
-  "video": {
-    "steps": [
-      "the app, served through ui-bridge/proxy.js",
-      "Capability Port (injected before </head>) — attach the button mover",
-      "button-mover attached in the drawer slot",
-      "Move: on — every button and link is now draggable",
-      "button \"Create admin and continu\" moved",
-      "link \"ArchiveBox\" moved",
-      "\"ArchiveBox\" renamed to \"Renamed by ATTa\"",
-      "sticky-notes capability attached — pin a note",
-      "note pinned on the live app and dragged into place",
-      "customer \"acme\" → skin \"midnight\" (moves, names and notes kept)",
-      "customer \"globex\" → skin \"sunrise\" (moves, names and notes kept)",
-      "customer \"initech\" → skin \"blueprint\" (moves, names and notes kept)",
-      "no customer header → original look",
-      "Reset + Clear — app back exactly as it was"
-    ],
-    "files": [
-      "demo.mp4",
-      "demo.webm"
-    ]
-  },
   "verdict": "FAIL",
-  "finishedAt": "2026-09-23T04:22:00.306Z"
+  "finishedAt": "2026-09-23T06:30:29.996Z"
 }

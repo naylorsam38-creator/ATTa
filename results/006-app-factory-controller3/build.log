@@ -1,5 +1,5 @@
 
 $ python3 -m unittest test_controller test_controller_v2 test_dependency_graph test_orchestrator -v
-Ran 47 tests in 0.004s
+Ran 47 tests in 0.003s
 
 OK

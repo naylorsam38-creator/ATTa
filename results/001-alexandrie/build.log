@@ -413,7 +413,7 @@ node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BMTKgz9h.js                    
 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/DzxwRta7.js                                          662.10 kB │ gzip: 143.16 kB
 node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/CmAtuOY4.js                                        1,344.87 kB │ gzip: 450.87 kB
 
-[info] [32m✓ built in 16.67s[39m
+[info] [32m✓ built in 15.86s[39m
 [info] [36mvite v8.3.0 [32mbuilding ssr environment for production...[36m[39m
 transforming...
 ✓ 1050 modules transformed.
@@ -428,19 +428,13 @@ node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Welcome-styles.C_nE27Y3.mjs    
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Workspace-styles.j4JemTGF.mjs                         0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/done-styles.hK727wgn.mjs                              0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/App-styles.CedB-iY1.mjs                               0.08 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/BentoFeatures-styles.Cc-ATZDL.mjs                     0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Board-styles.C5n6RlKf.mjs                             0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/ContextMenuManager-styles.C28KeMEn.mjs                0.08 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/ContributorsMarquee-styles.DgJV_p2P.mjs               0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Error-styles.BGgedLpb.mjs                             0.08 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/FeaturesFAQ-styles.upZt1xhk.mjs                       0.08 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/FeaturesShowcase-styles.COwm9Bkl.mjs                  0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Icon-styles.Bc3eLCDQ.mjs                              0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Level-styles.Cc8q8nLw.mjs                             0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/ModalManager-styles.C64PmJMw.mjs                      0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Notification-styles.QggnRIdo.mjs                      0.08 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/OpenSourceStats-styles.C2Yw86WN.mjs                   0.08 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/SelfHostSteps-styles.BNuTL2OQ.mjs                     0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/SplashScreen-styles.CsQ7rpIK.mjs                      0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Stats-styles.0v52oFWV.mjs                             0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/about-styles.mUer9VjX.mjs                             0.08 kB
@@ -467,20 +461,26 @@ node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/folder-styles.Cf2HUHqG.mjs     
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/signup-styles.BeBJhk6G.mjs                            0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/AppDrop-styles.Bom2GX9i.mjs                           0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/AppHint-styles.DrQ5OQCA.mjs                           0.08 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/BentoFeatures-styles.DGT5CNJz.mjs                     0.08 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/ContributorsMarquee-styles.BWWwxYTh.mjs               0.08 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/FeaturesFAQ-styles.D9prlRzN.mjs                       0.08 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/FeaturesShowcase-styles.DsguESSA.mjs                  0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Item-styles.F3GLcESL.mjs                              0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Login2FA-styles.CYRkI9_m.mjs                          0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Login2FAEnable-styles.SPQDHpbw.mjs                    0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/LoginBase-styles.DdvvpEkM.mjs                         0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/NodeTree-styles.D-07c5T3.mjs                          0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/OIDCProviders-styles.8fUgygft.mjs                     0.08 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/OpenSourceStats-styles.BYgSAeny.mjs                   0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Preview-styles.D21PxET1.mjs                           0.08 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/SelfHostSteps-styles.D8I516Kr.mjs                     0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Support-styles.BLLeu8EJ.mjs                           0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/TagList-styles.D-hJdDHx.mjs                           0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/backups-styles.DNml4rxJ.mjs                           0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/diagram-styles.DckHwwKn.mjs                           0.08 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles-2.7eibMYwH.mjs                           0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles-4.DEijPO8W.mjs                           0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles-6.DBcc9XxA.mjs                           0.08 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles.DTZj49Oi.mjs                             0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/preview-styles.DncS0avf.mjs                           0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/privacy-styles.DPi3mu6x.mjs                           0.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/profile-styles.CFrrED36.mjs                           0.08 kB
@@ -586,7 +586,7 @@ node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/home-styles.QYTo4uaL.mjs       
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/backup-styles.BydVJ9dW.mjs                            0.35 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles-3.BdXmiOQJ.mjs                           0.36 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/entry-styles.C7FWD2U5.mjs                             0.48 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles.hMgsXD7e.mjs                             0.48 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles-2.BEfUF6P6.mjs                           0.50 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/MarkdownEditor-styles.DMGEAMR8.mjs                    0.62 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/dashboard-styles.DqAlTUTt.mjs                         1.46 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/styles.mjs                                                 20.47 kB
@@ -704,7 +704,7 @@ node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Join-styles-1.mjs-f5W9eXXn.js  
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-7-styles-2.mjs-CgmeObyn.js                      1.31 kB │ map:   2.63 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/EditorAppHeader-styles-1.mjs-DETYameK.js              1.31 kB │ map:   1.74 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/MarkdownEditor-styles-3.mjs-DB8yAT02.js               1.32 kB │ map:   3.46 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-3-styles-1.mjs-DbHf-ed6.js                      1.36 kB │ map:   2.88 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-2-styles-1.mjs-DbHf-ed6.js                      1.36 kB │ map:   2.88 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/SecuritySectionOIDC-styles-1.mjs-CCCpykzH.js          1.45 kB │ map:   4.08 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/AppBtnIcon-styles-1.mjs-DSbhEs8q.js                   1.46 kB │ map:   2.59 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/dashboard-styles-7.mjs-4T6u9kwy.js                    1.47 kB │ map:   2.77 kB
@@ -764,7 +764,7 @@ node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-15-styles-2.mjs-CmEDq4pu.
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/home-styles-2.mjs-DlS40lmX.js                         2.41 kB │ map:   4.18 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/snippets-styles-1.mjs-m-CiKImj.js                     2.41 kB │ map:   9.20 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/backups-styles-1.mjs-HUCo_u9q.js                      2.45 kB │ map:  11.25 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles-5.mjs-BLDnyPDO.js                        2.47 kB │ map:   4.62 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-4-styles-5.mjs-BLDnyPDO.js                      2.47 kB │ map:   4.62 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/entry-styles-5.mjs-WdJOz2_4.js                        2.48 kB │ map:   3.30 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/TOC-styles-1.mjs-CEc0EHr1.js                          2.49 kB │ map:   6.91 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/signup-styles-1.mjs-CM7TleQz.js                       2.50 kB │ map:   7.57 kB
@@ -783,20 +783,20 @@ node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/_id_-Ca1_7uJ7.js               
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/AppCTA-Huii-rd9.js                                    2.84 kB │ map:   3.40 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-7-styles-1.mjs-sU8yh1c-.js                      2.86 kB │ map:   5.62 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/useDateFormatters-GJXTUuLd.js                         2.91 kB │ map:   5.05 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles-7.mjs-C5q-mSwS.js                        2.96 kB │ map:   6.52 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-4-styles-7.mjs-C5q-mSwS.js                      2.96 kB │ map:   6.52 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/nodes-DjfvF7pd.js                                     2.97 kB │ map:   2.63 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/new-_Hys9lyp.js                                       3.05 kB │ map:   4.18 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/PDFViewer-styles-1.mjs-DlVkt2rC.js                    3.08 kB │ map:   9.98 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/entry-styles-4.mjs-DGzbBMQG.js                        3.11 kB │ map:   5.87 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/AppColorPicker-Bg5-ouLt.js                            3.12 kB │ map:   5.75 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles-6.mjs-J0DdEoPg.js                        3.22 kB │ map:   7.11 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-4-styles-6.mjs-J0DdEoPg.js                      3.23 kB │ map:   7.12 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Stats-CMzGEqGv.js                                     3.37 kB │ map:   5.38 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/admin.store-DLKRcQFd.js                               3.39 kB │ map:   6.31 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/diagram-CInLhbiO.js                                   3.40 kB │ map:   7.40 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Status-BznGG0Xp.js                                    3.58 kB │ map:   7.84 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/SessionCard-styles-1.mjs-CUP0ynKH.js                  3.60 kB │ map:   7.31 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/request-reset-BEj3BuxU.js                             3.63 kB │ map:   6.44 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles-3.mjs-Bwh6V4bF.js                        3.70 kB │ map:  10.26 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-4-styles-3.mjs-Bwh6V4bF.js                      3.70 kB │ map:  10.27 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/useOIDC-GXHtJAnP.js                                   3.72 kB │ map:  10.30 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/CDN-styles-1.mjs-D8jGQoY_.js                          3.73 kB │ map:  14.29 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Support-styles-1.mjs-CgoFVUUQ.js                      3.74 kB │ map:   7.04 kB
@@ -805,10 +805,10 @@ node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/AppBtnIcon-B8muUtJ6.js         
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/dashboard-styles-18.mjs-DF1OumST.js                   3.82 kB │ map:   8.90 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/home-styles-3.mjs-2AvF95tu.js                         3.90 kB │ map:   6.31 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/public-DyMUZSkZ.js                                    3.93 kB │ map:   3.89 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles-2.mjs-xdwRz7F7.js                        4.03 kB │ map:   7.60 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-4-styles-2.mjs-xdwRz7F7.js                      4.04 kB │ map:   7.60 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/ContentCompiled-xaFTMCZE.js                           4.23 kB │ map:  13.59 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/RemoveShared-ByQhArL7.js                              4.25 kB │ map:   5.24 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles-4.mjs-nN446-hc.js                        4.37 kB │ map:   9.07 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-4-styles-4.mjs-nN446-hc.js                      4.38 kB │ map:   9.07 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/Column-styles-1.mjs-B6qPRXK6.js                       4.40 kB │ map:  10.64 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/AppSelect-styles-1.mjs-Dp00hlnk.js                    4.42 kB │ map:  14.28 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/AppTagInput-zXyQ1jO3.js                               4.54 kB │ map:  16.56 kB
@@ -845,7 +845,7 @@ node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/DrawioEditor-nMcL2W6B.js       
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/about-CE6z3o-D.js                                     7.43 kB │ map:  17.74 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/PDFViewer-BErEu_3y.js                                 7.59 kB │ map:  23.80 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/preview-B7_9NTed.js                                   7.90 kB │ map:  12.40 kB
-node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-styles-1.mjs-Djsl2mGe.js                        7.91 kB │ map:  18.70 kB
+node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/index-4-styles-1.mjs-Djsl2mGe.js                      7.92 kB │ map:  18.70 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-kmN4NvMu.js                                     7.96 kB │ map:  22.11 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/DataTable-CTELkZ6A.js                                 8.75 kB │ map:  23.46 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/nuxt-8MEjtmD6.js                                      8.81 kB │ map:  26.68 kB
@@ -880,7 +880,7 @@ node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/MarkdownEditor-CBKuTtBh.js     
 node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/settings-DJxw9iFK.js                                136.45 kB │ map: 264.12 kB
 node_modules/.cache/nuxt/.nuxt/dist/server/server.mjs                                                304.39 kB │ map: 885.70 kB
 
-[info] [32m✓ built in 8.45s[39m
+[info] [32m✓ built in 7.52s[39m
 [success] [nitro] Generated public .output/public
 
 PWA v1.3.0
@@ -892,7 +892,7 @@ rendering chunks...
 computing gzip size...
 .output/public/sw.mjs  98.11 kB │ gzip: 25.30 kB │ map: 215.37 kB
 
-[32m✓ built in 40ms[39m
+[32m✓ built in 36ms[39m
 
 PWA v1.3.0
 mode      injectManifest
@@ -1025,8 +1025,8 @@ files generated
   ├─ .output/server/chunks/build/BackupCodes2FA-styles.i5zTJn_Y.mjs.map (249 B) (180 B gzip)
   ├─ .output/server/chunks/build/backups-styles.DNml4rxJ.mjs (2.17 kB) (676 B gzip)
   ├─ .output/server/chunks/build/backups-styles.DNml4rxJ.mjs.map (228 B) (170 B gzip)
-  ├─ .output/server/chunks/build/BentoFeatures-styles.Cc-ATZDL.mjs (147 B) (148 B gzip)
-  ├─ .output/server/chunks/build/BentoFeatures-styles.Cc-ATZDL.mjs.map (255 B) (183 B gzip)
+  ├─ .output/server/chunks/build/BentoFeatures-styles.DGT5CNJz.mjs (149 B) (151 B gzip)
+  ├─ .output/server/chunks/build/BentoFeatures-styles.DGT5CNJz.mjs.map (256 B) (184 B gzip)
   ├─ .output/server/chunks/build/Board-styles.C5n6RlKf.mjs (1.24 kB) (564 B gzip)
   ├─ .output/server/chunks/build/Board-styles.C5n6RlKf.mjs.map (222 B) (169 B gzip)
   ├─ .output/server/chunks/build/BreadCrumbs-styles.B3EiMfWI.mjs (150 B) (153 B gzip)
@@ -1069,8 +1069,8 @@ files generated
   ├─ .output/server/chunks/build/ContextMenu-styles.B84UoABM.mjs.map (240 B) (175 B gzip)
   ├─ .output/server/chunks/build/ContextMenuManager-styles.C28KeMEn.mjs (152 B) (154 B gzip)
   ├─ .output/server/chunks/build/ContextMenuManager-styles.C28KeMEn.mjs.map (271 B) (184 B gzip)
-  ├─ .output/server/chunks/build/ContributorsMarquee-styles.DgJV_p2P.mjs (153 B) (156 B gzip)
-  ├─ .output/server/chunks/build/ContributorsMarquee-styles.DgJV_p2P.mjs.map (274 B) (187 B gzip)
+  ├─ .output/server/chunks/build/ContributorsMarquee-styles.BWWwxYTh.mjs (155 B) (157 B gzip)
+  ├─ .output/server/chunks/build/ContributorsMarquee-styles.BWWwxYTh.mjs.map (274 B) (187 B gzip)
   ├─ .output/server/chunks/build/CreateCategory-dQI3PDOA.mjs (3.02 kB) (1.37 kB gzip)
   ├─ .output/server/chunks/build/CreateCategory-dQI3PDOA.mjs.map (2.63 kB) (1.14 kB gzip)
   ├─ .output/server/chunks/build/dashboard-b6DFqiV6.mjs (48.1 kB) (13.6 kB gzip)
@@ -1185,10 +1185,10 @@ files generated
   ├─ .output/server/chunks/build/Error-styles.BGgedLpb.mjs.map (222 B) (168 B gzip)
   ├─ .output/server/chunks/build/error-styles.C1Rh7fVk.mjs (139 B) (144 B gzip)
   ├─ .output/server/chunks/build/error-styles.C1Rh7fVk.mjs.map (232 B) (175 B gzip)
-  ├─ .output/server/chunks/build/FeaturesFAQ-styles.upZt1xhk.mjs (145 B) (150 B gzip)
-  ├─ .output/server/chunks/build/FeaturesFAQ-styles.upZt1xhk.mjs.map (250 B) (180 B gzip)
-  ├─ .output/server/chunks/build/FeaturesShowcase-styles.COwm9Bkl.mjs (150 B) (154 B gzip)
-  ├─ .output/server/chunks/build/FeaturesShowcase-styles.COwm9Bkl.mjs.map (265 B) (185 B gzip)
+  ├─ .output/server/chunks/build/FeaturesFAQ-styles.D9prlRzN.mjs (147 B) (152 B gzip)
+  ├─ .output/server/chunks/build/FeaturesFAQ-styles.D9prlRzN.mjs.map (250 B) (181 B gzip)
+  ├─ .output/server/chunks/build/FeaturesShowcase-styles.DsguESSA.mjs (152 B) (155 B gzip)
+  ├─ .output/server/chunks/build/FeaturesShowcase-styles.DsguESSA.mjs.map (265 B) (183 B gzip)
   ├─ .output/server/chunks/build/FileInline-DFech3T8.mjs (1.22 kB) (644 B gzip)
   ├─ .output/server/chunks/build/FileInline-DFech3T8.mjs.map (705 B) (398 B gzip)
   ├─ .output/server/chunks/build/FileInline-styles.CyqE9km8.mjs (955 B) (446 B gzip)
@@ -1251,6 +1251,18 @@ files generated
   ├─ .output/server/chunks/build/index-15-styles-1.mjs-B3hdFWmA.mjs.map (95 B) (106 B gzip)
   ├─ .output/server/chunks/build/index-16-styles-1.mjs-CnXjBm--.mjs (887 B) (425 B gzip)
   ├─ .output/server/chunks/build/index-16-styles-1.mjs-CnXjBm--.mjs.map (95 B) (104 B gzip)
+  ├─ .output/server/chunks/build/index-4-styles-1.mjs-Djsl2mGe.mjs (7.62 kB) (1.71 kB gzip)
+  ├─ .output/server/chunks/build/index-4-styles-1.mjs-Djsl2mGe.mjs.map (94 B) (103 B gzip)
+  ├─ .output/server/chunks/build/index-4-styles-2.mjs-xdwRz7F7.mjs (3.73 kB) (1.17 kB gzip)
+  ├─ .output/server/chunks/build/index-4-styles-2.mjs-xdwRz7F7.mjs.map (94 B) (105 B gzip)
+  ├─ .output/server/chunks/build/index-4-styles-3.mjs-Bwh6V4bF.mjs (3.39 kB) (1.02 kB gzip)
+  ├─ .output/server/chunks/build/index-4-styles-3.mjs-Bwh6V4bF.mjs.map (94 B) (105 B gzip)
+  ├─ .output/server/chunks/build/index-4-styles-4.mjs-nN446-hc.mjs (4.08 kB) (1.27 kB gzip)
+  ├─ .output/server/chunks/build/index-4-styles-4.mjs-nN446-hc.mjs.map (94 B) (103 B gzip)
+  ├─ .output/server/chunks/build/index-4-styles-5.mjs-BLDnyPDO.mjs (2.15 kB) (731 B gzip)
+  ├─ .output/server/chunks/build/index-4-styles-5.mjs-BLDnyPDO.mjs.map (94 B) (105 B gzip)
+  ├─ .output/server/chunks/build/index-4-styles-6.mjs-J0DdEoPg.mjs (2.92 kB) (1.01 kB gzip)
+  ├─ .output/server/chunks/build/index-4-styles-6.mjs-J0DdEoPg.mjs.map (94 B) (105 B gzip)
   ├─ .output/server/chunks/build/index-5-styles-1.mjs-fGE7IyYI.mjs (1.6 kB) (695 B gzip)
   ├─ .output/server/chunks/build/index-5-styles-1.mjs-fGE7IyYI.mjs.map (94 B) (105 B gzip)
   ├─ .output/server/chunks/build/index-5-styles-2.mjs-CXsTZsis.mjs (2.37 kB) (757 B gzip)
@@ -1263,42 +1275,30 @@ files generated
   ├─ .output/server/chunks/build/index-7-styles-1.mjs-sU8yh1c-.mjs.map (94 B) (103 B gzip)
   ├─ .output/server/chunks/build/index-7-styles-2.mjs-CgmeObyn.mjs (1.03 kB) (449 B gzip)
   ├─ .output/server/chunks/build/index-7-styles-2.mjs-CgmeObyn.mjs.map (94 B) (105 B gzip)
-  ├─ .output/server/chunks/build/index-styles-1.mjs-Djsl2mGe.mjs (7.61 kB) (1.71 kB gzip)
-  ├─ .output/server/chunks/build/index-styles-1.mjs-Djsl2mGe.mjs.map (92 B) (101 B gzip)
   ├─ .output/server/chunks/build/index-styles-10.CB-K9cfN.mjs (497 B) (342 B gzip)
   ├─ .output/server/chunks/build/index-styles-10.CB-K9cfN.mjs.map (239 B) (180 B gzip)
   ├─ .output/server/chunks/build/index-styles-11.DIRkOmqW.mjs (1.7 kB) (732 B gzip)
   ├─ .output/server/chunks/build/index-styles-11.DIRkOmqW.mjs.map (230 B) (175 B gzip)
   ├─ .output/server/chunks/build/index-styles-12.Qii5EVlV.mjs (146 B) (149 B gzip)
   ├─ .output/server/chunks/build/index-styles-12.Qii5EVlV.mjs.map (240 B) (179 B gzip)
-  ├─ .output/server/chunks/build/index-styles-2.7eibMYwH.mjs (1.1 kB) (529 B gzip)
-  ├─ .output/server/chunks/build/index-styles-2.7eibMYwH.mjs.map (227 B) (173 B gzip)
-  ├─ .output/server/chunks/build/index-styles-2.mjs-xdwRz7F7.mjs (3.73 kB) (1.17 kB gzip)
-  ├─ .output/server/chunks/build/index-styles-2.mjs-xdwRz7F7.mjs.map (92 B) (103 B gzip)
+  ├─ .output/server/chunks/build/index-styles-2.BEfUF6P6.mjs (3.05 kB) (1.14 kB gzip)
+  ├─ .output/server/chunks/build/index-styles-2.BEfUF6P6.mjs.map (287 B) (192 B gzip)
   ├─ .output/server/chunks/build/index-styles-3.BdXmiOQJ.mjs (571 B) (348 B gzip)
   ├─ .output/server/chunks/build/index-styles-3.BdXmiOQJ.mjs.map (267 B) (185 B gzip)
-  ├─ .output/server/chunks/build/index-styles-3.mjs-Bwh6V4bF.mjs (3.39 kB) (1.02 kB gzip)
-  ├─ .output/server/chunks/build/index-styles-3.mjs-Bwh6V4bF.mjs.map (92 B) (103 B gzip)
   ├─ .output/server/chunks/build/index-styles-4.DEijPO8W.mjs (2.25 kB) (752 B gzip)
   ├─ .output/server/chunks/build/index-styles-4.DEijPO8W.mjs.map (227 B) (174 B gzip)
-  ├─ .output/server/chunks/build/index-styles-4.mjs-nN446-hc.mjs (4.07 kB) (1.27 kB gzip)
-  ├─ .output/server/chunks/build/index-styles-4.mjs-nN446-hc.mjs.map (92 B) (102 B gzip)
   ├─ .output/server/chunks/build/index-styles-5.DROszfWh.mjs (672 B) (394 B gzip)
   ├─ .output/server/chunks/build/index-styles-5.DROszfWh.mjs.map (247 B) (182 B gzip)
-  ├─ .output/server/chunks/build/index-styles-5.mjs-BLDnyPDO.mjs (2.15 kB) (729 B gzip)
-  ├─ .output/server/chunks/build/index-styles-5.mjs-BLDnyPDO.mjs.map (92 B) (103 B gzip)
   ├─ .output/server/chunks/build/index-styles-6.DBcc9XxA.mjs (573 B) (278 B gzip)
   ├─ .output/server/chunks/build/index-styles-6.DBcc9XxA.mjs.map (227 B) (172 B gzip)
-  ├─ .output/server/chunks/build/index-styles-6.mjs-J0DdEoPg.mjs (2.92 kB) (1.01 kB gzip)
-  ├─ .output/server/chunks/build/index-styles-6.mjs-J0DdEoPg.mjs.map (92 B) (103 B gzip)
   ├─ .output/server/chunks/build/index-styles-7.BAg-_fK1.mjs (310 B) (237 B gzip)
   ├─ .output/server/chunks/build/index-styles-7.BAg-_fK1.mjs.map (226 B) (174 B gzip)
   ├─ .output/server/chunks/build/index-styles-8.6Btex1MA.mjs (1.84 kB) (763 B gzip)
   ├─ .output/server/chunks/build/index-styles-8.6Btex1MA.mjs.map (227 B) (171 B gzip)
   ├─ .output/server/chunks/build/index-styles-9.mqhtoprE.mjs (2.18 kB) (739 B gzip)
   ├─ .output/server/chunks/build/index-styles-9.mqhtoprE.mjs.map (237 B) (175 B gzip)
-  ├─ .output/server/chunks/build/index-styles.hMgsXD7e.mjs (3.04 kB) (1.14 kB gzip)
-  ├─ .output/server/chunks/build/index-styles.hMgsXD7e.mjs.map (282 B) (186 B gzip)
+  ├─ .output/server/chunks/build/index-styles.DTZj49Oi.mjs (1.09 kB) (530 B gzip)
+  ├─ .output/server/chunks/build/index-styles.DTZj49Oi.mjs.map (222 B) (170 B gzip)
   ├─ .output/server/chunks/build/Inline-DpNFmLPh.mjs (2.71 kB) (1.24 kB gzip)
   ├─ .output/server/chunks/build/Inline-DpNFmLPh.mjs.map (2.37 kB) (1.04 kB gzip)
   ├─ .output/server/chunks/build/Inline-styles-2.DFyRByiP.mjs (762 B) (406 B gzip)
@@ -1397,8 +1397,8 @@ files generated
   ├─ .output/server/chunks/build/NuxtLinkLocale-CU11ThGx.mjs.map (552 B) (339 B gzip)
   ├─ .output/server/chunks/build/OIDCProviders-styles.8fUgygft.mjs (149 B) (154 B gzip)
   ├─ .output/server/chunks/build/OIDCProviders-styles.8fUgygft.mjs.map (256 B) (183 B gzip)
-  ├─ .output/server/chunks/build/OpenSourceStats-styles.C2Yw86WN.mjs (149 B) (152 B gzip)
-  ├─ .output/server/chunks/build/OpenSourceStats-styles.C2Yw86WN.mjs.map (262 B) (184 B gzip)
+  ├─ .output/server/chunks/build/OpenSourceStats-styles.BYgSAeny.mjs (151 B) (154 B gzip)
+  ├─ .output/server/chunks/build/OpenSourceStats-styles.BYgSAeny.mjs.map (262 B) (181 B gzip)
   ├─ .output/server/chunks/build/PDFViewer-BErEu_3y.mjs (4.5 kB) (2.04 kB gzip)
   ├─ .output/server/chunks/build/PDFViewer-BErEu_3y.mjs.map (1.47 kB) (769 B gzip)
   ├─ .output/server/chunks/build/PDFViewer-styles.COAT5fh7.mjs (2.81 kB) (994 B gzip)
@@ -1463,8 +1463,8 @@ files generated
   ├─ .output/server/chunks/build/SecuritySectionPassword-styles.CW4_9LkH.mjs.map (276 B) (185 B gzip)
   ├─ .output/server/chunks/build/SecuritySectionSessions-styles.DAHECqXX.mjs (497 B) (316 B gzip)
   ├─ .output/server/chunks/build/SecuritySectionSessions-styles.DAHECqXX.mjs.map (276 B) (183 B gzip)
-  ├─ .output/server/chunks/build/SelfHostSteps-styles.BNuTL2OQ.mjs (147 B) (150 B gzip)
-  ├─ .output/server/chunks/build/SelfHostSteps-styles.BNuTL2OQ.mjs.map (256 B) (183 B gzip)
+  ├─ .output/server/chunks/build/SelfHostSteps-styles.D8I516Kr.mjs (149 B) (152 B gzip)
+  ├─ .output/server/chunks/build/SelfHostSteps-styles.D8I516Kr.mjs.map (256 B) (183 B gzip)
   ├─ .output/server/chunks/build/SessionCard-styles.CvR8fe-n.mjs (3.29 kB) (939 B gzip)
   ├─ .output/server/chunks/build/SessionCard-styles.CvR8fe-n.mjs.map (239 B) (173 B gzip)
   ├─ .output/server/chunks/build/settings-BVip72oe.mjs (4.03 kB) (1.67 kB gzip)
@@ -1595,4 +1595,4 @@ files generated
 [success] [nitro] You can preview this build using `node .output/server/index.mjs`
 [log] |
 —  ✨ Build complete!
-Listening on http://127.0.0.1:38269
+Listening on http://127.0.0.1:39959

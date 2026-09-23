@@ -15,7 +15,7 @@ packages/illa-design prepare: Done
 . prepare$ husky install
 . prepare: husky - HUSKY env variable is set to 0, skipping install
 . prepare: Done
-Done in 2s
+Done in 1.8s
 
 $ cd apps/builder && NODE_OPTIONS=--max-old-space-size=8192 npx vite build --mode self
 [36mvite v4.5.0 [32mbuilding for self...[36m[39m
@@ -202,15 +202,15 @@ rendering chunks...
 [2mdist/[22m[2massets/[22m[36mindex-d2a1389f.js                                   [39m[1m[2m     1.81 kB[22m[1m[22m[2m │ map:      6.42 kB[22m
 [2mdist/[22m[2massets/[22m[36mindex-60ff074f.js                                   [39m[1m[2m     1.83 kB[22m[1m[22m[2m │ map:      6.41 kB[22m
 [2mdist/[22m[2massets/[22m[36mindex-340f6275.js                                   [39m[1m[2m     1.86 kB[22m[1m[22m[2m │ map:      5.60 kB[22m
-[2mdist/[22m[2massets/[22m[36mdriveWithStatusSwitch-efe5779e.js                   [39m[1m[2m     1.86 kB[22m[1m[22m[2m │ map:      6.38 kB[22m
 [2mdist/[22m[2massets/[22m[36mindex-26cf7140.js                                   [39m[1m[2m     1.86 kB[22m[1m[22m[2m │ map:      8.38 kB[22m
+[2mdist/[22m[2massets/[22m[36mdriveWithStatusSwitch-efe5779e.js                   [39m[1m[2m     1.86 kB[22m[1m[22m[2m │ map:      6.38 kB[22m
 [2mdist/[22m[2massets/[22m[36mindex-4a00bf4c.js                                   [39m[1m[2m     1.95 kB[22m[1m[22m[2m │ map:      7.31 kB[22m
 [2mdist/[22m[2massets/[22m[36mindex-65ed348a.js                                   [39m[1m[2m     1.96 kB[22m[1m[22m[2m │ map:      5.30 kB[22m
 [2mdist/[22m[2massets/[22m[36mindex-eb9cf553.js                                   [39m[1m[2m     1.97 kB[22m[1m[22m[2m │ map:      4.19 kB[22m
 [2mdist/[22m[2massets/[22m[36mindex-94227886.js                                   [39m[1m[2m     2.00 kB[22m[1m[22m[2m │ map:      6.69 kB[22m
 [2mdist/[22m[2massets/[22m[36mstyle-d4d9e5d9.js                                   [39m[1m[2m     2.02 kB[22m[1m[22m[2m │ map:      4.25 kB[22m
-[2mdist/[22m[2massets/[22m[36mindex-4513268e.js                                   [39m[1m[2m     2.05 kB[22m[1m[22m[2m │ map:      7.89 kB[22m
 [2mdist/[22m[2massets/[22m[36mindex-d719fe5c.js                                   [39m[1m[2m     2.05 kB[22m[1m[22m[2m │ map:      7.58 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-4513268e.js                                   [39m[1m[2m     2.05 kB[22m[1m[22m[2m │ map:      7.89 kB[22m
 [2mdist/[22m[2massets/[22m[36mrate-a3fb2b36.js                                    [39m[1m[2m     2.09 kB[22m[1m[22m[2m │ map:      7.86 kB[22m
 [2mdist/[22m[2massets/[22m[36mindex-9a64b6a3.js                                   [39m[1m[2m     2.13 kB[22m[1m[22m[2m │ map:      6.97 kB[22m
 [2mdist/[22m[2massets/[22m[36mindex-93447a5d.js                                   [39m[1m[2m     2.13 kB[22m[1m[22m[2m │ map:      6.38 kB[22m
@@ -354,4 +354,4 @@ rendering chunks...
 [2mdist/[22m[2massets/[22m[36mexceljs.min-99022c2f.js                             [39m[1m[33m 1,156.74 kB[39m[22m[2m │ map:  2,572.40 kB[22m
 [2mdist/[22m[2massets/[22m[36mreact-icons-vendor-2430ea65.js                      [39m[1m[33m 2,455.99 kB[39m[22m[2m │ map:  4,721.50 kB[22m
 [2mdist/[22m[2massets/[22m[36mindex-95dd7c90.js                                   [39m[1m[33m10,448.06 kB[39m[22m[2m │ map: 13,639.52 kB[22m
-[32m✓ built in 1m 23s[39m
+[32m✓ built in 1m 22s[39m

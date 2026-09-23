@@ -1,6 +1,6 @@
 # 011-gitea-main-2 — WARN
 
-Run: 2026-09-23T06:07:52.107Z
+Run: 2026-09-23T06:33:02.473Z
 
 > Gitea built from the received source the way its Makefile does (make build: frontend + backend, TAGS=bindata sqlite sqlite_unlock_notify). Runs as an unprivileged user (Gitea refuses root) with SQLite, install locked, admin atta-admin created via the gitea CLI (start.sh).
 
@@ -9,9 +9,9 @@ Run: 2026-09-23T06:07:52.107Z
 | # | Stage | Status | Detail |
 |---|---|---|---|
 | 0 | intake | PASS | no bundle shipped; canonical files used |
-| 1 | build | PASS | 2 step(s), 4s |
-| 2 | serve | PASS | exec ../start.sh "$DATA" $PORT → http://127.0.0.1:43431 |
-| 3 | proxy | PASS | http://127.0.0.1:33731 → http://127.0.0.1:43431 |
+| 1 | build | PASS | 2 step(s), 5s |
+| 2 | serve | PASS | exec ../start.sh "$DATA" $PORT → http://127.0.0.1:41973 |
+| 3 | proxy | PASS | http://127.0.0.1:36675 → http://127.0.0.1:41973 |
 | 4 | playwright | PASS | 16/16 not failing |
 
 ## Playwright checks

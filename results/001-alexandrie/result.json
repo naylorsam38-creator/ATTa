@@ -1,7 +1,7 @@
 {
   "app": "001-alexandrie",
   "number": "001",
-  "startedAt": "2026-09-23T04:31:53.664Z",
+  "startedAt": "2026-09-23T06:19:01.164Z",
   "stages": [
     {
       "stage": 0,
@@ -13,31 +13,25 @@
       "stage": 1,
       "name": "build",
       "status": "pass",
-      "detail": "2 step(s), 66s"
+      "detail": "2 step(s), 61s"
     },
     {
       "stage": 2,
       "name": "serve",
       "status": "pass",
-      "detail": "cd frontend && NODE_ENV=production exec node .output/server/index.mjs → http://127.0.0.1:38269"
+      "detail": "cd frontend && NODE_ENV=production exec node .output/server/index.mjs → http://127.0.0.1:39959"
     },
     {
       "stage": 3,
       "name": "proxy",
       "status": "pass",
-      "detail": "http://127.0.0.1:45235 → http://127.0.0.1:38269"
+      "detail": "http://127.0.0.1:40277 → http://127.0.0.1:39959"
     },
     {
       "stage": 4,
       "name": "playwright",
       "status": "pass",
       "detail": "16/16 not failing"
-    },
-    {
-      "stage": 5,
-      "name": "video",
-      "status": "pass",
-      "detail": "14 steps → demo.mp4, demo.webm"
     }
   ],
   "checks": [
@@ -129,7 +123,7 @@
       "id": "C15",
       "name": "Customer skins through the proxy",
       "status": "pass",
-      "detail": "acme→midnight: applied; globex→sunrise: applied; initech→blueprint: applied; no header → original look"
+      "detail": "acme→skin-002 \"Minimal Neutral\": applied (13 rules); globex→skin-003 \"Bold Contrast\": applied (13 rules); initech→skin-004 \"Warm Editorial\": applied (13 rules); umbrella→skin-005 \"Soft Rounded\": applied (13 rules); no header → original look"
     },
     {
       "id": "C16",
@@ -140,28 +134,6 @@
   ],
   "consoleErrors": [],
   "pageErrors": [],
-  "video": {
-    "steps": [
-      "the app, served through ui-bridge/proxy.js",
-      "Capability Port (injected before </head>) — attach the button mover",
-      "button-mover attached in the drawer slot",
-      "Move: on — every button and link is now draggable",
-      "button \"01 Capture Ideas Instant\" moved",
-      "link \"Get Started\" moved",
-      "\"Get Started\" renamed to \"Renamed by ATTa\"",
-      "sticky-notes capability attached — pin a note",
-      "note pinned on the live app and dragged into place",
-      "customer \"acme\" → skin \"midnight\" (moves, names and notes kept)",
-      "customer \"globex\" → skin \"sunrise\" (moves, names and notes kept)",
-      "customer \"initech\" → skin \"blueprint\" (moves, names and notes kept)",
-      "no customer header → original look",
-      "Reset + Clear — app back exactly as it was"
-    ],
-    "files": [
-      "demo.mp4",
-      "demo.webm"
-    ]
-  },
   "verdict": "PASS",
-  "finishedAt": "2026-09-23T04:34:49.222Z"
+  "finishedAt": "2026-09-23T06:21:42.723Z"
 }

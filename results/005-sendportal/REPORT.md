@@ -1,6 +1,6 @@
 # 005-sendportal — FAIL
 
-Run: 2026-09-23T04:19:37.077Z
+Run: 2026-09-23T06:29:12.814Z
 
 > SendPortal (Laravel 11 + sendportal-core). Dev-only roave/security-advisories removed from composer.json because it blocks every Laravel 11 release; installed --no-dev. SQLite instead of MySQL, core assets published, migrations run; unauthenticated visit lands on /login. Checks open /login directly because / redirects to the upstream origin (see C13).
 
@@ -9,11 +9,10 @@ Run: 2026-09-23T04:19:37.077Z
 | # | Stage | Status | Detail |
 |---|---|---|---|
 | 0 | intake | PASS | bundled proxy.js, port.js, mover.mjs match canonical |
-| 1 | build | PASS | 7 step(s), 8s |
-| 2 | serve | PASS | exec php artisan serve --host=127.0.0.1 --port=$PORT → http://127.0.0.1:44269 |
-| 3 | proxy | PASS | http://127.0.0.1:35941 → http://127.0.0.1:44269 |
+| 1 | build | PASS | 7 step(s), 9s |
+| 2 | serve | PASS | exec php artisan serve --host=127.0.0.1 --port=$PORT → http://127.0.0.1:34601 |
+| 3 | proxy | PASS | http://127.0.0.1:43103 → http://127.0.0.1:34601 |
 | 4 | playwright | FAIL | 15/16 not failing |
-| 5 | video | PASS | 14 steps → demo.mp4, demo.webm |
 
 ## Playwright checks
 
@@ -33,26 +32,11 @@ Run: 2026-09-23T04:19:37.077Z
 | C12 | No new uncaught errors with the Port | PASS | none (0 uncaught error(s) seen, all also raised by the app without the Port) |
 | C13 | App CSP lets the Port run | PASS | no CSP header |
 | C14 | Redirects and links stay on the proxy | FAIL | GET / → 302 Location: <upstream>/login (bypasses the proxy); 10 link/form/asset URL(s) in the page point at <upstream> |
-| C15 | Customer skins through the proxy | PASS | acme→midnight: applied; globex→sunrise: applied; initech→blueprint: applied; no header → original look |
+| C15 | Customer skins through the proxy | PASS | acme→skin-002 "Minimal Neutral": applied (13 rules); globex→skin-003 "Bold Contrast": applied (13 rules); initech→skin-004 "Warm Editorial": applied (13 rules); umbrella→skin-005 "Soft Rounded": applied (13 rules); no header → original look |
 | C16 | Sticky-notes capability on the live page | PASS | pinned=true ("Pinned by ATTa×", visible=true), after reload=true, clear=true |
 
 Screenshots: `screenshot-moved.png` (Move on, controls dragged, drawer closed), `screenshot-drawer.png` (Port drawer open).
 
-## Demo video
+## Console errors only seen with the Port
 
-[`demo.mp4`](demo.mp4) · [`demo.webm`](demo.webm)
-
-1. the app, served through ui-bridge/proxy.js
-2. Capability Port (injected before </head>) — attach the button mover
-3. button-mover attached in the drawer slot
-4. Move: on — every button and link is now draggable
-5. button "Login" moved
-6. link "Forgot Your Password?" moved
-7. "Login" renamed to "Renamed by ATTa"
-8. sticky-notes capability attached — pin a note
-9. note pinned on the live app and dragged into place
-10. customer "acme" → skin "midnight" (moves, names and notes kept)
-11. customer "globex" → skin "sunrise" (moves, names and notes kept)
-12. customer "initech" → skin "blueprint" (moves, names and notes kept)
-13. no customer header → original look
-14. Reset + Clear — app back exactly as it was
+- `Failed to load resource: net::ERR_TOO_MANY_RETRIES`

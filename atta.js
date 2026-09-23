@@ -5,6 +5,7 @@
 //   node atta.js add <zip|dir|git-url> [name]   intake → apps/NNN-name/src
 //   node atta.js run [NNN ...]                  0 intake → 1 build → 2 serve → 3 proxy → 4 Playwright → 5 record
 //   node atta.js package [NNN ...]              6 deploy bundle → docker compose up → same checks against the containers
+//   node atta.js deliver                        dist/ATTa-apps-browser-ready.zip: all bundles + reports + system files
 //   node atta.js results                        rebuild results/RESULTS.md
 //
 // Per-app recipe apps/NNN-name/atta.json:
@@ -198,10 +199,14 @@ async function runOne(id) {
       // unittest writes its summary to stderr; capture both.
       try { out += execSync(expand(cfg.test) + ' 2>&1 >/dev/null | tail -n 3', { cwd: src, env: envFor(), shell: '/bin/bash' }).toString(); } catch (_) {}
       log(`\n$ ${cfg.test}\n${out}`);
+      // Python unittest ("Ran N tests") or Go test ("ok  pkg" / "FAIL pkg") output.
       const ran = (out.match(/Ran (\d+) tests?/) || [])[1];
       const failures = (out.match(/FAILED \(([^)]*)\)/) || [])[1];
-      result.checks = [{ id: 'T1', name: 'Unit tests pass', status: ok && !failures ? 'pass' : 'fail',
-        detail: ran ? `${ran} tests ran, ${failures ? 'FAILED (' + failures + ')' : 'all OK'}` : 'test run did not report a count' }];
+      const goOk = (out.match(/^ok\s+\S+/gm) || []).length;
+      const goFail = (out.match(/^(FAIL|--- FAIL)\s+\S+/gm) || []).length;
+      const detail = ran ? `${ran} tests ran, ${failures ? 'FAILED (' + failures + ')' : 'all OK'}`
+        : goOk || goFail ? `go test: ${goOk} package(s) ok, ${goFail} failed` : 'test run did not report a count';
+      result.checks = [{ id: 'T1', name: 'Unit tests pass', status: ok && !failures && !goFail && (ran || goOk) ? 'pass' : 'fail', detail }];
       stage(4, 'tests', result.checks[0].status, result.checks[0].detail);
       throw null; // skip to record
     }
@@ -302,6 +307,61 @@ async function packageOne(id) {
   return deploy;
 }
 
+// Delivery: one zip to take away — every app's deploy bundle, the reports, and the system files.
+function deliver() {
+  summary();
+  const name = 'ATTa-apps-browser-ready';
+  const out = path.join(ROOT, 'dist', name);
+  fs.rmSync(out, { recursive: true, force: true });
+  fs.mkdirSync(path.join(out, 'apps'), { recursive: true });
+  const rows = [];
+  for (const id of numbered()) {
+    const r = readJson(path.join(RESULTS, id, 'result.json')) || {};
+    const d = readJson(path.join(RESULTS, id, 'deploy.json'));
+    const cfg = readJson(path.join(APPS, id, 'atta.json')) || {};
+    const zip = path.join(ROOT, 'dist', `${id}.zip`);
+    const hasBundle = d && fs.existsSync(zip);
+    if (hasBundle) fs.copyFileSync(zip, path.join(out, 'apps', `${id}.zip`));
+    const failing = (list) => (list || []).filter((c) => c.status === 'fail').map((c) => c.id);
+    rows.push(`| ${id.slice(0, 3)} | ${id} | ${r.verdict || '—'} ${failing(r.checks).length ? '(' + failing(r.checks).join(', ') + ')' : ''} | ${d ? d.status.toUpperCase() + (failing(d.checks).length ? ' (' + failing(d.checks).join(', ') + ')' : '') : cfg.kind === 'library' ? 'n/a — no web UI' : '—'} | ${hasBundle ? `apps/${id}.zip` : '—'} |`);
+  }
+  copyDir(RESULTS, path.join(out, 'results'));
+  for (const f of fs.readdirSync(path.join(out, 'results'))) {
+    const dir = path.join(out, 'results', f);
+    if (fs.statSync(dir).isDirectory()) for (const x of fs.readdirSync(dir)) if (/\.log$|demo\./.test(x)) fs.rmSync(path.join(dir, x));
+  }
+  fs.mkdirSync(path.join(out, 'system', 'ui-bridge'), { recursive: true });
+  fs.copyFileSync(PROXY, path.join(out, 'system', 'ui-bridge', 'proxy.js'));
+  copyDir(path.join(ROOT, 'capability-port'), path.join(out, 'system', 'capability-port'));
+  copyDir(path.join(ROOT, 'skins-library'), path.join(out, 'system', 'skins-library'));
+  copyDir(path.join(ROOT, 'proposals'), path.join(out, 'system', 'proposals'));
+  const readme = [
+    '# ATTa — apps, browser-ready', '',
+    `Built ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC from branch claude/port-mover-hooks-075yi7.`, '',
+    'Every app below was built from the source you sent, run, put behind ui-bridge/proxy.js (which injects',
+    'capability-port/port.js before </head>), and checked in a real browser with Playwright: the Port loads, the',
+    'mover attaches in the drawer slot and moves/renames the app\'s own controls, sticky notes pin, each customer',
+    'gets their skin from the skin library. Then each deploy bundle was built with docker compose and the same',
+    'checks were run again against the containers. Full reports: results/NNN-name/REPORT.md and DEPLOY.md.', '',
+    '| # | App | Test run | Deploy bundle (containers) | Bundle |', '|---|---|---|---|---|', ...rows, '',
+    '## Run one', '',
+    '```', 'unzip apps/NNN-name.zip && cd NNN-name',
+    'docker compose -f docker-compose.yml -f docker-compose.local.yml up -d --build',
+    '# open http://<server>:8080 — the capability proxy; the Port\'s + button is bottom-right', '```', '',
+    'On Coolify: put the bundle folder in a git repo, create a resource with the "Docker Compose" build pack,',
+    'give the `proxy` service your domain. Change every `change-me-*` value (they are marked in docker-compose.yml).', '',
+    '## Known issues (in every report)', '',
+    '- **C6 — links don\'t move.** mover.mjs uses CSS `translate`, which has no effect on `display:inline` elements (plain `<a>` links). Buttons move fine.',
+    '- **C14 — proxy sends Host: <upstream>.** Apps that build URLs from Host (Laravel apps, Authelia, Gitea) point browsers at the internal container name. `system/proposals/proxy.host-preserving.js` is a one-line fix (keep Host, add X-Forwarded-Host/Proto); with it, SendPortal and Authelia bundles pass (results/003-authelia/DEPLOY-hostfix.md, results/005-sendportal/DEPLOY-hostfix.md). Not applied — your call.',
+    '- **C13 — Authelia\'s CSP** refuses inline styles, so the Port\'s own stylesheet is blocked there (functional, unstyled).', '',
+  ].join('\n');
+  fs.writeFileSync(path.join(out, 'README.md'), readme + '\n');
+  const zip = path.join(ROOT, 'dist', `${name}.zip`);
+  fs.rmSync(zip, { force: true });
+  execSync(`zip -qr ${JSON.stringify(zip)} ${JSON.stringify(name)}`, { cwd: path.join(ROOT, 'dist') });
+  return `${zip} (${(fs.statSync(zip).size / 1048576).toFixed(1)} MB)`;
+}
+
 const cell = (s) => String(s).replace(/\|/g, '\\|').replace(/\n/g, ' ');
 
 function report(r, cfg) {
@@ -367,6 +427,8 @@ async function main() {
     const ids = args.length ? all.filter((id) => args.some((a) => id === a || id.startsWith(a.padStart(3, '0') + '-'))) : all;
     for (const id of ids) await packageOne(id);
     console.log('\n' + summary());
+  } else if (cmd === 'deliver') {
+    console.log(deliver());
   } else if (cmd === 'results') {
     console.log(summary());
   } else {
