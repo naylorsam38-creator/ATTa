@@ -1,0 +1,365 @@
+
+$ npm ci --no-audit --no-fund && npm run build
+
+added 207 packages in 8s
+
+> build
+> vite build
+
+[36mvite v5.4.19 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 1474 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mcalendar-disabled-item-DXCfE7-A.svg       [39m[1m[2m  0.16 kB[22m[1m[22m[2m │ gzip:   0.15 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mellipsis-BN8J-LbM.svg                     [39m[1m[2m  0.25 kB[22m[1m[22m[2m │ gzip:   0.17 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mbookmark-CRIcuyMw.svg                     [39m[1m[2m  0.29 kB[22m[1m[22m[2m │ gzip:   0.23 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mstar-BDaoXSF_.svg                         [39m[1m[2m  0.46 kB[22m[1m[22m[2m │ gzip:   0.30 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mreply-CG_jCWim.svg                        [39m[1m[2m  0.47 kB[22m[1m[22m[2m │ gzip:   0.31 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mretweet-Cf-KZ_I9.svg                      [39m[1m[2m  0.62 kB[22m[1m[22m[2m │ gzip:   0.35 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mglobe-CZY78CLb.svg                        [39m[1m[2m  0.98 kB[22m[1m[22m[2m │ gzip:   0.56 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mfb-like-Cxte55Fm.svg                      [39m[1m[2m  1.63 kB[22m[1m[22m[2m │ gzip:   0.77 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mfb-wow-B4_it6yo.svg                       [39m[1m[2m  3.90 kB[22m[1m[22m[2m │ gzip:   1.28 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mfb-icons-CbAenMk_.png                     [39m[1m[2m 12.44 kB[22m[1m[22m
+[2mresources/dist/vendor/mixpost/[22m[32mmanifest.json                                    [39m[1m[2m 20.34 kB[22m[1m[22m[2m │ gzip:   2.59 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mInter-Regular-COLGFB3M.woff2              [39m[1m[2m111.27 kB[22m[1m[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mInter-Medium-CDhBSFyE.woff2               [39m[1m[2m114.35 kB[22m[1m[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mInter-SemiBold-BAEEcJ4E.woff2             [39m[1m[2m114.81 kB[22m[1m[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[32mInter-Bold-BOs3KVhN.woff2                 [39m[1m[2m114.84 kB[22m[1m[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[35mVerticallyScrollableContent-CSK3iyLU.css  [39m[1m[2m  0.21 kB[22m[1m[22m[2m │ gzip:   0.17 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[35mEmojiMart-DfNuCDvd.css                    [39m[1m[2m  7.65 kB[22m[1m[22m[2m │ gzip:   1.91 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[35mCreateEdit-BbO5_4_P.css                   [39m[1m[2m 23.28 kB[22m[1m[22m[2m │ gzip:   4.23 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[35mapp-PXCr7DDP.css                          [39m[1m[2m 62.01 kB[22m[1m[22m[2m │ gzip:  11.65 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36museNotifications-DFiKjcCH.js              [39m[1m[2m  0.29 kB[22m[1m[22m[2m │ gzip:   0.21 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mError-BBMRnYIq.js                         [39m[1m[2m  0.36 kB[22m[1m[22m[2m │ gzip:   0.27 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mExclamationCircle-BxlmmuCz.js             [39m[1m[2m  0.42 kB[22m[1m[22m[2m │ gzip:   0.32 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mReadDocHelp-C46mxlUe.js                   [39m[1m[2m  0.42 kB[22m[1m[22m[2m │ gzip:   0.31 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mNoResult-CgsHRLpo.js                      [39m[1m[2m  0.47 kB[22m[1m[22m[2m │ gzip:   0.32 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mPageHeader-DauqaDzF.js                    [39m[1m[2m  0.48 kB[22m[1m[22m[2m │ gzip:   0.33 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mEllipsisVertical-CNKULB7I.js              [39m[1m[2m  0.49 kB[22m[1m[22m[2m │ gzip:   0.32 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mBadge-CanscNpX.js                         [39m[1m[2m  0.52 kB[22m[1m[22m[2m │ gzip:   0.34 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mLabelSuffix-D0pU3rd7.js                   [39m[1m[2m  0.54 kB[22m[1m[22m[2m │ gzip:   0.34 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mEye-BQZNFpCm.js                           [39m[1m[2m  0.60 kB[22m[1m[22m[2m │ gzip:   0.39 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mCheckbox-CSijbYoh.js                      [39m[1m[2m  0.65 kB[22m[1m[22m[2m │ gzip:   0.43 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mSelect-2uKHtvXy.js                        [39m[1m[2m  0.67 kB[22m[1m[22m[2m │ gzip:   0.44 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mInput-DfI0eFWa.js                         [39m[1m[2m  0.69 kB[22m[1m[22m[2m │ gzip:   0.44 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mTab-BPiU0us6.js                           [39m[1m[2m  0.80 kB[22m[1m[22m[2m │ gzip:   0.49 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mDangerButton-Db5oaAHB.js                  [39m[1m[2m  0.89 kB[22m[1m[22m[2m │ gzip:   0.54 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mPanel-D33Wao-5.js                         [39m[1m[2m  0.90 kB[22m[1m[22m[2m │ gzip:   0.46 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mErrorPage-Cc9d_yfm.js                     [39m[1m[2m  0.99 kB[22m[1m[22m[2m │ gzip:   0.59 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mAlert-DwYLNjtY.js                         [39m[1m[2m  1.02 kB[22m[1m[22m[2m │ gzip:   0.56 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mHorizontalGroup-JUcPcJvd.js               [39m[1m[2m  1.23 kB[22m[1m[22m[2m │ gzip:   0.54 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mTrash-BixYHYSi.js                         [39m[1m[2m  1.56 kB[22m[1m[22m[2m │ gzip:   0.88 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mTableCell-DclL0pcd.js                     [39m[1m[2m  1.56 kB[22m[1m[22m[2m │ gzip:   0.78 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mAccount-D-C4JJ6T.js                       [39m[1m[2m  1.58 kB[22m[1m[22m[2m │ gzip:   0.77 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mPureDangerButton-CdcnQC7B.js              [39m[1m[2m  1.70 kB[22m[1m[22m[2m │ gzip:   0.82 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mMediaFile-9SmCgF-N.js                     [39m[1m[2m  1.77 kB[22m[1m[22m[2m │ gzip:   0.99 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mAccountEntities-wvQ4CC4D.js               [39m[1m[2m  1.81 kB[22m[1m[22m[2m │ gzip:   0.97 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mInputHidden-GDbQi1mZ.js                   [39m[1m[2m  1.89 kB[22m[1m[22m[2m │ gzip:   1.04 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mUnsplashServiceForm-CGD1VFX8.js           [39m[1m[2m  2.38 kB[22m[1m[22m[2m │ gzip:   1.17 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mTenorServiceForm-DxYDLCnP.js              [39m[1m[2m  2.47 kB[22m[1m[22m[2m │ gzip:   1.21 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mLogs-DqDMcc6f.js                          [39m[1m[2m  2.48 kB[22m[1m[22m[2m │ gzip:   1.22 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mSearchInput-ALJjCrVE.js                   [39m[1m[2m  2.75 kB[22m[1m[22m[2m │ gzip:   1.38 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mMedia-BZN0uk8g.js                         [39m[1m[2m  2.92 kB[22m[1m[22m[2m │ gzip:   1.44 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mProviderIcon-DUIZMGGz.js                  [39m[1m[2m  3.07 kB[22m[1m[22m[2m │ gzip:   1.46 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36museSettings-C4D6bmpq.js                   [39m[1m[2m  3.12 kB[22m[1m[22m[2m │ gzip:   1.45 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mSettings-B8XddvrC.js                      [39m[1m[2m  3.54 kB[22m[1m[22m[2m │ gzip:   1.42 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mTwitterServiceForm-DCmzwYtm.js            [39m[1m[2m  3.62 kB[22m[1m[22m[2m │ gzip:   1.42 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mFacebookServiceForm-BNIM0Fel.js           [39m[1m[2m  3.88 kB[22m[1m[22m[2m │ gzip:   1.42 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mProfile-CP82-3Xr.js                       [39m[1m[2m  4.40 kB[22m[1m[22m[2m │ gzip:   1.59 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mPostsFilter-wU9N3LpC.js                   [39m[1m[2m  7.15 kB[22m[1m[22m[2m │ gzip:   2.75 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mStatus-C50qe7xy.js                        [39m[1m[2m  7.15 kB[22m[1m[22m[2m │ gzip:   2.09 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mServices-BdbFAGMa.js                      [39m[1m[2m  7.44 kB[22m[1m[22m[2m │ gzip:   3.36 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mAccounts-M1bZ9YpJ.js                      [39m[1m[2m  8.18 kB[22m[1m[22m[2m │ gzip:   3.19 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mIndex-LWjfZ2sn.js                         [39m[1m[2m 10.64 kB[22m[1m[22m[2m │ gzip:   3.95 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mMediaGifs-CIF0nNxV.js                     [39m[1m[2m 11.81 kB[22m[1m[22m[2m │ gzip:   4.47 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mCalendar-EZZJh6Ti.js                      [39m[1m[2m 20.95 kB[22m[1m[22m[2m │ gzip:   6.33 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mhelpers-CDM1V5s6.js                       [39m[1m[2m142.19 kB[22m[1m[22m[2m │ gzip:  45.20 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mDashboard-DbA0gSsW.js                     [39m[1m[2m201.73 kB[22m[1m[22m[2m │ gzip:  70.49 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mCreateEdit-DSDyE3MM.js                    [39m[1m[2m329.22 kB[22m[1m[22m[2m │ gzip: 112.48 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mapp-MfmMyh6O.js                           [39m[1m[2m341.99 kB[22m[1m[22m[2m │ gzip: 120.03 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mVerticallyScrollableContent-Di-R1FXO.js   [39m[1m[2m347.53 kB[22m[1m[22m[2m │ gzip: 112.09 kB[22m
+[2mresources/dist/vendor/mixpost/[22m[2massets/[22m[36mEmojiMart-D0nbZN4x.js                     [39m[1m[33m732.63 kB[39m[22m[2m │ gzip: 113.84 kB[22m
+[32m✓ built in 10.09s[39m
+
+$ rm -rf "/home/user/ATTa/apps/004-mixpost/data/host" && composer create-project 'laravel/laravel:^12.0' "/home/user/ATTa/apps/004-mixpost/data/host" --no-interaction --no-progress --prefer-dist -q
+
+$ cd "/home/user/ATTa/apps/004-mixpost/data/host" && composer config repositories.mixpost '{"type":"path","url":"'"/home/user/ATTa/apps/004-mixpost/src"'","options":{"symlink":true}}' && composer require 'inovector/mixpost:*@dev' --no-interaction --no-progress
+
+  [37;44m INFO [39;49m Discovering packages.  
+
+  inertiajs/inertia-laravel [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  inovector/mixpost [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  intervention/image [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  laravel/horizon [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  laravel/pail [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  laravel/sail [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  laravel/sentinel [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  laravel/tinker [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  nesbot/carbon [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  nunomaduro/collision [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  nunomaduro/termwind [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  tightenco/ziggy [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+
+
+  [37;44m INFO [39;49m No publishable resources for tag [1m[laravel-assets][22m.  
+
+
+$ cd "/home/user/ATTa/apps/004-mixpost/data/host" && php artisan mixpost:publish-assets --force=1 && php artisan vendor:publish --tag=mixpost-config --force && php artisan vendor:publish --tag=mixpost-migrations && php artisan migrate --force
+Assets was published to [public/vendor/mixpost]
+
+   INFO  Publishing [mixpost-config] assets.  
+
+  Copying file [/home/user/ATTa/apps/004-mixpost/src/config/mixpost.php] to [config/mixpost.php]  DONE
+
+
+   INFO  Publishing [mixpost-migrations] assets.  
+
+  Copying file [/home/user/ATTa/apps/004-mixpost/src/database/migrations/create_mixpost_tables.php] to [database/migrations/2026_09_23_040903_create_mixpost_tables.php]  DONE
+
+
+   INFO  Running migrations.  
+
+  2026_09_23_040903_create_mixpost_tables ....................... 44.96ms DONE
+
+
+$ cd "/home/user/ATTa/apps/004-mixpost/data/host" && php artisan tinker --execute="App\Models\User::updateOrCreate(['email'=>'atta@example.com'],['name'=>'ATTa Test','password'=>bcrypt('atta-password')]);"
+
+$ cat ../host-login-shim.php >> "/home/user/ATTa/apps/004-mixpost/data/host/routes/web.php"
+
+   INFO  Server running on [http://127.0.0.1:34007].  
+
+  Press Ctrl+C to stop the server
+
+  2026-09-23 04:09:03 / .......................................... ~ 501.86ms
+  2026-09-23 04:09:03 /login ....................................... ~ 0.06ms
+  2026-09-23 04:09:03 /mixpost ................................... ~ 500.38ms
+  2026-09-23 04:09:03 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.04ms
+  2026-09-23 04:09:03 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.09ms
+  2026-09-23 04:09:03 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.04ms
+  2026-09-23 04:09:03 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.10ms
+  2026-09-23 04:09:03 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.14ms
+  2026-09-23 04:09:03 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.17ms
+  2026-09-23 04:09:03 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.22ms
+  2026-09-23 04:09:03 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.24ms
+  2026-09-23 04:09:03 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.03ms
+  2026-09-23 04:09:03 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.06ms
+  2026-09-23 04:09:03 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.11ms
+  2026-09-23 04:09:03 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 0.15ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/Inter-Medium-CDhBSFyE.woff2  ~ 0.01ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/Inter-SemiBold-BAEEcJ4E.woff2  ~ 0.02ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/Inter-Regular-COLGFB3M.woff2  ~ 0.04ms
+  2026-09-23 04:09:04 /mixpost ..................................... ~ 0.13ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.02ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.08ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.04ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.07ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.15ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.19ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.22ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.26ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.05ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.08ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.18ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 0.29ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/Inter-Medium-CDhBSFyE.woff2  ~ 0.04ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/Inter-SemiBold-BAEEcJ4E.woff2  ~ 0.07ms
+  2026-09-23 04:09:04 /vendor/mixpost/assets/Inter-Regular-COLGFB3M.woff2  ~ 0.10ms
+  2026-09-23 04:09:05 /login ....................................... ~ 0.14ms
+  2026-09-23 04:09:05 /mixpost ..................................... ~ 0.03ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.02ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.08ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.11ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.03ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.07ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.09ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.11ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.14ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.03ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.06ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.09ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 0.12ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/Inter-Medium-CDhBSFyE.woff2  ~ 0.01ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/Inter-SemiBold-BAEEcJ4E.woff2  ~ 0.03ms
+  2026-09-23 04:09:05 /vendor/mixpost/assets/Inter-Regular-COLGFB3M.woff2  ~ 0.05ms
+  2026-09-23 04:09:06 /mixpost ..................................... ~ 0.15ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.06ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.19ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.05ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.09ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.14ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.19ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.24ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.30ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.04ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.05ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.02ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 0.14ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/Inter-Medium-CDhBSFyE.woff2  ~ 0.04ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/Inter-SemiBold-BAEEcJ4E.woff2  ~ 0.10ms
+  2026-09-23 04:09:06 /vendor/mixpost/assets/Inter-Regular-COLGFB3M.woff2  ~ 0.04ms
+  2026-09-23 04:09:08 / ............................................ ~ 0.10ms
+  2026-09-23 04:09:08 /login ....................................... ~ 0.03ms
+  2026-09-23 04:09:08 /login ....................................... ~ 0.03ms
+  2026-09-23 04:09:08 /mixpost ..................................... ~ 0.03ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.02ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.09ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.04ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.08ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.04ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.09ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.13ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.20ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.04ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.09ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.20ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 0.28ms
+  2026-09-23 04:09:08 /login ....................................... ~ 0.02ms
+  2026-09-23 04:09:08 /mixpost ..................................... ~ 0.02ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Inter-Medium-CDhBSFyE.woff2  ~ 0.22ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Inter-SemiBold-BAEEcJ4E.woff2  ~ 0.25ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Inter-Regular-COLGFB3M.woff2  ~ 0.28ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.03ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.09ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.03ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.04ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.07ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.16ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.17ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.04ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.08ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.12ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.11ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 0.01ms
+  2026-09-23 04:09:08 /login ....................................... ~ 0.01ms
+  2026-09-23 04:09:08 /mixpost ..................................... ~ 0.01ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Inter-Medium-CDhBSFyE.woff2  ~ 0.02ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Inter-SemiBold-BAEEcJ4E.woff2  ~ 0.20ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Inter-Regular-COLGFB3M.woff2  ~ 0.24ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.01ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.01ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.01ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.02ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.06ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.05ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.14ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.12ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.11ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.02ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.09ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 0.16ms
+  2026-09-23 04:09:08 /login ....................................... ~ 0.07ms
+  2026-09-23 04:09:08 /mixpost ..................................... ~ 0.07ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.02ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.07ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.03ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.49ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.52ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.57ms
+  2026-09-23 04:09:08 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.60ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.64ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.03ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.05ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.09ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 0.13ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Inter-Medium-CDhBSFyE.woff2  ~ 0.02ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Inter-SemiBold-BAEEcJ4E.woff2  ~ 0.04ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Inter-Regular-COLGFB3M.woff2  ~ 0.06ms
+  2026-09-23 04:09:09 /mixpost ..................................... ~ 0.02ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.01ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.07ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.01ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.01ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.02ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.04ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.01ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.02ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.05ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.07ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.11ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 1.02ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Inter-Medium-CDhBSFyE.woff2  ~ 0.05ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Inter-SemiBold-BAEEcJ4E.woff2  ~ 0.07ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Inter-Regular-COLGFB3M.woff2  ~ 0.14ms
+  2026-09-23 04:09:09 /login ....................................... ~ 0.07ms
+  2026-09-23 04:09:09 /mixpost ..................................... ~ 0.16ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.02ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.08ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.03ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.01ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.04ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.03ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.04ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.13ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.18ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.15ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.25ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 0.35ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Inter-Medium-CDhBSFyE.woff2  ~ 0.02ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Inter-SemiBold-BAEEcJ4E.woff2  ~ 0.03ms
+  2026-09-23 04:09:09 /vendor/mixpost/assets/Inter-Regular-COLGFB3M.woff2  ~ 0.03ms
+  2026-09-23 04:09:30 /login ....................................... ~ 0.11ms
+  2026-09-23 04:09:31 /mixpost ..................................... ~ 0.01ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.02ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.06ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.02ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.01ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.08ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.11ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.13ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.19ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.21ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.24ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.03ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 0.02ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/Inter-Medium-CDhBSFyE.woff2  ~ 0.03ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/Inter-SemiBold-BAEEcJ4E.woff2  ~ 0.06ms
+  2026-09-23 04:09:31 /vendor/mixpost/assets/Inter-Regular-COLGFB3M.woff2  ~ 0.08ms
+  2026-09-23 04:09:35 /login ....................................... ~ 0.16ms
+  2026-09-23 04:09:35 /mixpost ..................................... ~ 0.04ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.04ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.12ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.03ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.03ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.04ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.16ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.03ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.07ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.04ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.12ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.27ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 0.42ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/Inter-Medium-CDhBSFyE.woff2  ~ 0.05ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/Inter-SemiBold-BAEEcJ4E.woff2  ~ 0.10ms
+  2026-09-23 04:09:35 /vendor/mixpost/assets/Inter-Regular-COLGFB3M.woff2  ~ 0.13ms
+  2026-09-23 04:09:40 /login ....................................... ~ 0.14ms
+  2026-09-23 04:09:40 /mixpost ..................................... ~ 0.08ms
+  2026-09-23 04:09:40 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.03ms
+  2026-09-23 04:09:40 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.03ms
+  2026-09-23 04:09:40 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.02ms
+  2026-09-23 04:09:40 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.04ms
+  2026-09-23 04:09:40 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.09ms
+  2026-09-23 04:09:40 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.12ms
+  2026-09-23 04:09:40 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.15ms
+  2026-09-23 04:09:40 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.19ms
+  2026-09-23 04:09:40 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.19ms
+  2026-09-23 04:09:40 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.07ms
+  2026-09-23 04:09:40 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.03ms
+  2026-09-23 04:09:40 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 0.09ms
+  2026-09-23 04:09:45 /login ....................................... ~ 0.10ms
+  2026-09-23 04:09:45 /mixpost ..................................... ~ 0.02ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/app-PXCr7DDP.css ...... ~ 0.02ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/app-MfmMyh6O.js ....... ~ 0.07ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/Dashboard-DbA0gSsW.js . ~ 0.02ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/helpers-CDM1V5s6.js ... ~ 0.01ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/useNotifications-DFiKjcCH.js  ~ 0.03ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/PageHeader-DauqaDzF.js  ~ 0.12ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/Account-D-C4JJ6T.js ... ~ 0.14ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/ProviderIcon-DUIZMGGz.js  ~ 0.18ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/ExclamationCircle-BxlmmuCz.js  ~ 0.20ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/Tab-BPiU0us6.js ....... ~ 0.23ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/Panel-D33Wao-5.js ..... ~ 0.02ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/Alert-DwYLNjtY.js ..... ~ 0.06ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/Inter-Medium-CDhBSFyE.woff2  ~ 0.01ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/Inter-SemiBold-BAEEcJ4E.woff2  ~ 0.01ms
+  2026-09-23 04:09:45 /vendor/mixpost/assets/Inter-Regular-COLGFB3M.woff2  ~ 0.01ms

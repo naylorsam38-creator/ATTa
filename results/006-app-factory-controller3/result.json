@@ -1,0 +1,47 @@
+{
+  "app": "006-app-factory-controller3",
+  "number": "006",
+  "startedAt": "2026-09-23T04:11:22.580Z",
+  "stages": [
+    {
+      "stage": 0,
+      "name": "intake",
+      "status": "pass",
+      "detail": "bundled proxy.js, port.js, mover.mjs match canonical"
+    },
+    {
+      "stage": 1,
+      "name": "build",
+      "status": "pass",
+      "detail": "nothing to build"
+    },
+    {
+      "stage": 2,
+      "name": "serve",
+      "status": "n/a",
+      "detail": "no web UI"
+    },
+    {
+      "stage": 3,
+      "name": "proxy",
+      "status": "n/a",
+      "detail": "no web UI"
+    },
+    {
+      "stage": 4,
+      "name": "tests",
+      "status": "pass",
+      "detail": "47 tests ran, all OK"
+    }
+  ],
+  "checks": [
+    {
+      "id": "T1",
+      "name": "Unit tests pass",
+      "status": "pass",
+      "detail": "47 tests ran, all OK"
+    }
+  ],
+  "verdict": "PASS",
+  "finishedAt": "2026-09-23T04:11:22.708Z"
+}

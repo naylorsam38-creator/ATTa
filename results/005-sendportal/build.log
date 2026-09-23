@@ -1,0 +1,196 @@
+
+$ composer remove --dev roave/security-advisories --no-update -q || true
+
+$ composer update --no-dev --no-interaction --no-progress
+
+  [37;44m INFO [39;49m Discovering packages.  
+
+  aws/aws-sdk-php-laravel [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  laravel/horizon [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  laravel/sentinel [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  laravel/tinker [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  laravel/ui [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  livewire/livewire [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  mettle/sendportal-core [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  nesbot/carbon [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  nunomaduro/termwind [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+  rap2hpoutre/fast-excel [90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m[90m.[39m [32;1mDONE[39;22m
+
+
+$ rm -f "/home/user/ATTa/apps/005-sendportal/data/db.sqlite" && touch "/home/user/ATTa/apps/005-sendportal/data/db.sqlite"
+
+$ cp .env.example .env && sed -i "s#^DB_CONNECTION=.*#DB_CONNECTION=sqlite#; s#^DB_DATABASE=.*#DB_DATABASE=/home/user/ATTa/apps/005-sendportal/data/db.sqlite#; s#^SENDPORTAL_REGISTER=.*#SENDPORTAL_REGISTER=true#" .env
+
+$ php artisan key:generate --force
+
+   INFO  Application key set successfully.  
+
+
+$ php artisan vendor:publish --provider='Sendportal\Base\SendportalBaseServiceProvider' --force
+
+   INFO  Publishing assets.  
+
+  Copying file [vendor/mettle/sendportal-core/config/config.php] to [config/sendportal.php]  DONE
+  Copying directory [vendor/mettle/sendportal-core/resources/views] to [resources/views/vendor/sendportal]  DONE
+  Copying directory [vendor/mettle/sendportal-core/resources/lang] to [lang/vendor/sendportal]  DONE
+  Copying directory [vendor/mettle/sendportal-core/public] to [public/vendor/sendportal]  DONE
+
+
+$ php artisan migrate --force
+
+   INFO  Preparing database.  
+
+  Creating migration table ....................................... 9.31ms DONE
+
+   INFO  Running migrations.  
+
+  2014_10_12_000000_create_users_table ........................... 2.56ms DONE
+  2014_10_12_100000_create_password_resets_table ................. 2.04ms DONE
+  2017_04_11_000000_create_workspaces_table ...................... 5.17ms DONE
+  2017_04_11_100000_create_invitations_table ..................... 3.40ms DONE
+  2017_04_11_133343_create_email_service_tables .................. 7.20ms DONE
+  2017_04_12_6000_create_unsubscribed_table ...................... 4.13ms DONE
+  2017_04_28_223029_create_campaign_statuses_table ............... 1.95ms DONE
+  2017_04_28_223840_create_subscribers_table ..................... 5.02ms DONE
+  2017_04_28_223844_create_segments_table ........................ 2.96ms DONE
+  2017_04_28_223854_create_segment_subscriber_table .............. 1.59ms DONE
+  2017_04_28_223906_create_templates_table ....................... 2.15ms DONE
+  2017_04_28_223915_create_campaigns_table ....................... 2.34ms DONE
+  2017_05_02_104440_create_campaign_segment_table ................ 1.33ms DONE
+  2019_07_10_194325_create_messages_table ....................... 11.98ms DONE
+  2019_07_30_153117_create_message_urls_table .................... 5.47ms DONE
+  2019_08_19_000000_create_failed_jobs_table ..................... 1.51ms DONE
+  2019_08_24_114758_adjust_users_table ........................... 4.65ms DONE
+  2020_01_23_153845_create_message_failures_table ................ 1.51ms DONE
+  2020_06_16_072116_adjust_campaign_content ...................... 6.93ms DONE
+  2020_06_16_072137_adjust_template_content ...................... 4.78ms DONE
+  2020_07_17_072137_add_cancelled_campaign_status ................ 1.78ms DONE
+  2020_08_04_085127_add_mailjet_email_service .................... 1.04ms DONE
+  2020_10_02_152306_drop_segment_name_unique ..................... 1.10ms DONE
+  2020_10_16_092234_prefix_tables ................................ 0.42ms DONE
+  2020_11_13_120125_create_api_tokens_table ...................... 4.38ms DONE
+  2021_01_26_151747_remove_api_token_from_users_table ............ 0.09ms DONE
+  2021_01_29_121118_rename_segments_to_tags ..................... 18.82ms DONE
+  2021_02_26_110520_add_smtp_email_service_type .................. 0.83ms DONE
+  2021_10_22_202820_add_postal_email_service_type ................ 0.94ms DONE
+
+
+   INFO  Server running on [http://127.0.0.1:42559].  
+
+  Press Ctrl+C to stop the server
+
+  2026-09-23 04:10:13 ............................................ ~ 500.50ms
+  2026-09-23 04:10:13 .............................................. ~ 0.04ms
+  2026-09-23 04:10:13 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.03ms
+  2026-09-23 04:10:13 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.05ms
+  2026-09-23 04:10:13 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.09ms
+  2026-09-23 04:10:13 /vendor/sendportal/img/logo-gray.png ......... ~ 0.11ms
+  2026-09-23 04:10:13 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.16ms
+  2026-09-23 04:10:13 /vendor/sendportal/js/popper.min.js .......... ~ 0.19ms
+  2026-09-23 04:10:13 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.01ms
+  2026-09-23 04:10:19 .............................................. ~ 0.20ms
+  2026-09-23 04:10:19 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.07ms
+  2026-09-23 04:10:19 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.12ms
+  2026-09-23 04:10:19 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.16ms
+  2026-09-23 04:10:19 /vendor/sendportal/img/logo-gray.png ......... ~ 0.19ms
+  2026-09-23 04:10:19 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.30ms
+  2026-09-23 04:10:19 /vendor/sendportal/js/popper.min.js .......... ~ 0.04ms
+  2026-09-23 04:10:19 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.14ms
+  2026-09-23 04:10:20 .............................................. ~ 0.13ms
+  2026-09-23 04:10:20 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.06ms
+  2026-09-23 04:10:20 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.10ms
+  2026-09-23 04:10:20 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.14ms
+  2026-09-23 04:10:20 /vendor/sendportal/img/logo-gray.png ......... ~ 0.16ms
+  2026-09-23 04:10:20 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.22ms
+  2026-09-23 04:10:20 /vendor/sendportal/js/popper.min.js .......... ~ 0.02ms
+  2026-09-23 04:10:20 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.08ms
+  2026-09-23 04:10:29 .............................................. ~ 0.12ms
+  2026-09-23 04:10:29 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.04ms
+  2026-09-23 04:10:29 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.07ms
+  2026-09-23 04:10:29 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.11ms
+  2026-09-23 04:10:29 /vendor/sendportal/img/logo-gray.png ......... ~ 0.14ms
+  2026-09-23 04:10:29 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.19ms
+  2026-09-23 04:10:29 /vendor/sendportal/js/popper.min.js .......... ~ 0.02ms
+  2026-09-23 04:10:29 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.07ms
+  2026-09-23 04:10:36 .............................................. ~ 0.11ms
+  2026-09-23 04:10:36 .............................................. ~ 0.02ms
+  2026-09-23 04:10:36 .............................................. ~ 0.01ms
+  2026-09-23 04:10:36 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.06ms
+  2026-09-23 04:10:36 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.09ms
+  2026-09-23 04:10:36 /vendor/sendportal/img/logo-gray.png ......... ~ 0.11ms
+  2026-09-23 04:10:36 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.16ms
+  2026-09-23 04:10:36 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.21ms
+  2026-09-23 04:10:36 /vendor/sendportal/js/popper.min.js .......... ~ 0.02ms
+  2026-09-23 04:10:36 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.07ms
+  2026-09-23 04:10:36 .............................................. ~ 0.01ms
+  2026-09-23 04:10:37 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.03ms
+  2026-09-23 04:10:37 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.05ms
+  2026-09-23 04:10:37 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.11ms
+  2026-09-23 04:10:37 /vendor/sendportal/img/logo-gray.png ......... ~ 0.15ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.24ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/popper.min.js .......... ~ 0.28ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.01ms
+  2026-09-23 04:10:37 .............................................. ~ 0.11ms
+  2026-09-23 04:10:37 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.04ms
+  2026-09-23 04:10:37 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.07ms
+  2026-09-23 04:10:37 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.10ms
+  2026-09-23 04:10:37 /vendor/sendportal/img/logo-gray.png ......... ~ 0.05ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.10ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/popper.min.js .......... ~ 0.15ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.26ms
+  2026-09-23 04:10:37 .............................................. ~ 0.01ms
+  2026-09-23 04:10:37 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.05ms
+  2026-09-23 04:10:37 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.08ms
+  2026-09-23 04:10:37 /vendor/sendportal/img/logo-gray.png ......... ~ 0.10ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.17ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/popper.min.js .......... ~ 0.20ms
+  2026-09-23 04:10:37 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.26ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.01ms
+  2026-09-23 04:10:37 .............................................. ~ 0.01ms
+  2026-09-23 04:10:37 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.05ms
+  2026-09-23 04:10:37 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.07ms
+  2026-09-23 04:10:37 /vendor/sendportal/img/logo-gray.png ......... ~ 0.09ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.13ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/popper.min.js .......... ~ 0.17ms
+  2026-09-23 04:10:37 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.23ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.01ms
+  2026-09-23 04:10:37 .............................................. ~ 0.01ms
+  2026-09-23 04:10:37 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.04ms
+  2026-09-23 04:10:37 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.07ms
+  2026-09-23 04:10:37 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.10ms
+  2026-09-23 04:10:37 /vendor/sendportal/img/logo-gray.png ......... ~ 0.13ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.17ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/popper.min.js .......... ~ 0.01ms
+  2026-09-23 04:10:37 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.06ms
+  2026-09-23 04:10:58 .............................................. ~ 0.11ms
+  2026-09-23 04:10:58 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.04ms
+  2026-09-23 04:10:58 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.06ms
+  2026-09-23 04:10:58 /vendor/sendportal/img/logo-gray.png ......... ~ 0.09ms
+  2026-09-23 04:10:58 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.15ms
+  2026-09-23 04:10:58 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.20ms
+  2026-09-23 04:10:58 /vendor/sendportal/js/popper.min.js .......... ~ 0.02ms
+  2026-09-23 04:10:58 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.10ms
+  2026-09-23 04:11:03 .............................................. ~ 0.09ms
+  2026-09-23 04:11:03 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.05ms
+  2026-09-23 04:11:03 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.07ms
+  2026-09-23 04:11:03 /vendor/sendportal/img/logo-gray.png ......... ~ 0.10ms
+  2026-09-23 04:11:03 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.15ms
+  2026-09-23 04:11:03 /vendor/sendportal/js/popper.min.js .......... ~ 0.18ms
+  2026-09-23 04:11:03 /vendor/sendportal/css/bootstrap.min.css ..... ~ 2.00ms
+  2026-09-23 04:11:03 /vendor/sendportal/js/bootstrap.min.js ....... ~ 2.05ms
+  2026-09-23 04:11:08 .............................................. ~ 0.10ms
+  2026-09-23 04:11:08 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.02ms
+  2026-09-23 04:11:08 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.03ms
+  2026-09-23 04:11:08 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.07ms
+  2026-09-23 04:11:08 /vendor/sendportal/img/logo-gray.png ......... ~ 0.10ms
+  2026-09-23 04:11:08 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.16ms
+  2026-09-23 04:11:08 /vendor/sendportal/js/popper.min.js .......... ~ 0.19ms
+  2026-09-23 04:11:08 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.25ms
+  2026-09-23 04:11:13 .............................................. ~ 0.11ms
+  2026-09-23 04:11:13 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.06ms
+  2026-09-23 04:11:13 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.09ms
+  2026-09-23 04:11:13 /vendor/sendportal/img/logo-gray.png ......... ~ 0.12ms
+  2026-09-23 04:11:13 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.18ms
+  2026-09-23 04:11:13 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.23ms
+  2026-09-23 04:11:13 /vendor/sendportal/js/popper.min.js .......... ~ 0.02ms
+  2026-09-23 04:11:13 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.07ms

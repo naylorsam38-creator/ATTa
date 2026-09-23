@@ -1,0 +1,167 @@
+{
+  "app": "002-archivebox",
+  "number": "002",
+  "startedAt": "2026-09-23T04:05:18.371Z",
+  "stages": [
+    {
+      "stage": 0,
+      "name": "intake",
+      "status": "pass",
+      "detail": "bundled proxy.js, port.js, mover.mjs match canonical"
+    },
+    {
+      "stage": 1,
+      "name": "build",
+      "status": "pass",
+      "detail": "2 step(s), 6s"
+    },
+    {
+      "stage": 2,
+      "name": "serve",
+      "status": "pass",
+      "detail": "cd \"$DATA\" && exec \"$SRC/.venv/bin/archivebox\" server 127.0.0.1:$PORT → http://127.0.0.1:41439"
+    },
+    {
+      "stage": 3,
+      "name": "proxy",
+      "status": "pass",
+      "detail": "http://127.0.0.1:36039 → http://127.0.0.1:41439"
+    },
+    {
+      "stage": 4,
+      "name": "playwright",
+      "status": "fail",
+      "detail": "14/16 not failing"
+    },
+    {
+      "stage": 5,
+      "name": "video",
+      "status": "pass",
+      "detail": "14 steps → demo.mp4, demo.webm"
+    }
+  ],
+  "checks": [
+    {
+      "id": "C1",
+      "name": "Page loads through proxy",
+      "status": "pass",
+      "detail": "HTTP 200, landed on /admin/login/?next=/, title \"Set up ArchiveBox | Admin | ArchiveBox\""
+    },
+    {
+      "id": "C2",
+      "name": "Proxy injects port.js immediately before </head>",
+      "status": "pass",
+      "detail": "tag found once, directly before </head>"
+    },
+    {
+      "id": "C3",
+      "name": "port.js runs in the live page",
+      "status": "pass",
+      "detail": "v0.2.0, framework=jquery, app id=002-archivebox"
+    },
+    {
+      "id": "C4",
+      "name": "Mover attached into Port drawer slot",
+      "status": "pass",
+      "detail": "section[data-capability=button-mover] data-trust=trusted, in drawer=true, mover UI=true"
+    },
+    {
+      "id": "C5",
+      "name": "App controls found for the mover",
+      "status": "pass",
+      "detail": "2 buttons/links on the page"
+    },
+    {
+      "id": "C6",
+      "name": "Drag-move a link",
+      "status": "fail",
+      "detail": "<a> \"ArchiveBox\" (display:inline): mover recorded translate=\"120px 60px\" (saved=true); on screen it moved 0,0px — NOT moved visually: CSS translate has no effect on display:inline elements"
+    },
+    {
+      "id": "C7",
+      "name": "Drag-move a button",
+      "status": "fail",
+      "detail": "<input> \"Create admin and continue\" (display:flex): mover recorded translate=\"120px -60px\" (saved=true); on screen it moved 44,-25px — NOT moved visually"
+    },
+    {
+      "id": "C8",
+      "name": "Move survives reload",
+      "status": "pass",
+      "detail": "mover re-attached from storage; moved controls after reload: 2 (120px 60px, 120px -60px)"
+    },
+    {
+      "id": "C9",
+      "name": "Rename an app control (double-click)",
+      "status": "pass",
+      "detail": "\"ArchiveBox\" → \"ATTa renamed\""
+    },
+    {
+      "id": "C10",
+      "name": "Reset restores positions and labels",
+      "status": "pass",
+      "detail": "moved left=0, renamed left=0, saved positions=0, label restored=true"
+    },
+    {
+      "id": "C11",
+      "name": "Port button opens the drawer",
+      "status": "pass",
+      "detail": "panel open"
+    },
+    {
+      "id": "C12",
+      "name": "No new uncaught errors with the Port",
+      "status": "pass",
+      "detail": "none (0 uncaught error(s) seen, all also raised by the app without the Port)"
+    },
+    {
+      "id": "C13",
+      "name": "App CSP lets the Port run",
+      "status": "pass",
+      "detail": "CSP present, no violations added by the Port"
+    },
+    {
+      "id": "C14",
+      "name": "Redirects and links stay on the proxy",
+      "status": "pass",
+      "detail": "GET / → 302 /admin/login/?next=/"
+    },
+    {
+      "id": "C15",
+      "name": "Customer skins through the proxy",
+      "status": "pass",
+      "detail": "acme→midnight: applied; globex→sunrise: applied; initech→blueprint: applied; no header → original look"
+    },
+    {
+      "id": "C16",
+      "name": "Sticky-notes capability on the live page",
+      "status": "pass",
+      "detail": "pinned=true (\"Pinned by ATTa×\", visible=true), after reload=true, clear=true"
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "video": {
+    "steps": [
+      "the app, served through ui-bridge/proxy.js",
+      "Capability Port (injected before </head>) — attach the button mover",
+      "button-mover attached in the drawer slot",
+      "Move: on — every button and link is now draggable",
+      "button \"Create admin and continu\" moved",
+      "link \"ArchiveBox\" moved",
+      "\"ArchiveBox\" renamed to \"Renamed by ATTa\"",
+      "sticky-notes capability attached — pin a note",
+      "note pinned on the live app and dragged into place",
+      "customer \"acme\" → skin \"midnight\" (moves, names and notes kept)",
+      "customer \"globex\" → skin \"sunrise\" (moves, names and notes kept)",
+      "customer \"initech\" → skin \"blueprint\" (moves, names and notes kept)",
+      "no customer header → original look",
+      "Reset + Clear — app back exactly as it was"
+    ],
+    "files": [
+      "demo.mp4",
+      "demo.webm"
+    ]
+  },
+  "verdict": "FAIL",
+  "finishedAt": "2026-09-23T04:06:21.672Z"
+}

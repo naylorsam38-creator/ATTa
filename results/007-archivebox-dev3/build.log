@@ -1,0 +1,243 @@
+
+$ ~/.local/bin/uv sync --python 3.13 --frozen
+
+$ find "/home/user/ATTa/apps/007-archivebox-dev3/data" -mindepth 1 -delete && cd "/home/user/ATTa/apps/007-archivebox-dev3/data" && "/home/user/ATTa/apps/007-archivebox-dev3/src/.venv/bin/archivebox" init
+[+] Initializing a new ArchiveBox v0.9.37rc1 collection...
+----------------------------------------------------------------------
+
+[+] Building archive folder structure...
+    + ./archive, ./sources, ./logs...
+    + ./ArchiveBox.conf...
+
+[+] Building main SQL index and running initial migrations...
+    - Converging existing machine_binary table...
+    ✓ machine_binary table ready
+✓ Fresh install or all snapshots already have crawls
+    ✓ No ArchiveResults need Process migration
+    ✓ Process migration complete: 0 migrated
+    - Rebuilding empty ArchiveResult table with UUID primary keys...
+    ✓ ArchiveResult UUID primary key migration complete (0 records)
+    Operations to perform:
+    Apply all migrations: admin, api, auth, contenttypes, core, crawls, machine, personas, sessions
+    Running migrations:
+    Applying contenttypes.0001_initial... OK
+    Applying auth.0001_initial... OK
+    Applying admin.0001_initial... OK
+    Applying admin.0002_logentry_remove_auto_add... OK
+    Applying admin.0003_logentry_add_action_flag_choices... OK
+    Applying contenttypes.0002_remove_content_type_name... OK
+    Applying auth.0002_alter_permission_name_max_length... OK
+    Applying auth.0003_alter_user_email_max_length... OK
+    Applying auth.0004_alter_user_username_opts... OK
+    Applying auth.0005_alter_user_last_login_null... OK
+    Applying auth.0006_require_contenttypes_0002... OK
+    Applying auth.0007_alter_validators_add_error_messages... OK
+    Applying auth.0008_alter_user_username_max_length... OK
+    Applying auth.0009_alter_user_last_name_max_length... OK
+    Applying auth.0010_alter_group_name_max_length... OK
+    Applying auth.0011_update_proxy_permissions... OK
+    Applying auth.0012_alter_user_first_name_max_length... OK
+    Applying api.0001_initial... OK
+    Applying personas.0001_initial... OK
+    Applying personas.0002_alter_persona_id... OK
+    Applying personas.0003_persona_permissions... OK
+    Applying machine.0001_initial... OK
+    Applying machine.0005_converge_binary_model... OK
+    Applying machine.0006_process... OK
+    Applying machine.0007_add_process_type_and_parent... OK
+    Applying machine.0008_add_worker_type_field... OK
+    Applying machine.0009_alter_binary_status... OK
+    Applying machine.0010_alter_process_process_type... OK
+    Applying machine.0011_remove_binary_output_dir... OK
+    Applying machine.0012_add_machine_config_if_missing... OK
+    Applying machine.0013_alter_machine_config... OK
+    Applying machine.0014_process_machine_pro_pid_6eec8b_idx_and_more... OK
+    Applying machine.0015_process_progress_indexes... OK
+    Applying machine.0016_process_delete_at... OK
+    Applying machine.0017_shorten_process_progress_index_names... OK
+    Applying machine.0018_alter_process_process_type... OK
+    Applying machine.0019_single_active_runner_constraint... OK
+    Applying personas.0004_hydrate_persona_permissions... OK
+    Applying crawls.0001_initial... OK
+    Applying crawls.0002_upgrade_from_0_8_6... OK
+    Applying crawls.0003_remove_crawlschedule_num_uses_failed_and_more... OK
+    Applying crawls.0004_remove_crawl_output_dir... OK
+    Applying crawls.0005_add_crawl_limits... OK
+    Applying crawls.0006_crawl_crawl_admin_order_idx... OK
+    Applying crawls.0007_remove_crawl_crawl_admin_order_idx_and_more... OK
+    Applying crawls.0008_split_crawl_snapshot_size_limits... OK
+    Applying crawls.0009_crawl_progress_status_idx... OK
+    Applying crawls.0010_crawl_delete_at... OK
+    Applying crawls.0011_move_crawl_limits_to_config... OK
+    Applying crawls.0012_drop_stale_crawl_timeout_column... OK
+    Applying crawls.0013_crawl_permissions... OK
+    Applying crawls.0014_crawl_persona_fk... OK
+    Applying crawls.0015_alter_crawl_status... OK
+    Applying crawls.0016_hydrate_crawl_permissions... OK
+    Applying core.0001_initial... OK
+    Applying core.0002_auto_20200625_1521... OK
+    Applying core.0003_auto_20200630_1034... OK
+    Applying core.0004_auto_20200713_1552... OK
+    Applying core.0005_auto_20200728_0326... OK
+    Applying core.0006_auto_20201012_1520... OK
+    Applying core.0007_archiveresult... OK
+    Applying core.0008_auto_20210105_1421... OK
+    Applying core.0009_auto_20210216_1038... OK
+    Applying core.0010_auto_20210216_1055... OK
+    Applying core.0011_auto_20210216_1331... OK
+    Applying core.0012_auto_20210216_1425... OK
+    Applying core.0013_auto_20210218_0729... OK
+    Applying core.0014_auto_20210218_0729... OK
+    Applying core.0015_auto_20210218_0730... OK
+    Applying core.0016_auto_20210218_1204... OK
+    Applying core.0017_auto_20210219_0211... OK
+    Applying core.0018_auto_20210327_0952... OK
+    Applying core.0019_auto_20210401_0654... OK
+    Applying core.0020_auto_20210410_1031... OK
+    Applying core.0021_auto_20220914_0934... OK
+    Applying core.0022_auto_20231023_2008... OK
+    Applying core.0023_upgrade_to_0_9_0... OK
+    Applying core.0024_assign_default_crawl... OK
+    Applying core.0025_alter_archiveresult_options_alter_snapshot_options_and_more... OK
+    Applying core.0026_add_process_to_archiveresult... OK
+    Applying core.0027_copy_archiveresult_to_process... OK
+    Applying core.0028_alter_snapshot_fs_version... OK
+    Applying core.0029_migrate_archiveresult_to_uuid_pk... OK
+    Applying core.0030_alter_archiveresult_id... OK
+    Applying core.0031_add_archiveresult_snapshot_status_index... OK
+    Applying core.0032_remove_archiveresult_retry_at... OK
+    Applying core.0033_alter_archiveresult_status... OK
+    Applying core.0034_remove_tag_slug... OK
+    Applying core.0035_archiveresult_archiveresult_start_idx... OK
+    Applying core.0036_snapshot_snapshot_public_order_idx... OK
+    Applying core.0037_alter_snapshot_url_max_length... OK
+    Applying core.0038_snapshot_progress_idx... OK
+    Applying core.0039_alter_archiveresult_process... OK
+    Applying core.0040_archiveresult_delete_at_snapshot_delete_at... OK
+    Applying core.0041_snapshot_permissions... OK
+    Applying core.0042_snapshot_output_size... OK
+    Applying core.0043_archiveresult_retry_at... OK
+    Applying core.0044_alter_archiveresult_status_alter_snapshot_status... OK
+    Applying core.0045_archiveresult_unique_hook... OK
+    Applying core.0046_repair_snapshot_permissions... OK
+    Applying core.0047_archiveresult_status_snapshot_index... OK
+    Applying core.0048_remove_archiveresult_config... OK
+    Applying core.0049_alter_snapshot_url... OK
+    Applying core.0050_snapshot_permissions_not_null... OK
+    Applying core.0051_postgres_url_pattern_ops_index... OK
+    Applying core.0053_alter_archiveresult_options... OK
+    Applying core.0054_snapshot_fs_version_index... OK
+    Applying crawls.0017_drop_stale_crawl_limit_columns... OK
+    Applying crawls.0018_freeze_crawl_config_snapshots... OK
+    Applying crawls.0019_crawlschedule_config... OK
+    Applying machine.0020_repair_process_binary_iface_links... OK
+    Applying machine.0021_networkinterface_blank_defaults... OK
+    Applying machine.0022_networkinterface_identity_without_mac... OK
+    Applying sessions.0001_initial... OK
+
+    √ ./index.sqlite3
+
+[*] Checking links from indexes and archive folders (safe to Ctrl+C)...
+    > Skipping orphan snapshot import during init.
+
+    Hint: To import orphaned snapshot directories and reconcile filesystem 
+state, run:
+        archivebox update --rescan --migrate-only
+
+----------------------------------------------------------------------
+[√] Done. A new ArchiveBox collection was initialized (0 links).
+
+    Hint: To finish web setup, run:
+        archivebox server  # then visit 
+http://admin.archivebox.localhost:5797/admin/
+
+    To add new links, you can run:
+        archivebox add < ~/some/path/to/list_of_links.txt
+
+    For more usage and examples, run:
+        archivebox help
+
+Hint: Open the Admin UI to create the first admin and finish web setup:
+      http://admin.archivebox.localhost:37535/admin/
+
+[+] Starting ArchiveBox webserver...
+    > Starting ArchiveBox webserver on BIND_ADDR http://127.0.0.1:37535
+    > Log in to ArchiveBox Admin UI on BASE_URL  
+http://archivebox.localhost:37535/admin/
+    > Writing ArchiveBox error log to ./logs/errors.log
+
+[!] BASE_URL is not set. Generated URLs will fall back to 
+http://archivebox.localhost:<port>.
+    That's fine for local browsing on this machine. Set BASE_URL when running 
+behind
+    a reverse proxy / ingress / public hostname, e.g.
+      BASE_URL=https://archive.example.com archivebox server 0.0.0.0:5797
+
+[🦸‍♂️] Supervisord starting...
+    > Writing supervisord logs to: ./logs/supervisord.log
+    > Writing task worker logs to: ./logs/worker_*.log
+    > Using supervisord config file: ./tmp/1c5fc3d8/supervisord.conf
+    > Using supervisord UNIX socket: ./tmp/1c5fc3d8/supervisord.sock
+
+[🦸‍♂️] Supervisord connected (pid=1681) via 
+unix://./tmp/1c5fc3d8/supervisord.sock.
+[1;33m[[0m[33m![0m[1;33m][0m[33m Could not get supervisord worker worker_sonic: [0m[1;33m<[0m[1;33mFault[0m[33m [0m[1;33m10[0m[33m: [0m[33m'BAD_NAME: worker_sonic'[0m[1;33m>[0m
+[*] Sonic is already listening on 127.0.0.1:1491; not starting a duplicate 
+worker.
+[*] Starting orchestrator, server in this process (pid=1637)...
+
+[🦸‍♂️] Supervisord syncing subprocess worker: worker_daphne...
+     - Worker worker_daphne: started RUNNING (pid 1694, uptime 0:00:00)
+[🦸‍♂️] Supervisord syncing subprocess worker: worker_runner...
+     - Worker worker_runner: started RUNNING (pid 1695, uptime 0:00:00)
+[🦸‍♂️] Supervisord syncing subprocess worker: 
+worker_supervisord_parent_watchdog...
+     - Worker worker_supervisord_parent_watchdog: started RUNNING (pid 1696, 
+uptime 0:00:00)
+
+Tailing worker logs (Ctrl+C to stop)...
+
+    
+    
+
+[2026-09-23 04:11:38] INFO     daphne.cli Starting server at          cli.py:284
+                               tcp:port=37535:interface=127.0.0.1
+                      INFO     daphne.server HTTP/2 support not    server.py:126
+                               enabled (install the http2 and tls
+                               Twisted extras)
+                      INFO     daphne.server Configuring endpoint  server.py:135
+                               tcp:port=37535:interface=127.0.0.1
+                      INFO     daphne.server Listening on TCP      server.py:166
+                               address 127.0.0.1:37535
+2026-09-23 04:11:39 HTTP     GET / 302 localhost
+2026-09-23 04:11:39 HTTP     GET / 302 localhost
+2026-09-23 04:11:39 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:11:40 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:11:40 HTTP     GET / 302 localhost
+2026-09-23 04:11:40 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:11:41 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:11:43 HTTP     GET / 302 localhost
+2026-09-23 04:11:43 HTTP     GET / 302 localhost
+2026-09-23 04:11:43 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:11:43 HTTP     GET / 302 localhost
+2026-09-23 04:11:43 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:11:43 HTTP     GET / 302 localhost
+2026-09-23 04:11:43 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:11:43 HTTP     GET / 302 localhost
+2026-09-23 04:11:43 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:11:43 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:11:44 HTTP     GET / 302 localhost
+2026-09-23 04:11:44 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:12:05 HTTP     GET / 302 localhost
+2026-09-23 04:12:05 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:12:10 HTTP     GET / 302 localhost
+2026-09-23 04:12:10 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:12:14 HTTP     GET / 302 localhost
+2026-09-23 04:12:14 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:12:19 HTTP     GET / 302 localhost
+2026-09-23 04:12:19 HTTP     GET /admin/login/?next=/ 200 localhost
+
+[🛑] Got SIGTERM, stopping gracefully...
+[🦸‍♂️] Stopping supervisord process (pid=1681)...
+
+[🟩] ArchiveBox server shut down gracefully.

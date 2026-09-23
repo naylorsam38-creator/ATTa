@@ -1,0 +1,113 @@
+
+$ cd web && npx -y pnpm@12.6.0 install --frozen-lockfile && npx -y pnpm@12.6.0 build
+✓ Lockfile passes supply-chain policies (verified 37m ago)
+Lockfile is up to date, resolution step is skipped
+Done in 30ms using pnpm v12.6.0
+[36mvite v8.3.0 [32mbuilding client environment for production...[36m[39m
+transforming...
+✓ 2627 modules transformed.
+rendering chunks...
+computing gzip size...
+../internal/server/public_html/index.html                                                 2.84 kB │ gzip:   0.95 kB
+../internal/server/public_html/static/media/applestore-badge.BqUv8-dZ.svg                12.22 kB │ gzip:   4.66 kB
+../internal/server/public_html/static/media/googleplay-badge.Bs7UQq4a.svg                22.79 kB │ gzip:   4.97 kB
+../internal/server/public_html/static/css/PushNotificationIcon.wjz8ZNcZ.css               0.26 kB │ gzip:   0.13 kB
+../internal/server/public_html/static/css/Dialog.B_jfRqNb.css                             0.32 kB │ gzip:   0.17 kB
+../internal/server/public_html/static/css/index.Beae8sb_.css                            210.08 kB │ gzip:  33.30 kB
+../internal/server/public_html/static/js/OpenIDConnect.6LsUAj4b.js                        0.12 kB │ gzip:   0.13 kB
+../internal/server/public_html/static/js/visuallyHidden.CrYY0HH5.js                       0.19 kB │ gzip:   0.16 kB
+../internal/server/public_html/static/js/Revoke.D-0eEWHW.js                               0.19 kB │ gzip:   0.16 kB
+../internal/server/public_html/static/js/SwitchUserButton.CIJbcnFp.js                     0.25 kB │ gzip:   0.21 kB
+../internal/server/public_html/static/js/State.CDspKYxv.js                                0.26 kB │ gzip:   0.19 kB
+../internal/server/public_html/static/js/circle-x.B9svRyDs.js                             0.26 kB │ gzip:   0.21 kB
+../internal/server/public_html/static/js/FieldItemContext.BTeW21yK.js                     0.30 kB │ gzip:   0.25 kB
+../internal/server/public_html/static/js/Abort.DzD8ZgmU.js                                0.30 kB │ gzip:   0.22 kB
+../internal/server/public_html/static/js/SuccessIcon.Cb9ZIS3R.js                          0.32 kB │ gzip:   0.25 kB
+../internal/server/public_html/static/js/InformationIcon.Bf7HCYMG.js                      0.32 kB │ gzip:   0.25 kB
+../internal/server/public_html/static/js/FailureIcon.BppdfkyX.js                          0.32 kB │ gzip:   0.26 kB
+../internal/server/public_html/static/js/RemoteCall.Daqyk5e3.js                           0.34 kB │ gzip:   0.23 kB
+../internal/server/public_html/static/js/IconWithContext.DUa26YOh.js                      0.35 kB │ gzip:   0.21 kB
+../internal/server/public_html/static/js/LocalStorage.CnKy1I8z.js                         0.39 kB │ gzip:   0.22 kB
+../internal/server/public_html/static/js/Authenticated.Cg6_SQbY.js                        0.40 kB │ gzip:   0.27 kB
+../internal/server/public_html/static/js/PasswordVisibilityToggle.4m5cl2xY.js             0.41 kB │ gzip:   0.28 kB
+../internal/server/public_html/static/js/ResetPassword.v11sRQcS.js                        0.42 kB │ gzip:   0.27 kB
+../internal/server/public_html/static/js/Label.DVy71yyC.js                                0.43 kB │ gzip:   0.28 kB
+../internal/server/public_html/static/js/Spinner.DlPMKT_C.js                              0.50 kB │ gzip:   0.36 kB
+../internal/server/public_html/static/js/PasswordMethod.CoY0LIi9.js                       0.59 kB │ gzip:   0.39 kB
+../internal/server/public_html/static/js/Separator.DAIco9GU.js                            0.64 kB │ gzip:   0.36 kB
+../internal/server/public_html/static/js/AuthenticatedView.C9wj6Zt9.js                    0.67 kB │ gzip:   0.39 kB
+../internal/server/public_html/static/js/Card.DWgr4sfj.js                                 0.68 kB │ gzip:   0.36 kB
+../internal/server/public_html/static/js/UserSessionElevation.7gU5Cpkx.js                 0.70 kB │ gzip:   0.32 kB
+../internal/server/public_html/static/js/CapsLock.Bp1Yhs6v.js                             0.71 kB │ gzip:   0.42 kB
+../internal/server/public_html/static/js/UserInfo.CRNJ0K6k.js                             0.75 kB │ gzip:   0.36 kB
+../internal/server/public_html/static/js/RevokeOneTimeCodeView.BSQi84nl.js                0.77 kB │ gzip:   0.47 kB
+../internal/server/public_html/static/js/RevokeResetPasswordTokenView.D_pazA9S.js         0.80 kB │ gzip:   0.50 kB
+../internal/server/public_html/static/js/LogoutButton.DmurD6IB.js                         0.89 kB │ gzip:   0.48 kB
+../internal/server/public_html/static/js/Input.CP8hYo-B.js                                0.89 kB │ gzip:   0.49 kB
+../internal/server/public_html/static/js/WebAuthnTryIcon.B2o08Mvj.js                      0.99 kB │ gzip:   0.57 kB
+../internal/server/public_html/static/js/DirectionContext.Vkvq6wfA.js                     1.12 kB │ gzip:   0.56 kB
+../internal/server/public_html/static/js/MinimalLayout.Bnp5WsLk.js                        1.17 kB │ gzip:   0.60 kB
+../internal/server/public_html/static/js/SignOut.CPp9kbOr.js                              1.35 kB │ gzip:   0.79 kB
+../internal/server/public_html/static/js/Client.yf7m4ozQ.js                               1.56 kB │ gzip:   0.46 kB
+../internal/server/public_html/static/js/SecondFactorMethodWebAuthn.Cz9F6-Ly.js           1.76 kB │ gzip:   0.81 kB
+../internal/server/public_html/static/js/SecondFactorMethodOneTimePassword.DBncGBkB.js    1.80 kB │ gzip:   0.87 kB
+../internal/server/public_html/static/js/ConsentPortal.BmKDxjHL.js                        1.91 kB │ gzip:   1.02 kB
+../internal/server/public_html/static/js/PasswordVisibility.H1c8ouUS.js                   2.08 kB │ gzip:   0.99 kB
+../internal/server/public_html/static/js/ConsentPortal.BMWhktla.js                        2.09 kB │ gzip:   1.04 kB
+../internal/server/public_html/static/js/DeviceSelectionContainer.C4N0tuZ9.js             2.13 kB │ gzip:   0.83 kB
+../internal/server/public_html/static/js/WebAuthnMethod.DY0fnQId.js                       2.16 kB │ gzip:   1.08 kB
+../internal/server/public_html/static/js/MethodContainer.BCcUtfOh.js                      2.30 kB │ gzip:   0.95 kB
+../internal/server/public_html/static/js/OneTimePasswordMethod.K29DFz-W.js                2.52 kB │ gzip:   1.15 kB
+../internal/server/public_html/static/js/PasswordForm.hQfv4JAg.js                         2.57 kB │ gzip:   1.23 kB
+../internal/server/public_html/static/js/ResetPasswordStep1.DXA07oPV.js                   2.64 kB │ gzip:   1.18 kB
+../internal/server/public_html/static/js/useLabelableId.BZwrCcg4.js                       2.66 kB │ gzip:   1.26 kB
+../internal/server/public_html/static/js/Item.B2AkVJSH.js                                 2.69 kB │ gzip:   1.09 kB
+../internal/server/public_html/static/js/LoginLayout.DzeYvwhs.js                          2.71 kB │ gzip:   1.20 kB
+../internal/server/public_html/static/js/Field.aM22J7U5.js                                2.74 kB │ gzip:   1.15 kB
+../internal/server/public_html/static/js/PushNotificationIcon.B9X8kywY.js                 2.76 kB │ gzip:   1.07 kB
+../internal/server/public_html/static/js/DeviceAuthorizationFormView.CRLURf3A.js          3.18 kB │ gzip:   1.44 kB
+../internal/server/public_html/static/js/Timer.BdYlBf6z.js                                3.26 kB │ gzip:   1.54 kB
+../internal/server/public_html/static/js/ResetPasswordStep2.DcHVMAxP.js                   3.56 kB │ gzip:   1.52 kB
+../internal/server/public_html/static/js/SecondFactorMethodMobilePush.D4MkzBEr.js         3.79 kB │ gzip:   1.44 kB
+../internal/server/public_html/static/js/Switch.ByDos2BE.js                               3.94 kB │ gzip:   1.99 kB
+../internal/server/public_html/static/js/CompletionView.C8fog12o.js                       4.62 kB │ gzip:   1.88 kB
+../internal/server/public_html/static/js/useId.CVqlVJ21.js                                4.71 kB │ gzip:   2.17 kB
+../internal/server/public_html/static/js/PushNotificationMethod.CXGeuPvK.js               4.83 kB │ gzip:   1.95 kB
+../internal/server/public_html/static/js/WebAuthn.COUTWOPV.js                             5.63 kB │ gzip:   1.86 kB
+../internal/server/public_html/static/js/Dialog.F4AfQcEC.js                               6.14 kB │ gzip:   2.64 kB
+../internal/server/public_html/static/js/SecondFactorForm.DyvJY-9b.js                     6.43 kB │ gzip:   2.55 kB
+../internal/server/public_html/static/js/esm.CopUkWJ2.js                                  8.53 kB │ gzip:   2.78 kB
+../internal/server/public_html/static/js/FirstFactorForm.CrpHIC2O.js                      8.78 kB │ gzip:   3.49 kB
+../internal/server/public_html/static/js/jsx-runtime.D3jfb0Ew.js                          8.90 kB │ gzip:   3.38 kB
+../internal/server/public_html/static/js/OTPDial.CksM4RcM.js                             10.78 kB │ gzip:   4.53 kB
+../internal/server/public_html/static/js/SearchParams.DNjDnG3L.js                        14.28 kB │ gzip:   5.56 kB
+../internal/server/public_html/static/js/Checkbox.CWyrDa-j.js                            16.07 kB │ gzip:   6.21 kB
+../internal/server/public_html/static/js/inertValue.z1ffQlUh.js                          19.09 kB │ gzip:   7.15 kB
+../internal/server/public_html/static/js/DecisionFormView.Dhgi0TCV.js                    21.42 kB │ gzip:   7.30 kB
+../internal/server/public_html/static/js/preload-helper.D7l_lNMG.js                      24.52 kB │ gzip:   9.30 kB
+../internal/server/public_html/static/js/Sheet.CTBTJtM0.js                               33.65 kB │ gzip:  12.17 kB
+../internal/server/public_html/static/js/createLucideIcon.DqrhtZd4.js                    41.87 kB │ gzip:  14.75 kB
+../internal/server/public_html/static/js/axios.B6ruUI-h.js                               52.51 kB │ gzip:  19.58 kB
+../internal/server/public_html/static/js/TypographyWithTooltip.BBielEn7.js               60.54 kB │ gzip:  22.01 kB
+../internal/server/public_html/static/js/SettingsRouter.DB_vKEBT.js                      91.24 kB │ gzip:  27.41 kB
+../internal/server/public_html/static/js/LocalStorage.D5hI3iaM.js                       110.71 kB │ gzip:  36.79 kB
+../internal/server/public_html/static/js/index.C24ke4nO.js                              256.65 kB │ gzip:  82.46 kB
+../internal/server/public_html/static/js/PasswordPolicyConfiguration.C4F_g4ug.js        821.24 kB │ gzip: 398.59 kB
+
+[32m✓ built in 16.44s[39m
+
+$ cp -r api internal/server/public_html/
+
+$ go build -o "/home/user/ATTa/apps/003-authelia/data/authelia" ./cmd/authelia
+
+$ cp ../config/configuration.yml ../config/users.yml "/home/user/ATTa/apps/003-authelia/data/" && rm -f "/home/user/ATTa/apps/003-authelia/data/db.sqlite3"
+time="2026-09-23T04:06:44Z" level=warning msg="Configuration: access_control: no rules have been specified so the 'default_policy' of 'one_factor' is going to be applied to all requests"
+time="2026-09-23T04:06:44Z" level=info msg="Authelia untagged-unknown-dirty (master, unknown) is starting"
+time="2026-09-23T04:06:44Z" level=info msg="Log severity set to info"
+time="2026-09-23T04:06:44Z" level=info msg="Storage schema is being checked for updates"
+time="2026-09-23T04:06:44Z" level=info msg="Storage schema migration from 0 to 29 is being attempted"
+time="2026-09-23T04:06:44Z" level=info msg="Storage schema migration from 0 to 29 is complete"
+time="2026-09-23T04:06:44Z" level=info msg="Startup complete"
+time="2026-09-23T04:06:44Z" level=info msg="Listening for non-TLS connections on '127.0.0.1:38719' path '/'" server=main service=server
+time="2026-09-23T04:07:37Z" level=info msg="Shutdown initiated"
+time="2026-09-23T04:07:37Z" level=info msg="Shutdown complete"
