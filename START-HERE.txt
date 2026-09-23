@@ -1,0 +1,31 @@
+START HERE
+==========
+
+One command. Open a terminal in this folder and type:
+
+    bash run
+
+That's it.
+
+WHAT HAPPENS
+------------
+- On your AWS server (Linux):   it runs the full deploy automatically
+                                (services, nginx, browser stage, the works).
+                                If it needs root it will ask for your password.
+
+- On your laptop (Mac/Windows-  it starts the real system LOCALLY and prints a
+  WSL/plain Linux):             web address plus the login it made for you.
+                                Open that address, log in, upload the bundle.
+
+It creates the login password and secrets for you, so nothing stalls.
+
+To stop the local instance:   bash run stop
+To check if it's running:     bash run status
+
+THE ONE THING NO FILE CAN DO
+----------------------------
+A public, live URL on the internet needs three things that only exist on the
+actual AWS box, not in any zip: a domain name, a TLS certificate, and the
+server being reachable online. So on a laptop this gives you the system running
+for real, locally — it does not fake a public deployment. Run the same
+`bash run` on the AWS server and it finishes the public part there.

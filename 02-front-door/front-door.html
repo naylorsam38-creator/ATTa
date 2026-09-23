@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Front Door</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Monochrome shell. The loaded app wears its own skin; the shell never does. */
+:root{
+  --paper:#FFFFFF; --wash:#F5F5F4; --line:#E4E4E2; --mute:#8F8F8B; --ink2:#5C5C59; --ink:#1D1D1B;
+  --shadow:0 1px 2px rgba(29,29,27,.06),0 8px 24px rgba(29,29,27,.08);
+  --font:"Instrument Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mark:30px; --barMax:680px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#1A1A19; --wash:#222221; --line:#333331; --mute:#85857E; --ink2:#AEAEA9; --ink:#EDEDEA;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  --paper:#1A1A19; --wash:#222221; --line:#333331; --mute:#85857E; --ink2:#AEAEA9; --ink:#EDEDEA;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font:400 15px/1.5 var(--font);-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:6px}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+#stage{position:absolute;inset:0;overflow:hidden}
+
+/* The mark */
+#mark{position:absolute;z-index:35;left:50%;top:42%;width:var(--mark);height:var(--mark);margin:calc(var(--mark)/-2) 0 0 calc(var(--mark)/-2);
+  border:0;padding:0;background:none;color:var(--ink);transition:top .5s cubic-bezier(.2,.7,.2,1),left .5s cubic-bezier(.2,.7,.2,1)}
+#mark svg{display:block;width:100%;height:100%;overflow:visible}
+#mark .ring{fill:none;stroke:currentColor;stroke-width:1.6}
+#mark .core{fill:currentColor;transform-origin:15px 15px;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+#mark.thinking .core{animation:think 2.4s ease-in-out infinite}
+@keyframes think{0%,100%{transform:rotate(0) scale(1)}50%{transform:rotate(45deg) scale(.78)}}
+#mark.loading .core{transform:scale(1.9)}
+body[data-state="talk"] #mark{top:64px}
+body[data-state="app"] #mark{display:none}
+
+/* Conversation */
+#thread{position:absolute;left:0;right:0;top:100px;bottom:var(--barH,92px);overflow-y:auto;padding:0 20px 16px;display:none}
+body[data-state="talk"] #thread{display:block}
+.col{max-width:var(--barMax);margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.msg{max-width:88%;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.you{align-self:flex-end;background:var(--wash);border-radius:16px 16px 4px 16px;padding:9px 14px}
+.msg.it{align-self:flex-start;padding:2px}
+.msg.wait{color:var(--mute)}
+.msg.err{align-self:flex-start;color:var(--ink2);font-size:14px;border-left:2px solid var(--line);padding-left:10px}
+.msg ul{margin:8px 0 4px;padding-left:20px}
+.msg li{margin:2px 0}
+.msg .q{font-weight:600;margin-top:8px}
+.choices{display:flex;gap:8px;margin-top:10px}
+.pill{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 16px;font-size:14px}
+.pill:hover{border-color:var(--mute)}
+.pill.pri{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.pill:disabled{opacity:.45;cursor:default}
+
+/* Chat bar */
+#bar{position:absolute;left:0;right:0;bottom:0;z-index:30;padding:10px 16px 16px;background:linear-gradient(to top,var(--paper) 70%,transparent)}
+body[data-state="app"] #bar{display:none}
+.box{display:flex;align-items:flex-end;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:6px 6px 6px 16px;box-shadow:var(--shadow);max-width:var(--barMax);margin:0 auto}
+.box:focus-within{border-color:var(--mute)}
+.box textarea{flex:1;border:0;outline:0;background:none;resize:none;max-height:160px;min-height:24px;padding:6px 0;line-height:1.45}
+.box textarea::placeholder{color:var(--mute)}
+.ib{flex:none;width:36px;height:36px;border-radius:50%;border:0;display:grid;place-items:center;background:none;color:var(--ink2)}
+.ib:hover{background:var(--wash)}
+.ib.send{background:var(--ink);color:var(--paper)}
+.ib.send:disabled{background:var(--line);color:var(--mute);cursor:default}
+.ib.mic.on{background:var(--ink);color:var(--paper)}
+
+/* App state: the app fills the screen */
+#app{position:absolute;inset:0;display:none}
+body[data-state="app"] #app{display:block}
+#app iframe{border:0;width:100%;height:100%;display:block}
+
+/* Empty slot: stands in for the app until it lands. Rendered with the real skin CSS, same as a shelf app gets it. */
+#slot{border:0;width:100%;height:100%;display:block}
+
+/* Looks row in the change sheet */
+.looks{display:flex;gap:8px;overflow-x:auto;padding:12px 18px 2px;scrollbar-width:none}
+.looks::-webkit-scrollbar{display:none}
+.look{flex:none;width:92px;border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:6px;text-align:left;color:var(--ink2);font-size:12px;line-height:1.3}
+.look:hover{border-color:var(--mute)}
+.look[aria-pressed="true"]{border-color:var(--ink);color:var(--ink)}
+.look i{display:flex;align-items:flex-end;gap:4px;height:40px;border-radius:7px;padding:6px;margin-bottom:6px;border:1px solid rgba(128,128,128,.25)}
+.look i b{display:block;height:10px;width:26px;border-radius:3px}
+.look i s{display:block;height:6px;width:18px;border-radius:2px;opacity:.5;text-decoration:none}
+
+/* The one builder control on the app screen */
+#fab{position:absolute;z-index:40;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:48px;height:48px;border-radius:50%;border:0;
+  background:var(--ink);color:var(--paper);display:none;place-items:center;box-shadow:var(--shadow)}
+body[data-state="app"] #fab{display:grid}
+#fab svg{width:22px;height:22px}
+#fab .ring{fill:none;stroke:currentColor;stroke-width:1.6}
+#fab .core{fill:currentColor}
+
+/* Edit sheet over the app */
+#sheet{position:absolute;inset:0;z-index:50;display:none;background:rgba(29,29,27,.28);align-items:flex-end;justify-content:center}
+#sheet.open{display:flex}
+#sheet .pan{background:var(--paper);width:100%;max-width:560px;max-height:82%;display:flex;flex-direction:column;border-radius:18px 18px 0 0;box-shadow:var(--shadow)}
+@media (min-width:700px){#sheet{align-items:center}#sheet .pan{border-radius:18px}}
+#sheet .top{display:flex;align-items:center;justify-content:space-between;padding:12px 12px 0 18px}
+#sheet .top span{font-weight:600}
+#edits{flex:1;overflow-y:auto;padding:12px 18px}
+#sheet .box{margin:0 12px 12px;box-shadow:none}
+.log{border-top:1px solid var(--line);padding:10px 18px;font-size:13.5px;color:var(--ink2);display:flex;flex-direction:column;gap:4px;max-height:140px;overflow-y:auto}
+.log:empty{display:none}
+.log div{display:flex;justify-content:space-between;gap:10px}
+.link{background:none;border:0;color:var(--ink2);text-decoration:underline;padding:0;font-size:13.5px}
+
+/* Menu handle and small menu */
+#handle{position:absolute;top:12px;left:12px;z-index:30;width:36px;height:36px;border:0;border-radius:10px;background:none;display:grid;place-items:center;color:var(--mute)}
+#handle:hover{background:var(--wash);color:var(--ink2)}
+body[data-state="app"] #handle{display:none}
+#menu{position:absolute;top:52px;left:12px;z-index:60;background:var(--paper);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:6px;min-width:190px}
+#menu button{display:block;width:100%;text-align:left;border:0;background:none;border-radius:8px;padding:8px 10px}
+#menu button:hover{background:var(--wash)}
+#note{position:absolute;left:0;right:0;bottom:84px;text-align:center;font-size:12.5px;color:var(--mute);padding:0 16px}
+body:not([data-state="empty"]) #note{display:none}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body data-state="empty">
+<div id="stage">
+  <button id="handle" aria-label="Menu" aria-expanded="false" aria-controls="menu">
+    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 5h12M3 9h12M3 13h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+  <div id="menu" hidden>
+    <button id="mOpen">Open my app</button>
+    <button id="mRestart">Start again</button>
+  </div>
+
+  <div id="mark" role="img" aria-label="Front Door">
+    <svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="13.2"/><rect class="core" x="11" y="11" width="8" height="8" rx="2"/></svg>
+  </div>
+
+  <main id="thread" aria-live="polite"><div class="col" id="col"></div></main>
+  <p id="note"></p>
+
+  <div id="bar">
+    <form class="box" id="form">
+      <label class="sr" for="input">What do you want to make?</label>
+      <textarea id="input" rows="1" placeholder="What do you want to make?"></textarea>
+      <button type="button" class="ib mic" id="mic" aria-label="Speak" aria-pressed="false" hidden>
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><rect x="6.5" y="2" width="5" height="9" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 8.5a5.5 5.5 0 0 0 11 0M9 14v2.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <button type="submit" class="ib send" id="send" aria-label="Send" disabled>
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+  </div>
+
+  <section id="app" aria-label="Your app"></section>
+
+  <button id="fab" aria-label="Change your app" aria-expanded="false" aria-controls="sheet">
+    <svg viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="13.2"/><rect class="core" x="11" y="11" width="8" height="8" rx="2"/></svg>
+  </button>
+
+  <div id="sheet" role="dialog" aria-modal="true" aria-label="Change your app">
+    <div class="pan">
+      <div class="top"><span>Change your app</span><button class="ib" id="close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>
+      <div class="looks" id="looks" role="group" aria-label="Looks"></div>
+      <div id="edits" aria-live="polite"><div class="col" id="ecol"></div></div>
+      <form class="box" id="eform">
+        <label class="sr" for="einput">What do you want to change?</label>
+        <textarea id="einput" rows="1" placeholder="Look, colour, font, corners, name…"></textarea>
+        <button type="submit" class="ib send" id="esend" aria-label="Send" disabled>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+      <div class="log" id="log"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════
+   RULES — edit these. One comment per setting.
+   ═══════════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  // The line said when a match is found. Change the words here and nowhere else.
+  MATCH_LINE: "These capabilities match the most robust app out there in this category right now.",
+  // The confirm question asked straight after the match line.
+  CONFIRM_QUESTION: "Is this the app you're talking about?",
+  // What it says when they answer no. Sends them back to describe it again.
+  NO_REPLY: "No problem. Tell me more about what you're after.",
+  // What it says when nothing on the list fits. It never builds a substitute.
+  NOT_YET: "That one isn't available yet. I've noted it. Tell me about something else you'd like to make.",
+  // How many narrowing questions it may ask before giving up. Your spec says one.
+  MAX_NARROWING_QUESTIONS: 1,
+  // How sure the model must be (0 to 1) before it says "this is the one". Raise it and it asks more; lower it and it guesses more.
+  MIN_CONFIDENCE: 0.6,
+  // How many times it re-asks the model when the answer fails the checks. 1 = one repair attempt, then it says so plainly.
+  REPAIR_ATTEMPTS: 1,
+  // Model tier for matching and edits: "quick" is fastest, "default" thinks harder, "complex" hardest.
+  MODEL_TIER: "default",
+  // How many past messages go to the model each time. Higher = more context, slower.
+  HISTORY_TURNS: 12,
+  // Speech recognition language for the mic button.
+  VOICE_LANG: "en-AU",
+  // Fonts a person may choose. Each must exist on Google Fonts. Add a name here to offer it.
+  FONTS: ["Instrument Sans","Inter","Space Grotesk","IBM Plex Sans","Fraunces","Source Serif 4","JetBrains Mono"],
+  // Largest corner rounding allowed, in pixels.
+  MAX_RADIUS: 28,
+  // Message sent into a loaded library app when its skin changes. Each shelf app's adapter listens for this type.
+  SKIN_MESSAGE_TYPE: "frontdoor.skin",
+  // The look an app wears the moment it loads. "original" = the app's own look, untouched.
+  // Or one of: "minimal_neutral", "bold_contrast", "warm_editorial", "soft_rounded".
+  LOOK_ON_LOAD: "original"
+};
+
+/* The 52 categories, exactly as listed on openapps.pro/categories (read 20 Sep 2026).
+   Ids are the site's own slugs. Do not add categories here that are not on that list. */
+const CATEGORIES = [
+  ["developer-tools","Developer Tools"],["ai-development","AI Development"],["ai-agents","AI Agents"],["devops","DevOps"],
+  ["analytics","Analytics"],["monitoring","Monitoring"],["automation","Automation"],["databases","Databases"],
+  ["productivity","Productivity"],["ai-assistants","AI Assistants"],["security","Security"],["ai-code-assistants","AI Code Assistants"],
+  ["data-engineering","Data Engineering"],["collaboration","Collaboration"],["design-tools","Design Tools"],["file-storage","File Storage"],
+  ["invoicing-finance","Invoicing & Finance"],["note-taking","Note Taking"],["marketing","Marketing"],["authentication","Authentication"],
+  ["knowledge-management","Knowledge Management"],["no-code-platforms","No-Code Platforms"],["project-management","Project Management"],["cms","CMS"],
+  ["search","Search"],["bookmarks-archiving","Bookmarks & Archiving"],["game-development","Game Development"],["ecommerce","E-Commerce"],
+  ["low-code-platforms","Low Code Platforms"],["ai-design-tools","AI Design Tools"],["code-editors","Code Editors"],["team-chat","Team Chat"],
+  ["hosting-control-panel","Hosting Control Panel"],["blogging","Blogging"],["social-media","Social Media"],["community","Community"],
+  ["crm","CRM"],["networking","Networking"],["forms-surveys","Forms & Surveys"],["product-management","Product Management"],
+  ["video-editors","Video Editors"],["ab-testing-experimentation","A/B Testing & Experimentation"],["browser","Browser"],["customer-support","Customer Support"],
+  ["digital-signiture","Digital Signature"],["password-manager","Password Manager"],["erp","ERP"],["scheduling","Scheduling"],
+  ["video-conferencing","Video Conferencing"],["human-resources","Human Resources"],["learning-management","Learning Management"],["logistics","Logistics"]
+];
+
+/* YOUR LIBRARY — empty until the zips land. One entry per category id above.
+   url:   where the admitted app runs on your server. Leave "" and the empty slot shows instead.
+   app:   the app's own name — never shown to the person, for your records only.
+   family: which skin CSS fits the app's own page markup. "shared_card" or "todomvc" (measured in skins_library).
+           Leave "" for an app nobody has measured yet — it then gets the colours and fonts only, never CSS guessed at it.
+   Example shape (do not uncomment with made-up values):
+   // "project-management": { app: "…", url: "https://…", family: "" }, */
+const LIBRARY = {
+};
+
+/* Skin keys a person may change, and their starting values.
+   look "original" = the app's own look. The other four come from skins_library (below). */
+const SKIN_DEFAULT = { look:"original", accent:"#1D1D1B", background:"#FFFFFF", surface:"#F5F5F4", text:"#1D1D1B", font:"Instrument Sans", radius:12, name:"" };
+/* ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Skins ─────────────────────────────────────────────────────────────────
+   Ported line for line from skins_library/design_tokens.py and render_css.py
+   (shadcn/ui used as reference only). Tested byte-identical against all 172
+   skin files in skins_library.zip. Change the Python first, then this. */
+const LOOKS = [
+  ["original",        "Original"],
+  ["minimal_neutral", "Minimal Neutral"],
+  ["bold_contrast",   "Bold Contrast"],
+  ["warm_editorial",  "Warm Editorial"],
+  ["soft_rounded",    "Soft Rounded"]
+];
+const LOOK = new Map(LOOKS);
+const Skins = (() => {
+  const pyMod = (a, n) => { const m = a % n;                          // Python's % for floats: fmod, then shift into the divisor's sign
+    return m === 0 ? 0 : (m < 0) !== (n < 0) ? m + n : m; };
+  const pyRound = x => { const f = Math.floor(x), d = x - f;          // Python's round(): halves go to even
+    return d > 0.5 ? f + 1 : d < 0.5 ? f : (f % 2 === 0 ? f : f + 1); };
+  const hex2 = n => n.toString(16).padStart(2, "0");
+  const _v = (m1, m2, h) => { h = pyMod(h, 1.0);
+    if (h < 1 / 6) return m1 + (m2 - m1) * h * 6.0;
+    if (h < 0.5) return m2;
+    if (h < 2 / 3) return m1 + (m2 - m1) * (2 / 3 - h) * 6.0;
+    return m1; };
+  const hlsToRgb = (h, l, s) => { if (s === 0.0) return [l, l, l];
+    const m2 = l <= 0.5 ? l * (1.0 + s) : l + s - (l * s), m1 = 2.0 * l - m2;
+    return [_v(m1, m2, h + 1 / 3), _v(m1, m2, h), _v(m1, m2, h - 1 / 3)]; };
+  const rgbToHls = (r, g, b) => { const maxc = Math.max(r, g, b), minc = Math.min(r, g, b), sumc = maxc + minc, rangec = maxc - minc, l = sumc / 2.0;
+    if (minc === maxc) return [0.0, l, 0.0];
+    const s = l <= 0.5 ? rangec / sumc : rangec / (2.0 - maxc - minc);
+    const rc = (maxc - r) / rangec, gc = (maxc - g) / rangec, bc = (maxc - b) / rangec;
+    let h = r === maxc ? bc - gc : g === maxc ? 2.0 + rc - bc : 4.0 + gc - rc;
+    return [pyMod(h / 6.0, 1.0), l, s]; };
+  const toHex = rgb => "#" + rgb.map(c => hex2(pyRound(c * 255))).join("");
+  const hsl = (h, s, l) => toHex(hlsToRgb(pyMod(h, 360) / 360.0, l, s));
+  const hexToRgb = x => { x = x.replace(/^#/, ""); return [0, 2, 4].map(i => parseInt(x.slice(i, i + 2), 16)); };
+  const lum = x => { const ch = c => { c = c / 255.0; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
+    const [r, g, b] = hexToRgb(x); return 0.2126 * ch(r) + 0.7152 * ch(g) + 0.0722 * ch(b); };
+  const readable = (bg, dark = "#161616", light = "#ffffff") => lum(bg) > 0.42 ? dark : light;
+  const hue = slug => { let h = 0; for (const c of slug) h = (h * 131 + c.codePointAt(0)) % 360; return h; };
+  const mixHue = (h1, h2, w) => { const diff = pyMod(h2 - h1 + 540, 360) - 180; return pyMod(h1 + diff * w, 360); };
+  const shade = (x, delta) => { const [h, l0, s] = rgbToHls(...hexToRgb(x).map(c => c / 255.0));
+    return toHex(hlsToRgb(h, Math.max(0.0, Math.min(1.0, l0 + delta)), s)); };
+  const SYS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Helvetica, Arial, sans-serif";
+
+  function build(theme, h) {
+    if (theme === "minimal_neutral") { const p = hsl(h, 0.35, 0.32);
+      return { theme, label: "Minimal Neutral", background: "#ffffff", surface: "#ffffff", foreground: "#171a1f", muted: "#f4f5f6",
+        muted_foreground: "#6b7280", border: "#e2e5e9", primary: p, primary_hover: shade(p, -0.08), primary_foreground: readable(p),
+        danger: "#af2f2f", secondary_button: "#e9eaec", secondary_button_foreground: "#171a1f", radius: "8px", radius_sm: "6px", radius_pill: "8px",
+        font_heading: SYS, font_body: SYS, heading_weight: "600", body_max_width: "700px", card_padding: "24px", card_gap: "16px", row_gap: "8px",
+        shadow_card: "0 1px 2px rgba(16,24,40,.06)", shadow_focus_ring: `0 0 0 3px ${p}33`, input_border: "1px solid #d5d8dc",
+        input_padding: "9px 12px", button_padding: "9px 16px", button_font_weight: "500" }; }
+    if (theme === "bold_contrast") { const p = hsl(h, 0.82, 0.58);
+      return { theme, label: "Bold Contrast", background: "#0a0a0c", surface: "#151517", foreground: "#f5f5f6", muted: "#1f1f22",
+        muted_foreground: "#9a9aa2", border: "#2a2a2f", primary: p, primary_hover: shade(p, 0.08), primary_foreground: readable(p),
+        danger: "#ff5c5c", secondary_button: "#26262b", secondary_button_foreground: "#f5f5f6", radius: "4px", radius_sm: "3px", radius_pill: "4px",
+        font_heading: SYS, font_body: SYS, heading_weight: "700", body_max_width: "700px", card_padding: "20px", card_gap: "14px", row_gap: "8px",
+        shadow_card: `0 4px 18px ${p}26`, shadow_focus_ring: `0 0 0 3px ${p}55`, input_border: "1px solid #35353b",
+        input_padding: "9px 12px", button_padding: "9px 16px", button_font_weight: "600" }; }
+    if (theme === "warm_editorial") { const p = hsl(mixHue(h, 20.0, 0.6), 0.55, 0.42);
+      return { theme, label: "Warm Editorial", background: "#faf6ef", surface: "#ffffff", foreground: "#2a211a", muted: "#f1eadc",
+        muted_foreground: "#7a6a58", border: "#e6dcc9", primary: p, primary_hover: shade(p, -0.08), primary_foreground: readable(p),
+        danger: "#a4402c", secondary_button: "#efe6d6", secondary_button_foreground: "#2a211a", radius: "12px", radius_sm: "8px", radius_pill: "12px",
+        font_heading: "Georgia, 'Times New Roman', 'Iowan Old Style', serif", font_body: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
+        heading_weight: "700", body_max_width: "720px", card_padding: "32px", card_gap: "20px", row_gap: "10px",
+        shadow_card: "0 10px 28px rgba(120,86,40,.10)", shadow_focus_ring: `0 0 0 3px ${p}2e`, input_border: "1px solid #ddcfb4",
+        input_padding: "10px 14px", button_padding: "10px 18px", button_font_weight: "600" }; }
+    if (theme === "soft_rounded") { const p = hsl(h, 0.60, 0.60);
+      return { theme, label: "Soft Rounded", background: hsl(h, 0.45, 0.965), surface: "#ffffff", foreground: hsl(h, 0.30, 0.20),
+        muted: hsl(h, 0.35, 0.93), muted_foreground: hsl(h, 0.15, 0.42), border: hsl(h, 0.35, 0.88), primary: p, primary_hover: shade(p, -0.08),
+        primary_foreground: readable(p), danger: "#d1477a", secondary_button: hsl(h, 0.30, 0.90), secondary_button_foreground: hsl(h, 0.30, 0.20),
+        radius: "20px", radius_sm: "14px", radius_pill: "999px",
+        font_heading: "'Segoe UI Rounded', Nunito, -apple-system, BlinkMacSystemFont, sans-serif", font_body: "'Segoe UI Rounded', Nunito, -apple-system, BlinkMacSystemFont, sans-serif",
+        heading_weight: "700", body_max_width: "720px", card_padding: "28px", card_gap: "18px", row_gap: "12px",
+        shadow_card: "0 10px 30px rgba(30,20,50,.07)", shadow_focus_ring: `0 0 0 4px ${p}33`, input_border: `1px solid ${hsl(h, 0.35, 0.82)}`,
+        input_padding: "10px 16px", button_padding: "10px 20px", button_font_weight: "700" }; }
+    throw new Error(`unknown theme ${JSON.stringify(theme)} — never guess its tokens`);
+  }
+
+  const RENDER = {
+    shared_card: t => `body { font-family: ${t.font_body}; max-width: ${t.body_max_width}; margin: 40px auto;
+  color: ${t.foreground}; background: ${t.background}; }
+.card { background: ${t.surface}; box-shadow: ${t.shadow_card}; border: 1px solid ${t.border};
+  border-radius: ${t.radius}; padding: ${t.card_padding}; margin-bottom: ${t.card_gap}; }
+h1 { font-family: ${t.font_heading}; font-weight: ${t.heading_weight}; font-size: 22px;
+  color: ${t.foreground}; }
+input, select, textarea { font-family: ${t.font_body}; font-size: 15px; padding: ${t.input_padding};
+  border: ${t.input_border}; border-radius: ${t.radius_sm}; box-sizing: border-box;
+  background: ${t.surface}; color: ${t.foreground}; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: ${t.primary};
+  box-shadow: ${t.shadow_focus_ring}; }
+button { font-family: ${t.font_body}; font-size: 14px; font-weight: ${t.button_font_weight};
+  padding: ${t.button_padding}; border: none; border-radius: ${t.radius_pill};
+  background: ${t.primary}; color: ${t.primary_foreground}; cursor: pointer;
+  transition: background-color .12s ease; }
+button:hover { background: ${t.primary_hover}; }
+button:focus-visible { outline: none; box-shadow: ${t.shadow_focus_ring}; }
+button.danger { background: ${t.danger}; color: #ffffff; }
+button.secondary { background: ${t.secondary_button}; color: ${t.secondary_button_foreground}; }
+ul { list-style: none; margin: 0; padding: 0; }
+li { border-bottom: 1px solid ${t.border}; padding: 10px 4px; color: ${t.foreground}; }
+.row { display: flex; gap: ${t.row_gap}; align-items: center; flex-wrap: wrap; }`,
+    todomvc: t => `body { font-family: ${t.font_body}; max-width: 550px; margin: 40px auto;
+  color: ${t.foreground}; background: ${t.background}; }
+.todoapp { background: ${t.surface}; box-shadow: ${t.shadow_card}; border: 1px solid ${t.border};
+  border-radius: ${t.radius}; }
+.header input#new-todo { width: 100%; box-sizing: border-box; font-family: ${t.font_body};
+  font-size: 20px; padding: 12px; border: none; border-bottom: 1px solid ${t.border};
+  background: ${t.surface}; color: ${t.foreground}; }
+.header input#new-todo:focus { outline: none; box-shadow: inset ${t.shadow_focus_ring}; }
+ul#todo-list { list-style: none; margin: 0; padding: 0; }
+ul#todo-list li { position: relative; border-bottom: 1px solid ${t.border};
+  padding: 12px 12px 12px 40px; color: ${t.foreground}; }
+ul#todo-list li .toggle { position: absolute; left: 10px; top: 14px; accent-color: ${t.primary}; }
+ul#todo-list li label { margin-left: 6px; }
+ul#todo-list li.completed label { text-decoration: line-through; color: ${t.muted_foreground}; }
+ul#todo-list li .destroy { display: none; float: right; cursor: pointer; border: none; background: none;
+  color: ${t.danger}; }
+ul#todo-list li:hover .destroy { display: inline; }
+ul#todo-list li .edit { display: none; width: 90%; font-size: 16px; }
+ul#todo-list li.editing .edit { display: inline; }
+ul#todo-list li.editing .view { display: none; }
+.footer { padding: 10px 15px; display: flex; justify-content: space-between; align-items: center;
+  color: ${t.muted_foreground}; }
+.footer .filters { list-style: none; display: inline-flex; gap: 8px; margin: 0; padding: 0; }
+.footer .filters a { text-decoration: none; color: ${t.muted_foreground}; padding: 2px 6px;
+  border: 1px solid transparent; border-radius: ${t.radius_sm}; }
+.footer .filters a.selected { border-color: ${t.primary}55; }
+#clear-completed { border: none; background: none; cursor: pointer; color: ${t.muted_foreground}; }`
+  };
+  function render(family, t) {
+    const fn = RENDER[family];
+    if (!fn) throw new Error(`no CSS renderer for family ${JSON.stringify(family)} — known: ${Object.keys(RENDER).join(", ")}. Never guess; add one.`);
+    return fn(t);
+  }
+
+  /* The person's own edits, laid over a look. A value equal to the look's own leaves that token untouched,
+     so a look with no edits is exactly the tested skin file. */
+  function withEdits(t, skin) {
+    t = { ...t };
+    const ring = t.shadow_focus_ring.match(/^(.* )#[0-9a-f]{6}([0-9a-f]{2})$/i);
+    if (skin.accent.toLowerCase() !== t.primary.toLowerCase()) {
+      const a = skin.accent.toLowerCase();
+      t.primary = a; t.primary_hover = shade(a, t.theme === "bold_contrast" ? 0.08 : -0.08); t.primary_foreground = readable(a);
+      if (ring) t.shadow_focus_ring = ring[1] + a + ring[2];
+      if (t.theme === "bold_contrast") t.shadow_card = `0 4px 18px ${a}26`;
+    }
+    if (skin.background.toLowerCase() !== t.background.toLowerCase()) t.background = skin.background.toLowerCase();
+    if (skin.surface.toLowerCase() !== t.surface.toLowerCase()) t.surface = skin.surface.toLowerCase();
+    if (skin.text.toLowerCase() !== t.foreground.toLowerCase()) { t.foreground = skin.text.toLowerCase(); t.secondary_button_foreground = t.foreground; }
+    const r0 = parseInt(t.radius, 10);
+    if (skin.radius !== r0) {
+      const sm = parseInt(t.radius_sm, 10), pill = parseInt(t.radius_pill, 10);
+      t.radius = skin.radius + "px";
+      t.radius_sm = (r0 ? Math.round(skin.radius * sm / r0) : 0) + "px";   // keeps the look's own small-to-large ratio
+      if (pill === r0) t.radius_pill = t.radius;                            // pill looks (999px) stay pills
+    }
+    if (skin.font) t.font_heading = t.font_body = `"${skin.font}", ${SYS}`;
+    return t;
+  }
+
+  /* What the look fields become when a look is picked: the look's own values, and the look's own fonts. */
+  function lookFields(look, h) {
+    if (look === "original") return { look, accent: SKIN_DEFAULT.accent, background: SKIN_DEFAULT.background, surface: SKIN_DEFAULT.surface,
+      text: SKIN_DEFAULT.text, radius: SKIN_DEFAULT.radius, font: SKIN_DEFAULT.font };
+    const t = build(look, h);
+    return { look, accent: t.primary, background: t.background, surface: t.surface, text: t.foreground, radius: parseInt(t.radius, 10), font: "" };
+  }
+
+  /* Full token set for a skin in a category. "original" returns null: the app keeps its own look. */
+  const tokens = (skin, catId) => skin.look === "original" ? null : withEdits(build(skin.look, hue(catId)), skin);
+  /* Tokens for the empty slot, which has no look of its own: "original" shows the Front Door's plain monochrome. */
+  const slotTokens = (skin, catId) => tokens(skin, catId) || withEdits(build("minimal_neutral", hue(catId)), skin);
+  const fontUrl = name => name ? `https://fonts.googleapis.com/css2?family=${encodeURIComponent(name).replace(/%20/g, "+")}:wght@400;600;700&display=swap` : null;
+  return { pyRound, hue, build, render, withEdits, lookFields, tokens, slotTokens, fontUrl, readable, families: Object.keys(RENDER) };
+})();
+
+const $ = s => document.querySelector(s);
+const CAT = new Map(CATEGORIES);
+const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+
+/* ── Storage: db when the viewer grants it, localStorage otherwise ─────── */
+const Store = {
+  db: null, uid: null, mode: "local",
+  async init() {
+    try {
+      if (!window.claude) return;
+      const [db, user] = await Promise.all([claude.use("db"), claude.use("user")]);
+      if (db && user) { this.db = db; this.uid = await user.id(); this.mode = "remote"; }
+    } catch (_) { this.mode = "local"; }
+  },
+  async load() {
+    if (this.mode === "remote") {
+      try { const s = await this.db.doc(`data/users/${this.uid}/frontdoor/instance`).get(); return s.exists ? s.data() : null; }
+      catch (_) { this.mode = "local"; }
+    }
+    try { return JSON.parse(localStorage.getItem("fd.instance") || "null"); } catch (_) { return null; }
+  },
+  async save(inst) {
+    if (this.mode === "remote") {
+      try { await this.db.doc(`data/users/${this.uid}/frontdoor/instance`).set(inst); return; } catch (_) { this.mode = "local"; }
+    }
+    try { localStorage.setItem("fd.instance", JSON.stringify(inst)); } catch (_) {}
+  },
+  async clear() {
+    if (this.mode === "remote") { try { await this.db.doc(`data/users/${this.uid}/frontdoor/instance`).delete(); } catch (_) {} }
+    try { localStorage.removeItem("fd.instance"); } catch (_) {}
+  },
+  // Gaps go to a shared collection you can read back. Only the words asked for — never who asked.
+  async gap(kind, text, category) {
+    const row = { kind, text: String(text).slice(0, 500), category: category || null, at: new Date().toISOString() };
+    if (this.db) { try { await this.db.collection("gaps").add(row); return; } catch (_) {} }
+    try { const g = JSON.parse(localStorage.getItem("fd.gaps") || "[]"); g.push(row); localStorage.setItem("fd.gaps", JSON.stringify(g)); } catch (_) {}
+  }
+};
+
+/* ── Model ────────────────────────────────────────────────────────────── */
+let sample = null;
+async function getSample() {
+  if (sample) return sample;
+  if (!window.claude) return null;
+  try { sample = await claude.use("sample"); } catch (_) { sample = null; }
+  return sample;
+}
+const ERR = {
+  not_granted: "The model needs your permission to answer. Reload and allow it to continue.",
+  rate_limited: "Too many requests just now. Wait a moment, then send again.",
+  session_expired: "Your session ran out. Reload the page and sign in again.",
+  sampling_disabled: "The model is switched off for this account.",
+  capability_disabled: "The model is switched off for this page.",
+  prompt_too_large: "That conversation is too long for one request. Start again from the menu.",
+  refused: "The model declined that request. Try describing it differently.",
+  invalid_json: "The model's answer came back unreadable. Send again.",
+  upstream_error: "The model service failed on that request. Send again.",
+  no_model: "The model can't be reached from here. Open this page inside Claude to use it.",
+  failed_checks: "The model's answer failed the checks twice. Send again, or say it a different way."
+};
+const errText = e => ERR[e && e.code] || ERR.upstream_error;
+
+/* Layer 1: hard checks on a match answer. Returns a list of plain failures (empty = pass). */
+function checkMatch(r) {
+  const f = [];
+  if (!r || typeof r !== "object") return ["The answer was not a JSON object."];
+  if (!["match","ask","none"].includes(r.status)) f.push(`status must be match, ask or none — got ${JSON.stringify(r.status)}.`);
+  if (r.status === "match") {
+    if (!CAT.has(r.category_id)) f.push(`category_id ${JSON.stringify(r.category_id)} is not one of the 52 ids.`);
+    if (typeof r.confidence !== "number" || r.confidence < 0 || r.confidence > 1) f.push("confidence must be a number from 0 to 1.");
+    if (!Array.isArray(r.capabilities) || !r.capabilities.length || r.capabilities.length > 6 || r.capabilities.some(c => typeof c !== "string" || !c.trim()))
+      f.push("capabilities must be 1 to 6 non-empty strings.");
+    if (typeof r.label !== "string" || !r.label.trim()) f.push("label must be a non-empty string.");
+  }
+  if (r.status === "ask" && (typeof r.question !== "string" || !r.question.trim())) f.push("question must be a non-empty string when status is ask.");
+  return f;
+}
+
+/* Layer 1 for edits: every change must be a known key with a valid value. */
+function checkEdit(r) {
+  const f = [];
+  if (!r || typeof r !== "object" || !Array.isArray(r.changes)) return ["The answer must be an object with a changes array."];
+  if (r.cannot != null && !Array.isArray(r.cannot)) f.push("cannot must be an array of strings.");
+  r.changes.forEach((c, i) => {
+    const k = c && c.key, v = c && c.value;
+    if (!(k in SKIN_DEFAULT)) { f.push(`changes[${i}].key ${JSON.stringify(k)} is not a skin key.`); return; }
+    if (["accent","background","surface","text"].includes(k) && !/^#[0-9a-fA-F]{6}$/.test(v)) f.push(`changes[${i}] ${k} must be a 6-digit hex colour.`);
+    if (k === "font" && !(v === "" || CONFIG.FONTS.includes(v))) f.push(`changes[${i}] font must be "" (the look's own fonts) or one of: ${CONFIG.FONTS.join(", ")}.`);
+    if (k === "look" && !LOOK.has(v)) f.push(`changes[${i}] look must be one of: ${LOOKS.map(l => l[0]).join(", ")}.`);
+    if (k === "radius" && !(Number.isInteger(v) && v >= 0 && v <= CONFIG.MAX_RADIUS)) f.push(`changes[${i}] radius must be a whole number 0–${CONFIG.MAX_RADIUS}.`);
+    if (k === "name" && !(typeof v === "string" && v.trim() && v.length <= 40)) f.push(`changes[${i}] name must be 1–40 characters.`);
+    if (typeof (c && c.say) !== "string" || !c.say.trim()) f.push(`changes[${i}].say must describe the change in plain words.`);
+  });
+  return f;
+}
+
+/* Ask, check, repair once (layer 3), and name the failure if it still fails. */
+async function askChecked(prompt, check) {
+  const s = await getSample();
+  if (!s) throw { code: "no_model" };
+  let input = prompt, last;
+  for (let attempt = 0; attempt <= CONFIG.REPAIR_ATTEMPTS; attempt++) {
+    const r = await s.json(input, { modelTier: CONFIG.MODEL_TIER, cache: false });
+    const fails = check(r);
+    if (!fails.length) return r;
+    last = fails;
+    input = prompt + "\n\nYour previous answer failed these checks. Fix every one and answer again with JSON only:\n- " + fails.join("\n- ");
+  }
+  console.warn("Front Door: answer failed checks after repair:", last);
+  throw { code: "failed_checks" };
+}
+
+/* ── Conversation state ───────────────────────────────────────────────── */
+const convo = [];          // {role, content}
+let narrowingAsked = 0;
+let pending = null;        // the current match waiting for yes/no
+let inst = null;           // the loaded instance
+
+function transcript() {
+  return convo.slice(-CONFIG.HISTORY_TURNS).map(t => `${t.role === "user" ? "Person" : "You"}: ${t.content}`).join("\n");
+}
+
+function matchPrompt() {
+  const list = CATEGORIES.map(([id, name]) => `${id}: ${name}`).join("\n");
+  const force = narrowingAsked >= CONFIG.MAX_NARROWING_QUESTIONS
+    ? "You have already used your one narrowing question. Answer with status match or none — not ask."
+    : "If two categories fit about equally, use status ask with ONE short plain question that separates them.";
+  return `You are the front door of an app service. A person describes an app they want. Match it to exactly ONE category from this fixed list. Never invent a category or an id.
+
+CATEGORIES (id: name):
+${list}
+
+CONVERSATION SO FAR:
+${transcript()}
+
+Rules:
+- status "match": one category clearly fits. Give its exact id.
+- ${force}
+- status "none": nothing on the list fits what they want.
+- confidence: 0 to 1, how sure you are of the match.
+- label: 2 to 4 plain words for the kind of app, lower case, e.g. "project tracker".
+- capabilities: 1 to 6 short plain lines, each restating ONLY something the person actually asked for. Never add features they did not mention.
+- Never mention categories, lists, libraries or other apps to the person.
+
+Reply with only JSON, for example:
+{"status":"match","category_id":"project-management","confidence":0.85,"label":"project tracker","capabilities":["Track tasks by project"],"question":null}`;
+}
+
+/* ── Rendering helpers ────────────────────────────────────────────────── */
+const col = $("#col");
+function say(role, text, cls) {
+  const m = el("div", `msg ${role === "user" ? "you" : "it"}${cls ? " " + cls : ""}`, text);
+  col.appendChild(m); m.scrollIntoView({ block: "end" }); return m;
+}
+function setMark(state) { const m = $("#mark"); m.className = state || ""; }
+function setState(s) { document.body.dataset.state = s; }
+function busy(on) { $("#input").disabled = on; $("#send").disabled = on || !$("#input").value.trim(); setMark(on ? "thinking" : ""); }
+
+/* ── Main flow ────────────────────────────────────────────────────────── */
+async function onSend(text) {
+  text = text.trim(); if (!text) return;
+  if (pending) closePending(false);
+  setState("talk");
+  say("user", text);
+  convo.push({ role: "user", content: text });
+  busy(true);
+  const wait = say("it", "Thinking…", "wait");
+  try {
+    const r = await askChecked(matchPrompt(), checkMatch);
+    wait.remove();
+    if (r.status === "match" && r.confidence >= CONFIG.MIN_CONFIDENCE) return showMatch(r);
+    if ((r.status === "ask" || r.status === "match") && narrowingAsked < CONFIG.MAX_NARROWING_QUESTIONS) {
+      narrowingAsked++;
+      const q = r.status === "ask" ? r.question : `Just to be sure — is it mainly ${r.label}?`;
+      say("it", q); convo.push({ role: "assistant", content: q }); return;
+    }
+    // No match, or still unsure after the one question: plain "not yet", logged.
+    say("it", CONFIG.NOT_YET); convo.push({ role: "assistant", content: CONFIG.NOT_YET });
+    Store.gap("no-match", convo.filter(t => t.role === "user").map(t => t.content).join(" / "), r.category_id);
+    narrowingAsked = 0;
+  } catch (e) {
+    wait.remove(); say("it", errText(e), "err");
+  } finally { busy(false); $("#input").focus(); }
+}
+
+function showMatch(r) {
+  pending = r;
+  const m = el("div", "msg it");
+  m.appendChild(el("div", "", CONFIG.MATCH_LINE));
+  const ul = el("ul"); r.capabilities.forEach(c => ul.appendChild(el("li", "", c))); m.appendChild(ul);
+  m.appendChild(el("div", "q", CONFIG.CONFIRM_QUESTION));
+  const ch = el("div", "choices");
+  const yes = el("button", "pill pri", "Yes"), no = el("button", "pill", "No");
+  yes.type = no.type = "button";
+  yes.onclick = () => closePending(true);
+  no.onclick = () => closePending(false);
+  ch.append(yes, no); m.appendChild(ch);
+  col.appendChild(m); m.scrollIntoView({ block: "end" }); yes.focus();
+  convo.push({ role: "assistant", content: `${CONFIG.MATCH_LINE} ${r.capabilities.join("; ")}. ${CONFIG.CONFIRM_QUESTION}` });
+}
+
+function closePending(accepted) {
+  const r = pending; if (!r) return;
+  pending = null;
+  col.querySelectorAll(".choices button").forEach(b => b.disabled = true);
+  say("user", accepted ? "Yes" : "No");
+  if (accepted) return loadApp(r);
+  convo.push({ role: "user", content: "No, that's not it." });
+  say("it", CONFIG.NO_REPLY); convo.push({ role: "assistant", content: CONFIG.NO_REPLY });
+  narrowingAsked = 0;
+}
+
+async function loadApp(r) {
+  setMark("loading");
+  inst = {
+    category_id: r.category_id, label: r.label, capabilities: r.capabilities,
+    skin: { ...SKIN_DEFAULT, ...Skins.lookFields(startLook(), Skins.hue(r.category_id)), name: cap(r.label) }, log: [], created: new Date().toISOString()
+  };
+  await Store.save(inst);
+  $("#mOpen").hidden = false;
+  setTimeout(() => { setMark(""); openApp(); }, 400);
+}
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+function startLook() {
+  if (LOOK.has(CONFIG.LOOK_ON_LOAD)) return CONFIG.LOOK_ON_LOAD;
+  console.error(`Front Door: LOOK_ON_LOAD ${JSON.stringify(CONFIG.LOOK_ON_LOAD)} is not a look — using "original". Fix it in the RULES block.`);
+  return "original";
+}
+
+/* ── The app screen ───────────────────────────────────────────────────── */
+function openApp() {
+  const lib = LIBRARY[inst.category_id];
+  const host = $("#app"); host.innerHTML = "";
+  if (lib && lib.url) {
+    const f = el("iframe"); f.src = lib.url; f.title = inst.skin.name;
+    f.addEventListener("load", () => pushSkin());
+    host.appendChild(f);
+  } else {
+    const f = el("iframe"); f.id = "slot"; f.title = inst.skin.name;
+    host.appendChild(f);
+  }
+  setState("app");
+  applySkin();
+  renderLooks();
+  renderLog();
+}
+
+/* The empty slot is a real page in the shared_card markup, wearing the real skin CSS —
+   exactly what a shared_card shelf app receives. Only the person's own words go in it. */
+const escHtml = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+function slotDoc() {
+  const k = inst.skin, t = Skins.slotTokens(k, inst.category_id), fu = Skins.fontUrl(k.font);
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+${fu ? `<link rel="stylesheet" href="${fu}">` : ""}<style>html{padding:0 16px}</style>
+<style id="skin">${Skins.render("shared_card", t)}</style></head><body>
+<div class="card"><h1>${escHtml(k.name)}</h1><p>Your app loads here.</p></div>
+<div class="card"><div class="row"><input aria-label="Sample field" placeholder="Type here"><button>Primary</button><button class="secondary">Secondary</button><button class="danger">Remove</button></div>
+<ul>${inst.capabilities.map(c => `<li>${escHtml(c)}</li>`).join("")}</ul></div></body></html>`;
+}
+
+function applySkin() {
+  const k = inst.skin;
+  const s = $("#slot");
+  if (s) { s.srcdoc = slotDoc(); s.title = k.name; }
+  document.title = k.name || "Front Door";
+  pushSkin();
+}
+
+/* What a shelf app's adapter receives. css is only sent when the app's markup family is known,
+   and is null for "original" — the adapter then removes any skin and the app shows its own look. */
+function skinMessage() {
+  const lib = LIBRARY[inst.category_id] || {}, k = inst.skin, t = Skins.tokens(k, inst.category_id);
+  const family = Skins.families.includes(lib.family) ? lib.family : "";
+  return { type: CONFIG.SKIN_MESSAGE_TYPE, skin: { ...k }, tokens: t,
+           css: t && family ? Skins.render(family, t) : null, family, font_url: t ? Skins.fontUrl(k.font) : null };
+}
+function pushSkin() {
+  const f = $("#app iframe"); if (!f || f.id === "slot" || !f.contentWindow) return;
+  const lib = LIBRARY[inst.category_id];
+  try { f.contentWindow.postMessage(skinMessage(), new URL(lib.url).origin); } catch (_) {}
+}
+
+/* Looks row: each tile drawn in its own colours for this app. Tapping previews it live and asks before keeping it. */
+function renderLooks() {
+  const box = $("#looks"); box.innerHTML = "";
+  const h = Skins.hue(inst.category_id);
+  LOOKS.forEach(([id, label]) => {
+    const t = id === "original" ? { background: SKIN_DEFAULT.background, primary: SKIN_DEFAULT.accent, foreground: SKIN_DEFAULT.text } : Skins.build(id, h);
+    const b = el("button", "look"); b.type = "button"; b.dataset.look = id;
+    b.setAttribute("aria-pressed", String(inst.skin.look === id));
+    const sw = el("i"); sw.style.background = t.background;
+    const p = el("b"); p.style.background = t.primary; const l = el("s"); l.style.background = t.foreground;
+    sw.append(p, l); b.append(sw, document.createTextNode(label));
+    b.onclick = () => proposeLook(id);
+    box.appendChild(b);
+  });
+}
+function proposeLook(id) {
+  if (proposal) dropProposal();
+  const ch = [{ key: "look", value: id }];
+  if (sameSkin(expand(inst.skin, ch), inst.skin)) { esay("it", "That's the look it has now."); return; }
+  showProposal([{ key: "look", value: id, say: id === "original" ? "Back to the app's original look" : `The look changes to ${LOOK.get(id)}` }], true);
+}
+
+/* ── Live edits through the icon ──────────────────────────────────────── */
+const ecol = $("#ecol");
+let proposal = null;
+function esay(role, text, cls) { const m = el("div", `msg ${role === "user" ? "you" : "it"}${cls ? " " + cls : ""}`, text); ecol.appendChild(m); m.scrollIntoView({ block: "end" }); return m; }
+
+function editPrompt(text) {
+  return `You change the look of a person's app. You may ONLY change these keys:
+look (one of: ${LOOKS.map(l => l[0]).join(", ")}) — a whole finished style:
+  original = the app's own look; minimal_neutral = white, quiet, thin borders; bold_contrast = near-black dark mode, vivid accent, sharp corners;
+  warm_editorial = cream paper, serif headings, warm terracotta; soft_rounded = soft tinted pastel, pill buttons, airy spacing.
+accent (6-digit hex), background (6-digit hex), surface (6-digit hex), text (6-digit hex),
+font ("" for the look's own fonts, or one of: ${CONFIG.FONTS.join(", ")}), radius (whole number 0-${CONFIG.MAX_RADIUS}, corner rounding in px), name (the app's name, 1-40 chars).
+
+Current look: ${JSON.stringify(inst.skin)}
+
+The person asked: ${JSON.stringify(text)}
+
+Rules:
+- If they ask for a whole style or mood (dark mode, softer, more classic, more professional), change "look" to the closest one.
+- Put each change in "changes" with a plain one-line "say" describing it, e.g. "Buttons go navy".
+- Keep text readable against background: if you change one, check the other still contrasts.
+- Anything they asked for that is NOT one of these keys (new features, moving things, content) goes in "cannot" as a short plain line. Do not try to do it.
+
+Reply with only JSON, for example:
+{"changes":[{"key":"accent","value":"#1F3A5F","say":"Buttons and highlights go navy"}],"cannot":[]}`;
+}
+
+/* A proposal applied to a skin. A look goes first (it resets colours, corners and font to its own);
+   everything else is laid over it. Colours, corners or fonts on the "original" look first move to
+   Minimal Neutral — that step is added to the list the person approves, never done silently. */
+const STYLE_KEYS = ["accent", "background", "surface", "text", "font", "radius"];
+function normalizeChanges(changes) {
+  const look = changes.filter(c => c.key === "look").map(c => c.value).pop() || inst.skin.look;
+  if (look === "original" && changes.some(c => STYLE_KEYS.includes(c.key)))
+    return [{ key: "look", value: "minimal_neutral", say: "Switches to the Minimal Neutral look so these changes can apply" }, ...changes.filter(c => c.key !== "look")];
+  return changes;
+}
+function expand(skin, changes) {
+  let out = { ...skin };
+  const look = changes.filter(c => c.key === "look").pop();
+  if (look) out = { ...out, ...Skins.lookFields(look.value, Skins.hue(inst.category_id)) };
+  changes.forEach(c => { if (c.key !== "look") out[c.key] = c.value; });
+  return out;
+}
+const sameSkin = (a, b) => Object.keys(SKIN_DEFAULT).every(k => a[k] === b[k]);
+
+async function onEdit(text) {
+  text = text.trim(); if (!text) return;
+  if (proposal) dropProposal();
+  esay("user", text);
+  $("#einput").disabled = true; $("#esend").disabled = true;
+  const wait = esay("it", "Thinking…", "wait");
+  try {
+    const r = await askChecked(editPrompt(text), checkEdit);
+    wait.remove();
+    const cannot = (r.cannot || []).filter(x => typeof x === "string" && x.trim());
+    if (cannot.length) {
+      esay("it", "I can't do this part yet — it's been noted:\n• " + cannot.join("\n• "));
+      Store.gap("out-of-scope", cannot.join(" / "), inst.category_id);
+    }
+    if (r.changes.length) showProposal(normalizeChanges(r.changes), false);
+    else if (!cannot.length) esay("it", "Nothing to change there. Try a look, a colour, font, corners or the name.");
+  } catch (e) { wait.remove(); esay("it", errText(e), "err"); }
+  finally { $("#einput").disabled = false; $("#esend").disabled = !$("#einput").value.trim(); $("#einput").focus(); }
+}
+
+/* preview = show it on the app now, before they approve. "Not that" puts it back. */
+let previewBefore = null;
+function showProposal(changes, preview) {
+  proposal = changes;
+  if (preview) { previewBefore = { ...inst.skin }; inst.skin = expand(inst.skin, changes); applySkin(); renderLooks(); }
+  const m = el("div", "msg it"); m.appendChild(el("div", "", preview ? "Showing it now. Keep this?" : "I'll change:"));
+  const ul = el("ul"); changes.forEach(c => ul.appendChild(el("li", "", c.say))); m.appendChild(ul);
+  const ch = el("div", "choices");
+  const ok = el("button", "pill pri", preview ? "Keep it" : "Apply"), no = el("button", "pill", "Not that");
+  ok.type = no.type = "button";
+  ok.onclick = applyProposal; no.onclick = () => { dropProposal(); esay("it", "Left as it was. Tell me what you'd like instead."); };
+  ch.append(ok, no); m.appendChild(ch); ecol.appendChild(m); m.scrollIntoView({ block: "end" }); ok.focus();
+}
+function dropProposal() {
+  proposal = null; ecol.querySelectorAll(".choices button").forEach(b => b.disabled = true);
+  if (previewBefore) { inst.skin = previewBefore; previewBefore = null; applySkin(); renderLooks(); }
+}
+
+async function applyProposal() {
+  const changes = proposal;
+  const before = previewBefore ? { ...previewBefore } : { ...inst.skin };
+  previewBefore = null; dropProposal();
+  inst.skin = expand(before, changes);
+  inst.log.push({ at: new Date().toISOString(), says: changes.map(c => c.say), before });
+  await Store.save(inst);
+  applySkin(); renderLooks(); renderLog();
+  esay("it", "Applied.");
+}
+
+async function undo(i) {
+  if (proposal) dropProposal();
+  const entry = inst.log[i]; if (!entry) return;
+  inst.skin = { ...entry.before };
+  inst.log = inst.log.slice(0, i);   // undoing a change also undoes everything after it
+  await Store.save(inst);
+  applySkin(); renderLooks(); renderLog();
+  esay("it", "Undone.");
+}
+
+function renderLog() {
+  const box = $("#log"); box.innerHTML = "";
+  inst.log.forEach((e, i) => {
+    const row = el("div"); row.appendChild(el("span", "", e.says.join("; ")));
+    const u = el("button", "link", "Undo"); u.type = "button"; u.onclick = () => undo(i); u.setAttribute("aria-label", "Undo: " + e.says.join("; "));
+    row.appendChild(u); box.prepend(row);
+  });
+}
+
+function openSheet() { $("#sheet").classList.add("open"); $("#fab").setAttribute("aria-expanded", "true"); if (!ecol.children.length) esay("it", "What would you like to change?"); $("#einput").focus(); }
+function closeSheet() { if (previewBefore) { dropProposal(); esay("it", "Left as it was."); } $("#sheet").classList.remove("open"); $("#fab").setAttribute("aria-expanded", "false"); $("#fab").focus(); }
+
+/* ── Inputs ───────────────────────────────────────────────────────────── */
+function autosize(t) { t.style.height = "auto"; t.style.height = Math.min(t.scrollHeight, 160) + "px"; }
+function wireBox(form, input, send, handler) {
+  input.addEventListener("input", () => { autosize(input); send.disabled = !input.value.trim(); });
+  input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); } });
+  form.addEventListener("submit", e => { e.preventDefault(); const v = input.value; if (!v.trim()) return; input.value = ""; autosize(input); send.disabled = true; handler(v); });
+}
+wireBox($("#form"), $("#input"), $("#send"), onSend);
+wireBox($("#eform"), $("#einput"), $("#esend"), onEdit);
+
+$("#fab").onclick = openSheet;
+$("#close").onclick = closeSheet;
+$("#sheet").addEventListener("click", e => { if (e.target.id === "sheet") closeSheet(); });
+document.addEventListener("keydown", e => {
+  if (e.key !== "Escape") return;
+  if ($("#sheet").classList.contains("open")) closeSheet();
+  else if (!$("#menu").hidden) toggleMenu(false);
+});
+
+function toggleMenu(on) { $("#menu").hidden = !on; $("#handle").setAttribute("aria-expanded", String(on)); }
+$("#handle").onclick = () => toggleMenu($("#menu").hidden);
+$("#mOpen").onclick = () => { toggleMenu(false); if (inst) openApp(); };
+$("#mRestart").onclick = async () => {
+  toggleMenu(false);
+  await Store.clear(); inst = null; pending = null; proposal = null; previewBefore = null; narrowingAsked = 0; convo.length = 0;
+  col.innerHTML = ""; ecol.innerHTML = ""; $("#app").innerHTML = ""; setState("empty"); $("#input").focus();
+};
+
+/* Voice: shown only where the browser can actually do it. */
+(function voice() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return;
+  const mic = $("#mic"); mic.hidden = false;
+  let rec = null;
+  mic.onclick = () => {
+    if (rec) { rec.stop(); return; }
+    rec = new SR(); rec.lang = CONFIG.VOICE_LANG; rec.interimResults = true;
+    const input = $("#input"), base = input.value ? input.value + " " : "";
+    rec.onresult = e => { input.value = base + Array.from(e.results).map(r => r[0].transcript).join(""); autosize(input); $("#send").disabled = !input.value.trim(); };
+    rec.onerror = e => { if (e.error === "not-allowed" || e.error === "service-not-allowed") mic.hidden = true; };
+    rec.onend = () => { rec = null; mic.classList.remove("on"); mic.setAttribute("aria-pressed", "false"); };
+    rec.start(); mic.classList.add("on"); mic.setAttribute("aria-pressed", "true");
+  };
+})();
+
+/* ── Boot ─────────────────────────────────────────────────────────────── */
+(async function boot() {
+  $("#input").focus();
+  await Store.init();
+  const saved = await Store.load();
+  if (saved && CAT.has(saved.category_id) && saved.skin) { inst = { ...saved, skin: { ...SKIN_DEFAULT, ...saved.skin }, log: saved.log || [] }; $("#mOpen").hidden = false; openApp(); }
+  else $("#mOpen").hidden = true;
+  if (!(await getSample())) $("#note").textContent = "Open this page inside Claude to talk to it.";
+})();
+</script>
+</body>
+</html>
