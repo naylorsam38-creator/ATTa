@@ -1,0 +1,108 @@
+{
+  "at": "2026-09-23T05:43:54.997Z",
+  "bundle": "dist/003-authelia-hostfix/",
+  "zip": "dist/003-authelia-hostfix.zip",
+  "zipBytes": 15253358,
+  "status": "fail",
+  "detail": "containers up in 132s; 15/16 checks not failing",
+  "checks": [
+    {
+      "id": "C1",
+      "name": "Page loads through proxy",
+      "status": "pass",
+      "detail": "HTTP 200, landed on /, title \"Login - Authelia\""
+    },
+    {
+      "id": "C2",
+      "name": "Proxy injects port.js immediately before </head>",
+      "status": "pass",
+      "detail": "tag found once, directly before </head>"
+    },
+    {
+      "id": "C3",
+      "name": "port.js runs in the live page",
+      "status": "pass",
+      "detail": "v0.2.0, framework=plain, app id=003-authelia"
+    },
+    {
+      "id": "C4",
+      "name": "Mover attached into Port drawer slot",
+      "status": "pass",
+      "detail": "section[data-capability=button-mover] data-trust=trusted, in drawer=true, mover UI=true"
+    },
+    {
+      "id": "C5",
+      "name": "App controls found for the mover",
+      "status": "pass",
+      "detail": "6 buttons/links on the page"
+    },
+    {
+      "id": "C6",
+      "name": "Drag-move a link",
+      "status": "pass",
+      "detail": "<a> \"Powered by Authelia\" (display:block): mover recorded translate=\"120px 60px\" (saved=true); on screen it moved 120,60px, visible and clickable at the new spot"
+    },
+    {
+      "id": "C7",
+      "name": "Drag-move a button",
+      "status": "pass",
+      "detail": "<button> \"Toggle password visibility\" (display:block): mover recorded translate=\"120px 60px\" (saved=true); on screen it moved 120,74px, visible and clickable at the new spot"
+    },
+    {
+      "id": "C8",
+      "name": "Move survives reload",
+      "status": "pass",
+      "detail": "mover re-attached from storage; moved controls after reload: 2 (120px 60px, 120px 60px)"
+    },
+    {
+      "id": "C9",
+      "name": "Rename an app control (double-click)",
+      "status": "pass",
+      "detail": "\"\" → \"ATTa renamed\""
+    },
+    {
+      "id": "C10",
+      "name": "Reset restores positions and labels",
+      "status": "pass",
+      "detail": "moved left=0, renamed left=0, saved positions=0, label restored=true"
+    },
+    {
+      "id": "C11",
+      "name": "Port button opens the drawer",
+      "status": "pass",
+      "detail": "panel open"
+    },
+    {
+      "id": "C12",
+      "name": "No new uncaught errors with the Port",
+      "status": "pass",
+      "detail": "none (0 uncaught error(s) seen, all also raised by the app without the Port)"
+    },
+    {
+      "id": "C13",
+      "name": "App CSP lets the Port run",
+      "status": "fail",
+      "detail": "14 inline-style refusal(s) (style-src has no 'unsafe-inline'): the Port's stylesheet is blocked, so its button renders as a bare '+' at the end of the page and the drawer does not overlay — works programmatically, not usable by a person"
+    },
+    {
+      "id": "C14",
+      "name": "Redirects and links stay on the proxy",
+      "status": "pass",
+      "detail": "no redirects; no upstream URLs in page"
+    },
+    {
+      "id": "C15",
+      "name": "Customer skins through the proxy",
+      "status": "pass",
+      "detail": "acme→midnight: applied; globex→sunrise: applied; initech→blueprint: applied; no header → original look"
+    },
+    {
+      "id": "C16",
+      "name": "Sticky-notes capability on the live page",
+      "status": "pass",
+      "detail": "pinned=true (\"Pinned by ATTa×\", visible=true), after reload=true, clear=true"
+    }
+  ],
+  "note": "Authelia built from the received source (web build + api copy + go build, as authelia-scripts does) into an Alpine image; config templated from environment (cookie domain, public URL, secrets). Local verification uses cookie domain 127.0.0.1.",
+  "proxyVariant": "/home/user/ATTa/proposals/proxy.host-preserving.js"
+}

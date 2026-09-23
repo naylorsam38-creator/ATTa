@@ -1,0 +1,108 @@
+{
+  "at": "2026-09-23T05:49:18.433Z",
+  "bundle": "dist/005-sendportal-hostfix/",
+  "zip": "dist/005-sendportal-hostfix.zip",
+  "zipBytes": 177700,
+  "status": "pass",
+  "detail": "containers up in 310s; 16/16 checks not failing",
+  "checks": [
+    {
+      "id": "C1",
+      "name": "Page loads through proxy",
+      "status": "pass",
+      "detail": "HTTP 200, landed on /login, title \"SendPortal\""
+    },
+    {
+      "id": "C2",
+      "name": "Proxy injects port.js immediately before </head>",
+      "status": "pass",
+      "detail": "tag found once, directly before </head>"
+    },
+    {
+      "id": "C3",
+      "name": "port.js runs in the live page",
+      "status": "pass",
+      "detail": "v0.2.0, framework=jquery, app id=005-sendportal"
+    },
+    {
+      "id": "C4",
+      "name": "Mover attached into Port drawer slot",
+      "status": "pass",
+      "detail": "section[data-capability=button-mover] data-trust=trusted, in drawer=true, mover UI=true"
+    },
+    {
+      "id": "C5",
+      "name": "App controls found for the mover",
+      "status": "pass",
+      "detail": "3 buttons/links on the page"
+    },
+    {
+      "id": "C6",
+      "name": "Drag-move a link",
+      "status": "pass",
+      "detail": "<a> \"Forgot Your Password?\" (display:inline-block): mover recorded translate=\"120px 60px\" (saved=true); on screen it moved 120,60px, visible and clickable at the new spot"
+    },
+    {
+      "id": "C7",
+      "name": "Drag-move a button",
+      "status": "pass",
+      "detail": "<button> \"Login\" (display:inline-block): mover recorded translate=\"120px 60px\" (saved=true); on screen it moved 120,60px, visible and clickable at the new spot"
+    },
+    {
+      "id": "C8",
+      "name": "Move survives reload",
+      "status": "pass",
+      "detail": "mover re-attached from storage; moved controls after reload: 2 (120px 60px, 120px 60px)"
+    },
+    {
+      "id": "C9",
+      "name": "Rename an app control (double-click)",
+      "status": "pass",
+      "detail": "\"Login\" → \"ATTa renamed\""
+    },
+    {
+      "id": "C10",
+      "name": "Reset restores positions and labels",
+      "status": "pass",
+      "detail": "moved left=0, renamed left=0, saved positions=0, label restored=true"
+    },
+    {
+      "id": "C11",
+      "name": "Port button opens the drawer",
+      "status": "pass",
+      "detail": "panel open"
+    },
+    {
+      "id": "C12",
+      "name": "No new uncaught errors with the Port",
+      "status": "pass",
+      "detail": "none (0 uncaught error(s) seen, all also raised by the app without the Port)"
+    },
+    {
+      "id": "C13",
+      "name": "App CSP lets the Port run",
+      "status": "pass",
+      "detail": "no CSP header"
+    },
+    {
+      "id": "C14",
+      "name": "Redirects and links stay on the proxy",
+      "status": "pass",
+      "detail": "GET / → 302 http://127.0.0.1:35871/login"
+    },
+    {
+      "id": "C15",
+      "name": "Customer skins through the proxy",
+      "status": "pass",
+      "detail": "acme→midnight: applied; globex→sunrise: applied; initech→blueprint: applied; no header → original look"
+    },
+    {
+      "id": "C16",
+      "name": "Sticky-notes capability on the live page",
+      "status": "pass",
+      "detail": "pinned=true (\"Pinned by ATTa×\", visible=true), after reload=true, clear=true"
+    }
+  ],
+  "note": "SendPortal built from the received source (Apache + PHP 8.4, composer --no-dev, core assets published) with PostgreSQL 16; APP_KEY generated once per deployment into the storage volume unless set.",
+  "proxyVariant": "/home/user/ATTa/proposals/proxy.host-preserving.js"
+}
