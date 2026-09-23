@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import json, os, re, shutil, subprocess, time, zipfile, io
+import json, os, re, shutil, subprocess, time, zipfile
 import builds, coolify_handoff, maintenance
 
 ROOT=Path(os.environ.get('APP_BUILDER_ROOT','/srv/app-builder'))

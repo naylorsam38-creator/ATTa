@@ -2,7 +2,7 @@
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
-import hashlib,hmac,html,json,os,secrets,time,re,tempfile,threading,zipfile
+import hashlib,hmac,html,json,os,secrets,time,re,threading,zipfile
 import accounts, builds, alerts
 ROOT=Path(os.environ.get("APP_BUILDER_ROOT","/srv/app-builder"));
 LOGIN_WINDOW=int(os.environ.get("APP_BUILDER_LOGIN_WINDOW","900")); LOGIN_MAX_FAILURES=int(os.environ.get("APP_BUILDER_LOGIN_MAX_FAILURES","8")); _LOGIN_FAILURES={}

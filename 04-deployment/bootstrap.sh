@@ -86,12 +86,14 @@ fi
 # Browser stage is part of the acceptance gate. Install Playwright and its
 # Chromium browser if they are not already present. On Amazon Linux there is
 # no apt chromium package, so use Playwright's managed Chromium binary.
+# pip >= 23 needs --break-system-packages on distro Pythons; older pip (Amazon Linux 2023's) rejects it.
+pip_install(){ python3 -m pip install --break-system-packages "$@" 2>/dev/null || python3 -m pip install "$@"; }
 if ! python3 -c 'import playwright' >/dev/null 2>&1; then
-  python3 -m pip install --break-system-packages playwright
+  pip_install playwright
 fi
 python3 -m playwright install chromium
 # Self-healing LLM tier uses the official Anthropic SDK.
-python3 -c 'import anthropic' >/dev/null 2>&1 || python3 -m pip install --break-system-packages anthropic
+python3 -c 'import anthropic' >/dev/null 2>&1 || pip_install anthropic
 
 # Fail the deployment immediately if the real browser cannot launch.
 python3 - <<'PY'

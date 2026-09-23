@@ -38,3 +38,9 @@ On the server that will run Coolify (best a separate one):
 
 It installs Coolify 4.3.23 (the version you supplied) and prints the four
 steps to connect it to the APP Builder. Details: docs/COOLIFY-HANDOFF.md
+
+WHAT TO UPLOAD ONCE IT'S RUNNING
+--------------------------------
+Log in, go to Upload, and upload THIS SAME ZIP (ATTa-deploy.zip).
+Each upload installs the Front Door page that is inside it, so uploading an
+older bundle would put the older Front Door back.

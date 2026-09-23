@@ -43,6 +43,9 @@ password, so the existing login keeps working.
 `bash run`. On an AWS/systemd server this runs the full deploy (`04-deployment/bootstrap.sh`).
 On a laptop it starts a local instance at http://127.0.0.1:8787/. See `START-HERE.txt`.
 
+Once it's up, log in and upload **this same zip** as the bundle. Each upload installs the Front
+Door page inside it, so an older bundle would bring back the older page.
+
 Coolify: `sudo bash 05-coolify/install-coolify.sh`, ideally on a separate server (its proxy wants
 ports 80/443). Then follow docs/COOLIFY-HANDOFF.md to connect the two.
 

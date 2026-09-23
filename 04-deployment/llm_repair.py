@@ -108,8 +108,9 @@ def attempt(layer: str, item: dict, rec: dict, chain: list[dict]) -> dict:
         for _ in range(MAX_TURNS):
             resp = client.beta.messages.create(
                 model=MODEL, max_tokens=16000, system=SYSTEM, tools=_tools(), messages=messages,
-                thinking={"type": "adaptive"}, output_config={"effort": EFFORT},
-                betas=["server-side-fallback-2026-07-01"], fallbacks="default")
+                thinking={"type": "adaptive"}, betas=["server-side-fallback-2026-07-01"],
+                # Sent as body fields so older SDKs (the newest one Python 3.9 gets) accept them too.
+                extra_body={"output_config": {"effort": EFFORT}, "fallbacks": "default"})
             if resp.stop_reason == "refusal":
                 return {"applied": bool(actions), "actions": actions, "note": "the model declined this request"}
             messages.append({"role": "assistant", "content": resp.content})
@@ -131,8 +132,9 @@ def attempt(layer: str, item: dict, rec: dict, chain: list[dict]) -> dict:
             messages.append({"role": "user", "content": results})
         else:
             summary = (summary + "\n" if summary else "") + f"stopped after {MAX_TURNS} turns"
-    except anthropic.APIError as e:
-        return {"applied": any(not a["error"] for a in actions), "actions": actions, "note": f"LLM call failed: {e}"}
+    except Exception as e:  # API error, old SDK, bad response: never let tier 3 block the human alert
+        return {"applied": any(not a["error"] for a in actions), "actions": actions,
+                "note": f"LLM call failed: {type(e).__name__}: {e}"}
     return {"applied": any(not a["error"] for a in actions), "actions": actions, "note": summary[:3000]}
 
 
