@@ -1,0 +1,148 @@
+
+$ docker compose up -d --build
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.88kB done
+#1 DONE 0.0s
+
+#2 [archivebox internal] load build definition from Dockerfile.verify
+#2 transferring dockerfile: 1.16kB done
+#2 DONE 0.0s
+
+#3 [proxy internal] load build definition from Dockerfile.verify
+#3 transferring dockerfile: 1.10kB done
+#3 DONE 0.0s
+
+#4 [proxy context sandboxca] load .dockerignore
+#4 transferring sandboxca: 2B done
+#4 DONE 0.0s
+
+#5 [proxy internal] load metadata for docker.io/library/node:22-alpine
+#5 DONE 0.0s
+
+#6 [proxy internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [proxy context sandboxca] load from client
+#7 DONE 0.0s
+
+#8 [proxy internal] load build context
+#8 transferring context: 61.02kB done
+#8 DONE 0.0s
+
+#9 [proxy stage-0 1/5] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#9 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#9 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85 0.0s done
+#9 DONE 0.0s
+
+#7 [proxy context sandboxca] load from client
+#7 transferring sandboxca: 36B done
+#7 DONE 0.0s
+
+#10 [proxy stage-0 3/5] WORKDIR /cp
+#10 CACHED
+
+#11 [proxy stage-0 2/5] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#11 CACHED
+
+#12 [proxy stage-0 4/5] COPY --chown=node:node ui-bridge ./ui-bridge
+#12 CACHED
+
+#13 [proxy stage-0 5/5] COPY --chown=node:node capability-port ./capability-port
+#13 CACHED
+
+#14 [proxy] exporting to image
+#14 exporting layers done
+#14 exporting manifest sha256:3121b3fb37d3a0846daed8e845f40b23db6733efa60dc3810fae0d15bac3fcf1 done
+#14 exporting config sha256:87e9abd8c8cf25058c58d0c73cef890ce6100ee8a4064bd0242b84564342d65c done
+#14 exporting attestation manifest sha256:b140c2df684788eef0a8d9a6104875b174047a7a01356d907192d46306f4d264 0.0s done
+#14 exporting manifest list sha256:6a05c6e15610142ac5f3c4c8e1164761fb1ca845b72b8a1b9312118b8c20d3d2 done
+#14 naming to docker.io/library/atta-007archiveboxdev3-proxy:latest done
+#14 unpacking to docker.io/library/atta-007archiveboxdev3-proxy:latest 0.0s done
+#14 DONE 0.1s
+
+#15 [archivebox internal] load metadata for docker.io/library/python:3.13-slim
+#15 ...
+
+#16 [proxy] resolving provenance for metadata file
+#16 DONE 0.0s
+
+#15 [archivebox internal] load metadata for docker.io/library/python:3.13-slim
+#15 DONE 0.6s
+
+#17 [archivebox internal] load .dockerignore
+#17 transferring context: 1.28kB done
+#17 DONE 0.0s
+
+#7 [archivebox context sandboxca] load from client
+#7 DONE 0.0s
+
+#18 [archivebox stage-0 1/8] FROM docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
+#18 resolve docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0 0.0s done
+#18 DONE 0.0s
+
+#19 [archivebox internal] load build context
+#19 transferring context: 4.56MB 0.1s done
+#19 DONE 0.1s
+
+#20 [archivebox stage-0 7/8] RUN useradd -m -u 911 archivebox && mkdir -p /data && chown archivebox /data && chmod -R a+rX /app
+#20 CACHED
+
+#21 [archivebox stage-0 2/8] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#21 CACHED
+
+#22 [archivebox stage-0 5/8] COPY . .
+#22 CACHED
+
+#23 [archivebox stage-0 6/8] RUN uv sync --frozen --no-dev
+#23 CACHED
+
+#24 [archivebox stage-0 4/8] WORKDIR /app
+#24 CACHED
+
+#25 [archivebox stage-0 3/8] RUN pip install --no-cache-dir uv
+#25 CACHED
+
+#26 [archivebox stage-0 8/8] WORKDIR /data
+#26 CACHED
+
+#27 [archivebox] exporting to image
+#27 exporting layers done
+#27 exporting manifest sha256:ca11d6dabd27f0149326e3de1445edb88d9ba0f9417b406ea92ca6615f49ea07 done
+#27 exporting config sha256:2f44221312f345ec10a01c0839e39b8828a2a605a030837088f1fc93a3bdcba3 done
+#27 exporting attestation manifest sha256:eb42094ffbd5bceb33747a090f9773197c36380ea50dad0447ef927d2995ab1b 0.0s done
+#27 exporting manifest list sha256:e5d7e25bd6d02960c9c86ff9eaf18074110c33d5937d77655b303e4d66552faa done
+#27 naming to docker.io/library/atta-007archiveboxdev3-archivebox:latest done
+#27 unpacking to docker.io/library/atta-007archiveboxdev3-archivebox:latest 0.0s done
+#27 DONE 0.1s
+
+#28 [archivebox] resolving provenance for metadata file
+#28 DONE 0.0s
+ Image atta-007archiveboxdev3-archivebox Building 
+ Image atta-007archiveboxdev3-proxy Building 
+ Image atta-007archiveboxdev3-archivebox Built 
+ Image atta-007archiveboxdev3-proxy Built 
+ Network atta-007archiveboxdev3_default Creating 
+ Network atta-007archiveboxdev3_default Created 
+ Volume atta-007archiveboxdev3_archivebox-data Creating 
+ Volume atta-007archiveboxdev3_archivebox-data Created 
+ Container atta-007archiveboxdev3-archivebox-1 Creating 
+ Container atta-007archiveboxdev3-archivebox-1 Created 
+ Container atta-007archiveboxdev3-proxy-1 Creating 
+ Container atta-007archiveboxdev3-proxy-1 Created 
+ Container atta-007archiveboxdev3-archivebox-1 Starting 
+ Container atta-007archiveboxdev3-archivebox-1 Started 
+ Container atta-007archiveboxdev3-proxy-1 Starting 
+ Container atta-007archiveboxdev3-proxy-1 Started 
+
+$ docker compose down -v --remove-orphans
+ Container atta-007archiveboxdev3-proxy-1 Stopping 
+ Container atta-007archiveboxdev3-proxy-1 Stopped 
+ Container atta-007archiveboxdev3-proxy-1 Removing 
+ Container atta-007archiveboxdev3-proxy-1 Removed 
+ Container atta-007archiveboxdev3-archivebox-1 Stopping 
+ Container atta-007archiveboxdev3-archivebox-1 Stopped 
+ Container atta-007archiveboxdev3-archivebox-1 Removing 
+ Container atta-007archiveboxdev3-archivebox-1 Removed 
+ Volume atta-007archiveboxdev3_archivebox-data Removing 
+ Volume atta-007archiveboxdev3_archivebox-data Removed 

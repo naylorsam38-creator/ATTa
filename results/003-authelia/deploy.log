@@ -1,0 +1,363 @@
+
+$ docker compose up -d --build
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.82kB done
+#1 DONE 0.0s
+
+#2 [authelia internal] load build definition from Dockerfile.verify
+#2 transferring dockerfile: 2.46kB done
+#2 DONE 0.0s
+
+#3 [proxy internal] load build definition from Dockerfile.verify
+#3 transferring dockerfile: 1.10kB done
+#3 DONE 0.0s
+
+#4 [proxy context sandboxca] load .dockerignore
+#4 transferring sandboxca: 2B done
+#4 DONE 0.0s
+
+#5 [authelia internal] load metadata for docker.io/library/golang:1.27-alpine
+#5 DONE 0.0s
+
+#6 [authelia internal] load metadata for docker.io/library/node:22-alpine
+#6 DONE 0.0s
+
+#7 [proxy internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [proxy internal] load build context
+#8 transferring context: 60.97kB done
+#8 DONE 0.0s
+
+#9 [proxy stage-0 1/5] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#9 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85 0.0s done
+#9 DONE 0.0s
+
+#10 [proxy context sandboxca] load from client
+#10 transferring sandboxca: 36B done
+#10 DONE 0.0s
+
+#11 [proxy stage-0 3/5] WORKDIR /cp
+#11 CACHED
+
+#12 [proxy stage-0 4/5] COPY --chown=node:node ui-bridge ./ui-bridge
+#12 CACHED
+
+#13 [proxy stage-0 2/5] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#13 CACHED
+
+#14 [proxy stage-0 5/5] COPY --chown=node:node capability-port ./capability-port
+#14 CACHED
+
+#15 [proxy] exporting to image
+#15 exporting layers done
+#15 exporting manifest sha256:4fbaf7c312506ef4b2e3c7f21c479566ba35d511662d73ef411e34cb679deffa done
+#15 exporting config sha256:784b629157fec9e3da0dcb710ef66d1fca79bb85bf0b8d5483e327e9c91bc05a done
+#15 exporting attestation manifest sha256:dc31404ffb44ec04fee81f17b2322c9812776588dc3bbf5bf9ed7a54078526e4 done
+#15 exporting manifest list sha256:9d39fe774975d8252b7ac22e8c1a209bb876c6cad8aae4f7681f97c76fdfd051 done
+#15 naming to docker.io/library/atta-003authelia-proxy:latest done
+#15 unpacking to docker.io/library/atta-003authelia-proxy:latest 0.0s done
+#15 DONE 0.1s
+
+#16 [authelia internal] load metadata for docker.io/library/alpine:3.22
+#16 ...
+
+#17 [proxy] resolving provenance for metadata file
+#17 DONE 0.0s
+
+#16 [authelia internal] load metadata for docker.io/library/alpine:3.22
+#16 DONE 0.7s
+
+#10 [authelia context sandboxca] load from client
+#10 DONE 0.0s
+
+#9 [authelia web 1/7] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#9 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85 0.0s done
+#9 DONE 0.0s
+
+#18 [authelia build 1/8] FROM docker.io/library/golang:1.27-alpine@sha256:8a5910f31396cd4d89662f56c68b3ae31d374308270a1c3bd96672ee5ed43414
+#18 resolve docker.io/library/golang:1.27-alpine@sha256:8a5910f31396cd4d89662f56c68b3ae31d374308270a1c3bd96672ee5ed43414 0.0s done
+#18 DONE 0.0s
+
+#19 [authelia stage-2 1/4] FROM docker.io/library/alpine:3.22@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8
+#19 resolve docker.io/library/alpine:3.22@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8 0.0s done
+#19 DONE 0.0s
+
+#13 [authelia web 2/7] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#13 CACHED
+
+#20 [authelia stage-2 2/4] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#20 CACHED
+
+#21 [authelia web 3/7] WORKDIR /src/web
+#21 CACHED
+
+#22 [authelia stage-2 3/4] RUN apk add --no-cache ca-certificates tzdata wget
+#22 CACHED
+
+#23 [authelia internal] load build context
+#23 transferring context: 29.63MB 0.3s done
+#23 DONE 0.3s
+
+#24 [authelia build 3/8] WORKDIR /src
+#24 CACHED
+
+#25 [authelia build 2/8] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#25 CACHED
+
+#26 [authelia build 4/8] COPY go.mod go.sum ./
+#26 CACHED
+
+#27 [authelia web 4/7] COPY web/package.json web/pnpm-lock.yaml web/pnpm-workspace.yaml ./
+#27 DONE 0.1s
+
+#28 [authelia build 5/8] RUN go mod download
+#28 ...
+
+#29 [authelia web 5/7] RUN npx -y pnpm@12.6.0 install --frozen-lockfile --ignore-scripts
+#29 3.405 ? Verifying lockfile against supply-chain policies (816 entries)...
+#29 4.155 Packages are hard linked from the content-addressable store to the virtual store.
+#29 4.155   Content-addressable store is at: /root/.local/share/pnpm/store/v11
+#29 4.155   Virtual store is at:             node_modules/.pnpm
+#29 4.328 Downloading @typescript/typescript-linux-x64@7.0.2: 0.00 B/9.66 MB
+#29 5.408 Downloading @typescript/typescript-linux-x64@7.0.2: 665.40 kB/9.66 MB
+#29 6.179 Downloading lefthook-linux-x64@2.1.14: 0.00 B/5.42 MB
+#29 7.159 Downloading @rolldown/binding-linux-x64-musl@1.2.6: 0.00 B/7.94 MB
+#29 8.332 Downloading @rolldown/binding-linux-x64-musl@1.2.6: 3.58 MB/7.94 MB
+#29 8.702 ✓ Lockfile passes supply-chain policies (816 entries in 5.3s)
+#29 8.702 Lockfile is up to date, resolution step is skipped
+#29 8.727 Packages: +716
+#29 8.727 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#29 8.806 Progress: resolved 716, reused 0, downloaded 716, added 716, done
+#29 8.959 
+#29 8.959 dependencies:
+#29 8.959 + @base-ui/react 1.8.0
+#29 8.959 + @simplewebauthn/browser 14.0.0
+#29 8.959 + axios 1.20.0
+#29 8.959 + broadcast-channel 7.4.0
+#29 8.959 + class-variance-authority 0.7.1
+#29 8.959 + clsx 2.1.1
+#29 8.959 + i18next 26.4.2
+#29 8.959 + i18next-browser-languagedetector 8.2.1
+#29 8.959 + i18next-http-backend 4.0.2
+#29 8.959 + lucide-react 1.47.0
+#29 8.959 + qrcode.react 4.2.0
+#29 8.959 + react 19.3.0
+#29 8.959 + react-dom 19.3.0
+#29 8.959 + react-i18next 17.0.14
+#29 8.959 + react-router 8.4.0
+#29 8.959 + tailwind-merge 3.7.0
+#29 8.959 + zxcvbn 4.4.2
+#29 8.959 
+#29 8.959 devDependencies:
+#29 8.959 + @commitlint/cli 21.2.3
+#29 8.959 + @commitlint/config-conventional 21.2.3
+#29 8.959 + @eslint-react/eslint-plugin 5.20.3
+#29 8.959 + @limegrass/eslint-plugin-import-alias 1.6.1
+#29 8.959 + @tailwindcss/vite 4.3.3
+#29 8.959 + @testing-library/jest-dom 7.0.1
+#29 8.959 + @testing-library/react 16.3.3
+#29 8.959 + @types/react 19.3.0
+#29 8.959 + @types/react-dom 19.3.0
+#29 8.959 + @types/zxcvbn 4.4.5
+#29 8.959 + @typescript-eslint/eslint-plugin 8.70.0
+#29 8.959 + @typescript-eslint/parser 8.70.0
+#29 8.959 + @typescript/native <- typescript 7.0.2
+#29 8.959 + @vitejs/plugin-react 6.1.1
+#29 8.959 + @vitest/coverage-istanbul 5.0.1
+#29 8.959 + @vitest/ui 5.0.1
+#29 8.959 + eslint 10.11.0
+#29 8.959 + eslint-config-prettier 10.1.8
+#29 8.959 + eslint-formatter-rdjson 1.0.6
+#29 8.959 + eslint-formatter-visualstudio 9.0.1
+#29 8.959 + eslint-import-resolver-typescript 4.4.5
+#29 8.959 + eslint-plugin-import 2.32.0
+#29 8.959 + eslint-plugin-perfectionist 5.11.1
+#29 8.959 + eslint-plugin-prettier 5.5.6
+#29 8.959 + happy-dom 20.14.5
+#29 8.959 + lefthook 2.1.14
+#29 8.959 + prettier 3.9.8
+#29 8.959 + tailwindcss 4.3.3
+#29 8.959 + typescript <- @typescript/typescript6 6.0.2
+#29 8.959 + vite 8.3.0
+#29 8.959 + vite-plugin-checker 0.14.5
+#29 8.959 + vite-plugin-istanbul 9.0.1
+#29 8.959 + vite-plugin-svgr 5.2.0
+#29 8.959 + vitest 5.0.1
+#29 8.959 + vitest-preview 0.0.3
+#29 8.959 
+#29 8.995 Done in 5.7s using pnpm v12.6.0
+#29 9.007 npm notice
+#29 9.007 npm notice New major version of npm available! 10.9.8 -> 12.1.0
+#29 9.007 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.1.0
+#29 9.007 npm notice To update run: npm install -g npm@12.1.0
+#29 9.007 npm notice
+#29 DONE 9.4s
+
+#28 [authelia build 5/8] RUN go mod download
+#28 ...
+
+#30 [authelia web 6/7] COPY . /src
+#30 DONE 1.5s
+
+#28 [authelia build 5/8] RUN go mod download
+#28 ...
+
+#31 [authelia web 7/7] RUN npx -y pnpm@12.6.0 build
+#31 ...
+
+#28 [authelia build 5/8] RUN go mod download
+#28 DONE 11.4s
+
+#32 [authelia build 6/8] COPY . .
+#32 DONE 0.6s
+
+#31 [authelia web 7/7] RUN npx -y pnpm@12.6.0 build
+#31 3.177 $ vite build
+#31 3.897 vite v8.3.0 building client environment for production...
+#31 3.940 transforming...
+#31 20.10 ✓ 2627 modules transformed.
+#31 20.26 rendering chunks...
+#31 20.41 computing gzip size...
+#31 20.44 ../internal/server/public_html/index.html                                                 2.84 kB │ gzip:   0.95 kB
+#31 20.44 ../internal/server/public_html/static/media/applestore-badge.BqUv8-dZ.svg                12.22 kB │ gzip:   4.66 kB
+#31 20.44 ../internal/server/public_html/static/media/googleplay-badge.Bs7UQq4a.svg                22.79 kB │ gzip:   4.97 kB
+#31 20.44 ../internal/server/public_html/static/css/PushNotificationIcon.wjz8ZNcZ.css               0.26 kB │ gzip:   0.13 kB
+#31 20.44 ../internal/server/public_html/static/css/Dialog.B_jfRqNb.css                             0.32 kB │ gzip:   0.17 kB
+#31 20.44 ../internal/server/public_html/static/css/index.CkY1Ja5b.css                             71.22 kB │ gzip:  12.28 kB
+#31 20.44 ../internal/server/public_html/static/js/OpenIDConnect.6LsUAj4b.js                        0.12 kB │ gzip:   0.13 kB
+#31 20.44 ../internal/server/public_html/static/js/visuallyHidden.CrYY0HH5.js                       0.19 kB │ gzip:   0.16 kB
+#31 20.44 ../internal/server/public_html/static/js/Revoke.D-0eEWHW.js                               0.19 kB │ gzip:   0.16 kB
+#31 20.44 ../internal/server/public_html/static/js/SwitchUserButton.CQPzKziB.js                     0.25 kB │ gzip:   0.21 kB
+#31 20.44 ../internal/server/public_html/static/js/State.CDspKYxv.js                                0.26 kB │ gzip:   0.19 kB
+#31 20.44 ../internal/server/public_html/static/js/circle-x.B9svRyDs.js                             0.26 kB │ gzip:   0.21 kB
+#31 20.44 ../internal/server/public_html/static/js/FieldItemContext.BTeW21yK.js                     0.30 kB │ gzip:   0.25 kB
+#31 20.44 ../internal/server/public_html/static/js/Abort.DzD8ZgmU.js                                0.30 kB │ gzip:   0.22 kB
+#31 20.44 ../internal/server/public_html/static/js/SuccessIcon.DKFDX7J9.js                          0.32 kB │ gzip:   0.25 kB
+#31 20.44 ../internal/server/public_html/static/js/InformationIcon.BjxYBHd1.js                      0.32 kB │ gzip:   0.25 kB
+#31 20.44 ../internal/server/public_html/static/js/FailureIcon.BppdfkyX.js                          0.32 kB │ gzip:   0.26 kB
+#31 20.44 ../internal/server/public_html/static/js/RemoteCall.Daqyk5e3.js                           0.34 kB │ gzip:   0.23 kB
+#31 20.44 ../internal/server/public_html/static/js/IconWithContext.DUa26YOh.js                      0.35 kB │ gzip:   0.21 kB
+#31 20.44 ../internal/server/public_html/static/js/LocalStorage.CnKy1I8z.js                         0.39 kB │ gzip:   0.22 kB
+#31 20.44 ../internal/server/public_html/static/js/Authenticated.D-cb3Ht3.js                        0.40 kB │ gzip:   0.27 kB
+#31 20.44 ../internal/server/public_html/static/js/PasswordVisibilityToggle.4m5cl2xY.js             0.41 kB │ gzip:   0.28 kB
+#31 20.44 ../internal/server/public_html/static/js/ResetPassword.v11sRQcS.js                        0.42 kB │ gzip:   0.27 kB
+#31 20.44 ../internal/server/public_html/static/js/Label.DVy71yyC.js                                0.43 kB │ gzip:   0.28 kB
+#31 20.44 ../internal/server/public_html/static/js/Spinner.DlPMKT_C.js                              0.50 kB │ gzip:   0.36 kB
+#31 20.44 ../internal/server/public_html/static/js/PasswordMethod.CvToTPLT.js                       0.59 kB │ gzip:   0.39 kB
+#31 20.44 ../internal/server/public_html/static/js/Separator.DAIco9GU.js                            0.64 kB │ gzip:   0.36 kB
+#31 20.44 ../internal/server/public_html/static/js/AuthenticatedView.DpjPm8Oe.js                    0.67 kB │ gzip:   0.39 kB
+#31 20.44 ../internal/server/public_html/static/js/Card.DWgr4sfj.js                                 0.68 kB │ gzip:   0.36 kB
+#31 20.44 ../internal/server/public_html/static/js/UserSessionElevation.7gU5Cpkx.js                 0.70 kB │ gzip:   0.32 kB
+#31 20.44 ../internal/server/public_html/static/js/CapsLock.Bp1Yhs6v.js                             0.71 kB │ gzip:   0.42 kB
+#31 20.44 ../internal/server/public_html/static/js/UserInfo.CRNJ0K6k.js                             0.75 kB │ gzip:   0.36 kB
+#31 20.44 ../internal/server/public_html/static/js/RevokeOneTimeCodeView.B_nUNp4x.js                0.77 kB │ gzip:   0.47 kB
+#31 20.44 ../internal/server/public_html/static/js/RevokeResetPasswordTokenView.B6avzlwB.js         0.80 kB │ gzip:   0.50 kB
+#31 20.44 ../internal/server/public_html/static/js/LogoutButton.R0EoDoU7.js                         0.89 kB │ gzip:   0.49 kB
+#31 20.44 ../internal/server/public_html/static/js/Input.CP8hYo-B.js                                0.89 kB │ gzip:   0.49 kB
+#31 20.44 ../internal/server/public_html/static/js/WebAuthnTryIcon.B2o08Mvj.js                      0.99 kB │ gzip:   0.57 kB
+#31 20.44 ../internal/server/public_html/static/js/DirectionContext.Vkvq6wfA.js                     1.12 kB │ gzip:   0.56 kB
+#31 20.44 ../internal/server/public_html/static/js/MinimalLayout.DRScH9_0.js                        1.17 kB │ gzip:   0.60 kB
+#31 20.44 ../internal/server/public_html/static/js/SignOut.CzOlXld0.js                              1.35 kB │ gzip:   0.79 kB
+#31 20.44 ../internal/server/public_html/static/js/Client.yf7m4ozQ.js                               1.56 kB │ gzip:   0.46 kB
+#31 20.44 ../internal/server/public_html/static/js/SecondFactorMethodWebAuthn.Cz9F6-Ly.js           1.76 kB │ gzip:   0.81 kB
+#31 20.44 ../internal/server/public_html/static/js/SecondFactorMethodOneTimePassword.C2FqsYE9.js    1.80 kB │ gzip:   0.87 kB
+#31 20.44 ../internal/server/public_html/static/js/ConsentPortal.Dkf_swzR.js                        1.91 kB │ gzip:   1.03 kB
+#31 20.44 ../internal/server/public_html/static/js/PasswordVisibility.H1c8ouUS.js                   2.08 kB │ gzip:   0.99 kB
+#31 20.44 ../internal/server/public_html/static/js/ConsentPortal.Cqivl2OZ.js                        2.09 kB │ gzip:   1.04 kB
+#31 20.44 ../internal/server/public_html/static/js/DeviceSelectionContainer.C4N0tuZ9.js             2.13 kB │ gzip:   0.83 kB
+#31 20.44 ../internal/server/public_html/static/js/WebAuthnMethod.CYV66eTR.js                       2.16 kB │ gzip:   1.08 kB
+#31 20.44 ../internal/server/public_html/static/js/MethodContainer.DYWQuXua.js                      2.30 kB │ gzip:   0.95 kB
+#31 20.44 ../internal/server/public_html/static/js/OneTimePasswordMethod.CDEwhBBs.js                2.52 kB │ gzip:   1.15 kB
+#31 20.44 ../internal/server/public_html/static/js/PasswordForm.jStQEsHG.js                         2.57 kB │ gzip:   1.23 kB
+#31 20.44 ../internal/server/public_html/static/js/ResetPasswordStep1.B9uOTEMU.js                   2.64 kB │ gzip:   1.18 kB
+#31 20.44 ../internal/server/public_html/static/js/useLabelableId.BZwrCcg4.js                       2.66 kB │ gzip:   1.26 kB
+#31 20.44 ../internal/server/public_html/static/js/Item.B2AkVJSH.js                                 2.69 kB │ gzip:   1.09 kB
+#31 20.44 ../internal/server/public_html/static/js/LoginLayout.thdOZZ07.js                          2.71 kB │ gzip:   1.20 kB
+#31 20.44 ../internal/server/public_html/static/js/Field.aM22J7U5.js                                2.74 kB │ gzip:   1.15 kB
+#31 20.44 ../internal/server/public_html/static/js/PushNotificationIcon.B9X8kywY.js                 2.76 kB │ gzip:   1.07 kB
+#31 20.44 ../internal/server/public_html/static/js/DeviceAuthorizationFormView.CUVWzfgQ.js          3.18 kB │ gzip:   1.44 kB
+#31 20.44 ../internal/server/public_html/static/js/Timer.BdYlBf6z.js                                3.26 kB │ gzip:   1.54 kB
+#31 20.44 ../internal/server/public_html/static/js/ResetPasswordStep2.BCvdMMxm.js                   3.56 kB │ gzip:   1.51 kB
+#31 20.44 ../internal/server/public_html/static/js/SecondFactorMethodMobilePush.BuAmubDs.js         3.79 kB │ gzip:   1.44 kB
+#31 20.44 ../internal/server/public_html/static/js/Switch.ByDos2BE.js                               3.94 kB │ gzip:   1.99 kB
+#31 20.44 ../internal/server/public_html/static/js/CompletionView.BgdPtjyp.js                       4.62 kB │ gzip:   1.88 kB
+#31 20.44 ../internal/server/public_html/static/js/useId.CVqlVJ21.js                                4.71 kB │ gzip:   2.17 kB
+#31 20.44 ../internal/server/public_html/static/js/PushNotificationMethod.DXD-d19R.js               4.83 kB │ gzip:   1.95 kB
+#31 20.44 ../internal/server/public_html/static/js/WebAuthn.COUTWOPV.js                             5.63 kB │ gzip:   1.86 kB
+#31 20.44 ../internal/server/public_html/static/js/Dialog.F4AfQcEC.js                               6.14 kB │ gzip:   2.64 kB
+#31 20.44 ../internal/server/public_html/static/js/SecondFactorForm.DINYbPs1.js                     6.43 kB │ gzip:   2.55 kB
+#31 20.44 ../internal/server/public_html/static/js/esm.CopUkWJ2.js                                  8.53 kB │ gzip:   2.78 kB
+#31 20.44 ../internal/server/public_html/static/js/FirstFactorForm.5hXkbQKR.js                      8.78 kB │ gzip:   3.49 kB
+#31 20.44 ../internal/server/public_html/static/js/jsx-runtime.D3jfb0Ew.js                          8.90 kB │ gzip:   3.38 kB
+#31 20.44 ../internal/server/public_html/static/js/OTPDial.DbQlKMPy.js                             10.78 kB │ gzip:   4.53 kB
+#31 20.44 ../internal/server/public_html/static/js/SearchParams.DNjDnG3L.js                        14.28 kB │ gzip:   5.56 kB
+#31 20.44 ../internal/server/public_html/static/js/Checkbox.CWyrDa-j.js                            16.07 kB │ gzip:   6.21 kB
+#31 20.44 ../internal/server/public_html/static/js/inertValue.z1ffQlUh.js                          19.09 kB │ gzip:   7.15 kB
+#31 20.44 ../internal/server/public_html/static/js/DecisionFormView.BOqHIr-Z.js                    21.42 kB │ gzip:   7.30 kB
+#31 20.44 ../internal/server/public_html/static/js/preload-helper.D7l_lNMG.js                      24.52 kB │ gzip:   9.30 kB
+#31 20.44 ../internal/server/public_html/static/js/Sheet.CTBTJtM0.js                               33.65 kB │ gzip:  12.17 kB
+#31 20.44 ../internal/server/public_html/static/js/createLucideIcon.DqrhtZd4.js                    41.87 kB │ gzip:  14.75 kB
+#31 20.44 ../internal/server/public_html/static/js/axios.B6ruUI-h.js                               52.51 kB │ gzip:  19.58 kB
+#31 20.44 ../internal/server/public_html/static/js/TypographyWithTooltip.BO0VDpHl.js               60.54 kB │ gzip:  22.01 kB
+#31 20.44 ../internal/server/public_html/static/js/SettingsRouter.tYvxfuZU.js                      91.24 kB │ gzip:  27.41 kB
+#31 20.44 ../internal/server/public_html/static/js/LocalStorage.D5hI3iaM.js                       110.71 kB │ gzip:  36.79 kB
+#31 20.44 ../internal/server/public_html/static/js/index.mjVOu-cM.js                              256.65 kB │ gzip:  82.46 kB
+#31 20.44 ../internal/server/public_html/static/js/PasswordPolicyConfiguration.C4F_g4ug.js        821.24 kB │ gzip: 398.59 kB
+#31 20.44 
+#31 20.44 ✓ built in 16.54s
+#31 20.44 [plugin builtin:vite-reporter] 
+#31 20.44 (!) Some chunks are larger than 500 kB after minification. Consider:
+#31 20.44 - Using dynamic import() to code-split the application
+#31 20.44 - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+#31 20.44 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+#31 20.44 [33m[PLUGIN_TIMINGS] [0mYour build spent 98% of 16.5s inside plugin hooks (16.2s).
+#31 20.44 Measured inside the callback, so queue time is excluded and time the callback itself awaited is not:
+#31 20.44   - vite-plugin-checker buildEnd (88%, 14.5s, 1 call)
+#31 20.44 Those rows are 88% of the build; the rest of the 98% is below.
+#31 20.44 Not measurable — 2 hooks whose calls overlap, so elapsed time covers work other calls were doing. Profile with `node --cpu-prof`:
+#31 20.44   - vite-plugin-svgr load (2626 calls)
+#31 20.44   - vite:asset load (2 calls)
+#31 20.44 See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+#31 20.44 
+#31 DONE 20.7s
+
+#33 [authelia build 7/8] COPY --from=web /src/internal/server/public_html ./internal/server/public_html
+#33 DONE 0.1s
+
+#34 [authelia build 8/8] RUN cp -r api internal/server/public_html/ && CGO_ENABLED=0 go build -trimpath -ldflags '-s -w' -o /out/authelia ./cmd/authelia
+#34 32.99 # github.com/authelia/authelia/v4/internal/storage
+#34 32.99 internal/storage/errors.go:96:23: undefined: sqlite3.Error
+#34 32.99 internal/storage/errors.go:103:36: undefined: sqlite3.ErrBusy
+#34 32.99 internal/storage/errors.go:103:73: undefined: sqlite3.ErrLocked
+#34 ERROR: process "/bin/sh -c cp -r api internal/server/public_html/ && CGO_ENABLED=0 go build -trimpath -ldflags '-s -w' -o /out/authelia ./cmd/authelia" did not complete successfully: exit code: 1
+------
+ > [authelia build 8/8] RUN cp -r api internal/server/public_html/ && CGO_ENABLED=0 go build -trimpath -ldflags '-s -w' -o /out/authelia ./cmd/authelia:
+32.99 # github.com/authelia/authelia/v4/internal/storage
+32.99 internal/storage/errors.go:96:23: undefined: sqlite3.Error
+32.99 internal/storage/errors.go:103:36: undefined: sqlite3.ErrBusy
+32.99 internal/storage/errors.go:103:73: undefined: sqlite3.ErrLocked
+------
+ Image atta-003authelia-proxy Building 
+ Image atta-003authelia-authelia Building 
+Dockerfile.verify:20
+
+--------------------
+
+  18 |     COPY . .
+
+  19 |     COPY --from=web /src/internal/server/public_html ./internal/server/public_html
+
+  20 | >>> RUN cp -r api internal/server/public_html/ && CGO_ENABLED=0 go build -trimpath -ldflags '-s -w' -o /out/authelia ./cmd/authelia
+
+  21 |     
+
+  22 |     FROM alpine:3.22
+
+--------------------
+
+target authelia: failed to solve: process "/bin/sh -c cp -r api internal/server/public_html/ && CGO_ENABLED=0 go build -trimpath -ldflags '-s -w' -o /out/authelia ./cmd/authelia" did not complete successfully: exit code: 1
+
+
+$ docker compose down -v --remove-orphans

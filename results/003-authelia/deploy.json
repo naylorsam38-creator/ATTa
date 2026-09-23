@@ -1,0 +1,10 @@
+{
+  "at": "2026-09-23T04:31:05.844Z",
+  "bundle": "dist/003-authelia/",
+  "zip": "dist/003-authelia.zip",
+  "zipBytes": 15187519,
+  "status": "fail",
+  "detail": "docker compose up failed (exit 1); see deploy.log",
+  "checks": [],
+  "note": "Authelia built from the received source (web build + api copy + go build, as authelia-scripts does) into an Alpine image; config templated from environment (cookie domain, public URL, secrets). Local verification uses cookie domain 127.0.0.1."
+}

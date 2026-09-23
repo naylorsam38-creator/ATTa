@@ -1,0 +1,10 @@
+{
+  "at": "2026-09-23T04:31:08.911Z",
+  "bundle": "dist/004-mixpost/",
+  "zip": "dist/004-mixpost.zip",
+  "zipBytes": 2071634,
+  "status": "fail",
+  "detail": "docker compose up failed (exit 1); see deploy.log",
+  "checks": [],
+  "note": "Mixpost Lite: frontend rebuilt from the received source, installed into a Laravel 12 host app (Apache + PHP 8.4) with MySQL 8 and a minimal email/password login (admin from MIXPOST_ADMIN_EMAIL / MIXPOST_ADMIN_PASSWORD). The test pipeline's auto-login shim is NOT part of this bundle."
+}

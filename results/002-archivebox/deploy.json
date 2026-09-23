@@ -1,16 +1,16 @@
 {
-  "at": "2026-09-23T04:29:15.841Z",
-  "bundle": "dist/001-alexandrie/",
-  "zip": "dist/001-alexandrie.zip",
-  "zipBytes": 23377327,
+  "at": "2026-09-23T04:29:53.478Z",
+  "bundle": "dist/002-archivebox/",
+  "zip": "dist/002-archivebox.zip",
+  "zipBytes": 3091681,
   "status": "fail",
-  "detail": "containers up in 72s; 15/16 checks not failing",
+  "detail": "containers up in 26s; 15/16 checks not failing",
   "checks": [
     {
       "id": "C1",
       "name": "Page loads through proxy",
       "status": "pass",
-      "detail": "HTTP 200, landed on /, title \"Alexandrie\""
+      "detail": "HTTP 200, landed on /admin/login/?next=/, title \"Set up ArchiveBox | Admin | ArchiveBox\""
     },
     {
       "id": "C2",
@@ -22,7 +22,7 @@
       "id": "C3",
       "name": "port.js runs in the live page",
       "status": "pass",
-      "detail": "v0.2.0, framework=vue, app id=001-alexandrie"
+      "detail": "v0.2.0, framework=jquery, app id=002-archivebox"
     },
     {
       "id": "C4",
@@ -34,31 +34,31 @@
       "id": "C5",
       "name": "App controls found for the mover",
       "status": "pass",
-      "detail": "45 buttons/links on the page"
+      "detail": "2 buttons/links on the page"
     },
     {
       "id": "C6",
       "name": "Drag-move a link",
-      "status": "pass",
-      "detail": "<a> \"Get Started\" (display:block): mover recorded translate=\"120px 60px\" (saved=true); on screen it moved 120,60px, visible and clickable at the new spot"
+      "status": "fail",
+      "detail": "<a> \"ArchiveBox\" (display:inline): mover recorded translate=\"120px 60px\" (saved=true); on screen it moved 0,0px — NOT moved visually: CSS translate has no effect on display:inline elements"
     },
     {
       "id": "C7",
       "name": "Drag-move a button",
-      "status": "fail",
-      "detail": "<button> \"01 Capture Ideas Instantly Quick notes &\" (display:flex): mover recorded translate=\"120px 60px\" (saved=true); on screen it moved 120,36px — NOT moved visually"
+      "status": "pass",
+      "detail": "<input> \"Create admin and continue\" (display:flex): mover recorded translate=\"120px -60px\" (saved=true); on screen it moved 120,-60px, visible and clickable at the new spot"
     },
     {
       "id": "C8",
       "name": "Move survives reload",
       "status": "pass",
-      "detail": "mover re-attached from storage; moved controls after reload: 2 (120px 60px, 120px 60px)"
+      "detail": "mover re-attached from storage; moved controls after reload: 2 (120px 60px, 120px -60px)"
     },
     {
       "id": "C9",
       "name": "Rename an app control (double-click)",
       "status": "pass",
-      "detail": "\"Get Started\" → \"ATTa renamed\""
+      "detail": "\"ArchiveBox\" → \"ATTa renamed\""
     },
     {
       "id": "C10",
@@ -82,13 +82,13 @@
       "id": "C13",
       "name": "App CSP lets the Port run",
       "status": "pass",
-      "detail": "no CSP header"
+      "detail": "CSP present, no violations added by the Port"
     },
     {
       "id": "C14",
       "name": "Redirects and links stay on the proxy",
       "status": "pass",
-      "detail": "no redirects; no upstream URLs in page"
+      "detail": "GET / → 302 /admin/login/?next=/"
     },
     {
       "id": "C15",
@@ -103,5 +103,5 @@
       "detail": "pinned=true (\"Pinned by ATTa×\", visible=true), after reload=true, clear=true"
     }
   ],
-  "note": "Full Alexandrie stack (frontend + Go backend + MySQL + RustFS) built from the received source with Alexandrie's own Dockerfiles; the capability proxy is the only public web entrypoint (backend API and CDN are also public because the browser calls them directly)."
+  "note": "ArchiveBox web app built from the received source in a lean python:3.13 image (UI/admin/API; archiving extractors not included), data in a named volume; the capability proxy is the only public entrypoint."
 }
