@@ -1,0 +1,84 @@
+{
+  "app": "001-sample-static",
+  "number": "001",
+  "startedAt": "2026-09-23T03:25:00.025Z",
+  "stages": [
+    {
+      "stage": 1,
+      "name": "build",
+      "status": "pass",
+      "detail": "nothing to build"
+    },
+    {
+      "stage": 2,
+      "name": "serve",
+      "status": "pass",
+      "detail": "static ."
+    },
+    {
+      "stage": 3,
+      "name": "proxy",
+      "status": "pass",
+      "detail": "http://127.0.0.1:35927 → http://127.0.0.1:37157"
+    },
+    {
+      "stage": 4,
+      "name": "playwright",
+      "status": "pass",
+      "detail": "8/8 not failing"
+    }
+  ],
+  "checks": [
+    {
+      "id": "C1",
+      "name": "Page loads through proxy",
+      "status": "pass",
+      "detail": "HTTP 200"
+    },
+    {
+      "id": "C2",
+      "name": "proxy.js injects port.js before </head>",
+      "status": "pass",
+      "detail": "tag found directly before </head>"
+    },
+    {
+      "id": "C3",
+      "name": "port.js runs in the live page",
+      "status": "pass",
+      "detail": "appId=001-sample-static"
+    },
+    {
+      "id": "C4",
+      "name": "Mover slot is a Port <section> in the drawer body",
+      "status": "pass",
+      "detail": "data-trust=local, inDrawer=true, status=mounted"
+    },
+    {
+      "id": "C5",
+      "name": "Mover numbers app buttons/links",
+      "status": "pass",
+      "detail": "7 found: #1 Home, #2 About, #3 Contact, #4 Save, #5 Share, #6 Delete, #7 Late button"
+    },
+    {
+      "id": "C6",
+      "name": "Move + reset on live DOM",
+      "status": "pass",
+      "detail": "#2: index 1 → 0 → reset 1"
+    },
+    {
+      "id": "C7",
+      "name": "Drawer opens from the CP toggle",
+      "status": "pass",
+      "detail": "open"
+    },
+    {
+      "id": "C8",
+      "name": "No uncaught page errors",
+      "status": "pass",
+      "detail": "none"
+    }
+  ],
+  "consoleErrors": [],
+  "verdict": "PASS",
+  "finishedAt": "2026-09-23T03:25:01.382Z"
+}
