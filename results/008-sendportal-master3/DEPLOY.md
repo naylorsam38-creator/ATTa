@@ -1,12 +1,12 @@
 # 008-sendportal-master3 — deploy bundle FAIL
 
-Built: 2026-09-23T05:31:01.135Z
+Built: 2026-09-23T05:41:28.172Z
 
 Bundle: `dist/008-sendportal-master3/` · zip: `dist/008-sendportal-master3.zip` (0.2 MB)
 
 > SendPortal built from the received source (Apache + PHP 8.4, composer --no-dev, core assets published) with PostgreSQL 16; APP_KEY generated once per deployment into the storage volume unless set.
 
-Verification: containers up in 295s; 13/16 checks not failing
+Verification: containers up in 298s; 14/16 checks not failing
 
 Same Playwright checks, run against the containers (proxy container → app container):
 
@@ -23,8 +23,8 @@ Same Playwright checks, run against the containers (proxy container → app cont
 | C9 | Rename an app control (double-click) | PASS | "Login" → "ATTa renamed" |
 | C10 | Reset restores positions and labels | PASS | moved left=0, renamed left=0, saved positions=0, label restored=true |
 | C11 | Port button opens the drawer | PASS | panel open |
-| C12 | No new uncaught errors with the Port | FAIL | ReferenceError: $ is not defined |
+| C12 | No new uncaught errors with the Port | WARN | ReferenceError: $ is not defined (no direct-to-app baseline in deploy mode — may be the app's own) |
 | C13 | App CSP lets the Port run | PASS | no CSP header |
-| C14 | Redirects and links stay on the proxy | FAIL | GET / → 302 Location: http://sendportal/login (bypasses the proxy) |
+| C14 | Redirects and links stay on the proxy | FAIL | GET / → 302 Location: http://sendportal/login (bypasses the proxy); 10 link/form/asset URL(s) in the page point at <upstream> (internal service hostname) |
 | C15 | Customer skins through the proxy | PASS | acme→midnight: applied; globex→sunrise: applied; initech→blueprint: applied; no header → original look |
 | C16 | Sticky-notes capability on the live page | PASS | pinned=true ("Pinned by ATTa×", visible=true), after reload=true, clear=true |

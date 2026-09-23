@@ -282,22 +282,25 @@ async function packageOne(id) {
   fs.mkdirSync(out, { recursive: true });
   if (!fs.existsSync(recipeDir)) { console.log(`${id}: no deploy recipe (apps/${id}/deploy/)`); return null; }
   const cfg = readJson(path.join(recipeDir, 'deploy.json')) || {};
-  const logFile = path.join(out, 'deploy.log');
+  const suffix = process.env.ATTA_PROXY_FILE ? '-' + (process.env.ATTA_RESULT_SUFFIX || 'variant') : '';
+  const logFile = path.join(out, `deploy${suffix}.log`);
   fs.writeFileSync(logFile, '');
   const log = (s) => fs.appendFileSync(logFile, s);
   syncSkins(id);
-  const b = pkg.build(id, { src: path.join(dir, 'src'), recipeDir, intake: readJson(path.join(dir, 'intake.json')) || {} });
+  const suffixEarly = process.env.ATTA_PROXY_FILE ? '-' + (process.env.ATTA_RESULT_SUFFIX || 'variant') : '';
+  const b = pkg.build(id, { src: path.join(dir, 'src'), recipeDir, intake: readJson(path.join(dir, 'intake.json')) || {}, distName: id + suffixEarly });
   const v = await pkg.verify(id, { dist: b.dist, skins: b.skins, pagePath: cfg.path || '/', timeout: cfg.timeout || 900, log });
   const failed = v.checks ? v.checks.filter((c) => c.status === 'fail') : [];
   const deploy = {
     at: new Date().toISOString(),
-    bundle: `dist/${id}/`, zip: `dist/${id}.zip`, zipBytes: fs.statSync(b.zip).size,
+    bundle: `dist/${path.basename(b.dist)}/`, zip: `dist/${path.basename(b.zip)}`, zipBytes: fs.statSync(b.zip).size,
     status: !v.ok ? 'fail' : failed.length ? 'fail' : v.checks.some((c) => c.status === 'warn' || c.status === 'skip') ? 'warn' : 'pass',
     detail: v.ok ? `containers up in ${v.seconds}s; ${v.checks.length - failed.length}/${v.checks.length} checks not failing` : v.detail,
     checks: v.checks || [], note: cfg.note || '',
   };
-  fs.writeFileSync(path.join(out, 'deploy.json'), JSON.stringify(deploy, null, 2) + '\n');
-  const lines = [`# ${id} — deploy bundle ${deploy.status.toUpperCase()}`, '', `Built: ${deploy.at}`, '',
+  if (suffix) deploy.proxyVariant = process.env.ATTA_PROXY_FILE;
+  fs.writeFileSync(path.join(out, `deploy${suffix}.json`), JSON.stringify(deploy, null, 2) + '\n');
+  const lines = [`# ${id} — deploy bundle ${deploy.status.toUpperCase()}${suffix ? ` (what-if: ${process.env.ATTA_RESULT_SUFFIX || 'variant'} proxy)` : ''}`, '', `Built: ${deploy.at}`, '',
     `Bundle: \`${deploy.bundle}\` · zip: \`${deploy.zip}\` (${(deploy.zipBytes / 1048576).toFixed(1)} MB)`, ''];
   if (cfg.note) lines.push(`> ${cfg.note}`, '');
   lines.push(`Verification: ${deploy.detail}`, '');
@@ -306,7 +309,8 @@ async function packageOne(id) {
       '| # | Check | Status | Detail |', '|---|---|---|---|');
     deploy.checks.forEach((c) => lines.push(`| ${c.id} | ${c.name} | ${c.status.toUpperCase()} | ${cell(c.detail)} |`));
   }
-  fs.writeFileSync(path.join(out, 'DEPLOY.md'), lines.join('\n') + '\n');
+  if (suffix) lines.splice(2, 0, `> What-if run: same bundle, but the capability proxy is \`${path.relative(ROOT, process.env.ATTA_PROXY_FILE)}\` instead of ui-bridge/proxy.js. Not what ships.`, '');
+  fs.writeFileSync(path.join(out, `DEPLOY${suffix}.md`), lines.join('\n') + '\n');
   console.log(`${id}: deploy ${deploy.status.toUpperCase()} — ${deploy.detail}`);
   return deploy;
 }

@@ -1,10 +1,10 @@
 {
-  "at": "2026-09-23T05:31:01.135Z",
+  "at": "2026-09-23T05:41:28.172Z",
   "bundle": "dist/008-sendportal-master3/",
   "zip": "dist/008-sendportal-master3.zip",
   "zipBytes": 177712,
   "status": "fail",
-  "detail": "containers up in 295s; 13/16 checks not failing",
+  "detail": "containers up in 298s; 14/16 checks not failing",
   "checks": [
     {
       "id": "C1",
@@ -75,8 +75,8 @@
     {
       "id": "C12",
       "name": "No new uncaught errors with the Port",
-      "status": "fail",
-      "detail": "ReferenceError: $ is not defined"
+      "status": "warn",
+      "detail": "ReferenceError: $ is not defined (no direct-to-app baseline in deploy mode — may be the app's own)"
     },
     {
       "id": "C13",
@@ -88,7 +88,7 @@
       "id": "C14",
       "name": "Redirects and links stay on the proxy",
       "status": "fail",
-      "detail": "GET / → 302 Location: http://sendportal/login (bypasses the proxy)"
+      "detail": "GET / → 302 Location: http://sendportal/login (bypasses the proxy); 10 link/form/asset URL(s) in the page point at <upstream> (internal service hostname)"
     },
     {
       "id": "C15",
