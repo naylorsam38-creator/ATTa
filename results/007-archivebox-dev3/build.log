@@ -158,12 +158,12 @@ http://admin.archivebox.localhost:5797/admin/
         archivebox help
 
 Hint: Open the Admin UI to create the first admin and finish web setup:
-      http://admin.archivebox.localhost:37535/admin/
+      http://admin.archivebox.localhost:43253/admin/
 
 [+] Starting ArchiveBox webserver...
-    > Starting ArchiveBox webserver on BIND_ADDR http://127.0.0.1:37535
+    > Starting ArchiveBox webserver on BIND_ADDR http://127.0.0.1:43253
     > Log in to ArchiveBox Admin UI on BASE_URL  
-http://archivebox.localhost:37535/admin/
+http://archivebox.localhost:43253/admin/
     > Writing ArchiveBox error log to ./logs/errors.log
 
 [!] BASE_URL is not set. Generated URLs will fall back to 
@@ -179,65 +179,66 @@ behind
     > Using supervisord config file: ./tmp/1c5fc3d8/supervisord.conf
     > Using supervisord UNIX socket: ./tmp/1c5fc3d8/supervisord.sock
 
-[🦸‍♂️] Supervisord connected (pid=1681) via 
+[🦸‍♂️] Supervisord connected (pid=10995) via 
 unix://./tmp/1c5fc3d8/supervisord.sock.
 [1;33m[[0m[33m![0m[1;33m][0m[33m Could not get supervisord worker worker_sonic: [0m[1;33m<[0m[1;33mFault[0m[33m [0m[1;33m10[0m[33m: [0m[33m'BAD_NAME: worker_sonic'[0m[1;33m>[0m
-[*] Sonic is already listening on 127.0.0.1:1491; not starting a duplicate 
-worker.
-[*] Starting orchestrator, server in this process (pid=1637)...
+[*] Starting orchestrator, server, sonic in this process (pid=10986)...
 
 [🦸‍♂️] Supervisord syncing subprocess worker: worker_daphne...
-     - Worker worker_daphne: started RUNNING (pid 1694, uptime 0:00:00)
+     - Worker worker_daphne: started RUNNING (pid 10999, uptime 0:00:00)
+[🦸‍♂️] Supervisord syncing subprocess worker: worker_sonic...
+     - Worker worker_sonic: started RUNNING (pid 11000, uptime 0:00:00)
 [🦸‍♂️] Supervisord syncing subprocess worker: worker_runner...
-     - Worker worker_runner: started RUNNING (pid 1695, uptime 0:00:00)
+     - Worker worker_runner: started RUNNING (pid 11001, uptime 0:00:00)
 [🦸‍♂️] Supervisord syncing subprocess worker: 
 worker_supervisord_parent_watchdog...
-     - Worker worker_supervisord_parent_watchdog: started RUNNING (pid 1696, 
+     - Worker worker_supervisord_parent_watchdog: started RUNNING (pid 11004, 
 uptime 0:00:00)
 
 Tailing worker logs (Ctrl+C to stop)...
 
     
     
+    
 
-[2026-09-23 04:11:38] INFO     daphne.cli Starting server at          cli.py:284
-                               tcp:port=37535:interface=127.0.0.1
+[2026-09-23 04:21:09] INFO     daphne.cli Starting server at          cli.py:284
+                               tcp:port=43253:interface=127.0.0.1
                       INFO     daphne.server HTTP/2 support not    server.py:126
                                enabled (install the http2 and tls
                                Twisted extras)
                       INFO     daphne.server Configuring endpoint  server.py:135
-                               tcp:port=37535:interface=127.0.0.1
+                               tcp:port=43253:interface=127.0.0.1
                       INFO     daphne.server Listening on TCP      server.py:166
-                               address 127.0.0.1:37535
-2026-09-23 04:11:39 HTTP     GET / 302 localhost
-2026-09-23 04:11:39 HTTP     GET / 302 localhost
-2026-09-23 04:11:39 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:11:40 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:11:40 HTTP     GET / 302 localhost
-2026-09-23 04:11:40 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:11:41 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:11:43 HTTP     GET / 302 localhost
-2026-09-23 04:11:43 HTTP     GET / 302 localhost
-2026-09-23 04:11:43 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:11:43 HTTP     GET / 302 localhost
-2026-09-23 04:11:43 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:11:43 HTTP     GET / 302 localhost
-2026-09-23 04:11:43 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:11:43 HTTP     GET / 302 localhost
-2026-09-23 04:11:43 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:11:43 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:11:44 HTTP     GET / 302 localhost
-2026-09-23 04:11:44 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:12:05 HTTP     GET / 302 localhost
-2026-09-23 04:12:05 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:12:10 HTTP     GET / 302 localhost
-2026-09-23 04:12:10 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:12:14 HTTP     GET / 302 localhost
-2026-09-23 04:12:14 HTTP     GET /admin/login/?next=/ 200 localhost
-2026-09-23 04:12:19 HTTP     GET / 302 localhost
-2026-09-23 04:12:19 HTTP     GET /admin/login/?next=/ 200 localhost
+                               address 127.0.0.1:43253
+2026-09-23 04:21:10 HTTP     GET / 302 localhost
+2026-09-23 04:21:10 HTTP     GET / 302 localhost
+2026-09-23 04:21:10 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:21:11 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:21:11 HTTP     GET / 302 localhost
+2026-09-23 04:21:11 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:21:14 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:21:15 HTTP     GET / 302 localhost
+2026-09-23 04:21:15 HTTP     GET / 302 localhost
+2026-09-23 04:21:15 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:21:15 HTTP     GET / 302 localhost
+2026-09-23 04:21:16 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:21:16 HTTP     GET / 302 localhost
+2026-09-23 04:21:16 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:21:16 HTTP     GET / 302 localhost
+2026-09-23 04:21:16 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:21:16 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:21:16 HTTP     GET / 302 localhost
+2026-09-23 04:21:16 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:21:37 HTTP     GET / 302 localhost
+2026-09-23 04:21:37 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:21:42 HTTP     GET / 302 localhost
+2026-09-23 04:21:42 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:21:47 HTTP     GET / 302 localhost
+2026-09-23 04:21:47 HTTP     GET /admin/login/?next=/ 200 localhost
+2026-09-23 04:21:51 HTTP     GET / 302 localhost
+2026-09-23 04:21:51 HTTP     GET /admin/login/?next=/ 200 localhost
 
 [🛑] Got SIGTERM, stopping gracefully...
-[🦸‍♂️] Stopping supervisord process (pid=1681)...
+[🦸‍♂️] Stopping supervisord process (pid=10995)...
 
 [🟩] ArchiveBox server shut down gracefully.

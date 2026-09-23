@@ -1,6 +1,6 @@
 # 008-sendportal-master3 — FAIL
 
-Run: 2026-09-23T04:12:28.774Z
+Run: 2026-09-23T04:22:00.309Z
 
 > SendPortal master3 re-pack (same source as 005; out/ bundle now inside the app folder). SendPortal (Laravel 11 + sendportal-core). Dev-only roave/security-advisories removed from composer.json because it blocks every Laravel 11 release; installed --no-dev. SQLite instead of MySQL, core assets published, migrations run; unauthenticated visit lands on /login. Checks open /login directly because / redirects to the upstream origin (see C13).
 
@@ -9,9 +9,9 @@ Run: 2026-09-23T04:12:28.774Z
 | # | Stage | Status | Detail |
 |---|---|---|---|
 | 0 | intake | PASS | bundled proxy.js, port.js, mover.mjs match canonical |
-| 1 | build | PASS | 7 step(s), 40s |
-| 2 | serve | PASS | exec php artisan serve --host=127.0.0.1 --port=$PORT → http://127.0.0.1:40565 |
-| 3 | proxy | PASS | http://127.0.0.1:33325 → http://127.0.0.1:40565 |
+| 1 | build | PASS | 7 step(s), 9s |
+| 2 | serve | PASS | exec php artisan serve --host=127.0.0.1 --port=$PORT → http://127.0.0.1:41473 |
+| 3 | proxy | PASS | http://127.0.0.1:37491 → http://127.0.0.1:41473 |
 | 4 | playwright | FAIL | 15/16 not failing |
 | 5 | video | PASS | 14 steps → demo.mp4, demo.webm |
 
@@ -56,7 +56,3 @@ Screenshots: `screenshot-moved.png` (Move on, controls dragged, drawer closed), 
 12. customer "initech" → skin "blueprint" (moves, names and notes kept)
 13. no customer header → original look
 14. Reset + Clear — app back exactly as it was
-
-## Console errors only seen with the Port
-
-- `Failed to load resource: net::ERR_NETWORK_CHANGED`
