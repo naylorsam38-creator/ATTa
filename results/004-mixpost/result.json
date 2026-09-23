@@ -1,7 +1,7 @@
 {
-  "app": "005-sendportal",
-  "number": "005",
-  "startedAt": "2026-09-23T04:09:54.559Z",
+  "app": "004-mixpost",
+  "number": "004",
+  "startedAt": "2026-09-23T04:16:58.558Z",
   "stages": [
     {
       "stage": 0,
@@ -13,25 +13,25 @@
       "stage": 1,
       "name": "build",
       "status": "pass",
-      "detail": "7 step(s), 18s"
+      "detail": "6 step(s), 106s"
     },
     {
       "stage": 2,
       "name": "serve",
       "status": "pass",
-      "detail": "exec php artisan serve --host=127.0.0.1 --port=$PORT → http://127.0.0.1:42559"
+      "detail": "cd \"$DATA/host\" && exec php artisan serve --host=127.0.0.1 --port=$PORT → http://127.0.0.1:43629"
     },
     {
       "stage": 3,
       "name": "proxy",
       "status": "pass",
-      "detail": "http://127.0.0.1:40641 → http://127.0.0.1:42559"
+      "detail": "http://127.0.0.1:36423 → http://127.0.0.1:43629"
     },
     {
       "stage": 4,
       "name": "playwright",
       "status": "fail",
-      "detail": "15/16 not failing"
+      "detail": "14/16 not failing"
     },
     {
       "stage": 5,
@@ -45,7 +45,7 @@
       "id": "C1",
       "name": "Page loads through proxy",
       "status": "pass",
-      "detail": "HTTP 200, landed on /login, title \"SendPortal\""
+      "detail": "HTTP 200, landed on /mixpost, title \"Dashboard - Mixpost - Laravel\""
     },
     {
       "id": "C2",
@@ -57,7 +57,7 @@
       "id": "C3",
       "name": "port.js runs in the live page",
       "status": "pass",
-      "detail": "v0.2.0, framework=jquery, app id=005-sendportal"
+      "detail": "v0.2.0, framework=plain, app id=004-mixpost"
     },
     {
       "id": "C4",
@@ -69,31 +69,31 @@
       "id": "C5",
       "name": "App controls found for the mover",
       "status": "pass",
-      "detail": "3 buttons/links on the page"
+      "detail": "20 buttons/links on the page"
     },
     {
       "id": "C6",
       "name": "Drag-move a link",
-      "status": "pass",
-      "detail": "<a> \"Forgot Your Password?\" (display:inline-block): mover recorded translate=\"120px 60px\" (saved=true); on screen it moved 120,60px, visible and clickable at the new spot"
+      "status": "fail",
+      "detail": "<a> \"\" (display:inline): mover recorded translate=\"120px 60px\" (saved=true); on screen it moved 0,0px — NOT moved visually: CSS translate has no effect on display:inline elements"
     },
     {
       "id": "C7",
       "name": "Drag-move a button",
       "status": "pass",
-      "detail": "<button> \"Login\" (display:inline-block): mover recorded translate=\"120px 60px\" (saved=true); on screen it moved 120,60px, visible and clickable at the new spot"
+      "detail": "<div> \"Unlock Pro Features\" (display:block): mover recorded translate=\"120px -60px\" (saved=true); on screen it moved 120,-60px, visible and clickable at the new spot"
     },
     {
       "id": "C8",
       "name": "Move survives reload",
       "status": "pass",
-      "detail": "mover re-attached from storage; moved controls after reload: 2 (120px 60px, 120px 60px)"
+      "detail": "mover re-attached from storage; moved controls after reload: 2 (120px 60px, 120px -60px)"
     },
     {
       "id": "C9",
       "name": "Rename an app control (double-click)",
       "status": "pass",
-      "detail": "\"Login\" → \"ATTa renamed\""
+      "detail": "\"\" → \"ATTa renamed\""
     },
     {
       "id": "C10",
@@ -123,7 +123,7 @@
       "id": "C14",
       "name": "Redirects and links stay on the proxy",
       "status": "fail",
-      "detail": "GET / → 302 Location: <upstream>/login (bypasses the proxy); 10 link/form/asset URL(s) in the page point at <upstream>"
+      "detail": "15 link/form/asset URL(s) in the page point at <upstream>"
     },
     {
       "id": "C15",
@@ -138,9 +138,7 @@
       "detail": "pinned=true (\"Pinned by ATTa×\", visible=true), after reload=true, clear=true"
     }
   ],
-  "consoleErrors": [
-    "Failed to load resource: net::ERR_TOO_MANY_RETRIES"
-  ],
+  "consoleErrors": [],
   "pageErrors": [],
   "video": {
     "steps": [
@@ -148,9 +146,9 @@
       "Capability Port (injected before </head>) — attach the button mover",
       "button-mover attached in the drawer slot",
       "Move: on — every button and link is now draggable",
-      "button \"Login\" moved",
-      "link \"Forgot Your Password?\" moved",
-      "\"Login\" renamed to \"Renamed by ATTa\"",
+      "button \"Unlock Pro Features\" moved",
+      "link \"\" moved",
+      "\"\" renamed to \"Renamed by ATTa\"",
       "sticky-notes capability attached — pin a note",
       "note pinned on the live app and dragged into place",
       "customer \"acme\" → skin \"midnight\" (moves, names and notes kept)",
@@ -165,5 +163,5 @@
     ]
   },
   "verdict": "FAIL",
-  "finishedAt": "2026-09-23T04:11:22.579Z"
+  "finishedAt": "2026-09-23T04:19:37.075Z"
 }

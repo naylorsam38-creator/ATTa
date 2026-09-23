@@ -109,3 +109,5 @@ time="2026-09-23T04:16:04Z" level=info msg="Storage schema migration from 0 to 2
 time="2026-09-23T04:16:04Z" level=info msg="Storage schema migration from 0 to 29 is complete"
 time="2026-09-23T04:16:04Z" level=info msg="Startup complete"
 time="2026-09-23T04:16:04Z" level=info msg="Listening for non-TLS connections on '127.0.0.1:42533' path '/'" server=main service=server
+time="2026-09-23T04:16:58Z" level=info msg="Shutdown initiated"
+time="2026-09-23T04:16:58Z" level=info msg="Shutdown complete"
