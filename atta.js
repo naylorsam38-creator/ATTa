@@ -140,8 +140,11 @@ async function runOne(id) {
   const dir = path.join(APPS, id);
   const src = path.join(dir, 'src');
   const out = path.join(RESULTS, id);
-  fs.rmSync(out, { recursive: true, force: true });
+  // Replace this stage's own outputs only; the deploy stage's deploy.json / DEPLOY.md / deploy.log stay.
   fs.mkdirSync(out, { recursive: true });
+  for (const f of ['REPORT.md', 'result.json', 'build.log', 'screenshot-moved.png', 'screenshot-drawer.png', 'demo.mp4', 'demo.webm']) {
+    fs.rmSync(path.join(out, f), { force: true });
+  }
   const logFile = path.join(out, 'build.log');
   fs.writeFileSync(logFile, '');
   const log = (s) => fs.appendFileSync(logFile, s);
