@@ -1,0 +1,27 @@
+
+$ TAGS='bindata sqlite sqlite_unlock_notify' make build
+Running go generate...
+generating bindata for ../../modules/migration/schemas to bindata.dat
+generating bindata for ../../options to bindata.dat
+generating bindata for ../../public to bindata.dat
+generating bindata for ../../templates to bindata.dat
+
+$ find "/home/user/ATTa/apps/011-gitea-main-2/data" -mindepth 1 -delete
+2026/09/23 06:07:56 cmd/migrate.go:31:runMigrate() [I] AppPath: /home/user/ATTa/apps/011-gitea-main-2/src/gitea
+2026/09/23 06:07:56 cmd/migrate.go:32:runMigrate() [I] AppWorkPath: /home/user/ATTa/apps/011-gitea-main-2/data
+2026/09/23 06:07:56 cmd/migrate.go:33:runMigrate() [I] Custom path: /home/user/ATTa/apps/011-gitea-main-2/data/custom
+2026/09/23 06:07:56 cmd/migrate.go:34:runMigrate() [I] Log path: /home/user/ATTa/apps/011-gitea-main-2/data/log
+2026/09/23 06:07:56 cmd/migrate.go:35:runMigrate() [I] Configuration file: /home/user/ATTa/apps/011-gitea-main-2/data/custom/conf/app.ini
+2026/09/23 06:07:56 .../v3@v3.11.0/command_run.go:95:(*Command).Run() [I] PING DATABASE sqlite3
+2026/09/23 06:07:57 cmd/web.go:273:runWeb() [I] Starting Gitea on PID: 29506
+2026/09/23 06:07:57 cmd/web.go:117:showWebStartupMessage() [I] Gitea version: 5726717 built with go1.27.1 : bindata, sqlite, sqlite_unlock_notify
+2026/09/23 06:07:57 cmd/web.go:118:showWebStartupMessage() [I] * RunMode: prod
+2026/09/23 06:07:57 cmd/web.go:119:showWebStartupMessage() [I] * AppPath: /home/user/ATTa/apps/011-gitea-main-2/src/gitea
+2026/09/23 06:07:57 cmd/web.go:120:showWebStartupMessage() [I] * WorkPath: /home/user/ATTa/apps/011-gitea-main-2/data
+2026/09/23 06:07:57 cmd/web.go:121:showWebStartupMessage() [I] * CustomPath: /home/user/ATTa/apps/011-gitea-main-2/data/custom
+2026/09/23 06:07:57 cmd/web.go:122:showWebStartupMessage() [I] * ConfigFile: /home/user/ATTa/apps/011-gitea-main-2/data/custom/conf/app.ini
+2026/09/23 06:07:57 cmd/web.go:123:showWebStartupMessage() [I] Prepare to run web server
+2026/09/23 06:07:57 routers/init.go:117:InitWebInstalled() [I] Git version: 2.43.0 (home: /home/user/ATTa/apps/011-gitea-main-2/data/data/home)
+2026/09/23 06:07:58 .../ssh_key_authorized_keys.go:55:rewriteAllPublicKeys.1() [W] Unable to remove temporary authorized keys file: /home/user/ATTa/apps/011-gitea-main-2/data/.ssh/authorized_keys.tmp: Error: remove /home/user/ATTa/apps/011-gitea-main-2/data/.ssh/authorized_keys.tmp: no such file or directory
+
+Session terminated, killing shell...2026/09/23 06:08:04 .../graceful/manager_unix.go:144:(*Manager).handleSignals() [W] PID 29506. Received SIGTERM. Shutting down...

@@ -1,0 +1,47 @@
+{
+  "app": "013-moby",
+  "number": "013",
+  "startedAt": "2026-09-23T06:17:19.392Z",
+  "stages": [
+    {
+      "stage": 0,
+      "name": "intake",
+      "status": "pass",
+      "detail": "no bundle shipped; canonical files used"
+    },
+    {
+      "stage": 1,
+      "name": "build",
+      "status": "pass",
+      "detail": "2 step(s), 1s"
+    },
+    {
+      "stage": 2,
+      "name": "serve",
+      "status": "n/a",
+      "detail": "no web UI"
+    },
+    {
+      "stage": 3,
+      "name": "proxy",
+      "status": "n/a",
+      "detail": "no web UI"
+    },
+    {
+      "stage": 4,
+      "name": "tests",
+      "status": "pass",
+      "detail": "go test: 5 package(s) ok, 0 failed"
+    }
+  ],
+  "checks": [
+    {
+      "id": "T1",
+      "name": "Unit tests pass",
+      "status": "pass",
+      "detail": "go test: 5 package(s) ok, 0 failed"
+    }
+  ],
+  "verdict": "PASS",
+  "finishedAt": "2026-09-23T06:17:22.075Z"
+}

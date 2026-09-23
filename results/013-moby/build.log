@@ -1,0 +1,12 @@
+
+$ CGO_ENABLED=0 go build -o "/home/user/ATTa/apps/013-moby/data/dockerd" ./cmd/dockerd
+
+$ CGO_ENABLED=0 go build -o "/home/user/ATTa/apps/013-moby/data/docker-proxy" ./cmd/docker-proxy
+
+$ go test ./daemon/names/... ./daemon/internal/stringid/... ./pkg/homedir/... ./pkg/ioutils/... ./pkg/tailfile/... ./pkg/useragent/...
+?   	github.com/moby/moby/v2/daemon/names	[no test files]
+ok  	github.com/moby/moby/v2/daemon/internal/stringid	0.003s
+ok  	github.com/moby/moby/v2/pkg/homedir	0.016s
+ok  	github.com/moby/moby/v2/pkg/ioutils	0.105s
+ok  	github.com/moby/moby/v2/pkg/tailfile	0.011s
+ok  	github.com/moby/moby/v2/pkg/useragent	0.002s

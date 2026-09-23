@@ -1,0 +1,139 @@
+{
+  "app": "012-opencut",
+  "number": "012",
+  "startedAt": "2026-09-23T06:16:25.626Z",
+  "stages": [
+    {
+      "stage": 0,
+      "name": "intake",
+      "status": "pass",
+      "detail": "no bundle shipped; canonical files used"
+    },
+    {
+      "stage": 1,
+      "name": "build",
+      "status": "pass",
+      "detail": "2 step(s), 11s"
+    },
+    {
+      "stage": 2,
+      "name": "serve",
+      "status": "pass",
+      "detail": "cd apps/web && exec ~/.bun/bin/bun x vite preview --port $PORT --host 127.0.0.1 --strictPort → http://127.0.0.1:38903"
+    },
+    {
+      "stage": 3,
+      "name": "proxy",
+      "status": "pass",
+      "detail": "http://127.0.0.1:42043 → http://127.0.0.1:38903"
+    },
+    {
+      "stage": 4,
+      "name": "playwright",
+      "status": "pass",
+      "detail": "16/16 not failing"
+    }
+  ],
+  "checks": [
+    {
+      "id": "C1",
+      "name": "Page loads through proxy",
+      "status": "pass",
+      "detail": "HTTP 200, landed on /, title \"OpenCut rewrite | beta.opencut.app\""
+    },
+    {
+      "id": "C2",
+      "name": "Proxy injects port.js immediately before </head>",
+      "status": "pass",
+      "detail": "tag found once, directly before </head>"
+    },
+    {
+      "id": "C3",
+      "name": "port.js runs in the live page",
+      "status": "pass",
+      "detail": "v0.2.0, framework=plain, app id=012-opencut"
+    },
+    {
+      "id": "C4",
+      "name": "Mover attached into Port drawer slot",
+      "status": "pass",
+      "detail": "section[data-capability=button-mover] data-trust=trusted, in drawer=true, mover UI=true"
+    },
+    {
+      "id": "C5",
+      "name": "App controls found for the mover",
+      "status": "warn",
+      "detail": "0 buttons/links on the page"
+    },
+    {
+      "id": "C6",
+      "name": "Drag-move a link",
+      "status": "skip",
+      "detail": "no links on this page"
+    },
+    {
+      "id": "C7",
+      "name": "Drag-move a button",
+      "status": "skip",
+      "detail": "no buttons on this page"
+    },
+    {
+      "id": "C8",
+      "name": "Move survives reload",
+      "status": "skip",
+      "detail": "nothing moved"
+    },
+    {
+      "id": "C9",
+      "name": "Rename an app control (double-click)",
+      "status": "skip",
+      "detail": "no hittable control"
+    },
+    {
+      "id": "C10",
+      "name": "Reset restores positions and labels",
+      "status": "pass",
+      "detail": "moved left=0, renamed left=0, saved positions=0, label restored=true"
+    },
+    {
+      "id": "C11",
+      "name": "Port button opens the drawer",
+      "status": "pass",
+      "detail": "panel open"
+    },
+    {
+      "id": "C12",
+      "name": "No new uncaught errors with the Port",
+      "status": "pass",
+      "detail": "none (0 uncaught error(s) seen, all also raised by the app without the Port)"
+    },
+    {
+      "id": "C13",
+      "name": "App CSP lets the Port run",
+      "status": "pass",
+      "detail": "no CSP header"
+    },
+    {
+      "id": "C14",
+      "name": "Redirects and links stay on the proxy",
+      "status": "pass",
+      "detail": "no redirects; no upstream URLs in page"
+    },
+    {
+      "id": "C15",
+      "name": "Customer skins through the proxy",
+      "status": "pass",
+      "detail": "acme→skin-002 \"Minimal Neutral\": applied (13 rules); globex→skin-003 \"Bold Contrast\": applied (13 rules); initech→skin-004 \"Warm Editorial\": applied (13 rules); umbrella→skin-005 \"Soft Rounded\": applied (13 rules); no header → original look"
+    },
+    {
+      "id": "C16",
+      "name": "Sticky-notes capability on the live page",
+      "status": "pass",
+      "detail": "pinned=true (\"Pinned by ATTa×\", visible=true), after reload=true, clear=true"
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "verdict": "WARN",
+  "finishedAt": "2026-09-23T06:17:19.391Z"
+}

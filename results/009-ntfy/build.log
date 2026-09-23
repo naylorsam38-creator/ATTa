@@ -1,0 +1,78 @@
+
+$ make web
+cd web && npm ci
+
+added 623 packages, and audited 624 packages in 13s
+
+195 packages are looking for funding
+  run `npm fund` for details
+
+4 vulnerabilities (2 moderate, 2 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+# Use "npm ci" so that we don't change the package lock file
+# If this fails for .svg files, optimize them with svgo
+cd web \
+	&& npm run build \
+	&& mv build/index.html build/app.html \
+	&& rm -rf ../server/site \
+	&& mv build ../server/site \
+	&& rm \
+		../server/site/config.js
+
+> ntfy@1.0.0 build
+> vite build
+
+[36mvite v8.2.1 [32mbuilding client environment for production...[36m[39m
+transforming...
+✓ 1241 modules transformed.
+rendering chunks...
+computing gzip size...
+build/static/media/ntfy-filled-BeHxCuOR.svg               4.38 kB │ gzip:   1.53 kB
+build/index.html                                          5.12 kB │ gzip:   1.93 kB
+build/static/media/pop-swoosh-D4htuWC0.mp3                9.59 kB
+build/static/media/pop-jCTZXXxe.mp3                       9.80 kB
+build/static/media/juntos-4OTx6nUx.mp3                   18.83 kB
+build/static/media/dadum-DPV6bbiV.mp3                    18.88 kB
+build/static/media/ding-C-VaFit1.mp3                     25.26 kB
+build/static/media/pristine-WI8-PGnL.mp3                 31.73 kB
+build/static/media/rolldown-runtime-B0Z9INg1.js           0.90 kB │ gzip:   0.51 kB
+build/static/media/workbox-window.prod.es5-Bd17z0YL.js    5.71 kB │ gzip:   2.25 kB │ map:    13.15 kB
+build/static/media/MarkdownContent-DXvFWOU8.js          107.54 kB │ gzip:  33.19 kB │ map:   425.06 kB
+build/static/media/utils-BOCdwNwW.js                    176.55 kB │ gzip:  65.22 kB │ map:   454.64 kB
+build/static/media/EmojiPicker-d53c0Oyi.js              227.76 kB │ gzip:  33.11 kB │ map:   513.68 kB
+build/static/media/index-Cx1kKwl6.js                    848.87 kB │ gzip: 251.56 kB │ map: 3,850.60 kB
+
+[32m✓ built in 1.48s[39m
+
+PWA v1.3.0
+Building public/sw.js service worker ("es" format)...
+[36mvite v8.2.1 [32mbuilding client environment for production...[36m[39m
+transforming...
+✓ 129 modules transformed.
+rendering chunks...
+computing gzip size...
+build/sw.mjs  231.26 kB │ gzip: 75.56 kB │ map: 724.08 kB
+
+[32m✓ built in 75ms[39m
+
+PWA v1.3.0
+mode      injectManifest
+format:   es
+precache  68 entries (2570.34 KiB)
+files generated
+  build/sw.js
+  build/sw.js.map
+
+$ make cli-deps-static-sites
+mkdir -p server/docs server/site
+touch server/docs/index.html server/site/app.html
+
+$ go build -o "/home/user/ATTa/apps/009-ntfy/data/ntfy" .
+2026/09/23 06:15:06 INFO Listening on 127.0.0.1:33343[http], ntfy dev, log level is INFO (tag=startup)

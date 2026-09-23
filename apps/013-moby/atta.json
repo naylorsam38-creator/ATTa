@@ -3,7 +3,8 @@
   "kind": "library",
   "skinCategory": "devops_console",
   "setup": [
-    "CGO_ENABLED=0 go build -o \"$DATA/dockerd\" ./cmd/dockerd"
+    "CGO_ENABLED=0 go build -o \"$DATA/dockerd\" ./cmd/dockerd",
+    "CGO_ENABLED=0 go build -o \"$DATA/docker-proxy\" ./cmd/docker-proxy"
   ],
-  "test": "go test ./api/types/... ./daemon/names/..."
+  "test": "go test ./daemon/names/... ./daemon/internal/stringid/... ./pkg/homedir/... ./pkg/ioutils/... ./pkg/tailfile/... ./pkg/useragent/..."
 }

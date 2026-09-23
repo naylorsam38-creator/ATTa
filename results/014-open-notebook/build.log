@@ -1,0 +1,244 @@
+
+$ ~/.local/bin/uv sync --frozen
+
+$ cd frontend && npm ci --no-audit --no-fund && npx next build
+
+added 754 packages in 14s
+▲ Next.js 16.3.4 (Turbopack)
+✓ Running next.config.ts took 34ms
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+[Next.js Rewrites] Proxying /api/* to http://localhost:5055/api/*
+- Experiments (use with caution):
+  · proxyClientMaxBodySize: "100mb"
+
+[Next.js Rewrites] Proxying /api/* to http://localhost:5055/api/*
+  Creating an optimized production build ...
+✓ Compiled successfully in 1965ms
+  Running TypeScript ...
+  Finished TypeScript in 2.2s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/15) ...
+  Generating static pages using 3 workers (3/15) 
+  Generating static pages using 3 workers (7/15) 
+  Generating static pages using 3 workers (11/15) 
+✓ Generating static pages using 3 workers (15/15) in 463ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /advanced
+├ ƒ /api/search/ask
+├ ƒ /api/sources/[sourceId]/chat/sessions/[sessionId]/messages
+├ ƒ /config
+├ ○ /dev/design
+├ ○ /login
+├ ○ /notebooks
+├ ƒ /notebooks/[id]
+├ ○ /podcasts
+├ ○ /search
+├ ○ /settings
+├ ○ /settings/models
+├ ○ /sources
+├ ƒ /sources/[id]
+└ ○ /transformations
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+$ cd frontend && S=$(dirname $(find .next/standalone -name server.js -not -path '*/node_modules/*' | head -1)) && mkdir -p $S/.next && cp -r .next/static $S/.next/ && cp -r public $S/
+
+$ docker pull surrealdb/surrealdb:v2
+v2: Pulling from surrealdb/surrealdb
+Digest: sha256:d653f6c8a89e81f865ee31cd2f587c50f50ace922175e04150b1e385d2f86011
+Status: Image is up to date for surrealdb/surrealdb:v2
+docker.io/surrealdb/surrealdb:v2
+warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+Starting Open Notebook API server on 127.0.0.1:5055
+Reload mode: False
+2026-09-23 06:11:06.905 | DEBUG    | open_notebook.utils.chunking:<module>:121 - Chunking configuration: CHUNK_SIZE=400, CHUNK_OVERLAP=60, MIN_CHUNK_SIZE=5
+2026-09-23 06:11:06.994 | DEBUG    | surreal_commands.core.registry:__new__:24 - Creating CommandRegistry singleton instance
+2026-09-23 06:11:06.994 | DEBUG    | surreal_commands.core.registry:__init__:31 - Initializing CommandRegistry
+2026-09-23 06:11:07.136 | INFO     | surreal_commands.core.worker:configure_logging:85 - Debug mode disabled - showing only INFO level and above
+╭──────────────────────────────────────────────────────────────────────────────╮
+│ Surreal Commands Worker                                                      │
+╰──────────────────────────────────────────────────────────────────────────────╯
+2026-09-23 06:11:07.136 | INFO     | surreal_commands.core.worker:run_worker:187 - Starting Surreal Commands worker
+Importing command modules: commands
+2026-09-23 06:11:07.410 | DEBUG    | surreal_commands.core.registry:__new__:24 - Creating CommandRegistry singleton instance
+2026-09-23 06:11:07.411 | DEBUG    | surreal_commands.core.registry:__init__:31 - Initializing CommandRegistry
+2026-09-23 06:11:07.562 | INFO     | podcast_creator.graph:<module>:20 - Creating podcast generation graph
+  ✅ Imported: commands
+Successfully imported 1/1 modules
+Using 8 registered commands
+Worker configured to handle up to 5 concurrent tasks
+[06:11:07] Checking for existing commands...                       worker.py:109
+           No existing commands found                              worker.py:139
+           Starting LIVE query listener for new commands...        worker.py:142
+2026-09-23 06:11:07.920 | INFO     | podcast_creator.graph:<module>:20 - Creating podcast generation graph
+2026-09-23 06:11:07.957 | INFO     | api.main:<module>:124 - Commands imported in API process
+2026-09-23 06:11:07.957 | WARNING  | api.main:<module>:226 - CORS_ORIGINS is not set — API accepts cross-origin requests from any origin (default: '*'). For production deployments, set CORS_ORIGINS to your frontend origin(s), e.g. CORS_ORIGINS=https://notebook.example.com
+2026-09-23 06:11:07.957 | INFO     | api.main:<module>:253 - Max request body size: 100MB (set OPEN_NOTEBOOK_MAX_UPLOAD_SIZE_MB to change)
+INFO:     Started server process [9419]
+INFO:     Waiting for application startup.
+2026-09-23 06:11:08.008 | INFO     | api.main:lifespan:190 - Starting API initialization...
+2026-09-23 06:11:08.008 | WARNING  | api.main:lifespan:194 - OPEN_NOTEBOOK_ENCRYPTION_KEY not set. API key encryption will fail until this is configured. Set OPEN_NOTEBOOK_ENCRYPTION_KEY to any secret string.
+2026-09-23 06:11:08.095 | INFO     | api.main:_run_database_migrations:170 - Current database version: 0
+2026-09-23 06:11:08.125 | WARNING  | api.main:_run_database_migrations:173 - Database migrations are pending. Running migrations...
+2026-09-23 06:11:08.149 | INFO     | open_notebook.database.async_migrate:run_migration_up:258 - Current version before migration: 0
+2026-09-23 06:11:08.197 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 1
+2026-09-23 06:11:08.300 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 2
+2026-09-23 06:11:08.389 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 3
+2026-09-23 06:11:08.481 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 4
+2026-09-23 06:11:08.572 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 5
+2026-09-23 06:11:08.662 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 6
+2026-09-23 06:11:08.748 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 7
+2026-09-23 06:11:08.854 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 8
+2026-09-23 06:11:08.944 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 9
+2026-09-23 06:11:09.029 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 10
+2026-09-23 06:11:09.109 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 11
+2026-09-23 06:11:09.194 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 12
+2026-09-23 06:11:09.291 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 13
+2026-09-23 06:11:09.373 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 14
+2026-09-23 06:11:09.473 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 15
+2026-09-23 06:11:09.554 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 16
+2026-09-23 06:11:09.643 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 17
+2026-09-23 06:11:09.734 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 18
+2026-09-23 06:11:09.823 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 19
+2026-09-23 06:11:09.919 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 20
+2026-09-23 06:11:10.017 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 21
+2026-09-23 06:11:10.118 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 22
+2026-09-23 06:11:10.217 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 23
+2026-09-23 06:11:10.300 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 24
+2026-09-23 06:11:10.389 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 25
+2026-09-23 06:11:10.526 | INFO     | open_notebook.database.async_migrate:run_migration_up:264 - Migration successful. New version: 25
+2026-09-23 06:11:10.555 | SUCCESS  | api.main:_run_database_migrations:176 - Migrations completed successfully. Database is now at version 25
+2026-09-23 06:11:10.555 | SUCCESS  | api.main:lifespan:210 - API initialization completed successfully
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:5055 (Press CTRL+C to quit)
+INFO:     127.0.0.1:60786 - "GET /health HTTP/1.1" 200 OK
+▲ Next.js 16.3.4
+- Local:         http://127.0.0.1:37643
+- Network:       http://127.0.0.1:37643
+✓ Ready in 0ms
+✓ Running next.config took 2ms
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+2026-09-23 06:11:12.563 | INFO     | api.routers.config:get_latest_version_cached:65 - Checking for latest version from GitHub...
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+2026-09-23 06:11:12.677 | INFO     | api.routers.config:get_latest_version_cached:65 - Checking for latest version from GitHub...
+2026-09-23 06:11:12.954 | INFO     | api.routers.config:get_latest_version_cached:72 - Latest version from GitHub: 1.14.0, Current version: 1.14.0
+2026-09-23 06:11:12.955 | INFO     | api.routers.config:get_latest_version_cached:85 - Version check complete. Update available: False
+INFO:     127.0.0.1:60790 - "GET /api/config HTTP/1.1" 200 OK
+2026-09-23 06:11:13.028 | INFO     | api.routers.config:get_latest_version_cached:72 - Latest version from GitHub: 1.14.0, Current version: 1.14.0
+2026-09-23 06:11:13.028 | INFO     | api.routers.config:get_latest_version_cached:85 - Version check complete. Update available: False
+INFO:     127.0.0.1:60792 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60792 - "OPTIONS /api/auth/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60790 - "GET /api/auth/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60790 - "OPTIONS /api/credentials/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60792 - "OPTIONS /api/credentials/env-status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "OPTIONS /api/recently-viewed?limit=12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60804 - "OPTIONS /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60806 - "OPTIONS /api/notebooks?archived=true&order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60812 - "OPTIONS /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60792 - "OPTIONS /api/transformations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "OPTIONS /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60804 - "OPTIONS /api/episode-profiles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60806 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /api/notebooks?archived=true&order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60806 - "GET /api/transformations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60804 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60792 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60812 - "GET /api/recently-viewed?limit=12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60806 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60790 - "GET /api/credentials/status HTTP/1.1" 200 OK
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+INFO:     127.0.0.1:60790 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60806 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60806 - "OPTIONS /api/auth/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60790 - "OPTIONS /api/auth/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60806 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60806 - "GET /api/auth/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60804 - "GET /api/notebooks?archived=true&order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60804 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /api/auth/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60790 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60806 - "GET /api/transformations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60792 - "GET /api/recently-viewed?limit=12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60804 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60812 - "GET /api/credentials/status HTTP/1.1" 200 OK
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+INFO:     127.0.0.1:49192 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49200 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49200 - "OPTIONS /api/auth/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49192 - "GET /api/auth/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49192 - "OPTIONS /api/credentials/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49200 - "OPTIONS /api/credentials/env-status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49206 - "OPTIONS /api/recently-viewed?limit=12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49218 - "OPTIONS /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49224 - "OPTIONS /api/notebooks?archived=true&order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49236 - "OPTIONS /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49200 - "OPTIONS /api/transformations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49206 - "OPTIONS /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49218 - "OPTIONS /api/episode-profiles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49224 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49224 - "GET /api/transformations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49200 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49206 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49200 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49218 - "GET /api/notebooks?archived=true&order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49236 - "GET /api/recently-viewed?limit=12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49224 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49192 - "GET /api/credentials/status HTTP/1.1" 200 OK
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+INFO:     127.0.0.1:49224 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49192 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49192 - "OPTIONS /api/auth/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49224 - "OPTIONS /api/auth/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49218 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49192 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49206 - "GET /api/notebooks?archived=true&order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49192 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49224 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49192 - "GET /api/auth/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49224 - "GET /api/auth/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49218 - "GET /api/transformations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49200 - "GET /api/recently-viewed?limit=12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49206 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49236 - "GET /api/credentials/status HTTP/1.1" 200 OK
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+INFO:     127.0.0.1:49236 - "OPTIONS /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49206 - "OPTIONS /api/config HTTP/1.1" 200 OK
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+INFO:     127.0.0.1:49206 - "OPTIONS /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49206 - "OPTIONS /api/config HTTP/1.1" 200 OK
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+INFO:     127.0.0.1:49206 - "OPTIONS /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49192 - "OPTIONS /api/config HTTP/1.1" 200 OK
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+[runtime-config] Auto-detected API URL: http://127.0.0.1:5055 (proto=http, host=127.0.0.1:37643)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+2026-09-23 06:11:22.164 | INFO     | api.main:lifespan:216 - API shutdown complete
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9419]

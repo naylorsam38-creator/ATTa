@@ -6,7 +6,7 @@
     "make cli-deps-static-sites",
     "go build -o \"$DATA/ntfy\" ."
   ],
-  "start": "exec \"$DATA/ntfy\" serve --listen-http 127.0.0.1:$PORT --cache-file \"$DATA/cache.db\" --attachment-cache-dir \"$DATA/attachments\"",
+  "start": "exec \"$DATA/ntfy\" serve --listen-http 127.0.0.1:$PORT --cache-file \"$DATA/cache.db\"",
   "path": "/",
   "timeout": 60
 }

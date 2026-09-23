@@ -1,0 +1,139 @@
+{
+  "app": "011-gitea-main-2",
+  "number": "011",
+  "startedAt": "2026-09-23T06:07:52.107Z",
+  "stages": [
+    {
+      "stage": 0,
+      "name": "intake",
+      "status": "pass",
+      "detail": "no bundle shipped; canonical files used"
+    },
+    {
+      "stage": 1,
+      "name": "build",
+      "status": "pass",
+      "detail": "2 step(s), 4s"
+    },
+    {
+      "stage": 2,
+      "name": "serve",
+      "status": "pass",
+      "detail": "exec ../start.sh \"$DATA\" $PORT → http://127.0.0.1:43431"
+    },
+    {
+      "stage": 3,
+      "name": "proxy",
+      "status": "pass",
+      "detail": "http://127.0.0.1:33731 → http://127.0.0.1:43431"
+    },
+    {
+      "stage": 4,
+      "name": "playwright",
+      "status": "pass",
+      "detail": "16/16 not failing"
+    }
+  ],
+  "checks": [
+    {
+      "id": "C1",
+      "name": "Page loads through proxy",
+      "status": "pass",
+      "detail": "HTTP 200, landed on /, title \"Gitea\""
+    },
+    {
+      "id": "C2",
+      "name": "Proxy injects port.js immediately before </head>",
+      "status": "pass",
+      "detail": "tag found once, directly before </head>"
+    },
+    {
+      "id": "C3",
+      "name": "port.js runs in the live page",
+      "status": "pass",
+      "detail": "v0.2.0, framework=jquery, app id=011-gitea-main-2"
+    },
+    {
+      "id": "C4",
+      "name": "Mover attached into Port drawer slot",
+      "status": "pass",
+      "detail": "section[data-capability=button-mover] data-trust=trusted, in drawer=true, mover UI=true"
+    },
+    {
+      "id": "C5",
+      "name": "App controls found for the mover",
+      "status": "pass",
+      "detail": "46 buttons/links on the page"
+    },
+    {
+      "id": "C6",
+      "name": "Drag-move a link",
+      "status": "pass",
+      "detail": "<a> \"Home\" (display:flex): mover recorded translate=\"120px 60px\" (saved=true); on screen it moved 120,60px, visible and clickable at the new spot"
+    },
+    {
+      "id": "C7",
+      "name": "Drag-move a button",
+      "status": "skip",
+      "detail": "3 on page, none hittable in the viewport"
+    },
+    {
+      "id": "C8",
+      "name": "Move survives reload",
+      "status": "pass",
+      "detail": "mover re-attached from storage; moved controls after reload: 1 (120px 60px)"
+    },
+    {
+      "id": "C9",
+      "name": "Rename an app control (double-click)",
+      "status": "pass",
+      "detail": "\"\" → \"ATTa renamed\""
+    },
+    {
+      "id": "C10",
+      "name": "Reset restores positions and labels",
+      "status": "pass",
+      "detail": "moved left=0, renamed left=0, saved positions=0, label restored=true"
+    },
+    {
+      "id": "C11",
+      "name": "Port button opens the drawer",
+      "status": "pass",
+      "detail": "panel open"
+    },
+    {
+      "id": "C12",
+      "name": "No new uncaught errors with the Port",
+      "status": "pass",
+      "detail": "none (0 uncaught error(s) seen, all also raised by the app without the Port)"
+    },
+    {
+      "id": "C13",
+      "name": "App CSP lets the Port run",
+      "status": "pass",
+      "detail": "no CSP header"
+    },
+    {
+      "id": "C14",
+      "name": "Redirects and links stay on the proxy",
+      "status": "pass",
+      "detail": "no redirects; no upstream URLs in page"
+    },
+    {
+      "id": "C15",
+      "name": "Customer skins through the proxy",
+      "status": "pass",
+      "detail": "acme→skin-002 \"Minimal Neutral\": applied (13 rules); globex→skin-003 \"Bold Contrast\": applied (13 rules); initech→skin-004 \"Warm Editorial\": applied (13 rules); umbrella→skin-005 \"Soft Rounded\": applied (13 rules); no header → original look"
+    },
+    {
+      "id": "C16",
+      "name": "Sticky-notes capability on the live page",
+      "status": "pass",
+      "detail": "pinned=true (\"Pinned by ATTa×\", visible=true), after reload=true, clear=true"
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "verdict": "WARN",
+  "finishedAt": "2026-09-23T06:08:04.190Z"
+}

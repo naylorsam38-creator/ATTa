@@ -1,0 +1,123 @@
+
+$ cd apps/web && ~/.bun/bin/bun install
+bun install v1.3.11 (af24e281)
+
+Checked 672 installs across 784 packages (no changes) [15.00ms]
+
+$ cd apps/web && ~/.bun/bin/bun run build
+[36mvite v8.3.0 [32mbuilding client environment for production...[36m[39m
+transforming...
+
+[@tanstack/devtools-vite] Removed devtools code from: /src/routes/__root.tsx
+
+✓ 287 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/client/.assetsignore                                           0.02 kB
+dist/client/assets/inter-vietnamese-wght-normal-CBcvBZtf.woff2     10.25 kB
+dist/client/assets/inter-greek-ext-wght-normal-DlzME5K_.woff2      11.23 kB
+dist/client/assets/inter-cyrillic-wght-normal-DqGufNeO.woff2       18.74 kB
+dist/client/assets/inter-greek-wght-normal-CkhJZR-_.woff2          18.99 kB
+dist/client/assets/inter-cyrillic-ext-wght-normal-BOeWTOD4.woff2   25.96 kB
+dist/client/assets/inter-latin-wght-normal-Dx4kXJAl.woff2          48.25 kB
+dist/client/assets/inter-latin-ext-wght-normal-DO1Apj_S.woff2      85.06 kB
+dist/client/assets/styles-20NNzlrQ.css                            326.57 kB │ gzip:  48.87 kB
+dist/client/assets/routes-CO-6WlxE.js                               0.16 kB │ gzip:   0.14 kB
+dist/client/assets/editor-CfHbVuEc.js                               0.20 kB │ gzip:   0.16 kB
+dist/client/assets/index-BHmBorrb.js                              341.04 kB │ gzip: 109.40 kB
+
+[32m✓ built in 5.25s[39m
+[36mvite v8.3.0 [32mbuilding ssr environment for production...[36m[39m
+transforming...
+
+[@tanstack/devtools-vite] Removed devtools code from: /src/routes/__root.tsx
+
+✓ 363 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/server/wrangler.json                                           1.35 kB │ gzip:   0.68 kB
+dist/server/.vite/manifest.json                                     4.80 kB │ gzip:   0.81 kB
+dist/server/assets/inter-vietnamese-wght-normal-CBcvBZtf.woff2     10.25 kB
+dist/server/assets/inter-greek-ext-wght-normal-DlzME5K_.woff2      11.23 kB
+dist/server/assets/inter-cyrillic-wght-normal-DqGufNeO.woff2       18.74 kB
+dist/server/assets/inter-greek-wght-normal-CkhJZR-_.woff2          18.99 kB
+dist/server/assets/inter-cyrillic-ext-wght-normal-BOeWTOD4.woff2   25.96 kB
+dist/server/assets/inter-latin-wght-normal-Dx4kXJAl.woff2          48.25 kB
+dist/server/assets/inter-latin-ext-wght-normal-DO1Apj_S.woff2      85.06 kB
+dist/server/assets/styles-20NNzlrQ.css                            326.57 kB │ gzip:  48.87 kB
+dist/server/assets/start-5Z2QO8AU.js                                0.14 kB │ gzip:   0.13 kB
+dist/server/assets/empty-plugin-adapters-D9UWiqvJ.js                0.22 kB │ gzip:   0.16 kB
+dist/server/assets/routes-xNZ5Klrc.js                               0.38 kB │ gzip:   0.24 kB
+dist/server/assets/editor-D9_yqNim.js                               0.47 kB │ gzip:   0.26 kB
+dist/server/assets/_tanstack-start-manifest_v-D3C-S7ZH.js           0.72 kB │ gzip:   0.34 kB
+dist/server/assets/jsx-runtime-CIs12cAR.js                          2.51 kB │ gzip:   1.08 kB
+dist/server/assets/router-BYHliPEO.js                              42.54 kB │ gzip:  11.44 kB
+dist/server/assets/useSelector-BtRZF0BI.js                        148.86 kB │ gzip:  38.13 kB
+dist/server/index.js                                              742.60 kB │ gzip: 154.80 kB
+
+[32m✓ built in 4.32s[39m
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mProxy environment variables detected. We'll use your proxy for fetch requests.[0m
+
+
+(node:11234) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[2mDefault inspector port 9229 not available, using 9231 instead
+[22m
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m38903[22m/[39m
+  [32m➜[39m  [1mDebug[22m:   [2m[33mhttp://127.0.0.1:[1m38903[22m[2m/__debug[39m[22m
+
+The Cloudflare Vite plugin detected this preview session is running in an AI agent.
+The Local Explorer API is available at http://127.0.0.1:38903/cdn-cgi/local/explorer/api
+Useful routes:
+  GET http://127.0.0.1:38903/cdn-cgi/local/explorer/api/local/workers - local Workers and bindings
+  GET http://127.0.0.1:38903/cdn-cgi/local/explorer/api/storage/kv/namespaces - KV namespaces
+  GET http://127.0.0.1:38903/cdn-cgi/local/explorer/api/d1/database - D1 databases
+  GET http://127.0.0.1:38903/cdn-cgi/local/explorer/api/r2/buckets - R2 buckets
+  GET http://127.0.0.1:38903/cdn-cgi/local/explorer/api/workers/durable_objects/namespaces - Durable Object namespaces
+  GET http://127.0.0.1:38903/cdn-cgi/local/explorer/api/workflows - Workflows
+  POST http://127.0.0.1:38903/cdn-cgi/local/explorer/api/local/observability/query - run a read-only SQL query (SELECT/WITH only) over captured request traces and console logs. Tables: spans, logs (read attributes via json(attributes)). Example:
+    curl -X POST http://127.0.0.1:38903/cdn-cgi/local/explorer/api/local/observability/query -H 'Content-Type: application/json' -d '{"sql":"SELECT service, name, outcome, duration_ms FROM spans WHERE parent_id IS NULL LIMIT 20"}'
+  POST http://127.0.0.1:38903/cdn-cgi/local/explorer/api/local/observability/clear - clear all captured traces and logs
+If the routes above don't cover what you need, fetch the full OpenAPI schema (large - use only as a last resort):
+  GET http://127.0.0.1:38903/cdn-cgi/local/explorer/api - OpenAPI schema
+
+GET / 200 OK (21ms)
+GET / 200 OK (5ms)
+GET /assets/styles-20NNzlrQ.css 200 OK (5ms)
+GET /assets/routes-CO-6WlxE.js 200 OK (5ms)
+GET /assets/index-BHmBorrb.js 200 OK (6ms)
+GET /assets/inter-latin-wght-normal-Dx4kXJAl.woff2 200 OK (3ms)
+GET / 200 OK (6ms)
+GET /assets/styles-20NNzlrQ.css 304 Not Modified (1ms)
+GET /assets/index-BHmBorrb.js 304 Not Modified (1ms)
+GET /assets/routes-CO-6WlxE.js 304 Not Modified (1ms)
+GET / 200 OK (4ms)
+GET /assets/styles-20NNzlrQ.css 200 OK (2ms)
+GET /assets/index-BHmBorrb.js 200 OK (2ms)
+GET /assets/routes-CO-6WlxE.js 200 OK (2ms)
+GET /assets/inter-latin-wght-normal-Dx4kXJAl.woff2 200 OK (2ms)
+GET / 200 OK (6ms)
+GET / 200 OK (4ms)
+GET /assets/styles-20NNzlrQ.css 200 OK (1ms)
+GET /assets/index-BHmBorrb.js 200 OK (3ms)
+GET /assets/routes-CO-6WlxE.js 200 OK (1ms)
+GET / 200 OK (6ms)
+GET /assets/styles-20NNzlrQ.css 200 OK (1ms)
+GET /assets/index-BHmBorrb.js 200 OK (3ms)
+GET /assets/routes-CO-6WlxE.js 200 OK (1ms)
+GET / 200 OK (10ms)
+GET /assets/styles-20NNzlrQ.css 200 OK (3ms)
+GET /assets/index-BHmBorrb.js 200 OK (2ms)
+GET /assets/routes-CO-6WlxE.js 200 OK (1ms)
+GET / 200 OK (6ms)
+GET /assets/styles-20NNzlrQ.css 200 OK (2ms)
+GET /assets/index-BHmBorrb.js 200 OK (1ms)
+GET /assets/routes-CO-6WlxE.js 200 OK (1ms)
+GET / 200 OK (6ms)
+GET /assets/styles-20NNzlrQ.css 304 Not Modified (4ms)
+GET /assets/index-BHmBorrb.js 304 Not Modified (3ms)
+GET /assets/routes-CO-6WlxE.js 304 Not Modified (3ms)
+GET / 200 OK (3ms)
+GET /assets/styles-20NNzlrQ.css 304 Not Modified (2ms)
+GET /assets/index-BHmBorrb.js 304 Not Modified (4ms)
+GET /assets/routes-CO-6WlxE.js 304 Not Modified (2ms)
