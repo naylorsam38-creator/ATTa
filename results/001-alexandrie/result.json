@@ -1,10 +1,45 @@
 {
-  "at": "2026-09-23T04:37:06.737Z",
-  "bundle": "dist/001-alexandrie/",
-  "zip": "dist/001-alexandrie.zip",
-  "zipBytes": 23377327,
-  "status": "pass",
-  "detail": "containers up in 124s; 16/16 checks not failing",
+  "app": "001-alexandrie",
+  "number": "001",
+  "startedAt": "2026-09-23T04:31:53.664Z",
+  "stages": [
+    {
+      "stage": 0,
+      "name": "intake",
+      "status": "pass",
+      "detail": "bundled proxy.js, port.js, mover.mjs match canonical"
+    },
+    {
+      "stage": 1,
+      "name": "build",
+      "status": "pass",
+      "detail": "2 step(s), 66s"
+    },
+    {
+      "stage": 2,
+      "name": "serve",
+      "status": "pass",
+      "detail": "cd frontend && NODE_ENV=production exec node .output/server/index.mjs → http://127.0.0.1:38269"
+    },
+    {
+      "stage": 3,
+      "name": "proxy",
+      "status": "pass",
+      "detail": "http://127.0.0.1:45235 → http://127.0.0.1:38269"
+    },
+    {
+      "stage": 4,
+      "name": "playwright",
+      "status": "pass",
+      "detail": "16/16 not failing"
+    },
+    {
+      "stage": 5,
+      "name": "video",
+      "status": "pass",
+      "detail": "14 steps → demo.mp4, demo.webm"
+    }
+  ],
   "checks": [
     {
       "id": "C1",
@@ -103,5 +138,30 @@
       "detail": "pinned=true (\"Pinned by ATTa×\", visible=true), after reload=true, clear=true"
     }
   ],
-  "note": "Full Alexandrie stack (frontend + Go backend + MySQL + RustFS) built from the received source with Alexandrie's own Dockerfiles; the capability proxy is the only public web entrypoint (backend API and CDN are also public because the browser calls them directly)."
+  "consoleErrors": [],
+  "pageErrors": [],
+  "video": {
+    "steps": [
+      "the app, served through ui-bridge/proxy.js",
+      "Capability Port (injected before </head>) — attach the button mover",
+      "button-mover attached in the drawer slot",
+      "Move: on — every button and link is now draggable",
+      "button \"01 Capture Ideas Instant\" moved",
+      "link \"Get Started\" moved",
+      "\"Get Started\" renamed to \"Renamed by ATTa\"",
+      "sticky-notes capability attached — pin a note",
+      "note pinned on the live app and dragged into place",
+      "customer \"acme\" → skin \"midnight\" (moves, names and notes kept)",
+      "customer \"globex\" → skin \"sunrise\" (moves, names and notes kept)",
+      "customer \"initech\" → skin \"blueprint\" (moves, names and notes kept)",
+      "no customer header → original look",
+      "Reset + Clear — app back exactly as it was"
+    ],
+    "files": [
+      "demo.mp4",
+      "demo.webm"
+    ]
+  },
+  "verdict": "PASS",
+  "finishedAt": "2026-09-23T04:34:49.222Z"
 }

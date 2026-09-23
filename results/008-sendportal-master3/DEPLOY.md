@@ -1,8 +1,8 @@
-# 005-sendportal — deploy bundle FAIL
+# 008-sendportal-master3 — deploy bundle FAIL
 
-Built: 2026-09-23T04:37:49.434Z
+Built: 2026-09-23T04:37:56.026Z
 
-Bundle: `dist/005-sendportal/` · zip: `dist/005-sendportal.zip` (0.2 MB)
+Bundle: `dist/008-sendportal-master3/` · zip: `dist/008-sendportal-master3.zip` (0.2 MB)
 
 > SendPortal built from the received source (Apache + PHP 8.4, composer --no-dev, core assets published) with PostgreSQL 16; APP_KEY generated once per deployment into the storage volume unless set.
 

@@ -1,8 +1,8 @@
 {
-  "at": "2026-09-23T04:31:05.844Z",
+  "at": "2026-09-23T04:37:44.149Z",
   "bundle": "dist/003-authelia/",
   "zip": "dist/003-authelia.zip",
-  "zipBytes": 15187519,
+  "zipBytes": 15187570,
   "status": "fail",
   "detail": "docker compose up failed (exit 1); see deploy.log",
   "checks": [],

@@ -1,14 +1,21 @@
-# 001-alexandrie — deploy bundle PASS
+# 001-alexandrie — PASS
 
-Built: 2026-09-23T04:37:06.737Z
+Run: 2026-09-23T04:31:53.664Z
 
-Bundle: `dist/001-alexandrie/` · zip: `dist/001-alexandrie.zip` (22.3 MB)
+> Alexandrie: Nuxt 4 frontend only (SSR, Nitro server). The Go backend needs MySQL + S3 storage, which this environment doesn't have, so NUXT_PUBLIC_BASE_API points at an unused port — pages that only render work, anything that calls the API does not.
 
-> Full Alexandrie stack (frontend + Go backend + MySQL + RustFS) built from the received source with Alexandrie's own Dockerfiles; the capability proxy is the only public web entrypoint (backend API and CDN are also public because the browser calls them directly).
+## Stages
 
-Verification: containers up in 124s; 16/16 checks not failing
+| # | Stage | Status | Detail |
+|---|---|---|---|
+| 0 | intake | PASS | bundled proxy.js, port.js, mover.mjs match canonical |
+| 1 | build | PASS | 2 step(s), 66s |
+| 2 | serve | PASS | cd frontend && NODE_ENV=production exec node .output/server/index.mjs → http://127.0.0.1:38269 |
+| 3 | proxy | PASS | http://127.0.0.1:45235 → http://127.0.0.1:38269 |
+| 4 | playwright | PASS | 16/16 not failing |
+| 5 | video | PASS | 14 steps → demo.mp4, demo.webm |
 
-Same Playwright checks, run against the containers (proxy container → app container):
+## Playwright checks
 
 | # | Check | Status | Detail |
 |---|---|---|---|
@@ -28,3 +35,24 @@ Same Playwright checks, run against the containers (proxy container → app cont
 | C14 | Redirects and links stay on the proxy | PASS | no redirects; no upstream URLs in page |
 | C15 | Customer skins through the proxy | PASS | acme→midnight: applied; globex→sunrise: applied; initech→blueprint: applied; no header → original look |
 | C16 | Sticky-notes capability on the live page | PASS | pinned=true ("Pinned by ATTa×", visible=true), after reload=true, clear=true |
+
+Screenshots: `screenshot-moved.png` (Move on, controls dragged, drawer closed), `screenshot-drawer.png` (Port drawer open).
+
+## Demo video
+
+[`demo.mp4`](demo.mp4) · [`demo.webm`](demo.webm)
+
+1. the app, served through ui-bridge/proxy.js
+2. Capability Port (injected before </head>) — attach the button mover
+3. button-mover attached in the drawer slot
+4. Move: on — every button and link is now draggable
+5. button "01 Capture Ideas Instant" moved
+6. link "Get Started" moved
+7. "Get Started" renamed to "Renamed by ATTa"
+8. sticky-notes capability attached — pin a note
+9. note pinned on the live app and dragged into place
+10. customer "acme" → skin "midnight" (moves, names and notes kept)
+11. customer "globex" → skin "sunrise" (moves, names and notes kept)
+12. customer "initech" → skin "blueprint" (moves, names and notes kept)
+13. no customer header → original look
+14. Reset + Clear — app back exactly as it was

@@ -5,21 +5,21 @@ $ docker compose up -d --build
 #1 DONE 0.0s
 
 #2 [sendportal internal] load build definition from Dockerfile.verify
-#2 transferring dockerfile: 2.15kB done
+#2 transferring dockerfile: 2.46kB done
 #2 DONE 0.0s
 
 #3 [proxy internal] load build definition from Dockerfile.verify
-#3 transferring dockerfile: 1.10kB done
+#3 transferring dockerfile: 1.26kB done
 #3 DONE 0.0s
 
 #4 [sendportal context sandboxca] load .dockerignore
 #4 transferring sandboxca: 2B done
 #4 DONE 0.0s
 
-#5 [proxy internal] load metadata for docker.io/library/node:22-alpine
+#5 [sendportal internal] load metadata for docker.io/library/php:8.4-apache
 #5 DONE 0.0s
 
-#6 [sendportal internal] load metadata for docker.io/library/php:8.4-apache
+#6 [proxy internal] load metadata for docker.io/library/node:22-alpine
 #6 DONE 0.0s
 
 #7 [proxy internal] load .dockerignore
@@ -30,7 +30,7 @@ $ docker compose up -d --build
 #8 transferring context: 60.99kB done
 #8 DONE 0.0s
 
-#9 [proxy stage-0 1/5] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#9 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
 #9 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85 0.0s done
 #9 DONE 0.0s
 
@@ -38,113 +38,109 @@ $ docker compose up -d --build
 #10 transferring sandboxca: 36B done
 #10 DONE 0.0s
 
-#11 [proxy stage-0 3/5] WORKDIR /cp
+#11 [proxy stage-0 3/6] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
 #11 CACHED
 
-#12 [proxy stage-0 2/5] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#12 [proxy stage-0 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
 #12 CACHED
 
-#13 [proxy stage-0 4/5] COPY --chown=node:node ui-bridge ./ui-bridge
+#13 [proxy stage-0 4/6] WORKDIR /cp
 #13 CACHED
 
-#14 [proxy stage-0 5/5] COPY --chown=node:node capability-port ./capability-port
+#14 [proxy stage-0 5/6] COPY --chown=node:node ui-bridge ./ui-bridge
 #14 DONE 0.0s
 
-#15 [proxy] exporting to image
-#15 exporting layers 0.0s done
-#15 exporting manifest sha256:32e4b3435ad290f38fd26946bfc5e647c52d767c6cacb42b469174028dc5541b done
-#15 exporting config sha256:b229de2cd4c7dfad3cae3bd1e561527dc0c9d81ad52cb616f23efa68c86ca17a done
-#15 exporting attestation manifest sha256:2d92a07ebe427aafe5eeca80ce7f50c211560dcb79ae982b96c1f24478eea96b 0.0s done
-#15 exporting manifest list sha256:7d124708a803ae40d965afb905364e494501141b965a29e65a0ac722f7d82749 done
-#15 naming to docker.io/library/atta-005sendportal-proxy:latest done
-#15 unpacking to docker.io/library/atta-005sendportal-proxy:latest 0.0s done
-#15 DONE 0.1s
+#15 [proxy stage-0 6/6] COPY --chown=node:node capability-port ./capability-port
+#15 DONE 0.0s
 
-#16 [proxy] resolving provenance for metadata file
-#16 DONE 0.0s
+#16 [proxy] exporting to image
+#16 exporting layers 0.0s done
+#16 exporting manifest sha256:b11db5283df3ab0b0d42b0d7ff6b9b807659e93432df1bcb878bd05c46280054 done
+#16 exporting config sha256:b04b19d31e219014be7d49cd6f95e3443ab92bc007452fa25bc072def5792a11 done
+#16 exporting attestation manifest sha256:a7acc2a172a1d0a6c36c0008b2dada99cd6903784914c0ee97171996ddaa2119 done
+#16 exporting manifest list sha256:9eceba2e40e1192e38b18df9d03d9cf769c09ff6d6570af908d51cec3336c377 done
+#16 naming to docker.io/library/atta-005sendportal-proxy:latest done
+#16 unpacking to docker.io/library/atta-005sendportal-proxy:latest 0.0s done
+#16 DONE 0.1s
 
-#17 [sendportal internal] load metadata for docker.io/library/composer:2
-#17 DONE 0.5s
+#17 [proxy] resolving provenance for metadata file
+#17 DONE 0.0s
 
-#18 [sendportal internal] load .dockerignore
-#18 transferring context: 2B done
-#18 DONE 0.0s
+#18 [sendportal internal] load metadata for docker.io/library/composer:2
+#18 DONE 0.4s
 
-#19 [sendportal stage-1 1/9] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
-#19 resolve docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3 0.0s done
+#19 [sendportal internal] load .dockerignore
+#19 transferring context: 2B done
 #19 DONE 0.0s
 
-#20 [sendportal stage-1 2/9] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
-#20 CACHED
+#20 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#20 resolve docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3 0.0s done
+#20 DONE 0.0s
 
 #10 [sendportal context sandboxca] load from client
 #10 CACHED
 
-#21 [sendportal vendor 1/5] FROM docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b
-#21 resolve docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b 0.0s done
-#21 ...
+#21 [sendportal stage-1  2/10] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#21 CACHED
 
-#22 [sendportal internal] load build context
-#22 transferring context: 279.92kB 0.0s done
-#22 DONE 0.1s
+#22 [sendportal stage-1  3/10] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#22 CACHED
 
-#23 [sendportal stage-1 3/9] RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpq-dev unzip  && docker-php-ext-install pdo_pgsql pdo_mysql bcmath intl zip pcntl  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*
-#23 0.110 Err:1 http://deb.debian.org/debian trixie InRelease
-#23 0.110   405  Method Not Allowed [IP: 127.0.0.1 33173]
-#23 0.112 Err:2 http://deb.debian.org/debian trixie-updates InRelease
-#23 0.112   405  Method Not Allowed [IP: 127.0.0.1 33173]
-#23 0.112 Err:3 http://deb.debian.org/debian-security trixie-security InRelease
-#23 0.112   405  Method Not Allowed [IP: 127.0.0.1 33173]
-#23 0.118 Reading package lists...
-#23 0.127 E: The repository 'http://deb.debian.org/debian trixie InRelease' is no longer signed.
-#23 0.127 E: Failed to fetch http://deb.debian.org/debian/dists/trixie/InRelease  405  Method Not Allowed [IP: 127.0.0.1 33173]
-#23 0.127 E: Failed to fetch http://deb.debian.org/debian/dists/trixie-updates/InRelease  405  Method Not Allowed [IP: 127.0.0.1 33173]
-#23 0.127 E: The repository 'http://deb.debian.org/debian trixie-updates InRelease' is no longer signed.
-#23 0.127 E: Failed to fetch http://deb.debian.org/debian-security/dists/trixie-security/InRelease  405  Method Not Allowed [IP: 127.0.0.1 33173]
-#23 0.127 E: The repository 'http://deb.debian.org/debian-security trixie-security InRelease' is no longer signed.
-#23 ERROR: process "/bin/sh -c apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpq-dev unzip  && docker-php-ext-install pdo_pgsql pdo_mysql bcmath intl zip pcntl  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*" did not complete successfully: exit code: 100
+#23 [sendportal internal] load build context
+#23 transferring context: 280.23kB 0.1s done
+#23 DONE 0.1s
 
-#21 [sendportal vendor 1/5] FROM docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b
-#21 sha256:f3c3861b7f28d48a268475d144b60f3eff7ae6d2e4b89f80ad855b4526b86436 0B / 93B 0.2s
-#21 sha256:df9e0965cba971df0b40bf22f350477bb3a88943dcf7ed674c844000edaed895 0B / 419B 0.2s
-#21 sha256:93714b53f670a75fc6ac2889b7ff84b82d0790fbbd6c8ca305488478cd99af32 0B / 1.08MB 0.2s
-#21 sha256:dda1d22139e8e2848a33553d9156d8d8e812d027b0ce578c998b006aee652732 0B / 257B 0.2s
-#21 ...
+#24 [sendportal vendor 1/6] FROM docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b
+#24 resolve docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b 0.0s done
+#24 sha256:93714b53f670a75fc6ac2889b7ff84b82d0790fbbd6c8ca305488478cd99af32 0B / 1.08MB 0.2s
+#24 sha256:db63a21dece86cd4ee82c1db962d233909f19f8129157a5cd1a2aab237cbe214 28.31MB / 31.96MB 0.2s
+#24 sha256:47b315bc998d95306667eadaa05df9971c697eb770b6470ee9fbff58ed5d2808 5.24MB / 22.83MB 0.2s
+#24 sha256:dda1d22139e8e2848a33553d9156d8d8e812d027b0ce578c998b006aee652732 0B / 257B 0.2s
+#24 sha256:dda1d22139e8e2848a33553d9156d8d8e812d027b0ce578c998b006aee652732 257B / 257B 0.5s done
+#24 sha256:048db7ded50b884244d7cd8e1136c7f59f8de672fc333785717125f7ceacdb41 0B / 488B 0.2s
+#24 sha256:93714b53f670a75fc6ac2889b7ff84b82d0790fbbd6c8ca305488478cd99af32 1.08MB / 1.08MB 0.7s done
+#24 sha256:db63a21dece86cd4ee82c1db962d233909f19f8129157a5cd1a2aab237cbe214 31.96MB / 31.96MB 0.8s done
+#24 sha256:048db7ded50b884244d7cd8e1136c7f59f8de672fc333785717125f7ceacdb41 488B / 488B 0.4s done
+#24 sha256:47b315bc998d95306667eadaa05df9971c697eb770b6470ee9fbff58ed5d2808 13.63MB / 22.83MB 0.9s
+#24 sha256:0c5da73b54f94ec217546882f182f9bef195e691ac8e27ac32ddeef8d6669e5a 8.39MB / 14.48MB 0.2s
+#24 sha256:6273de5464fa78b05aac16b835da86450421ff1b6a97373881e6bf6831540f3b 0B / 215B 0.1s
+#24 ...
 
-#24 [sendportal vendor 2/5] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
-#24 CANCELED
+#25 [sendportal vendor 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#25 ERROR: failed to copy: failed to send write: write /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/ingest/aed2f7bcd0def88bebd8bd727b7cbedb492a02aca64dffe176eb2b7322385c9f/data: no space left on device
+
+#26 [sendportal stage-1  4/10] RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpq-dev unzip  && docker-php-ext-install pdo_pgsql pdo_mysql bcmath intl zip pcntl  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*
+#26 0.324 Hit:1 https://deb.debian.org/debian trixie InRelease
+#26 0.359 Get:2 https://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
+#26 0.421 Get:3 https://deb.debian.org/debian-security trixie-security InRelease [43.4 kB]
+#26 0.471 Get:4 https://deb.debian.org/debian trixie/main amd64 Packages [9678 kB]
+#26 0.586 Get:5 https://deb.debian.org/debian trixie-updates/main amd64 Packages [4412 B]
+#26 0.634 Get:6 https://deb.debian.org/debian-security trixie-security/main amd64 Packages [262 kB]
+#26 0.966 Err:4 https://deb.debian.org/debian trixie/main amd64 Packages
+#26 0.966   Write error - write (28: No space left on device) LZ4F: /var/lib/apt/lists/partial/deb.debian.org_debian_dists_trixie_main_binary-amd64_Packages.lz4 Write error (27520: Unspecified error code)
+#26 CANCELED
 ------
- > [sendportal stage-1 3/9] RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpq-dev unzip  && docker-php-ext-install pdo_pgsql pdo_mysql bcmath intl zip pcntl  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*:
-0.112   405  Method Not Allowed [IP: 127.0.0.1 33173]
-0.112 Err:3 http://deb.debian.org/debian-security trixie-security InRelease
-0.112   405  Method Not Allowed [IP: 127.0.0.1 33173]
-0.118 Reading package lists...
-0.127 E: The repository 'http://deb.debian.org/debian trixie InRelease' is no longer signed.
-0.127 E: Failed to fetch http://deb.debian.org/debian/dists/trixie/InRelease  405  Method Not Allowed [IP: 127.0.0.1 33173]
-0.127 E: Failed to fetch http://deb.debian.org/debian/dists/trixie-updates/InRelease  405  Method Not Allowed [IP: 127.0.0.1 33173]
-0.127 E: The repository 'http://deb.debian.org/debian trixie-updates InRelease' is no longer signed.
-0.127 E: Failed to fetch http://deb.debian.org/debian-security/dists/trixie-security/InRelease  405  Method Not Allowed [IP: 127.0.0.1 33173]
-0.127 E: The repository 'http://deb.debian.org/debian-security trixie-security InRelease' is no longer signed.
+ > [sendportal vendor 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt:
 ------
- Image atta-005sendportal-proxy Building 
  Image atta-005sendportal-sendportal Building 
-Dockerfile.verify:14
+ Image atta-005sendportal-proxy Building 
+Dockerfile.verify:4
 
 --------------------
 
-  13 |     ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt PIP_CERT=/etc/ssl/certs/ca-certificates.crt UV_NATIVE_TLS=1 CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
+   2 |     # roave/security-advisories (it blocks every Laravel 11 release), install --no-dev, publish core assets.
 
-  14 | >>> RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpq-dev unzip \
+   3 |     FROM composer:2 AS vendor
 
-  15 | >>>  && docker-php-ext-install pdo_pgsql pdo_mysql bcmath intl zip pcntl \
+   4 | >>> COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
 
-  16 | >>>  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*
+   5 |     RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
 
-  17 |     ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+   6 |     ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt PIP_CERT=/etc/ssl/certs/ca-certificates.crt UV_NATIVE_TLS=1 CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
 
 --------------------
 
-target sendportal: failed to solve: process "/bin/sh -c apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpq-dev unzip  && docker-php-ext-install pdo_pgsql pdo_mysql bcmath intl zip pcntl  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*" did not complete successfully: exit code: 100
+target sendportal: failed to solve: failed to compute cache key: failed to copy: failed to send write: write /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/ingest/aed2f7bcd0def88bebd8bd727b7cbedb492a02aca64dffe176eb2b7322385c9f/data: no space left on device
 
 
 $ docker compose down -v --remove-orphans

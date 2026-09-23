@@ -4,168 +4,218 @@ $ docker compose up -d --build
 #1 reading from stdin 1.80kB done
 #1 DONE 0.0s
 
-#2 [mixpost internal] load build definition from Dockerfile.verify
-#2 transferring dockerfile: 3.40kB done
+#2 [proxy internal] load build definition from Dockerfile.verify
+#2 transferring dockerfile: 1.26kB done
 #2 DONE 0.0s
 
-#3 [proxy internal] load build definition from Dockerfile.verify
-#3 transferring dockerfile: 1.10kB done
+#3 [mixpost internal] load build definition from Dockerfile.verify
+#3 transferring dockerfile: 3.87kB done
 #3 DONE 0.0s
 
 #4 [proxy context sandboxca] load .dockerignore
 #4 transferring sandboxca: 2B done
 #4 DONE 0.0s
 
-#5 [proxy internal] load metadata for docker.io/library/node:22-alpine
+#5 [mixpost internal] load metadata for docker.io/library/php:8.4-apache
 #5 DONE 0.0s
 
-#6 [proxy internal] load .dockerignore
-#6 transferring context: 2B done
+#6 [mixpost internal] load metadata for docker.io/library/node:22-alpine
 #6 DONE 0.0s
 
-#7 [mixpost internal] load metadata for docker.io/library/php:8.4-apache
+#7 [proxy internal] load .dockerignore
+#7 transferring context: 2B done
 #7 DONE 0.0s
 
-#8 [proxy context sandboxca] load from client
-#8 DONE 0.0s
+#8 [mixpost internal] load metadata for docker.io/library/composer:2
+#8 ...
 
 #9 [proxy internal] load build context
 #9 transferring context: 60.97kB done
 #9 DONE 0.0s
 
-#10 [proxy stage-0 1/5] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
-#10 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#10 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
 #10 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85 0.0s done
 #10 DONE 0.0s
 
-#8 [proxy context sandboxca] load from client
-#8 transferring sandboxca: 36B done
-#8 DONE 0.0s
+#11 [proxy context sandboxca] load from client
+#11 transferring sandboxca: 36B done
+#11 DONE 0.0s
 
-#11 [proxy stage-0 2/5] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
-#11 CACHED
-
-#12 [proxy stage-0 4/5] COPY --chown=node:node ui-bridge ./ui-bridge
+#12 [proxy stage-0 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
 #12 CACHED
 
-#13 [proxy stage-0 3/5] WORKDIR /cp
+#13 [proxy stage-0 3/6] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
 #13 CACHED
 
-#14 [proxy stage-0 5/5] COPY --chown=node:node capability-port ./capability-port
+#14 [proxy stage-0 4/6] WORKDIR /cp
 #14 CACHED
 
-#15 [proxy] exporting to image
-#15 exporting layers done
-#15 exporting manifest sha256:01589aaed992fd34f714fb7ee695505035abebe6bc6e6c88bae2a900858123ae done
-#15 exporting config sha256:20f7fb9c746af1931a63b9a52bd87cc35892491033771d53f2089a4064587cc3 done
-#15 exporting attestation manifest sha256:398eec61fbabf5639dfa91d33f5ec34fb3defd06a4e3d0abbe698edf2210238a done
-#15 exporting manifest list sha256:73c29c99e235a1297912ca563dc925504b34daa5e7db4f402cfaf6e66c0eb54b done
-#15 naming to docker.io/library/atta-004mixpost-proxy:latest done
-#15 unpacking to docker.io/library/atta-004mixpost-proxy:latest 0.0s done
+#15 [proxy stage-0 5/6] COPY --chown=node:node ui-bridge ./ui-bridge
 #15 DONE 0.1s
 
-#16 [proxy] resolving provenance for metadata file
+#16 [proxy stage-0 6/6] COPY --chown=node:node capability-port ./capability-port
 #16 DONE 0.0s
 
-#17 [mixpost internal] load metadata for docker.io/library/composer:2
-#17 DONE 1.8s
+#17 [proxy] exporting to image
+#17 exporting layers 0.0s done
+#17 exporting manifest sha256:120fe154a76847eec1bed8c0bea874feec0de6cd19c3d626afe2cd9aab82ad95 done
+#17 exporting config sha256:970ec4de7c98e9ab6e0ba42302a3bc7a9f0fa1172fb6c3525758cf378fc04aa5 done
+#17 exporting attestation manifest sha256:bd0a2950cab9f42afc2dd127ecb9dc8423b78ed6eae6f305927119008046f44a done
+#17 exporting manifest list sha256:8a293a0dbc2df48e24dc68e43817c81ab54d0833307225c6525f1779bcb5b04b done
+#17 naming to docker.io/library/atta-004mixpost-proxy:latest done
+#17 unpacking to docker.io/library/atta-004mixpost-proxy:latest 0.0s done
+#17 DONE 0.1s
 
-#10 [mixpost assets 1/7] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#18 [proxy] resolving provenance for metadata file
+#18 DONE 0.0s
+
+#8 [mixpost internal] load metadata for docker.io/library/composer:2
+#8 DONE 0.7s
+
+#19 [mixpost stage-2  1/11] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#19 resolve docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3 0.0s done
+#19 DONE 0.0s
+
+#10 [mixpost assets 1/8] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
 #10 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85 0.0s done
-#10 DONE 0.1s
+#10 DONE 0.0s
 
-#11 [mixpost assets 2/7] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#12 [mixpost assets 2/8] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#12 CACHED
+
+#13 [mixpost assets 3/8] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#13 CACHED
+
+#20 [mixpost stage-2  2/11] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#20 CACHED
+
+#11 [mixpost context sandboxca] load from client
 #11 CACHED
 
-#8 [mixpost context sandboxca] load from client
-#8 CACHED
+#21 [mixpost host 1/9] FROM docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b
+#21 resolve docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b 0.0s done
+#21 CACHED
 
-#18 [mixpost assets 3/7] WORKDIR /pkg
-#18 DONE 0.1s
+#22 [mixpost internal] load build context
+#22 transferring context: 4.27MB 0.1s done
+#22 DONE 0.1s
 
-#19 [mixpost host 1/8] FROM docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b
-#19 resolve docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b 0.0s done
-#19 ...
+#23 [mixpost assets 4/8] WORKDIR /pkg
+#23 DONE 0.1s
 
-#20 [mixpost internal] load build context
-#20 transferring context: 4.26MB 0.1s done
-#20 DONE 0.2s
+#24 [mixpost stage-2  3/11] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#24 DONE 0.1s
 
-#21 [mixpost assets 4/7] COPY package.json package-lock.json ./
-#21 DONE 0.0s
+#25 [mixpost assets 5/8] COPY package.json package-lock.json ./
+#25 DONE 0.0s
 
-#19 [mixpost host 1/8] FROM docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b
-#19 DONE 0.3s
+#21 [mixpost host 1/9] FROM docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b
+#21 sha256:df9e0965cba971df0b40bf22f350477bb3a88943dcf7ed674c844000edaed895 0B / 419B 0.3s
+#21 sha256:f3c3861b7f28d48a268475d144b60f3eff7ae6d2e4b89f80ad855b4526b86436 0B / 93B 0.3s
+#21 sha256:5bf1f8344e5bdfa4dc2d44919f2d4692a87a4eb016af3c8fdfbd32e29712467e 0B / 3.49MB 0.2s
+#21 sha256:5f5e9c2a2e39c7ff12b63c9a0b0511d1b7193450572669b00986b02afaf9d38e 0B / 932B 0.2s
+#21 sha256:f3c3861b7f28d48a268475d144b60f3eff7ae6d2e4b89f80ad855b4526b86436 93B / 93B 0.4s done
+#21 sha256:180fe6290b355c4f53ed1daf350144810ebb3af25384a50d3a522912bed89d2d 0B / 2.45kB 0.2s
+#21 sha256:df9e0965cba971df0b40bf22f350477bb3a88943dcf7ed674c844000edaed895 419B / 419B 0.6s done
+#21 sha256:5f5e9c2a2e39c7ff12b63c9a0b0511d1b7193450572669b00986b02afaf9d38e 932B / 932B 0.6s done
+#21 sha256:180fe6290b355c4f53ed1daf350144810ebb3af25384a50d3a522912bed89d2d 2.45kB / 2.45kB 0.4s done
+#21 sha256:db63a21dece86cd4ee82c1db962d233909f19f8129157a5cd1a2aab237cbe214 0B / 31.96MB 0.2s
+#21 sha256:215c9dac562bbab8edc9068931ef370869fa888390db5921ae8f343ebfc8f4f8 0B / 22.42kB 0.2s
+#21 sha256:5bf1f8344e5bdfa4dc2d44919f2d4692a87a4eb016af3c8fdfbd32e29712467e 3.49MB / 3.49MB 0.9s done
+#21 sha256:47b315bc998d95306667eadaa05df9971c697eb770b6470ee9fbff58ed5d2808 0B / 22.83MB 0.2s
+#21 extracting sha256:5bf1f8344e5bdfa4dc2d44919f2d4692a87a4eb016af3c8fdfbd32e29712467e
+#21 extracting sha256:5bf1f8344e5bdfa4dc2d44919f2d4692a87a4eb016af3c8fdfbd32e29712467e 0.1s done
+#21 extracting sha256:5f5e9c2a2e39c7ff12b63c9a0b0511d1b7193450572669b00986b02afaf9d38e done
+#21 sha256:0c5da73b54f94ec217546882f182f9bef195e691ac8e27ac32ddeef8d6669e5a 0B / 14.48MB 0.2s
+#21 sha256:215c9dac562bbab8edc9068931ef370869fa888390db5921ae8f343ebfc8f4f8 22.42kB / 22.42kB 0.6s done
+#21 sha256:db63a21dece86cd4ee82c1db962d233909f19f8129157a5cd1a2aab237cbe214 5.24MB / 31.96MB 0.8s
+#21 sha256:048db7ded50b884244d7cd8e1136c7f59f8de672fc333785717125f7ceacdb41 0B / 488B 0.2s
+#21 sha256:db63a21dece86cd4ee82c1db962d233909f19f8129157a5cd1a2aab237cbe214 24.12MB / 31.96MB 0.9s
+#21 sha256:0c5da73b54f94ec217546882f182f9bef195e691ac8e27ac32ddeef8d6669e5a 2.10MB / 14.48MB 0.6s
+#21 sha256:db63a21dece86cd4ee82c1db962d233909f19f8129157a5cd1a2aab237cbe214 28.31MB / 31.96MB 1.0s
+#21 sha256:47b315bc998d95306667eadaa05df9971c697eb770b6470ee9fbff58ed5d2808 5.24MB / 22.83MB 0.9s
+#21 sha256:0c5da73b54f94ec217546882f182f9bef195e691ac8e27ac32ddeef8d6669e5a 8.39MB / 14.48MB 0.7s
+#21 sha256:dda1d22139e8e2848a33553d9156d8d8e812d027b0ce578c998b006aee652732 0B / 257B
+#21 sha256:93714b53f670a75fc6ac2889b7ff84b82d0790fbbd6c8ca305488478cd99af32 0B / 1.08MB
+#21 ...
 
-#22 [mixpost stage-2  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
-#22 resolve docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3 0.0s done
-#22 DONE 0.4s
+#26 [mixpost host 2/9] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#26 ERROR: failed to copy: failed to send write: write /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/ingest/3e348b3f5995efadece3751ad1e257c71c467810e264e4052e6d301a47fbbb7b/data: no space left on device
 
-#23 [mixpost stage-2  2/10] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
-#23 DONE 0.0s
+#27 [mixpost assets 6/8] RUN npm ci --no-audit --no-fund
+#27 1.160 npm warn ERESOLVE overriding peer dependency
+#27 1.161 npm warn While resolving: vue-virtual-scroller@1.1.2
+#27 1.161 npm warn Found: vue@3.5.15
+#27 1.161 npm warn node_modules/vue
+#27 1.161 npm warn   dev vue@"^3.5.13" from the root project
+#27 1.161 npm warn   10 more (@inertiajs/vue3, @tiptap/vue-3, @vitejs/plugin-vue, ...)
+#27 1.161 npm warn
+#27 1.161 npm warn Could not resolve dependency:
+#27 1.161 npm warn peer vue@"^2.6.11" from vue-virtual-scroller@1.1.2
+#27 1.161 npm warn node_modules/emoji-mart-vue-fast/node_modules/vue-virtual-scroller
+#27 1.161 npm warn   vue-virtual-scroller@"^1.0.10" from emoji-mart-vue-fast@11.2.0
+#27 1.161 npm warn   node_modules/emoji-mart-vue-fast
+#27 1.161 npm warn
+#27 1.161 npm warn Conflicting peer dependency: vue@2.7.16
+#27 1.161 npm warn node_modules/vue
+#27 1.161 npm warn   peer vue@"^2.6.11" from vue-virtual-scroller@1.1.2
+#27 1.161 npm warn   node_modules/emoji-mart-vue-fast/node_modules/vue-virtual-scroller
+#27 1.161 npm warn     vue-virtual-scroller@"^1.0.10" from emoji-mart-vue-fast@11.2.0
+#27 1.161 npm warn     node_modules/emoji-mart-vue-fast
+#27 1.195 npm warn ERESOLVE overriding peer dependency
+#27 1.195 npm warn While resolving: vue-resize@0.4.5
+#27 1.195 npm warn Found: vue@3.5.15
+#27 1.195 npm warn node_modules/vue
+#27 1.195 npm warn   dev vue@"^3.5.13" from the root project
+#27 1.195 npm warn   10 more (@inertiajs/vue3, @tiptap/vue-3, @vitejs/plugin-vue, ...)
+#27 1.195 npm warn
+#27 1.195 npm warn Could not resolve dependency:
+#27 1.195 npm warn peer vue@"^2.3.0" from vue-resize@0.4.5
+#27 1.195 npm warn node_modules/emoji-mart-vue-fast/node_modules/vue-virtual-scroller/node_modules/vue-resize
+#27 1.195 npm warn   vue-resize@"^0.4.5" from vue-virtual-scroller@1.1.2
+#27 1.195 npm warn   node_modules/emoji-mart-vue-fast/node_modules/vue-virtual-scroller
+#27 1.195 npm warn
+#27 1.195 npm warn Conflicting peer dependency: vue@2.7.16
+#27 1.195 npm warn node_modules/vue
+#27 1.195 npm warn   peer vue@"^2.3.0" from vue-resize@0.4.5
+#27 1.195 npm warn   node_modules/emoji-mart-vue-fast/node_modules/vue-virtual-scroller/node_modules/vue-resize
+#27 1.195 npm warn     vue-resize@"^0.4.5" from vue-virtual-scroller@1.1.2
+#27 1.195 npm warn     node_modules/emoji-mart-vue-fast/node_modules/vue-virtual-scroller
+#27 CANCELED
 
-#24 [mixpost stage-2  3/10] RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpng-dev libjpeg-dev libfreetype6-dev unzip  && docker-php-ext-configure gd --with-freetype --with-jpeg  && docker-php-ext-install pdo_mysql bcmath intl zip pcntl gd exif  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*
-#24 0.101 Err:1 http://deb.debian.org/debian trixie InRelease
-#24 0.101   405  Method Not Allowed [IP: 127.0.0.1 33173]
-#24 0.102 Err:2 http://deb.debian.org/debian trixie-updates InRelease
-#24 0.102   405  Method Not Allowed [IP: 127.0.0.1 33173]
-#24 0.104 Err:3 http://deb.debian.org/debian-security trixie-security InRelease
-#24 0.104   405  Method Not Allowed [IP: 127.0.0.1 33173]
-#24 0.109 Reading package lists...
-#24 0.121 E: The repository 'http://deb.debian.org/debian trixie InRelease' is no longer signed.
-#24 0.121 E: Failed to fetch http://deb.debian.org/debian/dists/trixie/InRelease  405  Method Not Allowed [IP: 127.0.0.1 33173]
-#24 0.121 E: Failed to fetch http://deb.debian.org/debian/dists/trixie-updates/InRelease  405  Method Not Allowed [IP: 127.0.0.1 33173]
-#24 0.121 E: The repository 'http://deb.debian.org/debian trixie-updates InRelease' is no longer signed.
-#24 0.121 E: Failed to fetch http://deb.debian.org/debian-security/dists/trixie-security/InRelease  405  Method Not Allowed [IP: 127.0.0.1 33173]
-#24 0.121 E: The repository 'http://deb.debian.org/debian-security trixie-security InRelease' is no longer signed.
-#24 ERROR: process "/bin/sh -c apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpng-dev libjpeg-dev libfreetype6-dev unzip  && docker-php-ext-configure gd --with-freetype --with-jpeg  && docker-php-ext-install pdo_mysql bcmath intl zip pcntl gd exif  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*" did not complete successfully: exit code: 100
-
-#19 [mixpost host 1/8] FROM docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b
-#19 sha256:df9e0965cba971df0b40bf22f350477bb3a88943dcf7ed674c844000edaed895 0B / 419B 0.2s
-#19 sha256:f3c3861b7f28d48a268475d144b60f3eff7ae6d2e4b89f80ad855b4526b86436 0B / 93B 0.2s
-#19 sha256:93714b53f670a75fc6ac2889b7ff84b82d0790fbbd6c8ca305488478cd99af32 0B / 1.08MB 0.2s
-#19 sha256:dda1d22139e8e2848a33553d9156d8d8e812d027b0ce578c998b006aee652732 0B / 257B 0.2s
-#19 ...
-
-#25 [mixpost host 2/8] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
-#25 CANCELED
-
-#26 [mixpost assets 5/7] RUN npm ci --no-audit --no-fund
-#26 CANCELED
+#28 [mixpost stage-2  4/11] RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpng-dev libjpeg-dev libfreetype6-dev unzip  && docker-php-ext-configure gd --with-freetype --with-jpeg  && docker-php-ext-install pdo_mysql bcmath intl zip pcntl gd exif  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*
+#28 0.445 Hit:1 https://deb.debian.org/debian trixie InRelease
+#28 0.484 Get:2 https://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
+#28 0.558 Get:3 https://deb.debian.org/debian-security trixie-security InRelease [43.4 kB]
+#28 0.613 Get:4 https://deb.debian.org/debian trixie/main amd64 Packages [9678 kB]
+#28 0.792 Get:5 https://deb.debian.org/debian trixie-updates/main amd64 Packages [4412 B]
+#28 0.855 Get:6 https://deb.debian.org/debian-security trixie-security/main amd64 Packages [262 kB]
+#28 1.522 Err:4 https://deb.debian.org/debian trixie/main amd64 Packages
+#28 1.522   Write error - write (28: No space left on device) LZ4F: /var/lib/apt/lists/partial/deb.debian.org_debian_dists_trixie_main_binary-amd64_Packages.lz4 Write error (27570: Unspecified error code)
+#28 1.614 Get:4 https://deb.debian.org/debian trixie/main amd64 Packages [13.3 MB]
+#28 CANCELED
 ------
- > [mixpost stage-2  3/10] RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpng-dev libjpeg-dev libfreetype6-dev unzip  && docker-php-ext-configure gd --with-freetype --with-jpeg  && docker-php-ext-install pdo_mysql bcmath intl zip pcntl gd exif  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*:
-0.102   405  Method Not Allowed [IP: 127.0.0.1 33173]
-0.104 Err:3 http://deb.debian.org/debian-security trixie-security InRelease
-0.104   405  Method Not Allowed [IP: 127.0.0.1 33173]
-0.109 Reading package lists...
-0.121 E: The repository 'http://deb.debian.org/debian trixie InRelease' is no longer signed.
-0.121 E: Failed to fetch http://deb.debian.org/debian/dists/trixie/InRelease  405  Method Not Allowed [IP: 127.0.0.1 33173]
-0.121 E: Failed to fetch http://deb.debian.org/debian/dists/trixie-updates/InRelease  405  Method Not Allowed [IP: 127.0.0.1 33173]
-0.121 E: The repository 'http://deb.debian.org/debian trixie-updates InRelease' is no longer signed.
-0.121 E: Failed to fetch http://deb.debian.org/debian-security/dists/trixie-security/InRelease  405  Method Not Allowed [IP: 127.0.0.1 33173]
-0.121 E: The repository 'http://deb.debian.org/debian-security trixie-security InRelease' is no longer signed.
+ > [mixpost host 2/9] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt:
 ------
  Image atta-004mixpost-proxy Building 
  Image atta-004mixpost-mixpost Building 
-Dockerfile.verify:27
+Dockerfile.verify:15
 
 --------------------
 
-  26 |     ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt PIP_CERT=/etc/ssl/certs/ca-certificates.crt UV_NATIVE_TLS=1 CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
+  13 |     
 
-  27 | >>> RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpng-dev libjpeg-dev libfreetype6-dev unzip \
+  14 |     FROM composer:2 AS host
 
-  28 | >>>  && docker-php-ext-configure gd --with-freetype --with-jpeg \
+  15 | >>> COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
 
-  29 | >>>  && docker-php-ext-install pdo_mysql bcmath intl zip pcntl gd exif \
+  16 |     RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
 
-  30 | >>>  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*
-
-  31 |     ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+  17 |     ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt PIP_CERT=/etc/ssl/certs/ca-certificates.crt UV_NATIVE_TLS=1 CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
 
 --------------------
 
-target mixpost: failed to solve: process "/bin/sh -c apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpng-dev libjpeg-dev libfreetype6-dev unzip  && docker-php-ext-configure gd --with-freetype --with-jpeg  && docker-php-ext-install pdo_mysql bcmath intl zip pcntl gd exif  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*" did not complete successfully: exit code: 100
+target mixpost: failed to solve: failed to compute cache key: failed to copy: failed to send write: write /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/ingest/3e348b3f5995efadece3751ad1e257c71c467810e264e4052e6d301a47fbbb7b/data: no space left on device
 
 
 $ docker compose down -v --remove-orphans
