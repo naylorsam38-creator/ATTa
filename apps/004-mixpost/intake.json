@@ -1,0 +1,11 @@
+{
+  "id": "004-mixpost",
+  "source": "12bc995e-mixpost-main_2_-capability-patched.zip",
+  "addedAt": "2026-09-23T03:28:06.347Z",
+  "bundle": {
+    "ui-bridge/proxy.js": "match",
+    "capability-port/port.js": "match",
+    "capability-port/caps/mover.mjs": "match"
+  },
+  "md5": "9072b08c6cd7af09d9adc16ba2c70072"
+}

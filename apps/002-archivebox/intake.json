@@ -1,0 +1,11 @@
+{
+  "id": "002-archivebox",
+  "source": "09b95ff5-ArchiveBox-dev_3_-capability-patched.zip",
+  "addedAt": "2026-09-23T03:28:05.127Z",
+  "bundle": {
+    "ui-bridge/proxy.js": "match",
+    "capability-port/port.js": "match",
+    "capability-port/caps/mover.mjs": "match"
+  },
+  "md5": "2a72f309068f662e0d13b29304a2cfe4"
+}

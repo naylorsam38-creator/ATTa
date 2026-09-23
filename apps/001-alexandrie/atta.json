@@ -1,0 +1,16 @@
+{
+  "note": "Alexandrie: Nuxt 4 frontend only (SSR, Nitro server). The Go backend needs MySQL + S3 storage, which this environment doesn't have, so NUXT_PUBLIC_BASE_API points at an unused port \u2014 pages that only render work, anything that calls the API does not.",
+  "setup": [
+    "cd frontend && npm install --no-audit --no-fund",
+    "cd frontend && npx nuxt build"
+  ],
+  "start": "cd frontend && NODE_ENV=production exec node .output/server/index.mjs",
+  "env": {
+    "HOST": "127.0.0.1",
+    "NUXT_PUBLIC_BASE_API": "http://127.0.0.1:9/api",
+    "NUXT_PUBLIC_BASE_CDN": "http://127.0.0.1:9/cdn",
+    "NUXT_PUBLIC_BASE_URL": "http://127.0.0.1"
+  },
+  "path": "/",
+  "timeout": 60
+}

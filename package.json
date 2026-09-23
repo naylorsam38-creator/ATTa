@@ -2,15 +2,19 @@
   "name": "atta",
   "version": "1.0.0",
   "private": true,
-  "description": "Numbered app intake: build -> serve -> proxy (Capability Port + Mover) -> Playwright -> recorded results",
-  "bin": { "atta": "atta.js" },
+  "description": "Numbered app intake: build -> serve -> ui-bridge proxy (Capability Port + button mover) -> Playwright -> recorded results",
+  "bin": {
+    "atta": "atta.js"
+  },
   "scripts": {
     "test": "node --test test/*.test.js",
     "add": "node atta.js add",
     "run-all": "node atta.js run",
     "results": "node atta.js results"
   },
-  "engines": { "node": ">=18" },
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
     "playwright": "1.56.1"
   }

@@ -1,0 +1,14 @@
+{
+  "note": "Mixpost Lite is a Laravel package, not an app. Frontend (Vue/Inertia/Vite) rebuilt from source, then installed into a fresh Laravel 12 host app (path repository, SQLite). The host gets a test-only /login route that logs in a seeded user (host-login-shim.php), so the checks run on the real Mixpost dashboard.",
+  "setup": [
+    "npm ci --no-audit --no-fund && npm run build",
+    "rm -rf \"$DATA/host\" && composer create-project 'laravel/laravel:^12.0' \"$DATA/host\" --no-interaction --no-progress --prefer-dist -q",
+    "cd \"$DATA/host\" && composer config repositories.mixpost '{\"type\":\"path\",\"url\":\"'\"$SRC\"'\",\"options\":{\"symlink\":true}}' && composer require 'inovector/mixpost:*@dev' --no-interaction --no-progress",
+    "cd \"$DATA/host\" && php artisan mixpost:publish-assets --force=1 && php artisan vendor:publish --tag=mixpost-config --force && php artisan vendor:publish --tag=mixpost-migrations && php artisan migrate --force",
+    "cd \"$DATA/host\" && php artisan tinker --execute=\"App\\Models\\User::updateOrCreate(['email'=>'atta@example.com'],['name'=>'ATTa Test','password'=>bcrypt('atta-password')]);\"",
+    "cat ../host-login-shim.php >> \"$DATA/host/routes/web.php\""
+  ],
+  "start": "cd \"$DATA/host\" && exec php artisan serve --host=127.0.0.1 --port=$PORT",
+  "path": "/login",
+  "timeout": 60
+}

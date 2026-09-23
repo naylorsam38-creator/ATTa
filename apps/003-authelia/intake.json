@@ -1,0 +1,11 @@
+{
+  "id": "003-authelia",
+  "source": "f1d14e51-authelia-master-capability-patched.zip",
+  "addedAt": "2026-09-23T03:28:05.543Z",
+  "bundle": {
+    "ui-bridge/proxy.js": "match",
+    "capability-port/port.js": "match",
+    "capability-port/caps/mover.mjs": "match"
+  },
+  "md5": "9155803602f4ab3d7ac19384ff895c8f"
+}

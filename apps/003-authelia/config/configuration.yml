@@ -1,0 +1,25 @@
+# Minimal single-host config for testing the login portal. server.address comes from AUTHELIA_SERVER_ADDRESS.
+log:
+  level: info
+ntp:
+  disable_startup_check: true
+identity_validation:
+  reset_password:
+    jwt_secret: 'atta-test-jwt-secret-0123456789abcdef0123456789abcdef'
+authentication_backend:
+  file:
+    path: './users.yml'
+access_control:
+  default_policy: one_factor
+session:
+  secret: 'atta-test-session-secret-0123456789abcdef0123456789'
+  cookies:
+    - domain: '127.0.0.1'
+      authelia_url: 'https://127.0.0.1'
+storage:
+  encryption_key: 'atta-test-storage-key-0123456789abcdef0123456789abcdef'
+  local:
+    path: './db.sqlite3'
+notifier:
+  filesystem:
+    filename: './notification.txt'

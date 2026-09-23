@@ -1,0 +1,16 @@
+{
+  "note": "Authelia (Go server + React/Vite portal). Built the way authelia-scripts does it: web build into internal/server/public_html, copy api/, go build. Minimal config (file users, SQLite, filesystem notifier) with cookie domain 127.0.0.1; unauthenticated visit shows the login portal. LEFTHOOK=0 stops web/'s lefthook postinstall writing git hooks into the enclosing ATTa repo.",
+  "setup": [
+    "cd web && npx -y pnpm@12.6.0 install --frozen-lockfile && npx -y pnpm@12.6.0 build",
+    "cp -r api internal/server/public_html/",
+    "go build -o \"$DATA/authelia\" ./cmd/authelia",
+    "cp ../config/configuration.yml ../config/users.yml \"$DATA/\" && rm -f \"$DATA/db.sqlite3\""
+  ],
+  "start": "cd \"$DATA\" && exec ./authelia --config ./configuration.yml",
+  "env": {
+    "AUTHELIA_SERVER_ADDRESS": "tcp://127.0.0.1:$PORT/",
+    "LEFTHOOK": "0"
+  },
+  "path": "/",
+  "timeout": 90
+}

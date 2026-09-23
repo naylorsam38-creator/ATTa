@@ -1,0 +1,15 @@
+{
+  "note": "SendPortal (Laravel 11 + sendportal-core). Dev-only roave/security-advisories removed from composer.json because it blocks every Laravel 11 release; installed --no-dev. SQLite instead of MySQL, core assets published, migrations run; unauthenticated visit lands on /login. Checks open /login directly because / redirects to the upstream origin (see C13).",
+  "setup": [
+    "composer remove --dev roave/security-advisories --no-update -q || true",
+    "composer update --no-dev --no-interaction --no-progress",
+    "rm -f \"$DATA/db.sqlite\" && touch \"$DATA/db.sqlite\"",
+    "cp .env.example .env && sed -i \"s#^DB_CONNECTION=.*#DB_CONNECTION=sqlite#; s#^DB_DATABASE=.*#DB_DATABASE=$DATA/db.sqlite#; s#^SENDPORTAL_REGISTER=.*#SENDPORTAL_REGISTER=true#\" .env",
+    "php artisan key:generate --force",
+    "php artisan vendor:publish --provider='Sendportal\\Base\\SendportalBaseServiceProvider' --force",
+    "php artisan migrate --force"
+  ],
+  "start": "exec php artisan serve --host=127.0.0.1 --port=$PORT",
+  "path": "/login",
+  "timeout": 60
+}
