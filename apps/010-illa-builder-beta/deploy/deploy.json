@@ -1,0 +1,1 @@
+{ "note": "ILLA Builder frontend (self-host build) from the received source, submodules cloned at build time, served by nginx with SPA fallback. Backend services are not part of this source.", "path": "/", "timeout": 2400 }

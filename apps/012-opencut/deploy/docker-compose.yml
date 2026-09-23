@@ -1,0 +1,18 @@
+# 012-opencut — deploy bundle. Coolify: "Docker Compose" build pack, this file.
+# Public entrypoint is `proxy` (the capability proxy); it forwards to `web`.
+services:
+  proxy:
+    build: ./capability
+    environment:
+      - SERVICE_URL_PROXY_8080
+      - APP_ID=012-opencut
+      - TARGET=http://web:4173
+    depends_on:
+      - web
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.atta
+    restart: unless-stopped

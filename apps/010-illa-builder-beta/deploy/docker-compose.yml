@@ -1,0 +1,19 @@
+# 010-illa-builder-beta — deploy bundle. Coolify: "Docker Compose" build pack, this file.
+# Public entrypoint is `proxy` (the capability proxy); it forwards to `builder` (static SPA on nginx).
+# ILLA's backend services are separate projects, not part of this source.
+services:
+  proxy:
+    build: ./capability
+    environment:
+      - SERVICE_URL_PROXY_8080
+      - APP_ID=010-illa-builder-beta
+      - TARGET=http://builder:80
+    depends_on:
+      - builder
+    restart: unless-stopped
+
+  builder:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.atta
+    restart: unless-stopped

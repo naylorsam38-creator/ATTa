@@ -1,0 +1,1 @@
+{ "note": "OpenCut web built with Bun and served by vite preview (workerd). The received source is the early rewrite: its only page renders hello world!.", "path": "/", "timeout": 1500 }

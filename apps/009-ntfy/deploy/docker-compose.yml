@@ -1,0 +1,25 @@
+# 009-ntfy — deploy bundle. Coolify: "Docker Compose" build pack, this file.
+# Public entrypoint is `proxy` (the capability proxy); it forwards to `ntfy` and injects the Port.
+services:
+  proxy:
+    build: ./capability
+    environment:
+      - SERVICE_URL_PROXY_8080
+      - APP_ID=009-ntfy
+      - TARGET=http://ntfy:8081
+    depends_on:
+      - ntfy
+    restart: unless-stopped
+
+  ntfy:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.atta
+    environment:
+      - NTFY_BASE_URL=${SERVICE_URL_PROXY:-http://localhost:8080}
+    volumes:
+      - ntfy-cache:/var/cache/ntfy
+    restart: unless-stopped
+
+volumes:
+  ntfy-cache:

@@ -1,0 +1,33 @@
+# 011-gitea — deploy bundle. Coolify: "Docker Compose" build pack, this file.
+# Public entrypoint is `proxy` (the capability proxy); it forwards to `gitea`.
+# Gitea is built from the received source with Gitea's own Dockerfile.rootless (non-root), SQLite, install locked.
+# The first account registered becomes the admin.
+services:
+  proxy:
+    build: ./capability
+    environment:
+      - SERVICE_URL_PROXY_8080
+      - APP_ID=011-gitea-main-2
+      - TARGET=http://gitea:3000
+    depends_on:
+      - gitea
+    restart: unless-stopped
+
+  gitea:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.rootless
+    environment:
+      - GITEA__database__DB_TYPE=sqlite3
+      - GITEA__security__INSTALL_LOCK=true
+      - GITEA__server__ROOT_URL=${SERVICE_URL_PROXY:-http://localhost:8080}/
+      - GITEA__server__DISABLE_SSH=true
+      - GITEA__service__DISABLE_REGISTRATION=${GITEA_DISABLE_REGISTRATION:-false}
+    volumes:
+      - gitea-data:/var/lib/gitea
+      - gitea-config:/etc/gitea
+    restart: unless-stopped
+
+volumes:
+  gitea-data:
+  gitea-config:

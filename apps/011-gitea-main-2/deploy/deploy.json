@@ -1,0 +1,1 @@
+{ "note": "Gitea built from the received source with its own Dockerfile.rootless (frontend + backend, runs as the git user), SQLite, install locked via GITEA__ environment variables.", "path": "/", "timeout": 2400 }

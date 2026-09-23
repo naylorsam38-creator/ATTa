@@ -1,0 +1,42 @@
+# 014-open-notebook — deploy bundle. Coolify: "Docker Compose" build pack, this file.
+# Public entrypoint is `proxy` (the capability proxy); it forwards to the Next.js UI on 8502, which
+# forwards /api to the API inside the same container. Built with open-notebook's own Dockerfile
+# (target "runtime"), SurrealDB as in its docker-compose.yml.
+services:
+  proxy:
+    build: ./capability
+    environment:
+      - SERVICE_URL_PROXY_8080
+      - APP_ID=014-open-notebook
+      - TARGET=http://open-notebook:8502
+    depends_on:
+      - open-notebook
+    restart: unless-stopped
+
+  surrealdb:
+    image: surrealdb/surrealdb:v2
+    command: ["start", "--log", "info", "--user", "${SURREAL_USER:-root}", "--pass", "${SERVICE_PASSWORD_SURREAL:-change-me-surreal}", "rocksdb:/mydata/mydatabase.db"]
+    user: root
+    volumes:
+      - surreal-data:/mydata
+    restart: unless-stopped
+
+  open-notebook:
+    build:
+      context: ./app
+      target: runtime
+    environment:
+      - SURREAL_URL=ws://surrealdb:8000/rpc
+      - SURREAL_USER=${SURREAL_USER:-root}
+      - SURREAL_PASSWORD=${SERVICE_PASSWORD_SURREAL:-change-me-surreal}
+      - SURREAL_NAMESPACE=open_notebook
+      - SURREAL_DATABASE=open_notebook
+    volumes:
+      - notebook-data:/app/data
+    depends_on:
+      - surrealdb
+    restart: unless-stopped
+
+volumes:
+  surreal-data:
+  notebook-data:

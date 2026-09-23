@@ -1,0 +1,1 @@
+{ "note": "open-notebook built from the received source with its own Dockerfile (target runtime: API + worker + Next.js), SurrealDB v2 with a persistent volume.", "path": "/", "timeout": 2400 }

@@ -1,0 +1,1 @@
+{ "note": "ntfy built from the received source (web + Go with cgo/SQLite) into an Alpine image, running as a non-root user; message cache in a named volume.", "path": "/", "timeout": 1500 }
