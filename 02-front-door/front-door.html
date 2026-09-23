@@ -654,8 +654,16 @@ async function loadApp(r) {
     skin: { ...SKIN_DEFAULT, ...Skins.lookFields(startLook(), Skins.hue(r.category_id)), name: cap(r.label) }, log: [], created: new Date().toISOString()
   };
   await Store.save(inst);
+  reportChoice(r);
   $("#mOpen").hidden = false;
   setTimeout(() => { setMark(""); openApp(); }, 400);
+}
+/* When served by the APP Builder gateway, record the confirmed app against the logged-in account.
+   Best effort: opened anywhere else (e.g. inside Claude) there is no endpoint and nothing changes. */
+function reportChoice(r) {
+  if (!/^https?:$/.test(location.protocol)) return;
+  fetch("/api/front-door/choice", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ category_id: r.category_id, label: r.label, capabilities: r.capabilities }) }).catch(() => {});
 }
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 function startLook() {

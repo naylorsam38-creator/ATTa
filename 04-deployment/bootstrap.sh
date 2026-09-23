@@ -38,18 +38,25 @@ EOF
 if [ ! -f "$ROOT/.env" ]; then
  umask 077
  secret="$(python3 -c 'import secrets;print(secrets.token_urlsafe(48))')"
- pass="$(python3 -c 'import secrets;print(secrets.token_urlsafe(18))')"
  cat >"$ROOT/.env" <<EOF
 APP_BUILDER_ROOT=$ROOT
 APP_BUILDER_HOST=127.0.0.1
 APP_BUILDER_PORT=8787
-APP_BUILDER_USER=admin
-APP_BUILDER_PASSWORD=$pass
 APP_BUILDER_SESSION_SECRET=$secret
 APP_BUILDER_BROWSER_CHECK=true
 APP_BUILDER_WATCHER_INTERVAL=300
+# Coolify hand-off (docs/COOLIFY-HANDOFF.md). Qualified builds wait in the outbox until both are set.
+COOLIFY_URL=
+COOLIFY_TOKEN=
 EOF
- echo "Initial APP_BUILDER_PASSWORD=$pass" >"$ROOT/INITIAL_LOGIN.txt"; chmod 600 "$ROOT/.env" "$ROOT/INITIAL_LOGIN.txt"
+ chmod 600 "$ROOT/.env"
+fi
+# Accounts: admin + 10 pre-made test accounts. Idempotent: existing accounts are never changed.
+# On an upgraded server the old shared APP_BUILDER_PASSWORD (if still in .env) becomes the admin password.
+( set -a; . "$ROOT/.env"; set +a; python3 "$APP/accounts.py" init )
+# App id -> Coolify resource UUID. Template only; the owner fills it in.
+if [ ! -f "$ROOT/coolify_resources.json" ]; then
+ printf '{\n  "apps": {}\n}\n' >"$ROOT/coolify_resources.json"
 fi
 # Runtime dependencies. This handoff targets Amazon Linux 2023 (dnf), while
 # retaining apt support for Debian/Ubuntu hosts.
@@ -177,4 +184,5 @@ curl -fsSI http://127.0.0.1/ >/dev/null || {
 }
 echo "DEPLOYMENT VERIFIED"
 echo "Gateway health: $(cat /tmp/app-builder-health.txt)"
-echo "Open http://<EC2-IP>/ and read $ROOT/INITIAL_LOGIN.txt. For production, put nginx behind HTTPS before exposing it publicly."
+echo "Open http://<EC2-IP>/ . Logins (admin + tester01..tester10) are in $ROOT/TEST_ACCOUNTS.txt (0600) - hand out one line per tester, then delete the file."
+echo "For production, put nginx behind HTTPS before exposing it publicly."

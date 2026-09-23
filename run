@@ -57,18 +57,22 @@ local_root(){ printf '%s' "${APP_BUILDER_ROOT:-$HOME/.app-builder-local}"; }
 ensure_env(){
   local root; root="$(local_root)"
   mkdir -p "$root"
+  # Older local instances ran with no login; replace that env so local matches the server (real accounts).
+  if [ -f "$root/.env" ] && ! grep -q '^APP_BUILDER_SESSION_SECRET=' "$root/.env"; then rm -f "$root/.env"; fi
   if [ ! -f "$root/.env" ]; then
     umask 077
-    # Local instance: no login at all. auth is disabled, so no password or
-    # session secret is needed. (The server path uses bootstrap.sh, which keeps
-    # auth on and generates its own credentials — this flag is local-only.)
+    local secret; secret="$(python3 -c 'import secrets;print(secrets.token_urlsafe(48))')"
+    # Browser check is on, as on the server: without Playwright a build ends NOT_QUALIFIED
+    # rather than falsely QUALIFIED. Install: python3 -m pip install playwright && python3 -m playwright install chromium
     cat >"$root/.env" <<EOF
 APP_BUILDER_ROOT=$root
 APP_BUILDER_HOST=127.0.0.1
 APP_BUILDER_PORT=8787
-APP_BUILDER_AUTH_DISABLED=1
-APP_BUILDER_BROWSER_CHECK=false
+APP_BUILDER_SESSION_SECRET=$secret
+APP_BUILDER_BROWSER_CHECK=true
 APP_BUILDER_WATCHER_INTERVAL=300
+COOLIFY_URL=
+COOLIFY_TOKEN=
 EOF
     chmod 600 "$root/.env"
   fi
@@ -81,6 +85,7 @@ start_local(){
   ensure_env
   local root; root="$(local_root)"
   mkdir -p "$root/inbox" "$root/state" "$root/state/apps"
+  python3 "$DEPLOY/accounts.py" init
   [ -f "$FRONT_SRC" ] && cp -f "$FRONT_SRC" "$root/front-door.html"
   [ -f "$DEPLOY/upstream_apps.json" ] && cp -f "$DEPLOY/upstream_apps.json" "$root/upstream_apps.json"
 
@@ -102,11 +107,10 @@ start_local(){
   fi
 
   line
-  say "RUNNING (local instance — no login)"
+  say "RUNNING (local instance)"
   line
-  say "  Open:      http://127.0.0.1:${APP_BUILDER_PORT}/upload"
-  say ""
-  say "  No password. Just open that and upload the bundle to run the pipeline."
+  say "  Open:      http://127.0.0.1:${APP_BUILDER_PORT}/"
+  say "  Logins:    $root/TEST_ACCOUNTS.txt   (admin + tester01..tester10)"
   say "  Stop it any time with:   bash run stop"
   line
   say "Done for a laptop. NOT done for the public internet — a live public URL"
@@ -138,7 +142,7 @@ stop_local(){
 status_local(){
   local root; root="$(local_root)"; ensure_env >/dev/null 2>&1 || true
   if curl -fsS "http://127.0.0.1:${APP_BUILDER_PORT:-8787}/health" >/dev/null 2>&1; then
-    say "Local instance: UP  (http://127.0.0.1:${APP_BUILDER_PORT:-8787}/login)"
+    say "Local instance: UP  (http://127.0.0.1:${APP_BUILDER_PORT:-8787}/)"
   else
     say "Local instance: down.  Start it with:  bash run"
   fi

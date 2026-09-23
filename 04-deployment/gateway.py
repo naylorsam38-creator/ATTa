@@ -2,19 +2,20 @@
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
-import hashlib,hmac,html,json,os,secrets,time,re,tempfile,threading
+import hashlib,hmac,html,json,os,secrets,time,re,tempfile,threading,zipfile
+import accounts, builds
 ROOT=Path(os.environ.get("APP_BUILDER_ROOT","/srv/app-builder"));
 LOGIN_WINDOW=int(os.environ.get("APP_BUILDER_LOGIN_WINDOW","900")); LOGIN_MAX_FAILURES=int(os.environ.get("APP_BUILDER_LOGIN_MAX_FAILURES","8")); _LOGIN_FAILURES={}
 _LOGIN_LOCK=threading.Lock()
-INBOX=ROOT/"inbox"; STATUS=ROOT/"state/status.json"; FRONT=ROOT/"front-door.html"
-HOST=os.environ.get("APP_BUILDER_HOST","127.0.0.1"); PORT=int(os.environ.get("APP_BUILDER_PORT","8787")); USER=os.environ.get("APP_BUILDER_USER","admin"); PASSWORD=os.environ.get("APP_BUILDER_PASSWORD",""); SECRET=os.environ.get("APP_BUILDER_SESSION_SECRET",""); MAX=int(os.environ.get("APP_BUILDER_MAX_UPLOAD","10737418240")); SESSION_TTL=int(os.environ.get("APP_BUILDER_SESSION_TTL","86400"))
-# Local testing escape hatch: when APP_BUILDER_AUTH_DISABLED=1 the gateway skips
-# the login entirely (every request is treated as authenticated) and no password
-# or session secret is required. The `run` launcher sets this ONLY for the local
-# laptop instance; the server/bootstrap path never sets it, so AWS keeps auth.
+INBOX=ROOT/"inbox"; STATUS=ROOT/"state/status.json"; FRONT=ROOT/"front-door.html"; CHOICES=ROOT/"state/front-door-choices"
+HOST=os.environ.get("APP_BUILDER_HOST","127.0.0.1"); PORT=int(os.environ.get("APP_BUILDER_PORT","8787")); SECRET=os.environ.get("APP_BUILDER_SESSION_SECRET",""); MAX=int(os.environ.get("APP_BUILDER_MAX_UPLOAD","10737418240")); SESSION_TTL=int(os.environ.get("APP_BUILDER_SESSION_TTL","86400"))
+# Local testing escape hatch: when APP_BUILDER_AUTH_DISABLED=1 the gateway skips the login
+# entirely and every request acts as a local admin. Never set on a server.
 AUTH_DISABLED=os.environ.get("APP_BUILDER_AUTH_DISABLED","")=="1"
-for p in (INBOX,STATUS.parent): p.mkdir(parents=True,exist_ok=True)
-if not AUTH_DISABLED and (not PASSWORD or not SECRET): raise SystemExit("APP_BUILDER_PASSWORD and APP_BUILDER_SESSION_SECRET are required")
+LOCAL_ADMIN={"name":"local","role":"admin"}
+for p in (INBOX,STATUS.parent,CHOICES): p.mkdir(parents=True,exist_ok=True)
+if not AUTH_DISABLED and not SECRET: raise SystemExit("APP_BUILDER_SESSION_SECRET is required")
+if not AUTH_DISABLED and not accounts.load()["users"]: raise SystemExit("No accounts exist. Run: python3 accounts.py init")
 def client_ip(h):
  x=h.headers.get("X-Real-IP") or h.client_address[0]
  return x.split(",",1)[0].strip()
@@ -39,20 +40,48 @@ def clear_login_failures(ip):
  with _LOGIN_LOCK: _LOGIN_FAILURES.pop(ip,None)
 
 def sig(v): return hmac.new(SECRET.encode(),v.encode(),hashlib.sha256).hexdigest()
-def token():
- ts=str(int(time.time())); n=secrets.token_urlsafe(24); value=ts+"."+n; return value+"."+sig(value)
+def token(u):
+ # name:session_version:issued:nonce, signed. Bumping session_version (password reset,
+ # disable) ends every session that account already has.
+ value=f"{u['name']}:{int(u.get('session_version',1))}:{int(time.time())}:{secrets.token_urlsafe(18)}"
+ return value+"."+sig(value)
 def auth(h):
- if AUTH_DISABLED: return True
- c=h.headers.get("Cookie","")
- for x in c.split(";"):
+ """The logged-in account (dict with name + role), or None."""
+ if AUTH_DISABLED: return LOCAL_ADMIN
+ for x in h.headers.get("Cookie","").split(";"):
   if x.strip().startswith("session="):
    try:
     value,s=x.strip().split("=",1)[1].rsplit(".",1)
-    ts,n=value.split(".",1)
-    if 0 <= int(time.time())-int(ts) <= SESSION_TTL and hmac.compare_digest(s,sig(value)): return True
+    if not hmac.compare_digest(s,sig(value)): continue
+    name,ver,ts,_=value.split(":",3)
+    if not 0 <= int(time.time())-int(ts) <= SESSION_TTL: continue
+    u=accounts.get(name)
+    if u and not u.get("disabled") and int(u.get("session_version",1))==int(ver): return u
    except Exception: pass
- return False
-def page(title,body): return ('<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+html.escape(title)+'</title><style>body{font-family:system-ui;margin:40px;max-width:900px}input,button{padding:10px;margin:6px 0}pre{background:#f4f4f4;padding:12px;overflow:auto}</style></head><body>'+body+'</body></html>').encode()
+ return None
+def page(title,body,me=None):
+ nav=""
+ if me:
+  links='<a href=/>Front Door</a> <a href=/builds>'+("All builds" if me["role"]=="admin" else "My builds")+'</a> <a href=/upload>Upload</a>'
+  if me["role"]=="admin": links+=' <a href=/status>System status</a>'
+  nav='<nav>'+links+'<span>'+html.escape(me["name"])+' ('+html.escape(me["role"])+')'+(' <a href=/logout>Log out</a>' if not AUTH_DISABLED else '')+'</span></nav>'
+ return ('<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+html.escape(title)+'</title><style>body{font-family:system-ui;margin:40px;max-width:900px}input,button{padding:10px;margin:6px 0}pre{background:#f4f4f4;padding:12px;overflow:auto}nav{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #ddd}nav span{margin-left:auto;color:#666}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:6px 8px;border-bottom:1px solid #eee}.QUALIFIED{color:#0a7a2f;font-weight:600}.FAILED,.NOT_QUALIFIED{color:#b00020;font-weight:600}</style></head><body>'+nav+body+'</body></html>').encode()
+def when(t): return time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(t)) if t else ""
+def builds_table(rows,me):
+ if not rows: return "<p>No builds yet. <a href=/upload>Upload a bundle</a> to start one.</p>"
+ admin=me["role"]=="admin"
+ h="<table><tr><th>Build</th>"+("<th>Owner</th>" if admin else "")+"<th>State</th><th>Coolify</th><th>Started</th></tr>"
+ for r in rows:
+  st=html.escape(r.get("state","")); c=(r.get("coolify") or {}).get("status","")
+  h+="<tr><td><a href=/builds/"+html.escape(r["id"])+">"+html.escape(r["id"])+"</a></td>"+("<td>"+html.escape(r.get("owner",""))+"</td>" if admin else "")+"<td class="+st+">"+st+"</td><td>"+html.escape(c)+"</td><td>"+when(r.get("created"))+"</td></tr>"
+ return h+"</table>"
+FRONT_NAV_TMPL='<div id="ab-nav" style="position:fixed;top:8px;right:12px;z-index:99;font:13px system-ui;background:rgba(255,255,255,.9);padding:4px 10px;border-radius:8px;border:1px solid #ddd"><a href="/builds">{b}</a> &middot; <a href="/upload">Upload</a>{extra}</div>'
+def front_door(me):
+ b=FRONT.read_bytes()
+ extra=(' &middot; '+html.escape(me["name"])+' <a href="/logout">Log out</a>') if not AUTH_DISABLED else ''
+ nav=FRONT_NAV_TMPL.format(b="All builds" if me["role"]=="admin" else "My builds",extra=extra).encode()
+ i=b.lower().rfind(b"</body>")
+ return b[:i]+nav+b[i:] if i>=0 else b+nav
 def multipart_upload(handler, content_type, content_length, destination, max_bytes):
     m=re.search(r'boundary=(?:"([^"]+)"|([^;]+))', content_type or '', re.I)
     if not m:
@@ -138,49 +167,84 @@ def multipart_upload(handler, content_type, content_length, destination, max_byt
     raise ValueError("multipart upload incomplete")
 
 class H(BaseHTTPRequestHandler):
- def out(self,b,code=200,cookie=None):
-  self.send_response(code); self.send_header("Content-Type","text/html; charset=utf-8"); self.send_header("Content-Length",str(len(b))); self.send_header("Cache-Control","no-store")
+ def out(self,b,code=200,cookie=None,ctype="text/html; charset=utf-8"):
+  self.send_response(code); self.send_header("Content-Type",ctype); self.send_header("Content-Length",str(len(b))); self.send_header("Cache-Control","no-store")
   if cookie:self.send_header("Set-Cookie",cookie)
   self.end_headers(); self.wfile.write(b)
+ def redirect(self,to,cookie=None):
+  self.send_response(302); self.send_header("Location",to)
+  if cookie:self.send_header("Set-Cookie",cookie)
+  self.end_headers()
+ def json_out(self,d,code=200): self.out((json.dumps(d,indent=2)+"\n").encode(),code,ctype="application/json")
  def do_GET(self):
   p=urlparse(self.path).path
   if p=="/health": self.out(b"OK\n"); return
-  if not auth(self):
-   if p=="/login": self.out(page("Login","<h1>APP Builder</h1><form method=post action=/login><input name=user placeholder=User><br><input name=password type=password placeholder=Password><br><button>Login</button></form>")); return
-   self.send_response(302); self.send_header("Location","/login"); self.end_headers(); return
-  if p=="/" and AUTH_DISABLED: self.send_response(302); self.send_header("Location","/upload"); self.end_headers(); return
-  if p=="/": self.out(page("APP Builder","<h1>APP Builder</h1><p>Authenticated.</p><p><a href=/upload>Upload system bundle</a></p><p><a href=/status>Status</a></p><p><a href=/front-door>Open Front Door</a></p>")); return
-  if p=="/upload": self.out(page("Upload","<h1>Upload bundle</h1><form method=post action=/upload enctype=multipart/form-data><input type=file name=bundle accept=.zip><br><button>Upload and run pipeline</button></form>")); return
+  me=auth(self)
+  if not me:
+   if p=="/login": self.out(page("Login","<h1>APP Builder</h1><form method=post action=/login><input name=user placeholder=User autocomplete=username><br><input name=password type=password placeholder=Password autocomplete=current-password><br><button>Log in</button></form>")); return
+   self.redirect("/login"); return
+  if p=="/logout": self.redirect("/login","session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0"); return
+  # The Front Door (the questions page) is the first page everyone lands on.
+  if p in ("/","/front-door","/login"):
+   if not FRONT.exists(): self.out(page("Missing","<h1>front-door.html not installed</h1>",me),500); return
+   self.out(front_door(me)); return
+  if p=="/upload": self.out(page("Upload","<h1>Upload bundle</h1><p>Starts a new build owned by <b>"+html.escape(me["name"])+"</b>. It is only <b>QUALIFIED</b> after the real-browser check passes, and only qualified builds go to Coolify.</p><form method=post action=/upload enctype=multipart/form-data><input type=file name=bundle accept=.zip><br><button>Upload and run pipeline</button></form>",me)); return
+  if p=="/builds": self.out(page("Builds","<h1>"+("All builds" if me["role"]=="admin" else "My builds")+"</h1>"+builds_table(builds.visible_to(me),me),me)); return
+  if p=="/api/me": self.json_out({"name":me["name"],"role":me["role"]}); return
+  if p=="/api/builds": self.json_out(builds.visible_to(me)); return
+  m=re.fullmatch(r"/(api/)?builds/([A-Za-z0-9-]+)",p)
+  if m:
+   r=builds.get(m.group(2)) if builds.ID_RE.match(m.group(2)) else None
+   # Someone else's build answers exactly like a missing one.
+   if not r or not builds.can_see(me,r): self.send_error(404); return
+   if m.group(1): self.json_out(r); return
+   hist="".join("<tr><td>"+when(h.get("at"))+"</td><td class="+html.escape(h.get("state",""))+">"+html.escape(h.get("state",""))+"</td><td>"+html.escape(h.get("error",""))+"</td></tr>" for h in r.get("history",[]))
+   self.out(page(r["id"],"<h1>Build "+html.escape(r["id"])+"</h1><p>Owner: <b>"+html.escape(r.get("owner",""))+"</b> &middot; State: <b class="+html.escape(r.get("state",""))+">"+html.escape(r.get("state",""))+"</b></p>"+("<p>"+html.escape(str(r["error"]))+"</p>" if r.get("error") else "")+"<h2>History</h2><table>"+hist+"</table><h2>Full record</h2><pre>"+html.escape(json.dumps(r,indent=2))+"</pre>",me)); return
   if p=="/status":
+   # System-wide pipeline state spans every user's builds, so it is admin-only.
+   if me["role"]!="admin": self.redirect("/builds"); return
    try:s=STATUS.read_text()
    except:s=json.dumps({"state":"IDLE"})
-   self.out(page("Status","<h1>Status</h1><pre>"+html.escape(s)+"</pre><a href=/ >Back</a>")); return
-  if p=="/front-door":
-   if not FRONT.exists(): self.out(page("Missing","front-door.html not installed"),500); return
-   b=FRONT.read_bytes(); self.send_response(200); self.send_header("Content-Type","text/html; charset=utf-8"); self.send_header("Content-Length",str(len(b))); self.end_headers(); self.wfile.write(b); return
+   self.out(page("Status","<h1>System status</h1><pre>"+html.escape(s)+"</pre>",me)); return
   self.send_error(404)
  def do_POST(self):
   p=urlparse(self.path).path
   if p=="/login":
-   n=int(self.headers.get("Content-Length","0")); q=parse_qs(self.rfile.read(n).decode())
+   try:n=int(self.headers.get("Content-Length","0"))
+   except ValueError:n=0
+   if n<0 or n>8192: self.send_error(413); return
+   q=parse_qs(self.rfile.read(n).decode("utf-8","replace"))
    ip=client_ip(self)
    if not login_allowed(ip):
     self.out(page("Too many attempts","<h1>Too many login attempts</h1><p>Try again later.</p>"),429); return
-   if hmac.compare_digest(q.get("user",[""])[0],USER) and hmac.compare_digest(q.get("password",[""])[0],PASSWORD):
+   u=accounts.verify(q.get("user",[""])[0].strip().lower(),q.get("password",[""])[0])
+   if u:
     clear_login_failures(ip)
     secure="; Secure" if self.headers.get("X-Forwarded-Proto","").lower()=="https" else ""
-    self.out(page("Logged in","<h1>Logged in</h1><a href=/upload>Continue</a>"),200,"session="+token()+"; HttpOnly"+secure+"; SameSite=Strict; Path=/; Max-Age=86400")
+    self.redirect("/","session="+token(u)+"; HttpOnly"+secure+"; SameSite=Strict; Path=/; Max-Age="+str(SESSION_TTL))
    else:
     record_login_failure(ip)
     self.out(page("Login failed","<h1>Login failed</h1><a href=/login>Try again</a>"),401)
    return
-  if not auth(self): self.send_error(403); return
+  me=auth(self)
+  if not me: self.send_error(403); return
+  if p=="/api/front-door/choice":
+   # The Front Door records the app a person confirmed ("Is this the app?" -> Yes) against their account.
+   try:
+    n=int(self.headers.get("Content-Length","0"))
+    if not 0<n<=65536 or "application/json" not in self.headers.get("Content-Type",""): raise ValueError("expected a JSON body up to 64 KB")
+    d=json.loads(self.rfile.read(n))
+    rec={"at":time.time(),"user":me["name"],"category_id":str(d.get("category_id",""))[:80],"label":str(d.get("label",""))[:200],"capabilities":[str(c)[:300] for c in (d.get("capabilities") or [])][:20]}
+   except Exception as e: self.json_out({"ok":False,"error":str(e)},400); return
+   with (CHOICES/(me["name"]+".jsonl")).open("a") as f: f.write(json.dumps(rec)+"\n")
+   self.json_out({"ok":True}); return
   if p=="/upload":
    try:n=int(self.headers.get("Content-Length","0"))
    except ValueError:n=0
    if n<=0 or n>MAX:self.send_error(413); return
    ctype=self.headers.get("Content-Type","")
-   f=INBOX/f"upload-{int(time.time())}-{secrets.token_hex(6)}.zip"
+   # Written under a temporary name; it only enters the inbox (as <build id>.zip) once it is a valid ZIP.
+   f=INBOX/f".incoming-{int(time.time())}-{secrets.token_hex(6)}.part"
    try:
     if ctype.lower().startswith("multipart/form-data"):
      written=multipart_upload(self,ctype,n,f,MAX)
@@ -197,15 +261,16 @@ class H(BaseHTTPRequestHandler):
        raise ValueError("upload body ended before Content-Length was received")
     if written<=0 or written>MAX: raise ValueError("empty or oversized upload")
     # Validate the upload before queuing it; a malformed browser form must never enter the pipeline.
-    import zipfile
     with zipfile.ZipFile(f) as z: z.testzip()
    except Exception as exc:
     try:f.unlink()
     except OSError:pass
     try:f.with_suffix('.uploading').unlink()
     except OSError:pass
-    self.out(page("Upload failed","<h1>Upload failed</h1><p>"+html.escape(str(exc))+"</p><a href=/upload>Try again</a>"),400); return
-   self.out(page("Uploaded","<h1>Accepted</h1><p>Pipeline queued. <a href=/status>View status</a>.</p>")); return
+    self.out(page("Upload failed","<h1>Upload failed</h1><p>"+html.escape(str(exc))+"</p><a href=/upload>Try again</a>",me),400); return
+   b=builds.create(me["name"],bundle_bytes=written)
+   f.replace(INBOX/(b["id"]+".zip"))
+   self.out(page("Uploaded","<h1>Accepted</h1><p>Build <a href=/builds/"+b["id"]+">"+b["id"]+"</a> is queued.</p>",me)); return
   self.send_error(404)
  def log_message(self,*a): pass
 ThreadingHTTPServer((HOST,PORT),H).serve_forever()
