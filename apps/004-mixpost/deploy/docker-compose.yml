@@ -1,0 +1,60 @@
+# 004-mixpost — deploy bundle. Coolify: "Docker Compose" build pack, this file.
+# Public entrypoint is `proxy` (the capability proxy); it forwards to `mixpost` and injects the Port.
+services:
+  proxy:
+    build: ./capability
+    environment:
+      - SERVICE_URL_PROXY_8080
+      - APP_ID=004-mixpost
+      - TARGET=http://mixpost:80
+    depends_on:
+      - mixpost
+    restart: unless-stopped
+
+  mixpost:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.atta
+    environment:
+      - APP_NAME=Mixpost
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - APP_URL=${SERVICE_URL_PROXY:-http://localhost:8080}
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=mixpost
+      - DB_USERNAME=${SERVICE_USER_MYSQL:-mixpost}
+      - DB_PASSWORD=${SERVICE_PASSWORD_MYSQL:-change-me-mysql}
+      - QUEUE_CONNECTION=sync
+      - CACHE_STORE=file
+      - SESSION_DRIVER=file
+      - LOG_CHANNEL=stderr
+      - MIXPOST_ADMIN_EMAIL=${MIXPOST_ADMIN_EMAIL:-admin@example.com}
+      - MIXPOST_ADMIN_PASSWORD=${SERVICE_PASSWORD_ADMIN:-change-me-admin}
+    volumes:
+      - mixpost-storage:/var/www/html/storage
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=${SERVICE_PASSWORD_MYSQLROOT:-change-me-root}
+      - MYSQL_DATABASE=mixpost
+      - MYSQL_USER=${SERVICE_USER_MYSQL:-mixpost}
+      - MYSQL_PASSWORD=${SERVICE_PASSWORD_MYSQL:-change-me-mysql}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+    restart: unless-stopped
+
+volumes:
+  mixpost-storage:
+  mysql-data:

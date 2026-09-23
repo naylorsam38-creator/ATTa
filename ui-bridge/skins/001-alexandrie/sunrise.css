@@ -1,0 +1,10 @@
+/* Skin "sunrise": warm colours, pill-shaped controls, larger type. */
+html { filter: sepia(0.45) saturate(1.6) hue-rotate(-12deg) !important; font-size: 106% !important; }
+button, [role="button"], input[type="submit"], input[type="button"], .btn, .button, a[class*="btn"], a[class*="button"] {
+  border-radius: 999px !important;
+}
+body::after {
+  content: "skin: sunrise"; position: fixed; left: 12px; bottom: 12px; z-index: 2147482000;
+  font: 600 12px/1 system-ui, sans-serif; padding: 7px 10px; border-radius: 999px;
+  background: #b4441c; color: #fff; pointer-events: none;
+}

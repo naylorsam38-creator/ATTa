@@ -7,5 +7,6 @@
     "capability-port/port.js": "match",
     "capability-port/caps/mover.mjs": "match"
   },
-  "md5": "9155803602f4ab3d7ac19384ff895c8f"
+  "md5": "9155803602f4ab3d7ac19384ff895c8f",
+  "sourcePath": "/root/.claude/uploads/b3b4ff0b-4068-54c7-9d3e-768a8697e77f/f1d14e51-authelia-master-capability-patched.zip"
 }

@@ -1,0 +1,5 @@
+{
+  "note": "Mixpost Lite: frontend rebuilt from the received source, installed into a Laravel 12 host app (Apache + PHP 8.4) with MySQL 8 and a minimal email/password login (admin from MIXPOST_ADMIN_EMAIL / MIXPOST_ADMIN_PASSWORD). The test pipeline's auto-login shim is NOT part of this bundle.",
+  "path": "/login",
+  "timeout": 1800
+}

@@ -7,5 +7,9 @@
     "capability-port/port.js": "match",
     "capability-port/caps/mover.mjs": "match"
   },
-  "md5": "9072b08c6cd7af09d9adc16ba2c70072"
+  "md5": "9072b08c6cd7af09d9adc16ba2c70072",
+  "duplicates": [
+    "60cbf5e4-mixpost-main_2_-capability-patched.zip"
+  ],
+  "sourcePath": "/root/.claude/uploads/b3b4ff0b-4068-54c7-9d3e-768a8697e77f/12bc995e-mixpost-main_2_-capability-patched.zip"
 }

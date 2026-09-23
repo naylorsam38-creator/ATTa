@@ -1,0 +1,5 @@
+{
+  "note": "Authelia built from the received source (web build + api copy + go build, as authelia-scripts does) into an Alpine image; config templated from environment (cookie domain, public URL, secrets). Local verification uses cookie domain 127.0.0.1.",
+  "path": "/",
+  "timeout": 1500
+}

@@ -1,0 +1,93 @@
+# 001-alexandrie — deploy bundle. Coolify: "Docker Compose" build pack, this file.
+# Public entrypoint is `proxy` (the capability proxy); it forwards to `frontend` and injects the Port.
+# Alexandrie's frontend and backend are built from ./app with Alexandrie's own Dockerfiles.
+services:
+  proxy:
+    build: ./capability
+    environment:
+      - SERVICE_URL_PROXY_8080
+      - APP_ID=001-alexandrie
+      - TARGET=http://frontend:8200
+    depends_on:
+      - frontend
+    restart: unless-stopped
+
+  frontend:
+    build: ./app/frontend
+    environment:
+      - PORT=8200
+      - NUXT_PUBLIC_CONFIG_DISABLE_SIGNUP_PAGE=${CONFIG_DISABLE_SIGNUP:-false}
+      - NUXT_PUBLIC_CONFIG_DISABLE_LANDING_PAGE=${CONFIG_DISABLE_LANDING:-false}
+      - NUXT_PUBLIC_BASE_API=${SERVICE_URL_BACKEND:-http://localhost:8201}
+      - NUXT_PUBLIC_BASE_CDN=${SERVICE_URL_RUSTFS:-http://localhost:9000}
+      - NUXT_PUBLIC_CDN_ENDPOINT=${CDN_ENDPOINT:-/alexandrie/}
+      - NUXT_PUBLIC_BASE_URL=${SERVICE_URL_PROXY:-http://localhost:8080}
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./app/backend
+      dockerfile: Dockerfile.atta   # upstream Dockerfile pins golang:1.25; go.mod needs >= 1.26
+    environment:
+      - SERVICE_URL_BACKEND_8201
+      - BACKEND_PORT=8201
+      - GIN_MODE=release
+      - JWT_SECRET=${SERVICE_PASSWORD_JWT:-change-me-jwt-secret}
+      - COOKIE_DOMAIN=${SERVICE_URL_PROXY:-localhost:8080}
+      - FRONTEND_URL=${SERVICE_URL_PROXY:-http://localhost:8080}
+      - ALLOW_UNSECURE=${ALLOW_UNSECURE:-false}
+      - DATABASE_HOST=mysql
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=${MYSQL_DATABASE:-alexandrie}
+      - DATABASE_USER=${SERVICE_USER_MYSQL:-alexandrie}
+      - DATABASE_PASSWORD=${SERVICE_PASSWORD_MYSQL:-change-me-mysql}
+      - MINIO_ENDPOINT=rustfs:9000
+      - MINIO_PUBLIC_URL=${SERVICE_URL_RUSTFS:-http://localhost:9000}
+      - MINIO_SECURE=${MINIO_SECURE:-false}
+      - MINIO_ACCESSKEY=${SERVICE_USER_RUSTFS:-alexandrie-key}
+      - MINIO_SECRETKEY=${SERVICE_PASSWORD_RUSTFS:-alexandrie-secret}
+      - MINIO_BUCKET=${MINIO_BUCKET:-alexandrie}
+    depends_on:
+      mysql:
+        condition: service_healthy
+      rustfs:
+        condition: service_healthy
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=${SERVICE_PASSWORD_MYSQLROOT:-change-me-root}
+      - MYSQL_USER=${SERVICE_USER_MYSQL:-alexandrie}
+      - MYSQL_PASSWORD=${SERVICE_PASSWORD_MYSQL:-change-me-mysql}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-alexandrie}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  rustfs:
+    image: rustfs/rustfs:1.0.0-beta.8
+    environment:
+      - SERVICE_URL_RUSTFS_9000
+      - RUSTFS_ACCESS_KEY=${SERVICE_USER_RUSTFS:-alexandrie-key}
+      - RUSTFS_SECRET_KEY=${SERVICE_PASSWORD_RUSTFS:-alexandrie-secret}
+      - RUSTFS_CONSOLE_ENABLE=false
+    volumes:
+      - rustfs-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 9000 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  mysql-data:
+  rustfs-data:

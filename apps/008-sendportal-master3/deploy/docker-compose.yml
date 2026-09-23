@@ -1,0 +1,55 @@
+# SendPortal — deploy bundle. Coolify: "Docker Compose" build pack, this file.
+# Public entrypoint is `proxy` (the capability proxy); it forwards to `sendportal` and injects the Port.
+services:
+  proxy:
+    build: ./capability
+    environment:
+      - SERVICE_URL_PROXY_8080
+      - APP_ID=${ATTA_APP_ID}
+      - TARGET=http://sendportal:80
+    depends_on:
+      - sendportal
+    restart: unless-stopped
+
+  sendportal:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.atta
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - APP_URL=${SERVICE_URL_PROXY:-http://localhost:8080}
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=sendportal
+      - DB_USERNAME=${SERVICE_USER_POSTGRES:-sendportal}
+      - DB_PASSWORD=${SERVICE_PASSWORD_POSTGRES:-change-me-postgres}
+      - QUEUE_CONNECTION=sync
+      - SENDPORTAL_REGISTER=${SENDPORTAL_REGISTER:-true}
+      - LOG_CHANNEL=stderr
+    volumes:
+      - sendportal-storage:/var/www/html/storage
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=sendportal
+      - POSTGRES_USER=${SERVICE_USER_POSTGRES:-sendportal}
+      - POSTGRES_PASSWORD=${SERVICE_PASSWORD_POSTGRES:-change-me-postgres}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d sendportal"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+volumes:
+  sendportal-storage:
+  postgres-data:

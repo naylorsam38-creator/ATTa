@@ -1,0 +1,15 @@
+# Lean ArchiveBox web image, built from the received source (same steps as the ATTa recipe).
+# Serves the UI/admin/API. The upstream Dockerfile's extractor toolchain (Chromium, yt-dlp, singlefile…)
+# is not included — use the upstream Dockerfile in this folder if you need full archiving.
+FROM python:3.13-slim
+RUN pip install --no-cache-dir uv
+WORKDIR /app
+COPY . .
+RUN uv sync --frozen --no-dev
+RUN useradd -m -u 911 archivebox && mkdir -p /data && chown archivebox /data && chmod -R a+rX /app
+ENV PATH=/app/.venv/bin:$PATH PUID=911 PGID=911
+USER archivebox
+WORKDIR /data
+VOLUME /data
+EXPOSE 8000
+CMD ["sh", "-c", "archivebox init >/tmp/init.log 2>&1 || cat /tmp/init.log; exec archivebox server 0.0.0.0:8000"]

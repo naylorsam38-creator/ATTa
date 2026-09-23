@@ -1,0 +1,25 @@
+# SendPortal built from the received source. Same steps as the ATTa test recipe: drop the dev-only
+# roave/security-advisories (it blocks every Laravel 11 release), install --no-dev, publish core assets.
+FROM composer:2 AS vendor
+WORKDIR /app
+COPY . .
+RUN (composer remove --dev roave/security-advisories --no-update -q || true) \
+ && composer update --no-dev --no-interaction --no-progress --no-scripts --prefer-dist
+
+FROM php:8.4-apache
+RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpq-dev unzip \
+ && docker-php-ext-install pdo_pgsql pdo_mysql bcmath intl zip pcntl \
+ && a2enmod rewrite && rm -rf /var/lib/apt/lists/*
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
+ && sed -ri 's!AllowOverride None!AllowOverride All!g' /etc/apache2/apache2.conf
+WORKDIR /var/www/html
+COPY --from=vendor /app .
+RUN cp -n .env.example .env \
+ && php artisan package:discover --ansi \
+ && php artisan vendor:publish --provider='Sendportal\Base\SendportalBaseServiceProvider' --force \
+ && chown -R www-data:www-data storage bootstrap/cache
+COPY docker/atta-entrypoint.sh /usr/local/bin/atta-entrypoint.sh
+RUN chmod +x /usr/local/bin/atta-entrypoint.sh
+EXPOSE 80
+ENTRYPOINT ["atta-entrypoint.sh"]

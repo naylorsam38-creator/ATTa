@@ -7,5 +7,9 @@
     "capability-port/port.js": "match",
     "capability-port/caps/mover.mjs": "match"
   },
-  "md5": "3a9c99b0727dab3212c9b4c4692bd4d4"
+  "md5": "3a9c99b0727dab3212c9b4c4692bd4d4",
+  "duplicates": [
+    "091ee435-sendportal-master_3_-capability-patched.zip"
+  ],
+  "sourcePath": "/root/.claude/uploads/b3b4ff0b-4068-54c7-9d3e-768a8697e77f/ff204a9e-sendportal-master_3_-capability-patched.zip"
 }

@@ -1,0 +1,8 @@
+# Plain Docker / AWS EC2 host (not needed on Coolify): publish the proxy, plus the API and CDN the browser calls directly.
+services:
+  proxy:
+    ports: ["${PROXY_PORT:-8080}:8080"]
+  backend:
+    ports: ["${BACKEND_PORT_PUBLIC:-8201}:8201"]
+  rustfs:
+    ports: ["${RUSTFS_PORT_PUBLIC:-9000}:9000"]

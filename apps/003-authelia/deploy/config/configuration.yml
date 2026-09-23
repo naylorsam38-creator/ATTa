@@ -1,0 +1,23 @@
+# Authelia config for the deploy bundle. Values in {{ env "…" }} come from the compose environment
+# (X_AUTHELIA_CONFIG_FILTERS=template). Secrets come from AUTHELIA_* environment variables.
+server:
+  address: 'tcp://0.0.0.0:9091/'
+log:
+  level: info
+ntp:
+  disable_startup_check: true
+authentication_backend:
+  file:
+    path: '/config/users.yml'
+access_control:
+  default_policy: one_factor
+session:
+  cookies:
+    - domain: '{{ env "AUTHELIA_COOKIE_DOMAIN" }}'
+      authelia_url: '{{ env "AUTHELIA_PUBLIC_URL" }}'
+storage:
+  local:
+    path: '/config/db.sqlite3'
+notifier:
+  filesystem:
+    filename: '/config/notification.txt'

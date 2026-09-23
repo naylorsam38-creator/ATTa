@@ -1,0 +1,31 @@
+# Same as Alexandrie's backend/Dockerfile except golang:1.26 — upstream pins 1.25 but go.mod requires go >= 1.26.0.
+# Backend Dockerfile for Alexandrie
+FROM golang:1.26-alpine AS builder
+
+WORKDIR /app
+
+# Copy go mod files
+COPY go.mod go.sum ./
+
+# Download dependencies
+RUN go mod download
+
+# Copy source code
+COPY . .
+
+# Build the application
+RUN CGO_ENABLED=0 GOOS=linux go build -installsuffix cgo -o backend_app .
+
+# Production stage - distroless
+FROM gcr.io/distroless/static-debian12:nonroot
+
+WORKDIR /app
+
+# Copy built application
+COPY --from=builder --chown=nonroot:nonroot /app/backend_app ./
+
+# Expose port
+EXPOSE 8201
+
+# Default command
+ENTRYPOINT ["./backend_app"]

@@ -1,0 +1,5 @@
+{
+  "note": "SendPortal built from the received source (Apache + PHP 8.4, composer --no-dev, core assets published) with PostgreSQL 16; APP_KEY generated once per deployment into the storage volume unless set.",
+  "path": "/login",
+  "timeout": 1500
+}

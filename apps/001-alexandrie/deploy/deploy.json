@@ -1,0 +1,5 @@
+{
+  "note": "Full Alexandrie stack (frontend + Go backend + MySQL + RustFS) built from the received source with Alexandrie's own Dockerfiles; the capability proxy is the only public web entrypoint (backend API and CDN are also public because the browser calls them directly).",
+  "path": "/",
+  "timeout": 1500
+}

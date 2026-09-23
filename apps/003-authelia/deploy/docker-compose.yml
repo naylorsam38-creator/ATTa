@@ -1,0 +1,27 @@
+# 003-authelia — deploy bundle. Coolify: "Docker Compose" build pack, this file.
+# Public entrypoint is `proxy` (the capability proxy); it forwards to `authelia` and injects the Port.
+# Set AUTHELIA_COOKIE_DOMAIN / AUTHELIA_PUBLIC_URL to your real domain (Authelia requires https for the URL).
+services:
+  proxy:
+    build: ./capability
+    environment:
+      - SERVICE_URL_PROXY_8080
+      - APP_ID=003-authelia
+      - TARGET=http://authelia:9091
+    depends_on:
+      - authelia
+    restart: unless-stopped
+
+  authelia:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.atta
+    environment:
+      - AUTHELIA_COOKIE_DOMAIN=${AUTHELIA_COOKIE_DOMAIN:-127.0.0.1}
+      - AUTHELIA_PUBLIC_URL=${SERVICE_URL_PROXY:-https://127.0.0.1}
+      - AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET=${SERVICE_PASSWORD_64_JWT:-change-me-jwt-secret-0123456789abcdef0123456789abcdef}
+      - AUTHELIA_SESSION_SECRET=${SERVICE_PASSWORD_64_SESSION:-change-me-session-secret-0123456789abcdef0123456789}
+      - AUTHELIA_STORAGE_ENCRYPTION_KEY=${SERVICE_PASSWORD_64_STORAGE:-change-me-storage-key-0123456789abcdef0123456789abcdef}
+    volumes:
+      - ./config:/config
+    restart: unless-stopped

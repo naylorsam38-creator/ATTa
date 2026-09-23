@@ -1,0 +1,41 @@
+# Mixpost Lite is a Laravel package. This image builds its Vue/Vite frontend from the received source,
+# installs it into a fresh Laravel 12 host app (path repository), and adds a minimal email/password login
+# (Mixpost relies on the host app's auth). Same shape as the ATTa test recipe, minus the test-only auto-login.
+FROM node:22-alpine AS assets
+WORKDIR /pkg
+COPY package.json package-lock.json ./
+RUN npm ci --no-audit --no-fund
+COPY . .
+RUN npm run build
+
+FROM composer:2 AS host
+RUN composer create-project 'laravel/laravel:^12.0' /host --no-interaction --no-progress --prefer-dist --no-scripts
+COPY --from=assets /pkg /mixpost
+RUN rm -rf /mixpost/node_modules
+WORKDIR /host
+RUN composer config repositories.mixpost '{"type":"path","url":"/mixpost","options":{"symlink":false}}' \
+ && composer require 'inovector/mixpost:*@dev' --no-interaction --no-progress --no-scripts --ignore-platform-reqs
+COPY docker/host/ /host/
+
+FROM php:8.4-apache
+RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpng-dev libjpeg-dev libfreetype6-dev unzip \
+ && docker-php-ext-configure gd --with-freetype --with-jpeg \
+ && docker-php-ext-install pdo_mysql bcmath intl zip pcntl gd exif \
+ && a2enmod rewrite && rm -rf /var/lib/apt/lists/*
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
+ && sed -ri 's!AllowOverride None!AllowOverride All!g' /etc/apache2/apache2.conf
+WORKDIR /var/www/html
+COPY --from=host /host .
+COPY --from=host /mixpost /mixpost
+RUN cp -n .env.example .env \
+ && php artisan package:discover --ansi \
+ && php artisan mixpost:publish-assets --force=1 \
+ && php artisan vendor:publish --tag=mixpost-config --force \
+ && php artisan vendor:publish --tag=mixpost-migrations \
+ && cat routes/atta-auth.php >> routes/web.php && rm routes/atta-auth.php \
+ && chown -R www-data:www-data storage bootstrap/cache
+COPY docker/atta-entrypoint.sh /usr/local/bin/atta-entrypoint.sh
+RUN chmod +x /usr/local/bin/atta-entrypoint.sh
+EXPOSE 80
+ENTRYPOINT ["atta-entrypoint.sh"]

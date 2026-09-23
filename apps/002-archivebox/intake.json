@@ -7,5 +7,6 @@
     "capability-port/port.js": "match",
     "capability-port/caps/mover.mjs": "match"
   },
-  "md5": "2a72f309068f662e0d13b29304a2cfe4"
+  "md5": "2a72f309068f662e0d13b29304a2cfe4",
+  "sourcePath": "/root/.claude/uploads/b3b4ff0b-4068-54c7-9d3e-768a8697e77f/09b95ff5-ArchiveBox-dev_3_-capability-patched.zip"
 }

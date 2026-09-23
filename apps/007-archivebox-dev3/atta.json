@@ -1,0 +1,10 @@
+{
+  "note": "ArchiveBox dev3 re-pack (same app as 002; out/ bundle now inside the app folder, archivebox/static is a real directory). ArchiveBox (Python/Django, served by daphne). Fresh collection initialised in data/; unauthenticated visit lands on the admin login screen.",
+  "setup": [
+    "~/.local/bin/uv sync --python 3.13 --frozen",
+    "find \"$DATA\" -mindepth 1 -delete && cd \"$DATA\" && \"$SRC/.venv/bin/archivebox\" init"
+  ],
+  "start": "cd \"$DATA\" && exec \"$SRC/.venv/bin/archivebox\" server 127.0.0.1:$PORT",
+  "path": "/",
+  "timeout": 120
+}

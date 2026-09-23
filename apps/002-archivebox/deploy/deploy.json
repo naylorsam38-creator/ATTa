@@ -1,0 +1,5 @@
+{
+  "note": "ArchiveBox web app built from the received source in a lean python:3.13 image (UI/admin/API; archiving extractors not included), data in a named volume; the capability proxy is the only public entrypoint.",
+  "path": "/",
+  "timeout": 1200
+}
