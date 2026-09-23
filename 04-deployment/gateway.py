@@ -3,7 +3,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 import hashlib,hmac,html,json,os,secrets,time,re,tempfile,threading,zipfile
-import accounts, builds
+import accounts, builds, alerts
 ROOT=Path(os.environ.get("APP_BUILDER_ROOT","/srv/app-builder"));
 LOGIN_WINDOW=int(os.environ.get("APP_BUILDER_LOGIN_WINDOW","900")); LOGIN_MAX_FAILURES=int(os.environ.get("APP_BUILDER_LOGIN_MAX_FAILURES","8")); _LOGIN_FAILURES={}
 _LOGIN_LOCK=threading.Lock()
@@ -63,9 +63,22 @@ def page(title,body,me=None):
  nav=""
  if me:
   links='<a href=/>Front Door</a> <a href=/builds>'+("All builds" if me["role"]=="admin" else "My builds")+'</a> <a href=/upload>Upload</a>'
-  if me["role"]=="admin": links+=' <a href=/status>System status</a>'
+  if me["role"]=="admin": links+=' <a href=/status>System status</a> <a href=/alerts>Alerts</a>'
   nav='<nav>'+links+'<span>'+html.escape(me["name"])+' ('+html.escape(me["role"])+')'+(' <a href=/logout>Log out</a>' if not AUTH_DISABLED else '')+'</span></nav>'
  return ('<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+html.escape(title)+'</title><style>body{font-family:system-ui;margin:40px;max-width:900px}input,button{padding:10px;margin:6px 0}pre{background:#f4f4f4;padding:12px;overflow:auto}nav{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #ddd}nav span{margin-left:auto;color:#666}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:6px 8px;border-bottom:1px solid #eee}.QUALIFIED{color:#0a7a2f;font-weight:600}.FAILED,.NOT_QUALIFIED{color:#b00020;font-weight:600}</style></head><body>'+nav+body+'</body></html>').encode()
+def healing_html(r):
+ h=r.get("healing") or {}
+ if not h: return ""
+ out="<h2>Self-healing</h2>"
+ for layer,d in h.items():
+  out+="<h3>"+html.escape(layer)+": "+html.escape(d.get("status",""))+" ("+str(d.get("rounds",0))+" round(s))</h3><table><tr><th>When</th><th>Tier</th><th>Item</th><th>Outcome</th><th>Detail</th></tr>"
+  for c in d.get("chain",[]):
+   it=c.get("item") or {}
+   what=(it.get("app")+": " if it.get("app") else "")+it.get("key","") if it else ", ".join((x.get("app") or "")+" "+x.get("key","") for x in c.get("items",[]))
+   det=c.get("why") or c.get("note") or "; ".join(a["name"]+(" ✗ " if a.get("error") else " ✓ ")+str(a.get("result",""))[:160] for a in c.get("actions",[])) or ", ".join(c.get("findings",[]))
+   out+="<tr><td>"+when(c.get("at"))+"</td><td>"+str(c.get("tier"))+" "+html.escape(c.get("tier_name",""))+"</td><td>"+html.escape(what)+"</td><td>"+html.escape(c.get("outcome",""))+"</td><td>"+html.escape(str(det)[:600])+"</td></tr>"
+  out+="</table>"
+ return out
 def when(t): return time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(t)) if t else ""
 def builds_table(rows,me):
  if not rows: return "<p>No builds yet. <a href=/upload>Upload a bundle</a> to start one.</p>"
@@ -199,7 +212,14 @@ class H(BaseHTTPRequestHandler):
    if not r or not builds.can_see(me,r): self.send_error(404); return
    if m.group(1): self.json_out(r); return
    hist="".join("<tr><td>"+when(h.get("at"))+"</td><td class="+html.escape(h.get("state",""))+">"+html.escape(h.get("state",""))+"</td><td>"+html.escape(h.get("error",""))+"</td></tr>" for h in r.get("history",[]))
-   self.out(page(r["id"],"<h1>Build "+html.escape(r["id"])+"</h1><p>Owner: <b>"+html.escape(r.get("owner",""))+"</b> &middot; State: <b class="+html.escape(r.get("state",""))+">"+html.escape(r.get("state",""))+"</b></p>"+("<p>"+html.escape(str(r["error"]))+"</p>" if r.get("error") else "")+"<h2>History</h2><table>"+hist+"</table><h2>Full record</h2><pre>"+html.escape(json.dumps(r,indent=2))+"</pre>",me)); return
+   self.out(page(r["id"],"<h1>Build "+html.escape(r["id"])+"</h1><p>Owner: <b>"+html.escape(r.get("owner",""))+"</b> &middot; State: <b class="+html.escape(r.get("state",""))+">"+html.escape(r.get("state",""))+"</b></p>"+("<p>"+html.escape(str(r["error"]))+"</p>" if r.get("error") else "")+"<h2>History</h2><table>"+hist+"</table>"+healing_html(r)+"<h2>Full record</h2><pre>"+html.escape(json.dumps(r,indent=2))+"</pre>",me)); return
+  if p=="/alerts":
+   # Human escalations (tier 4 of self-healing) span every user's builds: admin-only.
+   if me["role"]!="admin": self.redirect("/builds"); return
+   rows=alerts.recent()
+   body="<h1>Alerts</h1><p>Raised only after the known-fix script, the capability adapter and the LLM could not fix a failure.</p>"
+   body+="".join("<h3>"+when(a.get("at"))+" &middot; <a href=/builds/"+html.escape(a.get("build_id",""))+">"+html.escape(a.get("build_id",""))+"</a> &middot; "+html.escape(a.get("layer",""))+"</h3><pre>"+html.escape(a.get("text",""))+"</pre>" for a in rows) or "<p>No alerts.</p>"
+   self.out(page("Alerts",body,me)); return
   if p=="/status":
    # System-wide pipeline state spans every user's builds, so it is admin-only.
    if me["role"]!="admin": self.redirect("/builds"); return

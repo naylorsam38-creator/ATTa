@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import json, os, re, shutil, subprocess, time, zipfile, io
-import builds, coolify_handoff
+import builds, coolify_handoff, maintenance
 
 ROOT=Path(os.environ.get('APP_BUILDER_ROOT','/srv/app-builder'))
 INBOX=ROOT/'inbox'; WORK=ROOT/'work'; LIB=ROOT/'library'; STATE=ROOT/'state'; PKG=ROOT/'package'
@@ -17,7 +17,7 @@ def state(**kw):
     except Exception: pass
     d.update(kw,updated_at=time.time()); STATUS.write_text(json.dumps(d,indent=2)+'\n')
 
-CURRENT_BUILD=None
+CURRENT_BUILD=None; LAST_BUILD=None
 def step(name,**kw):
     # System-wide status (admin view) and the owning user's build record move together.
     state(state=name,**kw)
@@ -29,7 +29,7 @@ def qualify():
     'PASS (CLEAN not run)' does not qualify. No targets does not qualify."""
     import system_watcher as w
     targets=w.load_targets()
-    if not targets: return False,[],'NO_TARGETS: no app targets registered in state/apps'
+    if not targets: return False,[],'NO_TARGETS: no app targets registered in state/apps',[]
     results=[w.check(t) for t in targets]
     w.LOG.parent.mkdir(parents=True,exist_ok=True)
     with w.LOG.open('a') as f:
@@ -40,7 +40,18 @@ def qualify():
         if r.get('broken_at') is not None: problems.append(f"{r['app']}: {r['verdict']}")
         elif clean!='OK': problems.append(f"{r['app']}: browser stage 6 not passed ({clean or 'missing'})")
         apps.append({'app':r['app'],'verdict':r['verdict'],'ui_dir':t.get('ui_dir'),'target_url':t.get('target_url'),'proxy_url':t.get('proxy_url')})
-    return (not problems),apps,'; '.join(problems)
+    return (not problems),apps,'; '.join(problems),results
+
+def requalify(bid):
+    """Run the QUALIFIED gate again for a build (used by self-healing to verify a fix)."""
+    ok,apps,why,results=qualify()
+    if not ok:
+        builds.update(bid,state='NOT_QUALIFIED',error=why,qualification=apps,qualification_results=results)
+        return False
+    builds.update(bid,state='QUALIFIED',qualified_at=time.time(),qualification=apps,qualification_results=results,error=None)
+    try: coolify_handoff.hand_off(bid,apps)
+    except Exception as e: print(f'coolify hand-off {bid}: {e} (retried from the loop)',flush=True)
+    return True
 
 def run(c):
     try:
@@ -135,12 +146,12 @@ def lock_is_stale():
     return False
 
 def process(b):
-    global CURRENT_BUILD
+    global CURRENT_BUILD, LAST_BUILD
     bid=b.stem
     if not builds.ID_RE.match(bid) or builds.get(bid) is None:
         # A zip dropped straight into the inbox (not via the gateway) still gets a build record.
         bid=builds.create('system',bundle=b.name)['id']
-    CURRENT_BUILD=bid
+    CURRENT_BUILD=LAST_BUILD=bid
     step('VALIDATING',bundle=b.name)
     stage=WORK/f'run-{int(time.time())}-{os.getpid()}'; stage.mkdir()
     try:
@@ -189,12 +200,13 @@ def process(b):
         for aid,item in desired.items():
             (state_apps/f'{aid}.json').write_text(json.dumps(item,indent=2)+'\n')
         step('READY_FOR_WATCHER',library=str(LIB),targets=str(ROOT/'state/apps'))
+        maintenance.on_build_progress(bid)
         # Gate: nothing goes downstream until the browser check has passed.
         step('QUALIFYING')
-        ok,apps,why=qualify()
+        ok,apps,why,results=qualify()
         if not ok:
-            step('NOT_QUALIFIED',error=why,qualification=apps); return False
-        step('QUALIFIED',qualified_at=time.time(),qualification=apps,error=None)
+            step('NOT_QUALIFIED',error=why,qualification=apps,qualification_results=results); return False
+        step('QUALIFIED',qualified_at=time.time(),qualification=apps,qualification_results=results,error=None)
         # Every qualified build goes to Coolify. Retries happen in loop() until it gets there.
         try: coolify_handoff.hand_off(bid,apps)
         except Exception as e: print(f'coolify hand-off {bid}: {e} (retried from the loop)',flush=True)
@@ -215,8 +227,13 @@ def loop():
             try:
                 b=bs[0]; ok=process(b)
                 b.rename(b.with_suffix('.processed.zip' if ok else '.failed.zip'))
+                # Self-healing: script -> adapter -> LLM -> human, before a failure is left sitting.
+                if not ok and LAST_BUILD:
+                    try: maintenance.on_failure(LAST_BUILD)
+                    except Exception as e: print(f'maintenance {LAST_BUILD}: {e}',flush=True)
             finally: LOCK.unlink(missing_ok=True)
         coolify_handoff.dispatch_pending()
+        maintenance.sweep()
         time.sleep(2)
 
 if __name__=='__main__': loop()
