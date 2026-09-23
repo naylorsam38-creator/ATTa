@@ -1,12 +1,12 @@
 # 007-archivebox-dev3 — deploy bundle FAIL
 
-Built: 2026-09-23T05:16:02.380Z
+Built: 2026-09-23T06:51:59.233Z
 
 Bundle: `dist/007-archivebox-dev3/` · zip: `dist/007-archivebox-dev3.zip` (3.2 MB)
 
 > ArchiveBox web app built from the received source in a lean python:3.13 image (UI/admin/API; archiving extractors not included), data in a named volume; the capability proxy is the only public entrypoint.
 
-Verification: containers up in 57s; 15/16 checks not failing
+Verification: containers up in 56s; 15/16 checks not failing
 
 Same Playwright checks, run against the containers (proxy container → app container):
 
@@ -26,5 +26,5 @@ Same Playwright checks, run against the containers (proxy container → app cont
 | C12 | No new uncaught errors with the Port | PASS | none (0 uncaught error(s) seen, all also raised by the app without the Port) |
 | C13 | App CSP lets the Port run | PASS | CSP present, no violations added by the Port |
 | C14 | Redirects and links stay on the proxy | PASS | GET / → 302 /admin/login/?next=/ |
-| C15 | Customer skins through the proxy | PASS | acme→midnight: applied; globex→sunrise: applied; initech→blueprint: applied; no header → original look |
+| C15 | Customer skins through the proxy | PASS | acme→skin-002 "skin-002": applied (13 rules); globex→skin-003 "skin-003": applied (13 rules); initech→skin-004 "skin-004": applied (13 rules); umbrella→skin-005 "skin-005": applied (13 rules); no header → original look |
 | C16 | Sticky-notes capability on the live page | PASS | pinned=true ("Pinned by ATTa×", visible=true), after reload=true, clear=true |

@@ -4,55 +4,96 @@ $ docker compose up -d --build
 #1 reading from stdin 1.88kB done
 #1 DONE 0.0s
 
-#2 [archivebox internal] load build definition from Dockerfile.verify
-#2 transferring dockerfile: 1.31kB done
+#2 [proxy internal] load build definition from Dockerfile.verify
+#2 transferring dockerfile: 1.26kB done
 #2 DONE 0.0s
 
-#3 [proxy internal] load build definition from Dockerfile.verify
-#3 transferring dockerfile: 1.26kB done
+#3 [archivebox internal] load build definition from Dockerfile.verify
+#3 transferring dockerfile: 1.31kB done
 #3 DONE 0.0s
 
 #4 [proxy context sandboxca] load .dockerignore
 #4 transferring sandboxca: 2B done
-#4 transferring sandboxca: 2B done
 #4 DONE 0.0s
 
-#5 [proxy internal] load metadata for docker.io/library/node:22-alpine
-#5 DONE 0.8s
+#5 [archivebox internal] load metadata for docker.io/library/python:3.13-slim
+#5 ...
 
-#6 [archivebox internal] load metadata for docker.io/library/python:3.13-slim
-#6 DONE 0.8s
+#6 [proxy internal] load metadata for docker.io/library/node:22-alpine
+#6 DONE 1.9s
 
 #7 [proxy internal] load .dockerignore
 #7 transferring context: 2B done
 #7 DONE 0.0s
 
 #8 [proxy internal] load build context
-#8 transferring context: 61.02kB done
+#8 transferring context: 70.08kB done
 #8 DONE 0.0s
 
-#9 [archivebox internal] load .dockerignore
-#9 transferring context: 1.28kB done
+#9 [proxy context sandboxca] load from client
+#9 transferring sandboxca: 228.61kB done
 #9 DONE 0.0s
 
-#10 [proxy context sandboxca] load from client
-#10 transferring sandboxca: 228.61kB 0.0s done
-#10 DONE 0.0s
+#5 [archivebox internal] load metadata for docker.io/library/python:3.13-slim
+#5 DONE 2.1s
 
-#11 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
-#11 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85 0.0s done
-#11 DONE 0.1s
+#10 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#10 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85 0.0s done
+#10 ...
 
-#12 [proxy stage-0 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#9 [archivebox context sandboxca] load from client
+#9 transferring sandboxca: 228.61kB done
+#9 DONE 0.0s
+
+#11 [archivebox internal] load .dockerignore
+#11 transferring context: 1.28kB done
+#11 DONE 0.0s
+
+#12 [archivebox stage-0 1/9] FROM docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
+#12 resolve docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0 0.0s done
 #12 DONE 0.1s
 
-#13 [archivebox stage-0 1/9] FROM docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
-#13 resolve docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0 0.0s done
-#13 ...
+#10 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#10 sha256:ec179e2ee07230312183920d42bf49c2ef18644e3d7186ffa92b02dd2e26a835 0B / 1.26MB 0.2s
+#10 sha256:65213f1a3de84db18197276d9be6a34fad98eec70604aeaa6821556d932c2676 0B / 444B 0.2s
+#10 sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 0B / 55.68MB 0.2s
+#10 sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5 0B / 3.85MB 0.2s
+#10 ...
 
-#14 [archivebox internal] load build context
-#14 transferring context: 4.56MB 0.1s done
-#14 DONE 0.2s
+#13 [archivebox internal] load build context
+#13 transferring context: 4.56MB 0.1s done
+#13 DONE 0.1s
+
+#10 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#10 sha256:65213f1a3de84db18197276d9be6a34fad98eec70604aeaa6821556d932c2676 444B / 444B 0.6s done
+#10 sha256:ec179e2ee07230312183920d42bf49c2ef18644e3d7186ffa92b02dd2e26a835 1.26MB / 1.26MB 0.6s done
+#10 sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5 3.85MB / 3.85MB 0.8s done
+#10 sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 37.75MB / 55.68MB 0.9s
+#10 extracting sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5
+#10 sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 55.68MB / 55.68MB 1.0s done
+#10 extracting sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5 0.2s done
+#10 extracting sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06
+#10 extracting sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 1.2s done
+#10 DONE 2.3s
+
+#12 [archivebox stage-0 1/9] FROM docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
+#12 sha256:4a43a40b039e72c4176e2fcbb0c08f42be7ff4e6a07722417801c9147b67bfb2 250B / 250B 0.5s done
+#12 sha256:264ba3d8ae19c964ad7ebecdd4379a348cc08c7898b50d08d7884127a78fdb23 11.91MB / 11.91MB 0.9s done
+#12 sha256:3d9fb74714202c0d9ba7af2ca3e226fec5647f73cefc725b7ff37338bc1b59ec 1.29MB / 1.29MB 0.7s done
+#12 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 29.83MB / 29.83MB 0.9s done
+#12 extracting sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8
+#12 ...
+
+#10 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#10 extracting sha256:ec179e2ee07230312183920d42bf49c2ef18644e3d7186ffa92b02dd2e26a835 0.0s done
+#10 extracting sha256:65213f1a3de84db18197276d9be6a34fad98eec70604aeaa6821556d932c2676 done
+#10 DONE 2.3s
+
+#14 [proxy stage-0 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#14 DONE 0.3s
+
+#12 [archivebox stage-0 1/9] FROM docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
+#12 ...
 
 #15 [proxy stage-0 3/6] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
 #15 DONE 0.1s
@@ -60,48 +101,39 @@ $ docker compose up -d --build
 #16 [proxy stage-0 4/6] WORKDIR /cp
 #16 DONE 0.0s
 
-#13 [archivebox stage-0 1/9] FROM docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
-#13 ...
-
 #17 [proxy stage-0 5/6] COPY --chown=node:node ui-bridge ./ui-bridge
 #17 DONE 0.0s
 
 #18 [proxy stage-0 6/6] COPY --chown=node:node capability-port ./capability-port
 #18 DONE 0.0s
 
-#13 [archivebox stage-0 1/9] FROM docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
-#13 sha256:264ba3d8ae19c964ad7ebecdd4379a348cc08c7898b50d08d7884127a78fdb23 0B / 11.91MB 0.2s
-#13 sha256:3d9fb74714202c0d9ba7af2ca3e226fec5647f73cefc725b7ff37338bc1b59ec 0B / 1.29MB 0.2s
-#13 ...
+#12 [archivebox stage-0 1/9] FROM docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
+#12 extracting sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 0.8s done
+#12 extracting sha256:3d9fb74714202c0d9ba7af2ca3e226fec5647f73cefc725b7ff37338bc1b59ec 0.1s done
+#12 DONE 2.7s
 
 #19 [proxy] exporting to image
+#19 exporting layers
 #19 exporting layers 0.1s done
-#19 exporting manifest sha256:53c4c3144fa23c98b912c465954c4536d3e971a383700b9ff85e838b2d781d92 done
-#19 exporting config sha256:fb86acf92c35311d78c614e27bea7a068a833b6c6174041d6039cc09681451df done
-#19 exporting attestation manifest sha256:790b56dddb3fd0c489029958ebf6d4d21ccc5eaff32ea83f57f9ffd5c2b64341 done
-#19 exporting manifest list sha256:808c39aa89c001d6a8a22c5b6120deaf8cce955802e2dde7551acac5ed3498e9 done
+#19 exporting manifest sha256:4a41ac3442430d5581277e3f569bf30f9fbfc2948aeb7f9f86dabb8fb66d836f done
+#19 exporting config sha256:77555ba9cd1375df96875a349968bb27eb8206145f9e5ed06fc99b631d8801c1 done
+#19 exporting attestation manifest sha256:00816b9c0ea7e68896a8ab2df1243b1fc54c6c16b23b2f52444a8fc9ddf87c1b 0.0s done
+#19 exporting manifest list sha256:8a7392a3cfba788c30983f644c80911d29b77dcc7c93a1ef9094552704c921ec done
 #19 naming to docker.io/library/atta-007archiveboxdev3-proxy:latest done
 #19 unpacking to docker.io/library/atta-007archiveboxdev3-proxy:latest 0.0s done
 #19 DONE 0.2s
 
-#13 [archivebox stage-0 1/9] FROM docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
-#13 ...
-
 #20 [proxy] resolving provenance for metadata file
 #20 DONE 0.0s
 
-#13 [archivebox stage-0 1/9] FROM docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
-#13 sha256:264ba3d8ae19c964ad7ebecdd4379a348cc08c7898b50d08d7884127a78fdb23 11.91MB / 11.91MB 0.7s done
-#13 sha256:3d9fb74714202c0d9ba7af2ca3e226fec5647f73cefc725b7ff37338bc1b59ec 1.29MB / 1.29MB 0.9s
-#13 sha256:3d9fb74714202c0d9ba7af2ca3e226fec5647f73cefc725b7ff37338bc1b59ec 1.29MB / 1.29MB 0.9s done
-#13 extracting sha256:3d9fb74714202c0d9ba7af2ca3e226fec5647f73cefc725b7ff37338bc1b59ec 0.1s done
-#13 extracting sha256:264ba3d8ae19c964ad7ebecdd4379a348cc08c7898b50d08d7884127a78fdb23
-#13 extracting sha256:264ba3d8ae19c964ad7ebecdd4379a348cc08c7898b50d08d7884127a78fdb23 0.3s done
-#13 DONE 1.4s
+#12 [archivebox stage-0 1/9] FROM docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
+#12 extracting sha256:264ba3d8ae19c964ad7ebecdd4379a348cc08c7898b50d08d7884127a78fdb23
+#12 extracting sha256:264ba3d8ae19c964ad7ebecdd4379a348cc08c7898b50d08d7884127a78fdb23 0.4s done
+#12 DONE 3.0s
 
-#13 [archivebox stage-0 1/9] FROM docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
-#13 extracting sha256:4a43a40b039e72c4176e2fcbb0c08f42be7ff4e6a07722417801c9147b67bfb2 done
-#13 DONE 1.4s
+#12 [archivebox stage-0 1/9] FROM docker.io/library/python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0
+#12 extracting sha256:4a43a40b039e72c4176e2fcbb0c08f42be7ff4e6a07722417801c9147b67bfb2 done
+#12 DONE 3.1s
 
 #21 [archivebox stage-0 2/9] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
 #21 DONE 0.1s
@@ -110,14 +142,14 @@ $ docker compose up -d --build
 #22 DONE 0.1s
 
 #23 [archivebox stage-0 4/9] RUN pip install --no-cache-dir uv
-#23 2.309 Collecting uv
-#23 2.710   Downloading uv-0.12.18-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
-#23 2.765 Downloading uv-0.12.18-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20.5 MB)
-#23 3.072    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.5/20.5 MB 78.0 MB/s  0:00:00
-#23 3.167 Installing collected packages: uv
-#23 3.396 Successfully installed uv-0.12.18
-#23 3.396 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#23 DONE 3.7s
+#23 1.700 Collecting uv
+#23 1.856   Downloading uv-0.12.18-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+#23 1.899 Downloading uv-0.12.18-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20.5 MB)
+#23 2.049    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.5/20.5 MB 176.5 MB/s  0:00:00
+#23 2.140 Installing collected packages: uv
+#23 2.427 Successfully installed uv-0.12.18
+#23 2.427 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#23 DONE 2.6s
 
 #24 [archivebox stage-0 5/9] WORKDIR /app
 #24 DONE 0.0s
@@ -126,167 +158,167 @@ $ docker compose up -d --build
 #25 DONE 0.1s
 
 #26 [archivebox stage-0 7/9] RUN uv sync --frozen --no-dev
-#26 0.077 warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
-#26 0.118 Using CPython 3.13.15 interpreter at: /usr/local/bin/python3
-#26 0.118 Creating virtual environment at: .venv
-#26 0.172    Building archivebox @ file:///app
-#26 0.599 Downloading lz4 (1.3MiB)
-#26 0.608 Downloading pygments (1.2MiB)
-#26 0.611 Downloading pycryptodomex (2.2MiB)
-#26 0.613 Downloading cryptography (4.5MiB)
-#26 0.615 Downloading psycopg-binary (4.9MiB)
-#26 0.616 Downloading jedi (4.7MiB)
-#26 0.618 Downloading pydantic-core (2.0MiB)
-#26 0.621 Downloading django (8.0MiB)
-#26 0.623 Downloading django-ninja (2.3MiB)
-#26 0.625 Downloading autobahn (2.2MiB)
-#26 0.626 Downloading twisted (3.1MiB)
-#26 0.628 Downloading uv (25.7MiB)
-#26 0.897    Building atomicwrites==1.4.1
-#26 1.019  Downloaded pygments
-#26 1.035  Downloaded lz4
-#26 1.142  Downloaded pydantic-core
-#26 1.153  Downloaded autobahn
-#26 1.171  Downloaded pycryptodomex
-#26 1.188  Downloaded django-ninja
-#26 1.274  Downloaded twisted
-#26 1.415  Downloaded jedi
-#26 1.415  Downloaded cryptography
-#26 1.422  Downloaded psycopg-binary
-#26 1.564  Downloaded django
-#26 1.746       Built archivebox @ file:///app
-#26 1.879       Built atomicwrites==1.4.1
-#26 2.340  Downloaded uv
-#26 2.340 Prepared 103 packages in 2.21s
-#26 2.539 Installed 103 packages in 198ms
-#26 2.539  + abx-dl==1.13.14
-#26 2.539  + abx-plugins==1.13.18
-#26 2.539  + abxbus==2.5.57
-#26 2.539  + abxpkg==1.13.1
-#26 2.539  + annotated-types==0.7.0
-#26 2.539  + anyio==4.14.2
-#26 2.539  + archivebox==0.9.37rc1 (from file:///app)
-#26 2.539  + asgiref==3.12.1
-#26 2.539  + asttokens==3.0.2
-#26 2.539  + atomicwrites==1.4.1
-#26 2.539  + attrs==26.1.0
-#26 2.539  + autobahn==26.7.1
-#26 2.539  + automat==25.4.16
-#26 2.539  + base32-crockford==0.3.0
-#26 2.539  + bleach==6.4.0
-#26 2.539  + browser-cookie3==0.20.1
-#26 2.539  + cbor2==6.1.3
-#26 2.539  + certifi==2026.6.17
-#26 2.539  + cffi==2.1.0
-#26 2.539  + charset-normalizer==3.4.9
-#26 2.539  + click==8.4.2
-#26 2.539  + constantly==23.10.4
-#26 2.539  + croniter==6.2.4
-#26 2.539  + cryptography==49.0.0
-#26 2.540  + daphne==4.2.2
-#26 2.541  + dateparser==1.4.1
-#26 2.541  + decorator==5.3.1
-#26 2.541  + django==6.1
-#26 2.541  + django-admin-data-views==0.4.3
-#26 2.541  + django-extensions==4.1
-#26 2.541  + django-ninja==1.6.3
-#26 2.541  + django-object-actions==5.1.2
-#26 2.541  + django-settings-holder==0.3.0
-#26 2.541  + django-signal-webhooks==0.3.1
-#26 2.541  + django-stubs==6.0.7
-#26 2.541  + django-stubs-ext==6.0.7
-#26 2.541  + executing==2.2.1
-#26 2.541  + h11==0.16.0
-#26 2.541  + httpcore==1.0.9
-#26 2.541  + httpx==0.28.1
-#26 2.541  + hyperlink==21.0.0
-#26 2.541  + idna==3.18
-#26 2.541  + imagesize==2.0.0
-#26 2.541  + incremental==24.11.0
-#26 2.541  + ipython==9.15.0
-#26 2.541  + ipython-pygments-lexers==1.1.1
-#26 2.541  + jedi==0.20.0
-#26 2.541  + jeepney==0.9.0
-#26 2.541  + lz4==4.4.5
-#26 2.541  + markdown-it-py==4.2.0
-#26 2.541  + matplotlib-inline==0.2.2
-#26 2.541  + mdurl==0.1.2
-#26 2.541  + msgpack==1.2.1
-#26 2.541  + packaging==26.2
-#26 2.541  + parso==0.8.7
-#26 2.541  + pexpect==4.9.0
-#26 2.541  + platformdirs==4.10.0
-#26 2.541  + prompt-toolkit==3.0.52
-#26 2.541  + psutil==7.2.2
-#26 2.541  + psycopg==3.3.4
-#26 2.541  + psycopg-binary==3.3.4
-#26 2.541  + ptyprocess==0.7.0
-#26 2.541  + pure-eval==0.2.3
-#26 2.541  + py-machineid==1.0.0
-#26 2.541  + pycparser==3.0
-#26 2.541  + pycryptodomex==3.23.0
-#26 2.541  + pydantic==2.13.4
-#26 2.541  + pydantic-core==2.46.4
-#26 2.541  + pydantic-settings==2.14.2
-#26 2.541  + pygments==2.20.0
-#26 2.541  + pyopenssl==26.3.0
-#26 2.541  + python-dateutil==2.9.0.post0
-#26 2.541  + python-dotenv==1.2.2
-#26 2.541  + pytz==2026.2
-#26 2.541  + regex==2026.7.10
-#26 2.541  + requests==2.34.2
-#26 2.541  + rich==15.0.0
-#26 2.541  + rich-click==1.9.8
-#26 2.541  + service-identity==26.1.0
-#26 2.541  + setuptools==83.0.0
-#26 2.541  + six==1.17.0
-#26 2.541  + sonic-client==1.0.0
-#26 2.541  + sqlparse==0.5.5
-#26 2.541  + stack-data==0.6.3
-#26 2.541  + supervisor==4.3.0
-#26 2.541  + toml==0.10.2
-#26 2.541  + traitlets==5.15.1
-#26 2.541  + twisted==26.4.0
-#26 2.541  + txaio==26.6.1
-#26 2.541  + types-pyyaml==6.0.12.20260518
-#26 2.541  + typing-extensions==4.16.0
-#26 2.541  + typing-inspection==0.4.2
-#26 2.541  + tzdata==2026.3
-#26 2.541  + tzlocal==5.4.4
-#26 2.541  + ujson==5.13.0
-#26 2.541  + urllib3==2.7.0
-#26 2.541  + uuid7==0.1.0
-#26 2.541  + uv==0.11.29
-#26 2.541  + w3lib==2.4.1
-#26 2.541  + wcwidth==0.8.2
-#26 2.541  + webencodings==0.5.1
-#26 2.541  + websockets==17.1
-#26 2.541  + zope-interface==8.5
-#26 DONE 3.3s
+#26 0.080 warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+#26 0.127 Using CPython 3.13.15 interpreter at: /usr/local/bin/python3
+#26 0.127 Creating virtual environment at: .venv
+#26 0.206    Building archivebox @ file:///app
+#26 0.565 Downloading uv (25.7MiB)
+#26 0.614 Downloading psycopg-binary (4.9MiB)
+#26 0.615 Downloading django (8.0MiB)
+#26 0.655 Downloading cryptography (4.5MiB)
+#26 0.657 Downloading jedi (4.7MiB)
+#26 0.673 Downloading twisted (3.1MiB)
+#26 0.673 Downloading pycryptodomex (2.2MiB)
+#26 0.674 Downloading django-ninja (2.3MiB)
+#26 0.675 Downloading pydantic-core (2.0MiB)
+#26 0.675 Downloading autobahn (2.2MiB)
+#26 0.681 Downloading pygments (1.2MiB)
+#26 0.681 Downloading lz4 (1.3MiB)
+#26 0.683    Building atomicwrites==1.4.1
+#26 1.001  Downloaded pygments
+#26 1.012  Downloaded lz4
+#26 1.094  Downloaded pydantic-core
+#26 1.110  Downloaded autobahn
+#26 1.110  Downloaded pycryptodomex
+#26 1.111  Downloaded django-ninja
+#26 1.172  Downloaded twisted
+#26 1.247  Downloaded jedi
+#26 1.248  Downloaded psycopg-binary
+#26 1.254  Downloaded cryptography
+#26 1.514  Downloaded django
+#26 1.751       Built archivebox @ file:///app
+#26 1.797  Downloaded uv
+#26 1.965       Built atomicwrites==1.4.1
+#26 1.968 Prepared 103 packages in 1.83s
+#26 2.183 Installed 103 packages in 214ms
+#26 2.183  + abx-dl==1.13.14
+#26 2.183  + abx-plugins==1.13.18
+#26 2.183  + abxbus==2.5.57
+#26 2.183  + abxpkg==1.13.1
+#26 2.183  + annotated-types==0.7.0
+#26 2.183  + anyio==4.14.2
+#26 2.183  + archivebox==0.9.37rc1 (from file:///app)
+#26 2.183  + asgiref==3.12.1
+#26 2.183  + asttokens==3.0.2
+#26 2.183  + atomicwrites==1.4.1
+#26 2.183  + attrs==26.1.0
+#26 2.183  + autobahn==26.7.1
+#26 2.183  + automat==25.4.16
+#26 2.183  + base32-crockford==0.3.0
+#26 2.183  + bleach==6.4.0
+#26 2.183  + browser-cookie3==0.20.1
+#26 2.183  + cbor2==6.1.3
+#26 2.183  + certifi==2026.6.17
+#26 2.183  + cffi==2.1.0
+#26 2.183  + charset-normalizer==3.4.9
+#26 2.183  + click==8.4.2
+#26 2.183  + constantly==23.10.4
+#26 2.183  + croniter==6.2.4
+#26 2.183  + cryptography==49.0.0
+#26 2.183  + daphne==4.2.2
+#26 2.183  + dateparser==1.4.1
+#26 2.183  + decorator==5.3.1
+#26 2.183  + django==6.1
+#26 2.183  + django-admin-data-views==0.4.3
+#26 2.183  + django-extensions==4.1
+#26 2.183  + django-ninja==1.6.3
+#26 2.184  + django-object-actions==5.1.2
+#26 2.184  + django-settings-holder==0.3.0
+#26 2.184  + django-signal-webhooks==0.3.1
+#26 2.184  + django-stubs==6.0.7
+#26 2.184  + django-stubs-ext==6.0.7
+#26 2.184  + executing==2.2.1
+#26 2.184  + h11==0.16.0
+#26 2.184  + httpcore==1.0.9
+#26 2.184  + httpx==0.28.1
+#26 2.184  + hyperlink==21.0.0
+#26 2.184  + idna==3.18
+#26 2.184  + imagesize==2.0.0
+#26 2.184  + incremental==24.11.0
+#26 2.184  + ipython==9.15.0
+#26 2.184  + ipython-pygments-lexers==1.1.1
+#26 2.184  + jedi==0.20.0
+#26 2.184  + jeepney==0.9.0
+#26 2.184  + lz4==4.4.5
+#26 2.184  + markdown-it-py==4.2.0
+#26 2.184  + matplotlib-inline==0.2.2
+#26 2.184  + mdurl==0.1.2
+#26 2.184  + msgpack==1.2.1
+#26 2.184  + packaging==26.2
+#26 2.184  + parso==0.8.7
+#26 2.184  + pexpect==4.9.0
+#26 2.184  + platformdirs==4.10.0
+#26 2.184  + prompt-toolkit==3.0.52
+#26 2.184  + psutil==7.2.2
+#26 2.184  + psycopg==3.3.4
+#26 2.184  + psycopg-binary==3.3.4
+#26 2.184  + ptyprocess==0.7.0
+#26 2.184  + pure-eval==0.2.3
+#26 2.184  + py-machineid==1.0.0
+#26 2.184  + pycparser==3.0
+#26 2.184  + pycryptodomex==3.23.0
+#26 2.184  + pydantic==2.13.4
+#26 2.184  + pydantic-core==2.46.4
+#26 2.184  + pydantic-settings==2.14.2
+#26 2.184  + pygments==2.20.0
+#26 2.184  + pyopenssl==26.3.0
+#26 2.184  + python-dateutil==2.9.0.post0
+#26 2.184  + python-dotenv==1.2.2
+#26 2.184  + pytz==2026.2
+#26 2.184  + regex==2026.7.10
+#26 2.184  + requests==2.34.2
+#26 2.184  + rich==15.0.0
+#26 2.184  + rich-click==1.9.8
+#26 2.184  + service-identity==26.1.0
+#26 2.184  + setuptools==83.0.0
+#26 2.184  + six==1.17.0
+#26 2.184  + sonic-client==1.0.0
+#26 2.184  + sqlparse==0.5.5
+#26 2.184  + stack-data==0.6.3
+#26 2.184  + supervisor==4.3.0
+#26 2.184  + toml==0.10.2
+#26 2.184  + traitlets==5.15.1
+#26 2.184  + twisted==26.4.0
+#26 2.184  + txaio==26.6.1
+#26 2.184  + types-pyyaml==6.0.12.20260518
+#26 2.184  + typing-extensions==4.16.0
+#26 2.184  + typing-inspection==0.4.2
+#26 2.184  + tzdata==2026.3
+#26 2.184  + tzlocal==5.4.4
+#26 2.184  + ujson==5.13.0
+#26 2.184  + urllib3==2.7.0
+#26 2.184  + uuid7==0.1.0
+#26 2.184  + uv==0.11.29
+#26 2.184  + w3lib==2.4.1
+#26 2.184  + wcwidth==0.8.2
+#26 2.184  + webencodings==0.5.1
+#26 2.184  + websockets==17.1
+#26 2.184  + zope-interface==8.5
+#26 DONE 2.7s
 
 #27 [archivebox stage-0 8/9] RUN useradd -m -u 911 archivebox && mkdir -p /data && chown archivebox /data && chmod -R a+rX /app
-#27 0.284 useradd warning: archivebox's uid 911 outside of the UID_MIN 1000 and UID_MAX 60000 range.
-#27 DONE 5.5s
+#27 0.294 useradd warning: archivebox's uid 911 outside of the UID_MIN 1000 and UID_MAX 60000 range.
+#27 DONE 4.7s
 
 #28 [archivebox stage-0 9/9] WORKDIR /data
-#28 DONE 0.2s
+#28 DONE 0.1s
 
 #29 [archivebox] exporting to image
 #29 exporting layers
-#29 exporting layers 10.1s done
-#29 exporting manifest sha256:03d5dca1404ed739bedbaabb754d0dd2987af99356e0921b03f5d9dfec1b0ff0 done
-#29 exporting config sha256:37243b000efd6110aecfe7b833b36736d56eada39ba750c67bf257da3a04addb done
-#29 exporting attestation manifest sha256:00855aecd7e3bfede9e62a3faa3c25aaafbaf79461762f8faac6245bed1c39c4 0.0s done
-#29 exporting manifest list sha256:99014cf86db3e695e954ceea72128907b92efcce3e5b945bf423167502ada22a done
+#29 exporting layers 8.6s done
+#29 exporting manifest sha256:f99ed105cdba3b752b14e4503d51acc963a24710edccdcf853197faf25c9cfd0 done
+#29 exporting config sha256:fa084e096cd647973c74edca4906aca7e22d199ec61aec74fdc7a6a3f75bba8c done
+#29 exporting attestation manifest sha256:d1a544e0eda9a29ea9daa45cceed7968e25afa3f9da447c397e0be3be61ab65d done
+#29 exporting manifest list sha256:624a68eb3cacf45cd80263970dc257682ac1a219e4512e9d554f1630b7bfea5a done
 #29 naming to docker.io/library/atta-007archiveboxdev3-archivebox:latest done
 #29 unpacking to docker.io/library/atta-007archiveboxdev3-archivebox:latest
-#29 unpacking to docker.io/library/atta-007archiveboxdev3-archivebox:latest 5.2s done
-#29 DONE 15.4s
+#29 unpacking to docker.io/library/atta-007archiveboxdev3-archivebox:latest 5.0s done
+#29 DONE 13.7s
 
 #30 [archivebox] resolving provenance for metadata file
 #30 DONE 0.0s
- Image atta-007archiveboxdev3-proxy Building 
  Image atta-007archiveboxdev3-archivebox Building 
+ Image atta-007archiveboxdev3-proxy Building 
  Image atta-007archiveboxdev3-archivebox Built 
  Image atta-007archiveboxdev3-proxy Built 
  Network atta-007archiveboxdev3_default Creating 
@@ -317,5 +349,5 @@ $ docker compose down -v --remove-orphans --rmi all
  Network atta-007archiveboxdev3_default Removing 
  Volume atta-007archiveboxdev3_archivebox-data Removed 
  Network atta-007archiveboxdev3_default Removed 
- Image atta-007archiveboxdev3-archivebox:latest Removed 
  Image atta-007archiveboxdev3-proxy:latest Removed 
+ Image atta-007archiveboxdev3-archivebox:latest Removed 

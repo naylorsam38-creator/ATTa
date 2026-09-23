@@ -1,10 +1,10 @@
 {
-  "at": "2026-09-23T05:36:16.938Z",
+  "at": "2026-09-23T06:50:50.528Z",
   "bundle": "dist/005-sendportal/",
   "zip": "dist/005-sendportal.zip",
-  "zipBytes": 173192,
+  "zipBytes": 176834,
   "status": "fail",
-  "detail": "containers up in 292s; 14/16 checks not failing",
+  "detail": "containers up in 287s; 14/16 checks not failing",
   "checks": [
     {
       "id": "C1",
@@ -94,7 +94,7 @@
       "id": "C15",
       "name": "Customer skins through the proxy",
       "status": "pass",
-      "detail": "acme→midnight: applied; globex→sunrise: applied; initech→blueprint: applied; no header → original look"
+      "detail": "acme→skin-002 \"skin-002\": applied (13 rules); globex→skin-003 \"skin-003\": applied (13 rules); initech→skin-004 \"skin-004\": applied (13 rules); umbrella→skin-005 \"skin-005\": applied (13 rules); no header → original look"
     },
     {
       "id": "C16",

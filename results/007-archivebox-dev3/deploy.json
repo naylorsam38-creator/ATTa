@@ -1,10 +1,10 @@
 {
-  "at": "2026-09-23T05:16:02.380Z",
+  "at": "2026-09-23T06:51:59.233Z",
   "bundle": "dist/007-archivebox-dev3/",
   "zip": "dist/007-archivebox-dev3.zip",
-  "zipBytes": 3356961,
+  "zipBytes": 3360652,
   "status": "fail",
-  "detail": "containers up in 57s; 15/16 checks not failing",
+  "detail": "containers up in 56s; 15/16 checks not failing",
   "checks": [
     {
       "id": "C1",
@@ -94,7 +94,7 @@
       "id": "C15",
       "name": "Customer skins through the proxy",
       "status": "pass",
-      "detail": "acme→midnight: applied; globex→sunrise: applied; initech→blueprint: applied; no header → original look"
+      "detail": "acme→skin-002 \"skin-002\": applied (13 rules); globex→skin-003 \"skin-003\": applied (13 rules); initech→skin-004 \"skin-004\": applied (13 rules); umbrella→skin-005 \"skin-005\": applied (13 rules); no header → original look"
     },
     {
       "id": "C16",
