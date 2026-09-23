@@ -9,7 +9,8 @@ COPY . .
 RUN npm run build
 
 FROM composer:2 AS host
-RUN composer create-project 'laravel/laravel:^12.0' /host --no-interaction --no-progress --prefer-dist --no-scripts
+# PHP extensions are installed in the runtime stage, not in this composer image.
+RUN composer create-project 'laravel/laravel:^12.0' /host --no-interaction --no-progress --no-scripts --ignore-platform-reqs
 COPY --from=assets /pkg /mixpost
 RUN rm -rf /mixpost/node_modules
 WORKDIR /host

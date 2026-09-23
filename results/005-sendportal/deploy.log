@@ -4,143 +4,386 @@ $ docker compose up -d --build
 #1 reading from stdin 1.84kB done
 #1 DONE 0.0s
 
-#2 [sendportal internal] load build definition from Dockerfile.verify
-#2 transferring dockerfile: 2.46kB done
+#2 [proxy internal] load build definition from Dockerfile.verify
+#2 transferring dockerfile: 1.26kB done
 #2 DONE 0.0s
 
-#3 [proxy internal] load build definition from Dockerfile.verify
-#3 transferring dockerfile: 1.26kB done
+#3 [sendportal internal] load build definition from Dockerfile.verify
+#3 transferring dockerfile: 2.46kB done
 #3 DONE 0.0s
 
 #4 [sendportal context sandboxca] load .dockerignore
 #4 transferring sandboxca: 2B done
 #4 DONE 0.0s
 
-#5 [sendportal internal] load metadata for docker.io/library/php:8.4-apache
-#5 DONE 0.0s
+#5 [sendportal internal] load metadata for docker.io/library/composer:2
+#5 DONE 1.7s
 
-#6 [proxy internal] load metadata for docker.io/library/node:22-alpine
-#6 DONE 0.0s
+#6 [sendportal internal] load metadata for docker.io/library/php:8.4-apache
+#6 DONE 2.0s
 
-#7 [proxy internal] load .dockerignore
-#7 transferring context: 2B done
-#7 DONE 0.0s
+#7 [proxy internal] load metadata for docker.io/library/node:22-alpine
+#7 DONE 2.2s
 
-#8 [proxy internal] load build context
-#8 transferring context: 60.99kB done
+#8 [sendportal internal] load .dockerignore
+#8 transferring context: 2B done
 #8 DONE 0.0s
 
-#9 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
-#9 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85 0.0s done
+#9 [sendportal context sandboxca] load from client
+#9 transferring sandboxca: 228.61kB done
 #9 DONE 0.0s
 
-#10 [proxy context sandboxca] load from client
-#10 transferring sandboxca: 36B done
-#10 DONE 0.0s
+#10 [sendportal internal] load build context
+#10 transferring context: 280.23kB 0.0s done
+#10 DONE 0.1s
 
-#11 [proxy stage-0 3/6] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
-#11 CACHED
+#11 [sendportal vendor 1/6] FROM docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b
+#11 resolve docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b 0.0s done
+#11 ...
 
-#12 [proxy stage-0 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
-#12 CACHED
+#9 [proxy context sandboxca] load from client
+#9 transferring sandboxca: 228.61kB done
+#9 DONE 0.0s
 
-#13 [proxy stage-0 4/6] WORKDIR /cp
-#13 CACHED
+#12 [proxy internal] load .dockerignore
+#12 transferring context: 2B done
+#12 DONE 0.0s
 
-#14 [proxy stage-0 5/6] COPY --chown=node:node ui-bridge ./ui-bridge
-#14 DONE 0.0s
+#13 [proxy internal] load build context
+#13 transferring context: 60.99kB done
+#13 DONE 0.0s
 
-#15 [proxy stage-0 6/6] COPY --chown=node:node capability-port ./capability-port
-#15 DONE 0.0s
+#14 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#14 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85 0.0s done
+#14 DONE 0.1s
 
-#16 [proxy] exporting to image
-#16 exporting layers 0.0s done
-#16 exporting manifest sha256:b11db5283df3ab0b0d42b0d7ff6b9b807659e93432df1bcb878bd05c46280054 done
-#16 exporting config sha256:b04b19d31e219014be7d49cd6f95e3443ab92bc007452fa25bc072def5792a11 done
-#16 exporting attestation manifest sha256:a7acc2a172a1d0a6c36c0008b2dada99cd6903784914c0ee97171996ddaa2119 done
-#16 exporting manifest list sha256:9eceba2e40e1192e38b18df9d03d9cf769c09ff6d6570af908d51cec3336c377 done
-#16 naming to docker.io/library/atta-005sendportal-proxy:latest done
-#16 unpacking to docker.io/library/atta-005sendportal-proxy:latest 0.0s done
-#16 DONE 0.1s
+#11 [sendportal vendor 1/6] FROM docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b
+#11 sha256:f3c3861b7f28d48a268475d144b60f3eff7ae6d2e4b89f80ad855b4526b86436 0B / 93B 0.2s
+#11 sha256:93714b53f670a75fc6ac2889b7ff84b82d0790fbbd6c8ca305488478cd99af32 0B / 1.08MB 0.2s
+#11 sha256:df9e0965cba971df0b40bf22f350477bb3a88943dcf7ed674c844000edaed895 0B / 419B 0.2s
+#11 sha256:f3c3861b7f28d48a268475d144b60f3eff7ae6d2e4b89f80ad855b4526b86436 93B / 93B 0.3s done
+#11 sha256:dda1d22139e8e2848a33553d9156d8d8e812d027b0ce578c998b006aee652732 0B / 257B 0.2s
+#11 sha256:db63a21dece86cd4ee82c1db962d233909f19f8129157a5cd1a2aab237cbe214 0B / 31.96MB 0.2s
+#11 sha256:df9e0965cba971df0b40bf22f350477bb3a88943dcf7ed674c844000edaed895 419B / 419B 0.4s done
+#11 sha256:dda1d22139e8e2848a33553d9156d8d8e812d027b0ce578c998b006aee652732 257B / 257B 0.4s done
+#11 sha256:215c9dac562bbab8edc9068931ef370869fa888390db5921ae8f343ebfc8f4f8 0B / 22.42kB 0.2s
+#11 sha256:47b315bc998d95306667eadaa05df9971c697eb770b6470ee9fbff58ed5d2808 0B / 22.83MB 0.2s
+#11 sha256:93714b53f670a75fc6ac2889b7ff84b82d0790fbbd6c8ca305488478cd99af32 1.08MB / 1.08MB 0.8s done
+#11 sha256:215c9dac562bbab8edc9068931ef370869fa888390db5921ae8f343ebfc8f4f8 22.42kB / 22.42kB 0.6s done
+#11 sha256:180fe6290b355c4f53ed1daf350144810ebb3af25384a50d3a522912bed89d2d 0B / 2.45kB 0.2s
+#11 sha256:db63a21dece86cd4ee82c1db962d233909f19f8129157a5cd1a2aab237cbe214 31.96MB / 31.96MB 0.8s done
+#11 sha256:47b315bc998d95306667eadaa05df9971c697eb770b6470ee9fbff58ed5d2808 2.10MB / 22.83MB 0.8s
+#11 sha256:180fe6290b355c4f53ed1daf350144810ebb3af25384a50d3a522912bed89d2d 2.45kB / 2.45kB 0.4s done
+#11 sha256:048db7ded50b884244d7cd8e1136c7f59f8de672fc333785717125f7ceacdb41 0B / 488B 0.2s
+#11 sha256:0c5da73b54f94ec217546882f182f9bef195e691ac8e27ac32ddeef8d6669e5a 0B / 14.48MB 0.2s
+#11 sha256:47b315bc998d95306667eadaa05df9971c697eb770b6470ee9fbff58ed5d2808 22.83MB / 22.83MB 0.9s done
+#11 sha256:048db7ded50b884244d7cd8e1136c7f59f8de672fc333785717125f7ceacdb41 488B / 488B 0.3s done
+#11 sha256:5f5e9c2a2e39c7ff12b63c9a0b0511d1b7193450572669b00986b02afaf9d38e 0B / 932B 0.2s
+#11 sha256:6273de5464fa78b05aac16b835da86450421ff1b6a97373881e6bf6831540f3b 0B / 215B 0.2s
+#11 sha256:5f5e9c2a2e39c7ff12b63c9a0b0511d1b7193450572669b00986b02afaf9d38e 932B / 932B 0.4s done
+#11 sha256:5bf1f8344e5bdfa4dc2d44919f2d4692a87a4eb016af3c8fdfbd32e29712467e 0B / 3.49MB 0.2s
+#11 sha256:0c5da73b54f94ec217546882f182f9bef195e691ac8e27ac32ddeef8d6669e5a 14.48MB / 14.48MB 0.7s done
+#11 sha256:6273de5464fa78b05aac16b835da86450421ff1b6a97373881e6bf6831540f3b 215B / 215B 0.4s done
+#11 sha256:5bf1f8344e5bdfa4dc2d44919f2d4692a87a4eb016af3c8fdfbd32e29712467e 3.49MB / 3.49MB 0.6s done
+#11 extracting sha256:5bf1f8344e5bdfa4dc2d44919f2d4692a87a4eb016af3c8fdfbd32e29712467e
+#11 extracting sha256:5bf1f8344e5bdfa4dc2d44919f2d4692a87a4eb016af3c8fdfbd32e29712467e 0.1s done
+#11 extracting sha256:5f5e9c2a2e39c7ff12b63c9a0b0511d1b7193450572669b00986b02afaf9d38e done
+#11 extracting sha256:6273de5464fa78b05aac16b835da86450421ff1b6a97373881e6bf6831540f3b done
+#11 extracting sha256:0c5da73b54f94ec217546882f182f9bef195e691ac8e27ac32ddeef8d6669e5a 0.0s done
+#11 extracting sha256:048db7ded50b884244d7cd8e1136c7f59f8de672fc333785717125f7ceacdb41 done
+#11 extracting sha256:47b315bc998d95306667eadaa05df9971c697eb770b6470ee9fbff58ed5d2808
+#11 extracting sha256:47b315bc998d95306667eadaa05df9971c697eb770b6470ee9fbff58ed5d2808 0.5s done
+#11 extracting sha256:180fe6290b355c4f53ed1daf350144810ebb3af25384a50d3a522912bed89d2d done
+#11 extracting sha256:215c9dac562bbab8edc9068931ef370869fa888390db5921ae8f343ebfc8f4f8 0.0s done
+#11 extracting sha256:db63a21dece86cd4ee82c1db962d233909f19f8129157a5cd1a2aab237cbe214
+#11 extracting sha256:db63a21dece86cd4ee82c1db962d233909f19f8129157a5cd1a2aab237cbe214 0.8s done
+#11 extracting sha256:dda1d22139e8e2848a33553d9156d8d8e812d027b0ce578c998b006aee652732 done
+#11 extracting sha256:93714b53f670a75fc6ac2889b7ff84b82d0790fbbd6c8ca305488478cd99af32 0.0s done
+#11 extracting sha256:df9e0965cba971df0b40bf22f350477bb3a88943dcf7ed674c844000edaed895 done
+#11 extracting sha256:f3c3861b7f28d48a268475d144b60f3eff7ae6d2e4b89f80ad855b4526b86436 0.0s done
+#11 DONE 3.7s
 
-#17 [proxy] resolving provenance for metadata file
-#17 DONE 0.0s
+#15 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#15 resolve docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3 0.0s done
+#15 sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 32B / 32B 0.4s done
+#15 sha256:f5a5aa23e09c2da270208a90a31e9339587d7ee42fc7f34efbc87becd80d0c00 890B / 890B 0.4s done
+#15 sha256:32b096ff72d7e8897bd3db544601b7721928e8486c2fce08c438cae54faabe3d 247B / 247B 0.4s done
+#15 sha256:f7b733fcb91a59373f78afca513bd877f86d8918d26b4bd43e7a01d6cc1db271 252B / 252B 0.4s done
+#15 sha256:ff291a87e8b0c8732f1b244a9139b3f9d264e71fceee67796467ca04558a54c8 2.46kB / 2.46kB 0.5s done
+#15 sha256:8290569bec7cd54c48cceb6ee51380314903f2547e1c3b224573278896320370 486B / 486B 0.4s done
+#15 sha256:15939f2e2ac4a6d4705d8f7d3d43c64bd9d23b5d34b196c57e92322a500faa54 0B / 13.71MB 0.8s
+#15 sha256:c3b8a0981d78315677ce1cf9467a0d1d455cbe9e17582b3473990ee1d42b67d0 0B / 13.93MB 0.5s
+#15 sha256:9f9f703dbe279415024156786b8c2f24677f0bc4fbe3ddc584c1a69c56c61a7e 486B / 486B 0.4s done
+#15 sha256:4999dbc97628b45f229568e92bccf2815e912aa26b62865aa857e7105b1fe411 0B / 429B 0.3s
+#15 sha256:15939f2e2ac4a6d4705d8f7d3d43c64bd9d23b5d34b196c57e92322a500faa54 12.58MB / 13.71MB 0.9s
+#15 sha256:4999dbc97628b45f229568e92bccf2815e912aa26b62865aa857e7105b1fe411 429B / 429B 0.5s
+#15 sha256:2b9b36fdd5ea8ad8327167ae51262cba6a31457faffbdad0a97b03eb25496f68 0B / 4.24MB 0.2s
+#15 sha256:15939f2e2ac4a6d4705d8f7d3d43c64bd9d23b5d34b196c57e92322a500faa54 13.71MB / 13.71MB 1.1s
+#15 sha256:c3b8a0981d78315677ce1cf9467a0d1d455cbe9e17582b3473990ee1d42b67d0 1.05MB / 13.93MB 0.8s
+#15 sha256:c3b8a0981d78315677ce1cf9467a0d1d455cbe9e17582b3473990ee1d42b67d0 10.49MB / 13.93MB 0.9s
+#15 sha256:c3b8a0981d78315677ce1cf9467a0d1d455cbe9e17582b3473990ee1d42b67d0 13.93MB / 13.93MB 1.1s
+#15 sha256:4999dbc97628b45f229568e92bccf2815e912aa26b62865aa857e7105b1fe411 429B / 429B 0.9s done
+#15 sha256:2b9b36fdd5ea8ad8327167ae51262cba6a31457faffbdad0a97b03eb25496f68 4.24MB / 4.24MB 0.9s
+#15 ...
 
-#18 [sendportal internal] load metadata for docker.io/library/composer:2
-#18 DONE 0.4s
+#16 [sendportal vendor 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#16 DONE 1.0s
 
-#19 [sendportal internal] load .dockerignore
-#19 transferring context: 2B done
+#15 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#15 sha256:15939f2e2ac4a6d4705d8f7d3d43c64bd9d23b5d34b196c57e92322a500faa54 13.71MB / 13.71MB 1.8s done
+#15 sha256:c3b8a0981d78315677ce1cf9467a0d1d455cbe9e17582b3473990ee1d42b67d0 13.93MB / 13.93MB 1.6s done
+#15 sha256:2b9b36fdd5ea8ad8327167ae51262cba6a31457faffbdad0a97b03eb25496f68 4.24MB / 4.24MB 1.1s done
+#15 sha256:11a660649a250bd5d73cafb8432dd2fa4b5b31d623024703638678ae7f855f3a 0B / 226B 0.2s
+#15 ...
+
+#17 [sendportal vendor 3/6] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#17 DONE 0.1s
+
+#14 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#14 sha256:65213f1a3de84db18197276d9be6a34fad98eec70604aeaa6821556d932c2676 444B / 444B 0.4s done
+#14 sha256:ec179e2ee07230312183920d42bf49c2ef18644e3d7186ffa92b02dd2e26a835 1.26MB / 1.26MB 0.6s done
+#14 sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 55.68MB / 55.68MB 1.2s done
+#14 extracting sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 1.3s done
+#14 extracting sha256:ec179e2ee07230312183920d42bf49c2ef18644e3d7186ffa92b02dd2e26a835 0.1s done
+#14 extracting sha256:65213f1a3de84db18197276d9be6a34fad98eec70604aeaa6821556d932c2676 done
+#14 DONE 4.6s
+
+#18 [proxy stage-0 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#18 DONE 0.0s
+
+#19 [sendportal vendor 4/6] WORKDIR /app
 #19 DONE 0.0s
 
-#20 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
-#20 resolve docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3 0.0s done
+#20 [sendportal vendor 5/6] COPY . .
 #20 DONE 0.0s
 
-#10 [sendportal context sandboxca] load from client
-#10 CACHED
+#21 [proxy stage-0 3/6] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#21 DONE 0.1s
 
-#21 [sendportal stage-1  2/10] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
-#21 CACHED
+#15 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#15 sha256:d8b04aca92b299a62b99a55a55cb1fbec1328dc2433adb9ef7ad34bfc81716cd 0B / 117.84MB 0.2s
+#15 sha256:7326873604d4d7ec9cda13d2b55b8b0f991af2aa3bbeaeac959c9d40f24c5bfc 0B / 225B 0.2s
+#15 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 0B / 29.83MB 0.2s
+#15 ...
 
-#22 [sendportal stage-1  3/10] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
-#22 CACHED
+#22 [proxy stage-0 4/6] WORKDIR /cp
+#22 DONE 0.0s
 
-#23 [sendportal internal] load build context
-#23 transferring context: 280.23kB 0.1s done
+#15 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#15 sha256:11a660649a250bd5d73cafb8432dd2fa4b5b31d623024703638678ae7f855f3a 226B / 226B 0.4s done
+#15 ...
+
+#23 [proxy stage-0 5/6] COPY --chown=node:node ui-bridge ./ui-bridge
 #23 DONE 0.1s
 
-#24 [sendportal vendor 1/6] FROM docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b
-#24 resolve docker.io/library/composer:2@sha256:a5f59b9fd2faf31218632be4809dc6491761085e8064c31dc3b84378c48c248b 0.0s done
-#24 sha256:93714b53f670a75fc6ac2889b7ff84b82d0790fbbd6c8ca305488478cd99af32 0B / 1.08MB 0.2s
-#24 sha256:db63a21dece86cd4ee82c1db962d233909f19f8129157a5cd1a2aab237cbe214 28.31MB / 31.96MB 0.2s
-#24 sha256:47b315bc998d95306667eadaa05df9971c697eb770b6470ee9fbff58ed5d2808 5.24MB / 22.83MB 0.2s
-#24 sha256:dda1d22139e8e2848a33553d9156d8d8e812d027b0ce578c998b006aee652732 0B / 257B 0.2s
-#24 sha256:dda1d22139e8e2848a33553d9156d8d8e812d027b0ce578c998b006aee652732 257B / 257B 0.5s done
-#24 sha256:048db7ded50b884244d7cd8e1136c7f59f8de672fc333785717125f7ceacdb41 0B / 488B 0.2s
-#24 sha256:93714b53f670a75fc6ac2889b7ff84b82d0790fbbd6c8ca305488478cd99af32 1.08MB / 1.08MB 0.7s done
-#24 sha256:db63a21dece86cd4ee82c1db962d233909f19f8129157a5cd1a2aab237cbe214 31.96MB / 31.96MB 0.8s done
-#24 sha256:048db7ded50b884244d7cd8e1136c7f59f8de672fc333785717125f7ceacdb41 488B / 488B 0.4s done
-#24 sha256:47b315bc998d95306667eadaa05df9971c697eb770b6470ee9fbff58ed5d2808 13.63MB / 22.83MB 0.9s
-#24 sha256:0c5da73b54f94ec217546882f182f9bef195e691ac8e27ac32ddeef8d6669e5a 8.39MB / 14.48MB 0.2s
-#24 sha256:6273de5464fa78b05aac16b835da86450421ff1b6a97373881e6bf6831540f3b 0B / 215B 0.1s
-#24 ...
+#15 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#15 ...
 
-#25 [sendportal vendor 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
-#25 ERROR: failed to copy: failed to send write: write /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/ingest/aed2f7bcd0def88bebd8bd727b7cbedb492a02aca64dffe176eb2b7322385c9f/data: no space left on device
+#24 [proxy stage-0 6/6] COPY --chown=node:node capability-port ./capability-port
+#24 DONE 0.1s
 
-#26 [sendportal stage-1  4/10] RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpq-dev unzip  && docker-php-ext-install pdo_pgsql pdo_mysql bcmath intl zip pcntl  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*
-#26 0.324 Hit:1 https://deb.debian.org/debian trixie InRelease
-#26 0.359 Get:2 https://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
-#26 0.421 Get:3 https://deb.debian.org/debian-security trixie-security InRelease [43.4 kB]
-#26 0.471 Get:4 https://deb.debian.org/debian trixie/main amd64 Packages [9678 kB]
-#26 0.586 Get:5 https://deb.debian.org/debian trixie-updates/main amd64 Packages [4412 B]
-#26 0.634 Get:6 https://deb.debian.org/debian-security trixie-security/main amd64 Packages [262 kB]
-#26 0.966 Err:4 https://deb.debian.org/debian trixie/main amd64 Packages
-#26 0.966   Write error - write (28: No space left on device) LZ4F: /var/lib/apt/lists/partial/deb.debian.org_debian_dists_trixie_main_binary-amd64_Packages.lz4 Write error (27520: Unspecified error code)
-#26 CANCELED
+#15 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#15 sha256:7326873604d4d7ec9cda13d2b55b8b0f991af2aa3bbeaeac959c9d40f24c5bfc 225B / 225B 0.5s done
+#15 ...
+
+#25 [proxy] exporting to image
+#25 exporting layers 0.1s done
+#25 exporting manifest sha256:5f240c64121dc85e7885589bf3c7fc98b82b9304a58512d223c810d97085d711 done
+#25 exporting config sha256:4a365f34087697c59a7786d6233e2f3ad4115ad6d0487af451bd200df231267e done
+#25 exporting attestation manifest sha256:0639f7c951ace57f7d97301cf7bf0f09fb2a6a088bca1ee501004874540a1082 done
+#25 exporting manifest list sha256:fd637ff0e5240d74ef272de9a14079b7510da0bd51bc90557e29faa99ddc8abd done
+#25 naming to docker.io/library/atta-005sendportal-proxy:latest done
+#25 unpacking to docker.io/library/atta-005sendportal-proxy:latest 0.1s done
+#25 DONE 0.2s
+
+#15 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#15 sha256:d8b04aca92b299a62b99a55a55cb1fbec1328dc2433adb9ef7ad34bfc81716cd 33.55MB / 117.84MB 0.9s
+#15 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 6.29MB / 29.83MB 0.8s
+#15 ...
+
+#26 [proxy] resolving provenance for metadata file
+#26 DONE 0.0s
+
+#15 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#15 sha256:d8b04aca92b299a62b99a55a55cb1fbec1328dc2433adb9ef7ad34bfc81716cd 51.38MB / 117.84MB 1.1s
+#15 sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 29.83MB / 29.83MB 1.0s done
+#15 extracting sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8
+#15 sha256:d8b04aca92b299a62b99a55a55cb1fbec1328dc2433adb9ef7ad34bfc81716cd 72.35MB / 117.84MB 1.2s
+#15 sha256:d8b04aca92b299a62b99a55a55cb1fbec1328dc2433adb9ef7ad34bfc81716cd 90.18MB / 117.84MB 1.4s
+#15 sha256:d8b04aca92b299a62b99a55a55cb1fbec1328dc2433adb9ef7ad34bfc81716cd 109.05MB / 117.84MB 1.5s
+#15 sha256:d8b04aca92b299a62b99a55a55cb1fbec1328dc2433adb9ef7ad34bfc81716cd 117.84MB / 117.84MB 1.7s
+#15 sha256:d8b04aca92b299a62b99a55a55cb1fbec1328dc2433adb9ef7ad34bfc81716cd 117.84MB / 117.84MB 1.7s done
+#15 extracting sha256:6b37362b3da78869050b894b799ad4df04f1f3b52774087db0d81151570244c8 0.8s done
+#15 DONE 6.5s
+
+#27 [sendportal vendor 6/6] RUN (composer remove --dev roave/security-advisories --no-update -q || true)  && composer update --no-dev --no-interaction --no-progress --no-scripts --prefer-dist
+#27 0.765 Loading composer repositories with package information
+#27 ...
+
+#15 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#15 extracting sha256:7326873604d4d7ec9cda13d2b55b8b0f991af2aa3bbeaeac959c9d40f24c5bfc done
+#15 extracting sha256:d8b04aca92b299a62b99a55a55cb1fbec1328dc2433adb9ef7ad34bfc81716cd 2.5s done
+#15 DONE 8.9s
+
+#15 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#15 extracting sha256:11a660649a250bd5d73cafb8432dd2fa4b5b31d623024703638678ae7f855f3a done
+#15 extracting sha256:2b9b36fdd5ea8ad8327167ae51262cba6a31457faffbdad0a97b03eb25496f68 0.1s done
+#15 DONE 9.1s
+
+#27 [sendportal vendor 6/6] RUN (composer remove --dev roave/security-advisories --no-update -q || true)  && composer update --no-dev --no-interaction --no-progress --no-scripts --prefer-dist
+#27 ...
+
+#15 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#15 extracting sha256:4999dbc97628b45f229568e92bccf2815e912aa26b62865aa857e7105b1fe411 done
+#15 extracting sha256:9f9f703dbe279415024156786b8c2f24677f0bc4fbe3ddc584c1a69c56c61a7e done
+#15 extracting sha256:c3b8a0981d78315677ce1cf9467a0d1d455cbe9e17582b3473990ee1d42b67d0 0.0s done
+#15 extracting sha256:8290569bec7cd54c48cceb6ee51380314903f2547e1c3b224573278896320370 done
+#15 extracting sha256:15939f2e2ac4a6d4705d8f7d3d43c64bd9d23b5d34b196c57e92322a500faa54 0.3s done
+#15 DONE 9.4s
+
+#15 [sendportal stage-1  1/10] FROM docker.io/library/php:8.4-apache@sha256:d54a6bdfaaa4b516264617b2ac6a3692f23f29510278e02494154f8e260e9ce3
+#15 extracting sha256:ff291a87e8b0c8732f1b244a9139b3f9d264e71fceee67796467ca04558a54c8 done
+#15 extracting sha256:f7b733fcb91a59373f78afca513bd877f86d8918d26b4bd43e7a01d6cc1db271 done
+#15 extracting sha256:32b096ff72d7e8897bd3db544601b7721928e8486c2fce08c438cae54faabe3d done
+#15 extracting sha256:f5a5aa23e09c2da270208a90a31e9339587d7ee42fc7f34efbc87becd80d0c00 done
+#15 extracting sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 done
+#15 DONE 9.4s
+
+#28 [sendportal stage-1  2/10] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#28 DONE 0.8s
+
+#27 [sendportal vendor 6/6] RUN (composer remove --dev roave/security-advisories --no-update -q || true)  && composer update --no-dev --no-interaction --no-progress --no-scripts --prefer-dist
+#27 5.029 Updating dependencies
+#27 ...
+
+#29 [sendportal stage-1  3/10] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#29 DONE 0.1s
+
+#30 [sendportal stage-1  4/10] RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev libicu-dev libpq-dev unzip  && docker-php-ext-install pdo_pgsql pdo_mysql bcmath intl zip pcntl  && a2enmod rewrite && rm -rf /var/lib/apt/lists/*
+#30 0.291 Hit:1 https://deb.debian.org/debian trixie InRelease
+#30 0.327 Get:2 https://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
+#30 CANCELED
+
+#27 [sendportal vendor 6/6] RUN (composer remove --dev roave/security-advisories --no-update -q || true)  && composer update --no-dev --no-interaction --no-progress --no-scripts --prefer-dist
+#27 5.716 Your requirements could not be resolved to an installable set of packages.
+#27 5.716 
+#27 5.716   Problem 1
+#27 5.716     - Root composer.json requires laravel/horizon ^5.24 -> satisfiable by laravel/horizon[v5.24.0, ..., 5.x-dev].
+#27 5.716     - laravel/horizon[v5.24.0, ..., 5.x-dev] require ext-pcntl * -> it is missing from your system. Install or enable PHP's pcntl extension.
+#27 5.716 
+#27 5.716 To enable extensions, verify that they are enabled in your .ini files:
+#27 5.716     - /usr/local/etc/php/php-cli.ini
+#27 5.716     - /usr/local/etc/php/conf.d/docker-php-ext-bz2.ini
+#27 5.716     - /usr/local/etc/php/conf.d/docker-php-ext-sodium.ini
+#27 5.716     - /usr/local/etc/php/conf.d/docker-php-ext-zip.ini
+#27 5.716 You can also run `php --ini` in a terminal to see which files are used by PHP in CLI mode.
+#27 5.716 Alternatively, you can run Composer with `--ignore-platform-req=ext-pcntl` to temporarily ignore these required extensions.
+#27 5.716 Running update with --no-dev does not mean require-dev is ignored, it just means the packages will not be installed. If dev requirements are blocking the update you have to resolve those problems.
+#27 ERROR: process "/bin/sh -c (composer remove --dev roave/security-advisories --no-update -q || true)  && composer update --no-dev --no-interaction --no-progress --no-scripts --prefer-dist" did not complete successfully: exit code: 2
 ------
- > [sendportal vendor 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt:
+ > [sendportal vendor 6/6] RUN (composer remove --dev roave/security-advisories --no-update -q || true)  && composer update --no-dev --no-interaction --no-progress --no-scripts --prefer-dist:
+5.716     - laravel/horizon[v5.24.0, ..., 5.x-dev] require ext-pcntl * -> it is missing from your system. Install or enable PHP's pcntl extension.
+5.716 
+5.716 To enable extensions, verify that they are enabled in your .ini files:
+5.716     - /usr/local/etc/php/php-cli.ini
+5.716     - /usr/local/etc/php/conf.d/docker-php-ext-bz2.ini
+5.716     - /usr/local/etc/php/conf.d/docker-php-ext-sodium.ini
+5.716     - /usr/local/etc/php/conf.d/docker-php-ext-zip.ini
+5.716 You can also run `php --ini` in a terminal to see which files are used by PHP in CLI mode.
+5.716 Alternatively, you can run Composer with `--ignore-platform-req=ext-pcntl` to temporarily ignore these required extensions.
+5.716 Running update with --no-dev does not mean require-dev is ignored, it just means the packages will not be installed. If dev requirements are blocking the update you have to resolve those problems.
 ------
- Image atta-005sendportal-sendportal Building 
+ Image postgres:16-alpine Pulling 
+ 210b280f9556 Pulling fs layer 0B
+ 509688edf37b Pulling fs layer 0B
+ 25b77f59fd95 Pulling fs layer 0B
+ 1b7f9cd581ee Pulling fs layer 0B
+ 81717818649a Pulling fs layer 0B
+ e2de96513ba9 Pulling fs layer 0B
+ d8d21be4bf02 Pulling fs layer 0B
+ 6117bd39f23f Pulling fs layer 0B
+ 3ae6141cfd99 Pulling fs layer 0B
+ 6c25da34e03f Pulling fs layer 0B
+ a88782f92806 Pulling fs layer 0B
+ 3ae6141cfd99 Download complete 0B
+ 509688edf37b Download complete 0B
+ a88782f92806 Download complete 0B
+ 81717818649a Download complete 0B
+ d8d21be4bf02 Download complete 0B
+ 6117bd39f23f Download complete 0B
+ 1b7f9cd581ee Download complete 0B
+ e2de96513ba9 Download complete 0B
+ e2de96513ba9 Extracting 1B
+ 210b280f9556 Download complete 0B
+ 25b77f59fd95 Downloading 1.049MB
+ 6c25da34e03f Download complete 0B
+ 3ae6141cfd99 Pull complete 0B
+ 81717818649a Pull complete 0B
+ 1b7f9cd581ee Pull complete 0B
+ e2de96513ba9 Pull complete 0B
+ 210b280f9556 Pull complete 0B
+ 25b77f59fd95 Downloading 9.437MB
+ e6b147246a89 Download complete 0B
+ 25b77f59fd95 Downloading 17.83MB
+ 021b01ea4cc2 Download complete 0B
+ 25b77f59fd95 Downloading 30.41MB
+ 25b77f59fd95 Downloading 42.99MB
+ 25b77f59fd95 Downloading 55.57MB
+ 25b77f59fd95 Downloading 67.11MB
+ 25b77f59fd95 Downloading 79.69MB
+ 25b77f59fd95 Downloading 92.27MB
+ 25b77f59fd95 Downloading 103.8MB
+ 25b77f59fd95 Downloading 111.3MB
+ 25b77f59fd95 Download complete 0B
+ 25b77f59fd95 Extracting 1B
+ 25b77f59fd95 Extracting 1B
+ 25b77f59fd95 Extracting 1B
+ 25b77f59fd95 Extracting 1B
+ 25b77f59fd95 Extracting 1B
+ 25b77f59fd95 Extracting 1B
+ 25b77f59fd95 Extracting 1B
+ 25b77f59fd95 Extracting 1B
+ 25b77f59fd95 Extracting 1B
+ 25b77f59fd95 Extracting 1B
+ 25b77f59fd95 Extracting 1B
+ 25b77f59fd95 Extracting 2B
+ 25b77f59fd95 Extracting 2B
+ 25b77f59fd95 Extracting 2B
+ 25b77f59fd95 Extracting 2B
+ 25b77f59fd95 Extracting 2B
+ 25b77f59fd95 Extracting 2B
+ 25b77f59fd95 Extracting 2B
+ 25b77f59fd95 Extracting 2B
+ 25b77f59fd95 Extracting 2B
+ 25b77f59fd95 Extracting 2B
+ 509688edf37b Pull complete 0B
+ a88782f92806 Pull complete 0B
+ d8d21be4bf02 Pull complete 0B
+ 6117bd39f23f Pull complete 0B
+ 6c25da34e03f Pull complete 0B
+ 25b77f59fd95 Pull complete 0B
+ Image postgres:16-alpine Pulled 
  Image atta-005sendportal-proxy Building 
-Dockerfile.verify:4
+ Image atta-005sendportal-sendportal Building 
+Dockerfile.verify:9
 
 --------------------
 
-   2 |     # roave/security-advisories (it blocks every Laravel 11 release), install --no-dev, publish core assets.
+   8 |     COPY . .
 
-   3 |     FROM composer:2 AS vendor
+   9 | >>> RUN (composer remove --dev roave/security-advisories --no-update -q || true) \
 
-   4 | >>> COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+  10 | >>>  && composer update --no-dev --no-interaction --no-progress --no-scripts --prefer-dist
 
-   5 |     RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
-
-   6 |     ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt PIP_CERT=/etc/ssl/certs/ca-certificates.crt UV_NATIVE_TLS=1 CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
+  11 |     
 
 --------------------
 
-target sendportal: failed to solve: failed to compute cache key: failed to copy: failed to send write: write /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/ingest/aed2f7bcd0def88bebd8bd727b7cbedb492a02aca64dffe176eb2b7322385c9f/data: no space left on device
+target sendportal: failed to solve: process "/bin/sh -c (composer remove --dev roave/security-advisories --no-update -q || true)  && composer update --no-dev --no-interaction --no-progress --no-scripts --prefer-dist" did not complete successfully: exit code: 2
 
 
-$ docker compose down -v --remove-orphans
+$ docker compose down -v --remove-orphans --rmi all
+ Image atta-005sendportal-proxy:latest Removing 
+ Image postgres:16-alpine Removing 
+ Image postgres:16-alpine Removed 
+ Image atta-005sendportal-proxy:latest Removed 
