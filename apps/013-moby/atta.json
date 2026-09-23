@@ -1,0 +1,9 @@
+{
+  "note": "Moby is the Docker Engine source: a daemon and CLI with no browser UI, so the proxy/Port checks do not apply. The pipeline builds the engine binaries from the received source and runs a unit-test package as the check.",
+  "kind": "library",
+  "skinCategory": "devops_console",
+  "setup": [
+    "CGO_ENABLED=0 go build -o \"$DATA/dockerd\" ./cmd/dockerd"
+  ],
+  "test": "go test ./api/types/... ./daemon/names/..."
+}

@@ -1,0 +1,13 @@
+{
+  "note": "ILLA Builder frontend (pnpm/turbo monorepo, Vite). The zip ships its two git submodules (packages/illa-design, packages/illa-public-component) empty, as GitHub zips always do, so setup clones them from their upstream repos (illa-public-component at branch beta, per .gitmodules). Self-host build served as a static SPA. ILLA's backend services are separate projects and not part of this zip, so pages that need the API show their not-connected state.",
+  "skinCategory": "form_builder_and_survey",
+  "setup": [
+    "[ -f packages/illa-design/package.json ] || (rm -rf packages/illa-design && git clone -q --depth 1 https://github.com/illacloud/illa-design.git packages/illa-design)",
+    "[ -f packages/illa-public-component/package.json ] || [ -d packages/illa-public-component/AuthShown ] || (rm -rf packages/illa-public-component && git clone -q --depth 1 --branch beta https://github.com/illacloud/illa-public-component.git packages/illa-public-component)",
+    "HUSKY=0 npx -y pnpm@8 install --no-frozen-lockfile",
+    "cd apps/builder && NODE_OPTIONS=--max-old-space-size=8192 npx vite build --mode self"
+  ],
+  "static": "apps/builder/dist",
+  "path": "/",
+  "timeout": 60
+}

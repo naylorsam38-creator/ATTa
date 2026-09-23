@@ -1,0 +1,11 @@
+{
+  "note": "Gitea built from the received source the way its Makefile does (make build: frontend + backend, TAGS=bindata sqlite sqlite_unlock_notify). Runs as an unprivileged user (Gitea refuses root) with SQLite, install locked, admin atta-admin created via the gitea CLI (start.sh).",
+  "skinCategory": "developer_tools",
+  "setup": [
+    "TAGS='bindata sqlite sqlite_unlock_notify' make build",
+    "find \"$DATA\" -mindepth 1 -delete"
+  ],
+  "start": "exec ../start.sh \"$DATA\" $PORT",
+  "path": "/",
+  "timeout": 90
+}

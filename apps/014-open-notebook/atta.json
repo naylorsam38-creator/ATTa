@@ -1,0 +1,13 @@
+{
+  "note": "open-notebook: FastAPI API + background worker (uv) + Next.js frontend (standalone build), with SurrealDB v2 in the official container (in-memory for tests). Started as its supervisord does (start.sh); the browser only talks to the Next.js server, which forwards /api to the API on 5055.",
+  "skinCategory": "note_taking",
+  "setup": [
+    "~/.local/bin/uv sync --frozen",
+    "cd frontend && npm ci --no-audit --no-fund && npx next build",
+    "cd frontend && S=$(dirname $(find .next/standalone -name server.js -not -path '*/node_modules/*' | head -1)) && mkdir -p $S/.next && cp -r .next/static $S/.next/ && cp -r public $S/",
+    "docker pull surrealdb/surrealdb:v2"
+  ],
+  "start": "PATH=$HOME/.local/bin:$PATH exec ../start.sh \"$DATA\" $PORT",
+  "path": "/",
+  "timeout": 180
+}

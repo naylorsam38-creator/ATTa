@@ -1,0 +1,9 @@
+{
+  "note": "OpenCut: the zip does not contain the web app. apps/web/ holds only components.json and moon.yml (no package.json, no source), so there is no browser UI to build or put the Port on. apps/api is a Cloudflare Worker and apps/desktop a Rust/GPUI desktop app — neither serves a browser page.",
+  "skinCategory": "short_video_feed",
+  "setup": [
+    "test -f apps/web/package.json || (echo 'apps/web has no package.json or source in the received zip (only components.json, moon.yml)'; ls -la apps/web; exit 1)"
+  ],
+  "static": "apps/web/out",
+  "path": "/"
+}

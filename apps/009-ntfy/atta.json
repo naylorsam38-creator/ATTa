@@ -1,0 +1,12 @@
+{
+  "note": "ntfy (Go server + React/Vite web app). Built as its Makefile does: make web (npm ci + vite build into server/site), placeholder docs (make cli-deps-static-sites), go build. Served with ntfy serve.",
+  "skinCategory": "developer_tools",
+  "setup": [
+    "make web",
+    "make cli-deps-static-sites",
+    "go build -o \"$DATA/ntfy\" ."
+  ],
+  "start": "exec \"$DATA/ntfy\" serve --listen-http 127.0.0.1:$PORT --cache-file \"$DATA/cache.db\" --attachment-cache-dir \"$DATA/attachments\"",
+  "path": "/",
+  "timeout": 60
+}
