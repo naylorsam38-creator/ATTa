@@ -1,12 +1,12 @@
-# 004-mixpost — deploy bundle FAIL
+# 004-mixpost — deploy bundle WARN
 
-Built: 2026-09-23T05:09:59.827Z
+Built: 2026-09-23T05:20:47.936Z
 
 Bundle: `dist/004-mixpost/` · zip: `dist/004-mixpost.zip` (2.0 MB)
 
 > Mixpost Lite: frontend rebuilt from the received source, installed into a Laravel 12 host app (Apache + PHP 8.4) with MySQL 8 and a minimal email/password login (admin from MIXPOST_ADMIN_EMAIL / MIXPOST_ADMIN_PASSWORD). The test pipeline's auto-login shim is NOT part of this bundle.
 
-Verification: containers up in 226s; 15/16 checks not failing
+Verification: containers up in 228s; 16/16 checks not failing
 
 Same Playwright checks, run against the containers (proxy container → app container):
 
@@ -25,6 +25,6 @@ Same Playwright checks, run against the containers (proxy container → app cont
 | C11 | Port button opens the drawer | PASS | panel open |
 | C12 | No new uncaught errors with the Port | PASS | none (0 uncaught error(s) seen, all also raised by the app without the Port) |
 | C13 | App CSP lets the Port run | PASS | no CSP header |
-| C14 | Redirects and links stay on the proxy | FAIL | GET / → 302 Location: http://mixpost/mixpost (bypasses the proxy) |
+| C14 | Redirects and links stay on the proxy | PASS | GET / → 302 /mixpost |
 | C15 | Customer skins through the proxy | PASS | acme→midnight: applied; globex→sunrise: applied; initech→blueprint: applied; no header → original look |
 | C16 | Sticky-notes capability on the live page | PASS | pinned=true ("Pinned by ATTa×", visible=true), after reload=true, clear=true |

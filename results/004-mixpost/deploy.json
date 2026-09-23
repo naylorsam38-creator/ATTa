@@ -1,10 +1,10 @@
 {
-  "at": "2026-09-23T05:09:59.827Z",
+  "at": "2026-09-23T05:20:47.936Z",
   "bundle": "dist/004-mixpost/",
   "zip": "dist/004-mixpost.zip",
-  "zipBytes": 2071673,
-  "status": "fail",
-  "detail": "containers up in 226s; 15/16 checks not failing",
+  "zipBytes": 2071861,
+  "status": "warn",
+  "detail": "containers up in 228s; 16/16 checks not failing",
   "checks": [
     {
       "id": "C1",
@@ -87,8 +87,8 @@
     {
       "id": "C14",
       "name": "Redirects and links stay on the proxy",
-      "status": "fail",
-      "detail": "GET / → 302 Location: http://mixpost/mixpost (bypasses the proxy)"
+      "status": "pass",
+      "detail": "GET / → 302 /mixpost"
     },
     {
       "id": "C15",
