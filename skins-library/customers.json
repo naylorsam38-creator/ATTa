@@ -1,0 +1,7 @@
+{
+  "_comment": "Test customers for skins. The proxy picks the layout from the x-authenticated-customer-id header; no header = the app's original look. Each app's category comes from apps/NNN-name/atta.json \"skinCategory\".",
+  "acme": "skin-002",
+  "globex": "skin-003",
+  "initech": "skin-004",
+  "umbrella": "skin-005"
+}

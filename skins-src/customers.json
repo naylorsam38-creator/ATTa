@@ -1,6 +1,0 @@
-{
-  "_comment": "Test customers for the skin demo. The proxy picks the layout from the x-authenticated-customer-id header; 'default' (no header) gets no skin.",
-  "acme": "midnight",
-  "globex": "sunrise",
-  "initech": "blueprint"
-}

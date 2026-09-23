@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-004",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Food Delivery",
+    "color": "#a69430"
+  },
+  "arrangement": [
+    {
+      "slot": "restaurant_list",
+      "position": "center"
+    }
+  ]
+}

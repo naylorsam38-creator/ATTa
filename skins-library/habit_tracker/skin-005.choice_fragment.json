@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-005",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Habit Tracker",
+    "color": "#9f5cd6"
+  },
+  "arrangement": [
+    {
+      "slot": "habit_list",
+      "position": "center"
+    }
+  ]
+}

@@ -22,7 +22,6 @@ const { execSync, spawn } = require('child_process');
 const { serveStatic, serveCommand, freePort } = require('./lib/serve');
 const { runChecks } = require('./lib/check');
 const { syncSkins } = require('./lib/skins');
-const { recordDemo } = require('./lib/demo');
 const pkg = require('./lib/package');
 
 const ROOT = __dirname;
@@ -243,18 +242,6 @@ async function runOne(id) {
       const failed = r.checks.filter((c) => c.status === 'fail').length;
       stage(4, 'playwright', failed ? 'fail' : 'pass', `${r.checks.length - failed}/${r.checks.length} not failing`);
 
-      // 5 — demo video: the Port UI, mover drag + rename, sticky note, each customer skin
-      if ((r.checks.find((c) => c.id === 'C3') || {}).status === 'pass') {
-        try {
-          const v = await recordDemo({ proxyUrl: proxy.url, appId: id, pagePath: cfg.path || '/', skins, outDir: out });
-          result.video = { steps: v.steps, files: [v.mp4, v.webm].filter(Boolean).map((f) => path.basename(f)) };
-          stage(5, 'video', 'pass', `${v.steps.length} steps → ${result.video.files.join(', ')}`);
-        } catch (e) {
-          stage(5, 'video', 'warn', 'demo recording stopped: ' + e.message.split('\n')[0].slice(0, 160));
-        }
-      } else {
-        stage(5, 'video', 'skip', 'Port not running in the page, nothing to show');
-      }
     } catch (e) {
       stage(4, 'playwright', 'fail', e.message.split('\n')[0]);
     }
@@ -327,9 +314,6 @@ function report(r, cfg) {
     r.checks.forEach((c) => lines.push(`| ${c.id} | ${c.name} | ${c.status.toUpperCase()} | ${cell(c.detail)} |`));
     lines.push('', 'Screenshots: `screenshot-moved.png` (Move on, controls dragged, drawer closed), `screenshot-drawer.png` (Port drawer open).');
   }
-  if (r.video) {
-    lines.push('', '## Demo video', '', r.video.files.map((f) => `[\`${f}\`](${f})`).join(' · '), '', ...r.video.steps.map((t, i) => `${i + 1}. ${t}`));
-  }
   for (const [title, list] of [['Uncaught page errors (all, including the app\'s own)', r.pageErrors], ['Console errors only seen with the Port', r.consoleErrors]]) {
     if (list && list.length) lines.push('', `## ${title}`, '', ...list.slice(0, 15).map((e) => '- `' + cell(e).slice(0, 300) + '`'));
   }
@@ -339,13 +323,13 @@ function report(r, cfg) {
 function summary() {
   const rows = numbered().map((id) => readJson(path.join(RESULTS, id, 'result.json'))).filter(Boolean);
   const lines = ['# ATTa results', '',
-    '| # | App | Verdict | Intake | Build | Serve | Proxy | Playwright | Video | Deploy bundle | Checks | Run |',
-    '|---|---|---|---|---|---|---|---|---|---|---|---|'];
+    '| # | App | Verdict | Intake | Build | Serve | Proxy | Playwright | Deploy bundle | Checks | Run |',
+    '|---|---|---|---|---|---|---|---|---|---|---|'];
   const dep = (id) => { const d = readJson(path.join(RESULTS, id, 'deploy.json')); return d ? `[${d.status.toUpperCase()}](${id}/DEPLOY.md)` : '—'; };
   for (const r of rows) {
     const st = (n) => (r.stages.find((s) => s.stage === n) || { status: '—' }).status.toUpperCase();
     const checks = r.checks.map((c) => `${c.id}:${c.status[0].toUpperCase()}`).join(' ') || '—';
-    lines.push(`| ${r.number} | [${r.app}](${r.app}/REPORT.md) | **${r.verdict}** | ${st(0)} | ${st(1)} | ${st(2)} | ${st(3)} | ${st(4)} | ${r.video ? `[mp4](${r.app}/${r.video.files[0]})` : st(5)} | ${dep(r.app)} | ${checks} | ${r.startedAt.slice(0, 16).replace('T', ' ')} |`);
+    lines.push(`| ${r.number} | [${r.app}](${r.app}/REPORT.md) | **${r.verdict}** | ${st(0)} | ${st(1)} | ${st(2)} | ${st(3)} | ${st(4)} | ${dep(r.app)} | ${checks} | ${r.startedAt.slice(0, 16).replace('T', ' ')} |`);
   }
   lines.push('', 'Checks: C1 page loads · C2 hook tag before </head> · C3 port.js live · C4 mover attached in drawer slot · ' +
     'C5 app controls found · C6 drag a link · C7 drag a button · C8 move survives reload · C9 rename · C10 reset restores · ' +

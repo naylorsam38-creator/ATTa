@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-003",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Quiz & Flashcards",
+    "color": "#3ca3ec"
+  },
+  "arrangement": [
+    {
+      "slot": "card_list",
+      "position": "center"
+    }
+  ]
+}

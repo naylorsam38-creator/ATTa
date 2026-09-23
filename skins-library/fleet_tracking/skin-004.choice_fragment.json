@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-004",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Fleet Tracking",
+    "color": "#a63035"
+  },
+  "arrangement": [
+    {
+      "slot": "vehicle_list",
+      "position": "center"
+    }
+  ]
+}

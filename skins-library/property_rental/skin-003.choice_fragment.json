@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-003",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Property Rental",
+    "color": "#ec3c71"
+  },
+  "arrangement": [
+    {
+      "slot": "listing_list",
+      "position": "center"
+    }
+  ]
+}

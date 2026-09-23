@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-004",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Fitness Tracking",
+    "color": "#8ea630"
+  },
+  "arrangement": [
+    {
+      "slot": "workout_list",
+      "position": "center"
+    }
+  ]
+}

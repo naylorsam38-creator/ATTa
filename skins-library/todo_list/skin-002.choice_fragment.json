@@ -1,0 +1,38 @@
+{
+  "skin_id": "skin-002",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Todo List",
+    "color": "#356e4f"
+  },
+  "arrangement": [
+    {
+      "slot": "todo_list",
+      "position": "center"
+    },
+    {
+      "slot": "new_todo",
+      "position": "center"
+    },
+    {
+      "slot": "toggle_todo",
+      "position": "center"
+    },
+    {
+      "slot": "edit_todo",
+      "position": "center"
+    },
+    {
+      "slot": "delete_todo",
+      "position": "center"
+    },
+    {
+      "slot": "toggle_all",
+      "position": "center"
+    },
+    {
+      "slot": "clear_completed",
+      "position": "center"
+    }
+  ]
+}

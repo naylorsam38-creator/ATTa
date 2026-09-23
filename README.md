@@ -2,7 +2,7 @@
 
 This repo holds the Capability Port front end: **ui-bridge/proxy.js**, **capability-port/port.js** and **capability-port/caps/mover.mjs**. It also has a numbered pipeline that runs apps through them and records what happens.
 
-The three system files are kept **verbatim**. They are byte-identical to the `out/` bundle shipped in every `*-capability-patched.zip`, and stage 0 of every run re-checks this. `capability-port/caps/sticky-notes.mjs` is new. It's a second capability written for this repo, and the proxy serves it the same way it serves the mover.
+The system files are kept **verbatim**. `ui-bridge/proxy.js` and `capability-port/caps/mover.mjs` are byte-identical to the `out/` bundle shipped in every `*-capability-patched.zip`. `capability-port/port.js` is the updated, security-hardened version from `port.zip`, which is identical to the one in `ui-skin-capability-bundle`. Stage 0 compares each zip's bundle against these files. `capability-port/caps/sticky-notes.mjs` is new. It's a second capability written for this repo, and the proxy serves it the same way it serves the mover.
 
 ## Hook chain
 
@@ -30,15 +30,9 @@ APPLICATION HTML
 
 With no header, the default customer has no layout, so the app keeps its original look.
 
-The skins live in `skins-src/`:
+The skins come from the skin library, `skins-library/`. It has 46 app categories, with four skins each (`skin-002` to `skin-005`). Each app's category is set in `apps/NNN-name/atta.json` as `"skinCategory"`.
 
-| Customer | Skin | Look |
-|---|---|---|
-| acme | midnight | dark |
-| globex | sunrise | warm, pill-shaped buttons |
-| initech | blueprint | blue monochrome, monospace |
-
-`lib/skins.js` writes the proxy's layout and skin files for every numbered app.
+`skins-library/customers.json` maps four customers to those skins: acme → skin-002, globex → skin-003, initech → skin-004, umbrella → skin-005. `lib/skins.js` writes the proxy's layout and skin files for every numbered app.
 
 ### Capabilities
 
@@ -65,7 +59,6 @@ node atta.js add <zip|dir|git-url> [name]  # intake → apps/001-name, 002-name,
 node atta.js run                          # every app (or: node atta.js run 003 005)
 node atta.js package [NNN ...]            # deploy bundle + docker compose verification (see below)
 node atta.js results                      # rebuild results/RESULTS.md
-npm test                                  # self-test: fixture page through the real proxy/port/mover
 ```
 
 `add` numbers the app and unpacks it into `apps/NNN-name/src/`. **Numbers are permanent.** Re-sending the byte-identical zip keeps its existing number, and the extra copy is listed under `duplicates` in `intake.json`. A zip that differs at all gets the next number. For a zip it compares the bundled `out/` folder with the canonical files and records the result in `intake.json`. App source isn't committed.
@@ -87,7 +80,6 @@ For each app, the stages run in order:
 | 2 serve | Starts the app with `start`, gives it `PORT`, and waits until it answers |
 | 3 proxy | Spawns `ui-bridge/proxy.js --app-id NNN-name --target <app>` and waits for `PASS` |
 | 4 Playwright | Loads the app directly once as a baseline, then runs C1–C16 through the proxy |
-| 5 video | Records the demo video (see below) |
 | 6 record | Writes `results/NNN-name/`: `REPORT.md`, `result.json`, `build.log`, `screenshot-moved.png`, `screenshot-drawer.png`. Updates `results/RESULTS.md` |
 
 | Check | What it proves |
@@ -108,15 +100,6 @@ For each app, the stages run in order:
 | C14 | Redirects, links, forms and assets stay on the proxy origin |
 | C15 | Each test customer gets their skin through the proxy's `/_cs/` route, and no header gives the original look |
 | C16 | The sticky-notes capability pins a visible note on the live page, keeps it after a reload, and clears it |
-
-Stage **5 video** records `results/NNN-name/demo.mp4` (also `demo.webm`, which isn't committed). The demo runs through the Port's own UI:
-
-1. Opens the app through the proxy.
-2. Opens the Port and types `/_cp/caps/mover.mjs` to attach the mover.
-3. Turns Move on, drags a button and a link, and renames one by double-clicking.
-4. Attaches sticky notes, then pins a note and drags it into place.
-5. Reloads as each customer (acme, globex, initech) to show their skin, with the moves and notes still there.
-6. Returns to the original look, then presses Reset and Clear.
 
 ## Deploy bundles (AWS / Coolify)
 

@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-005",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Video Conferencing",
+    "color": "#d65c7a"
+  },
+  "arrangement": [
+    {
+      "slot": "room_list",
+      "position": "center"
+    }
+  ]
+}

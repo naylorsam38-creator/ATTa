@@ -1,0 +1,22 @@
+body { font-family: 'Segoe UI Rounded', Nunito, -apple-system, BlinkMacSystemFont, sans-serif; max-width: 720px; margin: 40px auto;
+  color: #243242; background: #f2f6fa; }
+.card { background: #ffffff; box-shadow: 0 10px 30px rgba(30,20,50,.07); border: 1px solid #d6e0eb;
+  border-radius: 20px; padding: 28px; margin-bottom: 18px; }
+h1 { font-family: 'Segoe UI Rounded', Nunito, -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; font-size: 22px;
+  color: #243242; }
+input, select, textarea { font-family: 'Segoe UI Rounded', Nunito, -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; padding: 10px 16px;
+  border: 1px solid #c1d0e1; border-radius: 14px; box-sizing: border-box;
+  background: #ffffff; color: #243242; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: #5c95d6;
+  box-shadow: 0 0 0 4px #5c95d633; }
+button { font-family: 'Segoe UI Rounded', Nunito, -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 700;
+  padding: 10px 20px; border: none; border-radius: 999px;
+  background: #5c95d6; color: #ffffff; cursor: pointer;
+  transition: background-color .12s ease; }
+button:hover { background: #3b80ce; }
+button:focus-visible { outline: none; box-shadow: 0 0 0 4px #5c95d633; }
+button.danger { background: #d1477a; color: #ffffff; }
+button.secondary { background: #dee5ed; color: #243242; }
+ul { list-style: none; margin: 0; padding: 0; }
+li { border-bottom: 1px solid #d6e0eb; padding: 10px 4px; color: #243242; }
+.row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }

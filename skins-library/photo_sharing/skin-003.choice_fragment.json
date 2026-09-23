@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-003",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Photo Sharing",
+    "color": "#8b3cec"
+  },
+  "arrangement": [
+    {
+      "slot": "photo_list",
+      "position": "center"
+    }
+  ]
+}

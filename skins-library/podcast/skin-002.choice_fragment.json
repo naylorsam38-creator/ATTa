@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-002",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Podcast",
+    "color": "#356e5b"
+  },
+  "arrangement": [
+    {
+      "slot": "episode_list",
+      "position": "center"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-002",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Parcel Tracking",
+    "color": "#356e58"
+  },
+  "arrangement": [
+    {
+      "slot": "parcel_list",
+      "position": "center"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-005",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Spreadsheet",
+    "color": "#d65c64"
+  },
+  "arrangement": [
+    {
+      "slot": "cell_list",
+      "position": "center"
+    }
+  ]
+}

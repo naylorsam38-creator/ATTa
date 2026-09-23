@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-003",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Recipes",
+    "color": "#483cec"
+  },
+  "arrangement": [
+    {
+      "slot": "recipe_list",
+      "position": "center"
+    }
+  ]
+}

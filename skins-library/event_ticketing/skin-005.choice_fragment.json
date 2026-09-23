@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-005",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Event Ticketing",
+    "color": "#93d65c"
+  },
+  "arrangement": [
+    {
+      "slot": "event_list",
+      "position": "center"
+    }
+  ]
+}

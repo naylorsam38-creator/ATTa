@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-004",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Helpdesk",
+    "color": "#a63083"
+  },
+  "arrangement": [
+    {
+      "slot": "ticket_list",
+      "position": "center"
+    }
+  ]
+}

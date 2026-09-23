@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-004",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Expense Tracker",
+    "color": "#a67130"
+  },
+  "arrangement": [
+    {
+      "slot": "expense_list",
+      "position": "center"
+    }
+  ]
+}

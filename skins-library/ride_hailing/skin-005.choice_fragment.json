@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-005",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Ride Hailing",
+    "color": "#d6bc5c"
+  },
+  "arrangement": [
+    {
+      "slot": "ride_list",
+      "position": "center"
+    }
+  ]
+}

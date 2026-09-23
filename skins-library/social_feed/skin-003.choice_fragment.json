@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-003",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Social Feed",
+    "color": "#bd3cec"
+  },
+  "arrangement": [
+    {
+      "slot": "post_list",
+      "position": "center"
+    }
+  ]
+}

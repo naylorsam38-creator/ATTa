@@ -1,0 +1,27 @@
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; max-width: 550px; margin: 40px auto;
+  color: #2a211a; background: #faf6ef; }
+.todoapp { background: #ffffff; box-shadow: 0 10px 28px rgba(120,86,40,.10); border: 1px solid #e6dcc9;
+  border-radius: 12px; }
+.header input#new-todo { width: 100%; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 20px; padding: 12px; border: none; border-bottom: 1px solid #e6dcc9;
+  background: #ffffff; color: #2a211a; }
+.header input#new-todo:focus { outline: none; box-shadow: inset 0 0 0 3px #91a6302e; }
+ul#todo-list { list-style: none; margin: 0; padding: 0; }
+ul#todo-list li { position: relative; border-bottom: 1px solid #e6dcc9;
+  padding: 12px 12px 12px 40px; color: #2a211a; }
+ul#todo-list li .toggle { position: absolute; left: 10px; top: 14px; accent-color: #91a630; }
+ul#todo-list li label { margin-left: 6px; }
+ul#todo-list li.completed label { text-decoration: line-through; color: #7a6a58; }
+ul#todo-list li .destroy { display: none; float: right; cursor: pointer; border: none; background: none;
+  color: #a4402c; }
+ul#todo-list li:hover .destroy { display: inline; }
+ul#todo-list li .edit { display: none; width: 90%; font-size: 16px; }
+ul#todo-list li.editing .edit { display: inline; }
+ul#todo-list li.editing .view { display: none; }
+.footer { padding: 10px 15px; display: flex; justify-content: space-between; align-items: center;
+  color: #7a6a58; }
+.footer .filters { list-style: none; display: inline-flex; gap: 8px; margin: 0; padding: 0; }
+.footer .filters a { text-decoration: none; color: #7a6a58; padding: 2px 6px;
+  border: 1px solid transparent; border-radius: 8px; }
+.footer .filters a.selected { border-color: #91a63055; }
+#clear-completed { border: none; background: none; cursor: pointer; color: #7a6a58; }

@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-003",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Video Streaming",
+    "color": "#ec3c94"
+  },
+  "arrangement": [
+    {
+      "slot": "video_list",
+      "position": "center"
+    }
+  ]
+}

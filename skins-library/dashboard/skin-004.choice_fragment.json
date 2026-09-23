@@ -1,0 +1,15 @@
+{
+  "skin_id": "skin-004",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Observability Dashboard",
+    "color": "#a64530"
+  },
+  "arrangement": [
+    {
+      "slot": "cell_list",
+      "position": "center"
+    }
+  ],
+  "category": "dashboard"
+}

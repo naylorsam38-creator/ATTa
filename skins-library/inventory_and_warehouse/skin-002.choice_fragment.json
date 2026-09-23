@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-002",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Inventory",
+    "color": "#35506e"
+  },
+  "arrangement": [
+    {
+      "slot": "item_list",
+      "position": "center"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-005",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Survey",
+    "color": "#d6d05c"
+  },
+  "arrangement": [
+    {
+      "slot": "response_list",
+      "position": "center"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-003",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Appointment Booking",
+    "color": "#913cec"
+  },
+  "arrangement": [
+    {
+      "slot": "appointment_list",
+      "position": "center"
+    }
+  ]
+}

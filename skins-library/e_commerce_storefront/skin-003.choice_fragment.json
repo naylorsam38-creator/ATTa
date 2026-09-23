@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-003",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Storefront",
+    "color": "#ec3c88"
+  },
+  "arrangement": [
+    {
+      "slot": "product_list",
+      "position": "center"
+    }
+  ]
+}

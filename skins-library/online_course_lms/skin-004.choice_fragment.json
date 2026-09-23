@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-004",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real LMS",
+    "color": "#a65330"
+  },
+  "arrangement": [
+    {
+      "slot": "course_list",
+      "position": "center"
+    }
+  ]
+}

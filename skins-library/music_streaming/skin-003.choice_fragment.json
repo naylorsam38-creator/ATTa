@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-003",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Music Streaming",
+    "color": "#3cec77"
+  },
+  "arrangement": [
+    {
+      "slot": "track_list",
+      "position": "center"
+    }
+  ]
+}

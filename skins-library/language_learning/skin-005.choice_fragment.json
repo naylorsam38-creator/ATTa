@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-005",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Language Learning",
+    "color": "#d6c05c"
+  },
+  "arrangement": [
+    {
+      "slot": "card_list",
+      "position": "center"
+    }
+  ]
+}

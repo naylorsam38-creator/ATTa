@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-005",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Calendar",
+    "color": "#5cd6b8"
+  },
+  "arrangement": [
+    {
+      "slot": "event_list",
+      "position": "center"
+    }
+  ]
+}

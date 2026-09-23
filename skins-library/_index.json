@@ -1,0 +1,1406 @@
+{
+  "skins_per_category": 4,
+  "source_design_system": "shadcn/ui",
+  "existing_skin_id": "skin-001",
+  "categories": {
+    "accounting_ledger": {
+      "branding": {
+        "name": "Real Accounting Ledger",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "entry_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-0700/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-0700/app.py"
+      ],
+      "port": 5006,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "appointment_booking": {
+      "branding": {
+        "name": "Real Appointment Booking",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "appointment_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-2500/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-2500/app.py"
+      ],
+      "port": 5025,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "auction": {
+      "branding": {
+        "name": "Real Auction",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "item_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-2100/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-2100/app.py"
+      ],
+      "port": 5021,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "calendar_and_scheduling": {
+      "branding": {
+        "name": "Real Calendar",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "event_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-0400/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-0400/app.py"
+      ],
+      "port": 5003,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "collaborative_document_editor": {
+      "branding": {
+        "name": "Real Document Editor",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "doc_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-1600/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-1600/app.py"
+      ],
+      "port": 5016,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "crm": {
+      "branding": {
+        "name": "Real CRM",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "contact_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-0800/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-0800/app.py"
+      ],
+      "port": 5007,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "dating": {
+      "branding": {
+        "name": "Real Dating",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "profile_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-3100/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-3100/app.py"
+      ],
+      "port": 5031,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "e_commerce_storefront": {
+      "branding": {
+        "name": "Real Storefront",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "product_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-1900/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-1900/app.py"
+      ],
+      "port": 5019,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "email_client": {
+      "branding": {
+        "name": "Real Email Client",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "inbox_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-1400/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-1400/app.py"
+      ],
+      "port": 5014,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "event_ticketing": {
+      "branding": {
+        "name": "Real Event Ticketing",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "event_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-2700/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-2700/app.py"
+      ],
+      "port": 5027,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "expense_tracker": {
+      "branding": {
+        "name": "Real Expense Tracker",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "expense_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-0500/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-0500/app.py"
+      ],
+      "port": 5004,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "file_storage_and_sync": {
+      "branding": {
+        "name": "Real File Storage",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "file_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-1500/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-1500/app.py"
+      ],
+      "port": 5015,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "fitness_tracking": {
+      "branding": {
+        "name": "Real Fitness Tracking",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "workout_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-3800/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-3800/app.py"
+      ],
+      "port": 5038,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "fleet_tracking": {
+      "branding": {
+        "name": "Real Fleet Tracking",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "vehicle_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-3000/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-3000/app.py"
+      ],
+      "port": 5030,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "food_delivery": {
+      "branding": {
+        "name": "Real Food Delivery",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "restaurant_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-2200/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-2200/app.py"
+      ],
+      "port": 5022,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "form_builder_and_survey": {
+      "branding": {
+        "name": "Real Survey",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "response_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-1800/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-1800/app.py"
+      ],
+      "port": 5018,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "habit_tracker": {
+      "branding": {
+        "name": "Real Habit Tracker",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "habit_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-0300/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-0300/app.py"
+      ],
+      "port": 5002,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "helpdesk_ticketing": {
+      "branding": {
+        "name": "Real Helpdesk",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "ticket_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-0900/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-0900/app.py"
+      ],
+      "port": 5008,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "inventory_and_warehouse": {
+      "branding": {
+        "name": "Real Inventory",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "item_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-2900/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-2900/app.py"
+      ],
+      "port": 5029,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "invoicing": {
+      "branding": {
+        "name": "Real Invoicing",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "invoice_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-0600/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-0600/app.py"
+      ],
+      "port": 5005,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "language_learning": {
+      "branding": {
+        "name": "Real Language Learning",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "card_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-4000/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-4000/app.py"
+      ],
+      "port": 5040,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "meditation_and_wellbeing": {
+      "branding": {
+        "name": "Real Meditation",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "session_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-3900/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-3900/app.py"
+      ],
+      "port": 5039,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "multi_vendor_marketplace": {
+      "branding": {
+        "name": "Real Marketplace",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "vendor_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-2000/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-2000/app.py"
+      ],
+      "port": 5020,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "music_streaming": {
+      "branding": {
+        "name": "Real Music Streaming",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "track_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-3500/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-3500/app.py"
+      ],
+      "port": 5035,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "note_taking": {
+      "branding": {
+        "name": "Real Notes",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-0200/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-0200/app.py"
+      ],
+      "port": 5001,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "online_course_lms": {
+      "branding": {
+        "name": "Real LMS",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "course_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-4100/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-4100/app.py"
+      ],
+      "port": 5041,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "parcel_tracking": {
+      "branding": {
+        "name": "Real Parcel Tracking",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "parcel_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-2400/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-2400/app.py"
+      ],
+      "port": 5024,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "payroll": {
+      "branding": {
+        "name": "Real Payroll",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "employee_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-1000/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-1000/app.py"
+      ],
+      "port": 5010,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "photo_sharing": {
+      "branding": {
+        "name": "Real Photo Sharing",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "photo_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-3300/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-3300/app.py"
+      ],
+      "port": 5033,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "podcast": {
+      "branding": {
+        "name": "Real Podcast",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "episode_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-3700/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-3700/app.py"
+      ],
+      "port": 5037,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "project_management": {
+      "branding": {
+        "name": "Real Project Management",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "task_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-1100/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-1100/app.py"
+      ],
+      "port": 5011,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "property_rental": {
+      "branding": {
+        "name": "Real Property Rental",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "listing_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-2600/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-2600/app.py"
+      ],
+      "port": 5026,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "quiz_and_flashcards": {
+      "branding": {
+        "name": "Real Quiz & Flashcards",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "card_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-4200/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-4200/app.py"
+      ],
+      "port": 5042,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "recipe_and_meal_planning": {
+      "branding": {
+        "name": "Real Recipes",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "recipe_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-4300/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-4300/app.py"
+      ],
+      "port": 5043,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "restaurant_pos": {
+      "branding": {
+        "name": "Real Restaurant POS",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "order_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-2800/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-2800/app.py"
+      ],
+      "port": 5028,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "ride_hailing": {
+      "branding": {
+        "name": "Real Ride Hailing",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "ride_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-2300/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-2300/app.py"
+      ],
+      "port": 5023,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "short_video_feed": {
+      "branding": {
+        "name": "Real Short Video Feed",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "video_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-3400/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-3400/app.py"
+      ],
+      "port": 5034,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "social_feed": {
+      "branding": {
+        "name": "Real Social Feed",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "post_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-3200/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-3200/app.py"
+      ],
+      "port": 5032,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "spreadsheet": {
+      "branding": {
+        "name": "Real Spreadsheet",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "cell_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-1700/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-1700/app.py"
+      ],
+      "port": 5017,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "team_chat": {
+      "branding": {
+        "name": "Real Team Chat",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "message_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-1200/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-1200/app.py"
+      ],
+      "port": 5012,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "todo_list": {
+      "branding": {
+        "name": "Real Todo List",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "todo_list",
+          "position": "center"
+        },
+        {
+          "slot": "new_todo",
+          "position": "center"
+        },
+        {
+          "slot": "toggle_todo",
+          "position": "center"
+        },
+        {
+          "slot": "edit_todo",
+          "position": "center"
+        },
+        {
+          "slot": "delete_todo",
+          "position": "center"
+        },
+        {
+          "slot": "toggle_all",
+          "position": "center"
+        },
+        {
+          "slot": "clear_completed",
+          "position": "center"
+        }
+      ],
+      "family": "todomvc",
+      "style_hash": "80c2bb04c5",
+      "host_app_py": "modules/CAP-0100/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-0100/app.py"
+      ],
+      "port": 5000,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "todomvc"
+      }
+    },
+    "video_conferencing": {
+      "branding": {
+        "name": "Real Video Conferencing",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "room_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-1300/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-1300/app.py"
+      ],
+      "port": 5013,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "video_streaming": {
+      "branding": {
+        "name": "Real Video Streaming",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "video_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-3600/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-3600/app.py"
+      ],
+      "port": 5036,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "devops_console": {
+      "branding": {
+        "name": "Real DevOps Console",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "task_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-1100/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-1100/app.py"
+      ],
+      "port": 5011,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "dashboard": {
+      "branding": {
+        "name": "Real Observability Dashboard",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "cell_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-1700/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-1700/app.py"
+      ],
+      "port": 5017,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    },
+    "developer_tools": {
+      "branding": {
+        "name": "Real Developer Tools",
+        "color": "#2f6f9f"
+      },
+      "arrangement": [
+        {
+          "slot": "doc_list",
+          "position": "center"
+        }
+      ],
+      "family": "shared_card",
+      "style_hash": "8c2e648ace",
+      "host_app_py": "modules/CAP-1600/app.py",
+      "start": [
+        "python3",
+        "modules/CAP-1600/app.py"
+      ],
+      "port": 5016,
+      "result": {
+        "status": "GENERATED",
+        "skins": [
+          "skin-002",
+          "skin-003",
+          "skin-004",
+          "skin-005"
+        ],
+        "family": "shared_card"
+      }
+    }
+  }
+}

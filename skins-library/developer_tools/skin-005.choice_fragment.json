@@ -1,0 +1,15 @@
+{
+  "skin_id": "skin-005",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Developer Tools",
+    "color": "#d0d65c"
+  },
+  "arrangement": [
+    {
+      "slot": "doc_list",
+      "position": "center"
+    }
+  ],
+  "category": "developer_tools"
+}

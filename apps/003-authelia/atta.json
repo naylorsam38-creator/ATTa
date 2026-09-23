@@ -12,5 +12,6 @@
     "LEFTHOOK": "0"
   },
   "path": "/",
-  "timeout": 90
+  "timeout": 90,
+  "skinCategory": "developer_tools"
 }

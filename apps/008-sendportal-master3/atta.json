@@ -11,5 +11,6 @@
   ],
   "start": "exec php artisan serve --host=127.0.0.1 --port=$PORT",
   "path": "/login",
-  "timeout": 60
+  "timeout": 60,
+  "skinCategory": "email_client"
 }

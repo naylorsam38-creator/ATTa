@@ -6,5 +6,6 @@
   ],
   "start": "cd \"$DATA\" && exec \"$SRC/.venv/bin/archivebox\" server 127.0.0.1:$PORT",
   "path": "/",
-  "timeout": 120
+  "timeout": 120,
+  "skinCategory": "file_storage_and_sync"
 }

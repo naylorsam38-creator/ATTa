@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-004",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real CRM",
+    "color": "#a65930"
+  },
+  "arrangement": [
+    {
+      "slot": "contact_list",
+      "position": "center"
+    }
+  ]
+}

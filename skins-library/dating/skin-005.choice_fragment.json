@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-005",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Dating",
+    "color": "#d6c45c"
+  },
+  "arrangement": [
+    {
+      "slot": "profile_list",
+      "position": "center"
+    }
+  ]
+}

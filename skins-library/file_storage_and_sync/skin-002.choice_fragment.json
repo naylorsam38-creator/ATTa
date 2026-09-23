@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-002",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real File Storage",
+    "color": "#6e3f35"
+  },
+  "arrangement": [
+    {
+      "slot": "file_list",
+      "position": "center"
+    }
+  ]
+}

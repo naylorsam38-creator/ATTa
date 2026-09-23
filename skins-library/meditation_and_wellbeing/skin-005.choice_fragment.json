@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-005",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Meditation",
+    "color": "#5c5cd6"
+  },
+  "arrangement": [
+    {
+      "slot": "session_list",
+      "position": "center"
+    }
+  ]
+}

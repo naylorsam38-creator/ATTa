@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-002",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Accounting Ledger",
+    "color": "#355c6e"
+  },
+  "arrangement": [
+    {
+      "slot": "entry_list",
+      "position": "center"
+    }
+  ]
+}

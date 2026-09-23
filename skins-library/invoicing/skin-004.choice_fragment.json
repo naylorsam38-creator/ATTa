@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-004",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Invoicing",
+    "color": "#a63d30"
+  },
+  "arrangement": [
+    {
+      "slot": "invoice_list",
+      "position": "center"
+    }
+  ]
+}

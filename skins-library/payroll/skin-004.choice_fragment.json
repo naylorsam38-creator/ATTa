@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-004",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Payroll",
+    "color": "#a5a630"
+  },
+  "arrangement": [
+    {
+      "slot": "employee_list",
+      "position": "center"
+    }
+  ]
+}

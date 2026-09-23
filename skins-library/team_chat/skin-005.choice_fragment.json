@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-005",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Team Chat",
+    "color": "#bad65c"
+  },
+  "arrangement": [
+    {
+      "slot": "message_list",
+      "position": "center"
+    }
+  ]
+}

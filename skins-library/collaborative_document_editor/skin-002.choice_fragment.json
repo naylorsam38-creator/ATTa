@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-002",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Document Editor",
+    "color": "#6b6e35"
+  },
+  "arrangement": [
+    {
+      "slot": "doc_list",
+      "position": "center"
+    }
+  ]
+}

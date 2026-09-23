@@ -1,5 +1,6 @@
 {
   "note": "App Factory Controller: Python reference implementation (fail-closed incident controller, orchestrator, dependency graph). No web UI, so the proxy/Port checks do not apply; the pipeline runs its unit tests.",
   "kind": "library",
-  "test": "python3 -m unittest test_controller test_controller_v2 test_dependency_graph test_orchestrator -v"
+  "test": "python3 -m unittest test_controller test_controller_v2 test_dependency_graph test_orchestrator -v",
+  "skinCategory": "devops_console"
 }

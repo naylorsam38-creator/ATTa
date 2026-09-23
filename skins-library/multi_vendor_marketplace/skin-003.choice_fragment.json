@@ -1,0 +1,14 @@
+{
+  "skin_id": "skin-003",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real Marketplace",
+    "color": "#3cec94"
+  },
+  "arrangement": [
+    {
+      "slot": "vendor_list",
+      "position": "center"
+    }
+  ]
+}

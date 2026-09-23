@@ -1,0 +1,15 @@
+{
+  "skin_id": "skin-003",
+  "skin_version": "1.0.0",
+  "branding": {
+    "name": "Real DevOps Console",
+    "color": "#ec3cba"
+  },
+  "arrangement": [
+    {
+      "slot": "task_list",
+      "position": "center"
+    }
+  ],
+  "category": "devops_console"
+}

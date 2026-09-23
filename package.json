@@ -7,7 +7,6 @@
     "atta": "atta.js"
   },
   "scripts": {
-    "test": "node --test test/*.test.js",
     "add": "node atta.js add",
     "run-all": "node atta.js run",
     "results": "node atta.js results"

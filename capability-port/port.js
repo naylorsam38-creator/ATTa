@@ -118,12 +118,20 @@ const RULES = {
     }
     if (/^[a-z][a-z0-9+.-]*:/i.test(text) && !/\s/.test(text) && !/^\s*</.test(text)) parseUrl(text); // throws for javascript:, data:, file:
     if (/^\s*</.test(text)) {
+      if (!/<[a-zA-Z][^>]*>/.test(text)) throw new Error('That does not contain any HTML element');
       if (/<script[\s>]|<style[\s>]|<html/i.test(text)) return { kind: 'document', html: text, source: '(html document)', remote: false };
       return { kind: 'fragment', html: text, source: '(html fragment)', remote: false };
     }
-    if (/^\s*\{/.test(text)) {
+    if (/^\s*[\{\[]/.test(text)) {
       let m; try { m = JSON.parse(text); } catch { throw new Error('That looks like JSON but does not parse'); }
-      return { kind: 'manifest', manifest: m, base: location.href, source: '(manifest)', remote: false };
+      if (!m || typeof m !== 'object' || Array.isArray(m)) throw new Error('A capability manifest must be a JSON object, not an array or value');
+      // Remoteness follows the code the manifest points AT, not where the manifest text
+      // came from. A local-looking manifest whose entry/url is off-origin is remote, so it
+      // is sandboxed by default: a pasted manifest can't launder attacker code onto the page.
+      const v = validateManifest(m, location.href);
+      const target = v.entry || v.url || null;
+      let remote = false; if (target) { try { remote = new URL(target).origin !== location.origin; } catch {} }
+      return { kind: 'manifest', manifest: v, base: location.href, source: '(manifest)', remote };
     }
     if (/\bexport\b|\bimport\b/.test(text)) return { kind: 'module-source', code: text, source: '(module source)', remote: false };
     return { kind: 'script-source', code: text, source: '(script source)', remote: false };
@@ -150,24 +158,34 @@ const RULES = {
   }
 
   /* ---------- 3. TRUST: decide the tier before anything runs --------------- */
+  // One prompt for anything that will run on the host page with full access.
+  // Declining throws, so nothing downstream mounts.
+  async function confirmRunsOnPage(what) {
+    const ok = await Promise.resolve(RULES.CONFIRM(`${what}\n\nOnly continue if you trust where it came from. Run it?`));
+    if (!ok) throw new Error('Not confirmed, nothing was run');
+  }
   // Returns 'trusted' | 'sandboxed' | 'embedded' (a whole page: shown, never given the host).
   async function decideTrust(rec, requested) {
     const remote = !!rec.remote;
     switch (rec.kind) {
       case 'module': return 'trusted';
       case 'page': return 'embedded';
-      case 'image': case 'stylesheet': case 'fragment': case 'document':
-        // HTML is not sanitised: event handlers, SVG and embedded resources can all act. So it is trusted-only.
-        if (rec.kind === 'fragment' || rec.kind === 'document') return 'trusted';
-        return 'trusted';
-      case 'script-source': {
-        if (!RULES.ALLOW_RAW_CODE) throw new Error('Raw code is switched off in this port (ALLOW_RAW_CODE)');
-        const ok = await Promise.resolve(RULES.CONFIRM(
-          'This is raw code. It will run on the page itself with full access: it can read and change everything on this page, its storage and its network. Only continue if you trust where it came from.\n\nRun it?'));
-        if (!ok) throw new Error('Raw code was not confirmed, nothing was run');
+      case 'image': case 'stylesheet': return 'trusted';
+      case 'fragment': case 'document': {
+        // Pasted HTML is inserted into the live page and is NOT sanitised: inline handlers
+        // (onerror, onclick), <script>, SVG and embedded resources all run with full access.
+        // It is gated behind the same confirm as raw code — it used to run silently.
+        await confirmRunsOnPage('This is HTML. It will be inserted into the page and can run code: inline handlers, scripts and embedded resources all execute with full access.');
         return 'trusted';
       }
-      case 'module-source': return 'trusted';
+      case 'script-source': case 'module-source': {
+        // Raw pasted code: a plain script, or a module using import/export. Both run on the
+        // page with full access. module-source used to skip this confirm entirely — that was
+        // the bypass (any pasted code containing the word "import" was auto-trusted). Fixed.
+        if (!RULES.ALLOW_RAW_CODE) throw new Error('Raw code is switched off in this port (ALLOW_RAW_CODE)');
+        await confirmRunsOnPage('This is raw code. It will run on the page itself with full access: it can read and change everything on this page, its storage and its network.');
+        return 'trusted';
+      }
       case 'module-url': case 'manifest-url': case 'manifest': {
         const def = remote ? RULES.REMOTE_TRUST : RULES.LOCAL_TRUST;
         if (requested === 'trusted' && def === 'sandboxed') {
@@ -268,8 +286,13 @@ const RULES = {
     const id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
     let slot, cap;
     try {
+      // Trust was decided above from what this IS and where it comes from — before any
+      // import. A URL/manifest capability that wants to run sandboxed must declare it in
+      // its manifest or via opts.trust (both are read before import). We do NOT import it
+      // trusted and then re-home it in a sandbox: by then its top-level code has already
+      // run on the page, so that re-attach was theatre. It's gone.
       if (trust === 'sandboxed') { cap = sandboxModule(rec, res); }
-      else { cap = await normalise(rec, res); if (cap.trust === 'sandboxed' && rec.kind !== 'module') { res.dispose(); return attach(input, placement, { ...opts, trust: 'sandboxed' }); } }
+      else { cap = await normalise(rec, res); }
       const deal = negotiate(cap);
       if (!deal.ok) throw new Error(`${cap.name} needs ${deal.missing.join(', ')} and this app can't give that here.`);
       const target = resolvePlacement(placement || cap.place || RULES.DEFAULT_PLACEMENT);
@@ -277,7 +300,7 @@ const RULES = {
       target.appendChild(slot);
       const ctx = { port: api, host: publicHost(), slot, id, trust, signal: res.signal, on: res.on, interval: res.interval, timeout: res.timeout, own: res.own, style: res.style };
       await withTimeout(Promise.resolve(cap.mount(ctx)), `mounting ${cap.name}`);
-      attached.set(id, { cap, slot, res, input, placement: placementRecord(target, placement), trust, remote: !!rec.remote });
+      attached.set(id, { cap, slot, res, input, placement: placementRecord(target, placement), trust, remote: !!rec.remote, recKind: rec.kind });
       if (RULES.PERSIST && typeof input === 'string') persist();
       ui.say(`${cap.name} is in (${trust}).`); ui.refresh();
       return id;
@@ -369,9 +392,29 @@ const RULES = {
   const hookApp = (document.querySelector('script[data-capability-hook][data-capability-app]') || {dataset:{}}).dataset.capabilityApp;
   const appId = () => RULES.APP_ID || document.documentElement.dataset.capabilityApp || hookApp || location.pathname;
   const storageKey = () => `${RULES.STORAGE_KEY}:${location.origin}:${appId()}`;
+  // Raw pasted code (script or module source) is trusted ONLY because a human
+  // confirmed it at paste time. Replaying it from storage on reload would run it
+  // with no confirm, so anything able to write localStorage (an XSS elsewhere, a
+  // shared machine, a browser extension) could plant code the port runs silently.
+  // Such capabilities are therefore never written to storage; they live for the
+  // session only. Everything with a real source (a URL, a manifest) still persists.
+  function isReplayable(a) {
+    const k = a.recKind;
+    // No stable source → session-only. Raw script, raw module and pasted HTML are all typed
+    // in by hand; replaying them from storage would either run code with no fresh confirm or
+    // re-prompt on every load. Things with a real source (a URL, a manifest) still persist.
+    return k !== 'script-source' && k !== 'module-source' && k !== 'fragment' && k !== 'document';
+  }
+  let restoring = false; // during a restore batch, suppress writes; commit once at the end
   function persist() {
-    const list = [...attached.values()].filter(a => typeof a.input === 'string')
-      .map(a => ({ input: a.input, placement: a.placement, trust: a.trust, remote: a.remote, name: a.cap.name, savedAt: Date.now() }));
+    if (restoring) return;
+    // Store only what the capability IS and where it sits — never a trust verdict, never a
+    // "remote" flag, never a "needsConfirm". Trust is re-decided from the input on restore,
+    // so nothing written here can grant privilege: a planted record is inert data, re-judged
+    // from scratch exactly like a fresh paste.
+    const list = [...attached.values()]
+      .filter(a => typeof a.input === 'string' && isReplayable(a))
+      .map(a => ({ input: a.input, placement: a.placement, name: a.cap.name, savedAt: Date.now() }));
     try { localStorage.setItem(storageKey(), JSON.stringify(list.concat(skipped))); } catch { /* storage unavailable: nothing persists, port keeps working */ }
   }
   async function restore() {
@@ -380,15 +423,34 @@ const RULES = {
     try { const raw = localStorage.getItem(storageKey()); if (raw) list = JSON.parse(raw); } catch { list = []; }
     if (!Array.isArray(list)) list = [];
     list = list.filter(it => it && typeof it === 'object' && typeof it.input === 'string' && (it.placement === undefined || typeof it.placement === 'string'));
-    const remote = list.filter(it => it.remote);
+    // Storage holds only "what it is and where it sits" now — no trust, no remote flag, no
+    // needsConfirm. Nothing stored can grant privilege by itself. For each entry we recompute
+    // remote from the input (recognise() is pure classification, it imports nothing), purely
+    // to group the bulk "bring these back?" prompt below. The real trust decision happens
+    // inside attach() -> decideTrust(), fresh, exactly as if it had just been pasted: raw
+    // code and HTML re-ask, remote-wants-trusted re-asks. A planted record just gets
+    // re-judged and, if it's actually dangerous, re-prompted — same as day one.
+    const withRec = list.map(it => { try { return { it, rec: recognise(it.input) }; } catch { return { it, rec: null }; } })
+      .filter(x => x.rec); // drop anything the classifier itself rejects (malformed/legacy)
+    const remote = withRec.filter(x => x.rec.remote).map(x => x.it);
     if (remote.length && RULES.CONFIRM_REMOTE_RESTORE) {
       const ok = await Promise.resolve(RULES.CONFIRM(`Bring back ${remote.length} capability(ies) loaded from other origins? They may have changed since you attached them:\n\n${remote.map(r => '- ' + (r.name || r.input)).join('\n')}`));
-      if (!ok) { skipped = remote; list = list.filter(it => !it.remote); }
-    }
-    for (const it of list) {
-      try { await attach(it.input, it.placement, { trust: it.trust === 'sandboxed' ? 'sandboxed' : undefined }); }
-      catch (e) { if (typeof it.placement === 'string' && /^(anchor:|#)/.test(it.placement)) { try { await attach(it.input, 'drawer', { trust: it.trust === 'sandboxed' ? 'sandboxed' : undefined }); ui.say(`${it.name || it.input}: its old spot is gone, it is in the drawer.`); } catch {} } }
-    }
+      if (!ok) { skipped = remote; list = withRec.filter(x => !x.rec.remote).map(x => x.it); }
+      else list = withRec.map(x => x.it);
+    } else list = withRec.map(x => x.it);
+    restoring = true;
+    try {
+      for (const it of list) {
+        try { await attach(it.input, it.placement); }
+        catch (e) {
+          if (typeof it.placement === 'string' && /^(anchor:|#)/.test(it.placement)) {
+            try { await attach(it.input, 'drawer'); ui.say(`${it.name || it.input}: its old spot is gone, it is in the drawer.`); } catch {}
+          }
+          // else: declined (e.g. confirm said no) or genuinely broken — dropped from the
+          // list this run. persist() below writes only what actually re-attached + skipped.
+        }
+      }
+    } finally { restoring = false; }
     persist();
   }
 
