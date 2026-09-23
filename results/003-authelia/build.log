@@ -1,8 +1,8 @@
 
 $ cd web && npx -y pnpm@12.6.0 install --frozen-lockfile && npx -y pnpm@12.6.0 build
-✓ Lockfile passes supply-chain policies (verified 37m ago)
+✓ Lockfile passes supply-chain policies (verified 46m ago)
 Lockfile is up to date, resolution step is skipped
-Done in 30ms using pnpm v12.6.0
+Done in 26ms using pnpm v12.6.0
 [36mvite v8.3.0 [32mbuilding client environment for production...[36m[39m
 transforming...
 ✓ 2627 modules transformed.
@@ -94,20 +94,18 @@ computing gzip size...
 ../internal/server/public_html/static/js/index.C24ke4nO.js                              256.65 kB │ gzip:  82.46 kB
 ../internal/server/public_html/static/js/PasswordPolicyConfiguration.C4F_g4ug.js        821.24 kB │ gzip: 398.59 kB
 
-[32m✓ built in 16.44s[39m
+[32m✓ built in 16.56s[39m
 
 $ cp -r api internal/server/public_html/
 
 $ go build -o "/home/user/ATTa/apps/003-authelia/data/authelia" ./cmd/authelia
 
 $ cp ../config/configuration.yml ../config/users.yml "/home/user/ATTa/apps/003-authelia/data/" && rm -f "/home/user/ATTa/apps/003-authelia/data/db.sqlite3"
-time="2026-09-23T04:06:44Z" level=warning msg="Configuration: access_control: no rules have been specified so the 'default_policy' of 'one_factor' is going to be applied to all requests"
-time="2026-09-23T04:06:44Z" level=info msg="Authelia untagged-unknown-dirty (master, unknown) is starting"
-time="2026-09-23T04:06:44Z" level=info msg="Log severity set to info"
-time="2026-09-23T04:06:44Z" level=info msg="Storage schema is being checked for updates"
-time="2026-09-23T04:06:44Z" level=info msg="Storage schema migration from 0 to 29 is being attempted"
-time="2026-09-23T04:06:44Z" level=info msg="Storage schema migration from 0 to 29 is complete"
-time="2026-09-23T04:06:44Z" level=info msg="Startup complete"
-time="2026-09-23T04:06:44Z" level=info msg="Listening for non-TLS connections on '127.0.0.1:38719' path '/'" server=main service=server
-time="2026-09-23T04:07:37Z" level=info msg="Shutdown initiated"
-time="2026-09-23T04:07:37Z" level=info msg="Shutdown complete"
+time="2026-09-23T04:16:04Z" level=warning msg="Configuration: access_control: no rules have been specified so the 'default_policy' of 'one_factor' is going to be applied to all requests"
+time="2026-09-23T04:16:04Z" level=info msg="Authelia untagged-unknown-dirty (master, unknown) is starting"
+time="2026-09-23T04:16:04Z" level=info msg="Log severity set to info"
+time="2026-09-23T04:16:04Z" level=info msg="Storage schema is being checked for updates"
+time="2026-09-23T04:16:04Z" level=info msg="Storage schema migration from 0 to 29 is being attempted"
+time="2026-09-23T04:16:04Z" level=info msg="Storage schema migration from 0 to 29 is complete"
+time="2026-09-23T04:16:04Z" level=info msg="Startup complete"
+time="2026-09-23T04:16:04Z" level=info msg="Listening for non-TLS connections on '127.0.0.1:42533' path '/'" server=main service=server

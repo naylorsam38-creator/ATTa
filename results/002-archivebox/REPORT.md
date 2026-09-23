@@ -1,6 +1,6 @@
 # 002-archivebox — FAIL
 
-Run: 2026-09-23T04:05:18.371Z
+Run: 2026-09-23T04:14:33.226Z
 
 > ArchiveBox (Python/Django, served by daphne). Fresh collection initialised in data/; unauthenticated visit lands on the admin login screen.
 
@@ -10,9 +10,9 @@ Run: 2026-09-23T04:05:18.371Z
 |---|---|---|---|
 | 0 | intake | PASS | bundled proxy.js, port.js, mover.mjs match canonical |
 | 1 | build | PASS | 2 step(s), 6s |
-| 2 | serve | PASS | cd "$DATA" && exec "$SRC/.venv/bin/archivebox" server 127.0.0.1:$PORT → http://127.0.0.1:41439 |
-| 3 | proxy | PASS | http://127.0.0.1:36039 → http://127.0.0.1:41439 |
-| 4 | playwright | FAIL | 14/16 not failing |
+| 2 | serve | PASS | cd "$DATA" && exec "$SRC/.venv/bin/archivebox" server 127.0.0.1:$PORT → http://127.0.0.1:38649 |
+| 3 | proxy | PASS | http://127.0.0.1:37993 → http://127.0.0.1:38649 |
+| 4 | playwright | FAIL | 15/16 not failing |
 | 5 | video | PASS | 14 steps → demo.mp4, demo.webm |
 
 ## Playwright checks
@@ -25,7 +25,7 @@ Run: 2026-09-23T04:05:18.371Z
 | C4 | Mover attached into Port drawer slot | PASS | section[data-capability=button-mover] data-trust=trusted, in drawer=true, mover UI=true |
 | C5 | App controls found for the mover | PASS | 2 buttons/links on the page |
 | C6 | Drag-move a link | FAIL | <a> "ArchiveBox" (display:inline): mover recorded translate="120px 60px" (saved=true); on screen it moved 0,0px — NOT moved visually: CSS translate has no effect on display:inline elements |
-| C7 | Drag-move a button | FAIL | <input> "Create admin and continue" (display:flex): mover recorded translate="120px -60px" (saved=true); on screen it moved 44,-25px — NOT moved visually |
+| C7 | Drag-move a button | PASS | <input> "Create admin and continue" (display:flex): mover recorded translate="120px -60px" (saved=true); on screen it moved 120,-60px, visible and clickable at the new spot |
 | C8 | Move survives reload | PASS | mover re-attached from storage; moved controls after reload: 2 (120px 60px, 120px -60px) |
 | C9 | Rename an app control (double-click) | PASS | "ArchiveBox" → "ATTa renamed" |
 | C10 | Reset restores positions and labels | PASS | moved left=0, renamed left=0, saved positions=0, label restored=true |

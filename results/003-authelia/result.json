@@ -1,7 +1,7 @@
 {
   "app": "003-authelia",
   "number": "003",
-  "startedAt": "2026-09-23T04:06:21.674Z",
+  "startedAt": "2026-09-23T04:15:38.021Z",
   "stages": [
     {
       "stage": 0,
@@ -13,19 +13,19 @@
       "stage": 1,
       "name": "build",
       "status": "pass",
-      "detail": "4 step(s), 23s"
+      "detail": "4 step(s), 27s"
     },
     {
       "stage": 2,
       "name": "serve",
       "status": "pass",
-      "detail": "cd \"$DATA\" && exec ./authelia --config ./configuration.yml → http://127.0.0.1:38719"
+      "detail": "cd \"$DATA\" && exec ./authelia --config ./configuration.yml → http://127.0.0.1:42533"
     },
     {
       "stage": 3,
       "name": "proxy",
       "status": "pass",
-      "detail": "http://127.0.0.1:42203 → http://127.0.0.1:38719"
+      "detail": "http://127.0.0.1:39191 → http://127.0.0.1:42533"
     },
     {
       "stage": 4,
@@ -117,7 +117,7 @@
       "id": "C13",
       "name": "App CSP lets the Port run",
       "status": "fail",
-      "detail": "14 inline-style refusal(s) (style-src has no 'unsafe-inline'): the Port's stylesheet is blocked, so its button renders as a bare '+' at the end of the page and the drawer does not overlay — works programmatically, not usable by a person; 2 other violation(s) only seen through the proxy: Refused to set the document's base URI to 'http://127.0.0.1:38719/' because it violates the following Content Security Policy directive: \"base-uri 'se"
+      "detail": "14 inline-style refusal(s) (style-src has no 'unsafe-inline'): the Port's stylesheet is blocked, so its button renders as a bare '+' at the end of the page and the drawer does not overlay — works programmatically, not usable by a person; 2 other violation(s) only seen through the proxy: Refused to set the document's base URI to 'http://127.0.0.1:42533/' because it violates the following Content Security Policy directive: \"base-uri 'se"
     },
     {
       "id": "C14",
@@ -139,22 +139,22 @@
     }
   ],
   "consoleErrors": [
-    "Refused to set the document's base URI to 'http://127.0.0.1:38719/' because it violates the following Content Security Policy directive: \"base-uri 'self'\".\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-CxWPZ2CvJlXPK7XoemzSb27fabJkTN7P'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to enable inline execution.\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-CxWPZ2CvJlXPK7XoemzSb27fabJkTN7P'\". Either the 'unsafe-inline' keyword, a hash ('sha256-eiViVwsy86V7BX5KEdN6ArVYFAAhC85KOOxoj4qBKDE='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-CxWPZ2CvJlXPK7XoemzSb27fabJkTN7P'\". Either the 'unsafe-inline' keyword, a hash ('sha256-RnPKpo3kmlxYrU1tfD8ecp2cmyiEkjMmX7Gcapmdxaw='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-CxWPZ2CvJlXPK7XoemzSb27fabJkTN7P'\". Either the 'unsafe-inline' keyword, a hash ('sha256-DQqKKl2A7U3zsSWzqZEipFEzzcQUytbboRk/Tc+uToc='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-CxWPZ2CvJlXPK7XoemzSb27fabJkTN7P'\". Either the 'unsafe-inline' keyword, a hash ('sha256-5VKfPBSBCI24fxCIR4srPYTw8oPeGtcOujI+MXZyOdQ='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-CxWPZ2CvJlXPK7XoemzSb27fabJkTN7P'\". Either the 'unsafe-inline' keyword, a hash ('sha256-VxPOjCw5ObvPlb/s4Tfaydf32XZv8t+fKHM6amFuPzA='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-CxWPZ2CvJlXPK7XoemzSb27fabJkTN7P'\". Either the 'unsafe-inline' keyword, a hash ('sha256-RtONP2gdafT0L3Uw1Cifj6SnPRMblPOeT05wVuCAie4='), or a nonce ('nonce-...') is required to enable inline execution.\n",
-    "Refused to set the document's base URI to 'http://127.0.0.1:38719/' because it violates the following Content Security Policy directive: \"base-uri 'self'\".\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-HwuWiv7FFtRUJ4aQ0LIQX8hnvGUqhJBs'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to enable inline execution.\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-HwuWiv7FFtRUJ4aQ0LIQX8hnvGUqhJBs'\". Either the 'unsafe-inline' keyword, a hash ('sha256-eiViVwsy86V7BX5KEdN6ArVYFAAhC85KOOxoj4qBKDE='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-HwuWiv7FFtRUJ4aQ0LIQX8hnvGUqhJBs'\". Either the 'unsafe-inline' keyword, a hash ('sha256-RnPKpo3kmlxYrU1tfD8ecp2cmyiEkjMmX7Gcapmdxaw='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-HwuWiv7FFtRUJ4aQ0LIQX8hnvGUqhJBs'\". Either the 'unsafe-inline' keyword, a hash ('sha256-DQqKKl2A7U3zsSWzqZEipFEzzcQUytbboRk/Tc+uToc='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-HwuWiv7FFtRUJ4aQ0LIQX8hnvGUqhJBs'\". Either the 'unsafe-inline' keyword, a hash ('sha256-5VKfPBSBCI24fxCIR4srPYTw8oPeGtcOujI+MXZyOdQ='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-HwuWiv7FFtRUJ4aQ0LIQX8hnvGUqhJBs'\". Either the 'unsafe-inline' keyword, a hash ('sha256-VxPOjCw5ObvPlb/s4Tfaydf32XZv8t+fKHM6amFuPzA='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-HwuWiv7FFtRUJ4aQ0LIQX8hnvGUqhJBs'\". Either the 'unsafe-inline' keyword, a hash ('sha256-RtONP2gdafT0L3Uw1Cifj6SnPRMblPOeT05wVuCAie4='), or a nonce ('nonce-...') is required to enable inline execution.\n"
+    "Refused to set the document's base URI to 'http://127.0.0.1:42533/' because it violates the following Content Security Policy directive: \"base-uri 'self'\".\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-VfsCF7nmHWpIOtUwp4y16F32CoOphpIT'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to enable inline execution.\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-VfsCF7nmHWpIOtUwp4y16F32CoOphpIT'\". Either the 'unsafe-inline' keyword, a hash ('sha256-eiViVwsy86V7BX5KEdN6ArVYFAAhC85KOOxoj4qBKDE='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-VfsCF7nmHWpIOtUwp4y16F32CoOphpIT'\". Either the 'unsafe-inline' keyword, a hash ('sha256-RnPKpo3kmlxYrU1tfD8ecp2cmyiEkjMmX7Gcapmdxaw='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-VfsCF7nmHWpIOtUwp4y16F32CoOphpIT'\". Either the 'unsafe-inline' keyword, a hash ('sha256-DQqKKl2A7U3zsSWzqZEipFEzzcQUytbboRk/Tc+uToc='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-VfsCF7nmHWpIOtUwp4y16F32CoOphpIT'\". Either the 'unsafe-inline' keyword, a hash ('sha256-5VKfPBSBCI24fxCIR4srPYTw8oPeGtcOujI+MXZyOdQ='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-VfsCF7nmHWpIOtUwp4y16F32CoOphpIT'\". Either the 'unsafe-inline' keyword, a hash ('sha256-VxPOjCw5ObvPlb/s4Tfaydf32XZv8t+fKHM6amFuPzA='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-VfsCF7nmHWpIOtUwp4y16F32CoOphpIT'\". Either the 'unsafe-inline' keyword, a hash ('sha256-RtONP2gdafT0L3Uw1Cifj6SnPRMblPOeT05wVuCAie4='), or a nonce ('nonce-...') is required to enable inline execution.\n",
+    "Refused to set the document's base URI to 'http://127.0.0.1:42533/' because it violates the following Content Security Policy directive: \"base-uri 'self'\".\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-lGRZzX1jpZcab7nSI2LaFT28ecd8cyuA'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to enable inline execution.\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-lGRZzX1jpZcab7nSI2LaFT28ecd8cyuA'\". Either the 'unsafe-inline' keyword, a hash ('sha256-eiViVwsy86V7BX5KEdN6ArVYFAAhC85KOOxoj4qBKDE='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-lGRZzX1jpZcab7nSI2LaFT28ecd8cyuA'\". Either the 'unsafe-inline' keyword, a hash ('sha256-RnPKpo3kmlxYrU1tfD8ecp2cmyiEkjMmX7Gcapmdxaw='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-lGRZzX1jpZcab7nSI2LaFT28ecd8cyuA'\". Either the 'unsafe-inline' keyword, a hash ('sha256-DQqKKl2A7U3zsSWzqZEipFEzzcQUytbboRk/Tc+uToc='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-lGRZzX1jpZcab7nSI2LaFT28ecd8cyuA'\". Either the 'unsafe-inline' keyword, a hash ('sha256-5VKfPBSBCI24fxCIR4srPYTw8oPeGtcOujI+MXZyOdQ='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-lGRZzX1jpZcab7nSI2LaFT28ecd8cyuA'\". Either the 'unsafe-inline' keyword, a hash ('sha256-VxPOjCw5ObvPlb/s4Tfaydf32XZv8t+fKHM6amFuPzA='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.\n",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-lGRZzX1jpZcab7nSI2LaFT28ecd8cyuA'\". Either the 'unsafe-inline' keyword, a hash ('sha256-RtONP2gdafT0L3Uw1Cifj6SnPRMblPOeT05wVuCAie4='), or a nonce ('nonce-...') is required to enable inline execution.\n"
   ],
   "pageErrors": [],
   "video": {
@@ -180,5 +180,5 @@
     ]
   },
   "verdict": "FAIL",
-  "finishedAt": "2026-09-23T04:07:37.867Z"
+  "finishedAt": "2026-09-23T04:16:58.556Z"
 }

@@ -1,7 +1,7 @@
 {
   "app": "002-archivebox",
   "number": "002",
-  "startedAt": "2026-09-23T04:05:18.371Z",
+  "startedAt": "2026-09-23T04:14:33.226Z",
   "stages": [
     {
       "stage": 0,
@@ -19,19 +19,19 @@
       "stage": 2,
       "name": "serve",
       "status": "pass",
-      "detail": "cd \"$DATA\" && exec \"$SRC/.venv/bin/archivebox\" server 127.0.0.1:$PORT → http://127.0.0.1:41439"
+      "detail": "cd \"$DATA\" && exec \"$SRC/.venv/bin/archivebox\" server 127.0.0.1:$PORT → http://127.0.0.1:38649"
     },
     {
       "stage": 3,
       "name": "proxy",
       "status": "pass",
-      "detail": "http://127.0.0.1:36039 → http://127.0.0.1:41439"
+      "detail": "http://127.0.0.1:37993 → http://127.0.0.1:38649"
     },
     {
       "stage": 4,
       "name": "playwright",
       "status": "fail",
-      "detail": "14/16 not failing"
+      "detail": "15/16 not failing"
     },
     {
       "stage": 5,
@@ -80,8 +80,8 @@
     {
       "id": "C7",
       "name": "Drag-move a button",
-      "status": "fail",
-      "detail": "<input> \"Create admin and continue\" (display:flex): mover recorded translate=\"120px -60px\" (saved=true); on screen it moved 44,-25px — NOT moved visually"
+      "status": "pass",
+      "detail": "<input> \"Create admin and continue\" (display:flex): mover recorded translate=\"120px -60px\" (saved=true); on screen it moved 120,-60px, visible and clickable at the new spot"
     },
     {
       "id": "C8",
@@ -163,5 +163,5 @@
     ]
   },
   "verdict": "FAIL",
-  "finishedAt": "2026-09-23T04:06:21.672Z"
+  "finishedAt": "2026-09-23T04:15:38.018Z"
 }

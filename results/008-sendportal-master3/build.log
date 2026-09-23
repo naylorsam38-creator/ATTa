@@ -162,3 +162,35 @@ $ php artisan migrate --force
   2026-09-23 04:13:36 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.24ms
   2026-09-23 04:13:36 /vendor/sendportal/js/popper.min.js .......... ~ 0.28ms
   2026-09-23 04:13:36 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.34ms
+  2026-09-23 04:13:57 .............................................. ~ 0.10ms
+  2026-09-23 04:13:57 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.07ms
+  2026-09-23 04:13:57 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.09ms
+  2026-09-23 04:13:57 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.12ms
+  2026-09-23 04:13:57 /vendor/sendportal/img/logo-gray.png ......... ~ 0.15ms
+  2026-09-23 04:13:57 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.19ms
+  2026-09-23 04:13:57 /vendor/sendportal/js/popper.min.js .......... ~ 0.02ms
+  2026-09-23 04:13:57 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.06ms
+  2026-09-23 04:14:02 .............................................. ~ 1.14ms
+  2026-09-23 04:14:02 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.13ms
+  2026-09-23 04:14:02 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.17ms
+  2026-09-23 04:14:02 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.21ms
+  2026-09-23 04:14:02 /vendor/sendportal/img/logo-gray.png ......... ~ 0.27ms
+  2026-09-23 04:14:02 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.34ms
+  2026-09-23 04:14:02 /vendor/sendportal/js/popper.min.js .......... ~ 0.39ms
+  2026-09-23 04:14:02 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.01ms
+  2026-09-23 04:14:07 .............................................. ~ 0.11ms
+  2026-09-23 04:14:07 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.20ms
+  2026-09-23 04:14:07 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.31ms
+  2026-09-23 04:14:07 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.38ms
+  2026-09-23 04:14:07 /vendor/sendportal/img/logo-gray.png ......... ~ 0.42ms
+  2026-09-23 04:14:07 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.60ms
+  2026-09-23 04:14:07 /vendor/sendportal/js/popper.min.js .......... ~ 0.69ms
+  2026-09-23 04:14:07 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.06ms
+  2026-09-23 04:14:12 .............................................. ~ 0.15ms
+  2026-09-23 04:14:12 /vendor/sendportal/css/fontawesome-all.min.css  ~ 0.04ms
+  2026-09-23 04:14:12 /vendor/sendportal/css/bootstrap.min.css ..... ~ 0.09ms
+  2026-09-23 04:14:12 /vendor/sendportal/app.css?id=b959b8da49c1c039aff0  ~ 0.12ms
+  2026-09-23 04:14:12 /vendor/sendportal/img/logo-gray.png ......... ~ 0.14ms
+  2026-09-23 04:14:12 /vendor/sendportal/js/jquery-3.6.0.min.js .... ~ 0.02ms
+  2026-09-23 04:14:12 /vendor/sendportal/js/popper.min.js .......... ~ 0.06ms
+  2026-09-23 04:14:12 /vendor/sendportal/js/bootstrap.min.js ....... ~ 0.12ms
