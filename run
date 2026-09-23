@@ -93,8 +93,10 @@ start_local(){
   if curl -fsS "http://127.0.0.1:${APP_BUILDER_PORT}/health" >/dev/null 2>&1; then
     say "Already running."
   else
-    ( cd "$root" && nohup python3 "$DEPLOY/gateway.py"  >"$root/gateway.log"  2>&1 & echo $! >"$root/gateway.pid" )
-    ( cd "$root" && nohup python3 "$DEPLOY/pipeline.py" >"$root/pipeline.log" 2>&1 & echo $! >"$root/pipeline.pid" )
+    # exec: the background subshell BECOMES the service, so the saved pid is the service's own
+    # (previously it was a wrapper shell, and `run stop` left the real service running).
+    ( cd "$root" && exec nohup python3 "$DEPLOY/gateway.py"  >"$root/gateway.log"  2>&1 </dev/null ) & echo $! >"$root/gateway.pid"
+    ( cd "$root" && exec nohup python3 "$DEPLOY/pipeline.py" >"$root/pipeline.log" 2>&1 </dev/null ) & echo $! >"$root/pipeline.pid"
     local ok=""
     for _ in $(seq 1 30); do
       if curl -fsS "http://127.0.0.1:${APP_BUILDER_PORT}/health" >/dev/null 2>&1; then ok=1; break; fi
@@ -133,10 +135,11 @@ stop_local(){
   done
   # Wait until the gateway port stops answering before returning.
   for _ in $(seq 1 15); do
-    curl -fsS "http://127.0.0.1:${port}/health" >/dev/null 2>&1 || break
+    curl -fsS "http://127.0.0.1:${port}/health" >/dev/null 2>&1 || { say "Stopped."; return 0; }
     sleep 0.3
   done
-  say "Stopped."
+  say "NOT STOPPED: something still answers on port ${port}. Check: ss -ltnp | grep ${port}"
+  return 1
 }
 
 status_local(){

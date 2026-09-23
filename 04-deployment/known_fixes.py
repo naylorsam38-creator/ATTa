@@ -67,7 +67,7 @@ BUILT_IN = [
     {"id": "handoff.not_configured", "layer": "handoff",
      "pattern": r"^NOT_CONFIGURED", "human": "COOLIFY_URL and COOLIFY_TOKEN are not set in the server's .env."},
     {"id": "handoff.auth_rejected", "layer": "handoff",
-     "pattern": r"^ERROR:HTTP (401|403)", "human": "Coolify rejected the API token. It needs a valid token with deploy permission."},
+     "pattern": r"^ERROR:HTTP (401|403)", "human": "Coolify refused the request: either the API token is invalid / lacks the deploy and read permissions, or the API is switched off in Coolify (Settings -> Advanced -> API Access)."},
     {"id": "handoff.unmapped", "layer": "handoff",
      "pattern": r"^UNMAPPED", "actions": [("lookup_coolify_uuid", {"app": "{app}"})]},
     {"id": "handoff.stale_uuid", "layer": "handoff",

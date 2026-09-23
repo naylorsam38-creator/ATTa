@@ -43,6 +43,9 @@ password, so the existing login keeps working.
 `bash run`. On an AWS/systemd server this runs the full deploy (`04-deployment/bootstrap.sh`).
 On a laptop it starts a local instance at http://127.0.0.1:8787/. See `START-HERE.txt`.
 
+Coolify: `sudo bash 05-coolify/install-coolify.sh`, ideally on a separate server (its proxy wants
+ports 80/443). Then follow docs/COOLIFY-HANDOFF.md to connect the two.
+
 ## Layout
 
 | Path | What |
@@ -56,6 +59,9 @@ On a laptop it starts a local instance at http://127.0.0.1:8787/. See `START-HER
 | `04-deployment/pipeline.py` | Build pipeline and the QUALIFIED gate |
 | `04-deployment/system_watcher.py` | Six-stage checker (stage 6 = real browser) |
 | `04-deployment/coolify_handoff.py` | Hands qualified builds to Coolify |
+| `04-deployment/maintenance.py` + tiers | Self-healing: known fixes → capability adapter → LLM → human alert |
+| `05-coolify/coolify-main.zip` | The supplied Coolify source, unchanged (version 4.3.23) |
+| `05-coolify/install-coolify.sh` | Installs that Coolify version on a server with Coolify's own installer |
 | `docs/history/` | Audit and fix notes from the 2026-09-22 bundle |
 
 ## Known gaps

@@ -46,18 +46,21 @@ QUEUED → VALIDATING → FETCHING_LIBRARY → INSTALLING_UI_CAPABILITY
 2. **A deploy call per app** to the Coolify API, for each app that has a resource UUID:
 
    ```
-   GET {COOLIFY_URL}/api/v1/deploy?uuid=<resource uuid>&force=false
+   POST {COOLIFY_URL}/api/v1/deploy?uuid=<resource uuid>&force=false
    Authorization: Bearer {COOLIFY_TOKEN}
    ```
 
-   Any 2xx response counts as accepted. An app that's already accepted is never deployed a second
-   time for the same build.
+   An app counts as accepted only when Coolify's reply lists a `deployment_uuid` for that
+   resource. An app that's already accepted is never deployed a second time for the same build.
 
 ## What the owner sets up (the Coolify side)
 
 | Where | What |
 |---|---|
-| `<ROOT>/.env` | `COOLIFY_URL=https://your-coolify-host` and `COOLIFY_TOKEN=<API token with deploy permission>` |
+| Coolify | Install it with `sudo bash 05-coolify/install-coolify.sh`, ideally on its own server. |
+| Coolify → Settings → Advanced | Turn **API Access** on. Otherwise every call gets 403 "API is disabled". |
+| Coolify → Keys & Tokens | Create an API token with the **deploy** and **read** permissions. |
+| `<ROOT>/.env` | `COOLIFY_URL=http://your-coolify-host:8000` and `COOLIFY_TOKEN=<that token>` |
 | `<ROOT>/coolify_resources.json` | Maps each app name (the `app` field above) to the Coolify resource UUID that runs it: `{"apps": {"Grafana": "<uuid>"}}` |
 
 Restart the pipeline service after you edit `.env`: `systemctl restart app-builder-pipeline`.
@@ -77,11 +80,15 @@ Each qualified build gets a `coolify` block, shown on `/builds/<id>`:
 Retries run from the pipeline loop, starting after 30 s and doubling up to every 15 min
 (`COOLIFY_RETRY_BASE` / `COOLIFY_RETRY_MAX`). A qualified build is never dropped.
 
-## Not yet verified
+## Checked against Coolify's source
 
-- The deploy endpoint path and method come from the Coolify v4 API as I remember it. I
-  couldn't check the Coolify docs from this environment. If your Coolify version differs, set
-  `COOLIFY_DEPLOY_PATH` in `.env`.
-- It has not been run against a real Coolify instance. The client was tested against a local HTTP
-  stand-in that checked the path, the bearer token, the retry after a 500, and that nothing was
-  deployed twice.
+The supplied Coolify source (`05-coolify/coolify-main.zip`, version 4.3.23) was read to confirm:
+
+- `routes/api.php`: `POST /api/v1/deploy` needs the `deploy` permission. A `GET` answers 405
+  "This endpoint has changed to a POST request". `GET /api/v1/applications` needs `read`.
+- `DeployController::deploy`: an unknown UUID answers 404 "No resources found", which the
+  self-healer's lookup fix handles. Success is 200 with `deployments[]`, and each entry carries
+  a `deployment_uuid` when a deploy was actually queued.
+- `ApiAllowed` middleware: if API access is off in Coolify's settings, every call answers 403.
+
+This has not yet been run against a live Coolify. That needs a server where Coolify is installed.

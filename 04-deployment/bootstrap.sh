@@ -48,6 +48,10 @@ APP_BUILDER_WATCHER_INTERVAL=300
 # Coolify hand-off (docs/COOLIFY-HANDOFF.md). Qualified builds wait in the outbox until both are set.
 COOLIFY_URL=
 COOLIFY_TOKEN=
+# Self-healing tier 3 (LLM). Blank = that tier is skipped and failures go straight to a human.
+ANTHROPIC_API_KEY=
+# Self-healing tier 4: incoming-webhook URL for human alerts (Slack/Discord/any JSON POST). Blank = /alerts page only.
+ALERT_WEBHOOK_URL=
 EOF
  chmod 600 "$ROOT/.env"
 fi
@@ -86,6 +90,8 @@ if ! python3 -c 'import playwright' >/dev/null 2>&1; then
   python3 -m pip install --break-system-packages playwright
 fi
 python3 -m playwright install chromium
+# Self-healing LLM tier uses the official Anthropic SDK.
+python3 -c 'import anthropic' >/dev/null 2>&1 || python3 -m pip install --break-system-packages anthropic
 
 # Fail the deployment immediately if the real browser cannot launch.
 python3 - <<'PY'

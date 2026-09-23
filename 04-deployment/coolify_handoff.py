@@ -11,10 +11,11 @@ Contract (full write-up: docs/COOLIFY-HANDOFF.md):
             ui_dir, target_url and proxy_url). This file is the record Coolify-side tooling reads.
          2. For each app in the manifest that has a Coolify resource UUID in
             <ROOT>/coolify_resources.json, the Coolify deploy API is called:
-               GET  {COOLIFY_URL}{COOLIFY_DEPLOY_PATH}?uuid=<resource uuid>&force=false
+               POST {COOLIFY_URL}{COOLIFY_DEPLOY_PATH}?uuid=<resource uuid>&force=false
                Authorization: Bearer {COOLIFY_TOKEN}
+            (checked against the supplied Coolify 4.3.23 source; accepted = a deployment_uuid came back)
   RESULT The build record gets a `coolify` block: status DISPATCHED once every app was accepted
-         (2xx), otherwise RETRYING / BLOCKED_NOT_CONFIGURED / BLOCKED_UNMAPPED. Anything not yet
+         (a deployment was queued), otherwise RETRYING / BLOCKED_NOT_CONFIGURED / BLOCKED_UNMAPPED. Anything not yet
          dispatched is retried by the pipeline loop, so a qualified build is never dropped.
          An app already accepted is never deployed a second time for the same build.
 """
@@ -86,11 +87,23 @@ def hand_off(build_id: str, qualified_apps: list[dict]) -> dict:
 
 
 def _deploy(uuid: str) -> tuple[bool, str]:
+    # Coolify 4.3.x (checked against the supplied source, DeployController::deploy): POST only
+    # (a GET answers 405 "This endpoint has changed to a POST request"). A 200 only means a deploy
+    # was queued if `deployments` has an entry for this uuid carrying a deployment_uuid.
     url = f"{COOLIFY_URL}{COOLIFY_DEPLOY_PATH}?{urlencode({'uuid': uuid, 'force': 'false'})}"
-    req = Request(url, headers={"Authorization": f"Bearer {COOLIFY_TOKEN}", "Accept": "application/json"})
+    req = Request(url, data=b"", method="POST",
+                  headers={"Authorization": f"Bearer {COOLIFY_TOKEN}", "Accept": "application/json"})
     try:
         with urlopen(req, timeout=TIMEOUT) as r:
-            return 200 <= r.status < 300, f"HTTP {r.status}: {r.read(2000).decode('utf-8', 'replace')}"
+            body = r.read(20000).decode("utf-8", "replace")
+            try:
+                deps = json.loads(body).get("deployments") or []
+            except (ValueError, AttributeError):
+                deps = []
+            mine = [d for d in deps if isinstance(d, dict) and d.get("resource_uuid") == uuid]
+            if any(d.get("deployment_uuid") for d in mine):
+                return True, f"HTTP {r.status}: queued {[d['deployment_uuid'] for d in mine if d.get('deployment_uuid')]}"
+            return False, f"REJECTED: {(mine[0].get('message') if mine else body)[:1000]}"
     except HTTPError as e:
         return False, f"HTTP {e.code}: {e.read(2000).decode('utf-8', 'replace')}"
     except (URLError, OSError) as e:
