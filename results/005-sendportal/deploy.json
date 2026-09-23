@@ -1,8 +1,8 @@
 {
-  "at": "2026-09-23T04:41:50.630Z",
+  "at": "2026-09-23T05:14:52.795Z",
   "bundle": "dist/005-sendportal/",
   "zip": "dist/005-sendportal.zip",
-  "zipBytes": 173122,
+  "zipBytes": 173192,
   "status": "fail",
   "detail": "docker compose up failed (exit 1); see deploy.log",
   "checks": [],

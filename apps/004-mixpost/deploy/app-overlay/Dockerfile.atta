@@ -10,12 +10,12 @@ RUN npm run build
 
 FROM composer:2 AS host
 # PHP extensions are installed in the runtime stage, not in this composer image.
-RUN composer create-project 'laravel/laravel:^12.0' /host --no-interaction --no-progress --no-scripts --ignore-platform-reqs
+RUN composer create-project 'laravel/laravel:^12.0' /host --no-dev --no-interaction --no-progress --no-scripts --ignore-platform-reqs
 COPY --from=assets /pkg /mixpost
 RUN rm -rf /mixpost/node_modules
 WORKDIR /host
 RUN composer config repositories.mixpost '{"type":"path","url":"/mixpost","options":{"symlink":false}}' \
- && composer require 'inovector/mixpost:*@dev' --no-interaction --no-progress --no-scripts --ignore-platform-reqs
+ && composer require 'inovector/mixpost:*@dev' --update-no-dev --no-interaction --no-progress --no-scripts --ignore-platform-reqs
 COPY docker/host/ /host/
 
 FROM php:8.4-apache

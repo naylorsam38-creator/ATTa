@@ -366,6 +366,15 @@ async function main() {
     console.log('\n' + summary());
     process.exitCode = failed ? 1 : 0;
   } else if (cmd === 'package') {
+    // One packaging job at a time: two share docker project names and prune each other's images.
+    const lock = path.join(ROOT, 'dist', '.package.lock');
+    fs.mkdirSync(path.dirname(lock), { recursive: true });
+    const holder = Number((fs.existsSync(lock) && fs.readFileSync(lock, 'utf8')) || 0);
+    if (holder && holder !== process.pid) {
+      try { process.kill(holder, 0); throw new Error(`another package run is active (pid ${holder})`); } catch (e) { if (e.code !== 'ESRCH') throw e; }
+    }
+    fs.writeFileSync(lock, String(process.pid));
+    process.on('exit', () => { try { if (Number(fs.readFileSync(lock, 'utf8')) === process.pid) fs.rmSync(lock); } catch (_) {} });
     const all = numbered();
     const ids = args.length ? all.filter((id) => args.some((a) => id === a || id.startsWith(a.padStart(3, '0') + '-'))) : all;
     for (const id of ids) await packageOne(id);

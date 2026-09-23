@@ -1,6 +1,6 @@
 # 005-sendportal — deploy bundle FAIL
 
-Built: 2026-09-23T04:41:50.630Z
+Built: 2026-09-23T05:14:52.795Z
 
 Bundle: `dist/005-sendportal/` · zip: `dist/005-sendportal.zip` (0.2 MB)
 
