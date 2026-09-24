@@ -35,9 +35,10 @@ Command line (for a person):
   python3 app_runner.py down <app>      stop it
   python3 app_runner.py all             check every app in the library
   python3 app_runner.py recipe <app>    show the saved recipe
+  python3 app_runner.py replay [file]   re-diagnose every recorded failure (evidence.jsonl) under today's rules
 """
 from __future__ import annotations
-import json, os, re, secrets, shutil, signal, socket, subprocess, sys, time
+import http.client, json, os, re, secrets, shutil, signal, socket, subprocess, sys, time
 from pathlib import Path
 from urllib.request import Request, build_opener, ProxyHandler
 from urllib.error import HTTPError, URLError
@@ -109,6 +110,11 @@ UPSTREAM_SEARCH = os.environ.get("APP_BUILDER_UPSTREAM_SEARCH", "true").lower() 
 # Most seconds the runner spends trying to start ONE app, across all its parts and fixes, before it
 # stops and hands the app to the self-healer / a person. The per-app limit that stops endless looping.
 APP_TIME_BUDGET = int(os.environ.get("APP_BUILDER_APP_TIME_BUDGET", "3600"))
+# A download that broke off mid-build (net.transient) is retried after this many seconds.
+NET_RETRY_WAIT = int(os.environ.get("APP_BUILDER_NET_RETRY_WAIT", "30"))
+# How many times each fix may be applied to ONE way of running an app before it moves on to the next way.
+# Per fix, not shared: a variable filled in first never uses up the disk-full or download retry.
+FIX_BUDGET = {"set_env": 8, "copy_env": 3, "new_ports": 2, "rate_limit": 3, "prune": 1, "retry_net": 1, "wait_longer": 1}
 # Ports tried when an image doesn't say which port it listens on.
 COMMON_PORTS = [80, 8080, 3000, 8000, 5000, 5173, 4000, 9000, 8081, 3001]
 # Registries checked for an image named only by owner/repo in the app's files.
@@ -135,9 +141,12 @@ _HTTP = build_opener(ProxyHandler({}))   # local probes never go through an outb
 #   copy_env       the compose file wants a .env that isn't there -> copy the app's own example, retry
 #   new_ports      a port clash -> hand out fresh host ports, retry
 #   prune          disk full -> clear unused Docker data, retry
+#   retry_net      a download broke off -> pause NET_RETRY_WAIT seconds, retry the SAME part once
 #   wait_longer    it's still coming up -> more time (up to BOOT_TIMEOUT_MAX)
 #   next_part      this part can't work here -> move to the next way of running the app
 # Rules are tried in order; the first match wins. learned_rules.json (same shape) is checked first.
+# A rule with "phase": "start" only matches the download/build/start output, never the running app's logs.
+# Each fix has its own budget per part (FIX_BUDGET), so one fix used earlier never uses up another's.
 RULES = [
     {"id": "compose.required_var", "pattern": r"required variable (?P<var>[A-Za-z_][A-Za-z0-9_]*) is missing a value", "fix": "set_env"},
     {"id": "compose.env_file_missing", "pattern": r"env file (?P<path>\S+?) not found|Couldn't find env file|failed to read .*\.env", "fix": "copy_env"},
@@ -148,10 +157,29 @@ RULES = [
     # wrong with the app; the server needs IPv6 enabled (normal on AWS). Reported as its own reason.
     {"id": "host.no_ipv6", "pattern": r"Address family not supported by protocol|errno: 97|\(97: Address family", "fix": "next_part"},
     {"id": "compose.invalid", "pattern": r"invalid compose project|yaml: (line|unmarshal)|services\.\S+ (Additional property|must be)", "fix": "next_part"},
-    {"id": "disk.full", "pattern": r"no space left on device", "fix": "prune"},
     # Docker Hub's anonymous pull limit. Not a missing image: nothing is wrong with the part.
     {"id": "registry.rate_limit", "pattern": r"429 Too Many Requests|toomanyrequests|You have reached your (unauthenticated )?pull rate limit",
      "fix": "rate_limit"},
+    # Any case: Docker says "no space left on device", but tools inside a build (tar, composer, cp,
+    # the kernel's own ENOSPC text) print "No space left on device"; apt and Windows-style tools word it
+    # differently. Before build.failed: a build that stopped for lack of disk is not a broken build.
+    {"id": "disk.full", "pattern": r"(?i)no space left on device|\bENOSPC\b|not enough (?:free )?(?:disk )?space|"
+                                   r"don't have enough free space|disk quota exceeded", "fix": "prune"},
+    # A download broke off while the app was being downloaded or built (connection reset, truncated
+    # transfer, DNS or TLS hiccup). Nothing is wrong with the part: pause, then retry it once.
+    # phase "start": only matched against the download/build output, never the running app's own logs
+    # (an app that logs "connection reset" while it fails for another reason must not be retried for it).
+    # Before image.missing and build.failed, which the same output also matches.
+    {"id": "net.transient", "phase": "start", "fix": "retry_net",
+     "pattern": r"(?i)connection reset by peer|\bECONNRESET\b|unexpected EOF|early EOF|\bRPC failed\b|"
+                r"TLS handshake timeout|i/o timeout|\bETIMEDOUT\b|\bEAI_AGAIN\b|socket hang up|"
+                r"Temporary failure in name resolution|Could not resolve host|"
+                r"Failure when receiving data from the peer|curl: \((?:6|7|18|28|35|52|56|92)\)|"
+                r"net/http: request canceled|failed to (?:fetch|download)[^\n]{0,200}(?:timed? ?out|reset|EOF|network)|"
+                r"Connection timed out|Network is unreachable|error sending request|operation timed out|"
+                r"(?:read|dial) tcp [^\n]{0,120}(?:timeout|reset)|HTTP/2 stream \d+ was not closed cleanly|"
+                r"transfer closed with \d+ bytes remaining|The TLS connection was non-properly terminated|"
+                r"remote end hung up unexpectedly|Service Unavailable|\b50[234] (?:Bad Gateway|Service Unavailable|Gateway Time-?out)"},
     # Started before its own database was ready and gave up (Appsmith + embedded MongoDB on a slow
     # machine). Nothing is wrong with the part: restart it now the database is up.
     {"id": "app.dependency_not_ready", "pattern": r"NotPrimaryOrSecondary|node is not in primary or recovering state|"
@@ -193,8 +221,12 @@ def learned_rules() -> list[dict]:
         return []
 
 
-def diagnose(text: str) -> dict | None:
+def diagnose(text: str, phase: str = "boot") -> dict | None:
+    """The first rule whose pattern is in `text`. phase: "start" = the output of downloading/building/
+    starting the part, "boot" = what the started app printed (logs, the runner's own __MARKERS__)."""
     for r in learned_rules() + RULES:
+        if r.get("phase") and r["phase"] != phase:
+            continue
         try:
             m = re.search(r["pattern"], text or "", re.M)
         except re.error:
@@ -304,13 +336,25 @@ def port_open(port: int) -> bool:
         return s.connect_ex(("127.0.0.1", port)) == 0
 
 
+# What http_probe returns as the content type when a port answers but not in HTTP (a mail server's
+# "220 ESMTP" banner, a database handshake). Counts as "no web answer here", exactly like a closed port.
+NOT_HTTP = "not-http"
+
+
 def http_probe(port: int, path: str = "/") -> tuple[int | None, str]:
+    """(status, content type) of an HTTP GET, or (None, "") when nothing answers / (None, NOT_HTTP) when
+    something answers that isn't a web server. Never raises: one odd port must not stop the runner."""
     try:
         with _HTTP.open(Request(f"http://127.0.0.1:{port}{path}", headers={"Accept": "text/html,*/*"}), timeout=6) as r:
             return r.status, r.headers.get("Content-Type", "")
     except HTTPError as e:
         return e.code, e.headers.get("Content-Type", "") if e.headers else ""
+    except http.client.HTTPException:
+        # BadStatusLine, LineTooLong, IncompleteRead...: the port speaks some other protocol.
+        return None, NOT_HTTP
     except (URLError, OSError, ValueError):
+        return None, ""
+    except Exception:
         return None, ""
 
 
@@ -854,8 +898,8 @@ def _render_compose(app: str, d: Path, part: dict, notes: list[str]) -> tuple[bo
         new = []
         for p in s.get("ports") or []:
             if isinstance(p, dict) and p.get("target"):
-                if p.get("published") in (None, ""):
-                    continue   # unpublished ports stay internal
+                # Every `ports:` entry is published, including the short form `- "3000"` (compose gives it a
+                # random host port; only `expose:` keeps a port internal). Each gets a host port of our own.
                 p = {**p, "published": str(free_port(taken)), "host_ip": "127.0.0.1"}
                 new.append(p)
         if new or "ports" in s:
@@ -976,6 +1020,7 @@ def _wait_http(app: str, part: dict) -> tuple[int | None, str]:
     started = time.time(); deadline = started + int(part.get("boot_timeout") or BOOT_TIMEOUT)
     last_logs, extended = "", False
     stall_sig, stall_since = None, time.time()
+    not_http: set[int] = set()   # published ports that answer, but not in HTTP
     owner_keys = {safe_id(app).split("-")[0], "web", "app", "frontend", "ui", "proxy", "nginx", "server", "studio", "caddy"}
     while True:
         if host_memory_low():
@@ -1014,6 +1059,8 @@ def _wait_http(app: str, part: dict) -> tuple[int | None, str]:
         empty_server = None
         for hp, name, img in pubs:
             code, ctype = http_probe(hp)
+            if ctype == NOT_HTTP:
+                not_http.add(hp)   # a mail server / database port: no web answer here, keep looking
             if code is not None and code < 500:
                 if code in (403, 404) and "html" in ctype.lower():
                     # A bare "Forbidden"/"Not Found" page: a web server is up but the app isn't in it
@@ -1039,7 +1086,8 @@ def _wait_http(app: str, part: dict) -> tuple[int | None, str]:
             if not extended and logs != last_logs and time.time() - started < BOOT_TIMEOUT_MAX:
                 deadline = started + BOOT_TIMEOUT_MAX; extended = True
                 continue
-            return None, "__STILL_STARTING__ no answer after %ds\n" % int(time.time() - started) + logs
+            other = (f"ports {sorted(not_http)} answer, but not in HTTP (mail server, database...); " if not_http else "")
+            return None, "__STILL_STARTING__ no answer after %ds\n" % int(time.time() - started) + other + logs
         if int(time.time() - started) % 30 < 3:
             last_logs = _logs(app, part, 80)
         time.sleep(3)
@@ -1080,7 +1128,7 @@ def run_app(app: str, log=print) -> dict:
                              "notes": [f"per-app time budget ({APP_TIME_BUDGET}s) spent before this way could be tried"]})
             break
         part = json.loads(json.dumps(part))   # own copy: fixes add to it
-        fixes_here = 0
+        used: dict[str, int] = {}             # times each fix was applied to this part (see FIX_BUDGET)
         while n < MAX_ATTEMPTS:
             n += 1; notes: list[str] = []
             down(app, prune=False)
@@ -1097,17 +1145,19 @@ def run_app(app: str, log=print) -> dict:
                 # Not saved yet: "answered on a port" is not "works". qualify_app saves it only if the app
                 # then passes the full six-stage check.
                 return {"ok": True, "url": url, "part": part, "attempts": attempts}
-            dx = diagnose(reason) or {"rule": "unrecognised", "fix": "next_part"}
+            phase = "start" if not started else "boot"
+            dx = diagnose(reason, phase) or {"rule": "unrecognised", "fix": "next_part"}
             attempts.append({"n": n, "part": part["why"], "outcome": "FAILED", "rule": dx["rule"], "fix": dx["fix"],
-                             "notes": notes, "evidence": _evidence(reason), **timing})
-            _record_evidence(app, part, dx, reason)
+                             "phase": phase, "notes": notes, "evidence": _evidence(reason), **timing})
+            _record_evidence(app, part, dx, reason, phase)
             log(f"  [{app}]   -> {dx['rule']} -> {dx['fix']}")
-            fixes_here += 1
-            if dx["fix"] == "set_env" and dx.get("var") and dx["var"] not in part["env"] and fixes_here <= 8:
+            used[dx["fix"]] = used.get(dx["fix"], 0) + 1
+            within = used[dx["fix"]] <= FIX_BUDGET.get(dx["fix"], 1)
+            if dx["fix"] == "set_env" and dx.get("var") and dx["var"] not in part["env"] and within:
                 part["env"][dx["var"]] = gen_value(dx["var"]); continue
-            if dx["fix"] == "copy_env" and fixes_here <= 3 and _create_missing_env(d, part, dx.get("path"), notes):
+            if dx["fix"] == "copy_env" and within and _create_missing_env(d, part, dx.get("path"), notes):
                 attempts[-1]["notes"] = notes; continue
-            if dx["fix"] == "new_ports" and fixes_here <= 2:
+            if dx["fix"] == "new_ports" and within:
                 continue      # fresh ports are handed out on every attempt
             if dx["fix"] == "pick_command" and part["kind"] != "compose" and not part.get("command"):
                 cmd = _pick_command(reason)
@@ -1116,7 +1166,7 @@ def run_app(app: str, log=print) -> dict:
                     continue
             if dx["fix"] == "drop_ulimits" and not part.get("drop_ulimits"):
                 part["drop_ulimits"] = True; continue
-            if dx["fix"] == "rate_limit" and fixes_here <= 3:
+            if dx["fix"] == "rate_limit" and within:
                 fix_rate_limit(notes); attempts[-1]["notes"] = notes; continue
             if dx["fix"] == "restart" and not part.get("_restarted_for_" + dx["rule"]):
                 # Restart the SAME containers (data kept), rather than tearing down and starting over.
@@ -1134,10 +1184,18 @@ def run_app(app: str, log=print) -> dict:
                 attempts.append({"n": n, "part": part["why"], "outcome": "FAILED after restart", "rule": dx["rule"],
                                  "fix": dx["fix"], "notes": [], "evidence": _evidence(reason)})
                 break
-            if dx["fix"] == "prune" and fixes_here <= 1:
+            if dx["fix"] == "prune" and within:
+                before = _free_disk_gb()
                 sh(["docker", "builder", "prune", "-af"], timeout=900)
-                sh(["docker", "image", "prune", "-f" if len(_RUNNING) > 1 else "-af"], timeout=900); continue
-            if dx["fix"] == "wait_longer" and fixes_here <= 1 and BOOT_TIMEOUT < BOOT_TIMEOUT_MAX:
+                sh(["docker", "image", "prune", "-f" if len(_RUNNING) > 1 else "-af"], timeout=900)
+                notes.append(f"disk full: cleared Docker build cache and unused images ({before:.1f} -> {_free_disk_gb():.1f} GB free); "
+                             "retrying the same way of starting it")
+                attempts[-1]["notes"] = notes; continue
+            if dx["fix"] == "retry_net" and within:
+                notes.append(f"a download broke off ({dx['rule']}): waiting {NET_RETRY_WAIT}s, then retrying the same way of starting it")
+                attempts[-1]["notes"] = notes
+                time.sleep(NET_RETRY_WAIT); continue
+            if dx["fix"] == "wait_longer" and within and BOOT_TIMEOUT < BOOT_TIMEOUT_MAX:
                 part["boot_timeout"] = BOOT_TIMEOUT_MAX; continue
             if part.get("why") == "recipe that worked before":
                 # A saved recipe that no longer works is forgotten, so it can't keep going first.
@@ -1186,15 +1244,30 @@ def _host_starved(r: dict) -> bool:
         or "no space left on device" in text
 
 
-def _record_evidence(app: str, part: dict, dx: dict, reason: str) -> None:
+def _record_evidence(app: str, part: dict, dx: dict, reason: str, phase: str = "boot") -> None:
     """Every failed start, kept forever (state/runner/evidence.jsonl): what was tried, which rule it
     matched, and the real error/log lines. "unrecognised" rows are where the next rule comes from;
-    tests/run_tests.py replays the rules against these real failures."""
-    row = {"at": time.time(), "app": safe_id(app), "part": part.get("why"), "rule": dx.get("rule"), "fix": dx.get("fix"),
-           "evidence": _evidence(reason), "raw_tail": (reason or "")[-6000:]}
+    `app_runner.py replay` (and tests/test_run2_rules.py) re-diagnose these real failures under the current rules."""
+    _append_evidence({"at": time.time(), "kind": "start", "app": safe_id(app), "part": part.get("why"), "phase": phase,
+                      "rule": dx.get("rule"), "fix": dx.get("fix"), "evidence": _evidence(reason), "raw_tail": (reason or "")[-6000:]})
+
+
+def _record_check_evidence(app: str, r: dict) -> None:
+    """A started app that then failed a watcher stage (the browser check, the skin): the stage, its code
+    and its full detail go into the same evidence.jsonl, so the file sent back after a run carries the
+    browser evidence too (final address, served page, page header), not only start failures."""
+    bad = r.get("broken_at")
+    if not bad:
+        return
+    st = (r.get("stages") or {}).get(bad) or {}
+    _append_evidence({"at": time.time(), "kind": "check", "app": safe_id(app), "part": (r.get("runner") or {}).get("part"),
+                      "stage": bad, "code": st.get("code"), "detail": str(st.get("detail") or "")[-12000:]})
+
+
+def _append_evidence(row: dict) -> None:
     try:
         with _EVIDENCE_LOCK, (RUNNER / "evidence.jsonl").open("a") as f:
-            f.write(json.dumps(row) + "\n")
+            f.write(json.dumps(row, default=str) + "\n")
     except OSError:
         pass   # a full disk must never turn an app's failure into a runner crash
 
@@ -1325,6 +1398,7 @@ def qualify_app(app: str, keep: bool | None = None, log=print) -> dict:
                     r = _watcher().check(t)
             r["runner"] = {"started": True, "url": run["url"], "part": run["part"].get("why"),
                            "part_detail": {k: v for k, v in run["part"].items() if not k.startswith("_")}, "attempts": run["attempts"]}
+            _record_check_evidence(app, r)
         if not keep:
             down(app)
     # The recipe rule: a way of starting an app is saved ONLY when the app passed the full check with it
@@ -1609,7 +1683,40 @@ def _qualify_one_inner(a: str, log) -> dict:
     return r
 
 
+def replay(path: Path | None = None) -> dict:
+    """Re-diagnose every recorded failed start (evidence.jsonl) under the CURRENT rules. Shows what a rule
+    change does to real failures before a run: which rows now get a different rule, and which failures
+    no rule recognises yet (grouped by their most telling line), which is where the next rule comes from."""
+    path = path or RUNNER / "evidence.jsonl"
+    rows, changed, unrec = [], [], {}
+    try:
+        lines = path.read_text(errors="replace").splitlines()
+    except OSError:
+        lines = []
+    for line in lines:
+        try:
+            row = json.loads(line)
+        except ValueError:
+            continue
+        if row.get("kind", "start") != "start":
+            continue
+        # Rows written before the phase was recorded: a runner __MARKER__ means the app had started.
+        phase = row.get("phase") or ("boot" if re.match(r"__[A-Z_]+__", row.get("raw_tail") or "") else "start")
+        now = diagnose(row.get("raw_tail") or row.get("evidence") or "", phase) or {"rule": "unrecognised", "fix": "next_part"}
+        rows.append(row)
+        if now["rule"] != row.get("rule"):
+            changed.append({"app": row.get("app"), "part": row.get("part"), "was": row.get("rule"), "now": now["rule"], "fix": now["fix"]})
+        if now["rule"] == "unrecognised":
+            sig = (_evidence(row.get("raw_tail") or "").splitlines() or ["(no output)"])[-1][:160]
+            unrec.setdefault(sig, set()).add(row.get("app"))
+    return {"rows": len(rows), "changed": changed,
+            "unrecognised": [{"line": k, "apps": sorted(a for a in v if a)} for k, v in sorted(unrec.items(), key=lambda kv: -len(kv[1]))]}
+
+
 def main(argv: list[str]) -> int:
+    if len(argv) >= 2 and argv[1] == "replay":
+        out = replay(Path(argv[2]) if len(argv) > 2 else None)
+        print(json.dumps(out, indent=2)); return 0
     if len(argv) < 2 or argv[1] not in {"check", "up", "down", "all", "recipe"}:
         print(__doc__.split("Command line (for a person):", 1)[1]); return 2
     cmd, app = argv[1], (argv[2] if len(argv) > 2 else None)

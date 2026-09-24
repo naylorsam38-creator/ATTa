@@ -25,8 +25,14 @@
 - The build page: numbered checklist, every app against steps S01–S12, where it stopped, how long it
   took, and **regressions** (apps that passed last run and fail now) plus **newly passing** apps.
 - `/srv/app-builder/state/checklists/<build>.md` — the same checklist as a file.
-- `/srv/app-builder/state/runner/evidence.jsonl` — every failed start with the real log lines. Send this
-  file back: it's what the next round of script rules is made from.
+- `/srv/app-builder/state/runner/evidence.jsonl`: every failed start with the real log lines (`"kind": "start"`),
+  and every started app that then failed a check stage with that stage's full detail (`"kind": "check"`:
+  for a missing skin link that's where the browser ended up, the page it was served there, and its
+  `<head>`). Send this file back: it's what the next round of script rules is made from.
+- `sudo APP_BUILDER_ROOT=/srv/app-builder python3 /opt/app-builder/app_runner.py replay` (or, on a copy of the file,
+  `APP_BUILDER_ROOT=/tmp/atta python3 04-deployment/app_runner.py replay evidence.jsonl`):
+  re-diagnoses every recorded failed start under the current rules. `changed` = failures a new rule now
+  handles differently; `unrecognised` = failures no rule knows yet, grouped by their most telling line.
 
 ## Things this run must prove (not proven on the test machine)
 | What | Where to look |
@@ -36,5 +42,8 @@
 | Reusable **Rust + WebAssembly runtime** (graphite) | S05 note says "reusable Rust+WebAssembly web runtime" |
 | **Upstream search** — krayin-crm via its official image `webkul/krayin` from its own docs | S05 note says "named in the app's own docs" |
 | Apps needing IPv6 (clearflask, coolify) | should get past S05 on AWS |
+| Run-2 rules: billionmail, tidb (non-web ports), krayin-crm, flarum (disk), graphite (download) | no RUNNER_EXCEPTION; attempts show `disk.full` / `net.transient` retrying the **same** part |
+| colanode (page drawn late) | S10 passes; its 6 CLEAN detail shows `drawn_after_s` |
+| plane (skin link missing in the browser) | if it still fails, the `kind: check` row's `observed` says which: `SERVED_WITHOUT_SKIN`, `REMOVED_BY_PAGE_SCRIPT` or `NAVIGATED_TO:<path>` |
 
 Nothing counts as fixed until a full run shows it. Every run re-checks the whole catalogue.

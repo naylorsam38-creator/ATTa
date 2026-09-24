@@ -28,6 +28,10 @@ BROWSER_TIMEOUT=int(os.environ.get('APP_BUILDER_BROWSER_TIMEOUT','45'))
 # After the page loads, seconds to wait for the network to go quiet. Apps with live connections
 # (websockets, polling) never go quiet, so this is a grace period, not a requirement.
 NETWORK_IDLE_GRACE=int(os.environ.get('APP_BUILDER_NETWORK_IDLE_GRACE','8'))
+# After the page loads, seconds to wait for it to draw something (visible text, or a canvas for apps
+# that paint instead of writing text). Pages drawn by their own JavaScript (single-page apps) are still
+# blank at "load". Only a page still blank after this long fails EMPTY_BODY.
+CONTENT_WAIT=int(os.environ.get('APP_BUILDER_CONTENT_WAIT','15'))
 # true = old behaviour: ANY console error or failed request fails stage 6, including third-party
 # noise (analytics, fonts, favicon, cancelled requests). false = those are recorded as warnings;
 # errors from the app's own origin and uncaught page exceptions still fail.
@@ -130,6 +134,77 @@ def _norm_err(text):
     """An error message with hosts/ports taken out, so the proxied and bare copies compare equal."""
     return re.sub(r'https?://[^/\s)]+','<origin>',str(text)).strip()
 
+# "The page has drawn something": visible text in the body, or a visible canvas of real size (apps that
+# paint their whole UI on a canvas have no text). A spinner image alone does not count.
+DRAWN_JS="""() => { const b=document.body; if(!b) return false;
+  if ((b.innerText||'').trim()) return true;
+  for (const c of document.querySelectorAll('canvas')) { const r=c.getBoundingClientRect(); if (r.width>=50 && r.height>=50) return true; }
+  return false; }"""
+
+def _wait_drawn(page):
+    """Wait up to CONTENT_WAIT seconds for the page to draw something. Seconds waited, or None if it never did."""
+    t=time.time()
+    try:
+        page.wait_for_function(DRAWN_JS,timeout=max(1,CONTENT_WAIT)*1000,polling=250)
+        return round(time.time()-t,1)
+    except Exception:
+        return None
+
+# Installed in every page before its own scripts run: notes any skin link / hook tag the page's own
+# JavaScript removes (a framework rewriting <head> after it starts), with when it happened.
+WATCH_SKIN_JS="""(() => { window.__attaRemoved=[];
+  const sel='link[href^="/_cs/"],script[data-capability-hook]';
+  const note=(n)=>{ if(n.nodeType!==1) return; const hit=[]; if(n.matches&&n.matches(sel)) hit.push(n);
+    if(n.querySelectorAll) hit.push(...n.querySelectorAll(sel));
+    for (const e of hit) window.__attaRemoved.push({tag:e.tagName.toLowerCase(),ref:e.getAttribute('href')||e.getAttribute('src'),
+      parent:n===e?'':n.tagName.toLowerCase(),ms:Math.round(performance.now()),url:location.pathname}); };
+  new MutationObserver(ms=>{ for (const m of ms) for (const n of m.removedNodes) note(n); })
+    .observe(document,{childList:true,subtree:true}); })()"""
+
+def _page_evidence(page,requested,navs,docs):
+    """What the browser actually had when the skin link or hook count was wrong: where it ended up, the
+    page it was served there (did the proxy put the skin in it?), and what the page header holds now.
+    Recorded as the failure's detail so the rule for it comes from evidence, not a guess."""
+    ev={'requested':requested,'final_url':page.url,'navigations':list(dict.fromkeys(navs))[-10:]}
+    try:
+        ev.update(page.evaluate("""() => ({
+          count_skin_links: document.querySelectorAll('link[href^="/_cs/"][href$=".css"]').length,
+          count_hooks: document.querySelectorAll('script[data-capability-hook="1"][src*="/_cp/port.js"]').length,
+          head_links: [...document.querySelectorAll('head link')].map(l=>(l.rel||'')+' '+(l.getAttribute('href')||'')).slice(0,40),
+          head: (document.head ? document.head.outerHTML : '(no head)').slice(0,3000),
+          removed_by_page: (window.__attaRemoved||[]).slice(0,20) })"""))
+    except Exception as e:
+        ev['dom_error']=str(e)[:300]
+    served=None
+    last=docs[-1] if docs else None
+    if last is not None:
+        try:
+            body=last.text()
+            served={'source':'navigation','url':last.url,'status':last.status}
+        except Exception:
+            body=None
+        if body is not None:
+            h={k.lower():v for k,v in (last.headers or {}).items()}
+            served.update(content_type=h.get('content-type'),content_encoding=h.get('content-encoding'))
+    if served is None:
+        # The navigation's own body is gone (the page moved on): ask for the same address again, from the page.
+        try:
+            got=page.evaluate("""async () => { const r=await fetch(location.href,{credentials:'include',headers:{Accept:'text/html'}});
+              return {status:r.status,type:r.headers.get('content-type'),enc:r.headers.get('content-encoding'),body:await r.text()}; }""")
+            body=got['body']; served={'source':'refetch','url':page.url,'status':got['status'],'content_type':got['type'],'content_encoding':got['enc']}
+        except Exception as e:
+            body=None; served={'source':'unavailable','error':str(e)[:300]}
+    if body is not None:
+        served.update(has_skin_link=bool(SKIN_RE.search(body)),has_hook=bool(HOOK_RE.search(body)),
+                      has_head_close='</head>' in body.lower(),bytes=len(body))
+    ev['served']=served
+    seen=[]
+    if served.get('has_skin_link') is False: seen.append('SERVED_WITHOUT_SKIN')
+    if ev.get('removed_by_page'): seen.append('REMOVED_BY_PAGE_SCRIPT')
+    if urlparse(page.url).path.rstrip('/')!=urlparse(requested).path.rstrip('/'): seen.append('NAVIGATED_TO:'+urlparse(page.url).path)
+    ev['observed']=seen or ['UNEXPLAINED']
+    return ev
+
 def _baseline(p,executable,app_url):
     """Errors the bare app (no proxy) shows on the same page. None if it couldn't be loaded."""
     b=None
@@ -147,6 +222,7 @@ def _baseline(p,executable,app_url):
         pg.goto(app_url,wait_until='load',timeout=BROWSER_TIMEOUT*1000)
         try: pg.wait_for_load_state('networkidle',timeout=NETWORK_IDLE_GRACE*1000)
         except Exception: pass
+        _wait_drawn(pg)   # same wait as the proxied page, so errors thrown while it draws are compared fairly
         found=set()
         for x in errs+reqs: found.add(_norm_err(x))
         for x in cons: found.add(_norm_err(x))
@@ -206,6 +282,9 @@ def browser_check(url, app_url=None, expected=None):
             executable=os.environ.get('APP_BUILDER_CHROMIUM_PATH') or next((x for x in (shutil.which('chromium'),shutil.which('chromium-browser'),shutil.which('google-chrome')) if x),None)
             browser=p.chromium.launch(headless=True, executable_path=executable) if executable else p.chromium.launch(headless=True)
             page=browser.new_page()
+            page.add_init_script(WATCH_SKIN_JS)
+            navs=[]; docs=[]
+            page.on('framenavigated',lambda fr: navs.append(fr.url) if fr==page.main_frame else None)
             page.on('pageerror',lambda exc: errors.append(str(exc)))
             def on_console(msg):
                 if msg.type!='error': return
@@ -215,6 +294,9 @@ def browser_check(url, app_url=None, expected=None):
             page.on('console',on_console)
             page.on('requestfailed',lambda req: request_failures.append((req.url,str(req.failure))))
             def on_response(resp):
+                try:
+                    if resp.request.resource_type=='document' and resp.frame==page.main_frame: docs.append(resp)
+                except Exception: pass
                 if resp.url.startswith(expected_origin+'/_cs/') and resp.url.endswith('.css'): css_ok.append(resp.status)
                 if resp.url.startswith(expected_origin+PORT_ROUTE): hook_ok.append(resp.status)
             page.on('response',on_response)
@@ -222,6 +304,7 @@ def browser_check(url, app_url=None, expected=None):
             try: page.wait_for_load_state('networkidle',timeout=NETWORK_IDLE_GRACE*1000)
             except Exception: pass  # live connections keep the network busy; that is not a failure
             if not resp or resp.status>=500:return stage('FAIL','BROWSER_HTTP',str(resp.status if resp else 'NO_RESPONSE'))
+            drawn_after=_wait_drawn(page)
             if not page.url.startswith(expected_origin):return stage('FAIL','REDIRECT_OFF_PROXY',page.url)
             bad_console,bad_requests,warnings=_split_noise(expected_origin,console_errors,request_failures)
             app_own=[]
@@ -239,12 +322,14 @@ def browser_check(url, app_url=None, expected=None):
             if errors:return stage('FAIL','PAGE_ERROR',errors[0])
             if bad_console:return stage('FAIL',f'CONSOLE_ERRORS:{len(bad_console)}',json.dumps(bad_console[:10]))
             if bad_requests:return stage('FAIL','REQUEST_FAILED',json.dumps(bad_requests[:10]))
-            body=page.locator('body')
-            if body.count()==0 or not body.inner_text().strip():return stage('FAIL','EMPTY_BODY')
+            if drawn_after is None and not page.evaluate(DRAWN_JS):
+                blank={'waited_s':CONTENT_WAIT,'final_url':page.url,
+                       'body':(page.evaluate("() => document.body ? document.body.outerHTML : '(no body)'") or '')[:1500]}
+                return stage('FAIL','EMPTY_BODY',json.dumps(blank))
             links=page.locator('link[href^="/_cs/"][href$=".css"]')
             hooks=page.locator('script[data-capability-hook="1"][src*="/_cp/port.js"]')
-            if links.count()!=1:return stage('FAIL','BROWSER_SKIN_LINK_COUNT',str(links.count()))
-            if hooks.count()!=1:return stage('FAIL','BROWSER_HOOK_COUNT',str(hooks.count()))
+            if links.count()!=1:return stage('FAIL','BROWSER_SKIN_LINK_COUNT',json.dumps({'count':links.count(),**_page_evidence(page,url,navs,docs)}))
+            if hooks.count()!=1:return stage('FAIL','BROWSER_HOOK_COUNT',json.dumps({'count':hooks.count(),**_page_evidence(page,url,navs,docs)}))
             if not css_ok or any(x!=200 for x in css_ok):return stage('FAIL','CSS_FAILED_TO_LOAD',json.dumps(css_ok))
             if not hook_ok or any(x!=200 for x in hook_ok):return stage('FAIL','PORT_FAILED_TO_LOAD',json.dumps(hook_ok))
             # Dormant-port check: only the port's explicit anchor/owned attributes count.
@@ -272,7 +357,8 @@ def browser_check(url, app_url=None, expected=None):
             _TL.seen=seen
             # The adapter being hooked in is checked in stage 5 (HOOK). Dormant or active is recorded
             # here (result['adapter']), never failed: the adapter may legitimately be either.
-        extra={k:v for k,v in (('ignored_noise',warnings[:20]),('app_own_errors',app_own[:20])) if v}
+        extra={k:v for k,v in (('ignored_noise',warnings[:20]),('app_own_errors',app_own[:20]),
+                               ('drawn_after_s',drawn_after if drawn_after else None)) if v}
         return stage('OK','CLEAN_OK',json.dumps(extra) if extra else None)
     except Exception as e:return stage('FAIL','BROWSER_EXCEPTION',str(e))
     finally:

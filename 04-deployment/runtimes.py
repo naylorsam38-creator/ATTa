@@ -130,6 +130,9 @@ def _php_dockerfile(p: dict) -> str:
     docroot = "/var/www/html" + ("" if p["docroot"] == "." else "/" + p["docroot"])
     laravel = p["laravel"]
     return f"""FROM php:{p['php']}-apache
+# Downloads retry on their own: a connection that drops mid-build is retried in place, not a failed build.
+RUN printf 'Acquire::Retries "5";\\n' > /etc/apt/apt.conf.d/80-atta-retries
+ENV COMPOSER_PROCESS_TIMEOUT=900
 RUN apt-get update && apt-get install -y --no-install-recommends git unzip libzip-dev libpng-dev libjpeg-dev \\
       libfreetype6-dev libicu-dev libonig-dev default-mysql-client && rm -rf /var/lib/apt/lists/* \\
  && docker-php-ext-configure gd --with-freetype --with-jpeg \\
@@ -187,10 +190,16 @@ def _rust_dockerfile(p: dict) -> str:
     return f"""FROM {NODE_IMAGE} AS node
 FROM {RUST_IMAGE} AS build
 COPY --from=node /usr/local /usr/local
+# Downloads retry on their own (cargo crates, npm packages, the binaryen release): a connection that
+# drops mid-build is retried in place instead of failing the build. The release is saved to a file
+# first: a retried download piped straight into tar could hand it a corrupt stream.
+ENV CARGO_NET_RETRY=10 CARGO_HTTP_TIMEOUT=120 npm_config_fetch_retries=5 npm_config_fetch_retry_mintimeout=10000 \\
+    npm_config_fetch_retry_maxtimeout=120000
 RUN rustup target add wasm32-unknown-unknown \\
  && {wb} && {about} \\
- && curl -fsSL https://github.com/WebAssembly/binaryen/releases/download/version_{p['binaryen']}/binaryen-version_{p['binaryen']}-x86_64-linux.tar.gz \\
-    | tar -xz -C /usr/local --strip-components=1
+ && curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 30 -o /tmp/binaryen.tar.gz \\
+    https://github.com/WebAssembly/binaryen/releases/download/version_{p['binaryen']}/binaryen-version_{p['binaryen']}-x86_64-linux.tar.gz \\
+ && tar -xzf /tmp/binaryen.tar.gz -C /usr/local --strip-components=1 && rm -f /tmp/binaryen.tar.gz
 WORKDIR /src
 COPY . /src
 RUN rm -rf .ui-capability .atta-intake.json && {build}

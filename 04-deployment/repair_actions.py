@@ -439,11 +439,12 @@ def set_run_recipe(app: str, recipe_json: str) -> str:
 
 @action("Teach the app runner a new failure rule for ALL apps: a regex matched against the start error and container logs, "
         "and the fix to apply: set_env (the regex must capture the variable as (?P<var>...)), copy_env, new_ports, prune, "
+        "retry_net (a download broke off: pause, retry the same way once; matched only against download/build output), "
         "wait_longer, pick_command or next_part. Use when you recognise a general failure pattern the runner doesn't know.",
         {"rule_id": {"type": "string"}, "pattern": {"type": "string"}, "fix": {"type": "string"}})
 def add_runner_rule(rule_id: str, pattern: str, fix: str) -> str:
     import app_runner as ar
-    if fix not in {"set_env", "copy_env", "new_ports", "prune", "wait_longer", "pick_command", "next_part"}:
+    if fix not in {"set_env", "copy_env", "new_ports", "prune", "retry_net", "wait_longer", "pick_command", "next_part"}:
         raise ActionError(f"unknown fix {fix!r}")
     try:
         rx = re.compile(pattern)
@@ -452,7 +453,10 @@ def add_runner_rule(rule_id: str, pattern: str, fix: str) -> str:
     if fix == "set_env" and "var" not in rx.groupindex:
         raise ActionError("a set_env rule must capture the variable name as (?P<var>...)")
     rows = [x for x in ar.learned_rules() if x.get("id") != rule_id]
-    rows.append({"id": safe_id(rule_id), "pattern": pattern, "fix": fix, "learned_at": time.time()})
+    row = {"id": safe_id(rule_id), "pattern": pattern, "fix": fix, "learned_at": time.time()}
+    if fix == "retry_net":
+        row["phase"] = "start"   # a network retry is only for download/build output, never the app's own logs
+    rows.append(row)
     ar.LEARNED_RULES.write_text(json.dumps(rows, indent=2) + "\n")
     return f"runner rule {rule_id} saved ({fix})"
 

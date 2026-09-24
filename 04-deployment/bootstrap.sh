@@ -66,6 +66,10 @@ APP_BUILDER_PRUNE_IMAGES=false
 # Seconds an app gets to answer after it starts, and the most it gets while still visibly starting.
 APP_BUILDER_BOOT_TIMEOUT=240
 APP_BUILDER_BOOT_TIMEOUT_MAX=900
+# Seconds the real browser waits after "load" for a page its own JavaScript draws to show something.
+APP_BUILDER_CONTENT_WAIT=15
+# Seconds to pause before retrying a download that broke off mid-build (once per way of starting an app).
+APP_BUILDER_NET_RETRY_WAIT=30
 # Self-healing tier 4: incoming-webhook URL for human alerts (Slack/Discord/any JSON POST). Blank = /alerts page only.
 ALERT_WEBHOOK_URL=
 EOF

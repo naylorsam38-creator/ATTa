@@ -75,19 +75,30 @@ ports 80/443). Then follow docs/COOLIFY-HANDOFF.md to connect the two.
 | `04-deployment/catalogue_sync.py` | App catalogue: every app in the library gets a code root, skin category and profile automatically |
 | `04-deployment/app_classifier.py` | Finds an app's code root (monorepos too) and picks its skin category from its own words |
 | `04-deployment/app_catalogue.json` | The app catalogue (edit a category here and it sticks) + `CATALOGUE_CHANGELOG.md` |
+| `04-deployment/app_runner.py` | Starts each app (compose / published image / source build / reusable runtime), adapts it on failure by rule, qualifies it, records every failure in `state/runner/evidence.jsonl` |
+| `04-deployment/runtimes.py` | Reusable runtimes for app TYPES that ship no way to start (PHP + Composer, Rust + WebAssembly web) |
+| `04-deployment/upstream.py` | Finds how an app's upstream publishes it (docs, owner's deploy repos, owner's Docker Hub images) |
 | `04-deployment/system_watcher.py` | Six-stage checker (stage 6 = real browser) |
 | `04-deployment/coolify_handoff.py` | Hands qualified builds to Coolify |
 | `04-deployment/maintenance.py` + tiers | Self-healing: known fixes → capability adapter → LLM → human alert |
 | `05-coolify/coolify-main.zip` | The supplied Coolify source, unchanged (version 4.3.23) |
 | `05-coolify/install-coolify.sh` | Installs that Coolify version on a server with Coolify's own installer |
-| `docs/history/` | Audit and fix notes from the 2026-09-22 bundle |
+| `tests/` | Tests for the runner's failure rules and the browser check (`python3 -m pytest tests`) |
+| `docs/history/` | Change and audit notes, one file per change |
+
+## Tests
+
+`python3 -m pytest tests` (needs `pytest`; the browser tests need Playwright + Chromium, the Docker
+tests a running Docker, and each group skips itself when its tool is missing). Each run-2 failure class
+has a test that fails on v109 as shipped and passes now. `python3 04-deployment/app_runner.py replay`
+re-diagnoses every failure a real run recorded (`state/runner/evidence.jsonl`) under the current rules.
 
 ## Known gaps
 
-- **Apps are started by app_runner.py (v109).** See docs/history/CHANGES-2026-09-24-APP-RUNNER.md.
-  nothing starts them yet: each app needs to be running with its `.ui-capability/run-ui.sh`
-  (TARGET_URL set) before it can pass stages 2–6. Until then a build ends NOT_QUALIFIED with
-  "unreachable". An app runner (compose/Dockerfile per app, ports assigned) is the next step.
+- **Apps are started by app_runner.py (v109).** See docs/history/CHANGES-2026-09-24-APP-RUNNER.md
+  and, for the run-2 rules, docs/history/CHANGES-2026-09-24-RUN2-RULES.md. A failure no rule
+  recognises moves on to the next way of starting the app and is kept in evidence.jsonl as
+  "unrecognised": that is where the next rule comes from.
 - **Auto categories are word-based.** They're right for most apps (20/31 agree with the
   hand-made APP_MAP, and most disagreements are debatable), but not all. Change any app's
   `skin_category` in `app_catalogue.json`; a sync never overwrites it.
