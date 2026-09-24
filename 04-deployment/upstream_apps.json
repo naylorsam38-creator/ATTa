@@ -1,0 +1,272 @@
+{
+  "schema": "APP_LIBRARY_UPSTREAMS.v1",
+  "generated": "2026-09-22",
+  "entries": [
+    {
+      "number": 1,
+      "category": "Developer Tools",
+      "app": "Docker Moby",
+      "repository": "moby/moby",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 2,
+      "category": "AI Development",
+      "app": "Agno",
+      "repository": "agno-agi/agno",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 3,
+      "category": "DevOps",
+      "app": "Docker Moby",
+      "repository": "moby/moby",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 4,
+      "category": "Automation",
+      "app": "Appsmith",
+      "repository": "appsmithorg/appsmith",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 5,
+      "category": "Monitoring",
+      "app": "Grafana",
+      "repository": "grafana/grafana",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 6,
+      "category": "Productivity",
+      "app": "Super Productivity",
+      "repository": "super-productivity/super-productivity",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 7,
+      "category": "Security",
+      "app": "Traefik",
+      "repository": "traefik/traefik",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 8,
+      "category": "AI Assistants",
+      "app": "Langflow",
+      "repository": "langflow-ai/langflow",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 9,
+      "category": "Analytics",
+      "app": "Umami",
+      "repository": "umami-software/umami",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 10,
+      "category": "Databases",
+      "app": "TiDB",
+      "repository": "pingcap/tidb",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 11,
+      "category": "AI Agents",
+      "app": "Langflow",
+      "repository": "langflow-ai/langflow",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 12,
+      "category": "Invoicing Finance",
+      "app": "Polar",
+      "repository": "polarsource/polar",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 13,
+      "category": "Design Tools",
+      "app": "Open Design",
+      "repository": "attentiondotnet/open-design",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 14,
+      "category": "Collaboration",
+      "app": "Plane",
+      "repository": "makeplane/plane",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 15,
+      "category": "Marketing",
+      "app": "BillionMail",
+      "repository": "Billionmail/BillionMail",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 16,
+      "category": "AI Code Assistants",
+      "app": "Codex",
+      "repository": "OPENAI-CODEX-NEEDS-EXACT-REPO",
+      "status": "NEEDS_EXACT_IDENTIFICATION"
+    },
+    {
+      "number": 17,
+      "category": "File Storage",
+      "app": "OpenCloud",
+      "repository": "opencloud-eu/opencloud",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 18,
+      "category": "Data Engineering",
+      "app": "Apache Airflow",
+      "repository": "apache/airflow",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 19,
+      "category": "Project Management",
+      "app": "Super Productivity",
+      "repository": "super-productivity/super-productivity",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 20,
+      "category": "Authentication",
+      "app": "Medplum",
+      "repository": "medplum/medplum",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 21,
+      "category": "Note Taking",
+      "app": "Memos",
+      "repository": "usememos/memos",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 22,
+      "category": "No Code Platforms",
+      "app": "Appsmith",
+      "repository": "appsmithorg/appsmith",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 23,
+      "category": "CMS",
+      "app": "Supabase",
+      "repository": "supabase/supabase",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 24,
+      "category": "Ecommerce",
+      "app": "Krayin CRM",
+      "repository": "krayin/laravel-crm",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 25,
+      "category": "Knowledge Management",
+      "app": "Colanode",
+      "repository": "colanode/colanode",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 26,
+      "category": "Search",
+      "app": "Supabase",
+      "repository": "supabase/supabase",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 27,
+      "category": "Code Editors",
+      "app": "Graphite",
+      "repository": "GraphiteEditor/Graphite",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 28,
+      "category": "Game Development",
+      "app": "Stride",
+      "repository": "stride3d/stride",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 29,
+      "category": "AI Design Tools",
+      "app": "Next AI Draw.io",
+      "repository": "lyway/next-ai-draw-io",
+      "status": "VERIFIED_CANDIDATE"
+    },
+    {
+      "number": 30,
+      "category": "Team Chat",
+      "app": "Colanode",
+      "repository": "colanode/colanode",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 31,
+      "category": "Hosting Control Panels",
+      "app": "Coolify",
+      "repository": "coollabsio/coolify",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 32,
+      "category": "Blogging",
+      "app": "Ghost",
+      "repository": "TryGhost/Ghost",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 33,
+      "category": "Social Media",
+      "app": "OpenCart",
+      "repository": "opencart/opencart",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 34,
+      "category": "Community Apps",
+      "app": "Flarum",
+      "repository": "flarum/flarum",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 35,
+      "category": "Networking",
+      "app": "FRP",
+      "repository": "fatedier/frp",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 36,
+      "category": "Forms & Surveys",
+      "app": "FormBee",
+      "repository": "FormBee/FormBee",
+      "status": "VERIFIED_CANDIDATE"
+    },
+    {
+      "number": 37,
+      "category": "Production Management",
+      "app": "ClearFlask",
+      "repository": "clearflask/clearflask",
+      "status": "VERIFIED"
+    },
+    {
+      "number": 38,
+      "category": "Customer Support",
+      "app": "Botpress",
+      "repository": "botpress/botpress",
+      "status": "VERIFIED"
+    }
+  ]
+}
