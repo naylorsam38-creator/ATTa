@@ -44,8 +44,8 @@ def _ps(pid, field):
     return r.stdout.strip() if r.returncode == 0 else None
 
 
-def identity(pid):
-    """(start token, command line) of a RUNNING pid, or None. Linux: /proc; macOS and others: ps."""
+def _proc(pid):
+    """(start token, command line, state) of a pid that exists (zombies included), or None."""
     try:
         pid = int(pid)
     except (TypeError, ValueError):
@@ -56,34 +56,47 @@ def identity(pid):
         try:
             data = Path(f"/proc/{pid}/stat").read_bytes().decode("utf-8", "replace")
             rest = data[data.rfind(")") + 2:].split()
-            if rest[0] in ("Z", "X"):
-                return None
             cmd = Path(f"/proc/{pid}/cmdline").read_bytes().replace(b"\0", b" ").decode("utf-8", "replace").strip()
-            return rest[19], cmd
+            return rest[19], cmd, rest[0]
         except (OSError, IndexError):
             return None
     start, cmd, state = _ps(pid, "lstart"), _ps(pid, "command"), _ps(pid, "state")
-    if not start or not cmd or (state or "").startswith("Z"):
+    return (start, cmd or "", state or "") if start else None
+
+
+def identity(pid):
+    """(start token, command line) of a RUNNING pid, or None. Linux: /proc; macOS and others: ps."""
+    p = _proc(pid)
+    if p is None or p[2][:1] in ("Z", "X") or not p[1]:
         return None
-    return start, cmd
+    return p[0], p[1]
 
 
 def matches(rec) -> bool:
-    """True only if the recorded process is still the same process: pid alive, same start, same command line."""
+    """May we signal it? True only if the recorded process is still the same process: alive, same start time,
+    same command line."""
     if not isinstance(rec, dict):
         return False
     ident = identity(rec.get("pid"))
     return ident is not None and ident[0] == rec.get("start") and ident[1] == rec.get("cmdline")
 
 
-def group_members(pgid, script):
-    """Live processes in process group `pgid` (ours: we made it) whose command line runs one of our files."""
+def still_running(rec) -> bool:
+    """Is it gone yet? The same process (same start time) that has not finished exiting. Its command line is NOT
+    used: a dying process loses it (the kernel frees its memory) BEFORE it closes its sockets, so a check on the
+    command line would call a gateway gone while its port still accepts connections."""
+    p = _proc(rec.get("pid")) if isinstance(rec, dict) else None
+    return p is not None and p[0] == rec.get("start") and p[2][:1] not in ("Z", "X")
+
+
+def group_members(pgid, script=None):
+    """Processes in process group `pgid` that are not zombies (the group is ours: we created it)."""
     out = []
-    r = subprocess.run(["ps", "-A", "-o", "pid=,pgid=,command="], capture_output=True, text=True)
+    r = subprocess.run(["ps", "-A", "-o", "pid=,pgid=,stat=,command="], capture_output=True, text=True)
     for line in r.stdout.splitlines():
-        parts = line.split(None, 2)
-        if len(parts) == 3 and parts[1] == str(pgid) and parts[0] != str(os.getpid()):
-            out.append((int(parts[0]), parts[2]))
+        parts = line.split(None, 3)
+        if len(parts) >= 3 and parts[1] == str(pgid) and parts[0] != str(os.getpid()) and not parts[2].startswith("Z"):
+            out.append((int(parts[0]), parts[3] if len(parts) == 4 else ""))
     return out
 
 
@@ -208,16 +221,20 @@ class Launcher:
     def stop_service(self, name, rec):
         """Stop one recorded service and its whole process group. Returns a problem string, or None."""
         pgid = rec.get("pgid")
-        script = rec.get("script", "")
         if matches(rec):
             targets = "group"
+            def gone():
+                return not still_running(rec) and not group_members(pgid)
         else:
             # The leader is gone (or its pid reused). What is still in its group AND runs our code is ours; anything
             # else is left alone.
-            members = [(p, c) for p, c in group_members(pgid, script) if str(DEP) in c]
+            members = [(p, c) for p, c in group_members(pgid) if str(DEP) in c]
             if not members:
                 return None
             targets = [p for p, _ in members]
+            starts = {p: (_proc(p) or ("",))[0] for p in targets}
+            def gone():
+                return not any(still_running({"pid": p, "start": st}) for p, st in starts.items())
         for sig, wait in ((signal.SIGTERM, STOP_GRACE), (signal.SIGKILL, 5)):
             try:
                 if targets == "group":
@@ -229,11 +246,10 @@ class Launcher:
                 pass
             end = time.monotonic() + wait
             while time.monotonic() < end:
-                if not [m for m in group_members(pgid, script) if str(DEP) in m[1]] and not matches(rec):
+                if gone():
                     return None
                 time.sleep(0.1)
-        left = [m for m in group_members(pgid, script) if str(DEP) in m[1]]
-        return f"{name}: still running after SIGKILL: {left}" if left or matches(rec) else None
+        return None if gone() else f"{name}: still running after SIGKILL (pid {rec.get('pid')}, group {pgid})"
 
     def stop_all(self, st):
         problems = []
@@ -278,6 +294,11 @@ class Launcher:
         problems = self.stop_all(st)
         if problems:
             return self.fail(st, "could not stop the previous instance: " + "; ".join(problems))
+        if st.get("services"):
+            # We just stopped our own gateway: give the kernel a moment to release its port before judging it.
+            end = time.monotonic() + 5
+            while _port_busy("127.0.0.1", port) and time.monotonic() < end:
+                time.sleep(0.1)
         if _port_busy("127.0.0.1", port):
             ok, _ = self.gateway_ok(timeout=0)
             who = ("an ATTa gateway for this folder that this launcher did not start (stop it, then run again)" if ok
