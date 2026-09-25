@@ -1094,6 +1094,11 @@ class DeployOnlyAfterTestsPass(unittest.TestCase):
     def setUp(self):
         adm_config.ensure_dirs()
         self.t = Path(tempfile.mkdtemp(dir=TMP))
+        # On a server ADM lives under the data folder, which the test user can pass through. Whichever test module
+        # chose ADM's folder first here may have put it in a private (0700) temp folder: open those for traversal.
+        for d in adm_config.STAGING.resolve().parents:
+            if str(d).startswith(tempfile.gettempdir() + "/") and not os.stat(d).st_mode & 0o001:
+                os.chmod(d, os.stat(d).st_mode | 0o001)
 
     def fake_bundle(self, test_body):
         root = adm_config.STAGING / f"gate-{os.getpid()}-{len(test_body)}" / "ATTa"
