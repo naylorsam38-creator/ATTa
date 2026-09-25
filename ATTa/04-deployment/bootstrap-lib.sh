@@ -63,12 +63,16 @@ atta_secure_state() {
   # with their own users, and bind mounts don't depend on the host folders above them.
   local root="$1" f
   [ -f "$root/.env" ] && { [ "$(id -u)" = 0 ] && chown root:root "$root/.env"; chmod 600 "$root/.env"; }
-  for f in "$root/coolify_resources.json" "$root/TEST_ACCOUNTS.txt" "$root"/state/*.json "$root"/state/apps/*.json; do
+  # v115: the local inbox is where a bundle placed on the server itself is trusted from; it must stay
+  # root-only or the pipeline refuses what is in it. Customer-secret receipts and their fingerprint key too.
+  mkdir -p "$root/local-inbox"
+  for f in "$root/coolify_resources.json" "$root/TEST_ACCOUNTS.txt" "$root"/state/*.json "$root"/state/apps/*.json \
+           "$root/state/secret-fingerprint.key" "$root"/state/customer_secrets/*.json; do
     [ -f "$f" ] || continue
     [ "$(id -u)" = 0 ] && chown root:root "$f"
     chmod 600 "$f"
   done
-  for f in "$root/state" "$root/state/apps"; do
+  for f in "$root/state" "$root/state/apps" "$root/state/customer_secrets" "$root/local-inbox"; do
     [ -d "$f" ] || continue
     [ "$(id -u)" = 0 ] && chown root:root "$f"
     chmod 700 "$f"

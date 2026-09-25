@@ -63,6 +63,10 @@ QUEUED → VALIDATING → FETCHING_LIBRARY → INSTALLING_UI_CAPABILITY
 | `<ROOT>/.env` | `COOLIFY_URL=http://your-coolify-host:8000` and `COOLIFY_TOKEN=<that token>` |
 | `<ROOT>/coolify_resources.json` | Maps each app name (the `app` field above) to the Coolify resource UUID that runs it: `{"apps": {"Grafana": "<uuid>"}}` |
 
+For customer tokens (v115, below) the same API token also needs **write**. Do **not** give it
+`read:sensitive`: then Coolify never returns a variable's value to ATTa, even by accident.
+An entry in `coolify_resources.json` may also be `{"uuid": "<uuid>", "kind": "service"}` for a Coolify service.
+
 Restart the pipeline service after you edit `.env`: `systemctl restart app-builder-pipeline`.
 Changes to `coolify_resources.json` are picked up on the next retry and don't need a restart.
 
@@ -79,6 +83,30 @@ Each qualified build gets a `coolify` block, shown on `/builds/<id>`:
 
 Retries run from the pipeline loop, starting after 30 s and doubling up to every 15 min
 (`COOLIFY_RETRY_BASE` / `COOLIFY_RETRY_MAX`). A qualified build is never dropped.
+
+## Customer tokens (v115)
+
+A customer's own integration tokens reach their app through Coolify, never through ATTa's disk:
+
+```
+PATCH {COOLIFY_URL}/api/v1/applications/<uuid>/envs/bulk      (services/<uuid>/... for a service)
+{"data": [{"key": "STRIPE_SECRET_KEY", "value": "...", "is_literal": true, "is_shown_once": true,
+           "is_runtime": true, "is_buildtime": false, "is_preview": false, "is_multiline": false}]}
+then POST {COOLIFY_URL}/api/v1/deploy?uuid=<uuid>&force=false   so the running app picks them up
+```
+
+Entered on `/apps/<app>/secrets` (the account that added the app, or an admin) or
+`POST /api/apps/<app>/secrets` `{"secrets": {"NAME": "value"}}`. ATTa writes only a receipt,
+`state/customer_secrets/<app>.json`: name, a 16-hex keyed fingerprint, time, build, who, and the Coolify
+resource. `POST /api/apps/<app>/secrets/check` `{"name", "value"}` says whether a token matches what was
+delivered, from the fingerprint alone. ATTa never reads a value back from Coolify. If Coolify isn't
+configured or the app has no resource yet, nothing is sent and nothing is kept: enter the tokens again later.
+Checked against the bundled 4.3.23 source: `routes/api.php` (`write` ability), `create_bulk_envs`
+(accepted fields, 201), `removeSensitiveData` (values hidden without `read:sensitive`).
+
+ATTa's own local check runs never see a customer's value: each recorded variable gets the placeholder
+`atta-local-check-placeholder-not-a-real-secret`. An app that refuses to start without a REAL key can't
+be proved locally. Its deployed copy in Coolify is the one that runs with it.
 
 ## Checked against Coolify's source
 

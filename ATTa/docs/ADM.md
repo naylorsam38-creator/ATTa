@@ -47,7 +47,17 @@ labelled block at the top of `04-deployment/deployd/adm/config.py`.
    with ADM. The build page gets a **System update** section showing the ADM job, its verdict and log.
    ADM waits for that build to finish before restarting anything.
 2. **Terminal.** `sudo deployctl deploy /path/to/ATTa-deployNNN.zip` — same steps, runs in front of
-   you, exits 0 on DEPLOYED and 1 otherwise. Or drop a zip into `/srv/app-builder/adm/incoming/`.
+   you, exits 0 on DEPLOYED and 1 otherwise. Or drop a zip into `/srv/app-builder/adm/incoming/`
+   (root-owned, 0700), or into the pipeline's `/srv/app-builder/local-inbox/` (root-owned, 0700) to run the
+   full pipeline first.
+
+**Who may deploy (v115).** Every job records its `origin`, and trust comes from that, never from a name:
+`local` jobs (deployctl, `incoming/`, the pipeline's `local-inbox/`) run only if the job file and the queue
+folder belong to root and nobody else can write them; `web` jobs run only if the uploader is an enabled admin
+right now. A job with no origin, a web job naming `system`/`deployctl`/`incoming` (reserved names,
+`04-deployment/reserved.py`), or a zip in a loosened `incoming/` (moved to `incoming/rejected/`) is refused
+before anything is backed up or activated. Reserved names can't be accounts; `accounts.py init` disables
+any that exist.
 
 Only one deploy can run at a time (file lock). The daemon and the CLI never collide; the CLI just
 reports the lock if the daemon is mid-deploy.

@@ -41,6 +41,7 @@ import json, os, re, secrets, shutil, signal, socket, subprocess, sys, time
 from pathlib import Path
 from urllib.request import Request, build_opener, ProxyHandler
 from urllib.error import HTTPError, URLError
+import app_env
 
 # ============================ RULES / CONFIG — edit here, nothing below needs reading ============================
 # Seconds an app gets to answer HTTP after it starts. Raise for slow machines; lower = faster give-up.
@@ -240,6 +241,10 @@ def safe_id(name: str) -> str:
 
 
 def sh(cmd, timeout=120, env=None, cwd=None) -> tuple[int, str]:
+    # v115: a docker/compose command never inherits ATTa's service environment (its secrets). Compose
+    # reads its environment for ${NAME} and bare `environment: [NAME]`; the CLI needs only BASE_ENV.
+    if env is None and cmd and cmd[0] == "docker":
+        env = app_env.runner_env()
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, env=env, cwd=cwd)
         return r.returncode, (r.stdout or "") + (r.stderr or "")
@@ -784,8 +789,11 @@ def down(app: str, prune: bool | None = None) -> str:
     return "; ".join(msgs) or "stopped"
 
 
-def _env_for(part: dict) -> dict:
-    return {**os.environ, **{k: str(v) for k, v in (part.get("env") or {}).items()}}
+def _env_for(part: dict, app: str | None = None) -> dict:
+    """v115: what Compose sees. Only the Docker CLI's own names plus what the runner chose for this app,
+    plus a fake placeholder for each customer variable on record (the real one is in Coolify only)."""
+    own = {k: str(v) for k, v in (part.get("env") or {}).items()}
+    return app_env.runner_env({**(app_env.placeholders_for(app, own) if app else {}), **own})
 
 
 def _ensure_env_file(d: Path, compose_file: Path, notes: list[str]) -> None:
@@ -819,7 +827,7 @@ def _ensure_env_file(d: Path, compose_file: Path, notes: list[str]) -> None:
             continue
         for ex in ENV_EXAMPLES:
             src = w.parent / ex
-            if src.is_file():
+            if src.is_file() and _own_file(src, d):
                 shutil.copy2(src, w); hide(w)
                 notes.append(f"created {rel(w)} from its own {ex}")
                 break
@@ -842,13 +850,22 @@ def _create_missing_env(d: Path, part: dict, path: str | None, notes: list[str])
         return False
     p.parent.mkdir(parents=True, exist_ok=True)
     for ex in ENV_EXAMPLES:
-        if (p.parent / ex).is_file():
+        if (p.parent / ex).is_file() and _own_file(p.parent / ex, d):
             shutil.copy2(p.parent / ex, p); break
     else:
         p.write_text("")
     exclude_from_git(d, p.relative_to(d.resolve()).as_posix())
     notes.append(f"created {p.relative_to(d.resolve())} (the compose file needs it)")
     return True
+
+
+def _own_file(src: Path, d: Path) -> bool:
+    """v115: an example file is copied only if it really is the app's (a link to ATTa's .env is not)."""
+    try:
+        r = src.resolve()
+    except (OSError, RuntimeError):
+        return False
+    return r.is_relative_to(d.resolve()) or r.is_relative_to(WORK.resolve())
 
 
 def _tracked(d: Path, rel: str) -> bool:
@@ -881,7 +898,7 @@ def _fill_blank_secrets(f: Path, part: dict, notes: list[str]) -> None:
                 k, v = line.split("=", 1)
                 have[k.strip()] = v.strip().strip("\"'")
     for n in sorted(names):
-        if SECRET_NAME.search(n) and not have.get(n) and not os.environ.get(n) and n not in part["env"]:
+        if SECRET_NAME.search(n) and not have.get(n) and n not in part["env"]:
             part["env"][n] = secrets.token_hex(16)
             notes.append(f"{n} was blank: generated a value for this run")
 
@@ -900,8 +917,34 @@ def harden_args(part: dict) -> list[str]:
     return a
 
 
-def harden_service(name: str, s: dict, part: dict, notes: list[str], d: Path) -> None:
-    """v114: the same fence for one compose service, plus removal of anything that hands it the host."""
+def _exposes_atta(src: str) -> bool:
+    """v115: a host path that would hand a container ATTa itself: its data folder (.env, accounts, other
+    apps), its live code, or a parent of either (/, /srv). Refused even when ALLOW_HOST_ACCESS is on."""
+    try:
+        r = Path(src).resolve()
+    except (OSError, RuntimeError):
+        return True
+    for atta in (ROOT.resolve(), HERE, Path("/opt/app-builder").resolve(), Path("/opt/app-builder-releases")):
+        if r == atta or atta.is_relative_to(r) or r.is_relative_to(atta):
+            return True
+    return False
+
+
+def harden_service(name: str, s: dict, part: dict, notes: list[str], d: Path, work: Path | None = None) -> None:
+    """v114: the same fence for one compose service, plus removal of anything that hands it the host.
+    v115: bind mounts may only come from the app's OWN folders (not the shared work folder), and never
+    expose ATTa's own data or code, whatever HARDEN / ALLOW_HOST_ACCESS say."""
+    own = [d.resolve(), (work or WORK).resolve()]
+    kept = []
+    for v in s.get("volumes") or []:
+        src = v.get("source") if isinstance(v, dict) else (str(v).split(":", 1)[0] if ":" in str(v) else None)
+        bind = (isinstance(v, dict) and v.get("type") == "bind") or (isinstance(v, str) and src and src.startswith(("/", ".", "~")))
+        if bind and src and _exposes_atta(src) and not any(Path(src).resolve().is_relative_to(a) for a in own):
+            notes.append(f"{name}: dropped host mount {src} (it would expose ATTa's own data or code)")
+            continue
+        kept.append(v)
+    if "volumes" in s:
+        s["volumes"] = kept
     if not HARDEN:
         return
     if not ALLOW_HOST_ACCESS:
@@ -924,7 +967,7 @@ def harden_service(name: str, s: dict, part: dict, notes: list[str], d: Path) ->
             bind = (isinstance(v, dict) and v.get("type") == "bind") or (isinstance(v, str) and src and src.startswith(("/", ".", "~")))
             if bind and src:
                 try:
-                    inside = Path(src).resolve().is_relative_to(d.resolve()) or Path(src).resolve().is_relative_to(WORK.resolve())
+                    inside = any(Path(src).resolve().is_relative_to(a) for a in own)
                 except (OSError, ValueError):
                     inside = False
                 ro = (isinstance(v, dict) and v.get("read_only")) or (isinstance(v, str) and v.endswith(":ro"))
@@ -953,8 +996,18 @@ def _render_compose(app: str, d: Path, part: dict, notes: list[str]) -> tuple[bo
     f = d / part["file"]
     _ensure_env_file(d, f, notes)
     _fill_blank_secrets(f, part, notes)
+    # v115: files Compose would read INTO the config (env_file, include, extends, the .env it interpolates
+    # from) must be the app's own, links followed. Checked before Compose reads them.
+    try:
+        import yaml
+        raw = yaml.safe_load(f.read_text(errors="replace")) or {}
+    except Exception:
+        raw = {}
+    bad = app_env.check_sources(f, raw, app_env.allowed_dirs(d, WORK / safe_id(app)))
+    if bad:
+        return False, "__UNSAFE_CONFIG__ refused this compose file: " + "; ".join(bad[:8])
     rc, out = sh(["docker", "compose", "-f", str(f), "--project-directory", str(f.parent), "config", "--format", "json"],
-                 timeout=120, env=_env_for(part), cwd=str(f.parent))
+                 timeout=120, env=_env_for(part, app), cwd=str(f.parent))
     if rc != 0:
         return False, out
     try:
@@ -1029,7 +1082,11 @@ def _render_compose(app: str, d: Path, part: dict, notes: list[str]) -> tuple[bo
             new_src.mkdir(parents=True, exist_ok=True)
             v["source"] = str(new_src)
             notes.append(f"{name}: runtime data {rel} kept outside the library ({new_src})")
-        harden_service(name, s, part, notes, d)
+        harden_service(name, s, part, notes, d, WORK / safe_id(app))
+    # v115: the finished config may not carry ATTa's secrets or read files from outside the app.
+    bad = app_env.check_rendered(cfg, app_env.allowed_dirs(d, WORK / safe_id(app)))
+    if bad:
+        return False, "__UNSAFE_CONFIG__ refused this compose file: " + "; ".join(bad[:8])
     cfg["name"] = project(app)
     wd = WORK / safe_id(app); wd.mkdir(parents=True, exist_ok=True)
     (wd / "compose.rendered.json").write_text(json.dumps(cfg, indent=1))
@@ -1051,7 +1108,7 @@ def _start_inner(app: str, d: Path, part: dict, notes: list[str]) -> tuple[bool,
         part.setdefault("env", {}).setdefault("ATTA_DB_PASSWORD", secrets.token_hex(16))
         part = {**part, "kind": "compose", "file": str(gen)}   # from here on, the same path as any compose file
         notes.append(f"generated {part.get('runtime')} runtime files in {gen.parent} (the library is not touched)")
-    env = _env_for(part)
+    env = _env_for(part, app)
     if part["kind"] == "compose":
         ok, err = _render_compose(app, d, part, notes)
         if not ok:
@@ -1081,7 +1138,7 @@ def _start_inner(app: str, d: Path, part: dict, notes: list[str]) -> tuple[bool,
         cmd += ["--memory", mem_limit()]
     for p in ports:
         cmd += ["-p", f"127.0.0.1:{free_port(taken)}:{p}"]
-    for k, v in (part.get("env") or {}).items():
+    for k, v in {**app_env.placeholders_for(app, part.get("env") or {}), **(part.get("env") or {})}.items():
         cmd += ["-e", f"{k}={v}"]
     for vol in (part.get("volumes") or []):
         if not isinstance(vol, str) or not vol.startswith("/") or ":" in vol:

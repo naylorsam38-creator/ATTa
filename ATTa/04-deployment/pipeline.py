@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import json, os, re, shutil, subprocess, sys, time, zipfile
-import builds, coolify_handoff, maintenance, intake, app_classifier, app_discovery, accounts
+import builds, coolify_handoff, maintenance, intake, app_classifier, app_discovery, accounts, app_owners
+from reserved import ORIGIN_WEB, ORIGIN_LOCAL, is_reserved
 
 ROOT=Path(os.environ.get('APP_BUILDER_ROOT','/srv/app-builder'))
-INBOX=ROOT/'inbox'; WORK=ROOT/'work'; LIB=ROOT/'library'; STATE=ROOT/'state'; PKG=ROOT/'package'
+INBOX=ROOT/'inbox'; WORK=ROOT/'work';
+# v115: the only place a bundle can be dropped on the server itself. Root-only (0700); the gateway never
+# writes here. Anything in INBOX must have a build record the gateway created (origin "web").
+LOCAL_INBOX=ROOT/'local-inbox'; LIB=ROOT/'library'; STATE=ROOT/'state'; PKG=ROOT/'package'
 STATUS=STATE/'status.json'; LOCK=STATE/'pipeline.lock'; MANIFEST=ROOT/'upstream_apps.json'
 # App catalogue: the runtime copy accumulates; the shipped copy next to this file is the baseline.
 HERE=Path(__file__).resolve().parent; CATALOGUE=ROOT/'app_catalogue.json'
@@ -13,6 +17,9 @@ MAX_EXTRACTED=int(os.environ.get('APP_BUILDER_MAX_EXTRACTED','53687091200'))
 GIT_TIMEOUT=int(os.environ.get('APP_BUILDER_GIT_TIMEOUT','900'))
 INSTALL_TIMEOUT=int(os.environ.get('APP_BUILDER_INSTALL_TIMEOUT','1800'))
 for p in (INBOX,WORK,LIB,STATE,PKG): p.mkdir(parents=True,exist_ok=True)
+LOCAL_INBOX.mkdir(mode=0o700,exist_ok=True)
+try: os.chmod(LOCAL_INBOX,0o700)
+except OSError: pass
 
 def state(**kw):
     d={}
@@ -280,6 +287,7 @@ def ingest_upload(stage,bid,owner,original):
             kept.append(name); continue   # the library copy is authoritative (repairs live there)
         shutil.move(str(src),str(dest))
         _git_snapshot(dest,f'intake: {name} uploaded by {owner} (build {bid}) from {a["rel"]}')
+        app_owners.record(name,owner,bid)
         added.append(name)
     return added,kept
 
@@ -291,17 +299,41 @@ def ingest_repo(url,bid,owner):
     try: run(['git','clone','--depth','1',url,str(dest)])
     except RuntimeError:
         shutil.rmtree(dest,ignore_errors=True); raise
+    app_owners.record(name,owner,bid)
     return [name],[]
 
-# v114: only an admin may change the system itself. An ATTa bundle replaces the skins package (whose
+# Only an admin may change the system itself. An ATTa bundle replaces the skins package (whose
 # install_all.py the pipeline then RUNS), the Front Door page every user sees, and queues a root
-# deploy with ADM. 'system' = a zip placed in the inbox from the server itself, not via the web.
-TRUSTED_OWNERS=('system',)
-def may_update_system(owner):
-    if owner in TRUSTED_OWNERS: return True
-    try: acct=accounts.get(owner) if owner else None
+# deploy with ADM.
+# v115: decided by where the build CAME FROM, never by the name on it.
+#   origin "local" = the pipeline itself made the record for a bundle in LOCAL_INBOX (root-only, checked
+#                    in local_item_trusted()) -> trusted, it needed root to put it there.
+#   origin "web"   = the gateway made it for a logged-in account -> that account must be an enabled
+#                    admin right now (a reserved name never is: accounts.get() hides it).
+#   anything else, or no origin -> refused.
+def may_update_system(rec):
+    if not isinstance(rec,dict): return False
+    origin,owner=rec.get('origin'),rec.get('owner')
+    if origin==ORIGIN_LOCAL: return owner=='system' and bool(rec.get('local_verified'))
+    if origin!=ORIGIN_WEB or not isinstance(owner,str) or is_reserved(owner): return False
+    try: acct=accounts.get(owner)
     except Exception: acct=None
     return bool(acct) and acct.get('role')=='admin' and not acct.get('disabled')
+
+def local_item_trusted(p):
+    """(ok, why). A local-inbox item is trusted only if it and its folder belong to this (root) process
+    and nobody else can write them: a regular file, not a link, owned by us, not group/other-writable."""
+    import stat as st
+    try:
+        for x,kind in ((p.parent,'folder'),(p,'file')):
+            s=os.lstat(x)
+            if st.S_ISLNK(s.st_mode): return False,f'local inbox {kind} {x.name} is a symlink'
+            if s.st_uid!=os.geteuid(): return False,f'local inbox {kind} {x.name} is owned by uid {s.st_uid}, not {os.geteuid()}'
+            if s.st_mode & 0o022: return False,f'local inbox {kind} {x.name} is writable by group/others (mode {oct(s.st_mode & 0o777)})'
+        if not st.S_ISREG(os.lstat(p).st_mode): return False,'local inbox item is not a regular file'
+    except OSError as e:
+        return False,f'local inbox item unreadable: {e}'
+    return True,'local'
 
 class SystemUpdateRefused(RuntimeError):
     pass
@@ -312,7 +344,7 @@ def queue_system_update(b,stage,bid,rec):
     bundle's own `bash run`, health-checks, and rolls back on failure — after this build has
     finished, so the restart never kills a running build. Only the pipeline writes the build
     record: ADM's own progress lives in its journal, which the build page reads."""
-    if not may_update_system(rec.get('owner')):   # second check: process() already refuses first
+    if not may_update_system(rec):   # second check: process() already refuses first
         builds.update(bid,adm={'queued':False,'reason':'system updates need an admin account; system code unchanged'})
         step('SYSTEM_UPDATE_REFUSED',owner=rec.get('owner')); return None
     roots=[p.parent for p in stage.rglob('release.json') if (p.parent/'run').is_file() and (p.parent/'04-deployment/bootstrap.sh').is_file()]
@@ -323,7 +355,7 @@ def queue_system_update(b,stage,bid,rec):
     try:
         sys.path.insert(0,str(HERE/'deployd'))
         from adm import queue as adm_queue
-        job=adm_queue.enqueue(b,build_id=bid,original_name=rec.get('original_name') or b.name,requested_by=rec.get('owner','system'))
+        job=adm_queue.enqueue(b,build_id=bid,original_name=rec.get('original_name') or b.name,requested_by=rec['owner'],origin=rec['origin'])
         builds.update(bid,adm={'queued':True,'job_id':job,'note':'system code update queued with ADM; runs after this build finishes'})
         step('SYSTEM_UPDATE_QUEUED',adm_job=job)
         return job
@@ -360,10 +392,28 @@ def process(b):
     Returns the build's final state."""
     global CURRENT_BUILD, LAST_BUILD
     bid=build_id_of(b)
-    if not builds.ID_RE.match(bid) or builds.get(bid) is None:
-        # A zip dropped straight into the inbox (not via the gateway) still gets a build record.
-        bid=builds.create('system',bundle=b.name)['id']
-    rec=builds.get(bid) or {}
+    if b.parent==LOCAL_INBOX:
+        # v115: dropped on the server itself. The pipeline makes the record, origin "local", but only
+        # after checking nobody but root could have put the file there.
+        ok,why=local_item_trusted(b)
+        rec=builds.create('system',origin=ORIGIN_LOCAL,bundle=b.name,local_verified=ok)
+        bid=rec['id']
+        if not ok:
+            builds.update(bid,state=builds.FAILED,refused=True,error=f'local inbox item refused: {why}')
+            LAST_BUILD=None; return builds.FAILED
+    else:
+        rec=builds.get(bid) if builds.ID_RE.match(bid) else None
+        # v115: an inbox item is a web upload. It must have the record the gateway wrote, saying so.
+        # No record, or no/unknown origin (a record from before v115), is refused; it is never
+        # quietly turned into a 'system' build.
+        if rec is None:
+            print(f'inbox: refused {b.name}: no build record (only the web Add page writes here; '
+                  f'bundles placed on the server go in {LOCAL_INBOX})',flush=True)
+            LAST_BUILD=None; return builds.FAILED
+        if rec.get('origin')!=ORIGIN_WEB or not isinstance(rec.get('owner'),str) or is_reserved(rec.get('owner')):
+            builds.update(bid,state=builds.FAILED,refused=True,
+                          error=f"refused: build origin {rec.get('origin')!r} / owner {rec.get('owner')!r} is not a web upload by an account; upload it again")
+            LAST_BUILD=None; return builds.FAILED
     CURRENT_BUILD=LAST_BUILD=bid
     step('VALIDATING',bundle=b.name)
     stage=WORK/f'run-{int(time.time())}-{os.getpid()}'; stage.mkdir()
@@ -372,14 +422,14 @@ def process(b):
         if b.name.endswith('.repo.json'):
             url=json.loads(b.read_text()).get('url','')
             step('ADDING_APP',kind='git',source=url)
-            added,kept=ingest_repo(url,bid,rec.get('owner','system'))
+            added,kept=ingest_repo(url,bid,rec['owner'])
             builds.update(bid,package=ensure_package())
         else:
             with zipfile.ZipFile(b) as z: extract(z,stage)
             n=nested(stage,'UI_Skin_Capability_OneShot_v2.zip')
             if n:
                 builds.update(bid,kind='bundle')
-                if not may_update_system(rec.get('owner')):
+                if not may_update_system(rec):
                     # Refused before anything is touched: skins package, Front Door page and code stay as they are.
                     builds.update(bid,refused=True,adm={'queued':False,'reason':'system updates need an admin account; system code unchanged'})
                     raise SystemUpdateRefused(f"only an admin can upload an ATTa bundle (uploaded by {rec.get('owner')!r}); nothing was changed")
@@ -392,7 +442,7 @@ def process(b):
                 queue_system_update(b,stage,bid,rec)
             else:
                 step('ADDING_APP',kind='upload',source=rec.get('original_name') or b.name)
-                added,kept=ingest_upload(stage,bid,rec.get('owner','system'),rec.get('original_name'))
+                added,kept=ingest_upload(stage,bid,rec['owner'],rec.get('original_name'))
                 builds.update(bid,package=ensure_package())
         if added or kept: builds.update(bid,apps_added=added,apps_already_in_library=kept)
         step('FETCHING_LIBRARY'); lib=library()
@@ -470,8 +520,10 @@ def process(b):
 def _inbox_items():
     done=('.processed.zip','.failed.zip','.processed.json','.failed.json')
     zips=[p for p in INBOX.glob('*.zip') if not p.name.endswith(done)]
-    repos=[p for p in INBOX.glob('*.repo.json')]
-    return sorted(zips+repos,key=lambda p:p.name)
+    repos=[p for p in INBOX.glob('*.repo.json') if not p.name.endswith(done)]
+    # v115: bundles placed on the server itself (zips only; a git address comes through the web page).
+    local=[p for p in LOCAL_INBOX.glob('*.zip') if not p.name.endswith(done)] if LOCAL_INBOX.is_dir() else []
+    return sorted(zips+repos,key=lambda p:p.name)+sorted(local,key=lambda p:p.name)
 
 def loop():
     while True:
@@ -484,7 +536,7 @@ def loop():
                 b=bs[0]; st=process(b)
                 ok=st in (builds.QUALIFIED,builds.PARTIALLY_QUALIFIED,builds.PACKAGE_INSTALLED)
                 ext='.json' if b.name.endswith('.json') else '.zip'
-                b.rename(INBOX/(build_id_of(b)+('.processed' if ok else '.failed')+ext))
+                b.rename(b.parent/(build_id_of(b)+('.processed' if ok else '.failed')+ext))
                 # Self-healing: script -> adapter -> LLM -> human, for whatever didn't pass.
                 if st not in (builds.QUALIFIED,builds.PACKAGE_INSTALLED) and LAST_BUILD:
                     try: maintenance.on_failure(LAST_BUILD)

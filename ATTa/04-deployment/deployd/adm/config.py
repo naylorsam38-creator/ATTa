@@ -53,6 +53,15 @@ POLL_SECONDS = 5
 DIRS = (INCOMING, QUEUE, JOURNAL, STAGING, RELEASES, BACKUPS, LOGS)
 
 
+# v115: folders a local (trusted) job comes from. This daemon's user only; authz refuses jobs if loosened.
+PRIVATE_DIRS = (ADM / "state", INCOMING, QUEUE, JOURNAL, STAGING)
+
+
 def ensure_dirs():
     for d in DIRS:
         d.mkdir(parents=True, exist_ok=True)
+    for d in PRIVATE_DIRS:
+        try:
+            os.chmod(d, 0o700)
+        except OSError:
+            pass

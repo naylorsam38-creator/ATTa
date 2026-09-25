@@ -20,6 +20,7 @@ permissions). The accounts file itself holds hashes only.
 from __future__ import annotations
 import argparse, hashlib, hmac, json, os, re, secrets, sys, tempfile, threading, time
 from pathlib import Path
+from reserved import RESERVED_NAMES, is_reserved
 
 # ===================== CONFIG — edit here, nothing below needs reading =====================
 # Where the app keeps its data. Same variable the gateway and pipeline use.
@@ -79,6 +80,10 @@ def save(d: dict) -> None:
 
 
 def get(name: str) -> dict | None:
+    """The account, or None. v115: a reserved name (reserved.py) is never an account, even if the file
+    has one (from before v115): it can't log in, its sessions stop, and nothing trusts it."""
+    if is_reserved(name):
+        return None
     return load()["users"].get(name)
 
 
@@ -96,6 +101,8 @@ def verify(name: str, password: str) -> dict | None:
 def create(name: str, role: str, password: str | None = None, note: str = "") -> str:
     if not NAME_RE.match(name):
         raise ValueError(f"bad username {name!r}: 2-32 chars, lowercase letters, digits, _ . -")
+    if is_reserved(name):
+        raise ValueError(f"{name!r} is reserved for ATTa's own processes and can't be an account")
     if role not in ROLES:
         raise ValueError(f"role must be one of {ROLES}")
     password = password or new_password()
@@ -110,6 +117,8 @@ def create(name: str, role: str, password: str | None = None, note: str = "") ->
 
 
 def update(name: str, **fields) -> None:
+    if is_reserved(name) and fields.get("disabled") is False:
+        raise ValueError(f"{name!r} is reserved for ATTa's own processes and can't be enabled")
     with _LOCK:
         d = load()
         u = d["users"].get(name)
@@ -131,6 +140,9 @@ def init() -> list[tuple[str, str, str]]:
     """Create the admin and the test accounts that don't exist yet. Returns (name, role, password)
     for accounts created in this run only. Existing accounts are never touched."""
     made = []
+    if is_reserved(ADMIN_NAME):
+        raise ValueError(f"APP_BUILDER_USER={ADMIN_NAME!r} is reserved for ATTa's own processes; choose another admin name")
+    disable_reserved()
     d = load()
     if ADMIN_NAME not in d["users"]:
         # Carry over the old single shared password if the server already had one, so the
@@ -144,6 +156,23 @@ def init() -> list[tuple[str, str, str]]:
     if made:
         _append_credentials(made)
     return made
+
+
+def disable_reserved() -> list[str]:
+    """v115: an account created before names were reserved is disabled (sessions ended, note kept).
+    Returns the names disabled in this call."""
+    done = []
+    with _LOCK:
+        d = load()
+        for name, u in d["users"].items():
+            if is_reserved(name) and not u.get("disabled"):
+                u["disabled"] = True
+                u["note"] = (u.get("note", "") + " | disabled: name reserved for ATTa's own processes (v115)").strip(" |")
+                u["session_version"] = int(u.get("session_version", 1)) + 1
+                done.append(name)
+        if done:
+            save(d)
+    return done
 
 
 def _append_credentials(rows) -> None:
@@ -170,13 +199,16 @@ def main(argv=None) -> int:
     args = ap.parse_args(argv)
     try:
         if args.cmd == "init":
+            for name in disable_reserved():
+                print(f"disabled {name}: the name is reserved for ATTa's own processes", file=sys.stderr)
             made = init()
             for name, role, _ in made:
                 print(f"created {name} ({role})")
             print(f"{len(made)} account(s) created. Passwords: {TEST_ACCOUNTS_FILE}" if made else "all accounts already exist")
         elif args.cmd == "list":
             for u in sorted(load()["users"].values(), key=lambda u: (u["role"] != "admin", u["name"])):
-                print(f"{u['name']:<14} {u['role']:<6} {'DISABLED' if u.get('disabled') else 'active'}")
+                state = "RESERVED (never active)" if is_reserved(u["name"]) else "DISABLED" if u.get("disabled") else "active"
+                print(f"{u['name']:<14} {u['role']:<6} {state}")
         elif args.cmd == "add":
             print(create(args.name, "admin" if args.admin else "user"))
         elif args.cmd == "reset":

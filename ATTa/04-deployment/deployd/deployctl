@@ -28,7 +28,7 @@ def _v(p):
 def cmd_deploy(args):
     if len(args) != 1:
         return usage()
-    job = queue.enqueue(args[0], requested_by="deployctl")
+    job = queue.enqueue(args[0], requested_by="deployctl", origin="local")
     meta = next(m for m in queue.pending() if m["job_id"] == job)
     verdict = manager.process(meta)
     doc = journal.load(job)

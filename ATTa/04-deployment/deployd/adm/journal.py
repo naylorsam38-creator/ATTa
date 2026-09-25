@@ -42,7 +42,7 @@ def record(job, event, **fields):
         doc["events"].append({"at": now(), "event": event, **fields})
         if event in VERDICTS:
             doc["verdict"] = event
-        for k in ("build_id", "version", "release", "backup", "log", "original_name", "requested_by"):
+        for k in ("build_id", "version", "release", "backup", "log", "original_name", "requested_by", "origin"):
             if k in fields and fields[k] is not None:
                 doc[k] = fields[k]
         doc["updated_at"] = now()

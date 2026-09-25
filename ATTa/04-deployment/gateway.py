@@ -3,7 +3,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 import hashlib,hmac,html,json,os,secrets,time,re,threading,zipfile
-import accounts, builds, alerts
+import accounts, builds, alerts, app_owners, customer_secrets
 ROOT=Path(os.environ.get("APP_BUILDER_ROOT","/srv/app-builder"));
 LOGIN_WINDOW=int(os.environ.get("APP_BUILDER_LOGIN_WINDOW","900")); LOGIN_MAX_FAILURES=int(os.environ.get("APP_BUILDER_LOGIN_MAX_FAILURES","8")); _LOGIN_FAILURES={}
 _LOGIN_LOCK=threading.Lock()
@@ -11,8 +11,10 @@ INBOX=ROOT/"inbox"; STATUS=ROOT/"state/status.json"; FRONT=ROOT/"front-door.html
 HOST=os.environ.get("APP_BUILDER_HOST","127.0.0.1"); PORT=int(os.environ.get("APP_BUILDER_PORT","8787")); SECRET=os.environ.get("APP_BUILDER_SESSION_SECRET",""); MAX=int(os.environ.get("APP_BUILDER_MAX_UPLOAD","10737418240")); SESSION_TTL=int(os.environ.get("APP_BUILDER_SESSION_TTL","86400"))
 # Local testing escape hatch: when APP_BUILDER_AUTH_DISABLED=1 the gateway skips the login
 # entirely and every request acts as a local admin. Never set on a server.
+# v115: that identity is not an account, so its uploads add apps but can never update the system itself
+# (pipeline.may_update_system needs a real enabled admin account for a web build).
 AUTH_DISABLED=os.environ.get("APP_BUILDER_AUTH_DISABLED","")=="1"
-LOCAL_ADMIN={"name":"local","role":"admin"}
+LOCAL_ADMIN={"name":"local-admin","role":"admin"}
 for p in (INBOX,STATUS.parent,CHOICES): p.mkdir(parents=True,exist_ok=True)
 if not AUTH_DISABLED and not SECRET: raise SystemExit("APP_BUILDER_SESSION_SECRET is required")
 if not AUTH_DISABLED and not accounts.load()["users"]: raise SystemExit("No accounts exist. Run: python3 accounts.py init")
@@ -66,8 +68,60 @@ def page(title,body,me=None):
   if me["role"]=="admin": links+=' <a href=/status>System status</a> <a href=/alerts>Alerts</a>'
   nav='<nav>'+links+'<span>'+html.escape(me["name"])+' ('+html.escape(me["role"])+')'+(' <a href=/logout>Log out</a>' if not AUTH_DISABLED else '')+'</span></nav>'
  return ('<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+html.escape(title)+'</title><style>body{font-family:system-ui;margin:40px;max-width:900px}input,button{padding:10px;margin:6px 0}pre{background:#f4f4f4;padding:12px;overflow:auto}nav{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #ddd}nav span{margin-left:auto;color:#666}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:6px 8px;border-bottom:1px solid #eee}.QUALIFIED,.MAPPED{color:#0a7a2f;font-weight:600}.PARTIALLY_QUALIFIED{color:#9a6700;font-weight:600}.FAILED,.NOT_QUALIFIED{color:#b00020;font-weight:600}</style></head><body>'+nav+body+'</body></html>').encode()
-EVIDENCE_FILES={"screenshot.png":"image/png","page.html":"text/html; charset=utf-8","browser.json":"application/json"}
-def discovered_html(r):
+EVIDENCE_FILES={"screenshot.png":"image/png","page.html":"text/plain; charset=utf-8","browser.json":"application/json"}
+EVIDENCE_DIR=ROOT/"state/runner/evidence"
+# v115: security headers. Every ATTa page is built here with no script at all, so its CSP allows none.
+# The Front Door carries its own inline script and keeps a looser policy that still forbids framing.
+CSP_PAGE="default-src 'none'; style-src 'unsafe-inline'; img-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+CSP_FRONT="frame-ancestors 'self'; base-uri 'self'; object-src 'none'; form-action 'self'"
+CSP_DATA="default-src 'none'; frame-ancestors 'none'; sandbox"
+CSP_EVIDENCE="default-src 'none'; img-src 'self'; frame-ancestors 'none'; sandbox"
+PNG_MAGIC=b"\x89PNG\r\n\x1a\n"
+def evidence_response(f):
+ """v115: stage-6 evidence is DATA from an untrusted app, never ATTa UI. (body, content type, disposition).
+ A screenshot is shown only if it really is a PNG; JSON is JSON; page.html and anything else download as
+ plain text/bytes, so the page the app produced can never run inside ATTa's origin."""
+ b=f.read_bytes(); name=re.sub(r"[^A-Za-z0-9._-]","_",f.parent.name+"-"+f.name)
+ if f.suffix.lower()==".png" and b.startswith(PNG_MAGIC): return b,"image/png","inline; filename=\""+name+"\""
+ if f.suffix.lower()==".json":
+  try: json.loads(b); return b,"application/json","inline; filename=\""+name+"\""
+  except ValueError: pass
+ if f.suffix.lower() in (".html",".htm",".txt",".log",".json"): return b,"text/plain; charset=utf-8","attachment; filename=\""+name+".txt\""
+ return b,"application/octet-stream","attachment; filename=\""+name+"\""
+def same_origin_post(h):
+ """v115: a POST must come from ATTa's own pages. Browsers send Sec-Fetch-Site and Origin on every POST;
+ another site (or another port / subdomain, e.g. an app deployed next to ATTa) is refused. A client that
+ sends neither header (curl, API scripts with the session cookie) is not a browser and can't be tricked."""
+ sfs=h.headers.get("Sec-Fetch-Site")
+ if sfs and sfs.lower() not in ("same-origin","none"): return False
+ o=h.headers.get("Origin") or h.headers.get("Referer")
+ if not o: return True
+ if o=="null": return False
+ try:
+  u=urlparse(o); hst=urlparse("//"+h.headers.get("Host",""))
+  if not u.hostname or (u.hostname or "").lower()!=(hst.hostname or "").lower(): return False
+  op=u.port or {"https":443,"http":80}.get(u.scheme)
+  return op==hst.port if hst.port else op in (80,443)
+ except ValueError: return False
+_RATE_LOCK=threading.Lock(); _RATE={}
+def rate_ok(user,what,per_min):
+ now=time.time()
+ with _RATE_LOCK:
+  q=[t for t in _RATE.get((user,what),[]) if now-t<60]
+  if len(q)>=per_min: _RATE[(user,what)]=q; return False
+  q.append(now); _RATE[(user,what)]=q; return True
+LIB=ROOT/"library"
+def app_exists(a): return bool(a) and (LIB/a).is_dir()
+def secrets_page(me,app,msg=""):
+ """v115: the customer enters their own integration tokens for an app they added. The values go straight
+ to Coolify (customer_secrets.py); this page only ever shows names, fingerprints and when."""
+ r=customer_secrets.receipts(app).get("vars") or {}
+ rows="".join("<tr><td><code>"+html.escape(n)+"</code></td><td><code>"+html.escape(v.get("fingerprint",""))+"</code></td><td>"+when(v.get("at"))+"</td><td>"+html.escape(str(v.get("build_id") or ""))+"</td><td>"+html.escape(str(v.get("by") or ""))+"</td><td>"+html.escape(str(v.get("delivered_to") or ""))+"</td></tr>" for n,v in sorted(r.items()))
+ table=("<table><tr><th>Variable</th><th>Fingerprint</th><th>Delivered</th><th>Build</th><th>By</th><th>Held by</th></tr>"+rows+"</table>") if rows else "<p>No tokens delivered yet.</p>"
+ form="<form method=post action=/apps/"+html.escape(app)+"/secrets autocomplete=off>"+"".join("<input name=name placeholder=VARIABLE_NAME size=28 autocomplete=off> <input name=value type=password placeholder=value size=40 autocomplete=new-password><br>" for _ in range(3))+"<button>Send to the app</button></form>"
+ check="<h2>Check a token</h2><form method=post action=/apps/"+html.escape(app)+"/secrets/check autocomplete=off><input name=name placeholder=VARIABLE_NAME size=28 autocomplete=off> <input name=value type=password size=40 autocomplete=new-password> <button>Check</button></form>"
+ return page("Tokens: "+app,"<h1>Integration tokens for "+html.escape(app)+"</h1>"+(("<p><b>"+html.escape(msg)+"</b></p>") if msg else "")+"<p>Your own service tokens (payments, AI, email, ...). Each value goes straight to this app's deployment in Coolify and is used by the running app. ATTa keeps only the variable name and a short fingerprint so you can check later which token was sent; the value itself is not kept here.</p>"+table+"<h2>Send tokens</h2>"+form+check,me)
+def discovered_html(r,me=None):
  """v112: what the upload held (every app found in the zip) and, once checked, what the browser saw."""
  d=r.get("apps_discovered")
  ev={a.get("app"):a.get("evidence") for a in (r.get("qualification") or []) if a.get("evidence")}
@@ -78,7 +132,8 @@ def discovered_html(r):
   added=set(r.get("apps_added") or []); kept=set(r.get("apps_already_in_library") or [])
   out+="".join("<tr><td>"+html.escape(a.get("name",""))+"</td><td><code>"+html.escape(a.get("rel",""))+"</code></td><td>"+html.escape(a.get("how",""))+"</td><td>"+("added" if a.get("name") in added else "already there (library copy kept)" if a.get("name") in kept else "")+"</td></tr>" for a in d)+"</table>"
  if ev:
-  out+="<h2>What the browser saw (stage 6 evidence)</h2><p>"+" &middot; ".join("<b>"+html.escape(a)+"</b>: "+" ".join("<a href=/evidence/"+html.escape(a)+"/"+f+">"+f+"</a>" for f in EVIDENCE_FILES if e.get({"screenshot.png":"screenshot","page.html":"html","browser.json":"browser"}[f])) for a,e in ev.items())+"</p>"
+  ev={a:e for a,e in ev.items() if app_owners.can_access(me,a)}
+  if ev: out+="<h2>What the browser saw (stage 6 evidence)</h2><p>"+" &middot; ".join("<b>"+html.escape(a)+"</b>: "+" ".join("<a href=/evidence/"+html.escape(a)+"/"+f+">"+f+"</a>" for f in EVIDENCE_FILES if e.get({"screenshot.png":"screenshot","page.html":"html","browser.json":"browser"}[f])) for a,e in ev.items())+"</p>"
  return out
 def checklist_html(r):
  cl=r.get("checklist")
@@ -260,8 +315,18 @@ def multipart_upload(handler, content_type, content_length, destination, max_byt
     raise ValueError("multipart upload incomplete")
 
 class H(BaseHTTPRequestHandler):
- def out(self,b,code=200,cookie=None,ctype="text/html; charset=utf-8"):
+ _csp=None
+ def end_headers(self):
+  # v115: on every response, including redirects and errors.
+  self.send_header("X-Content-Type-Options","nosniff"); self.send_header("Referrer-Policy","same-origin")
+  self.send_header("Content-Security-Policy",self._csp or CSP_PAGE)
+  if (self._csp or CSP_PAGE)!=CSP_FRONT: self.send_header("X-Frame-Options","DENY")
+  self._csp=None
+  super().end_headers()
+ def out(self,b,code=200,cookie=None,ctype="text/html; charset=utf-8",csp=None,disposition=None):
+  self._csp=csp or (CSP_DATA if not ctype.startswith("text/html") else CSP_PAGE)
   self.send_response(code); self.send_header("Content-Type",ctype); self.send_header("Content-Length",str(len(b))); self.send_header("Cache-Control","no-store")
+  if disposition: self.send_header("Content-Disposition",disposition)
   if cookie:self.send_header("Set-Cookie",cookie)
   self.end_headers(); self.wfile.write(b)
  def redirect(self,to,cookie=None):
@@ -280,7 +345,7 @@ class H(BaseHTTPRequestHandler):
   # The Front Door (the questions page) is the first page everyone lands on.
   if p in ("/","/front-door","/login"):
    if not FRONT.exists(): self.out(page("Missing","<h1>front-door.html not installed</h1>",me),500); return
-   self.out(front_door(me)); return
+   self.out(front_door(me),csp=CSP_FRONT); return
   if p=="/upload": self.out(page("Add","<h1>Add an app</h1><p>Anything you add joins the library and gets its skin and checks automatically. No list needs updating first. The build is owned by <b>"+html.escape(me["name"])+"</b>. Each app is only <b>QUALIFIED</b> after the real-browser check passes, and only qualified apps go to Coolify.</p><h2>Upload a zip</h2><p>An app's source (e.g. <code>gitea-main.zip</code>), or the ATTa bundle to update the system itself.</p><form method=post action=/upload enctype=multipart/form-data><input type=file name=bundle accept=.zip><br><button>Upload and run pipeline</button></form><h2>Or add from a git address</h2><form method=post action=/add-repo><input name=url size=60 placeholder=https://github.com/owner/name><br><button>Add and run pipeline</button></form>",me)); return
   if p=="/library":
    try: cat=json.loads((ROOT/"app_catalogue.json").read_text()).get("apps",{})
@@ -296,13 +361,25 @@ class H(BaseHTTPRequestHandler):
     how=run.get("part") or run.get("why") or (run.get("detail") or "")[:160]
     cls="QUALIFIED" if r.get("verdict")=="PASS" else "FAILED"
     return "<span class="+cls+">"+html.escape(r.get("verdict",""))+"</span><br><small>"+html.escape(how)+"</small>"
-   rows="".join("<tr><td>"+html.escape(e.get("app",k))+"</td><td>"+("yes" if inlib(e) else "not yet")+"</td><td>"+last_check(e)+"</td><td>"+html.escape(e.get("skin_category") or "—")+"</td><td>"+html.escape(str(e.get("skin_source") or ""))+" / "+html.escape(str(e.get("skin_confidence") or ""))+"</td><td>"+html.escape(str(e.get("profile") or "—"))+"</td><td>"+html.escape(str(e.get("root") or ""))+"</td><td>"+html.escape(", ".join(e.get("sources",[])))+"</td><td class="+html.escape(e.get("status",""))+">"+html.escape(e.get("status",""))+("<br><small>"+html.escape("; ".join(e["look"]))+"</small>" if e.get("look") else "")+"</td></tr>" for k,e in order)
+   def tok(e):
+    a=re.sub(r"[^a-z0-9-]+","-",str(e.get("app","")).lower()).strip("-")
+    return (" <small><a href=/apps/"+html.escape(a)+"/secrets>tokens</a></small>") if inlib(e) and app_owners.can_access(me,a) else ""
+   rows="".join("<tr><td>"+html.escape(e.get("app",k))+tok(e)+"</td><td>"+("yes" if inlib(e) else "not yet")+"</td><td>"+last_check(e)+"</td><td>"+html.escape(e.get("skin_category") or "—")+"</td><td>"+html.escape(str(e.get("skin_source") or ""))+" / "+html.escape(str(e.get("skin_confidence") or ""))+"</td><td>"+html.escape(str(e.get("profile") or "—"))+"</td><td>"+html.escape(str(e.get("root") or ""))+"</td><td>"+html.escape(", ".join(e.get("sources",[])))+"</td><td class="+html.escape(e.get("status",""))+">"+html.escape(e.get("status",""))+("<br><small>"+html.escape("; ".join(e["look"]))+"</small>" if e.get("look") else "")+"</td></tr>" for k,e in order)
    self.out(page("Library","<h1>Library</h1><p>"+str(n_in)+" apps in the library, "+str(len(cat))+" known in total (seed repos are cloned on the next build). Grows with every app added; skin and profile come from each app's own files.</p><table><tr><th>App</th><th>In library</th><th>Last check (started how)</th><th>Skin</th><th>Decided by / confidence</th><th>Profile</th><th>Code root</th><th>Came from</th><th>Status</th></tr>"+rows+"</table>",me)); return
-  m=re.fullmatch(r"/evidence/([a-z0-9-]+)/(screenshot\.png|page\.html|browser\.json)",p)
+  m=re.fullmatch(r"/evidence/([a-z0-9-]+)/([A-Za-z0-9][A-Za-z0-9._-]{0,99})",p)
   if m:
-   f=ROOT/"state/runner/evidence"/m.group(1)/m.group(2)
-   if not f.is_file(): self.send_error(404); return
-   self.out(f.read_bytes(),ctype=EVIDENCE_FILES[m.group(2)]); return
+   # v115: only the app's owner (or an admin) sees its evidence; anyone else gets the same 404 as "missing".
+   if not app_owners.can_access(me,m.group(1)): self.send_error(404); return
+   base=(EVIDENCE_DIR/m.group(1))
+   try: f=(base/m.group(2)).resolve(strict=True)
+   except (OSError,RuntimeError): self.send_error(404); return
+   if (base/m.group(2)).is_symlink() or not f.is_relative_to(base.resolve()) or not f.is_file(): self.send_error(404); return
+   b,ct,disp=evidence_response(f)
+   self.out(b,ctype=ct,csp=CSP_EVIDENCE,disposition=disp); return
+  m=re.fullmatch(r"/apps/([a-z0-9-]+)/secrets",p)
+  if m:
+   if not app_exists(m.group(1)) or not app_owners.can_access(me,m.group(1)): self.send_error(404); return
+   self.out(secrets_page(me,m.group(1))); return
   if p=="/builds": self.out(page("Builds","<h1>"+("All builds" if me["role"]=="admin" else "My builds")+"</h1>"+builds_table(builds.visible_to(me),me),me)); return
   if p=="/api/me": self.json_out({"name":me["name"],"role":me["role"]}); return
   if p=="/api/builds": self.json_out(builds.visible_to(me)); return
@@ -313,7 +390,7 @@ class H(BaseHTTPRequestHandler):
    if not r or not builds.can_see(me,r): self.send_error(404); return
    if m.group(1): self.json_out(r); return
    hist="".join("<tr><td>"+when(h.get("at"))+"</td><td class="+html.escape(h.get("state",""))+">"+html.escape(h.get("state",""))+"</td><td>"+html.escape(h.get("error",""))+"</td></tr>" for h in r.get("history",[]))
-   self.out(page(r["id"],"<h1>Build "+html.escape(r["id"])+"</h1><p>Owner: <b>"+html.escape(r.get("owner",""))+"</b> &middot; State: <b class="+html.escape(r.get("state",""))+">"+html.escape(r.get("state",""))+"</b></p>"+("<p>"+html.escape(str(r["error"]))+"</p>" if r.get("error") else "")+discovered_html(r)+checklist_html(r)+adm_html(r)+"<h2>History</h2><table>"+hist+"</table>"+healing_html(r)+"<h2>Full record</h2><pre>"+html.escape(json.dumps(r,indent=2))+"</pre>",me)); return
+   self.out(page(r["id"],"<h1>Build "+html.escape(r["id"])+"</h1><p>Owner: <b>"+html.escape(r.get("owner",""))+"</b> &middot; State: <b class="+html.escape(r.get("state",""))+">"+html.escape(r.get("state",""))+"</b></p>"+("<p>"+html.escape(str(r["error"]))+"</p>" if r.get("error") else "")+discovered_html(r,me)+checklist_html(r)+adm_html(r)+"<h2>History</h2><table>"+hist+"</table>"+healing_html(r)+"<h2>Full record</h2><pre>"+html.escape(json.dumps(r,indent=2))+"</pre>",me)); return
   if p=="/alerts":
    # Human escalations (tier 4 of self-healing) span every user's builds: admin-only.
    if me["role"]!="admin": self.redirect("/builds"); return
@@ -330,6 +407,9 @@ class H(BaseHTTPRequestHandler):
   self.send_error(404)
  def do_POST(self):
   p=urlparse(self.path).path
+  if not same_origin_post(self):
+   # v115: a form or script on another site (or an app deployed next to ATTa) can't act as the user.
+   self.send_error(403,"cross-site request refused"); return
   if p=="/login":
    try:n=int(self.headers.get("Content-Length","0"))
    except ValueError:n=0
@@ -400,7 +480,7 @@ class H(BaseHTTPRequestHandler):
     try:f.with_suffix('.uploading').unlink()
     except OSError:pass
     self.out(page("Upload failed","<h1>Upload failed</h1><p>"+html.escape(str(exc))+"</p><a href=/upload>Try again</a>",me),400); return
-   b=builds.create(me["name"],bundle_bytes=written,original_name=getattr(self,"_upload_name","") or None)
+   b=builds.create(me["name"],origin="web",bundle_bytes=written,original_name=getattr(self,"_upload_name","") or None)
    f.replace(INBOX/(b["id"]+".zip"))
    # Redirect (Post/Redirect/Get): refreshing the build page can never upload the file again.
    self.redirect("/builds/"+b["id"]); return
@@ -411,10 +491,44 @@ class H(BaseHTTPRequestHandler):
    url=parse_qs(self.rfile.read(n).decode("utf-8","replace")).get("url",[""])[0].strip()
    if not re.fullmatch(r"https://[A-Za-z0-9.-]+/[A-Za-z0-9._~/-]+?(\.git)?/?",url):
     self.out(page("Not a repo URL","<h1>That isn't a usable repository address</h1><p>Use an https address like https://github.com/owner/name</p><a href=/upload>Back</a>",me),400); return
-   b=builds.create(me["name"],source=url,kind="git")
+   b=builds.create(me["name"],origin="web",source=url,kind="git")
    tmp=INBOX/(".incoming-"+b["id"]+".part")
    tmp.write_text(json.dumps({"url":url})+"\n"); tmp.replace(INBOX/(b["id"]+".repo.json"))
    self.redirect("/builds/"+b["id"]); return
+  m=re.fullmatch(r"/(api/)?apps/([a-z0-9-]+)/secrets(/check)?",p)
+  if m:
+   api,app,chk=bool(m.group(1)),m.group(2),bool(m.group(3))
+   if not app_exists(app) or not app_owners.can_access(me,app): self.send_error(404); return
+   try:
+    n=int(self.headers.get("Content-Length","0"))
+    if not 0<n<=512000: raise ValueError("body must be 1 byte to 500 KB")
+    raw=self.rfile.read(n)
+    if api:
+     if "application/json" not in self.headers.get("Content-Type",""): raise ValueError("expected application/json")
+     d=json.loads(raw)
+     if not isinstance(d,dict): raise ValueError("expected a JSON object")
+    else:
+     q=parse_qs(raw.decode("utf-8","replace"),keep_blank_values=True)
+     names=[x.strip() for x in q.get("name",[])]; vals=q.get("value",[])
+     if chk: d={"name":names[0] if names else "","value":vals[0] if vals else ""}
+     else: d={"secrets":{k:v for k,v in zip(names,vals) if k or v}}
+   except (ValueError,UnicodeDecodeError) as e:
+    self.json_out({"ok":False,"error":str(e)},400) if api else self.out(secrets_page(me,app,"Not sent: "+str(e)),400); return
+   if chk:
+    if not rate_ok(me["name"],"secret-check",20): self.json_out({"ok":False,"error":"too many checks; wait a minute"},429) if api else self.out(secrets_page(me,app,"Too many checks; wait a minute."),429); return
+    r=customer_secrets.check(app,str(d.get("name","")),d.get("value"))
+    if api: self.json_out({"ok":True,**r}); return
+    msg=("No token recorded for that variable." if not r["recorded"] else "Matches the token delivered "+when(r.get("at"))+"." if r["matches"] else "Does NOT match the token delivered "+when(r.get("at"))+".")
+    self.out(secrets_page(me,app,msg)); return
+   if not rate_ok(me["name"],"secret-deliver",10): self.json_out({"ok":False,"error":"too many deliveries; wait a minute"},429) if api else self.out(secrets_page(me,app,"Too many deliveries; wait a minute."),429); return
+   bid=d.get("build_id") if api else None
+   if bid is not None and not (isinstance(bid,str) and builds.ID_RE.match(bid) and (builds.get(bid) or None) and builds.can_see(me,builds.get(bid))): bid=None
+   bid=bid or (app_owners.get(app) or {}).get("build_id")
+   try: r=customer_secrets.deliver(app,d.get("secrets"),me["name"],bid)
+   except customer_secrets.SecretError as e:
+    self.json_out({"ok":False,"error":str(e)},400) if api else self.out(secrets_page(me,app,"Not sent: "+str(e)),400); return
+   if api: self.json_out({"ok":True,**r}); return
+   self.out(secrets_page(me,app,"Sent to Coolify: "+", ".join(r["delivered"])+("" if (r.get("redeploy") or {}).get("ok",True) else " (the redeploy call failed: "+str(r["redeploy"]["detail"])[:200]+")"))); return
   self.send_error(404)
  def log_message(self,*a): pass
 ThreadingHTTPServer((HOST,PORT),H).serve_forever()

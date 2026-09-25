@@ -17,6 +17,7 @@ QUALIFIED build is ever handed to Coolify (see coolify_handoff.py).
 from __future__ import annotations
 import json, os, re, secrets, tempfile, time
 from pathlib import Path
+from reserved import ORIGINS
 
 # ===================== CONFIG — edit here, nothing below needs reading =====================
 # Where the app keeps its data. Same variable the gateway and pipeline use.
@@ -59,9 +60,16 @@ def _write(rec: dict) -> None:
     os.replace(tmp, path(rec["id"]))
 
 
-def create(owner: str, **fields) -> dict:
+def create(owner: str, *, origin: str, **fields) -> dict:
+    """v115: every build says where it came from. origin="web" (the gateway, for a logged-in account) or
+    "local" (the pipeline, for a bundle in the root-only local inbox). There is no default: a caller that
+    doesn't know where its build came from must not create one."""
+    if origin not in ORIGINS:
+        raise ValueError(f"build origin must be one of {ORIGINS}, not {origin!r}")
+    if not isinstance(owner, str) or not owner:
+        raise ValueError("a build needs an owner")
     now = time.time()
-    rec = {"id": new_id(), "owner": owner, "state": QUEUED, "created": now, "updated": now,
+    rec = {"id": new_id(), "owner": owner, "origin": origin, "state": QUEUED, "created": now, "updated": now,
            "history": [{"state": QUEUED, "at": now}], **fields}
     _write(rec)
     return rec

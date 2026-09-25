@@ -61,6 +61,18 @@ def _resources() -> dict:
         return {}
 
 
+def resource_for(app: str) -> dict | None:
+    """v115: the Coolify resource for an app. coolify_resources.json maps an app to either a UUID string
+    (an application) or {"uuid": "...", "kind": "application" | "service"}. None if unmapped/malformed."""
+    r = _resources().get(app)
+    if isinstance(r, str) and r.strip():
+        return {"uuid": r.strip(), "kind": "application"}
+    if isinstance(r, dict) and isinstance(r.get("uuid"), str) and r["uuid"].strip():
+        kind = r.get("kind", "application")
+        return {"uuid": r["uuid"].strip(), "kind": kind if kind in ("application", "service") else "application"}
+    return None
+
+
 def _write_manifest(m: dict) -> Path:
     OUTBOX.mkdir(parents=True, exist_ok=True)
     fd, tmp = tempfile.mkstemp(dir=OUTBOX, prefix=".handoff.")
@@ -132,11 +144,11 @@ def dispatch(build_id: str) -> dict:
         c["status"] = NOT_CONFIGURED
         c["last_error"] = "COOLIFY_URL and COOLIFY_TOKEN must be set in the .env file"
     else:
-        res = _resources()
         for app, st in apps.items():
             if st.get("status") == "ACCEPTED":
                 continue
-            uuid = res.get(app)
+            r = resource_for(app)
+            uuid = r["uuid"] if r else None
             if not uuid:
                 apps[app] = {"status": "UNMAPPED", "detail": f"no entry for {app!r} in {RESOURCES_FILE.name}"}
                 continue

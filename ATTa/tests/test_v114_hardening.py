@@ -39,15 +39,18 @@ class SystemUpdateIsAdminOnly(unittest.TestCase):
         users(admin="admin", tester01="user", gone=("admin", True))
 
     def test_roles(self):
-        self.assertTrue(pipeline.may_update_system("admin"))
-        self.assertTrue(pipeline.may_update_system("system"))       # inbox drop on the server itself
-        self.assertFalse(pipeline.may_update_system("tester01"))
-        self.assertFalse(pipeline.may_update_system("gone"))        # disabled admin
-        self.assertFalse(pipeline.may_update_system("nobody"))
+        # v115: decided by the record's origin, not the name (see test_v115_security.py for the attacks).
+        web = lambda who: {"origin": "web", "owner": who}
+        self.assertTrue(pipeline.may_update_system(web("admin")))
+        self.assertTrue(pipeline.may_update_system({"origin": "local", "owner": "system", "local_verified": True}))
+        self.assertFalse(pipeline.may_update_system(web("system")))  # the name alone is worth nothing now
+        self.assertFalse(pipeline.may_update_system(web("tester01")))
+        self.assertFalse(pipeline.may_update_system(web("gone")))    # disabled admin
+        self.assertFalse(pipeline.may_update_system(web("nobody")))
         self.assertFalse(pipeline.may_update_system(None))
 
     def _bundle_upload(self, owner):
-        rec = builds.create(owner, bundle_bytes=1, original_name="ATTa-evil.zip")
+        rec = builds.create(owner, origin="web", bundle_bytes=1, original_name="ATTa-evil.zip")
         inner = io.BytesIO()
         with zipfile.ZipFile(inner, "w") as z:
             z.writestr("out/install_all.py", "import os; os.system('touch /tmp/pwned')\n")
@@ -74,7 +77,7 @@ class SystemUpdateIsAdminOnly(unittest.TestCase):
         self.assertEqual(maintenance.on_failure(bid), "REFUSED")                      # not sent to self-healing
 
     def test_queue_system_update_second_check(self):
-        rec = builds.create("tester01", bundle_bytes=1)
+        rec = builds.create("tester01", origin="web", bundle_bytes=1)
         stage = TMP / "stage-q"; (stage / "04-deployment").mkdir(parents=True, exist_ok=True)
         (stage / "run").write_text(""); (stage / "release.json").write_text("{}")
         (stage / "04-deployment" / "bootstrap.sh").write_text("")
@@ -87,20 +90,29 @@ class AdmAuthorisation(unittest.TestCase):
         authz.USERS_FILE = accounts.USERS_FILE
         users(admin="admin", tester01="user")
 
+    def _meta(self, who, origin):
+        z = make_zip(TMP / "a.zip", {"x.txt": "hi"})
+        job = adm_queue.enqueue(z, requested_by=who, origin=origin)
+        return [m for m in adm_queue.pending() if m["job_id"] == job][0]
+
+    def tearDown(self):
+        for m in adm_queue.pending():
+            adm_queue.finish(m)
+
     def test_allowed(self):
-        for who in ("deployctl", "incoming", "system", "admin"):
-            self.assertTrue(authz.allowed(who)[0], who)
-        for who in ("tester01", "nobody", None):
-            self.assertFalse(authz.allowed(who)[0], who)
+        for who, origin in (("deployctl", "local"), ("incoming", "local"), ("system", "local"), ("admin", "web")):
+            self.assertTrue(authz.allowed(self._meta(who, origin))[0], who)
+        for who, origin in (("tester01", "web"), ("nobody", "web"), ("system", "web"), ("admin", "local")):
+            self.assertFalse(authz.allowed(self._meta(who, origin))[0], who)
 
     def test_unreadable_accounts_refuses_web_jobs(self):
         accounts.USERS_FILE.write_text("{not json")
-        self.assertFalse(authz.allowed("admin")[0])
-        self.assertTrue(authz.allowed("deployctl")[0])
+        self.assertFalse(authz.allowed(self._meta("admin", "web"))[0])
+        self.assertTrue(authz.allowed(self._meta("deployctl", "local"))[0])
 
     def test_non_admin_job_touches_nothing(self):
         z = make_zip(TMP / "b.zip", {"x.txt": "hi"})
-        job = adm_queue.enqueue(z, build_id="b-1", requested_by="tester01")
+        job = adm_queue.enqueue(z, build_id="b-1", requested_by="tester01", origin="web")
         meta = [m for m in adm_queue.pending() if m["job_id"] == job][0]
         self.assertEqual(manager.process(meta), "FAILED")
         j = json.loads((adm_config.JOURNAL / f"{job}.json").read_text())

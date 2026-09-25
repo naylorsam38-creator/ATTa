@@ -25,6 +25,10 @@ builds are handed to Coolify to run.
    NOT_QUALIFIED (none). One broken app no longer holds the others back.
 7. **Coolify**: every qualified app is handed off automatically. See
    [docs/COOLIFY-HANDOFF.md](docs/COOLIFY-HANDOFF.md).
+8. **Your integration tokens** (Stripe, PayPal, OpenAI/Anthropic, email service, ...): Library →
+   **tokens** next to an app you added. Each value goes straight to that app's deployment in Coolify;
+   ATTa keeps only the variable name, a short fingerprint, when, which build and who. Uploaded apps never
+   receive ATTa's own credentials. See [docs/history/CHANGES-2026-09-25-V115-SECURITY.md](docs/history/CHANGES-2026-09-25-V115-SECURITY.md).
 
 `04-deployment/upstream_apps.json` is now only a **seed list**: repos cloned into the library if
 they aren't there yet. Delete it, and nothing breaks. APP_MAP in the skins package is kept as
