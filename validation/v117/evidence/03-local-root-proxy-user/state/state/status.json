@@ -1,0 +1,11 @@
+{
+  "state": "QUALIFYING",
+  "bundle": "b-20260925-140750-4aad9208.zip",
+  "updated_at": 1790345388.7903845,
+  "kind": "upload",
+  "source": "static-landing.zip",
+  "library": "/root/.app-builder-local/library",
+  "targets": "/root/.app-builder-local/state/apps",
+  "apps": 1,
+  "parallel": 1
+}

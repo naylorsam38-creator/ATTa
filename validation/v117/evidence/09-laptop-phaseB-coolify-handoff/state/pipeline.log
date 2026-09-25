@@ -1,0 +1,109 @@
+discovered 1 app(s): static-landing (static-landing: code marker)
+[static-landing] qualifying
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[static-landing] BROKEN AT 6 CLEAN — PLAYWRIGHT_UNAVAILABLE
+[static-landing] qualifying
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+discovered 1 app(s): node-api (node-api: code marker)
+discovered 1 app(s): node-api (node-api: code marker)
+[node-api] qualifying
+[static-landing] qualifying
+  [node-api] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[static-landing] BROKEN AT 6 CLEAN — BROWSER_EXCEPTION
+[node-api] PASS
+[node-api] qualifying
+[static-landing] qualifying
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+  [node-api] attempt 1: recipe that worked before
+[node-api] PASS
+[static-landing] BROKEN AT 6 CLEAN — BROWSER_EXCEPTION
+[node-api] qualifying
+[static-landing] qualifying
+  [node-api] attempt 1: recipe that worked before
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[node-api] PASS
+[static-landing] BROKEN AT 6 CLEAN — BROWSER_EXCEPTION
+[node-api] qualifying
+[static-landing] qualifying
+  [node-api] attempt 1: recipe that worked before
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[node-api] PASS
+[static-landing] BROKEN AT 6 CLEAN — BROWSER_EXCEPTION
+[node-api] qualifying
+[static-landing] qualifying
+  [node-api] attempt 1: recipe that worked before
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[node-api] PASS
+[static-landing] BROKEN AT 6 CLEAN — BROWSER_EXCEPTION
+[node-api] qualifying
+[static-landing] qualifying
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+  [node-api] attempt 1: recipe that worked before
+[node-api] PASS
+[static-landing] BROKEN AT 6 CLEAN — BROWSER_EXCEPTION
+discovered 1 app(s): static-landing (static-landing: code marker)
+[node-api] qualifying
+[static-landing] qualifying
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+  [node-api] attempt 1: recipe that worked before
+[node-api] PASS
+[static-landing] PASS
+discovered 1 app(s): vite-react-dashboard (vite-react-dashboard: code marker)
+[node-api] qualifying
+[static-landing] qualifying
+[vite-react-dashboard] qualifying
+  [node-api] attempt 1: recipe that worked before
+  [static-landing] attempt 1: recipe that worked before
+  [vite-react-dashboard] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[node-api] PASS
+[static-landing] PASS
+[vite-react-dashboard] PASS
+discovered 1 app(s): fastapi-service (fastapi-service: code marker)
+[fastapi-service] qualifying
+[node-api] qualifying
+[static-landing] qualifying
+[vite-react-dashboard] qualifying
+  [node-api] attempt 1: recipe that worked before
+  [static-landing] attempt 1: recipe that worked before
+  [fastapi-service] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+  [vite-react-dashboard] attempt 1: recipe that worked before
+[node-api] PASS
+[static-landing] PASS
+[vite-react-dashboard] PASS
+[fastapi-service] PASS
+discovered 1 app(s): env-guestbook (env-guestbook: code marker)
+[env-guestbook] qualifying
+[fastapi-service] qualifying
+[node-api] qualifying
+[vite-react-dashboard] qualifying
+[static-landing] qualifying
+  [env-guestbook] attempt 1: the app's own compose file docker-compose.yml (builds from source)
+  [node-api] attempt 1: recipe that worked before
+  [static-landing] attempt 1: recipe that worked before
+  [fastapi-service] attempt 1: recipe that worked before
+  [vite-react-dashboard] attempt 1: recipe that worked before
+[node-api] PASS
+[static-landing] PASS
+[vite-react-dashboard] PASS
+[fastapi-service] PASS
+[env-guestbook] PASS
+discovered 1 app(s): compose-stack (compose-stack: code marker)
+[compose-stack] qualifying
+[env-guestbook] qualifying
+[fastapi-service] qualifying
+[static-landing] qualifying
+[node-api] qualifying
+[vite-react-dashboard] qualifying
+  [compose-stack] attempt 1: the app's own compose file docker-compose.yml (builds from source)
+  [node-api] attempt 1: recipe that worked before
+  [static-landing] attempt 1: recipe that worked before
+  [fastapi-service] attempt 1: recipe that worked before
+  [vite-react-dashboard] attempt 1: recipe that worked before
+  [env-guestbook] attempt 1: recipe that worked before env=['GUESTBOOK_SECRET']
+[node-api] PASS
+[static-landing] PASS
+[vite-react-dashboard] PASS
+[fastapi-service] PASS
+[env-guestbook] PASS
+[compose-stack] PASS

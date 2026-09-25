@@ -1,0 +1,8 @@
+{
+  "kind": "dockerfile",
+  "dockerfile": "Dockerfile",
+  "context": ".",
+  "env": {},
+  "saved_at": 1790346946.125061,
+  "saved_by": "qualified: passed all six stages"
+}

@@ -1,0 +1,140 @@
+{
+  "id": "b-20260925-140523-40a125a1",
+  "owner": "tester01",
+  "state": "FAILED",
+  "created": 1790345123.2870758,
+  "updated": 1790345124.9823914,
+  "history": [
+    {
+      "state": "QUEUED",
+      "at": 1790345123.2870758
+    },
+    {
+      "state": "VALIDATING",
+      "at": 1790345124.6449401
+    },
+    {
+      "state": "ADDING_APP",
+      "at": 1790345124.6631527
+    },
+    {
+      "state": "DISCOVERING",
+      "at": 1790345124.663747
+    },
+    {
+      "state": "FETCHING_LIBRARY",
+      "at": 1790345124.8076835
+    },
+    {
+      "state": "CATALOGUE_SYNC",
+      "at": 1790345124.808409
+    },
+    {
+      "state": "INSTALLING_UI_CAPABILITY",
+      "at": 1790345124.9119196
+    },
+    {
+      "state": "FAILED",
+      "at": 1790345124.9806073,
+      "error": "['python3', '/srv/app-builder/package/out/install_all.py', '/srv/app-builder/library'] -> 2: p-static-landing/capability-port/caps', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/caps'\"), (<DirEntry 'vendor'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-"
+    }
+  ],
+  "origin": "web",
+  "bundle_bytes": 3167070,
+  "original_name": "fastapi-service.zip",
+  "bundle": "b-20260925-140523-40a125a1.zip",
+  "kind": "upload",
+  "source": "fastapi-service.zip",
+  "apps_discovered": [
+    {
+      "name": "fastapi-service",
+      "rel": "fastapi-service",
+      "how": "code marker"
+    }
+  ],
+  "package": "current",
+  "apps_added": [
+    "fastapi-service"
+  ],
+  "apps_already_in_library": [],
+  "catalogue_look": {
+    "fastapi service": [
+      "skin 'dashboard' is a low-confidence pick (words: backend)"
+    ],
+    "static landing": [
+      "skin 'dashboard' is a low-confidence pick (no category words found; fallback skin)"
+    ]
+  },
+  "catalogue_new": {
+    "fastapi-service": {
+      "skin_category": "dashboard",
+      "skin_source": "auto",
+      "skin_confidence": "low",
+      "profile": "service",
+      "root": "."
+    }
+  },
+  "error": "['python3', '/srv/app-builder/package/out/install_all.py', '/srv/app-builder/library'] -> 2: p-static-landing/capability-port/caps', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/caps'\"), (<DirEntry 'vendor'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor'\"), (<DirEntry 'hosts'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts'\"), (PosixPath('/srv/app-builder/package/out/capability-port'), PosixPath('/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'), \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'\")]\n ",
+  "healing": {
+    "build": {
+      "status": "ESCALATED",
+      "rounds": 1,
+      "items": {
+        "build|['python#', '<path>', '<path>'] -> #: p-static-landing<path>', \"[Errno #] Operation not permitted: '<path>'\"), (<DirEntry 'vendor'>, '<path>', \"[Errno #] Operat|": {
+          "next_tier": 4,
+          "probe_i": 0
+        }
+      },
+      "chain": [
+        {
+          "tier": 1,
+          "tier_name": "script",
+          "item": {
+            "key": "['python#', '<path>', '<path>'] -> #: p-static-landing<path>', \"[Errno #] Operation not permitted: '<path>'\"), (<DirEntry 'vendor'>, '<path>', \"[Errno #] Operat",
+            "detail": "['python3', '/srv/app-builder/package/out/install_all.py', '/srv/app-builder/library'] -> 2: p-static-landing/capability-port/caps', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/caps'\"), (<DirEntry 'vendor'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor'\"), (<DirEntry 'hosts'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts'\"), (PosixPath('/srv/app-builder/package/out/capability-port'), PosixPath('/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'), \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'\")]\n "
+          },
+          "at": 1790345124.9817405,
+          "outcome": "NOT_RECOGNISED"
+        },
+        {
+          "tier": 2,
+          "tier_name": "adapter",
+          "item": {
+            "key": "['python#', '<path>', '<path>'] -> #: p-static-landing<path>', \"[Errno #] Operation not permitted: '<path>'\"), (<DirEntry 'vendor'>, '<path>', \"[Errno #] Operat",
+            "detail": "['python3', '/srv/app-builder/package/out/install_all.py', '/srv/app-builder/library'] -> 2: p-static-landing/capability-port/caps', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/caps'\"), (<DirEntry 'vendor'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor'\"), (<DirEntry 'hosts'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts'\"), (PosixPath('/srv/app-builder/package/out/capability-port'), PosixPath('/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'), \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'\")]\n "
+          },
+          "at": 1790345124.981883,
+          "outcome": "NOT_MINE"
+        },
+        {
+          "tier": 3,
+          "tier_name": "probe",
+          "item": {
+            "key": "['python#', '<path>', '<path>'] -> #: p-static-landing<path>', \"[Errno #] Operation not permitted: '<path>'\"), (<DirEntry 'vendor'>, '<path>', \"[Errno #] Operat",
+            "detail": "['python3', '/srv/app-builder/package/out/install_all.py', '/srv/app-builder/library'] -> 2: p-static-landing/capability-port/caps', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/caps'\"), (<DirEntry 'vendor'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor'\"), (<DirEntry 'hosts'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts'\"), (PosixPath('/srv/app-builder/package/out/capability-port'), PosixPath('/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'), \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'\")]\n "
+          },
+          "at": 1790345124.981888,
+          "outcome": "NO_FIX",
+          "actions": [],
+          "note": "probe: no general repair left for this layer"
+        },
+        {
+          "tier": 4,
+          "tier_name": "human",
+          "at": 1790345124.982273,
+          "outcome": "ALERTED",
+          "items": [
+            {
+              "key": "['python#', '<path>', '<path>'] -> #: p-static-landing<path>', \"[Errno #] Operation not permitted: '<path>'\"), (<DirEntry 'vendor'>, '<path>', \"[Errno #] Operat",
+              "detail": "['python3', '/srv/app-builder/package/out/install_all.py', '/srv/app-builder/library'] -> 2: p-static-landing/capability-port/caps', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/caps'\"), (<DirEntry 'vendor'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor'\"), (<DirEntry 'hosts'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts'\"), (PosixPath('/srv/app-builder/package/out/capability-port'), PosixPath('/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'), \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'\")]\n "
+            }
+          ],
+          "delivered": []
+        }
+      ],
+      "alerted": [
+        "build|['python#', '<path>', '<path>'] -> #: p-static-landing<path>', \"[Errno #] Operation not permitted: '<path>'\"), (<DirEntry 'vendor'>, '<path>', \"[Errno #] Operat|"
+      ]
+    }
+  }
+}

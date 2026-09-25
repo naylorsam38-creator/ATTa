@@ -1,0 +1,29 @@
+{
+  "next": 7,
+  "apps": {
+    "static-landing": {
+      "no": "A-001",
+      "assigned_at": 1790345540.931331
+    },
+    "node-api": {
+      "no": "A-002",
+      "assigned_at": 1790346340.9065077
+    },
+    "vite-react-dashboard": {
+      "no": "A-003",
+      "assigned_at": 1790346746.1202798
+    },
+    "fastapi-service": {
+      "no": "A-004",
+      "assigned_at": 1790346802.4221494
+    },
+    "env-guestbook": {
+      "no": "A-005",
+      "assigned_at": 1790346855.628644
+    },
+    "compose-stack": {
+      "no": "A-006",
+      "assigned_at": 1790346906.7760406
+    }
+  }
+}

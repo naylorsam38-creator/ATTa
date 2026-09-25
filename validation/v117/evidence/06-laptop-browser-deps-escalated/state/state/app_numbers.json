@@ -1,0 +1,13 @@
+{
+  "next": 3,
+  "apps": {
+    "static-landing": {
+      "no": "A-001",
+      "assigned_at": 1790345540.931331
+    },
+    "node-api": {
+      "no": "A-002",
+      "assigned_at": 1790346340.9065077
+    }
+  }
+}

@@ -1,0 +1,75 @@
+checked bundle version v117
+previous live: v117-20260925T134404Z (known-good, verified by 20260925T134403Z-127c1292-manual)
+=== bash run  (cwd /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117, timeout 5400s)
+------------------------------------------------------------
+FULL SERVER DEPLOY (bootstrap.sh)
+------------------------------------------------------------
+deployment 20260925T143259Z-044c474e  (record: deployctl journal 20260925T143259Z-044c474e)
+system: ubuntu-24.04
+new release, not live yet: /opt/app-builder-releases/v117-20260925T143300Z (v117)
+Hit:1 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+nodejs is already the newest version (18.19.1+dfsg-6ubuntu5).
+python3-pip is already the newest version (24.0+dfsg-1ubuntu1.3).
+nginx is already the newest version (1.24.0-2ubuntu7.18).
+unzip is already the newest version (6.0-28ubuntu4.1).
+git is already the newest version (1:2.43.0-1ubuntu7.3).
+curl is already the newest version (8.5.0-2ubuntu10.15).
+ca-certificates is already the newest version (20260601~24.04.1).
+openssl is already the newest version (3.0.13-0ubuntu3.15).
+0 upgraded, 0 newly installed, 0 to remove and 2 not upgraded.
+DOCKER_PASS
+Looking in links: http://172.30.0.5/wheels/
+Requirement already satisfied: playwright==1.60.0 in /usr/local/lib/python3.12/dist-packages (from -r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 5)) (1.60.0)
+Requirement already satisfied: anthropic==0.125.0 in /usr/local/lib/python3.12/dist-packages (from -r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (0.125.0)
+Requirement already satisfied: pyyaml==6.0.3 in /usr/local/lib/python3.12/dist-packages (from -r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 7)) (6.0.3)
+Requirement already satisfied: pyee<14,>=13 in /usr/local/lib/python3.12/dist-packages (from playwright==1.60.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 5)) (13.0.1)
+Requirement already satisfied: greenlet<4.0.0,>=3.1.1 in /usr/local/lib/python3.12/dist-packages (from playwright==1.60.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 5)) (3.5.6)
+Requirement already satisfied: anyio<5,>=3.5.0 in /usr/local/lib/python3.12/dist-packages (from anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (4.15.1)
+Requirement already satisfied: distro<2,>=1.7.0 in /usr/local/lib/python3.12/dist-packages (from anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (1.9.0)
+Requirement already satisfied: docstring-parser<1,>=0.15 in /usr/local/lib/python3.12/dist-packages (from anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (0.18.0)
+Requirement already satisfied: httpx<1,>=0.25.0 in /usr/local/lib/python3.12/dist-packages (from anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (0.28.1)
+Requirement already satisfied: jiter<1,>=0.4.0 in /usr/local/lib/python3.12/dist-packages (from anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (0.17.0)
+Requirement already satisfied: pydantic<3,>=1.9.0 in /usr/local/lib/python3.12/dist-packages (from anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (2.13.5)
+Requirement already satisfied: sniffio<2,>=1 in /usr/local/lib/python3.12/dist-packages (from anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (1.3.1)
+Requirement already satisfied: typing-extensions<5,>=4.14 in /usr/local/lib/python3.12/dist-packages (from anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (4.16.0)
+Requirement already satisfied: idna>=2.8 in /usr/local/lib/python3.12/dist-packages (from anyio<5,>=3.5.0->anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (3.20)
+Requirement already satisfied: certifi in /usr/local/lib/python3.12/dist-packages (from httpx<1,>=0.25.0->anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (2026.7.22)
+Requirement already satisfied: httpcore==1.* in /usr/local/lib/python3.12/dist-packages (from httpx<1,>=0.25.0->anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (1.0.9)
+Requirement already satisfied: h11>=0.16 in /usr/local/lib/python3.12/dist-packages (from httpcore==1.*->httpx<1,>=0.25.0->anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (0.16.0)
+Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.12/dist-packages (from pydantic<3,>=1.9.0->anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (0.8.0)
+Requirement already satisfied: pydantic-core==2.46.5 in /usr/local/lib/python3.12/dist-packages (from pydantic<3,>=1.9.0->anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (2.46.5)
+Requirement already satisfied: typing-inspection>=0.4.2 in /usr/local/lib/python3.12/dist-packages (from pydantic<3,>=1.9.0->anthropic==0.125.0->-r /srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117/04-deployment/requirements-server.txt (line 6)) (0.4.4)
+PLAYWRIGHT_BROWSER_PASS
+PASS gateway http://127.0.0.1:55183 release v117-20260925T143300Z version v117 instance 90245c7065377d44
+HEALTH PASS
+CANDIDATE_PASS v117-20260925T143300Z
+all accounts already exist
+code: /opt/app-builder -> /opt/app-builder-releases/v117-20260925T143300Z
+Synchronizing state of nginx.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
+Executing: /usr/lib/systemd/systemd-sysv-install enable nginx
+● app-builder-pipeline.service - APP Builder upload pipeline
+     Loaded: loaded (/etc/systemd/system/app-builder-pipeline.service; enabled; preset: enabled)
+     Active: activating (auto-restart) (Result: exit-code) since Fri 2026-09-25 14:33:14 UTC; 473ms ago
+   Main PID: 7025 (code=exited, status=1/FAILURE)
+DEPLOYMENT FAILED: app-builder-pipeline.service is not active
+DEPLOYMENT FAILED: app-builder-pipeline.service is not active
+Putting back exactly what was live (snapshot /opt/app-builder-releases/.txn/20260925T143259Z-044c474e) ...
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+PASS gateway http://127.0.0.1:8787 release v117-20260925T134404Z version v117 instance 8554ed20a5933757
+PASS proxy http://127.0.0.1:80 (via 127.0.0.1)
+HEALTH PASS
+RESTORE VERIFIED: /opt/app-builder-releases/v117-20260925T134404Z
+RESULT: ROLLED BACK — live again, and checked: /opt/app-builder-releases/v117-20260925T134404Z
+=== run: exit 1 after 16.07s
+FAIL app-builder-pipeline.service is not active
+=== rollback to v117-20260925T134404Z
+ROLLED_BACK to v117-20260925T134404Z (restored by bootstrap.sh, verified by ADM); live again: v117
+pruned /opt/app-builder-releases/v117-20260925T143300Z

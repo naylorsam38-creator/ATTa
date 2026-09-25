@@ -1,0 +1,51 @@
+{
+  "schema": "APP_BUILDER_COOLIFY_HANDOFF.v1",
+  "build_id": "b-20260925-143144-56d1001d",
+  "owner": "tester01",
+  "qualified_at": 1790346798.0955293,
+  "apps": [
+    {
+      "app": "node-api",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/node-api/.ui-capability",
+      "target_url": "http://127.0.0.1:20014/",
+      "proxy_url": "http://127.0.0.1:9063/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": null
+    },
+    {
+      "app": "static-landing",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/static-landing/.ui-capability",
+      "target_url": "http://127.0.0.1:20015/",
+      "proxy_url": "http://127.0.0.1:8990/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": {
+        "dir": "/home/sam/.app-builder-local/state/runner/evidence/static-landing",
+        "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/screenshot.png",
+        "html": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/page.html",
+        "browser": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/browser.json"
+      }
+    },
+    {
+      "app": "vite-react-dashboard",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/vite-react-dashboard/.ui-capability",
+      "target_url": "http://127.0.0.1:20016/",
+      "proxy_url": "http://127.0.0.1:8520/",
+      "started_by": "the app's own Dockerfile Dockerfile (builds from source)",
+      "kept_running": false,
+      "evidence": {
+        "dir": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard",
+        "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard/screenshot.png",
+        "html": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard/page.html",
+        "browser": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard/browser.json"
+      }
+    }
+  ]
+}

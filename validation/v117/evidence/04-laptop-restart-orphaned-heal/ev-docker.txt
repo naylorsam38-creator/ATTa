@@ -1,0 +1,1 @@
+atta-static-landing	atta-local/static-landing:latest	Up 11 minutes

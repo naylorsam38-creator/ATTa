@@ -1,0 +1,115 @@
+{
+  "schema": "APP_BUILDER_ALERT.v1",
+  "at": 1790345422.1655917,
+  "build_id": "b-20260925-140750-4aad9208",
+  "owner": "tester01",
+  "layer": "qualify",
+  "state": "NOT_QUALIFIED",
+  "error": "static-landing: BROKEN AT 2 APP_UP \u2014 PROXY_NOT_STARTED",
+  "items": [
+    {
+      "key": "2 APP_UP:PROXY_NOT_STARTED",
+      "app": "static-landing",
+      "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)",
+      "syntax_errors": []
+    }
+  ],
+  "chain": [
+    {
+      "tier": 1,
+      "tier_name": "script",
+      "item": {
+        "key": "2 APP_UP:PROXY_NOT_STARTED",
+        "app": "static-landing",
+        "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)",
+        "syntax_errors": []
+      },
+      "at": 1790345308.6739204,
+      "outcome": "NOT_RECOGNISED"
+    },
+    {
+      "tier": 2,
+      "tier_name": "adapter",
+      "item": {
+        "key": "2 APP_UP:PROXY_NOT_STARTED",
+        "app": "static-landing",
+        "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)",
+        "syntax_errors": []
+      },
+      "at": 1790345308.6753435,
+      "outcome": "NOT_MINE"
+    },
+    {
+      "tier": 3,
+      "tier_name": "probe",
+      "item": {
+        "key": "2 APP_UP:PROXY_NOT_STARTED",
+        "app": "static-landing",
+        "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)",
+        "syntax_errors": []
+      },
+      "at": 1790345308.6753535,
+      "outcome": "APPLIED",
+      "actions": [
+        {
+          "name": "reinstall_app_overlay",
+          "args": {
+            "app": "static-landing"
+          },
+          "result": "reinstalled static-landing overlay (dashboard/skin-002)",
+          "error": false
+        }
+      ],
+      "probe_more": true,
+      "note": "probe: general repair reinstall_app_overlay for 2 APP_UP:PROXY_NOT_STARTED"
+    },
+    {
+      "tier": 3,
+      "tier_name": "probe",
+      "item": {
+        "key": "2 APP_UP:PROXY_NOT_STARTED",
+        "app": "static-landing",
+        "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)",
+        "syntax_errors": []
+      },
+      "at": 1790345341.8811975,
+      "outcome": "APPLIED",
+      "actions": [
+        {
+          "name": "chmod_launcher",
+          "args": {
+            "app": "static-landing"
+          },
+          "result": "run-ui.sh is executable",
+          "error": false
+        }
+      ],
+      "probe_more": true,
+      "note": "probe: general repair chmod_launcher for 2 APP_UP:PROXY_NOT_STARTED"
+    },
+    {
+      "tier": 3,
+      "tier_name": "probe",
+      "item": {
+        "key": "2 APP_UP:PROXY_NOT_STARTED",
+        "app": "static-landing",
+        "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)",
+        "syntax_errors": []
+      },
+      "at": 1790345374.764004,
+      "outcome": "APPLIED",
+      "actions": [
+        {
+          "name": "install_browser",
+          "args": {},
+          "result": "chromium installed",
+          "error": false
+        }
+      ],
+      "probe_more": false,
+      "note": "probe: general repair install_browser for 2 APP_UP:PROXY_NOT_STARTED"
+    }
+  ],
+  "text": "[APP Builder] Build b-20260925-140750-4aad9208 (owner tester01) is stuck at the qualify stage and self-healing could not fix it.\n- static-landing: 2 APP_UP:PROXY_NOT_STARTED\nTried: 5 step(s) \u2014 see the alert file for each action and its result.",
+  "delivered": []
+}

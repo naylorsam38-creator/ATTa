@@ -1,0 +1,89 @@
+{
+  "job_id": "20260925T143050Z-afa84a49",
+  "created_at": "2026-09-25T14:30:50+00:00",
+  "verdict": "FAILED",
+  "events": [
+    {
+      "at": "2026-09-25T14:30:50+00:00",
+      "event": "QUEUED",
+      "build_id": null,
+      "original_name": "ATTa-v117-819d42768954.zip",
+      "requested_by": "deployctl",
+      "origin": "local",
+      "archive": "/srv/app-builder/adm/state/queue/20260925T143050Z-afa84a49.zip"
+    },
+    {
+      "at": "2026-09-25T14:30:50+00:00",
+      "event": "CREATED",
+      "kind": "adm"
+    },
+    {
+      "at": "2026-09-25T14:30:50+00:00",
+      "event": "VALIDATING"
+    },
+    {
+      "at": "2026-09-25T14:30:51+00:00",
+      "event": "CHECKED",
+      "version": "v117",
+      "root": "/srv/app-builder/adm/staging/20260925T143050Z-afa84a49/ATTa"
+    },
+    {
+      "at": "2026-09-25T14:31:27+00:00",
+      "event": "FAILED",
+      "reason": "bundle rejected: bundle tests failed: exit 1: .............s...s.................................deployd: not taking bundles from /tmp/atta-bundle-tests-zwk0cgob/atta-v114-r2zly_za/adm/incoming: /tmp/atta-bundle-tests-zwk0cgob/atta-v114-r2zly_za/adm/incoming is writable by group or others (mode 0o777) / ......................"
+    },
+    {
+      "at": "2026-09-25T14:31:27+00:00",
+      "event": "ROLLBACK_NOT_NEEDED",
+      "reason": "nothing live was touched"
+    }
+  ],
+  "original_name": "ATTa-v117-819d42768954.zip",
+  "requested_by": "deployctl",
+  "origin": "local",
+  "updated_at": "2026-09-25T14:31:27+00:00",
+  "deployment_id": "20260925T143050Z-afa84a49",
+  "kind": "adm",
+  "state": "failed",
+  "state_history": [
+    {
+      "state": "created",
+      "at": "2026-09-25T14:30:50+00:00"
+    },
+    {
+      "state": "validating",
+      "at": "2026-09-25T14:30:50+00:00"
+    },
+    {
+      "state": "failed",
+      "at": "2026-09-25T14:31:27+00:00",
+      "reason": "bundle rejected: bundle tests failed: exit 1: .............s...s.................................deployd: not taking bundles from /tmp/atta-bundle-tests-zwk0cgob/atta-v114-r2zly_za/adm/incoming: /tmp/atta-bundle-tests-zwk0cgob/atta-v114-r2zly_za/adm/incoming is writable by group or others (mode 0o777) / ......................"
+    }
+  ],
+  "started_at": "2026-09-25T14:30:50+00:00",
+  "completed_at": "2026-09-25T14:31:27+00:00",
+  "source": {
+    "original_name": "ATTa-v117-819d42768954.zip",
+    "bundle_sha256": "0a32458efa02e008c355fa58f2e8b996b6c555f5d768448547b3247a58fd49eb"
+  },
+  "previous_live": null,
+  "attempted": {},
+  "failure_reason": "bundle rejected: bundle tests failed: exit 1: .............s...s.................................deployd: not taking bundles from /tmp/atta-bundle-tests-zwk0cgob/atta-v114-r2zly_za/adm/incoming: /tmp/atta-bundle-tests-zwk0cgob/atta-v114-r2zly_za/adm/incoming is writable by group or others (mode 0o777) / ......................",
+  "process": {
+    "host": "atta-server"
+  },
+  "rollback": {
+    "result": "not_needed",
+    "at": "2026-09-25T14:31:27+00:00",
+    "reason": "nothing live was touched"
+  },
+  "final_live": {
+    "release": "/opt/app-builder-releases/v117-20260925T134404Z",
+    "version": "v117",
+    "verified": true
+  },
+  "build_id": null,
+  "log": "/srv/app-builder/adm/logs/20260925T143050Z-afa84a49.log",
+  "version": "v117",
+  "touched_live": false
+}

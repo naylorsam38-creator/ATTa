@@ -1,0 +1,26 @@
+{
+  "status": "RUNNING",
+  "root": "/root/.app-builder-local",
+  "port": 8787,
+  "services": {
+    "gateway": {
+      "pid": 875,
+      "pgid": 875,
+      "start": "222549",
+      "cmdline": "/usr/bin/python3 /root/ATTa/04-deployment/gateway.py",
+      "script": "/root/ATTa/04-deployment/gateway.py",
+      "started_at": 1790345253.404153
+    },
+    "pipeline": {
+      "pid": 876,
+      "pgid": 876,
+      "start": "222549",
+      "cmdline": "/usr/bin/python3 /root/ATTa/04-deployment/pipeline.py",
+      "script": "/root/ATTa/04-deployment/pipeline.py",
+      "started_at": 1790345253.4046872
+    }
+  },
+  "failure": null,
+  "started_at": 1790345253.40352,
+  "updated_at": "2026-09-25T14:07:33+0000"
+}

@@ -1,0 +1,23 @@
+{
+  "spec": "UI + Skin + Capability Universal Deployment v2",
+  "library": "/srv/app-builder/library",
+  "apps": [],
+  "errors": [
+    {
+      "path": "/srv/app-builder/library/fastapi-service",
+      "status": "FAILED",
+      "error": "[(<DirEntry 'caps'>, '/srv/app-builder/library/fastapi-service/.ui-capability.tmp-fastapi-service/capability-port/caps', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/fastapi-service/.ui-capability.tmp-fastapi-service/capability-port/caps'\"), (<DirEntry 'vendor'>, '/srv/app-builder/library/fastapi-service/.ui-capability.tmp-fastapi-service/capability-port/hosts/vendor', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/fastapi-service/.ui-capability.tmp-fastapi-service/capability-port/hosts/vendor'\"), (<DirEntry 'hosts'>, '/srv/app-builder/library/fastapi-service/.ui-capability.tmp-fastapi-service/capability-port/hosts', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/fastapi-service/.ui-capability.tmp-fastapi-service/capability-port/hosts'\"), (PosixPath('/srv/app-builder/package/out/capability-port'), PosixPath('/srv/app-builder/library/fastapi-service/.ui-capability.tmp-fastapi-service/capability-port'), \"[Errno 1] Operation not permitted: '/srv/app-builder/library/fastapi-service/.ui-capability.tmp-fastapi-service/capability-port'\")]"
+    },
+    {
+      "path": "/srv/app-builder/library/node-api",
+      "status": "FAILED",
+      "error": "[(<DirEntry 'caps'>, '/srv/app-builder/library/node-api/.ui-capability.tmp-node-api/capability-port/caps', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/node-api/.ui-capability.tmp-node-api/capability-port/caps'\"), (<DirEntry 'vendor'>, '/srv/app-builder/library/node-api/.ui-capability.tmp-node-api/capability-port/hosts/vendor', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/node-api/.ui-capability.tmp-node-api/capability-port/hosts/vendor'\"), (<DirEntry 'hosts'>, '/srv/app-builder/library/node-api/.ui-capability.tmp-node-api/capability-port/hosts', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/node-api/.ui-capability.tmp-node-api/capability-port/hosts'\"), (PosixPath('/srv/app-builder/package/out/capability-port'), PosixPath('/srv/app-builder/library/node-api/.ui-capability.tmp-node-api/capability-port'), \"[Errno 1] Operation not permitted: '/srv/app-builder/library/node-api/.ui-capability.tmp-node-api/capability-port'\")]"
+    },
+    {
+      "path": "/srv/app-builder/library/static-landing",
+      "status": "FAILED",
+      "error": "[(<DirEntry 'caps'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/caps', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/caps'\"), (<DirEntry 'vendor'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor'\"), (<DirEntry 'hosts'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts'\"), (PosixPath('/srv/app-builder/package/out/capability-port'), PosixPath('/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'), \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'\")]"
+    }
+  ],
+  "pending_review": []
+}

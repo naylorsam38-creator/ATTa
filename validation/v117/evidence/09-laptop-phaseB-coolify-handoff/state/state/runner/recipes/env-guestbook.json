@@ -1,0 +1,9 @@
+{
+  "kind": "compose",
+  "file": "docker-compose.yml",
+  "env": {
+    "GUESTBOOK_SECRET": "486498f7b20c33c4828dbe00b200f3a4"
+  },
+  "saved_at": 1790346953.4919744,
+  "saved_by": "qualified: passed all six stages"
+}

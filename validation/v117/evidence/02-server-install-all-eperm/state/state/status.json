@@ -1,0 +1,8 @@
+{
+  "state": "FAILED",
+  "bundle": "b-20260925-140523-40a125a1.zip",
+  "updated_at": 1790345124.980197,
+  "kind": "upload",
+  "source": "fastapi-service.zip",
+  "error": "['python3', '/srv/app-builder/package/out/install_all.py', '/srv/app-builder/library'] -> 2: p-static-landing/capability-port/caps', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/caps'\"), (<DirEntry 'vendor'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts/vendor'\"), (<DirEntry 'hosts'>, '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts', \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port/hosts'\"), (PosixPath('/srv/app-builder/package/out/capability-port'), PosixPath('/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'), \"[Errno 1] Operation not permitted: '/srv/app-builder/library/static-landing/.ui-capability.tmp-static-landing/capability-port'\")]\n "
+}

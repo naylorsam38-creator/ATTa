@@ -1,0 +1,78 @@
+{
+  "app": "node-api",
+  "number": "A-002",
+  "verdict": "PASS",
+  "broken_at": null,
+  "code": null,
+  "stages": {
+    "1 INSTALLED": {
+      "status": "OK"
+    },
+    "2 APP_UP": {
+      "status": "OK",
+      "detail": "200"
+    },
+    "3 PROXY_UP": {
+      "status": "OK",
+      "detail": "200"
+    },
+    "4 SKIN": {
+      "status": "NOT_APPLICABLE",
+      "code": "SERVICE"
+    },
+    "5 HOOK": {
+      "status": "NOT_APPLICABLE",
+      "code": "SERVICE"
+    },
+    "6 CLEAN": {
+      "status": "OK",
+      "code": "SERVICE_RESPONDS",
+      "detail": "app 200, proxy 200"
+    }
+  },
+  "ts": 1790346578.967695,
+  "runner": {
+    "started": true,
+    "url": "http://127.0.0.1:20011/",
+    "part": "recipe that worked before",
+    "part_detail": {
+      "kind": "dockerfile",
+      "dockerfile": "Dockerfile",
+      "context": ".",
+      "env": {},
+      "saved_at": 1790346529.4609609,
+      "saved_by": "qualified: passed all six stages",
+      "why": "recipe that worked before",
+      "port_seen": 20011
+    },
+    "attempts": [
+      {
+        "n": 1,
+        "part": "recipe that worked before",
+        "outcome": "UP",
+        "url": "http://127.0.0.1:20011/",
+        "notes": [],
+        "download_start_s": 1.0,
+        "boot_wait_s": 30.1
+      }
+    ],
+    "seconds": 35,
+    "kept_running": false
+  },
+  "timing": {
+    "queued_s": 0,
+    "started_at": "14:29:06",
+    "finished_at": "14:29:42",
+    "total_s": 35,
+    "start_s": 31,
+    "check_s": 4,
+    "attempts": [
+      {
+        "n": 1,
+        "outcome": "UP",
+        "download_start_s": 1.0,
+        "boot_wait_s": 30.1
+      }
+    ]
+  }
+}

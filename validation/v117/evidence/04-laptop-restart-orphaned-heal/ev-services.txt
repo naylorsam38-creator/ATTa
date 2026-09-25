@@ -1,0 +1,6 @@
+app-builder-gateway inactive
+app-builder-pipeline inactive
+app-builder-watcher inactive
+atta-deployd inactive
+nginx failed
+docker active

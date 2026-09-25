@@ -1,0 +1,165 @@
+{
+  "job_id": "20260925T143259Z-044c474e",
+  "created_at": "2026-09-25T14:32:59+00:00",
+  "verdict": "ROLLED_BACK",
+  "events": [
+    {
+      "at": "2026-09-25T14:32:59+00:00",
+      "event": "QUEUED",
+      "build_id": null,
+      "original_name": "ATTa-v117-pipeline-exit.zip",
+      "requested_by": "deployctl",
+      "origin": "local",
+      "archive": "/srv/app-builder/adm/state/queue/20260925T143259Z-044c474e.zip"
+    },
+    {
+      "at": "2026-09-25T14:32:59+00:00",
+      "event": "CREATED",
+      "kind": "adm"
+    },
+    {
+      "at": "2026-09-25T14:32:59+00:00",
+      "event": "VALIDATING"
+    },
+    {
+      "at": "2026-09-25T14:33:00+00:00",
+      "event": "CHECKED",
+      "version": "v117",
+      "root": "/srv/app-builder/adm/staging/20260925T143259Z-044c474e/ATTa"
+    },
+    {
+      "at": "2026-09-25T14:33:00+00:00",
+      "event": "TESTS_SKIPPED",
+      "reason": "ATTA_ADM_RUN_TESTS=0"
+    },
+    {
+      "at": "2026-09-25T14:33:00+00:00",
+      "event": "BACKED_UP",
+      "backup": "/srv/app-builder/adm/backups/20260925T143300Z-20260925T143259Z-044c474e"
+    },
+    {
+      "at": "2026-09-25T14:33:00+00:00",
+      "event": "BUILDING"
+    },
+    {
+      "at": "2026-09-25T14:33:13+00:00",
+      "event": "BUILT"
+    },
+    {
+      "at": "2026-09-25T14:33:13+00:00",
+      "event": "HEALTH_CHECKING"
+    },
+    {
+      "at": "2026-09-25T14:33:15+00:00",
+      "event": "FAILED",
+      "reason": "app-builder-pipeline.service is not active"
+    },
+    {
+      "at": "2026-09-25T14:33:16+00:00",
+      "event": "ROLLBACK_PENDING"
+    },
+    {
+      "at": "2026-09-25T14:33:17+00:00",
+      "event": "ROLLBACK_SUCCEEDED"
+    },
+    {
+      "at": "2026-09-25T14:33:17+00:00",
+      "event": "ROLLED_BACK"
+    }
+  ],
+  "original_name": "ATTa-v117-pipeline-exit.zip",
+  "requested_by": "deployctl",
+  "origin": "local",
+  "updated_at": "2026-09-25T14:33:17+00:00",
+  "deployment_id": "20260925T143259Z-044c474e",
+  "kind": "adm",
+  "state": "rolled_back",
+  "state_history": [
+    {
+      "state": "created",
+      "at": "2026-09-25T14:32:59+00:00"
+    },
+    {
+      "state": "validating",
+      "at": "2026-09-25T14:32:59+00:00"
+    },
+    {
+      "state": "building",
+      "at": "2026-09-25T14:33:00+00:00"
+    },
+    {
+      "state": "built",
+      "at": "2026-09-25T14:33:13+00:00"
+    },
+    {
+      "state": "health_checking",
+      "at": "2026-09-25T14:33:13+00:00"
+    },
+    {
+      "state": "failed",
+      "at": "2026-09-25T14:33:15+00:00",
+      "reason": "app-builder-pipeline.service is not active"
+    },
+    {
+      "state": "rolled_back",
+      "at": "2026-09-25T14:33:17+00:00"
+    }
+  ],
+  "started_at": "2026-09-25T14:32:59+00:00",
+  "completed_at": "2026-09-25T14:33:17+00:00",
+  "source": {
+    "original_name": "ATTa-v117-pipeline-exit.zip",
+    "bundle_sha256": "cd7279e9490fc8a02950b946d6f1b46c83a98a9cbe751716b3f81364b47f42e8",
+    "source_commit": "f698e51e48ed9f59f0cb6095a8f9c66c74e74ee3",
+    "manifest_sha256": "48b42cf8b7ac206ea7132c3c6edf5c0f9e0c435e58d99c12884da2d80a4fb0f7"
+  },
+  "previous_live": {
+    "release": "/opt/app-builder-releases/v117-20260925T134404Z",
+    "version": "v117",
+    "verified": true,
+    "adopted": false,
+    "code_sha256": "3fcc13b5ad384bc736771c6adcbbd271f1fdcea7c56dfe298f63be88387b5a1e",
+    "bundle": null
+  },
+  "attempted": {
+    "version": "v117",
+    "bundle": "/srv/app-builder/adm/releases/20260925T143259Z-044c474e-v117",
+    "release": "/opt/app-builder-releases/v117-20260925T143300Z",
+    "code_sha256": "c7679eb307af488d6db5b736681edf0a9bbb7572cb43a1507ba47e3cec9ed2e5"
+  },
+  "failure_reason": "app-builder-pipeline.service is not active",
+  "process": {
+    "host": "atta-server",
+    "pid": 6088,
+    "pgid": 6088,
+    "runner_pid": 6086,
+    "exit": 1,
+    "seconds": 16.07,
+    "timed_out": false,
+    "interrupted": false,
+    "stopped": true,
+    "signalled": 0,
+    "escalated": false,
+    "leftovers": [],
+    "survivors": []
+  },
+  "rollback": {
+    "result": "succeeded",
+    "at": "2026-09-25T14:33:17+00:00",
+    "target": "/opt/app-builder-releases/v117-20260925T134404Z",
+    "method": "restored by bootstrap.sh, verified by ADM"
+  },
+  "final_live": {
+    "release": "/opt/app-builder-releases/v117-20260925T134404Z",
+    "version": "v117",
+    "code_sha256": "3fcc13b5ad384bc736771c6adcbbd271f1fdcea7c56dfe298f63be88387b5a1e"
+  },
+  "build_id": null,
+  "log": "/srv/app-builder/adm/logs/20260925T143259Z-044c474e.log",
+  "version": "v117",
+  "backup": "/srv/app-builder/adm/backups/20260925T143300Z-20260925T143259Z-044c474e",
+  "transaction": "/opt/app-builder-releases/.txn/20260925T143259Z-044c474e",
+  "local_restore": {
+    "result": "verified"
+  }
+}

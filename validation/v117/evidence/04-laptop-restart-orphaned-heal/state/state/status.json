@@ -1,0 +1,11 @@
+{
+  "state": "QUALIFYING",
+  "bundle": "b-20260925-141217-cbc9ea56.zip",
+  "updated_at": 1790345585.8435016,
+  "kind": "upload",
+  "source": "static-landing.zip",
+  "library": "/home/sam/.app-builder-local/library",
+  "targets": "/home/sam/.app-builder-local/state/apps",
+  "apps": 1,
+  "parallel": 1
+}

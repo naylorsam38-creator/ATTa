@@ -1,0 +1,79 @@
+{
+  "app": "env-guestbook",
+  "number": "A-005",
+  "verdict": "PASS",
+  "broken_at": null,
+  "code": null,
+  "stages": {
+    "1 INSTALLED": {
+      "status": "OK"
+    },
+    "2 APP_UP": {
+      "status": "OK",
+      "detail": "200"
+    },
+    "3 PROXY_UP": {
+      "status": "OK",
+      "detail": "200"
+    },
+    "4 SKIN": {
+      "status": "NOT_APPLICABLE",
+      "code": "SERVICE"
+    },
+    "5 HOOK": {
+      "status": "NOT_APPLICABLE",
+      "code": "SERVICE"
+    },
+    "6 CLEAN": {
+      "status": "OK",
+      "code": "SERVICE_RESPONDS",
+      "detail": "app 200, proxy 200"
+    }
+  },
+  "ts": 1790346939.825706,
+  "runner": {
+    "started": true,
+    "url": "http://127.0.0.1:20027/",
+    "part": "recipe that worked before",
+    "part_detail": {
+      "kind": "compose",
+      "file": "docker-compose.yml",
+      "env": {
+        "GUESTBOOK_SECRET": "486498f7b20c33c4828dbe00b200f3a4"
+      },
+      "saved_at": 1790346902.4856286,
+      "saved_by": "qualified: passed all six stages",
+      "why": "recipe that worked before",
+      "port_seen": 20027
+    },
+    "attempts": [
+      {
+        "n": 1,
+        "part": "recipe that worked before",
+        "outcome": "UP",
+        "url": "http://127.0.0.1:20027/",
+        "notes": [],
+        "download_start_s": 1.4,
+        "boot_wait_s": 30.2
+      }
+    ],
+    "seconds": 46,
+    "kept_running": false
+  },
+  "timing": {
+    "queued_s": 0,
+    "started_at": "14:35:06",
+    "finished_at": "14:35:53",
+    "total_s": 46,
+    "start_s": 32,
+    "check_s": 14,
+    "attempts": [
+      {
+        "n": 1,
+        "outcome": "UP",
+        "download_start_s": 1.4,
+        "boot_wait_s": 30.2
+      }
+    ]
+  }
+}

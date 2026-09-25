@@ -1,0 +1,12 @@
+{
+  "app": "fastapi-service",
+  "app_id": "fastapi-service",
+  "app_dir": "/home/sam/.app-builder-local/library/fastapi-service",
+  "target_url": "http://127.0.0.1:20030/",
+  "proxy_url": "http://127.0.0.1:8544/",
+  "ui_dir": "/home/sam/.app-builder-local/library/fastapi-service/.ui-capability",
+  "customer_id": "default",
+  "profile": "service",
+  "parked": true,
+  "parked_at": 1790346946.1247308
+}

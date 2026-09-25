@@ -1,0 +1,83 @@
+{
+  "app": "static-landing",
+  "number": "A-001",
+  "verdict": "BROKEN AT 6 CLEAN \u2014 PLAYWRIGHT_UNAVAILABLE",
+  "broken_at": "6 CLEAN",
+  "code": "PLAYWRIGHT_UNAVAILABLE",
+  "stages": {
+    "1 INSTALLED": {
+      "status": "OK"
+    },
+    "2 APP_UP": {
+      "status": "OK",
+      "detail": "200"
+    },
+    "3 PROXY_UP": {
+      "status": "OK",
+      "detail": "200"
+    },
+    "4 SKIN": {
+      "status": "OK"
+    },
+    "5 HOOK": {
+      "status": "OK"
+    },
+    "6 CLEAN": {
+      "status": "FAIL",
+      "code": "PLAYWRIGHT_UNAVAILABLE",
+      "detail": "No module named 'playwright'"
+    }
+  },
+  "ts": 1790345574.0043154,
+  "adapter": {
+    "state": null,
+    "capabilities": [],
+    "seen": null,
+    "expected": {
+      "mode": "dormant"
+    },
+    "matches_expected": false
+  },
+  "runner": {
+    "started": true,
+    "url": "http://127.0.0.1:20000/",
+    "part": "the app's own Dockerfile Dockerfile (builds from source)",
+    "part_detail": {
+      "kind": "dockerfile",
+      "dockerfile": "Dockerfile",
+      "context": ".",
+      "env": {},
+      "why": "the app's own Dockerfile Dockerfile (builds from source)",
+      "port_seen": 20000
+    },
+    "attempts": [
+      {
+        "n": 1,
+        "part": "the app's own Dockerfile Dockerfile (builds from source)",
+        "outcome": "UP",
+        "url": "http://127.0.0.1:20000/",
+        "notes": [],
+        "download_start_s": 2.2,
+        "boot_wait_s": 30.1
+      }
+    ],
+    "seconds": 36,
+    "kept_running": false
+  },
+  "timing": {
+    "queued_s": 0,
+    "started_at": "14:12:20",
+    "finished_at": "14:12:57",
+    "total_s": 36,
+    "start_s": 32,
+    "check_s": 4,
+    "attempts": [
+      {
+        "n": 1,
+        "outcome": "UP",
+        "download_start_s": 2.2,
+        "boot_wait_s": 30.1
+      }
+    ]
+  }
+}

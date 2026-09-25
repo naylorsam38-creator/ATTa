@@ -1,0 +1,115 @@
+{
+  "id": "b-20260925-140341-ffa34a0d",
+  "owner": "tester01",
+  "state": "FAILED",
+  "created": 1790345021.199858,
+  "updated": 1790345022.4554305,
+  "history": [
+    {
+      "state": "QUEUED",
+      "at": 1790345021.199858
+    },
+    {
+      "state": "VALIDATING",
+      "at": 1790345022.1214275
+    },
+    {
+      "state": "ADDING_APP",
+      "at": 1790345022.1245842
+    },
+    {
+      "state": "DISCOVERING",
+      "at": 1790345022.1252367
+    },
+    {
+      "state": "FETCHING_LIBRARY",
+      "at": 1790345022.3775914
+    },
+    {
+      "state": "FAILED",
+      "at": 1790345022.4528184,
+      "error": "['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=/dev/null', '-c', 'submodule.recurse=false', '-c', 'credential.helper=', '-c', 'core.askPass=/bin/false', 'clone', '--no-recurse-submodules', '--depth', '1', '--', 'https://github.com/moby/moby.git', '/srv/app-builder/library/docker-moby'] -> 128:  Cloning into '/srv/app-builder/library/docker-moby'...\nfatal: unable to access 'https://github.com/moby/moby.git/': server certificate verification failed"
+    }
+  ],
+  "origin": "web",
+  "bundle_bytes": 1222,
+  "original_name": "static-landing.zip",
+  "bundle": "b-20260925-140341-ffa34a0d.zip",
+  "kind": "upload",
+  "source": "static-landing.zip",
+  "apps_discovered": [
+    {
+      "name": "static-landing",
+      "rel": "static-landing",
+      "how": "code marker"
+    }
+  ],
+  "package": "shipped (UI_Skin_Capability_OneShot_v2.zip)",
+  "apps_added": [
+    "static-landing"
+  ],
+  "apps_already_in_library": [],
+  "error": "['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=/dev/null', '-c', 'submodule.recurse=false', '-c', 'credential.helper=', '-c', 'core.askPass=/bin/false', 'clone', '--no-recurse-submodules', '--depth', '1', '--', 'https://github.com/moby/moby.git', '/srv/app-builder/library/docker-moby'] -> 128:  Cloning into '/srv/app-builder/library/docker-moby'...\nfatal: unable to access 'https://github.com/moby/moby.git/': server certificate verification failed. CAfile: none CRLfile: none\n",
+  "healing": {
+    "build": {
+      "status": "ESCALATED",
+      "rounds": 1,
+      "items": {
+        "build|['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=<path>', '-c', 'submodule.recurse=false', '-c', 'credential.hel|": {
+          "next_tier": 4,
+          "probe_i": 0
+        }
+      },
+      "chain": [
+        {
+          "tier": 1,
+          "tier_name": "script",
+          "item": {
+            "key": "['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=<path>', '-c', 'submodule.recurse=false', '-c', 'credential.hel",
+            "detail": "['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=/dev/null', '-c', 'submodule.recurse=false', '-c', 'credential.helper=', '-c', 'core.askPass=/bin/false', 'clone', '--no-recurse-submodules', '--depth', '1', '--', 'https://github.com/moby/moby.git', '/srv/app-builder/library/docker-moby'] -> 128:  Cloning into '/srv/app-builder/library/docker-moby'...\nfatal: unable to access 'https://github.com/moby/moby.git/': server certificate verification failed. CAfile: none CRLfile: none\n"
+          },
+          "at": 1790345022.4539602,
+          "outcome": "NOT_RECOGNISED"
+        },
+        {
+          "tier": 2,
+          "tier_name": "adapter",
+          "item": {
+            "key": "['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=<path>', '-c', 'submodule.recurse=false', '-c', 'credential.hel",
+            "detail": "['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=/dev/null', '-c', 'submodule.recurse=false', '-c', 'credential.helper=', '-c', 'core.askPass=/bin/false', 'clone', '--no-recurse-submodules', '--depth', '1', '--', 'https://github.com/moby/moby.git', '/srv/app-builder/library/docker-moby'] -> 128:  Cloning into '/srv/app-builder/library/docker-moby'...\nfatal: unable to access 'https://github.com/moby/moby.git/': server certificate verification failed. CAfile: none CRLfile: none\n"
+          },
+          "at": 1790345022.4549153,
+          "outcome": "NOT_MINE"
+        },
+        {
+          "tier": 3,
+          "tier_name": "probe",
+          "item": {
+            "key": "['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=<path>', '-c', 'submodule.recurse=false', '-c', 'credential.hel",
+            "detail": "['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=/dev/null', '-c', 'submodule.recurse=false', '-c', 'credential.helper=', '-c', 'core.askPass=/bin/false', 'clone', '--no-recurse-submodules', '--depth', '1', '--', 'https://github.com/moby/moby.git', '/srv/app-builder/library/docker-moby'] -> 128:  Cloning into '/srv/app-builder/library/docker-moby'...\nfatal: unable to access 'https://github.com/moby/moby.git/': server certificate verification failed. CAfile: none CRLfile: none\n"
+          },
+          "at": 1790345022.4549215,
+          "outcome": "NO_FIX",
+          "actions": [],
+          "note": "probe: no general repair left for this layer"
+        },
+        {
+          "tier": 4,
+          "tier_name": "human",
+          "at": 1790345022.4553194,
+          "outcome": "ALERTED",
+          "items": [
+            {
+              "key": "['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=<path>', '-c', 'submodule.recurse=false', '-c', 'credential.hel",
+              "detail": "['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=/dev/null', '-c', 'submodule.recurse=false', '-c', 'credential.helper=', '-c', 'core.askPass=/bin/false', 'clone', '--no-recurse-submodules', '--depth', '1', '--', 'https://github.com/moby/moby.git', '/srv/app-builder/library/docker-moby'] -> 128:  Cloning into '/srv/app-builder/library/docker-moby'...\nfatal: unable to access 'https://github.com/moby/moby.git/': server certificate verification failed. CAfile: none CRLfile: none\n"
+            }
+          ],
+          "delivered": []
+        }
+      ],
+      "alerted": [
+        "build|['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=<path>', '-c', 'submodule.recurse=false', '-c', 'credential.hel|"
+      ]
+    }
+  }
+}

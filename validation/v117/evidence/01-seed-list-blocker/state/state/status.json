@@ -1,0 +1,8 @@
+{
+  "state": "FAILED",
+  "bundle": "b-20260925-140443-955b5b14.zip",
+  "updated_at": 1790345084.6141589,
+  "kind": "upload",
+  "source": "node-api.zip",
+  "error": "['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=/dev/null', '-c', 'submodule.recurse=false', '-c', 'credential.helper=', '-c', 'core.askPass=/bin/false', 'clone', '--no-recurse-submodules', '--depth', '1', '--', 'https://github.com/moby/moby.git', '/srv/app-builder/library/docker-moby'] -> 128:  Cloning into '/srv/app-builder/library/docker-moby'...\nfatal: unable to access 'https://github.com/moby/moby.git/': server certificate verification failed. CAfile: none CRLfile: none\n"
+}

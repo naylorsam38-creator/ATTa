@@ -1,0 +1,4 @@
+total 12
+drwxr-xr-x 2 root root 4096 Sep 25 14:08 .
+drwxr-xr-x 8 root root 4096 Sep 25 14:08 ..
+-rw-r--r-- 1 root root 1222 Sep 25 14:07 b-20260925-140750-4aad9208.failed.zip

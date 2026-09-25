@@ -1,0 +1,83 @@
+{
+  "app": "static-landing",
+  "number": "A-001",
+  "verdict": "BROKEN AT 6 CLEAN \u2014 BROWSER_EXCEPTION",
+  "broken_at": "6 CLEAN",
+  "code": "BROWSER_EXCEPTION",
+  "stages": {
+    "1 INSTALLED": {
+      "status": "OK"
+    },
+    "2 APP_UP": {
+      "status": "OK",
+      "detail": "200"
+    },
+    "3 PROXY_UP": {
+      "status": "OK",
+      "detail": "200"
+    },
+    "4 SKIN": {
+      "status": "OK"
+    },
+    "5 HOOK": {
+      "status": "OK"
+    },
+    "6 CLEAN": {
+      "status": "FAIL",
+      "code": "BROWSER_EXCEPTION",
+      "detail": "BrowserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-hAzOat --remote-debugging-pipe --no-startup-window\n<launched> pid=7689\n[pid=7689][err] /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell: error while loading shared libraries: libglib-2.0.so.0: cannot open shared object file: No such file or directory\nCall log:\n  - <launching> /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-hAzOat --remote-debugging-pipe --no-startup-window\n  - <launched> pid=7689\n  - [pid=7689][err] /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell: error while loading shared libraries: libglib-2.0.so.0: cannot open shared object file: No such file or directory\n  - [pid=7689] <gracefully close start>\n  - [pid=7689] <kill>\n  - [pid=7689] <will force kill>\n  - [pid=7689] exception while trying to kill process: Error: kill ESRCH\n  - [pid=7689] <process did exit: exitCode=127, signal=null>\n  - [pid=7689] starting temporary directories cleanup\n  - [pid=7689] finished temporary directories cleanup\n  - [pid=7689] <gracefully close end>\n"
+    }
+  },
+  "ts": 1790346579.4843411,
+  "adapter": {
+    "state": null,
+    "capabilities": [],
+    "seen": null,
+    "expected": {
+      "mode": "dormant"
+    },
+    "matches_expected": false
+  },
+  "runner": {
+    "started": true,
+    "url": "http://127.0.0.1:20010/",
+    "part": "the app's own Dockerfile Dockerfile (builds from source)",
+    "part_detail": {
+      "kind": "dockerfile",
+      "dockerfile": "Dockerfile",
+      "context": ".",
+      "env": {},
+      "why": "the app's own Dockerfile Dockerfile (builds from source)",
+      "port_seen": 20010
+    },
+    "attempts": [
+      {
+        "n": 1,
+        "part": "the app's own Dockerfile Dockerfile (builds from source)",
+        "outcome": "UP",
+        "url": "http://127.0.0.1:20010/",
+        "notes": [],
+        "download_start_s": 1.0,
+        "boot_wait_s": 30.1
+      }
+    ],
+    "seconds": 35,
+    "kept_running": false
+  },
+  "timing": {
+    "queued_s": 0,
+    "started_at": "14:29:06",
+    "finished_at": "14:29:42",
+    "total_s": 35,
+    "start_s": 31,
+    "check_s": 4,
+    "attempts": [
+      {
+        "n": 1,
+        "outcome": "UP",
+        "download_start_s": 1.0,
+        "boot_wait_s": 30.1
+      }
+    ]
+  }
+}

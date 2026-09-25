@@ -1,0 +1,697 @@
+{
+  "id": "b-20260925-142537-e4e58493",
+  "owner": "tester02",
+  "state": "PARTIALLY_QUALIFIED",
+  "created": 1790346337.7607927,
+  "updated": 1790346798.1029713,
+  "history": [
+    {
+      "state": "QUEUED",
+      "at": 1790346337.7607927
+    },
+    {
+      "state": "VALIDATING",
+      "at": 1790346338.5544171
+    },
+    {
+      "state": "ADDING_APP",
+      "at": 1790346338.5564094
+    },
+    {
+      "state": "DISCOVERING",
+      "at": 1790346338.557115
+    },
+    {
+      "state": "FETCHING_LIBRARY",
+      "at": 1790346338.5641937
+    },
+    {
+      "state": "CATALOGUE_SYNC",
+      "at": 1790346338.5648482
+    },
+    {
+      "state": "INSTALLING_UI_CAPABILITY",
+      "at": 1790346338.6781056
+    },
+    {
+      "state": "INTAKE_CHECK",
+      "at": 1790346338.7310514
+    },
+    {
+      "state": "READY_FOR_WATCHER",
+      "at": 1790346340.8287969
+    },
+    {
+      "state": "QUALIFYING",
+      "at": 1790346340.829356
+    },
+    {
+      "state": "PARTIALLY_QUALIFIED",
+      "at": 1790346379.9215202,
+      "error": "static-landing: BROKEN AT 6 CLEAN \u2014 BROWSER_EXCEPTION"
+    }
+  ],
+  "origin": "web",
+  "bundle_bytes": 1555,
+  "original_name": "node-api.zip",
+  "bundle": "b-20260925-142537-e4e58493.zip",
+  "kind": "upload",
+  "source": "node-api.zip",
+  "apps_discovered": [
+    {
+      "name": "node-api",
+      "rel": "node-api",
+      "how": "code marker"
+    }
+  ],
+  "package": "current",
+  "apps_added": [],
+  "apps_already_in_library": [
+    "node-api"
+  ],
+  "catalogue_look": {
+    "static landing": [
+      "skin 'dashboard' is a low-confidence pick (no category words found; fallback skin)"
+    ]
+  },
+  "coverage_warnings": [
+    "no app uses skin category yet: devops_console"
+  ],
+  "library": "/home/sam/.app-builder-local/library",
+  "targets": "/home/sam/.app-builder-local/state/apps",
+  "apps": 2,
+  "parallel": 2,
+  "checklist": {
+    "expected": 2,
+    "ticked": 2,
+    "PASS": 1,
+    "FAIL": 1,
+    "NOT_CHECKED": 0,
+    "complete": true,
+    "rows": [
+      {
+        "no": "A-001",
+        "app": "static-landing",
+        "tick": "FAIL",
+        "verdict": "BROKEN AT 6 CLEAN \u2014 BROWSER_EXCEPTION",
+        "stopped_at": "S10 BROWSER_CLEAN",
+        "seconds": 35,
+        "timing": {
+          "queued_s": 0,
+          "started_at": "14:25:40",
+          "finished_at": "14:26:16",
+          "total_s": 35,
+          "start_s": 31,
+          "check_s": 4,
+          "attempts": [
+            {
+              "n": 1,
+              "outcome": "UP",
+              "download_start_s": 0.5,
+              "boot_wait_s": 30.1
+            }
+          ]
+        },
+        "steps": [
+          {
+            "no": "S01",
+            "name": "IN_LIBRARY",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S02",
+            "name": "CATALOGUED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S03",
+            "name": "SKIN_INSTALLED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S04",
+            "name": "INTAKE_CHECKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S05",
+            "name": "STARTED",
+            "tick": "PASS",
+            "note": "the app's own Dockerfile Dockerfile (builds from source)"
+          },
+          {
+            "no": "S06",
+            "name": "APP_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S07",
+            "name": "PROXY_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S08",
+            "name": "SKIN_SERVED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S09",
+            "name": "ADAPTER_HOOKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S10",
+            "name": "BROWSER_CLEAN",
+            "tick": "FAIL",
+            "note": ""
+          },
+          {
+            "no": "S11",
+            "name": "ADAPTER_STATE",
+            "tick": "INFO",
+            "note": "not seen"
+          },
+          {
+            "no": "S12",
+            "name": "RECIPE_SAVED",
+            "tick": "FAIL",
+            "note": ""
+          }
+        ],
+        "was": "FAIL"
+      },
+      {
+        "no": "A-002",
+        "app": "node-api",
+        "tick": "PASS",
+        "verdict": "PASS",
+        "stopped_at": null,
+        "seconds": 39,
+        "timing": {
+          "queued_s": 0,
+          "started_at": "14:25:40",
+          "finished_at": "14:26:19",
+          "total_s": 39,
+          "start_s": 34,
+          "check_s": 4,
+          "attempts": [
+            {
+              "n": 1,
+              "outcome": "UP",
+              "download_start_s": 4.6,
+              "boot_wait_s": 30.1
+            }
+          ]
+        },
+        "steps": [
+          {
+            "no": "S01",
+            "name": "IN_LIBRARY",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S02",
+            "name": "CATALOGUED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S03",
+            "name": "SKIN_INSTALLED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S04",
+            "name": "INTAKE_CHECKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S05",
+            "name": "STARTED",
+            "tick": "PASS",
+            "note": "the app's own Dockerfile Dockerfile (builds from source)"
+          },
+          {
+            "no": "S06",
+            "name": "APP_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S07",
+            "name": "PROXY_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S08",
+            "name": "SKIN_SERVED",
+            "tick": "N/A",
+            "note": ""
+          },
+          {
+            "no": "S09",
+            "name": "ADAPTER_HOOKED",
+            "tick": "N/A",
+            "note": ""
+          },
+          {
+            "no": "S10",
+            "name": "BROWSER_CLEAN",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S11",
+            "name": "ADAPTER_STATE",
+            "tick": "INFO",
+            "note": "not seen"
+          },
+          {
+            "no": "S12",
+            "name": "RECIPE_SAVED",
+            "tick": "PASS",
+            "note": ""
+          }
+        ],
+        "was": null
+      }
+    ],
+    "regressions": [],
+    "newly_passing": [],
+    "rules_promoted": [],
+    "rule_suspects": []
+  },
+  "qualified_at": 1790346582.8868232,
+  "error": "static-landing: BROKEN AT 6 CLEAN \u2014 BROWSER_EXCEPTION",
+  "qualification": [
+    {
+      "app": "node-api",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/node-api/.ui-capability",
+      "target_url": "http://127.0.0.1:20011/",
+      "proxy_url": "http://127.0.0.1:9063/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": null
+    },
+    {
+      "app": "static-landing",
+      "verdict": "BROKEN AT 6 CLEAN \u2014 BROWSER_EXCEPTION",
+      "qualified": false,
+      "ui_dir": "/home/sam/.app-builder-local/library/static-landing/.ui-capability",
+      "target_url": "http://127.0.0.1:20010/",
+      "proxy_url": "http://127.0.0.1:8990/",
+      "started_by": "the app's own Dockerfile Dockerfile (builds from source)",
+      "kept_running": false,
+      "evidence": null
+    }
+  ],
+  "qualification_results": [
+    {
+      "app": "node-api",
+      "number": "A-002",
+      "verdict": "PASS",
+      "broken_at": null,
+      "code": null,
+      "stages": {
+        "1 INSTALLED": {
+          "status": "OK"
+        },
+        "2 APP_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "3 PROXY_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "4 SKIN": {
+          "status": "NOT_APPLICABLE",
+          "code": "SERVICE"
+        },
+        "5 HOOK": {
+          "status": "NOT_APPLICABLE",
+          "code": "SERVICE"
+        },
+        "6 CLEAN": {
+          "status": "OK",
+          "code": "SERVICE_RESPONDS",
+          "detail": "app 200, proxy 200"
+        }
+      },
+      "ts": 1790346578.967695,
+      "runner": {
+        "started": true,
+        "url": "http://127.0.0.1:20011/",
+        "part": "recipe that worked before",
+        "part_detail": {
+          "kind": "dockerfile",
+          "dockerfile": "Dockerfile",
+          "context": ".",
+          "env": {},
+          "saved_at": 1790346529.4609609,
+          "saved_by": "qualified: passed all six stages",
+          "why": "recipe that worked before",
+          "port_seen": 20011
+        },
+        "attempts": [
+          {
+            "n": 1,
+            "part": "recipe that worked before",
+            "outcome": "UP",
+            "url": "http://127.0.0.1:20011/",
+            "notes": [],
+            "download_start_s": 1.0,
+            "boot_wait_s": 30.1
+          }
+        ],
+        "seconds": 35,
+        "kept_running": false
+      },
+      "timing": {
+        "queued_s": 0,
+        "started_at": "14:29:06",
+        "finished_at": "14:29:42",
+        "total_s": 35,
+        "start_s": 31,
+        "check_s": 4,
+        "attempts": [
+          {
+            "n": 1,
+            "outcome": "UP",
+            "download_start_s": 1.0,
+            "boot_wait_s": 30.1
+          }
+        ]
+      }
+    },
+    {
+      "app": "static-landing",
+      "number": "A-001",
+      "verdict": "BROKEN AT 6 CLEAN \u2014 BROWSER_EXCEPTION",
+      "broken_at": "6 CLEAN",
+      "code": "BROWSER_EXCEPTION",
+      "stages": {
+        "1 INSTALLED": {
+          "status": "OK"
+        },
+        "2 APP_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "3 PROXY_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "4 SKIN": {
+          "status": "OK"
+        },
+        "5 HOOK": {
+          "status": "OK"
+        },
+        "6 CLEAN": {
+          "status": "FAIL",
+          "code": "BROWSER_EXCEPTION",
+          "detail": "BrowserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-hAzOat --remote-debugging-pipe --no-startup-window\n<launched> pid=7689\n[pid=7689][err] /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell: error while loading shared libraries: libglib-2.0.so.0: cannot open shared object file: No such file or directory\nCall log:\n  - <launching> /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-hAzOat --remote-debugging-pipe --no-startup-window\n  - <launched> pid=7689\n  - [pid=7689][err] /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell: error while loading shared libraries: libglib-2.0.so.0: cannot open shared object file: No such file or directory\n  - [pid=7689] <gracefully close start>\n  - [pid=7689] <kill>\n  - [pid=7689] <will force kill>\n  - [pid=7689] exception while trying to kill process: Error: kill ESRCH\n  - [pid=7689] <process did exit: exitCode=127, signal=null>\n  - [pid=7689] starting temporary directories cleanup\n  - [pid=7689] finished temporary directories cleanup\n  - [pid=7689] <gracefully close end>\n"
+        }
+      },
+      "ts": 1790346579.4843411,
+      "adapter": {
+        "state": null,
+        "capabilities": [],
+        "seen": null,
+        "expected": {
+          "mode": "dormant"
+        },
+        "matches_expected": false
+      },
+      "runner": {
+        "started": true,
+        "url": "http://127.0.0.1:20010/",
+        "part": "the app's own Dockerfile Dockerfile (builds from source)",
+        "part_detail": {
+          "kind": "dockerfile",
+          "dockerfile": "Dockerfile",
+          "context": ".",
+          "env": {},
+          "why": "the app's own Dockerfile Dockerfile (builds from source)",
+          "port_seen": 20010
+        },
+        "attempts": [
+          {
+            "n": 1,
+            "part": "the app's own Dockerfile Dockerfile (builds from source)",
+            "outcome": "UP",
+            "url": "http://127.0.0.1:20010/",
+            "notes": [],
+            "download_start_s": 1.0,
+            "boot_wait_s": 30.1
+          }
+        ],
+        "seconds": 35,
+        "kept_running": false
+      },
+      "timing": {
+        "queued_s": 0,
+        "started_at": "14:29:06",
+        "finished_at": "14:29:42",
+        "total_s": 35,
+        "start_s": 31,
+        "check_s": 4,
+        "attempts": [
+          {
+            "n": 1,
+            "outcome": "UP",
+            "download_start_s": 1.0,
+            "boot_wait_s": 30.1
+          }
+        ]
+      }
+    }
+  ],
+  "qualified_apps": [
+    "node-api"
+  ],
+  "coolify": {
+    "status": "BLOCKED_NOT_CONFIGURED",
+    "attempts": 4,
+    "next_attempt_at": 1790347038.1026614,
+    "manifest": "/home/sam/.app-builder-local/state/coolify/outbox/b-20260925-142537-e4e58493.json",
+    "apps": {
+      "node-api": {
+        "status": "PENDING"
+      }
+    },
+    "last_attempt_at": 1790346798.1026614,
+    "last_error": "COOLIFY_URL and COOLIFY_TOKEN must be set in the .env file"
+  },
+  "healing": {
+    "qualify": {
+      "status": "ESCALATED",
+      "rounds": 6,
+      "items": {
+        "qualify|6 CLEAN:BROWSER_EXCEPTION|static-landing": {
+          "next_tier": 4,
+          "probe_i": 5,
+          "last_applied": {
+            "tier": 3,
+            "tier_name": "probe",
+            "item": {
+              "key": "6 CLEAN:BROWSER_EXCEPTION",
+              "app": "static-landing",
+              "detail": "BrowserType.launch: Executable doesn't exist at /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     playwright install                                     \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d",
+              "syntax_errors": []
+            },
+            "at": 1790346535.0583456,
+            "outcome": "APPLIED",
+            "actions": [
+              {
+                "name": "install_browser",
+                "args": {},
+                "result": "chromium installed",
+                "error": false
+              }
+            ],
+            "probe_more": false,
+            "note": "probe: general repair install_browser for 6 CLEAN:BROWSER_EXCEPTION"
+          }
+        }
+      },
+      "chain": [
+        {
+          "tier": 1,
+          "tier_name": "script",
+          "item": {
+            "key": "6 CLEAN:BROWSER_EXCEPTION",
+            "app": "static-landing",
+            "detail": "BrowserType.launch: Executable doesn't exist at /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     playwright install                                     \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d",
+            "syntax_errors": []
+          },
+          "at": 1790346381.870813,
+          "outcome": "NOT_RECOGNISED"
+        },
+        {
+          "tier": 2,
+          "tier_name": "adapter",
+          "item": {
+            "key": "6 CLEAN:BROWSER_EXCEPTION",
+            "app": "static-landing",
+            "detail": "BrowserType.launch: Executable doesn't exist at /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     playwright install                                     \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d",
+            "syntax_errors": []
+          },
+          "at": 1790346381.87176,
+          "outcome": "NOT_MINE"
+        },
+        {
+          "tier": 3,
+          "tier_name": "probe",
+          "item": {
+            "key": "6 CLEAN:BROWSER_EXCEPTION",
+            "app": "static-landing",
+            "detail": "BrowserType.launch: Executable doesn't exist at /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     playwright install                                     \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d",
+            "syntax_errors": []
+          },
+          "at": 1790346381.8717659,
+          "outcome": "APPLIED",
+          "actions": [
+            {
+              "name": "reinstall_app_overlay",
+              "args": {
+                "app": "static-landing"
+              },
+              "result": "reinstalled static-landing overlay (dashboard/skin-002)",
+              "error": false
+            }
+          ],
+          "probe_more": true,
+          "note": "probe: general repair reinstall_app_overlay for 6 CLEAN:BROWSER_EXCEPTION"
+        },
+        {
+          "tier": 3,
+          "tier_name": "probe",
+          "item": {
+            "key": "6 CLEAN:BROWSER_EXCEPTION",
+            "app": "static-landing",
+            "detail": "BrowserType.launch: Executable doesn't exist at /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     playwright install                                     \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d",
+            "syntax_errors": []
+          },
+          "at": 1790346419.4300086,
+          "outcome": "APPLIED",
+          "actions": [
+            {
+              "name": "reregister_target",
+              "args": {
+                "app": "static-landing"
+              },
+              "result": "registration already points at a live overlay",
+              "error": false
+            }
+          ],
+          "probe_more": true,
+          "note": "probe: general repair reregister_target for 6 CLEAN:BROWSER_EXCEPTION"
+        },
+        {
+          "tier": 3,
+          "tier_name": "probe",
+          "item": {
+            "key": "6 CLEAN:BROWSER_EXCEPTION",
+            "app": "static-landing",
+            "detail": "BrowserType.launch: Executable doesn't exist at /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     playwright install                                     \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d",
+            "syntax_errors": []
+          },
+          "at": 1790346456.896435,
+          "outcome": "APPLIED",
+          "actions": [
+            {
+              "name": "chmod_launcher",
+              "args": {
+                "app": "static-landing"
+              },
+              "result": "run-ui.sh is executable",
+              "error": false
+            }
+          ],
+          "probe_more": true,
+          "note": "probe: general repair chmod_launcher for 6 CLEAN:BROWSER_EXCEPTION"
+        },
+        {
+          "tier": 3,
+          "tier_name": "probe",
+          "item": {
+            "key": "6 CLEAN:BROWSER_EXCEPTION",
+            "app": "static-landing",
+            "detail": "BrowserType.launch: Executable doesn't exist at /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     playwright install                                     \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d",
+            "syntax_errors": []
+          },
+          "at": 1790346494.3497849,
+          "outcome": "APPLIED",
+          "actions": [
+            {
+              "name": "start_proxy",
+              "args": {
+                "app": "static-landing"
+              },
+              "result": "proxy listening on 8990",
+              "error": false
+            }
+          ],
+          "probe_more": true,
+          "note": "probe: general repair start_proxy for 6 CLEAN:BROWSER_EXCEPTION"
+        },
+        {
+          "tier": 3,
+          "tier_name": "probe",
+          "item": {
+            "key": "6 CLEAN:BROWSER_EXCEPTION",
+            "app": "static-landing",
+            "detail": "BrowserType.launch: Executable doesn't exist at /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     playwright install                                     \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d",
+            "syntax_errors": []
+          },
+          "at": 1790346535.0583456,
+          "outcome": "APPLIED",
+          "actions": [
+            {
+              "name": "install_browser",
+              "args": {},
+              "result": "chromium installed",
+              "error": false
+            }
+          ],
+          "probe_more": false,
+          "note": "probe: general repair install_browser for 6 CLEAN:BROWSER_EXCEPTION"
+        },
+        {
+          "tier": 4,
+          "tier_name": "human",
+          "at": 1790346584.8303576,
+          "outcome": "ALERTED",
+          "items": [
+            {
+              "key": "6 CLEAN:BROWSER_EXCEPTION",
+              "app": "static-landing",
+              "detail": "BrowserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-hAzOat --remote-debugging-pipe --no-startup-window\n<launched> pid=7689\n[pid=7689][err] /home/sam/.cache/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-linux64/chrome-headless-shell: error whi",
+              "syntax_errors": []
+            }
+          ],
+          "delivered": []
+        }
+      ],
+      "alerted": [
+        "qualify|6 CLEAN:BROWSER_EXCEPTION|static-landing"
+      ]
+    }
+  }
+}

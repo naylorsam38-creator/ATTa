@@ -1,0 +1,12 @@
+{
+  "app": "node-api",
+  "app_id": "node-api",
+  "app_dir": "/home/sam/.app-builder-local/library/node-api",
+  "target_url": "http://127.0.0.1:20011/",
+  "proxy_url": "http://127.0.0.1:9063/",
+  "ui_dir": "/home/sam/.app-builder-local/library/node-api/.ui-capability",
+  "customer_id": "default",
+  "profile": "service",
+  "parked": true,
+  "parked_at": 1790346582.3364286
+}

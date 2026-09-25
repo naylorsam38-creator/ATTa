@@ -1,0 +1,11 @@
+total 14588
+drwxr-xr-x 2 sam sam     4096 Sep 25 14:35 .
+drwxr-xr-x 8 sam sam     4096 Sep 25 14:37 ..
+-rw-r--r-- 1 sam sam     1222 Sep 25 14:12 b-20260925-141217-cbc9ea56.failed.zip
+-rw-r--r-- 1 sam sam     1555 Sep 25 14:25 b-20260925-142516-d62fe5cd.failed.zip
+-rw-r--r-- 1 sam sam     1555 Sep 25 14:25 b-20260925-142537-e4e58493.processed.zip
+-rw-r--r-- 1 sam sam     1222 Sep 25 14:31 b-20260925-143144-43e2376d.processed.zip
+-rw-r--r-- 1 sam sam 11731557 Sep 25 14:31 b-20260925-143144-56d1001d.processed.zip
+-rw-r--r-- 1 sam sam  3167070 Sep 25 14:31 b-20260925-143144-69fa2f7b.processed.zip
+-rw-r--r-- 1 sam sam     1718 Sep 25 14:31 b-20260925-143144-c112e735.processed.zip
+-rw-r--r-- 1 sam sam     2002 Sep 25 14:31 b-20260925-143144-c4bb3789.processed.zip

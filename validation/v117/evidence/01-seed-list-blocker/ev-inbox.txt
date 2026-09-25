@@ -1,0 +1,5 @@
+total 16
+drwxrws---  2 atta-run atta 4096 Sep 25 14:04 .
+drwxrws--t 10 root     atta 4096 Sep 25 14:04 ..
+-rw-r-----  1 atta-web atta 1222 Sep 25 14:03 b-20260925-140341-ffa34a0d.failed.zip
+-rw-r-----  1 atta-web atta 1555 Sep 25 14:04 b-20260925-140443-955b5b14.failed.zip

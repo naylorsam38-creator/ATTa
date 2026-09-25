@@ -1,0 +1,7 @@
+live:               v117  /opt/app-builder-releases/v117-20260925T134404Z
+known-good:         v117  /opt/app-builder-releases/v117-20260925T134404Z
+previous known-good: -
+deploy lock:        free
+queued: 0   claimed/running: 0
+last job: 20260925T134403Z-127c1292-manual  state live  verdict DEPLOYED  version v117  build -
+RESULT: DEPLOYED

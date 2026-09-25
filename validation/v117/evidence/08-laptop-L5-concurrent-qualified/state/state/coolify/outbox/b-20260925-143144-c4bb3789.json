@@ -1,0 +1,89 @@
+{
+  "schema": "APP_BUILDER_COOLIFY_HANDOFF.v1",
+  "build_id": "b-20260925-143144-c4bb3789",
+  "owner": "tester02",
+  "qualified_at": 1790346956.2306354,
+  "apps": [
+    {
+      "app": "compose-stack",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/compose-stack/.ui-capability",
+      "target_url": "http://127.0.0.1:20026/",
+      "proxy_url": "http://127.0.0.1:8451/",
+      "started_by": "the app's own compose file docker-compose.yml (builds from source)",
+      "kept_running": false,
+      "evidence": {
+        "dir": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack",
+        "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack/screenshot.png",
+        "html": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack/page.html",
+        "browser": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack/browser.json"
+      }
+    },
+    {
+      "app": "env-guestbook",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/env-guestbook/.ui-capability",
+      "target_url": "http://127.0.0.1:20027/",
+      "proxy_url": "http://127.0.0.1:8307/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": null
+    },
+    {
+      "app": "fastapi-service",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/fastapi-service/.ui-capability",
+      "target_url": "http://127.0.0.1:20030/",
+      "proxy_url": "http://127.0.0.1:8544/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": null
+    },
+    {
+      "app": "node-api",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/node-api/.ui-capability",
+      "target_url": "http://127.0.0.1:20029/",
+      "proxy_url": "http://127.0.0.1:9063/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": null
+    },
+    {
+      "app": "static-landing",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/static-landing/.ui-capability",
+      "target_url": "http://127.0.0.1:20028/",
+      "proxy_url": "http://127.0.0.1:8990/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": {
+        "dir": "/home/sam/.app-builder-local/state/runner/evidence/static-landing",
+        "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/screenshot.png",
+        "html": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/page.html",
+        "browser": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/browser.json"
+      }
+    },
+    {
+      "app": "vite-react-dashboard",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/vite-react-dashboard/.ui-capability",
+      "target_url": "http://127.0.0.1:20031/",
+      "proxy_url": "http://127.0.0.1:8520/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": {
+        "dir": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard",
+        "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard/screenshot.png",
+        "html": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard/page.html",
+        "browser": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard/browser.json"
+      }
+    }
+  ]
+}

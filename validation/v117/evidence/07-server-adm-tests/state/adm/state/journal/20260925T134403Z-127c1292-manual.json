@@ -1,0 +1,88 @@
+{
+  "job_id": "20260925T134403Z-127c1292-manual",
+  "created_at": "2026-09-25T13:44:03+00:00",
+  "verdict": "DEPLOYED",
+  "events": [
+    {
+      "at": "2026-09-25T13:44:03+00:00",
+      "event": "CREATED",
+      "kind": "manual"
+    },
+    {
+      "at": "2026-09-25T13:44:03+00:00",
+      "event": "VALIDATING"
+    },
+    {
+      "at": "2026-09-25T13:44:04+00:00",
+      "event": "BUILDING"
+    },
+    {
+      "at": "2026-09-25T13:45:03+00:00",
+      "event": "BUILT"
+    },
+    {
+      "at": "2026-09-25T13:45:03+00:00",
+      "event": "HEALTH_CHECKING"
+    },
+    {
+      "at": "2026-09-25T13:45:07+00:00",
+      "event": "VERIFIED"
+    },
+    {
+      "at": "2026-09-25T13:45:07+00:00",
+      "event": "LIVE"
+    }
+  ],
+  "deployment_id": "20260925T134403Z-127c1292-manual",
+  "kind": "manual",
+  "state": "live",
+  "state_history": [
+    {
+      "state": "created",
+      "at": "2026-09-25T13:44:03+00:00"
+    },
+    {
+      "state": "validating",
+      "at": "2026-09-25T13:44:03+00:00"
+    },
+    {
+      "state": "building",
+      "at": "2026-09-25T13:44:04+00:00"
+    },
+    {
+      "state": "built",
+      "at": "2026-09-25T13:45:03+00:00"
+    },
+    {
+      "state": "health_checking",
+      "at": "2026-09-25T13:45:03+00:00"
+    },
+    {
+      "state": "verified",
+      "at": "2026-09-25T13:45:07+00:00"
+    },
+    {
+      "state": "live",
+      "at": "2026-09-25T13:45:07+00:00"
+    }
+  ],
+  "started_at": "2026-09-25T13:44:03+00:00",
+  "completed_at": "2026-09-25T13:45:07+00:00",
+  "source": {},
+  "previous_live": null,
+  "attempted": {
+    "release": "/opt/app-builder-releases/v117-20260925T134404Z",
+    "version": "v117",
+    "code_sha256": "3fcc13b5ad384bc736771c6adcbbd271f1fdcea7c56dfe298f63be88387b5a1e"
+  },
+  "failure_reason": null,
+  "process": {
+    "host": "atta-server"
+  },
+  "rollback": null,
+  "final_live": null,
+  "origin": "local",
+  "requested_by": "root",
+  "updated_at": "2026-09-25T13:45:07+00:00",
+  "transaction": "/opt/app-builder-releases/.txn/20260925T134403Z-127c1292-manual"
+}
