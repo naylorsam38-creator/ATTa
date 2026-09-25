@@ -7,12 +7,13 @@ Roles: "admin" sees every user's builds; "user" sees only their own.
 
 Command line (run on the server, as the service user or root):
 
-  python3 accounts.py init                 create the admin + 10 test accounts (idempotent)
+  python3 accounts.py init                 create the admin (+ APP_BUILDER_TEST_ACCOUNTS test accounts; idempotent)
   python3 accounts.py list                 list accounts (no passwords)
   python3 accounts.py add NAME [--admin]   create one account, prints its password once
   python3 accounts.py reset NAME           new password for NAME, prints it once
   python3 accounts.py disable NAME         block logins for NAME (existing sessions stop working)
   python3 accounts.py enable NAME          undo disable
+  python3 accounts.py delete NAME          remove an account (never the last enabled admin)
 
 Passwords are only ever printed (and, for `init`, written to TEST_ACCOUNTS.txt with 0600
 permissions). The accounts file itself holds hashes only.
@@ -28,8 +29,11 @@ ROOT = Path(os.environ.get("APP_BUILDER_ROOT", "/srv/app-builder"))
 USERS_FILE = ROOT / "state" / "users.json"
 # Where `init` writes the generated test-account passwords for handing out. 0600.
 TEST_ACCOUNTS_FILE = ROOT / "TEST_ACCOUNTS.txt"
-# How many pre-made test accounts `init` creates.
-TEST_ACCOUNT_COUNT = 10
+# How many pre-made test accounts `init` creates. v116: none unless asked for (APP_BUILDER_TEST_ACCOUNTS=10);
+# the laptop instance (`bash run` on a laptop) asks for 10, a server asks for none.
+TEST_ACCOUNT_COUNT = max(0, min(50, int(os.environ.get("APP_BUILDER_TEST_ACCOUNTS", "0") or 0)))
+# A carried-over shared password (APP_BUILDER_PASSWORD) shorter than this is not reused as the admin's.
+MIN_LEGACY_PASSWORD = 16
 # Test account names are this prefix + a two-digit number: tester01 .. tester10.
 TEST_ACCOUNT_PREFIX = "tester"
 # Name of the admin account `init` creates.
@@ -161,6 +165,21 @@ def update(name: str, **fields) -> None:
         save(d)
 
 
+def delete(name: str) -> None:
+    """Remove an account for good (v116: pre-made test accounts can be removed, not only disabled).
+    The last enabled admin cannot be deleted."""
+    with _LOCK:
+        d = load()
+        u = d["users"].get(name)
+        if not u:
+            raise ValueError(f"no account {name!r}")
+        admins = [n for n, x in d["users"].items() if x.get("role") == "admin" and not x.get("disabled")]
+        if u.get("role") == "admin" and admins == [name]:
+            raise ValueError("that is the last enabled admin; create another admin first")
+        del d["users"][name]
+        save(d)
+
+
 def reset_password(name: str) -> str:
     pw = new_password()
     update(name, password=make_hash(pw))
@@ -176,6 +195,10 @@ def init() -> list[tuple[str, str, str]]:
         # Carry over the old single shared password if the server already had one, so the
         # existing admin login keeps working after the upgrade.
         legacy = os.environ.get("APP_BUILDER_PASSWORD") or None
+        if legacy and len(legacy) < MIN_LEGACY_PASSWORD:
+            print(f"note: the old shared APP_BUILDER_PASSWORD is shorter than {MIN_LEGACY_PASSWORD} characters; "
+                  "a new admin password was generated instead", file=sys.stderr)
+            legacy = None
         made.append((ADMIN_NAME, "admin", create(ADMIN_NAME, "admin", legacy, "initial admin")))
     for i in range(1, TEST_ACCOUNT_COUNT + 1):
         name = f"{TEST_ACCOUNT_PREFIX}{i:02d}"
@@ -205,7 +228,7 @@ def main(argv=None) -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("init"); sub.add_parser("list")
     a = sub.add_parser("add"); a.add_argument("name"); a.add_argument("--admin", action="store_true")
-    for c in ("reset", "disable", "enable"):
+    for c in ("reset", "disable", "enable", "delete"):
         sub.add_parser(c).add_argument("name")
     args = ap.parse_args(argv)
     try:
@@ -219,6 +242,8 @@ def main(argv=None) -> int:
                 print(f"{u['name']:<14} {u['role']:<6} {'DISABLED' if u.get('disabled') else 'active'}")
         elif args.cmd == "add":
             print(create(args.name, "admin" if args.admin else "user"))
+        elif args.cmd == "delete":
+            delete(args.name); print(f"{args.name} deleted")
         elif args.cmd == "reset":
             print(reset_password(args.name))
         elif args.cmd == "disable":

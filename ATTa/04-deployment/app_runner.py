@@ -78,6 +78,10 @@ SERVER_COMMANDS = ["standalone", "server", "serve", "webserver", "web", "start",
 # reduced set of kernel capabilities. An app that fails with "Operation not permitted" is retried once with
 # Docker's default capability set (rule container.caps); the other limits stay. HARDEN=false turns all of it off.
 HARDEN = os.environ.get("APP_BUILDER_HARDEN", "true").lower() in {"1", "true", "yes"}
+# v116: switching the container fence off is for a laptop only; a server (a systemd service) keeps it on.
+if not HARDEN and os.environ.get("INVOCATION_ID"):
+    print("APP_BUILDER_HARDEN=false is ignored on a server: containers keep their limits", file=sys.stderr, flush=True)
+    HARDEN = True
 PIDS_LIMIT = int(os.environ.get("APP_BUILDER_PIDS_LIMIT", "1024"))
 CPUS = os.environ.get("APP_BUILDER_CPUS", "2.0")
 # Kept after dropping ALL: what ordinary images need to start (entrypoints that chown data folders and then

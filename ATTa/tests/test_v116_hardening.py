@@ -614,5 +614,230 @@ class DocumentationFetchesStayPublic(unittest.TestCase):
             srv.shutdown(); srv.server_close()
 
 
+# ============================================================================ #9 #11 #12 #13 #14 #16 gateway + accounts
+
+import urllib.error, urllib.request  # noqa: E402
+
+
+def load_gateway():
+    os.environ.setdefault("APP_BUILDER_SESSION_SECRET", "test-session-secret-" + "x" * 32)
+    if not accounts.load()["users"]:
+        accounts.create("admin", "admin", "correct horse battery staple")
+    import gateway
+    return gateway
+
+
+def set_users(**roles):
+    d = {"schema": "APP_BUILDER_USERS.v1", "users": {}}
+    for name, role in roles.items():
+        d["users"][name] = {"name": name, "role": role, "session_version": 1,
+                            "password": accounts.make_hash("pw-" + name + "-0123456789")}
+    accounts.save(d)
+
+
+class TestAccountsAreOptIn(unittest.TestCase):
+    def setUp(self):
+        self.saved = (accounts.TEST_ACCOUNT_COUNT, accounts.TEST_ACCOUNTS_FILE, os.environ.get("APP_BUILDER_PASSWORD"))
+        accounts.TEST_ACCOUNTS_FILE = Path(tempfile.mkdtemp(dir=TMP)) / "TEST_ACCOUNTS.txt"
+        accounts.save({"schema": "APP_BUILDER_USERS.v1", "users": {}})
+
+    def tearDown(self):
+        accounts.TEST_ACCOUNT_COUNT, accounts.TEST_ACCOUNTS_FILE, pw = self.saved
+        os.environ.pop("APP_BUILDER_PASSWORD", None)
+        if pw is not None:
+            os.environ["APP_BUILDER_PASSWORD"] = pw
+
+    def test_server_default_is_admin_only(self):
+        accounts.TEST_ACCOUNT_COUNT = 0
+        made = accounts.init()
+        self.assertEqual([m[0] for m in made], [accounts.ADMIN_NAME])
+        self.assertEqual(list(accounts.load()["users"]), [accounts.ADMIN_NAME])
+
+    def test_testers_only_when_asked(self):
+        accounts.TEST_ACCOUNT_COUNT = 3
+        self.assertEqual(sorted(accounts.load()["users"]) + sorted(m[0] for m in accounts.init()),
+                         ["admin", "tester01", "tester02", "tester03"])
+
+    def test_env_default_is_zero(self):
+        r = subprocess.run([sys.executable, "-c", "import accounts; print(accounts.TEST_ACCOUNT_COUNT)"], cwd=DEP,
+                           capture_output=True, text=True, env={k: v for k, v in os.environ.items() if k != "APP_BUILDER_TEST_ACCOUNTS"})
+        self.assertEqual(r.stdout.strip(), "0")
+
+    def test_short_legacy_password_is_not_reused(self):
+        accounts.TEST_ACCOUNT_COUNT = 0
+        os.environ["APP_BUILDER_PASSWORD"] = "admin123"
+        (_, _, pw), = accounts.init()
+        self.assertNotEqual(pw, "admin123")
+        self.assertIsNone(accounts.verify("admin", "admin123"))
+
+    def test_long_legacy_password_is_kept(self):
+        accounts.TEST_ACCOUNT_COUNT = 0
+        os.environ["APP_BUILDER_PASSWORD"] = "a-long-shared-password-2024"
+        accounts.init()
+        self.assertIsNotNone(accounts.verify("admin", "a-long-shared-password-2024"))
+
+    def test_delete(self):
+        set_users(admin="admin", tester01="user")
+        accounts.delete("tester01")
+        self.assertIsNone(accounts.get("tester01"))
+        with self.assertRaisesRegex(ValueError, "last enabled admin"):
+            accounts.delete("admin")
+
+
+class _LiveGateway(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.gw = load_gateway()
+        cls.srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), cls.gw.H)
+        threading.Thread(target=cls.srv.serve_forever, daemon=True).start()
+        cls.base = f"http://127.0.0.1:{cls.srv.server_address[1]}"
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.srv.shutdown(); cls.srv.server_close()
+
+    def setUp(self):
+        set_users(admin="admin", tester01="user", tester02="user")
+        self.gw._LOGIN_FAILURES.clear()
+
+    def login(self, name, pw=None, headers=None):
+        req = urllib.request.Request(self.base + "/login", data=f"user={name}&password={pw or 'pw-' + name + '-0123456789'}".encode(),
+                                     headers=headers or {})
+        op = urllib.request.build_opener(_NoRedirect)
+        try:
+            r = op.open(req); return r.status, r.headers.get("Set-Cookie", "")
+        except urllib.error.HTTPError as e:
+            return e.code, e.headers.get("Set-Cookie", "") or ""
+
+    def get(self, path, cookie):
+        op = urllib.request.build_opener(_NoRedirect)
+        try:
+            return op.open(urllib.request.Request(self.base + path, headers={"Cookie": cookie})).status
+        except urllib.error.HTTPError as e:
+            return e.code
+
+
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *a, **k):
+        return None
+
+
+def cookie_of(set_cookie):
+    return set_cookie.split(";", 1)[0]
+
+
+class LoginThrottling(_LiveGateway):
+    def test_x_real_ip_only_from_nginx(self):
+        class Fake:
+            def __init__(self, peer, hdr): self.client_address, self.headers = (peer, 1), {"X-Real-IP": hdr}
+        self.assertEqual(self.gw.client_ip(Fake("127.0.0.1", "203.0.113.9")), "203.0.113.9")
+        self.assertEqual(self.gw.client_ip(Fake("198.51.100.7", "127.0.0.1")), "198.51.100.7")   # spoof ignored
+
+    def test_rotating_addresses_still_lock_the_account(self):
+        for i in range(self.gw.LOGIN_MAX_ACCOUNT_FAILURES):
+            self.gw.record_login_failure(f"203.0.113.{i % 250}", "admin")
+        self.assertFalse(self.gw.login_allowed("198.51.100.1", "admin"))
+        self.assertTrue(self.gw.login_allowed("198.51.100.1", "tester01"))    # other accounts unaffected
+
+    def test_per_address_limit_over_http(self):
+        for _ in range(self.gw.LOGIN_MAX_FAILURES):
+            self.assertEqual(self.login("tester01", "wrong")[0], 401)
+        self.assertEqual(self.login("tester01")[0], 429)                      # even the right password waits
+
+    def test_counters_survive_a_restart(self):
+        self.gw.record_login_failure("203.0.113.5", "tester02")
+        saved = json.loads((self.gw.GW_STATE / "login.json").read_text())
+        self.assertIn("user:tester02", saved)
+
+    def test_table_is_bounded(self):
+        saved = self.gw.LOGIN_TABLE_MAX; self.gw.LOGIN_TABLE_MAX = 50
+        try:
+            for i in range(200):
+                self.gw.record_login_failure(f"10.0.{i // 250}.{i % 250}")
+            self.assertLessEqual(len(self.gw._LOGIN_FAILURES), 50)
+        finally:
+            self.gw.LOGIN_TABLE_MAX = saved
+
+
+class LogoutEndsTheSession(_LiveGateway):
+    def test_logout_revokes_the_token_itself(self):
+        code, sc = self.login("tester01"); c = cookie_of(sc)
+        self.assertEqual(code, 302); self.assertEqual(self.get("/builds", c), 200)
+        self.get("/logout", c)
+        self.assertEqual(self.get("/builds", c), 302)            # the old cookie, replayed: back to login
+
+    def test_logout_everywhere(self):
+        c1 = cookie_of(self.login("tester02")[1]); c2 = cookie_of(self.login("tester02")[1])
+        self.get("/logout-all", c1)
+        self.assertEqual(self.get("/builds", c1), 302); self.assertEqual(self.get("/builds", c2), 302)
+
+    def test_sessions_last_12_hours_by_default(self):
+        self.assertEqual(self.gw.SESSION_TTL, 43200)
+
+
+class UploadLimits(_LiveGateway):
+    def upload(self, cookie, size=100):
+        req = urllib.request.Request(self.base + "/upload", data=b"x" * size, method="POST",
+                                     headers={"Cookie": cookie, "Content-Type": "application/zip"})
+        try:
+            return urllib.request.urlopen(req).status
+        except urllib.error.HTTPError as e:
+            return e.code
+
+    def test_active_builds_cap(self):
+        for _ in range(self.gw.MAX_ACTIVE_BUILDS):
+            builds.create("tester01", origin="web")
+        self.assertIn("builds running", self.gw.upload_refusal({"name": "tester01", "role": "user"}, 10))
+        self.assertEqual(self.upload(cookie_of(self.login("tester01")[1])), 429)
+        self.assertIsNone(self.gw.upload_refusal({"name": "admin", "role": "admin"}, 10))
+
+    def test_daily_allowance(self):
+        saved = self.gw.MAX_DAILY_UPLOAD; self.gw.MAX_DAILY_UPLOAD = 1000
+        try:
+            b = builds.create("tester02", origin="web", bundle_bytes=900); builds.update(b["id"], state=builds.FAILED)
+            self.assertIn("allowance", self.gw.upload_refusal({"name": "tester02", "role": "user"}, 200))
+            self.assertIsNone(self.gw.upload_refusal({"name": "tester02", "role": "user"}, 50))
+        finally:
+            self.gw.MAX_DAILY_UPLOAD = saved
+
+    def test_disk_floor_applies_to_everyone(self):
+        saved = self.gw.DISK_RESERVE; self.gw.DISK_RESERVE = 1 << 62
+        try:
+            self.assertIn("disk space", self.gw.upload_refusal({"name": "admin", "role": "admin"}, 1))
+        finally:
+            self.gw.DISK_RESERVE = saved
+
+
+class FrontDoorCaps(_LiveGateway):
+    def test_server_wide_daily_cap_and_persistence(self):
+        saved = (self.gw.FD_TOTAL_PER_DAY, self.gw.FD_PER_MIN)
+        self.gw.FD_TOTAL_PER_DAY, self.gw.FD_PER_MIN = 3, 100
+        self.gw._FD_DAY.update(day="", users={}, total=0); self.gw._FD_USE.clear()
+        try:
+            got = [self.gw._fd_allowed(u) for u in ("a", "b", "c", "d")]
+            self.assertEqual(got, [True, True, True, False])
+            self.assertEqual(json.loads((self.gw.GW_STATE / "frontdoor.json").read_text())["total"], 3)
+        finally:
+            self.gw.FD_TOTAL_PER_DAY, self.gw.FD_PER_MIN = saved
+
+
+class DangerousSwitchesRefusedOnServers(unittest.TestCase):
+    def run_py(self, code, **env):
+        e = {**os.environ, "APP_BUILDER_SESSION_SECRET": "s" * 40, **env}
+        return subprocess.run([sys.executable, "-c", code], cwd=DEP, capture_output=True, text=True, env=e, timeout=60)
+
+    def test_auth_disabled_refused_under_systemd_or_public_host(self):
+        r = self.run_py("import gateway", APP_BUILDER_AUTH_DISABLED="1", INVOCATION_ID="abc")
+        self.assertNotEqual(r.returncode, 0); self.assertIn("laptop only", r.stderr)
+        r = self.run_py("import gateway", APP_BUILDER_AUTH_DISABLED="1", APP_BUILDER_HOST="0.0.0.0")
+        self.assertNotEqual(r.returncode, 0)
+
+    def test_harden_off_ignored_on_a_server(self):
+        r = self.run_py("import app_runner; print(app_runner.HARDEN)", APP_BUILDER_HARDEN="false", INVOCATION_ID="abc")
+        self.assertEqual(r.stdout.strip().splitlines()[-1], "True")
+        r = self.run_py("import app_runner; print(app_runner.HARDEN)", APP_BUILDER_HARDEN="false", INVOCATION_ID="")
+        self.assertEqual(r.stdout.strip().splitlines()[-1], "False")    # a laptop may still turn it off
+
+
 if __name__ == "__main__":
     unittest.main()

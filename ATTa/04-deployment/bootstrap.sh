@@ -131,6 +131,8 @@ APP_BUILDER_DOMAIN=
 APP_BUILDER_LETSENCRYPT_EMAIL=
 # v116: without HTTPS nginx answers on 127.0.0.1 only. true = serve plain HTTP publicly anyway (not advised).
 APP_BUILDER_ALLOW_PUBLIC_HTTP=false
+# v116: pre-made test accounts (tester01..NN). 0 on a server; set a number to create them, then hand them out.
+APP_BUILDER_TEST_ACCOUNTS=0
 # App runner (app_runner.py). true = apps stay running after their check; false = stopped after it
 # (frees memory for the next app; Coolify runs the qualified ones for real).
 APP_BUILDER_KEEP_RUNNING=false
@@ -148,7 +150,7 @@ fi
 # On an upgraded server the old shared APP_BUILDER_PASSWORD (if still in .env) becomes the admin password.
 # v114.1: .env is read as data (envfile.py), never run as shell. A malformed or unsafe line stops the install.
 python3 "$APP/envfile.py" check "$ROOT/.env" || { echo "DEPLOYMENT FAILED: fix $ROOT/.env (line named above)" >&2; exit 1; }
-atta_env_run "$ROOT/.env" APP_BUILDER_ROOT,APP_BUILDER_USER,APP_BUILDER_PASSWORD -- python3 "$APP/accounts.py" init
+atta_env_run "$ROOT/.env" APP_BUILDER_ROOT,APP_BUILDER_USER,APP_BUILDER_PASSWORD,APP_BUILDER_TEST_ACCOUNTS -- python3 "$APP/accounts.py" init
 # App id -> Coolify resource UUID. Template only; the owner fills it in.
 if [ ! -f "$ROOT/coolify_resources.json" ]; then
  printf '{\n  "apps": {}\n}\n' >"$ROOT/coolify_resources.json"

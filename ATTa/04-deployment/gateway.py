@@ -6,13 +6,25 @@ import hashlib,hmac,html,json,os,secrets,time,re,threading,zipfile
 import accounts, builds, alerts
 ROOT=Path(os.environ.get("APP_BUILDER_ROOT","/srv/app-builder"));
 LOGIN_WINDOW=int(os.environ.get("APP_BUILDER_LOGIN_WINDOW","900")); LOGIN_MAX_FAILURES=int(os.environ.get("APP_BUILDER_LOGIN_MAX_FAILURES","8")); _LOGIN_FAILURES={}
+# v116: failures also counted per ACCOUNT (a guesser rotating addresses is still stopped), kept on disk so a
+# restart does not reset them, and the table is bounded so it cannot be used to exhaust memory.
+LOGIN_MAX_ACCOUNT_FAILURES=int(os.environ.get("APP_BUILDER_LOGIN_MAX_ACCOUNT_FAILURES","30")); LOGIN_TABLE_MAX=10000
 _LOGIN_LOCK=threading.Lock()
 INBOX=ROOT/"inbox"; STATUS=ROOT/"state/status.json"; FRONT=ROOT/"front-door.html"; CHOICES=ROOT/"state/front-door-choices"
-HOST=os.environ.get("APP_BUILDER_HOST","127.0.0.1"); PORT=int(os.environ.get("APP_BUILDER_PORT","8787")); SECRET=os.environ.get("APP_BUILDER_SESSION_SECRET",""); MAX=int(os.environ.get("APP_BUILDER_MAX_UPLOAD","10737418240")); SESSION_TTL=int(os.environ.get("APP_BUILDER_SESSION_TTL","86400"))
+HOST=os.environ.get("APP_BUILDER_HOST","127.0.0.1"); PORT=int(os.environ.get("APP_BUILDER_PORT","8787")); SECRET=os.environ.get("APP_BUILDER_SESSION_SECRET",""); MAX=int(os.environ.get("APP_BUILDER_MAX_UPLOAD","10737418240")); SESSION_TTL=int(os.environ.get("APP_BUILDER_SESSION_TTL","43200"))
+# v116: the gateway's own state (login counters, ended sessions, Front Door usage). Written only by the gateway.
+GW_STATE=ROOT/"state/gateway"
+# v116 upload limits. Admins are exempt from the first two (they upload ATTa bundles); everyone gets the disk floor.
+MAX_ACTIVE_BUILDS=int(os.environ.get("APP_BUILDER_MAX_ACTIVE_BUILDS","3"))
+MAX_DAILY_UPLOAD=int(float(os.environ.get("APP_BUILDER_MAX_DAILY_UPLOAD_GB","20"))*1024**3)
+DISK_RESERVE=int(float(os.environ.get("APP_BUILDER_DISK_RESERVE_GB","10"))*1024**3)
 # Local testing escape hatch: when APP_BUILDER_AUTH_DISABLED=1 the gateway skips the login
 # entirely and every request acts as a local admin. Never set on a server.
 AUTH_DISABLED=os.environ.get("APP_BUILDER_AUTH_DISABLED","")=="1"
 LOCAL_ADMIN={"name":"local","role":"admin"}
+# v116: never honoured on a server (a systemd service) or on any address but loopback.
+if AUTH_DISABLED and (os.environ.get("INVOCATION_ID") or HOST not in ("127.0.0.1","::1","localhost")):
+ raise SystemExit("APP_BUILDER_AUTH_DISABLED=1 is for a laptop only: refused on a server or a non-loopback address")
 for p in (INBOX,STATUS.parent,CHOICES): p.mkdir(parents=True,exist_ok=True)
 if not AUTH_DISABLED and not SECRET: raise SystemExit("APP_BUILDER_SESSION_SECRET is required")
 if not AUTH_DISABLED and not accounts.load()["users"]: raise SystemExit("No accounts exist. Run: python3 accounts.py init")
@@ -23,28 +35,68 @@ def disable_reserved_at_startup():
  if gone:
   alerts.system_alert("reserved-accounts","Disabled account(s) with a reserved name at startup: "+", ".join(sorted(gone))+". These names can no longer log in or deploy; create a normal account if a person needs access.",accounts_disabled=sorted(gone))
  return gone
+def _load_state(name,default):
+ try: return json.loads((GW_STATE/f"{name}.json").read_text())
+ except (OSError,ValueError): return default
+def _save_state(name,data):
+ try:
+  GW_STATE.mkdir(parents=True,exist_ok=True)
+  tmp=GW_STATE/f".{name}.json.tmp"; tmp.write_text(json.dumps(data)); os.replace(tmp,GW_STATE/f"{name}.json")
+ except OSError: pass   # a read-only disk must not stop logins; the in-memory copy still applies
+
 def client_ip(h):
- x=h.headers.get("X-Real-IP") or h.client_address[0]
- return x.split(",",1)[0].strip()
+ # v116: X-Real-IP is only believed from nginx on this machine; anyone else could send any address.
+ peer=h.client_address[0]
+ x=h.headers.get("X-Real-IP") if peer in ("127.0.0.1","::1") else None
+ return (x or peer).split(",",1)[0].strip()
 
-def login_allowed(ip):
+def _login_keys(ip,name):
+ return [("ip:"+ip,LOGIN_MAX_FAILURES)]+([("user:"+name,LOGIN_MAX_ACCOUNT_FAILURES)] if name else [])
+
+def login_allowed(ip,name=""):
  now=time.time()
  with _LOGIN_LOCK:
-  rec=_LOGIN_FAILURES.get(ip)
-  if not rec:return True
-  if now-rec[0]>LOGIN_WINDOW:
-   _LOGIN_FAILURES.pop(ip,None); return True
-  return rec[1] < LOGIN_MAX_FAILURES
+  for k,limit in _login_keys(ip,name):
+   rec=_LOGIN_FAILURES.get(k)
+   if rec and now-rec[0]<=LOGIN_WINDOW and rec[1]>=limit: return False
+  return True
 
-def record_login_failure(ip):
+def record_login_failure(ip,name=""):
  now=time.time()
  with _LOGIN_LOCK:
-  rec=_LOGIN_FAILURES.get(ip)
-  if not rec or now-rec[0]>LOGIN_WINDOW: _LOGIN_FAILURES[ip]=(now,1)
-  else: _LOGIN_FAILURES[ip]=(rec[0],rec[1]+1)
+  for k,_ in _login_keys(ip,name):
+   rec=_LOGIN_FAILURES.get(k)
+   _LOGIN_FAILURES[k]=[now,1] if not rec or now-rec[0]>LOGIN_WINDOW else [rec[0],rec[1]+1]
+  if len(_LOGIN_FAILURES)>LOGIN_TABLE_MAX:
+   for k in [k for k,r in _LOGIN_FAILURES.items() if now-r[0]>LOGIN_WINDOW]: _LOGIN_FAILURES.pop(k,None)
+   for k,_ in sorted(_LOGIN_FAILURES.items(),key=lambda kv:kv[1][0])[:max(0,len(_LOGIN_FAILURES)-LOGIN_TABLE_MAX)]: _LOGIN_FAILURES.pop(k,None)
+  _save_state("login",_LOGIN_FAILURES)
 
-def clear_login_failures(ip):
- with _LOGIN_LOCK: _LOGIN_FAILURES.pop(ip,None)
+def clear_login_failures(ip,name=""):
+ with _LOGIN_LOCK:
+  for k,_ in _login_keys(ip,name): _LOGIN_FAILURES.pop(k,None)
+  _save_state("login",_LOGIN_FAILURES)
+
+_LOGIN_FAILURES.update({k:v for k,v in _load_state("login",{}).items() if isinstance(v,list) and len(v)==2})
+# v116: sessions ended by "Log out" stay ended (nonce -> the time the token would have expired anyway).
+_REVOKED=_load_state("revoked",{}); _REVOKED_LOCK=threading.Lock()
+def revoke(nonce,issued):
+ with _REVOKED_LOCK:
+  now=time.time()
+  for k in [k for k,exp in _REVOKED.items() if exp<now]: _REVOKED.pop(k,None)
+  _REVOKED[nonce]=int(issued)+SESSION_TTL
+  _save_state("revoked",_REVOKED)
+def session_parts(h):
+ """(name, version, issued, nonce) of a validly signed session cookie, or None."""
+ for x in h.headers.get("Cookie","").split(";"):
+  if x.strip().startswith("session="):
+   try:
+    value,sg=x.strip().split("=",1)[1].rsplit(".",1)
+    if not hmac.compare_digest(sg,sig(value)): continue
+    name,ver,ts,nonce=value.split(":",3)
+    return name,int(ver),int(ts),nonce
+   except Exception: pass
+ return None
 
 def sig(v): return hmac.new(SECRET.encode(),v.encode(),hashlib.sha256).hexdigest()
 def token(u):
@@ -55,23 +107,21 @@ def token(u):
 def auth(h):
  """The logged-in account (dict with name + role), or None."""
  if AUTH_DISABLED: return LOCAL_ADMIN
- for x in h.headers.get("Cookie","").split(";"):
-  if x.strip().startswith("session="):
-   try:
-    value,s=x.strip().split("=",1)[1].rsplit(".",1)
-    if not hmac.compare_digest(s,sig(value)): continue
-    name,ver,ts,_=value.split(":",3)
-    if not 0 <= int(time.time())-int(ts) <= SESSION_TTL: continue
-    u=accounts.get(name)
-    if u and not u.get("disabled") and int(u.get("session_version",1))==int(ver): return u
-   except Exception: pass
+ sp=session_parts(h)
+ if not sp: return None
+ name,ver,ts,nonce=sp
+ if not 0 <= int(time.time())-ts <= SESSION_TTL or nonce in _REVOKED: return None
+ u=accounts.get(name)
+ if u and not u.get("disabled") and int(u.get("session_version",1))==ver: return u
  return None
 def page(title,body,me=None):
  nav=""
  if me:
   links='<a href=/>Front Door</a> <a href=/builds>'+("All builds" if me["role"]=="admin" else "My builds")+'</a> <a href=/upload>Add app</a> <a href=/library>Library</a>'
   if me["role"]=="admin": links+=' <a href=/status>System status</a> <a href=/alerts>Alerts</a>'
-  nav='<nav>'+links+'<span>'+html.escape(me["name"])+' ('+html.escape(me["role"])+')'+(' <a href=/logout>Log out</a>' if not AUTH_DISABLED else '')+'</span></nav>'
+  nav='<nav>'+links+'<span>'+html.escape(me["name"])+' ('+html.escape(me["role"])+')'+(' <a href=/logout>Log out</a> <a href=/logout-all title="End this account\'s sessions on every device">everywhere</a>' if not AUTH_DISABLED else '')+'</span></nav>'
+  if me["role"]=="admin" and (ROOT/"TEST_ACCOUNTS.txt").exists():
+   nav+='<p style="background:#fff4d6;padding:8px 12px;border-radius:6px">The file of generated passwords (TEST_ACCOUNTS.txt) is still on the server. Hand each person their line, then delete it.</p>'
  return ('<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+html.escape(title)+'</title><style>body{font-family:system-ui;margin:40px;max-width:900px}input,button{padding:10px;margin:6px 0}pre{background:#f4f4f4;padding:12px;overflow:auto}nav{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #ddd}nav span{margin-left:auto;color:#666}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:6px 8px;border-bottom:1px solid #eee}.QUALIFIED,.MAPPED{color:#0a7a2f;font-weight:600}.PARTIALLY_QUALIFIED{color:#9a6700;font-weight:600}.FAILED,.NOT_QUALIFIED{color:#b00020;font-weight:600}</style></head><body>'+nav+body+'</body></html>').encode()
 EVIDENCE_FILES=("screenshot.png","page.html","browser.json")   # linked from the build page
 # v115: evidence is what an UNTRUSTED app produced. It is data, never ATTa UI: page.html is the app's own HTML
@@ -196,15 +246,20 @@ FRONT_NAV_TMPL='<div id="ab-nav" style="position:fixed;top:8px;right:12px;z-inde
 FD_MODEL=os.environ.get("APP_BUILDER_FRONTDOOR_MODEL","claude-haiku-4-5-20251001")
 FD_PER_MIN=int(os.environ.get("APP_BUILDER_FRONTDOOR_PER_MIN","20"))
 FD_PER_DAY=int(os.environ.get("APP_BUILDER_FRONTDOOR_PER_DAY","300"))
+# v116: a ceiling for the whole server as well (every account together), and daily counts that survive restarts.
+FD_TOTAL_PER_DAY=int(os.environ.get("APP_BUILDER_FRONTDOOR_TOTAL_PER_DAY","1500"))
 _FD_LOCK=threading.Lock(); _FD_USE={}
+_FD_DAY=_load_state("frontdoor",{"day":"","users":{},"total":0})
 def _fd_allowed(user):
  now=time.time(); day=time.strftime("%Y-%m-%d")
  with _FD_LOCK:
-  r=_FD_USE.setdefault(user,{"min":[],"day":day,"n":0})
-  if r["day"]!=day: r["day"],r["n"]=day,0
+  if _FD_DAY.get("day")!=day: _FD_DAY.update(day=day,users={},total=0)
+  r=_FD_USE.setdefault(user,{"min":[]})
   r["min"]=[t for t in r["min"] if now-t<60]
-  if len(r["min"])>=FD_PER_MIN or r["n"]>=FD_PER_DAY: return False
-  r["min"].append(now); r["n"]+=1; return True
+  n=int(_FD_DAY["users"].get(user,0))
+  if len(r["min"])>=FD_PER_MIN or n>=FD_PER_DAY or int(_FD_DAY.get("total",0))>=FD_TOTAL_PER_DAY: return False
+  r["min"].append(now); _FD_DAY["users"][user]=n+1; _FD_DAY["total"]=int(_FD_DAY.get("total",0))+1
+  _save_state("frontdoor",_FD_DAY); return True
 def front_door_model(user,prompt):
  """Returns (error_code or None, parsed JSON answer)."""
  import urllib.request, urllib.error
@@ -327,6 +382,23 @@ SITE_CSP=("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'sel
           "object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'")
 SECURITY_HEADERS=(("Content-Security-Policy",SITE_CSP),("X-Content-Type-Options","nosniff"),("X-Frame-Options","DENY"),
                   ("Referrer-Policy","same-origin"),("Cross-Origin-Opener-Policy","same-origin"))
+DONE_STATES={builds.QUALIFIED,builds.NOT_QUALIFIED,builds.PARTIALLY_QUALIFIED,builds.PACKAGE_INSTALLED,builds.FAILED}
+def upload_refusal(me,n):
+ """v116: why this upload is not accepted now, or None. Checked before any byte of it is read."""
+ import shutil as _sh
+ try:
+  if _sh.disk_usage(INBOX).free-n < DISK_RESERVE:
+   return "the server is short of disk space; try again later or ask an admin to free some"
+ except OSError: pass
+ if me.get("role")=="admin": return None
+ mine=[r for r in builds.all_builds() if r.get("owner")==me["name"]]
+ if sum(1 for r in mine if r.get("state") not in DONE_STATES)>=MAX_ACTIVE_BUILDS:
+  return f"you already have {MAX_ACTIVE_BUILDS} builds running; wait for one to finish"
+ today=time.strftime("%Y-%m-%d")
+ used=sum(int(r.get("bundle_bytes") or 0) for r in mine if time.strftime("%Y-%m-%d",time.localtime(r.get("created",0)))==today)
+ if used+n>MAX_DAILY_UPLOAD:
+  return f"today's upload allowance ({MAX_DAILY_UPLOAD//1024**3} GB) is used up; try again tomorrow"
+ return None
 class H(BaseHTTPRequestHandler):
  def send_header(self,k,v):
   self.__dict__.setdefault("_sent",set()).add(k.lower()); super().send_header(k,v)
@@ -353,7 +425,16 @@ class H(BaseHTTPRequestHandler):
   if not me:
    if p=="/login": self.out(page("Login","<h1>APP Builder</h1><form method=post action=/login><input name=user placeholder=User autocomplete=username><br><input name=password type=password placeholder=Password autocomplete=current-password><br><button>Log in</button></form>")); return
    self.redirect("/login"); return
-  if p=="/logout": self.redirect("/login","session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0"); return
+  if p=="/logout":
+   # v116: the token itself is ended server-side, not just deleted from this browser.
+   sp=session_parts(self)
+   if sp: revoke(sp[3],sp[2])
+   self.redirect("/login","session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0"); return
+  if p=="/logout-all":
+   # v116: every session of this account, on every device (the account's session version moves on).
+   try: accounts.update(me["name"])
+   except (ValueError,OSError): pass
+   self.redirect("/login","session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0"); return
   # The Front Door (the questions page) is the first page everyone lands on.
   if p in ("/","/front-door","/login"):
    if not FRONT.exists(): self.out(page("Missing","<h1>front-door.html not installed</h1>",me),500); return
@@ -416,15 +497,16 @@ class H(BaseHTTPRequestHandler):
    if n<0 or n>8192: self.send_error(413); return
    q=parse_qs(self.rfile.read(n).decode("utf-8","replace"))
    ip=client_ip(self)
-   if not login_allowed(ip):
+   name=q.get("user",[""])[0].strip().lower()[:64]
+   if not login_allowed(ip,name):
     self.out(page("Too many attempts","<h1>Too many login attempts</h1><p>Try again later.</p>"),429); return
-   u=accounts.verify(q.get("user",[""])[0].strip().lower(),q.get("password",[""])[0])
+   u=accounts.verify(name,q.get("password",[""])[0])
    if u:
-    clear_login_failures(ip)
+    clear_login_failures(ip,name)
     secure="; Secure" if self.headers.get("X-Forwarded-Proto","").lower()=="https" else ""
     self.redirect("/","session="+token(u)+"; HttpOnly"+secure+"; SameSite=Strict; Path=/; Max-Age="+str(SESSION_TTL))
    else:
-    record_login_failure(ip)
+    record_login_failure(ip,name)
     self.out(page("Login failed","<h1>Login failed</h1><a href=/login>Try again</a>"),401)
    return
   me=auth(self)
@@ -454,6 +536,8 @@ class H(BaseHTTPRequestHandler):
    try:n=int(self.headers.get("Content-Length","0"))
    except ValueError:n=0
    if n<=0 or n>MAX:self.send_error(413); return
+   why=upload_refusal(me,n)
+   if why: self.out(page("Not now","<h1>Upload not accepted</h1><p>"+html.escape(why)+"</p><a href=/builds>Your builds</a>",me),429); return
    ctype=self.headers.get("Content-Type","")
    # Written under a temporary name; it only enters the inbox (as <build id>.zip) once it is a valid ZIP.
    f=INBOX/f".incoming-{int(time.time())}-{secrets.token_hex(6)}.part"
@@ -488,6 +572,8 @@ class H(BaseHTTPRequestHandler):
    try:n=int(self.headers.get("Content-Length","0"))
    except ValueError:n=0
    if n<=0 or n>4096: self.send_error(413); return
+   why=upload_refusal(me,0)
+   if why: self.out(page("Not now","<h1>Not accepted</h1><p>"+html.escape(why)+"</p><a href=/builds>Your builds</a>",me),429); return
    url=parse_qs(self.rfile.read(n).decode("utf-8","replace")).get("url",[""])[0].strip()
    import netguard   # v116: allowed git hosts only, never an address inside the network
    try: url=netguard.check_repo_url(url)
