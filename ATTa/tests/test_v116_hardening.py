@@ -4,7 +4,7 @@
 
 Tests marked "as root" create the unprivileged service users they check (atta-proxy ...) and are skipped
 when not run as root. Each test works in throwaway folders; the rest of the machine is not touched."""
-import http.server, importlib.util, io, json, os, pwd, re, shutil, socket, subprocess, sys, tempfile, threading
+import http.client, http.server, importlib.util, io, json, os, pwd, re, shutil, socket, subprocess, sys, tempfile, threading
 import time, unittest, zipfile
 from pathlib import Path
 
@@ -414,6 +414,8 @@ class FilesKeepTheirOwnersAcrossRewrites(unittest.TestCase):
 
 # ============================================================================ #7 HTTPS by default, #13 nginx limits
 
+import socket as _socket  # noqa: E402
+
 LIBSH = DEP / "bootstrap-lib.sh"
 
 
@@ -423,77 +425,94 @@ def libsh(script):
 
 
 class NginxListensPubliclyOnlyWithHttps(unittest.TestCase):
-    def listen(self, domains, email, allow=""):
-        return libsh(f'atta_nginx_listen "{domains}" "{email}" "{allow}"').stdout.strip()
+    """v117: the site is rendered whole by nginx_site.py (tests/test_v117_nginx.py has the full set); the v116
+    guarantees are kept and checked here: public only with HTTPS (or an explicit opt-out), values never pasted raw."""
+    def listen(self, domains, email, allow=False):
+        import nginx_site
+        site, desc = nginx_site.render(8787, nginx_site.domains_of(domains) if domains not in ("", "_") else [], email,
+                                       allow, "/nonexistent", "/var/lib/atta-acme", ipv6=False)
+        return desc["mode"], site
 
     def test_listen_choice(self):
-        self.assertEqual(self.listen("", ""), "127.0.0.1:80")                      # nothing set: local only
-        self.assertEqual(self.listen("_", "a@b.c"), "127.0.0.1:80")
-        self.assertEqual(self.listen("atta.example.com", ""), "127.0.0.1:80")      # no email, no certificate
-        self.assertEqual(self.listen("atta.example.com", "a@b.c"), "80")           # certbot can prove the domain
-        self.assertEqual(self.listen("", "", "true"), "80")                        # explicit opt-out only
-        self.assertEqual(self.listen("", "", "yes"), "127.0.0.1:80")               # nothing but "true"
+        self.assertEqual(self.listen("", "")[0], "local")                           # nothing set: local only
+        self.assertEqual(self.listen("_", "a@b.co")[0], "local")
+        self.assertEqual(self.listen("", "", True)[0], "public")                    # explicit opt-out only
+        mode, site = self.listen("atta.example.com", "a@b.co")                      # certbot can prove the domain...
+        self.assertEqual(mode, "pending")
+        self.assertIn("listen 127.0.0.1:80 default_server", site)                  # ...but the login stays local
+        self.assertIn("return 503", site)
+        import nginx_site
+        with self.assertRaises(nginx_site.SiteError):                              # no email, no certificate
+            self.listen("atta.example.com", "")
 
     def test_rendered_values_are_checked(self):
-        r = libsh(f'atta_nginx_conf "{DEP}/app-builder-nginx.conf" "evil;}} server {{" "80"')
-        self.assertNotEqual(r.returncode, 0)
-        r = libsh(f'atta_nginx_conf "{DEP}/app-builder-nginx.conf" "_" "0.0.0.0:80"')
-        self.assertNotEqual(r.returncode, 0)
-        r = libsh(f'atta_nginx_conf "{DEP}/app-builder-nginx.conf" "a.example.com www.a.example.com" "127.0.0.1:80"')
-        self.assertEqual(r.returncode, 0, r.stderr)
-        self.assertIn("listen 127.0.0.1:80;", r.stdout); self.assertIn("server_name a.example.com www.a.example.com;", r.stdout)
-        self.assertNotIn("__LISTEN__", r.stdout); self.assertNotIn("YOUR_DOMAIN", r.stdout)
+        import nginx_site
+        for bad in ("evil;} server {", "0.0.0.0:80", "a b;c"):
+            with self.subTest(bad=bad), self.assertRaises(nginx_site.SiteError):
+                nginx_site.domains_of(bad)
+        mode, site = self.listen("a.example.com www.a.example.com", "a@b.co")
+        self.assertIn("server_name a.example.com www.a.example.com;", site)
+        self.assertNotIn("__", site)
 
 
 @unittest.skipUnless(shutil.which("nginx") and os.geteuid() == 0, "needs nginx (and root to run it)")
 class RealNginx(unittest.TestCase):
-    """The rendered site, loaded by the real nginx: syntax, then the rate limits live."""
+    """The rendered site, loaded by the real nginx: syntax in every mode, then the rate limits live."""
     def setUp(self):
         self.t = Path(tempfile.mkdtemp(dir=TMP)); os.chmod(self.t, 0o755)
 
-    def main_conf(self, site, port):
-        body = site.replace("listen 127.0.0.1:80;", f"listen 127.0.0.1:{port};")
-        (self.t / "site.conf").write_text(body)
+    def main_conf(self, site):
+        (self.t / "site.conf").write_text(site)
         conf = self.t / "nginx.conf"
         conf.write_text(f"daemon off; pid {self.t}/nginx.pid; error_log {self.t}/error.log;\n"
                         f"events {{}}\nhttp {{ access_log off; client_body_temp_path {self.t}/body;\n"
                         f"proxy_temp_path {self.t}/proxy; include {self.t}/site.conf; }}\n")
         return conf
 
-    def render(self, listen):
-        r = libsh(f'atta_nginx_conf "{DEP}/app-builder-nginx.conf" "_" "{listen}"')
-        self.assertEqual(r.returncode, 0, r.stderr)
-        return r.stdout
+    def render(self, backend_port, http_port, allow_public_http):
+        import nginx_site
+        site, _ = nginx_site.render(backend_port, [], "", allow_public_http, self.t / "le", self.t / "acme",
+                                    http_port=http_port, ipv6=False)
+        return site
 
     def test_both_modes_pass_nginx_t(self):
-        for listen in ("127.0.0.1:80", "80"):
-            conf = self.main_conf(self.render(listen), 80)
+        for allow in (False, True):
+            conf = self.main_conf(self.render(8787, 80, allow))
             r = subprocess.run(["nginx", "-t", "-c", str(conf)], capture_output=True, text=True)
             self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertNotIn("[warn]", r.stderr)
 
     def test_login_and_upload_are_rate_limited(self):
-        backend = http.server.ThreadingHTTPServer(("127.0.0.1", 8787), _Quiet)
+        # v117: this server's own checks (from loopback) are not counted, so the limits are exercised from the
+        # machine's other address — the way a real client reaches it.
+        ip = next((a for a in _socket.gethostbyname_ex(_socket.gethostname())[2] if not a.startswith("127.")), None)
+        if not ip:
+            self.skipTest("no non-loopback address to send from")
+        bport = _free_port()
+        backend = http.server.ThreadingHTTPServer(("127.0.0.1", bport), _Quiet)
         threading.Thread(target=backend.serve_forever, daemon=True).start()
         port = _free_port()
-        conf = self.main_conf(self.render("127.0.0.1:80"), port)
+        conf = self.main_conf(self.render(bport, port, True))
         ngx = subprocess.Popen(["nginx", "-c", str(conf)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         try:
             for _ in range(50):
                 if proxy_launch._port_open(port):
                     break
                 time.sleep(0.1)
-            import urllib.request, urllib.error
-            def code(path):
+
+            def code(path, host=ip):
+                c = http.client.HTTPConnection(host, port, timeout=5, source_address=(host, 0))
                 try:
-                    return urllib.request.urlopen(f"http://127.0.0.1:{port}{path}", timeout=5).status
-                except urllib.error.HTTPError as e:
-                    return e.code
+                    c.request("GET", path); return c.getresponse().status
+                finally:
+                    c.close()
             login = [code("/login") for _ in range(12)]
             self.assertEqual(login[:6].count(429), 0, login)          # 1 + burst 5 get through
             self.assertIn(429, login[6:], login)                     # then the limit answers
             upload = [code("/upload") for _ in range(8)]
             self.assertIn(429, upload, upload)
             self.assertNotIn(429, [code("/") for _ in range(20)])      # ordinary pages are not limited
+            self.assertNotIn(429, [code("/login", "127.0.0.1") for _ in range(12)])   # this server's own checks
         finally:
             ngx.terminate(); ngx.wait(timeout=10)
             backend.shutdown(); backend.server_close()
@@ -501,7 +520,6 @@ class RealNginx(unittest.TestCase):
 
 # ============================================================================ #8 no fetching inside the network
 
-import socket as _socket  # noqa: E402
 import netguard, upstream  # noqa: E402
 
 
@@ -853,8 +871,10 @@ class PinnedDependencies(unittest.TestCase):
             self.assertRegex(l, r"^[a-z0-9-]+==\d+(\.\d+)+$", l)
 
     def test_bootstrap_installs_the_pins_and_nothing_unpinned(self):
-        b = (DEP / "bootstrap.sh").read_text()
-        self.assertIn('-r "$APP/requirements-server.txt"', b)
+        # v117: installed by atta_install_browser (bootstrap-lib.sh) from the NEW release's own folder, before the switch.
+        b = (DEP / "bootstrap.sh").read_text() + (DEP / "bootstrap-lib.sh").read_text()
+        self.assertIn('-r "$ATTA_LIB_DIR/requirements-server.txt"', b)
+        self.assertIn('atta_install_browser "$OS"', b)
         self.assertNotRegex(b, r"pip_install (playwright|anthropic|pyyaml)\b")
 
     def test_coolify_zip_checksum_is_pinned_and_matches(self):

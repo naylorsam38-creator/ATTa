@@ -163,6 +163,35 @@ def check_browser(url, host_header, connect_host, *, legacy=False, timeout=60.0)
         raise CheckFailed(f"browser: {type(e).__name__}: {str(e).strip().splitlines()[0][:300] if str(e).strip() else ''}")
 
 
+def check_launch(timeout=60.0):
+    """Can a real headless Chromium start here at all (before there is anything to point it at)?"""
+    try:
+        from playwright.sync_api import sync_playwright, Error as PWError
+    except ImportError as e:
+        raise CheckFailed(f"Playwright is not installed ({e})")
+    try:
+        with sync_playwright() as p:
+            try:
+                browser = p.chromium.launch(headless=True)
+            except PWError as e:
+                first = str(e).strip().splitlines()[0] if str(e).strip() else type(e).__name__
+                missing = "missing dependencies" in str(e) or "shared libraries" in str(e)
+                raise CheckFailed(("system libraries are missing (install the browser dependencies for this OS); "
+                                   if missing else "") + first[:300])
+            try:
+                page = browser.new_page()
+                page.goto("data:text/html,<title>ATTa browser gate</title>", wait_until="load",
+                          timeout=int(timeout * 1000))
+                if page.title() != "ATTa browser gate":
+                    raise CheckFailed("the browser started but did not render a page")
+            finally:
+                browser.close()
+    except CheckFailed:
+        raise
+    except Exception as e:
+        raise CheckFailed(f"{type(e).__name__}: {str(e).strip().splitlines()[0][:300] if str(e).strip() else ''}")
+
+
 def settings(env_file):
     """(host, port, secret) from .env, parsed as data."""
     try:
@@ -203,7 +232,8 @@ def run_checks(env_file, *, proxy_file=None, direct=True, proxy=False, browser=F
     while True:
         lines = []
         try:
-            host, port, secret = settings(env_file)
+            if direct or proxy:
+                host, port, secret = settings(env_file)
             if direct:
                 d = check_identity("http", host, port, host, secret, expect_release=expect_release, legacy=legacy)
                 check_login("http", host, port, host, legacy=legacy)
@@ -237,7 +267,8 @@ def run_checks(env_file, *, proxy_file=None, direct=True, proxy=False, browser=F
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description="ATTa-specific health checks")
-    ap.add_argument("--env", required=True, help="the .env file (port, host and the secret the proof is keyed on)")
+    ap.add_argument("--env", help="the .env file (port, host and the secret the proof is keyed on)")
+    ap.add_argument("--launch-only", action="store_true", help="only check that a real Chromium starts here")
     ap.add_argument("--proxy-file", help="proxy.json written by bootstrap.sh (scheme/host/port nginx serves)")
     ap.add_argument("--direct", action="store_true", help="check the gateway on its own port")
     ap.add_argument("--proxy", action="store_true", help="check through nginx")
@@ -246,8 +277,18 @@ def main(argv=None):
     ap.add_argument("--legacy", action="store_true", help="the release predates identity proofs (body OK only)")
     ap.add_argument("--timeout", type=float, default=60.0)
     a = ap.parse_args(argv)
+    if a.launch_only:
+        try:
+            check_launch(timeout=a.timeout)
+        except CheckFailed as e:
+            print(f"HEALTH FAIL browser cannot launch: {e}")
+            return 1
+        print("HEALTH PASS browser launches")
+        return 0
     if not (a.direct or a.proxy or a.browser):
         a.direct = True
+    if (a.direct or a.proxy) and not a.env:
+        ap.error("--env is required for --direct/--proxy (the identity proof is keyed on its secret)")
     ok, lines = run_checks(a.env, proxy_file=a.proxy_file, direct=a.direct, proxy=a.proxy, browser=a.browser,
                            expect_release=a.expect_release, legacy=a.legacy, timeout=a.timeout)
     for l in lines:

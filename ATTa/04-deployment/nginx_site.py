@@ -21,6 +21,7 @@ server showed "Welcome to nginx!").
 
     nginx_site.py render --port P --domains "a b" --email E --allow-public-http BOOL --letsencrypt DIR
                          --acme-root DIR --out SITE.conf --proxy-json FILE
+    nginx_site.py check --port P --domains "a b" --email E --allow-public-http BOOL      validate only, writes nothing
     nginx_site.py neutralize --nginx-conf /etc/nginx/nginx.conf --sites-enabled /etc/nginx/sites-enabled
     nginx_site.py check-output FILE     exit 1 if `nginx -t` output (in FILE) has any [warn] or [emerg]
 """
@@ -267,6 +268,23 @@ def neutralize(nginx_conf, sites_enabled):
     return changed
 
 
+def write_file(path, text):
+    """Atomic write (temp + rename) — but ONLY over a regular file or nothing. Renaming onto a device, FIFO or folder
+    would replace it: as root, `--out /dev/null` once turned the server's /dev/null into a plain file."""
+    import stat
+    p = Path(path)
+    try:
+        st = os.lstat(p)
+        if not stat.S_ISREG(st.st_mode):
+            raise SiteError(f"refusing to replace {p}: it is not a regular file")
+    except FileNotFoundError:
+        pass
+    tmp = p.with_name(p.name + f".{os.getpid()}.tmp")
+    tmp.write_text(text)
+    os.chmod(tmp, 0o644)
+    os.replace(tmp, p)
+
+
 def check_output(text):
     """nginx -t output: any warning (e.g. 'conflicting server name') or error means the site may not be served."""
     bad = [l.strip() for l in text.splitlines() if "[warn]" in l or "[emerg]" in l or "[alert]" in l or "[crit]" in l]
@@ -291,20 +309,26 @@ def main(argv=None):
     n = sub.add_parser("neutralize")
     n.add_argument("--nginx-conf", default="/etc/nginx/nginx.conf")
     n.add_argument("--sites-enabled", default="/etc/nginx/sites-enabled")
+    k = sub.add_parser("check", help="validate the settings only; writes nothing")
+    k.add_argument("--port", required=True, type=int)
+    k.add_argument("--domains", default="")
+    k.add_argument("--email", default="")
+    k.add_argument("--allow-public-http", default="false")
     c = sub.add_parser("check-output")
     c.add_argument("file")
     a = ap.parse_args(argv)
     try:
+        if a.cmd == "check":
+            render(a.port, domains_of(a.domains), a.email, a.allow_public_http == "true", "/nonexistent",
+                   "/var/lib/atta-acme", ipv6=False)
+            print("ok")
+            return 0
         if a.cmd == "render":
             site, desc = render(a.port, domains_of(a.domains), a.email, a.allow_public_http == "true",
                                 a.letsencrypt, a.acme_root, http_port=a.http_port, https_port=a.https_port,
                                 ipv6=None if a.ipv6 == "auto" else a.ipv6 == "yes")
             for path, text in ((a.out, site), (a.proxy_json, json.dumps(desc, indent=2) + "\n")):
-                p = Path(path)
-                tmp = p.with_name(p.name + ".tmp")
-                tmp.write_text(text)
-                os.chmod(tmp, 0o644)
-                os.replace(tmp, p)
+                write_file(path, text)
             print(desc["mode"])
             return 0
         if a.cmd == "neutralize":

@@ -192,8 +192,9 @@ def switch(app, release):
 
 def prune(rels, app, keep=3, *, protect=()):
     """Delete failed releases and old ones. Never: the live, known-good, previous-known-good release, or any in
-    `protect`. Of the rest, verified releases are kept (newest first) up to `keep`; unverified ones — a failed,
-    interrupted or never-checked deploy — are removed (they can't be rollback targets anyway)."""
+    `protect`. Verified releases are kept, newest first, until `keep` verified ones are on disk (protected ones
+    count); unverified ones — a failed, interrupted or never-checked deploy — are removed (they can't be rollback
+    targets anyway)."""
     rels = Path(rels)
     if not rels.is_dir():
         return []
@@ -202,7 +203,8 @@ def prune(rels, app, keep=3, *, protect=()):
         if rec:
             safe.add(Path(rec["release"]).resolve())
     safe |= {Path(p).resolve() for p in protect}
-    removed, verified_kept = [], 0
+    # `keep` is the total of verified releases on disk; the protected ones count toward it (and stay regardless).
+    removed, verified_kept = [], sum(1 for p in safe if p.is_dir() and is_verified(p))
     dirs = sorted((d for d in rels.iterdir() if d.is_dir() and not d.is_symlink()),
                   key=lambda d: d.stat().st_mtime, reverse=True)
     for d in dirs:
@@ -222,9 +224,89 @@ def prune(rels, app, keep=3, *, protect=()):
     return removed
 
 
+def stage(src, rels):
+    """Copy the code in `src` (a bundle's 04-deployment, or a release folder) into a NEW release folder under `rels`,
+    check it, and return that folder. Nothing live changes: APP is switched later, and only after everything passed.
+
+      - regular files and folders only: symlinks are not copied (noted), caches never;
+      - the bundle's release.json goes in beside the code (the gateway reports it; checks use its features);
+      - every .py must compile (checked in memory: nothing written); otherwise the folder is removed and it fails;
+      - readable by the unprivileged service users (v116 runs the gateway as atta-web, which could not read a
+        0700 release folder made by mktemp -d), writable by root only.
+    Built in a hidden .incoming-* folder and renamed into place, so a half-copied release never exists by name."""
+    import secrets, shutil, stat, time
+    src, rels = Path(src).resolve(), Path(rels)
+    if not src.is_dir():
+        raise ReleaseError(f"{src} is not a folder")
+    rj = next((p for p in (src.parent / "release.json", src / "release.json") if p.is_file()), None)
+    ver = str((_read_json(rj) or {}).get("version") or "unknown") if rj else "unknown"
+    ver = "".join(c if c.isalnum() or c in "._-" else "_" for c in ver)[:40] or "unknown"
+    stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    rels.mkdir(parents=True, exist_ok=True)
+    os.chmod(rels, 0o755)
+    for old in rels.glob(".incoming-*"):                 # leftovers of an interrupted run (older than an hour)
+        if time.time() - old.stat().st_mtime > 3600:
+            shutil.rmtree(old, ignore_errors=True)
+    tmp = rels / f".incoming-{ver}-{stamp}-{secrets.token_hex(4)}"
+    tmp.mkdir(mode=0o755)
+    skipped = []
+    try:
+        for dirpath, dirnames, filenames in os.walk(src):
+            d = Path(dirpath)
+            rel = d.relative_to(src)
+            dirnames[:] = [n for n in dirnames if n != "__pycache__" and not (d / n).is_symlink()]
+            skipped += [str(rel / n) for n in os.listdir(d) if (d / n).is_symlink()]
+            (tmp / rel).mkdir(mode=0o755, exist_ok=True)
+            for n in filenames:
+                f = d / n
+                if f.is_symlink() or n.endswith(".pyc") or not f.is_file():
+                    continue
+                dst = tmp / rel / n
+                shutil.copyfile(f, dst)
+                os.chmod(dst, 0o755 if f.stat().st_mode & stat.S_IXUSR else 0o644)
+        if rj is not None and not (tmp / "release.json").exists():
+            shutil.copyfile(rj, tmp / "release.json")
+            os.chmod(tmp / "release.json", 0o644)
+        bad = []
+        for py in sorted(tmp.rglob("*.py")):
+            try:
+                compile(py.read_bytes(), str(py.relative_to(tmp)), "exec")
+            except (SyntaxError, ValueError) as e:
+                bad.append(f"{py.relative_to(tmp)} ({e.__class__.__name__}: line {getattr(e, 'lineno', '?')})")
+        if bad:
+            raise ReleaseError("python does not compile in the new release: " + ", ".join(bad))
+        final = rels / f"{ver}-{stamp}"
+        n = 1
+        while final.exists():
+            n += 1
+            final = rels / f"{ver}-{stamp}-{n}"
+        os.rename(tmp, final)
+    except BaseException:
+        shutil.rmtree(tmp, ignore_errors=True)
+        raise
+    if skipped:
+        print(f"note: symlinks were not copied into the release: {', '.join(sorted(set(skipped))[:10])}", file=sys.stderr)
+    return final
+
+
+def migrate_legacy(app, rels):
+    """A server laid out before v114.1 has APP as a real folder: it becomes a release of its own and APP a symlink
+    to it (same code, same inodes: nothing running notices). Returns the new release path, or None."""
+    import time
+    app, rels = Path(app), Path(rels)
+    if app.is_symlink() or not app.is_dir():
+        return None
+    rels.mkdir(parents=True, exist_ok=True)
+    dest = rels / f"legacy-{time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())}"
+    os.rename(app, dest)
+    switch(app, dest)
+    return dest
+
+
 def main(argv):
     """CLI for bootstrap.sh:  releases.py known-good RELS | verify APP REL ID | promote RELS APP REL ID |
-    adopt RELS APP ID | failed REL ID REASON | switch APP REL | prune RELS APP KEEP [PROTECT...] | sha REL"""
+    adopt RELS APP ID | failed REL ID REASON | switch APP REL | prune RELS APP KEEP [PROTECT...] | sha REL |
+    stage SRC RELS | migrate-legacy APP RELS"""
     try:
         cmd, a = argv[0], argv[1:]
         if cmd == "known-good":
@@ -245,6 +327,10 @@ def main(argv):
             return 0
         if cmd == "sha":
             print(tree_sha256(a[0])); return 0
+        if cmd == "stage":
+            print(stage(a[0], a[1])); return 0
+        if cmd == "migrate-legacy":
+            d = migrate_legacy(a[0], a[1]); print(d or ""); return 0
     except (IndexError, ValueError):
         pass
     except ReleaseError as e:

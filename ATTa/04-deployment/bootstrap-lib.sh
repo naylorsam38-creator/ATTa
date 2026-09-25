@@ -1,4 +1,5 @@
-# bootstrap-lib.sh — functions bootstrap.sh uses (v114.1). Sourced, never run on its own.
+# shellcheck shell=bash
+# bootstrap-lib.sh — functions bootstrap.sh uses (v114.1; v117). Sourced, never run on its own.
 # Kept separate so tests/ can exercise each step without root, systemd or a real server.
 
 # ===================== CONFIG — edit here =====================
@@ -119,6 +120,8 @@ atta_secure_state() {
     [ -f "$root/state/users.json" ] && { chown "$web:$g" "$root/state/users.json"; chmod 640 "$root/state/users.json"; }
     chown "$run:$g" "$root/proxy"; chmod 755 "$root/proxy"
     chown root:root "$root/adm"; chmod 755 "$root/adm"
+    # v117: bundles put on the server itself: root's alone (the pipeline reads, never writes, never forges).
+    mkdir -p "$root/local-inbox"; chown root:root "$root/local-inbox"; chmod 755 "$root/local-inbox"
     chown "$run:$run" "$root/adm/requests"; chmod 700 "$root/adm/requests"
     # the pipeline replaces it from an admin's ATTa bundle; everyone reads it
     [ -f "$root/front-door.html" ] && { chown "$run:$g" "$root/front-door.html"; chmod 644 "$root/front-door.html"; }
@@ -145,6 +148,67 @@ atta_install_proxy_runner() {
   install -o root -g root -m 0440 "$rule" /etc/sudoers.d/atta-proxy; rm -f "$rule"
 }
 
+atta_write_default_env() {
+  # atta_write_default_env FILE ROOT — a fresh server's .env, created 0600 in one step (v117).
+  # The fixed text is a QUOTED heredoc: bash never runs anything inside it. v114.2-v116 used an unquoted one
+  # whose comment held `bash run` in backticks, so writing .env re-ran the whole deploy, nested, as root, and
+  # pasted its output into the file. The two generated values are added with printf, never interpolated.
+  local f="$1" root="$2" secret tmp
+  [[ "$root" =~ ^/[A-Za-z0-9._/-]+$ ]] || { echo "atta_write_default_env: bad root folder: $root" >&2; return 1; }
+  secret="$(python3 -c 'import secrets;print(secrets.token_urlsafe(48))')" || return 1
+  [[ "$secret" =~ ^[A-Za-z0-9_-]{48,}$ ]] || { echo "atta_write_default_env: could not make a secret" >&2; return 1; }
+  tmp="$(mktemp "$(dirname "$f")/.env.new.XXXXXX")" || return 1
+  chmod 600 "$tmp"
+  {
+    printf 'APP_BUILDER_ROOT=%s\n' "$root"
+    printf 'APP_BUILDER_SESSION_SECRET=%s\n' "$secret"
+    cat <<'EOF'
+APP_BUILDER_HOST=127.0.0.1
+APP_BUILDER_PORT=8787
+APP_BUILDER_BROWSER_CHECK=true
+APP_BUILDER_WATCHER_INTERVAL=300
+# This file is DATA, read by envfile.py and systemd; it is never run as a shell script. Values with spaces or
+# any of ; & | < > ( ) # ~ * ? ! must be in quotes, and $ ` \ are refused (nothing is ever expanded).
+# Coolify hand-off (docs/COOLIFY-HANDOFF.md). Qualified builds wait in the outbox until both are set.
+COOLIFY_URL=
+COOLIFY_TOKEN=
+# Self-healing tier 3 (LLM). Blank = that tier is skipped and failures go straight to a human.
+ANTHROPIC_API_KEY=
+# v116: the LLM repair tier needs this as well as the key (the Front Door uses the same key). It can only
+# edit overlay data (CSS/JSON), never code, and every proxy it restarts runs unprivileged.
+APP_BUILDER_HEAL_LLM=false
+# Public web address(es) and the email for the free HTTPS certificate (Let's Encrypt).
+# DNS for each name must already point at this server, ports 80+443 open. Run "sudo bash run" again after setting.
+APP_BUILDER_DOMAIN=
+APP_BUILDER_LETSENCRYPT_EMAIL=
+# v116: without HTTPS nginx answers on 127.0.0.1 only. true = serve plain HTTP publicly anyway (not advised).
+APP_BUILDER_ALLOW_PUBLIC_HTTP=false
+# v116: pre-made test accounts (tester01..NN). 0 on a server; set a number to create them, then hand them out.
+APP_BUILDER_TEST_ACCOUNTS=0
+# v116: what app containers may reach besides each other: public = the internet (never metadata, private
+# networks or this server); deny = nothing outside their own network.
+APP_BUILDER_APP_EGRESS=public
+# App runner (app_runner.py). true = apps stay running after their check; false = stopped after it
+# (frees memory for the next app; Coolify runs the qualified ones for real).
+APP_BUILDER_KEEP_RUNNING=false
+# true = delete an app's downloaded images after its check (use on small disks).
+APP_BUILDER_PRUNE_IMAGES=false
+# Seconds an app gets to answer after it starts, and the most it gets while still visibly starting.
+APP_BUILDER_BOOT_TIMEOUT=240
+APP_BUILDER_BOOT_TIMEOUT_MAX=900
+# Self-healing tier 4: incoming-webhook URL for human alerts (Slack/Discord/any JSON POST). Blank = /alerts page only.
+ALERT_WEBHOOK_URL=
+EOF
+  } >"$tmp" || { rm -f "$tmp"; return 1; }
+  mv -f "$tmp" "$f"
+}
+
+atta_env_get() {
+  # atta_env_get ENVFILE NAME [DEFAULT] — one value, read as data by the same parser systemd's view is checked
+  # against (never sed/grep: those disagree with it on quotes and repeated names).
+  python3 "$ATTA_LIB_DIR/envfile.py" get "$@"
+}
+
 atta_env_run() {
   # atta_env_run ENVFILE KEYS -- command... — run a command with KEYS read from ENVFILE as data.
   local envf="$1" keys="$2"; shift 2; [ "${1:-}" = "--" ] && shift
@@ -155,94 +219,306 @@ atta_env_run() {
   fi
 }
 
+# ============================================================================================================ v117
+# The deploy is a transaction: everything that can fail is done OFF to the side first (stage, packages, Docker,
+# browser, a smoke test of the new gateway); then a snapshot of every file the switch will change is taken, with a
+# restore.sh that puts it all back exactly; then the switch; then ATTa-specific checks through the real proxy. The
+# release becomes known-good only after all of that (adm/releases.py). See docs/DEPLOYMENT.md.
+
+ATTA_UNITS="app-builder-gateway.service app-builder-pipeline.service app-builder-watcher.service atta-deployd.service atta-block-metadata.service atta-tls-check.service atta-tls-check.timer atta-certbot-renew.service atta-certbot-renew.timer"
+ATTA_RESTART_UNITS="app-builder-gateway.service app-builder-pipeline.service app-builder-watcher.service"
+ATTA_ACME_ROOT="${ATTA_ACME_ROOT:-/var/lib/atta-acme}"
+ATTA_LETSENCRYPT="${ATTA_LETSENCRYPT:-/etc/letsencrypt}"
+
+atta_fail() {
+  # atta_fail MESSAGE — the one line an operator reads; bootstrap.sh's ERR trap repeats it as the reason.
+  # shellcheck disable=SC2034  # read by bootstrap.sh's ERR trap (on_failure)
+  ATTA_LAST_FAIL="$*"
+  echo "DEPLOYMENT FAILED: $*" >&2
+  return 1
+}
+
+atta_ds() { python3 "$ATTA_LIB_DIR/deployd/deploystate.py" "$@"; }
+atta_rel() { python3 "$ATTA_LIB_DIR/deployd/adm/releases.py" "$@"; }
+
 atta_stage_code() {
-  # atta_stage_code SRC RELEASES — copy SRC into a fresh release folder and check it. Prints the folder.
-  # Nothing live is touched; atta_activate_code switches to it. Nothing from an older release is
-  # carried over, so files deleted upstream really disappear.
-  local src="$1" rels="$2" ver stamp new bad rj
-  rj="$src/../release.json"; [ -f "$rj" ] || rj="$src/release.json"   # a bundle, or an ADM backup of the live folder
-  ver="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("version","unknown"))' "$rj" 2>/dev/null || echo unknown)"
-  ver="$(printf '%s' "$ver" | tr -c 'A-Za-z0-9._-' '_')"
-  stamp="$(date -u +%Y%m%dT%H%M%SZ)"
-  mkdir -p "$rels"
-  find "$rels" -maxdepth 1 -name '.incoming-*' -mmin +60 -exec rm -rf {} + 2>/dev/null || true   # leftovers of an interrupted run
-  new="$(mktemp -d "$rels/.incoming-${ver}-${stamp}-XXXX")"
-  # Copy only what the code needs: regular files and folders, no symlinks, no caches.
-  (cd "$src" && find . -path '*/__pycache__' -prune -o \( -type f -o -type d \) -print0 \
-     | while IFS= read -r -d '' p; do
-         if [ -d "$p" ]; then mkdir -p "$new/$p"; else cp -p "$p" "$new/$p"; fi
-       done)
-  [ -n "$(find "$src" -type l -not -path '*/__pycache__/*' -print -quit)" ] && \
-    echo "note: symlinks in $src were not copied into the release" >&2
-  bad="$(cd "$new" && python3 - <<'PY'
-import pathlib
-for p in sorted(pathlib.Path(".").rglob("*.py")):
-    try: compile(p.read_bytes(), str(p), "exec")   # checked in memory: nothing written
-    except (SyntaxError, ValueError): print(p)
+  # atta_stage_code SRC RELEASES — a NEW, checked release folder built from SRC (printed). Nothing live changes.
+  # (adm/releases.py stage: regular files only, compile-checked, readable by the service users, renamed into place.)
+  python3 "$ATTA_LIB_DIR/deployd/adm/releases.py" stage "$1" "$2"
+}
+
+atta_deploy_lock() {
+  # atta_deploy_lock LOCKFILE — one deploy at a time, server-wide: the SAME lock deployd and deployctl take.
+  # Under ADM it is inherited (ATTA_DEPLOY_LOCK_FD, checked to really be that lock and held); run by hand it is
+  # taken here. The fd stays open in bash and every child inherits it, so the whole install holds the lock.
+  local lock="$1" fd="${ATTA_DEPLOY_LOCK_FD:-}"
+  mkdir -p "$(dirname "$lock")"
+  if [ -n "$fd" ]; then
+    [[ "$fd" =~ ^[0-9]+$ ]] && [ "$(readlink -f "/proc/self/fd/$fd" 2>/dev/null)" = "$(readlink -f "$lock")" ] \
+      || atta_fail "ATTA_DEPLOY_LOCK_FD=$fd is not open on the deploy lock $lock" || return 1
+    flock -n "$fd" || atta_fail "the inherited deploy lock is not held" || return 1
+    return 0
+  fi
+  exec {ATTA_LOCK_FD}>>"$lock"
+  if ! flock -n "$ATTA_LOCK_FD"; then
+    local who
+    who="$(python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); print("deployment %s (pid %s since %s)" % (d.get("deployment_id"), d.get("pid"), d.get("acquired_at")))' "$lock.owner.json" 2>/dev/null || echo "another deployment")"
+    atta_fail "$who is running (deploy lock $lock). Nothing was changed. See: deployctl status"
+    return 1
+  fi
+  export ATTA_DEPLOY_LOCK_FD="$ATTA_LOCK_FD"
+}
+
+atta_os() {
+  # atta_os — "<ID>-<VERSION_ID>" from /etc/os-release, read as DATA (never sourced): e.g. ubuntu-24.04, amzn-2023.
+  python3 - "${ATTA_OS_RELEASE:-/etc/os-release}" <<'PY'
+import shlex, sys
+d = {}
+try:
+    for line in open(sys.argv[1], encoding="utf-8", errors="replace"):
+        line = line.strip()
+        if "=" in line and not line.startswith("#"):
+            k, v = line.split("=", 1)
+            try:
+                d[k] = (shlex.split(v) or [""])[0]
+            except ValueError:
+                pass
+except OSError:
+    pass
+print(f'{d.get("ID", "unknown")}-{d.get("VERSION_ID", "unknown")}')
 PY
-)"
-  if [ -n "$bad" ]; then
-    echo "DEPLOYMENT FAILED: python does not compile in the new release: $bad" >&2
-    rm -rf "$new"; return 1
-  fi
-  local final="$rels/${ver}-${stamp}"
-  [ -e "$final" ] && final="${final}-$$"
-  mv "$new" "$final"
-  echo "$final"
 }
 
-atta_activate_code() {
-  # atta_activate_code APP RELEASES NEW — point APP at NEW with one atomic rename. The release that was
-  # live is remembered in RELEASES/.previous and kept until pruned after a healthy deploy.
-  local app="$1" rels="$2" final="$3" stamp
-  stamp="$(date -u +%Y%m%dT%H%M%SZ)"
-  # First run on a server laid out the old way: the live folder becomes a release of its own.
-  if [ -d "$app" ] && [ ! -L "$app" ]; then
-    mv "$app" "$rels/legacy-${stamp}"
-    echo "note: moved the old code folder to $rels/legacy-${stamp}" >&2
-  fi
-  if [ -L "$app" ]; then readlink "$app" > "$rels/.previous"; else rm -f "$rels/.previous"; fi
-  ln -sfn "$final" "$app.next"
-  mv -Tf "$app.next" "$app"      # rename(2): the switch is atomic
+atta_os_supported() {
+  # The two systems this release is built and tested for. Anything else needs ATTA_ALLOW_UNSUPPORTED_OS=1.
+  case "$1" in ubuntu-24.04|amzn-2023) return 0 ;; *) return 1 ;; esac
 }
 
-atta_prune_code_releases() {
-  # atta_prune_code_releases APP RELEASES — after a healthy deploy: keep the newest N and never the
-  # live or previous one.
-  local app="$1" rels="$2" live prev n=0 d
-  live="$(readlink -f "$app" 2>/dev/null || true)"
-  prev="$(cat "$rels/.previous" 2>/dev/null || true)"
-  [ -n "$prev" ] && prev="$(readlink -f "$prev" 2>/dev/null || true)"
-  for d in $(ls -1dt "$rels"/*/ 2>/dev/null); do
-    d="${d%/}"; n=$((n + 1))
-    [ "$(readlink -f "$d")" = "$live" ] && continue
-    [ -n "$prev" ] && [ "$(readlink -f "$d")" = "$prev" ] && continue
-    [ "$n" -le "$ATTA_KEEP_CODE_RELEASES" ] && continue
-    rm -rf "$d"
+atta_install_packages() {
+  # atta_install_packages OS — the system packages ATTa needs (browser libraries: see atta_install_browser).
+  local os="$1"
+  case "$os" in
+    amzn-*|fedora-*|rhel-*|rocky-*|almalinux-*)
+      dnf install -y nodejs python3-pip nginx unzip git openssl \
+        nss nspr atk at-spi2-atk at-spi2-core cups-libs libdrm libxkbcommon \
+        libXcomposite libXdamage libXext libXfixes libXrandr libxshmfence \
+        pango cairo alsa-lib mesa-libgbm liberation-fonts \
+        || atta_fail "could not install the system packages with dnf on $os (see the lines above)" ;;
+    ubuntu-*|debian-*)
+      { apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs python3-pip nginx unzip git \
+          curl ca-certificates openssl; } \
+        || atta_fail "could not install the system packages with apt-get on $os (see the lines above)" ;;
+    *) atta_fail "no package list for $os (supported: Ubuntu 24.04, Amazon Linux 2023)" ;;
+  esac
+}
+
+atta_install_browser() {
+  # atta_install_browser OS CODE — pinned Playwright + its Chromium, the OS libraries Chromium needs, then a REAL
+  # launch as the runner user, using the checker in the new release CODE (readable by the service users; the
+  # unpacked bundle often sits in a private home folder they cannot enter). Every failure is one
+  # "DEPLOYMENT FAILED: ..." line with the reason, never a bare traceback.
+  local os="$1" code="$2" out rc
+  pip_install(){ python3 -m pip install --break-system-packages "$@" 2>/dev/null || python3 -m pip install "$@"; }
+  pip_install --disable-pip-version-check -r "$ATTA_LIB_DIR/requirements-server.txt" \
+    || atta_fail "could not install the pinned Python packages (requirements-server.txt)" || return 1
+  for m in yaml playwright anthropic; do
+    python3 -c "import $m" >/dev/null 2>&1 || atta_fail "Python package $m is missing after install" || return 1
   done
+  export PLAYWRIGHT_BROWSERS_PATH="$ATTA_BROWSERS"
+  out="$(mktemp)"
+  rc=0; python3 -m playwright install chromium >"$out" 2>&1 || rc=$?   # (|| keeps set -e / ERR out of it)
+  if [ "$rc" != 0 ]; then
+    tail -n 5 "$out" >&2; rm -f "$out"
+    atta_fail "could not download the pinned Chromium ($(python3 -c 'import importlib.metadata as m;print("playwright "+m.version("playwright"))' 2>/dev/null))"
+    return 1
+  fi
+  case "$os" in
+    ubuntu-*|debian-*)
+      # Playwright's own list for this Ubuntu, installed with apt (the dnf path lists them in atta_install_packages).
+      rc=0; python3 -m playwright install-deps chromium >"$out" 2>&1 || rc=$?
+      if [ "$rc" != 0 ]; then
+        tail -n 8 "$out" >&2; rm -f "$out"
+        atta_fail "the browser's system libraries could not be installed on $os (playwright install-deps chromium)"
+        return 1
+      fi ;;
+  esac
+  rm -f "$out"
+  chmod -R a+rX "$ATTA_BROWSERS"
+  atta_browser_launch_check "$code"
 }
 
-atta_restore_previous_code() {
-  # atta_restore_previous_code APP RELEASES — point APP back at the release that was live before.
-  local app="$1" rels="$2" prev
-  prev="$(cat "$rels/.previous" 2>/dev/null || true)"
-  [ -n "$prev" ] && [ -d "$prev" ] || return 1
-  ln -sfn "$prev" "$app.next" && mv -Tf "$app.next" "$app"
+atta_browser_launch_check() {
+  # atta_browser_launch_check CODE — a real headless Chromium, as the runner user (the one the watcher's browser
+  # stage runs as), with the checker from the release folder CODE.
+  local code="$1" out
+  out="$(runuser -u "$ATTA_RUN_USER" -- env HOME="$ATTA_RUN_HOME" PLAYWRIGHT_BROWSERS_PATH="$ATTA_BROWSERS" \
+         python3 "$code/atta_health.py" --launch-only 2>&1)" \
+    || { printf '%s\n' "$out" | tail -n 3 >&2; atta_fail "the browser cannot launch: $(printf '%s\n' "$out" | tail -n 1)"; return 1; }
+  echo "PLAYWRIGHT_BROWSER_PASS"
 }
 
-atta_nginx_listen() {
-  # atta_nginx_listen DOMAINS EMAIL ALLOW_PUBLIC_HTTP — v116: where nginx listens. Public only when HTTPS can be
-  # set up (certbot needs port 80 to prove the domain) or the owner explicitly accepts plain HTTP.
-  local domains="$1" email="$2" allow="${3:-}"
-  if [ -n "$domains" ] && [ "$domains" != "_" ] && [ -n "$email" ]; then echo 80
-  elif [ "$allow" = "true" ]; then echo 80
-  else echo 127.0.0.1:80; fi
+atta_candidate_check() {
+  # atta_candidate_check CODE — BEFORE anything live changes: start the NEW release's gateway from its own folder,
+  # as the web user, on a free loopback port, against a throwaway data folder; it must prove its identity and serve
+  # ATTa's login as that release. Proves the new code starts, imports and answers — off to the side.
+  local code="$1" tmp port secret pid ok=0 as=()
+  tmp="$(mktemp -d /tmp/atta-candidate.XXXXXX)" || return 1
+  port="$(python3 -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1", 0)); print(s.getsockname()[1])')"
+  secret="$(python3 -c 'import secrets; print(secrets.token_urlsafe(48))')"
+  mkdir -p "$tmp/root"
+  printf 'APP_BUILDER_ROOT=%s\nAPP_BUILDER_HOST=127.0.0.1\nAPP_BUILDER_PORT=%s\nAPP_BUILDER_SESSION_SECRET=%s\nAPP_BUILDER_TEST_ACCOUNTS=0\n' \
+    "$tmp/root" "$port" "$secret" >"$tmp/.env"
+  chmod 600 "$tmp/.env"
+  if [ "$(id -u)" = 0 ] && getent passwd "$ATTA_WEB_USER" >/dev/null; then
+    # setpriv EXECs (runuser forks): the pid below is the gateway itself, so killing it leaves nothing behind.
+    chown -R "$ATTA_WEB_USER" "$tmp"
+    as=(setpriv --reuid="$(id -u "$ATTA_WEB_USER")" --regid="$(id -g "$ATTA_WEB_USER")" --init-groups --)
+  fi
+  "${as[@]}" env -i PATH="$PATH" HOME="$tmp" python3 "$code/envfile.py" run "$tmp/.env" --all -- \
+      python3 "$code/accounts.py" init >"$tmp/init.log" 2>&1 \
+    && { "${as[@]}" env -i PATH="$PATH" HOME="$tmp" python3 "$code/envfile.py" run "$tmp/.env" --all -- \
+           python3 "$code/gateway.py" >"$tmp/gateway.log" 2>&1 & pid=$!; } \
+    && python3 "$code/atta_health.py" --env "$tmp/.env" --expect-release "$(basename "$code")" --timeout 40 \
+    && ok=1
+  if [ -n "${pid:-}" ]; then kill "$pid" 2>/dev/null || true; wait "$pid" 2>/dev/null || true; fi
+  if [ "$ok" != 1 ]; then
+    tail -n 15 "$tmp/init.log" "$tmp/gateway.log" >&2 2>/dev/null
+    rm -rf "$tmp"
+    atta_fail "the new release's gateway did not start and prove itself (smoke test, nothing live was changed)"
+    return 1
+  fi
+  rm -rf "$tmp"
+  echo "CANDIDATE_PASS $(basename "$code")"
 }
 
-atta_nginx_conf() {
-  # atta_nginx_conf TEMPLATE DOMAINS LISTEN — the site config on stdout. Values are checked, never pasted raw.
-  local tpl="$1" domains="${2:-_}" listen="$3"
-  [[ "$listen" =~ ^(127\.0\.0\.1:)?80$ ]] || { echo "bad nginx listen value: $listen" >&2; return 1; }
-  [[ "$domains" =~ ^[A-Za-z0-9._\ -]+$ ]] || { echo "bad domain list: $domains" >&2; return 1; }
-  sed -e "s/__LISTEN__/${listen}/" -e "s/YOUR_DOMAIN/${domains}/g" "$tpl"
+atta_snapshot() {
+  # atta_snapshot TXN APP ROOT CHECKER_DIR — copy every file the switch is about to change, and write TXN/restore.sh,
+  # which puts them ALL back (units, egress script, nginx site + main config + stock site link, proxy.json, the
+  # code symlink), restarts, and verifies the previous release with its own kind of checks. Self-contained: it
+  # carries its own copy of the checker, so it works whatever state the new release is in.
+  local txn="$1" app="$2" root="$3" chk="$4" u prev
+  mkdir -p "$txn/units" "$txn/nginx" "$txn/checker"
+  chmod 700 "$txn"
+  for u in $ATTA_UNITS; do
+    if [ -f "/etc/systemd/system/$u" ]; then cp -p "/etc/systemd/system/$u" "$txn/units/$u"; else : >"$txn/units/$u.absent"; fi
+  done
+  if [ -f /usr/local/sbin/atta-block-metadata ]; then cp -p /usr/local/sbin/atta-block-metadata "$txn/egress"; else : >"$txn/egress.absent"; fi
+  if [ -f /etc/nginx/conf.d/app-builder.conf ]; then cp -p /etc/nginx/conf.d/app-builder.conf "$txn/nginx/site"; else : >"$txn/nginx/site.absent"; fi
+  [ -f /etc/nginx/nginx.conf ] && cp -p /etc/nginx/nginx.conf "$txn/nginx/main"
+  if [ -L /etc/nginx/sites-enabled/default ]; then readlink /etc/nginx/sites-enabled/default >"$txn/nginx/stock-link"; fi
+  if [ -f "$root/state/proxy.json" ]; then cp -p "$root/state/proxy.json" "$txn/proxy.json"; else : >"$txn/proxy.json.absent"; fi
+  cp -p "$chk/atta_health.py" "$chk/atta_identity.py" "$chk/envfile.py" "$txn/checker/"
+  # readlink -e: the target must EXIST. (-f echoes a missing path back: on a first install that made "the previous
+  # release" /opt/app-builder itself, and the restore pointed it at itself.)
+  prev="$(readlink -e "$app" 2>/dev/null || true)"
+  if [ -n "$prev" ] && { [ "$prev" = "$app" ] || [ -L "$prev" ] || [ ! -d "$prev" ]; }; then
+    atta_fail "the live code at $app does not resolve to a release folder ($prev); refusing to snapshot it"; return 1
+  fi
+  {
+    echo '#!/usr/bin/env bash'
+    echo '# restore.sh — written by bootstrap.sh BEFORE it switched anything. Puts back exactly what was live.'
+    printf 'PREV=%q\nAPP=%q\nROOT=%q\nRESTART_UNITS=%q\n' "$prev" "$app" "$root" "$ATTA_RESTART_UNITS"
+    cat <<'RESTORE'
+set -uo pipefail
+TXN="$(cd "$(dirname "$0")" && pwd)"
+fail(){ echo "RESTORE FAILED: $*" >&2; exit 1; }
+if [ -n "$PREV" ]; then
+  # The previous release must be a real folder of its own, never APP itself or a link.
+  { [ -d "$PREV" ] && [ ! -L "$PREV" ] && [ "$PREV" != "$APP" ]; } || fail "the previous release $PREV is not a release folder"
+fi
+for f in "$TXN"/units/*; do
+  n="$(basename "$f")"
+  case "$n" in *.absent) rm -f "/etc/systemd/system/${n%.absent}" ;; *) install -m 0644 "$f" "/etc/systemd/system/$n" ;; esac
+done
+if [ -f "$TXN/egress" ]; then install -m 0755 "$TXN/egress" /usr/local/sbin/atta-block-metadata; else rm -f /usr/local/sbin/atta-block-metadata; fi
+if [ -f "$TXN/nginx/site" ]; then install -m 0644 "$TXN/nginx/site" /etc/nginx/conf.d/app-builder.conf; else rm -f /etc/nginx/conf.d/app-builder.conf; fi
+[ -f "$TXN/nginx/main" ] && install -m 0644 "$TXN/nginx/main" /etc/nginx/nginx.conf
+mkdir -p "$ROOT/state"
+if [ -f "$TXN/proxy.json" ]; then install -m 0644 "$TXN/proxy.json" "$ROOT/state/proxy.json"; else rm -f "$ROOT/state/proxy.json"; fi
+if [ -z "$PREV" ]; then
+  # First install: nothing was live before. Undo it: ATTa's services stopped and disabled, the code link removed.
+  for u in $RESTART_UNITS atta-deployd.service; do systemctl disable --now "$u" >/dev/null 2>&1 || true; done
+  [ -L "$APP" ] && rm -f "$APP"
+else
+  ln -sfn "$PREV" "$APP.restore" && mv -Tf "$APP.restore" "$APP" || fail "could not point $APP back at $PREV"
+fi
+systemctl daemon-reload || fail "systemctl daemon-reload"
+if [ -n "$PREV" ]; then
+  for u in $RESTART_UNITS; do [ -f "/etc/systemd/system/$u" ] && { systemctl restart "$u" || fail "could not restart $u"; }; done
+  systemctl restart atta-block-metadata.service >/dev/null 2>&1 || true
+fi
+if command -v nginx >/dev/null 2>&1; then
+  if [ -f "$TXN/nginx/stock-link" ] && [ -d /etc/nginx/sites-enabled ]; then
+    ln -sfn "$(cat "$TXN/nginx/stock-link")" /etc/nginx/sites-enabled/default
+    # The stock site comes back only if nginx accepts it here (e.g. it listens on [::] where IPv6 is off).
+    nginx -t >/dev/null 2>&1 || { rm -f /etc/nginx/sites-enabled/default; echo "restore: the stock nginx site stays disabled (it does not pass nginx -t here)" >&2; }
+  fi
+  nginx -t || fail "nginx -t"
+  if systemctl is-active --quiet nginx; then systemctl reload nginx || fail "nginx reload"; fi
+fi
+if [ -z "$PREV" ]; then
+  if python3 "$TXN/checker/atta_health.py" --env "$ROOT/.env" --direct --timeout 3 >/dev/null 2>&1; then
+    fail "ATTa still answers after undoing the first install"
+  fi
+  echo "RESTORE VERIFIED: first install undone (nothing was live before; ATTa's services are stopped)"
+  exit 0
+fi
+if python3 -c 'import json,sys; sys.exit(0 if "health_identity_v1" in (json.load(open(sys.argv[1])).get("features") or []) else 1)' "$PREV/release.json" 2>/dev/null; then
+  python3 "$TXN/checker/atta_health.py" --env "$ROOT/.env" --direct --proxy --proxy-file "$ROOT/state/proxy.json" \
+    --expect-release "$(basename "$PREV")" --timeout 90 || fail "the previous release did not pass its checks again"
+else
+  python3 "$TXN/checker/atta_health.py" --env "$ROOT/.env" --direct --legacy --timeout 90 \
+    || fail "the previous (pre-v117) release did not answer its health check again"
+fi
+echo "RESTORE VERIFIED: $PREV"
+RESTORE
+  } >"$txn/restore.sh"
+  chmod 700 "$txn/restore.sh"
+}
+
+atta_cert_renewal() {
+  # atta_cert_renewal APP ROOT — certificates renew by themselves, nginx picks the new one up, and a failure is SEEN:
+  # a deploy hook reloads nginx after each renewal; the distribution's certbot timer (or ATTa's own) runs renewals;
+  # atta-tls-check.timer checks the served and on-disk certificate every day and raises an ATTa alert (and a failed
+  # unit in `systemctl --failed`) when it is close to expiry or renewals stopped working.
+  local app="$1" root="$2" t=""
+  mkdir -p "$ATTA_LETSENCRYPT/renewal-hooks/deploy"
+  printf '#!/bin/sh\n# ATTa: pick up a renewed certificate.\nnginx -t && systemctl reload nginx\n' \
+    >"$ATTA_LETSENCRYPT/renewal-hooks/deploy/atta-reload-nginx"
+  chmod 755 "$ATTA_LETSENCRYPT/renewal-hooks/deploy/atta-reload-nginx"
+  for u in certbot.timer certbot-renew.timer snap.certbot.renew.timer; do
+    systemctl cat "$u" >/dev/null 2>&1 && { t="$u"; break; }
+  done
+  if [ -n "$t" ]; then
+    systemctl enable --now "$t" >/dev/null 2>&1 || atta_fail "could not enable the certificate renewal timer $t" || return 1
+    rm -f /etc/systemd/system/atta-certbot-renew.service /etc/systemd/system/atta-certbot-renew.timer
+  else
+    printf '[Unit]\nDescription=ATTa: renew Let'"'"'s Encrypt certificates\n[Service]\nType=oneshot\nExecStart=/usr/bin/env certbot renew -q\n' \
+      >/etc/systemd/system/atta-certbot-renew.service
+    printf '[Unit]\nDescription=ATTa: renew certificates twice a day\n[Timer]\nOnCalendar=*-*-* 03,15:17:00\nRandomizedDelaySec=1h\nPersistent=true\n[Install]\nWantedBy=timers.target\n' \
+      >/etc/systemd/system/atta-certbot-renew.timer
+    t=atta-certbot-renew.timer
+  fi
+  printf '[Unit]\nDescription=ATTa: check the HTTPS certificate (expiry, renewal, what nginx serves)\n[Service]\nType=oneshot\nEnvironmentFile=-%s/.env\nExecStart=/usr/bin/python3 %s/tls_check.py --renewal-timer %s\n' \
+    "$root" "$app" "$t" >/etc/systemd/system/atta-tls-check.service
+  printf '[Unit]\nDescription=ATTa: daily HTTPS certificate check\n[Timer]\nOnCalendar=daily\nRandomizedDelaySec=2h\nPersistent=true\n[Install]\nWantedBy=timers.target\n' \
+    >/etc/systemd/system/atta-tls-check.timer
+  systemctl daemon-reload
+  systemctl enable --now "$t" atta-tls-check.timer >/dev/null 2>&1 || atta_fail "could not enable the certificate timers" || return 1
+}
+
+atta_issue_certificate() {
+  # atta_issue_certificate EMAIL DOMAIN... — first certificate, by webroot (nginx is already serving the ACME path).
+  # certbot never edits nginx: ATTa renders the HTTPS site itself once the files exist (nginx_site.py).
+  local email="$1"; shift
+  local args=() d
+  for d in "$@"; do args+=(-d "$d"); done
+  if ! command -v certbot >/dev/null 2>&1; then
+    if command -v dnf >/dev/null 2>&1; then dnf install -y certbot || return 1
+    elif command -v apt-get >/dev/null 2>&1; then DEBIAN_FRONTEND=noninteractive apt-get install -y certbot || return 1
+    else return 1; fi
+  fi
+  mkdir -p "$ATTA_ACME_ROOT"; chmod 755 "$ATTA_ACME_ROOT"
+  certbot certonly --webroot -w "$ATTA_ACME_ROOT" -n --agree-tos -m "$email" --keep-until-expiring \
+    --cert-name "$1" "${args[@]}"
 }

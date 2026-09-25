@@ -10,8 +10,10 @@ import json, os, shutil, subprocess, sys, time, unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from atta_testlib import DEP, Gateway, free_port, nginx_available, tmpdir, wait_until, _port_open  # noqa: E402
+from atta_testlib import BUNDLE, DEP, Gateway, free_port, nginx_available, tmpdir, wait_until, _port_open  # noqa: E402
 import atta_health, nginx_site  # noqa: E402
+
+BUNDLE_RUN = BUNDLE / "run"
 
 # The stock nginx.conf shipped by Fedora/RHEL-family nginx packages (Amazon Linux 2023 uses this layout): a server
 # block inside http{} with its own `listen 80`, next to `include conf.d/*.conf`. Reproduced here as the fixture.
@@ -147,6 +149,38 @@ class Render(unittest.TestCase):
         conf.write_text("http { server { listen 80; ")
         self.assertEqual(nginx_site.neutralize(conf, self.t / "none"), [])
         self.assertEqual(conf.read_text(), "http { server { listen 80; ")
+
+    def test_writer_never_replaces_a_device_fifo_or_folder(self):
+        # v117 e2e found it: `render --out /dev/null` (a settings check) replaced the server's /dev/null with a
+        # regular file, as root. Atomic writes now refuse any target that is not a regular file.
+        fifo = self.t / "fifo"; os.mkfifo(fifo)
+        (self.t / "dir").mkdir()
+        for target in (fifo, self.t / "dir"):
+            r = subprocess.run([sys.executable, str(DEP / "nginx_site.py"), "render", "--port", "8787",
+                                "--out", str(target), "--proxy-json", str(self.t / "p.json")],
+                               capture_output=True, text=True)
+            self.assertEqual(r.returncode, 1, r.stdout + r.stderr)
+            self.assertIn("not a regular file", r.stderr)
+        import stat as st
+        self.assertTrue(st.S_ISFIFO(os.lstat(fifo).st_mode))
+        self.assertTrue((self.t / "dir").is_dir())
+
+    def test_check_writes_nothing(self):
+        before = set(os.listdir(self.t))
+        r = subprocess.run([sys.executable, str(DEP / "nginx_site.py"), "check", "--port", "8787", "--domains",
+                            "a.example.com", "--email", "o@example.com"], capture_output=True, text=True, cwd=self.t)
+        self.assertEqual((r.returncode, r.stdout.strip()), (0, "ok"), r.stderr)
+        self.assertEqual(set(os.listdir(self.t)), before)
+        r = subprocess.run([sys.executable, str(DEP / "nginx_site.py"), "check", "--port", "8787", "--domains",
+                            "bad;name", "--email", "o@example.com"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 1)
+
+    def test_shell_scripts_never_point_a_writer_at_a_device(self):
+        import re as _re
+        for f in (DEP / "bootstrap.sh", DEP / "bootstrap-lib.sh", BUNDLE_RUN):
+            for n, line in enumerate(f.read_text().splitlines(), 1):
+                with self.subTest(file=f.name, line=n):
+                    self.assertIsNone(_re.search(r"--(out|proxy-json)\s+/dev/", line), line)
 
     def test_check_output_flags_warnings(self):
         self.assertEqual(nginx_site.check_output("nginx: the configuration file ... syntax is ok\n"), [])
