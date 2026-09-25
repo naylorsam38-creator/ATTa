@@ -367,3 +367,34 @@ echo real-installer'
     [ "$status" -eq 1 ]
     [[ $output == *"not found"* ]]
 }
+
+# ------------------------------------------------------------------ localhost activation
+@test "activate_localhost_server waits for Coolify's seeding instead of passing a missing server" {
+    # Regression (CI): on a fast machine Server 0 did not exist yet and Coolify threw
+    # "ValidateAndInstallServerJob::__construct(): Argument #1 must be of type Server, null given".
+    local n="$BATS_TEST_TMPDIR/polls"
+    echo 0 >"$n"
+    coolify_db_query() { # seeded on the 3rd poll
+        local c
+        c=$(($(cat "$n") + 1))
+        echo "$c" >"$n"
+        [ "$c" -ge 3 ] && echo 1 || echo 0
+    }
+    sleep() { :; }
+    stub docker 'echo usable'
+    wait_for_stable_proxy() { echo "proxy-wait-called"; }
+    run activate_localhost_server
+    [ "$status" -eq 0 ]
+    [[ $output == *"validated by Coolify"* ]]
+    [[ $output == *"proxy-wait-called"* ]]
+}
+
+@test "activate_localhost_server fails clearly if Coolify never registers localhost" {
+    coolify_db_query() { echo 0; }
+    sleep() { :; }
+    stub docker 'echo "should not be called"; exit 1'
+    SERVER_SEED_WAIT=3 run activate_localhost_server
+    [ "$status" -eq 1 ]
+    [[ $output == *"never registered its localhost server"* ]]
+    [[ $output != *"should not be called"* ]]
+}

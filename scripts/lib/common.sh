@@ -438,8 +438,23 @@ proxy_running() {
 # Have Coolify validate its own host ("This Machine" in onboarding) using its own job.
 # On success Coolify marks the server usable and starts the reverse proxy (Traefik on
 # ports 80/443), which every app, ATT included, is served through.
+# Coolify creates its "localhost" server record (and its settings row) during first-boot
+# seeding, which can finish after the container already reports healthy.
+localhost_server_seeded() {
+    [ "$(coolify_db_query 'select count(*) from servers s join server_settings ss on ss.server_id = s.id where s.id = 0')" = "1" ]
+}
+
 activate_localhost_server() {
     local out i
+    info "Waiting for Coolify to register its localhost server"
+    for ((i = 0; i < ${SERVER_SEED_WAIT:-60}; i++)); do
+        localhost_server_seeded && break
+        sleep 3
+    done
+    if ! localhost_server_seeded; then
+        fail "Coolify never registered its localhost server. Check: docker logs coolify 2>&1 | grep -i seed"
+        return 1
+    fi
     info "Validating the localhost server with Coolify (this also starts the reverse proxy)"
     # shellcheck disable=SC2016 # PHP code: $s is a PHP variable, not shell
     out="$(timeout 300 docker exec coolify php artisan tinker --execute '
