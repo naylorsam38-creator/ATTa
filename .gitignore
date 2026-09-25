@@ -1,2 +1,14 @@
 # Google App Engine generated folder
 appengine-generated/
+
+# Kit config holds the Coolify admin password - never commit it.
+config/coolify.env
+
+# Backups and credentials must never land in git.
+*.tar.gz
+*credentials*.txt
+
+# Handover bundle generated from this repo (git archive); shared directly, not versioned.
+ATTa-handover.zip
+ATTa-Coolify-Bundle.zip
+ATTa-Coolify-Kit-only.zip
