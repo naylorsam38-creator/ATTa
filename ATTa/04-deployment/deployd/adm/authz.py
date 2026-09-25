@@ -92,7 +92,9 @@ def allowed(meta):
     job = str(meta.get("job_id") or "")
     if not job or "/" in job or job.startswith("."):
         return False, "job has no usable id"
-    ok, why = secure_file(config.QUEUE / f"{job}.json", config.QUEUE, private_dir=True)
+    # v117: a job is checked where it is when it runs: claimed (RUNNING), or still queued (older callers).
+    entry_dir = config.RUNNING if (config.RUNNING / f"{job}.json").exists() else config.QUEUE
+    ok, why = secure_file(entry_dir / f"{job}.json", entry_dir, private_dir=True)
     if not ok:
         return False, f"queue entry not trusted: {why}"
     ok, why = secure_file(meta.get("archive") or "", config.QUEUE, private_dir=True)

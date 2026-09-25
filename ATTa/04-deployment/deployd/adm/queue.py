@@ -4,10 +4,12 @@ import json, os, shutil, stat
 from . import authz, config, journal
 
 
-def enqueue(archive, *, origin, requested_by, build_id=None, original_name=None):
+def enqueue(archive, *, origin, requested_by, build_id=None, original_name=None, claimed=False, job_id=None):
     """Copy the bundle into the queue and open its journal. Returns the job id.
     origin: "local" (queued on the server by root) or "web" (uploaded on the web by `requested_by`).
-    Both are required: authz.py decides from them, and a job without them is refused."""
+    Both are required: authz.py decides from them, and a job without them is refused.
+    claimed=True (v117, deployctl): the caller already holds the deploy lock and runs the job itself, so it goes
+    straight to RUNNING and deployd never sees it as pending (no second process can pick it up)."""
     if origin not in authz.VALID_ORIGINS:
         raise ValueError(f"origin must be one of {authz.VALID_ORIGINS}, not {origin!r}")
     if origin == "web" and not str(requested_by or "").strip():
@@ -16,19 +18,58 @@ def enqueue(archive, *, origin, requested_by, build_id=None, original_name=None)
     a = Path(archive).resolve()
     if not a.is_file():
         raise FileNotFoundError(f"bundle not found: {a}")
-    job = journal.new_job_id()
+    job = job_id or journal.new_job_id()
+    if not journal.ID_RE.fullmatch(job) or journal.exists(job):
+        raise ValueError(f"job id {job!r} is not usable (malformed, or already used)")
     dest = config.QUEUE / f"{job}.zip"
     shutil.copy2(a, dest)
     dest.chmod(0o600)
     meta = {"job_id": job, "archive": str(dest), "original_name": original_name or a.name,
             "build_id": build_id, "origin": origin, "requested_by": requested_by}
-    mp = config.QUEUE / f"{job}.json"
+    mp = (config.RUNNING if claimed else config.QUEUE) / f"{job}.json"
     fd = os.open(mp, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     with os.fdopen(fd, "w") as f:
         f.write(json.dumps(meta, indent=2) + "\n")
     journal.record(job, "QUEUED", build_id=build_id, original_name=meta["original_name"], requested_by=requested_by,
                    origin=origin, archive=str(dest))
     return job
+
+
+def claim(meta):
+    """v117: take one queued job for this process, atomically (rename QUEUE/<job>.json -> RUNNING/<job>.json).
+    Exactly one caller wins; the others get None. Call only while holding the deploy lock."""
+    job = str(meta.get("job_id") or "")
+    if not journal.ID_RE.fullmatch(job):
+        return None
+    src, dst = config.QUEUE / f"{job}.json", config.RUNNING / f"{job}.json"
+    try:
+        os.rename(src, dst)          # atomic on one filesystem; fails for everyone but the first
+    except FileNotFoundError:
+        return None
+    try:
+        return json.loads(dst.read_text())
+    except (OSError, ValueError):
+        return None
+
+
+def claim_next():
+    """Claim the oldest queued job, or None."""
+    for meta in pending():
+        m = claim(meta)
+        if m is not None:
+            return m
+    return None
+
+
+def running():
+    """Claimed jobs (RUNNING). While the deploy lock is free, every one of these is a deploy that was killed."""
+    out = []
+    for m in sorted(config.RUNNING.glob("*.json")):
+        try:
+            out.append(json.loads(m.read_text()))
+        except (OSError, ValueError):
+            out.append({"job_id": m.stem, "unreadable": True})
+    return out
 
 
 def pending():
@@ -101,8 +142,9 @@ def sweep_requests():
 
 
 def finish(meta):
-    """Remove a job from the queue once its journal holds the verdict."""
-    for p in (Path(meta.get("archive", "")), config.QUEUE / f"{meta['job_id']}.json"):
+    """Remove a job from the queue once its journal holds the verdict (claimed or not)."""
+    for p in (Path(meta.get("archive", "")), config.QUEUE / f"{meta['job_id']}.json",
+              config.RUNNING / f"{meta['job_id']}.json"):
         try:
             p.unlink()
         except OSError:

@@ -102,7 +102,7 @@ def check(root):
     return version
 
 
-def run_tests(root, log):
+def run_tests(root, log, cancel=None):
     """v116: the bundle's own test suite (security tests included) must pass before it is activated. Run as an
     unprivileged user with an empty environment and throwaway folders: never root, never the live data."""
     import os, pwd, subprocess, tempfile
@@ -135,16 +135,24 @@ def run_tests(root, log):
     if os.geteuid() == 0:
         cmd = ["setpriv", f"--reuid={u.pw_uid}", f"--regid={u.pw_gid}", "--clear-groups", "--no-new-privs"] + cmd
     log.write(f"=== bundle tests (as {config.TEST_USER}): {' '.join(cmd[-5:])}\n"); log.flush()
+    # v117: a stoppable tree (adm/proc.py): a hanging test can't leave processes behind after the timeout.
+    from . import proc
+    outp = Path(tempfile.mkstemp(prefix="atta-bundle-tests-", suffix=".log")[1])
     try:
-        r = subprocess.run(cmd, cwd=str(root), env=env, capture_output=True, text=True, timeout=config.TEST_TIMEOUT)
-    except subprocess.TimeoutExpired:
-        raise BundleRejected(f"bundle tests did not finish within {config.TEST_TIMEOUT}s")
+        with open(outp, "w") as out_f:
+            r = proc.run_tree(cmd, cwd=str(root), env=env, stdout=out_f, timeout=config.TEST_TIMEOUT,
+                              grace=10, cancel=cancel)
+        out = outp.read_text(errors="replace")
     finally:
         subprocess.run(["rm", "-rf", str(work)], check=False)
-    out = (r.stdout or "") + (r.stderr or "")
+        outp.unlink(missing_ok=True)
     log.write(out[-20000:] + "\n"); log.flush()
+    if r.interrupted:
+        raise proc.Cancelled("stopped while the bundle's tests were running")
+    if r.timed_out:
+        raise BundleRejected(f"bundle tests did not finish within {config.TEST_TIMEOUT}s (all their processes stopped)")
     tail = [l for l in out.splitlines() if l.startswith(("Ran ", "OK", "FAILED", "FAIL:", "ERROR:"))]
-    if r.returncode != 0:
+    if r.returncode != 0 or not r.stopped:
         why = tail[-6:] or [f"exit {r.returncode}: " + " / ".join(l.strip() for l in out.strip().splitlines()[-2:])]
         raise BundleRejected("bundle tests failed: " + " | ".join(why))
     return next((l for l in reversed(tail) if l.startswith("Ran ")), "tests passed")

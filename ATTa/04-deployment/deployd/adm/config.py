@@ -22,20 +22,36 @@ BACKUPS  = ADM / "backups"      # copy of the live code folder taken before each
 LOGS     = ADM / "logs"         # full `bash run` output per job; read the last line + FAIL lines
 CURRENT  = ADM / "current"      # symlink -> the release that is live now
 PREVIOUS = ADM / "previous"     # symlink -> the release that was live before it (rollback target)
-LOCK     = ADM / "state" / "deployd.lock"  # flock: deployd and deployctl never deploy at the same time
+RUNNING  = ADM / "state" / "running"  # v117: a job is CLAIMED by an atomic rename from QUEUE into here
+# v117: the server-wide deploy lock (adm/lock.py). deployd, deployctl AND a hand-typed `bash run` (bootstrap.sh)
+# all take this one; its fd is passed to the installer so the whole deploy tree holds it. Owner beside it (.owner.json).
+LOCK     = ADM / "state" / "deployd.lock"
+# v117: ADM's own known-good record (the BUNDLE to re-run if a fast restore is impossible); code-level known-good
+# lives with the code releases (CODE_RELEASES/.known-good.json, adm/releases.py).
+KNOWN_GOOD = ADM / "state" / "known_good.json"
 # The live pipeline's lock. ADM waits until it is gone before restarting services, so a running build isn't killed.
 PIPELINE_LOCK = ROOT / "state" / "pipeline.lock"
 # Longest ADM waits for a running build to finish before deploying anyway (seconds). 0 = never wait.
 PIPELINE_WAIT = int(os.environ.get("ATTA_ADM_PIPELINE_WAIT", "3600"))
 # Longest a full `bash run` may take (seconds). First deploy on a fresh box installs Docker/Playwright: keep this generous.
 DEPLOY_TIMEOUT = int(os.environ.get("ATTA_ADM_DEPLOY_TIMEOUT", "5400"))
+# v117: on timeout or cancel the whole deploy tree gets SIGTERM, this long to finish, then SIGKILL (adm/proc.py).
+KILL_GRACE = float(os.environ.get("ATTA_ADM_KILL_GRACE", "30"))
+# v117: longest a rollback (fast restore, or re-running the known-good bundle) may take.
+ROLLBACK_TIMEOUT = int(os.environ.get("ATTA_ADM_ROLLBACK_TIMEOUT", "3600"))
 # Files a bundle MUST contain (relative to its root) or it is refused before anything live is touched.
 REQUIRED_FILES = ["run", "release.json", "04-deployment/bootstrap.sh", "04-deployment/gateway.py",
                   "04-deployment/pipeline.py", "04-deployment/deployd/deployd.py"]
-# Gateway health URL (bootstrap.sh's own gate uses the same one). Must answer with body "OK".
-HEALTH_URL = os.environ.get("ATTA_ADM_HEALTH_URL", "http://127.0.0.1:8787/health")
-# Nginx front URL — must answer at all (any status) for the deploy to count.
-FRONT_URL = os.environ.get("ATTA_ADM_FRONT_URL", "http://127.0.0.1/")
+# v117: where bootstrap.sh installs code releases (APP is a symlink to one of them). Must match RELS= in bootstrap.sh.
+CODE_RELEASES = Path(os.environ.get("ATTA_CODE_RELEASES", "/opt/app-builder-releases"))
+# v117 health (atta_health.py): the gateway must PROVE it is this installation (key from .env), on the port .env
+# names, directly and through nginx as bootstrap.sh last rendered it (PROXY_FILE: scheme/host/port), plus a real
+# browser through the proxy. Nothing here names a port: it comes from .env.
+ENV_FILE = ROOT / ".env"
+PROXY_FILE = ROOT / "state" / "proxy.json"
+REQUIRE_PROXY = True          # tests without nginx turn this off in-process; a server always checks the proxy
+BROWSER_CHECK = os.environ.get("ATTA_ADM_BROWSER_CHECK", "1") != "0"
+PLAYWRIGHT_BROWSERS = os.environ.get("ATTA_BROWSERS", "/opt/ms-playwright")
 # systemd units that must be active after a deploy. Add here if bootstrap.sh gains a service.
 SERVICES = ["app-builder-gateway.service", "app-builder-pipeline.service", "app-builder-watcher.service", "nginx.service"]
 # How many times / how long the health check retries after a restart (seconds between tries, total tries).
@@ -65,9 +81,9 @@ POLL_SECONDS = 5
 TRUSTED_UID = 0
 # ==========================================================================================
 
-DIRS = (INCOMING, QUEUE, JOURNAL, STAGING, RELEASES, BACKUPS, LOGS)
+DIRS = (INCOMING, QUEUE, RUNNING, JOURNAL, STAGING, RELEASES, BACKUPS, LOGS)
 # v115: nobody but TRUSTED_UID may read or write these. A job's authority depends on them (see authz.py).
-PRIVATE_DIRS = (INCOMING, QUEUE)
+PRIVATE_DIRS = (INCOMING, QUEUE, RUNNING)
 
 
 def ensure_dirs():
