@@ -157,6 +157,18 @@ def validate_paths(cfg: dict, app_root, *, host_access: bool = False) -> None:
                     # there is no legitimate reason for an app to read the runner's environment at all.
                     raise ComposeSecurityError(f"{kind}.{k} reads `{item['environment']}` from the server's environment")
     if not host_access:
+        # v116: app containers must sit on an ordinary Docker bridge (docker0 / br-*): that is what the outbound
+        # rules (container-egress.sh) recognise. macvlan/ipvlan/host networks, a renamed bridge, or joining a
+        # network that already exists (another app's, Coolify's) would step around them.
+        for k, net in (cfg.get("networks") or {}).items():
+            if not isinstance(net, dict):
+                continue
+            if net.get("external"):
+                raise ComposeSecurityError(f"network {k} joins an existing network outside the app")
+            if (net.get("driver") or "bridge") != "bridge":
+                raise ComposeSecurityError(f"network {k} uses the {net.get('driver')} driver; only bridge networks are allowed")
+            if net.get("driver_opts"):
+                raise ComposeSecurityError(f"network {k} sets driver options; not allowed for an app")
         for k, vol in (cfg.get("volumes") or {}).items():
             opts = ((vol or {}).get("driver_opts") or {}) if isinstance(vol, dict) else {}
             if opts and _is_bind_volume(opts):

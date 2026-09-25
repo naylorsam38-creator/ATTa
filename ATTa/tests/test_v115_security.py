@@ -562,6 +562,13 @@ class ComposePathsStayInsideTheApp(_SecretsWorld):
         self.check({"volumes": {"in": {"driver_opts": {"type": "none", "o": "bind", "device": str(self.app / "data")}}}})
         self.check({"volumes": {"plain": {}, "named": None}})
 
+    def test_networks_must_be_plain_bridges(self):
+        for net in ({"driver": "macvlan"}, {"driver": "ipvlan"}, {"driver": "host"}, {"external": True},
+                    {"driver": "bridge", "driver_opts": {"com.docker.network.bridge.name": "evil0"}}):
+            self.refused({"networks": {"n": net}})
+        self.check({"networks": {"default": {"name": "shop_default", "ipam": {}}, "back": {"driver": "bridge"}, "x": None}})
+        self.check({"networks": {"n": {"external": True}}}, host_access=True)        # a trusted manager may
+
     def test_trusted_host_access_relaxes_volumes_only(self):
         self.check({"volumes": {"host": {"driver_opts": {"type": "none", "o": "bind", "device": "/"}}}}, host_access=True)
         self.refused({"services": {"web": {"env_file": ["/srv/app-builder/.env"]}}}, host_access=True)

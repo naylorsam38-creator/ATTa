@@ -322,8 +322,10 @@ class UnitOrdering(unittest.TestCase):
         self.assertIn("StartLimitBurst=", u.split("[Service]")[0])
 
     def test_metadata_block_and_daemon_json_kept(self):
-        self.assertIn("169.254.169.254/32", BOOTSTRAP)
-        self.assertIn("fd00:ec2::254/128", BOOTSTRAP)
+        egress = (DEP / "container-egress.sh").read_text()        # v116: the rules moved into their own script
+        self.assertIn("169.254.169.254/32", egress)
+        self.assertIn("fd00:ec2::254/128", egress)
+        self.assertIn('"$APP/container-egress.sh" /usr/local/sbin/atta-block-metadata', BOOTSTRAP)
         self.assertIn('if [ ! -f /etc/docker/daemon.json ]', BOOTSTRAP)  # never overwrites an existing one
 
     def test_bootstrap_parses(self):

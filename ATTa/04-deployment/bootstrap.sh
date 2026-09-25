@@ -133,6 +133,9 @@ APP_BUILDER_LETSENCRYPT_EMAIL=
 APP_BUILDER_ALLOW_PUBLIC_HTTP=false
 # v116: pre-made test accounts (tester01..NN). 0 on a server; set a number to create them, then hand them out.
 APP_BUILDER_TEST_ACCOUNTS=0
+# v116: what app containers may reach besides each other: public = the internet (never metadata, private
+# networks or this server); deny = nothing outside their own network.
+APP_BUILDER_APP_EGRESS=public
 # App runner (app_runner.py). true = apps stay running after their check; false = stopped after it
 # (frees memory for the next app; Coolify runs the qualified ones for real).
 APP_BUILDER_KEEP_RUNNING=false
@@ -195,42 +198,26 @@ fi
 docker compose version >/dev/null 2>&1 || { echo "DEPLOYMENT FAILED: docker compose is not available" >&2; exit 1; }
 docker run --rm hello-world >/dev/null || { echo "DEPLOYMENT FAILED: docker cannot run a container" >&2; exit 1; }
 # v114: containers may not reach the cloud metadata service (on AWS it hands out this server's IAM
-# credentials). A oneshot unit re-adds the firewall rule after every Docker start, because Docker rebuilds
-# its chains then. DOCKER-USER is the chain Docker leaves for rules like this; INPUT rules don't see container traffic.
-cat >/usr/local/sbin/atta-block-metadata <<'BLOCKSH'
-#!/usr/bin/env bash
-# Drop container traffic to the cloud metadata service. Idempotent; safe to run repeatedly.
-set -u
-ok=0
-if command -v iptables >/dev/null 2>&1; then
-  iptables -N DOCKER-USER 2>/dev/null || true
-  if iptables -C DOCKER-USER -d 169.254.169.254/32 -j DROP 2>/dev/null || iptables -I DOCKER-USER 1 -d 169.254.169.254/32 -j DROP; then ok=1; fi
-fi
-if command -v ip6tables >/dev/null 2>&1; then
-  ip6tables -N DOCKER-USER 2>/dev/null || true
-  ip6tables -C DOCKER-USER -d fd00:ec2::254/128 -j DROP 2>/dev/null || ip6tables -I DOCKER-USER 1 -d fd00:ec2::254/128 -j DROP || true
-fi
-if [ "$ok" != 1 ]; then
-  echo "atta-block-metadata: iptables not available; container access to 169.254.169.254 is NOT blocked" >&2
-  exit 1
-fi
-BLOCKSH
-chmod 755 /usr/local/sbin/atta-block-metadata
-cat >/etc/systemd/system/atta-block-metadata.service <<'BLOCKUNIT'
+# credentials). v116: nor private networks, link-local, loopback or this server itself; public internet only
+# (APP_BUILDER_APP_EGRESS=public, default) or nothing (=deny). The rules live in container-egress.sh; a
+# oneshot unit re-applies them after every Docker start, because Docker rebuilds its chains then.
+install -o root -g root -m 0755 "$APP/container-egress.sh" /usr/local/sbin/atta-block-metadata
+cat >/etc/systemd/system/atta-block-metadata.service <<BLOCKUNIT
 [Unit]
-Description=ATTa: block container access to the cloud metadata service
+Description=ATTa: restrict what app containers can reach (metadata, internal networks, this host)
 After=docker.service
 PartOf=docker.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
+EnvironmentFile=-$ROOT/.env
 ExecStart=/usr/local/sbin/atta-block-metadata
 [Install]
 WantedBy=docker.service
 BLOCKUNIT
 systemctl daemon-reload
 systemctl enable atta-block-metadata.service >/dev/null 2>&1 || true
-systemctl restart atta-block-metadata.service || echo "WARNING: could not block container access to the metadata service (see: systemctl status atta-block-metadata)" >&2
+systemctl restart atta-block-metadata.service || echo "WARNING: could not restrict app containers' network access (see: systemctl status atta-block-metadata)" >&2
 # Second layer, on AWS: require IMDSv2 with a hop limit of 1, so a container that got past the rule still
 # can't get a token. Needs the AWS CLI and ec2:ModifyInstanceMetadataOptions; skipped otherwise.
 if command -v aws >/dev/null 2>&1; then

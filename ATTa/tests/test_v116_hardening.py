@@ -934,5 +934,103 @@ class CoolifyTokenTravelsSafely(unittest.TestCase):
                 srv.shutdown(); srv.server_close()
 
 
+# ============================================================================ #10 what app containers can reach
+
+EGRESS = DEP / "container-egress.sh"
+CAN_NETNS = os.geteuid() == 0 and shutil.which("ip") and shutil.which("iptables") and \
+    subprocess.run(["ip", "netns", "add", "atta-cap-probe"], capture_output=True).returncode == 0
+if CAN_NETNS:
+    subprocess.run(["ip", "netns", "del", "atta-cap-probe"], capture_output=True)
+
+SERVE = ("import socket,sys,threading\n"
+         "for a in sys.argv[1:]:\n"
+         " h,p=a.rsplit(':',1); s=socket.socket(); s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1); s.bind((h,int(p))); s.listen(8)\n"
+         " threading.Thread(target=lambda s=s:[c.close() for c in iter(lambda:s.accept()[0],None)],daemon=True).start()\n"
+         "import time; time.sleep(3600)\n")
+
+
+@unittest.skipUnless(CAN_NETNS, "needs root and network namespaces")
+class ContainersReachOnlyWhatTheyShould(unittest.TestCase):
+    """Real packets through the real rules: a host with a Docker-style bridge, two containers, an outside network."""
+    NS = ("attaE-h", "attaE-c1", "attaE-c2", "attaE-net")
+
+    def ns(self, name, *cmd, check=True):
+        return subprocess.run(["ip", "netns", "exec", name, *cmd], capture_output=True, text=True, check=check)
+
+    def setUp(self):
+        self.procs = []
+        for n in self.NS:
+            subprocess.run(["ip", "netns", "del", n], capture_output=True)
+            subprocess.run(["ip", "netns", "add", n], check=True)
+            self.ns(n, "ip", "link", "set", "lo", "up")
+        h, c1, c2, net = self.NS
+        sh = lambda *c: subprocess.run(c, check=True, capture_output=True)
+        self.ns(h, "ip", "link", "add", "br-atta0", "type", "bridge")
+        self.ns(h, "ip", "addr", "add", "172.30.0.1/24", "dev", "br-atta0"); self.ns(h, "ip", "link", "set", "br-atta0", "up")
+        for i, c in ((2, c1), (3, c2)):
+            sh("ip", "link", "add", f"vc{i}", "type", "veth", "peer", "name", f"vh{i}")
+            sh("ip", "link", "set", f"vc{i}", "netns", c); sh("ip", "link", "set", f"vh{i}", "netns", h)
+            self.ns(h, "ip", "link", "set", f"vh{i}", "master", "br-atta0"); self.ns(h, "ip", "link", "set", f"vh{i}", "up")
+            self.ns(c, "ip", "addr", "add", f"172.30.0.{i}/24", "dev", f"vc{i}"); self.ns(c, "ip", "link", "set", f"vc{i}", "up")
+            self.ns(c, "ip", "route", "add", "default", "via", "172.30.0.1")
+        sh("ip", "link", "add", "vn", "type", "veth", "peer", "name", "vhn")
+        sh("ip", "link", "set", "vn", "netns", net); sh("ip", "link", "set", "vhn", "netns", h)
+        self.ns(h, "ip", "addr", "add", "203.0.113.1/30", "dev", "vhn"); self.ns(h, "ip", "link", "set", "vhn", "up")
+        self.ns(net, "ip", "addr", "add", "203.0.113.2/30", "dev", "vn"); self.ns(net, "ip", "link", "set", "vn", "up")
+        self.ns(net, "ip", "route", "add", "172.30.0.0/24", "via", "203.0.113.1")
+        for a in ("198.51.100.10", "10.9.9.9", "169.254.169.254", "100.64.1.1"):
+            self.ns(net, "ip", "addr", "add", f"{a}/32", "dev", "lo")
+            self.ns(h, "ip", "route", "add", f"{a}/32", "via", "203.0.113.2")
+        self.ns(h, "sysctl", "-qw", "net.ipv4.ip_forward=1")
+        self.ns(h, "iptables", "-N", "DOCKER-USER"); self.ns(h, "iptables", "-I", "FORWARD", "-j", "DOCKER-USER")
+        for n, addrs in ((net, ["0.0.0.0:80", "10.9.9.9:53"]), (h, ["172.30.0.1:8081"]), (c2, ["172.30.0.3:8080"]),
+                         (c1, ["172.30.0.2:9000"])):
+            self.procs.append(subprocess.Popen(["ip", "netns", "exec", n, sys.executable, "-c", SERVE, *addrs]))
+        time.sleep(0.8)
+
+    def tearDown(self):
+        for p in self.procs:
+            p.kill(); p.wait()
+        for n in self.NS:
+            subprocess.run(["ip", "netns", "del", n], capture_output=True)
+
+    def reach(self, frm, host, port):
+        r = self.ns(frm, sys.executable, "-c", f"import socket;socket.create_connection(('{host}',{port}),timeout=1.5)", check=False)
+        return r.returncode == 0
+
+    def apply(self, mode):
+        r = subprocess.run(["ip", "netns", "exec", self.NS[0], "bash", str(EGRESS)], capture_output=True, text=True,
+                           env={**os.environ, "APP_BUILDER_APP_EGRESS": mode})
+        self.assertEqual(r.returncode, 0, r.stderr)
+
+    def test_before_any_rule_everything_is_reachable(self):
+        c1 = self.NS[1]
+        for dst in (("198.51.100.10", 80), ("10.9.9.9", 80), ("169.254.169.254", 80), ("172.30.0.1", 8081)):
+            self.assertTrue(self.reach(c1, *dst), dst)                 # proves the blocks below are the rules' doing
+
+    def test_public_mode(self):
+        self.apply("public")
+        c1, net = self.NS[1], self.NS[3]
+        self.assertTrue(self.reach(c1, "198.51.100.10", 80))          # the internet
+        self.assertTrue(self.reach(c1, "172.30.0.3", 8080))           # another container on its network
+        self.assertTrue(self.reach(c1, "10.9.9.9", 53))               # a private DNS resolver
+        for dst in (("169.254.169.254", 80), ("10.9.9.9", 80), ("100.64.1.1", 80), ("172.30.0.1", 8081)):
+            self.assertFalse(self.reach(c1, *dst), dst)               # metadata, VPC, CGNAT, this host
+        self.assertTrue(self.reach(net, "172.30.0.2", 9000))          # connections INTO a container still work
+
+    def test_deny_mode(self):
+        self.apply("deny")
+        c1 = self.NS[1]
+        self.assertFalse(self.reach(c1, "198.51.100.10", 80))
+        self.assertTrue(self.reach(c1, "172.30.0.3", 8080))
+        self.assertFalse(self.reach(c1, "169.254.169.254", 80))
+
+    def test_idempotent(self):
+        self.apply("public"); first = self.ns(self.NS[0], "iptables-save").stdout
+        self.apply("public"); second = self.ns(self.NS[0], "iptables-save").stdout
+        strip = lambda t: [l for l in t.splitlines() if not l.startswith(("#", ":"))]
+        self.assertEqual(strip(first), strip(second))
+
+
 if __name__ == "__main__":
     unittest.main()
