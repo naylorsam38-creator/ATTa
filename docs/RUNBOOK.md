@@ -1,4 +1,8 @@
-# Runbook: from nothing to ATT running on Coolify
+# Runbook: from nothing to ATTa handing apps to Coolify
+
+This sets up the **Coolify server**.
+ATTa (the APP Builder) runs on its **own** server: both need ports 80/443.
+The link between them is step 9.
 
 Work through the steps in order.
 Every command runs on the server as `root` unless it says otherwise.
@@ -33,7 +37,7 @@ Don't rely on `ufw` alone: Docker publishes ports around it.
 | 22/tcp | SSH | Yes. Restrict to your IP if you can |
 | 80/tcp | HTTP and Let's Encrypt challenges | Yes |
 | 443/tcp | HTTPS for ATT and the dashboard | Yes |
-| 8000/tcp | Dashboard before it has a domain | **Close after step 7** |
+| 8000/tcp | Dashboard before it has a domain; ATTa's API calls | **After step 7, allow only from the ATTa server** (or close it if ATTa uses the https URL) |
 | 6001/tcp | Realtime before the dashboard has a domain | **Close after step 7** |
 | 6002/tcp | Web terminal before the dashboard has a domain | **Close after step 7** |
 
@@ -63,7 +67,8 @@ In `config/coolify.env`:
 - `ROOT_USERNAME`: your login name, for example `sam`. No spaces.
 - `ROOT_USER_EMAIL`: a real address. Coolify checks that the domain has DNS.
 - `ROOT_USER_PASSWORD`: **leave empty** and a strong password is generated for you.
-- `AUTOUPDATE`: `true` (default) gets security fixes automatically. `false` keeps the pinned version until you run `scripts/upgrade.sh`.
+- `AUTOUPDATE`: `false` (default) keeps Coolify on 4.3.23, the version ATTa's hand-off was verified against, until you run `scripts/upgrade.sh`. `true` lets Coolify update itself.
+- `COOLIFY_SOURCE_ZIP` (optional): path to ATTa's `coolify-main.zip`. The installer is then taken from that checksum-verified zip instead of being downloaded.
 
 Then run:
 
@@ -102,7 +107,7 @@ If the server dies, `APP_KEY` is the only way to decrypt the secrets stored in a
 
 1. **Settings → Configuration → Instance's Domain**: enter `https://coolify.yourdomain.com` and save.
 2. Wait about 30 seconds, then open `https://coolify.yourdomain.com`. You should see a valid padlock (Let's Encrypt).
-3. Once that works, **remove ports 8000, 6001 and 6002** from the cloud firewall. The dashboard, realtime updates and web terminal now go through 443.
+3. Once that works, **remove ports 6001 and 6002** from the cloud firewall, and **restrict 8000 to the ATTa server's address**. The dashboard, realtime updates and web terminal now go through 443. ATTa's API calls use 8000 over the private network.
 4. Re-run `./scripts/verify.sh` to confirm everything is still healthy.
 
 If the certificate doesn't appear, the DNS record isn't pointing at the server yet or port 80 is blocked.
@@ -132,9 +137,13 @@ To restore onto a new server:
 4. Log in with the **original** admin credentials.
 5. Point the DNS records from step 3 at the new server's IP. Apps come back as you redeploy them (or on their next push).
 
-## 9. Deploy ATT
+## 9. Connect ATTa
 
-See [DEPLOY-ATT.md](DEPLOY-ATT.md).
+```bash
+./scripts/connect-atta.sh --map-apps
+```
+
+Then follow [DEPLOY-ATT.md](DEPLOY-ATT.md), which covers copying the settings to the ATTa server, the firewall rule and naming apps.
 
 ## 10. Maintenance
 

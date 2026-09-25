@@ -287,11 +287,12 @@ setup() {
 }
 
 @test "the shipped example config loads cleanly" {
-    unset COOLIFY_VERSION ROOT_USERNAME ROOT_USER_EMAIL ROOT_USER_PASSWORD AUTOUPDATE REGISTRY_URL
+    unset COOLIFY_VERSION ROOT_USERNAME ROOT_USER_EMAIL ROOT_USER_PASSWORD AUTOUPDATE REGISTRY_URL COOLIFY_SOURCE_ZIP
     load_config "$KIT_DIR/config/coolify.env.example"
     [ "$COOLIFY_VERSION" = "4.3.23" ]
-    [ "$AUTOUPDATE" = "true" ]
+    [ "$AUTOUPDATE" = "false" ]
     [ -z "${ROOT_USER_PASSWORD+x}" ]
+    [ -z "${COOLIFY_SOURCE_ZIP+x}" ]
 }
 
 # ------------------------------------------------------------------ env file
@@ -319,4 +320,50 @@ setup() {
     [ "$status" -ne 0 ]
     [[ $output == *"Unexpected error (exit 1)"*"grep -q nothere"* ]]
     [[ $output != *unreachable* ]]
+}
+
+# ------------------------------------------------------------------ installer from source zip
+make_zip() {
+    # make_zip <zipfile> <top-folder> [installer-content]
+    local d="$BATS_TEST_TMPDIR/zipsrc"
+    rm -rf "$d"
+    mkdir -p "$d/$2/scripts"
+    [ -z "${3:-}" ] || printf '%s' "$3" >"$d/$2/scripts/install.sh"
+    touch "$d/$2/README.md"
+    (cd "$d" && zip -qr "$1" "$2")
+}
+
+@test "installer_from_zip extracts scripts/install.sh from a checksum-matching zip" {
+    command -v zip >/dev/null || skip "zip not installed"
+    make_zip "$BATS_TEST_TMPDIR/c.zip" coolify-4.3.23 '#!/bin/bash
+echo real-installer'
+    COOLIFY_SOURCE_ZIP_SHA256="$(sha256sum "$BATS_TEST_TMPDIR/c.zip" | awk '{print $1}')"
+    run installer_from_zip "$BATS_TEST_TMPDIR/c.zip" "$BATS_TEST_TMPDIR/out.sh"
+    [ "$status" -eq 0 ]
+    [ "$(tail -n1 "$BATS_TEST_TMPDIR/out.sh")" = "echo real-installer" ]
+}
+
+@test "installer_from_zip refuses a zip whose checksum does not match" {
+    command -v zip >/dev/null || skip "zip not installed"
+    make_zip "$BATS_TEST_TMPDIR/c.zip" coolify-main '#!/bin/bash'
+    unset COOLIFY_SOURCE_ZIP_SHA256 # default: the pinned ATTa v116 checksum
+    run installer_from_zip "$BATS_TEST_TMPDIR/c.zip" "$BATS_TEST_TMPDIR/out.sh"
+    [ "$status" -eq 1 ]
+    [[ $output == *"REFUSED"*"$ATTA_COOLIFY_ZIP_SHA256"* ]]
+    [ ! -s "$BATS_TEST_TMPDIR/out.sh" ]
+}
+
+@test "installer_from_zip refuses a zip without scripts/install.sh" {
+    command -v zip >/dev/null || skip "zip not installed"
+    make_zip "$BATS_TEST_TMPDIR/c.zip" coolify-main
+    COOLIFY_SOURCE_ZIP_SHA256="$(sha256sum "$BATS_TEST_TMPDIR/c.zip" | awk '{print $1}')"
+    run installer_from_zip "$BATS_TEST_TMPDIR/c.zip" "$BATS_TEST_TMPDIR/out.sh"
+    [ "$status" -eq 1 ]
+    [[ $output == *"does not contain"* ]]
+}
+
+@test "installer_from_zip fails clearly when the zip is missing" {
+    run installer_from_zip "$BATS_TEST_TMPDIR/nope.zip" "$BATS_TEST_TMPDIR/out.sh"
+    [ "$status" -eq 1 ]
+    [[ $output == *"not found"* ]]
 }

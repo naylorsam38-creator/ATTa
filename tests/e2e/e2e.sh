@@ -93,6 +93,7 @@ wipe_coolify() {
         sed -i '/coolify/d' /root/.ssh/authorized_keys
     fi
     rm -f /root/coolify-admin-credentials.txt
+    rm -rf /root/atta-coolify
 }
 
 start_cdn_mirror() {
@@ -306,6 +307,23 @@ assert "API token created" test "${#API_TOKEN}" -gt 20
 assert "API answers with version $FROM_VERSION" test "$(api GET /version)" = "$FROM_VERSION"
 assert "test app deploy accepted" deploy_test_app
 assert "test app is served through the proxy at $TEST_APP_HOST" test_app_reachable
+
+step "Connect ATTa: least-privilege token + ATTa's exact deploy call"
+assert "connect-atta.sh sets up API access, token and app map" "$KIT_DIR/scripts/connect-atta.sh" --map-apps
+assert "ATTa settings file is root-only" test "$(stat -c '%a' /root/atta-coolify/atta.env)" = "600"
+# shellcheck disable=SC1091 # written by connect-atta.sh at run time
+atta_token="$(set -a; . /root/atta-coolify/atta.env; printf '%s' "$COOLIFY_TOKEN")"
+assert "token survives being read as shell (quoted '|')" test "${atta_token#*|}" != "$atta_token"
+assert "app map contains the test app" test "$(jq -r '.apps | to_entries[] | .value' /root/atta-coolify/coolify_resources.json)" = "$TEST_APP_UUID"
+# ATTa's rule (coolify_handoff._deploy): accepted only if deployments[] has this resource
+# with a deployment_uuid.
+atta_deploy_accepted() {
+    curl -sS -m 30 -X POST -H "Authorization: Bearer $atta_token" -H 'Accept: application/json' \
+        "$API/deploy?uuid=$TEST_APP_UUID&force=false" |
+        jq -e --arg u "$TEST_APP_UUID" '[.deployments[]? | select(.resource_uuid == $u and .deployment_uuid)] | length == 1' >/dev/null
+}
+assert "ATTa-style deploy call is accepted with a deployment_uuid" atta_deploy_accepted
+assert "app still served after the ATTa-triggered deploy" test_app_reachable
 
 step "Admin self-heal: simulate Coolify's first-boot seeding having failed"
 db "delete from team_user where user_id = 0; delete from users where id = 0; update instance_settings set is_registration_enabled = true where id = 0" >/dev/null

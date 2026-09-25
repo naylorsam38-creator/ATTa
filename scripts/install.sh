@@ -56,7 +56,7 @@ load_config "$CONFIG_FILE"
 
 COOLIFY_VERSION="${COOLIFY_VERSION:-$DEFAULT_COOLIFY_VERSION}"
 COOLIFY_VERSION="${COOLIFY_VERSION#v}"
-AUTOUPDATE="${AUTOUPDATE:-true}"
+AUTOUPDATE="${AUTOUPDATE:-false}"
 CREDENTIALS_FILE="${CREDENTIALS_FILE:-/root/coolify-admin-credentials.txt}"
 
 # ---------------------------------------------------------------- validation
@@ -176,5 +176,6 @@ if [ "$PASSWORD_GENERATED" = true ]; then
 fi
 echo "  2. Copy $CREDENTIALS_FILE and $COOLIFY_ENV_FILE into your password manager"
 echo "  3. Point a domain at this server and set it as the Coolify instance domain (gives you HTTPS)"
-echo "  4. Close ports 8000, 6001 and 6002 in your cloud firewall once the domain works"
+echo "  4. Once the domain works: close 6001/6002, allow 8000 only from the ATTa server"
 echo "  5. Run: sudo ./scripts/backup.sh   (and schedule it - see RUNBOOK)"
+echo "  6. Connect ATTa: sudo ./scripts/connect-atta.sh --map-apps   (docs/DEPLOY-ATT.md)"

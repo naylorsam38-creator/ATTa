@@ -202,3 +202,33 @@ preflight_os() {
     run bash -c '. "$0/scripts/preflight.sh"; IPV6_PROC_FILE="$1" check_kernel_ipv6; echo "BLOCKERS=$BLOCKERS"' "$KIT_DIR" "$BATS_TEST_TMPDIR/if_inet6"
     [[ $output == *"BLOCKERS=0"* ]]
 }
+
+# ------------------------------------------------------------------ connect-atta.sh
+@test "connect-atta.sh --help describes what it sets up" {
+    run "$KIT_DIR/scripts/connect-atta.sh" --help
+    [ "$status" -eq 0 ]
+    [[ $output == *'"deploy" and "read"'* ]]
+}
+
+@test "connect-atta.sh rejects a URL without a scheme" {
+    run "$KIT_DIR/scripts/connect-atta.sh" --url coolify.example.com
+    [ "$status" -eq 1 ]
+    [[ $output == *"must start with http:// or https://"* ]]
+}
+
+@test "connect-atta.sh refuses plain http to a public address (ATTa would refuse the token)" {
+    run "$KIT_DIR/scripts/connect-atta.sh" --url http://8.8.8.8:8000
+    [ "$status" -eq 1 ]
+    [[ $output == *"PUBLIC address"* ]]
+}
+
+@test "connect-atta.sh accepts http to a private address and https anywhere (then needs Coolify)" {
+    local u
+    for u in http://10.0.0.5:8000 http://172.31.4.9:8000 http://192.168.1.2:8000 https://coolify.example.com; do
+        COOLIFY_ENV_FILE="$BATS_TEST_TMPDIR/none" run "$KIT_DIR/scripts/connect-atta.sh" --url "$u"
+        [[ $output != *"PUBLIC address"* ]] || {
+            echo "wrongly refused $u"
+            false
+        }
+    done
+}

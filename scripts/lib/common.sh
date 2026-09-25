@@ -59,7 +59,7 @@ require_root() {
 # typo in a key name can't silently drop a setting.
 load_config() {
     local file="$1"
-    local allowed=" COOLIFY_VERSION ROOT_USERNAME ROOT_USER_EMAIL ROOT_USER_PASSWORD AUTOUPDATE DOCKER_ADDRESS_POOL_BASE DOCKER_ADDRESS_POOL_SIZE REGISTRY_URL CREDENTIALS_FILE "
+    local allowed=" COOLIFY_VERSION COOLIFY_SOURCE_ZIP COOLIFY_SOURCE_ZIP_SHA256 ROOT_USERNAME ROOT_USER_EMAIL ROOT_USER_PASSWORD AUTOUPDATE DOCKER_ADDRESS_POOL_BASE DOCKER_ADDRESS_POOL_SIZE REGISTRY_URL CREDENTIALS_FILE "
     local line key value lineno=0
 
     [ -f "$file" ] || die "Config file not found: $file (copy config/coolify.env.example to config/coolify.env)"
@@ -285,9 +285,41 @@ coolify_image_exists() {
     [ "$code" = "200" ]
 }
 
-# Download Coolify's official installer and run it for a version.
+# SHA-256 of the coolify-main.zip (Coolify 4.3.23 source) that ATTa v116 ships and pins.
+# Its scripts/install.sh is byte-identical to the official v4.3.23 release installer.
+ATTA_COOLIFY_ZIP_SHA256="509f4abb54c0a5fab0bce1c7447a5dcb35e91a3cfab636a3c35f57e8bfdc6609"
+
+# Put Coolify's installer at $2, taken from a checksum-verified source zip ($1).
+installer_from_zip() {
+    local zip="$1" dest="$2" want="${COOLIFY_SOURCE_ZIP_SHA256:-$ATTA_COOLIFY_ZIP_SHA256}" got
+    [ -f "$zip" ] || {
+        fail "COOLIFY_SOURCE_ZIP not found: $zip"
+        return 1
+    }
+    got="$(sha256sum "$zip" | awk '{print $1}')"
+    if [ "$got" != "$want" ]; then
+        fail "REFUSED: $zip has SHA-256 $got, expected $want (set COOLIFY_SOURCE_ZIP_SHA256 only for a zip you trust)"
+        return 1
+    fi
+    command -v unzip >/dev/null 2>&1 || {
+        fail "unzip is not installed (apt-get install -y unzip)"
+        return 1
+    }
+    # The archive's top folder name varies (coolify-main/, coolify-4.3.23/ ...).
+    local member
+    member="$(unzip -Z1 "$zip" | grep -E '^[^/]+/scripts/install\.sh$' | head -n1 || true)"
+    [ -n "$member" ] || {
+        fail "$zip does not contain <folder>/scripts/install.sh"
+        return 1
+    }
+    unzip -p "$zip" "$member" >"$dest"
+    ok "Installer taken from checksum-verified $zip ($member)"
+}
+
+# Run Coolify's official installer for a version. The installer comes from
+# COOLIFY_SOURCE_ZIP (checksum-verified) when set, otherwise it is downloaded
+# (COOLIFY_INSTALLER_URL overrides the download location, for mirrors and tests).
 # Extra KEY=VALUE arguments after the version are passed to it as environment.
-# COOLIFY_INSTALLER_URL overrides the download location (mirrors, tests).
 run_coolify_installer() {
     local version="$1"
     shift
@@ -296,11 +328,18 @@ run_coolify_installer() {
     dir="$(mktemp -d)"
     installer="$dir/coolify-install.sh"
 
-    info "Downloading Coolify installer from $url"
-    if ! curl -fsSL --retry 3 --max-time 60 "$url" -o "$installer"; then
-        rm -rf "$dir"
-        fail "Could not download the Coolify installer from $url"
-        return 1
+    if [ -n "${COOLIFY_SOURCE_ZIP:-}" ]; then
+        if ! installer_from_zip "$COOLIFY_SOURCE_ZIP" "$installer"; then
+            rm -rf "$dir"
+            return 1
+        fi
+    else
+        info "Downloading Coolify installer from $url"
+        if ! curl -fsSL --retry 3 --max-time 60 "$url" -o "$installer"; then
+            rm -rf "$dir"
+            fail "Could not download the Coolify installer from $url"
+            return 1
+        fi
     fi
     # Guard against a captive portal or error page being executed as root.
     if ! head -n1 "$installer" | grep -q '^#!/bin/bash' ||
