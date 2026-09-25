@@ -1,0 +1,14 @@
+{
+  "version": "v114.2",
+  "entrypoint": "run",
+  "state_version": 1,
+  "features": [
+    "upload_app_discovery_any_depth",
+    "per_app_queue_into_parallel_pool",
+    "stage6_browser_evidence",
+    "repair_loop_v109_v110_v111a_unchanged",
+    "v114_hardening_admin_only_updates_container_isolation_metadata_block_llm_redaction",
+    "v114_1_installer_env_as_data_pinned_compose_clean_code_releases_docker_ordering_perms",
+    "v114_2_all_apps_at_once_no_start_gates_script_probe_learns_general_rules_llm_off"
+  ]
+}
