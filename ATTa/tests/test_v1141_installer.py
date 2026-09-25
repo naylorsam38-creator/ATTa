@@ -5,7 +5,7 @@ folders; no systemd needed. Permission-ownership checks need root and are skippe
     cd ATTa && python3 -m unittest discover -s tests -v
     ATTA_TEST_NETWORK=1 ...   also downloads the pinned Compose from GitHub and verifies it for real
 """
-import os, re, stat, subprocess, sys, tempfile, time, unittest
+import os, re, shutil, stat, subprocess, sys, tempfile, time, unittest
 from pathlib import Path
 
 DEP = Path(__file__).resolve().parent.parent / "04-deployment"
@@ -198,29 +198,82 @@ class CleanCodeReleases(Tmp):
         self.assertFalse((self.t / "bk").is_symlink())
 
 
-@unittest.skipUnless(os.geteuid() == 0, "ownership checks need root")
+# v116: the layout is for services running as their OWN users (atta-web / atta-run / atta-proxy); the
+# v114.1 "everything root 0600" layout would lock them out. Test users get their own names here.
+T_USERS = {"ATTA_GROUP": "attat", "ATTA_WEB_USER": "attat-web", "ATTA_RUN_USER": "attat-run",
+           "ATTA_PROXY_USER": "attat-proxy", "ATTA_RUN_HOME": "/tmp/attat-run-home"}
+
+
+def as_user(user, *cmd):
+    import pwd
+    u = pwd.getpwnam(user)
+    return subprocess.run(["setpriv", f"--reuid={u.pw_uid}", f"--regid={u.pw_gid}", "--init-groups", *cmd],
+                          capture_output=True, text=True)
+
+
+@unittest.skipUnless(os.geteuid() == 0 and shutil.which("useradd") and shutil.which("setpriv"),
+                     "ownership checks need root, useradd and setpriv")
 class PermissionsEveryRun(Tmp):
-    def test_rerun_enforces(self):
-        root = self.t
-        (root / "state" / "apps").mkdir(parents=True)
-        (root / "state" / "runner" / "work" / "app1").mkdir(parents=True)
-        files = [root / ".env", root / "coolify_resources.json", root / "state" / "users.json",
-                 root / "state" / "apps" / "a.json", root / "TEST_ACCOUNTS.txt"]
-        for f in files:
-            f.write_text("x"); f.chmod(0o644); os.chown(f, 1000, 1000)
-        (root / "state").chmod(0o755)
-        work = root / "state" / "runner" / "work" / "app1"; work.chmod(0o777)
+    def setUp(self):
+        super().setUp()
+        os.chmod(self.t, 0o755)
+        r = bash("atta_ensure_users", env=T_USERS)
+        self.assertEqual(r.returncode, 0, r.stderr)
+
+    def layout(self):
+        root = self.t / "srv"
+        for d in ("state/apps", "state/builds", "state/runner/work/app1/data/db", "library/shop", "inbox"):
+            (root / d).mkdir(parents=True, exist_ok=True)
+        files = {".env": "SECRET=x", "TEST_ACCOUNTS.txt": "admin pw", "state/users.json": "{}",
+                 "state/builds/b-1.json": "{}", "state/apps/a.json": "{}", "library/shop/.env": "STRIPE=sk_live",
+                 "library/shop/index.html": "x", "state/runner/work/app1/data/db/pg": "rows",
+                 "coolify_resources.json": "{}", "front-door.html": "<html>"}
+        for rel, text in files.items():
+            f = root / rel; f.write_text(text); f.chmod(0o600); os.chown(f, 0, 0)   # old v114.1 layout: all root
+        (root / "state" / "runner" / "work" / "app1" / "data" / "db" / "pg").chmod(0o640)
+        os.chown(root / "state/runner/work/app1/data/db/pg", 999, 999)              # a container's own file
+        return root
+
+    def test_each_service_gets_exactly_what_it_needs(self):
+        root = self.layout()
         for _ in range(2):                                               # rerun: same result
-            r = bash(f'atta_secure_state "{root}"')
+            r = bash(f'atta_secure_state "{root}"', env=T_USERS)
             self.assertEqual(r.returncode, 0, r.stderr)
-            for f in files:
-                st = f.stat()
-                self.assertEqual((stat.S_IMODE(st.st_mode), st.st_uid, st.st_gid), (0o600, 0, 0), f)
-            self.assertEqual(stat.S_IMODE((root / "state").stat().st_mode), 0o700)
-            self.assertEqual(stat.S_IMODE((root / "state" / "apps").stat().st_mode), 0o700)
-            self.assertEqual(stat.S_IMODE(work.stat().st_mode), 0o777)   # app data left alone
-            for f in files:
-                f.chmod(0o644); os.chown(f, 1000, 1000)                  # loosen again before the rerun
+        web, run, proxy = "attat-web", "attat-run", "attat-proxy"
+        ok = lambda res: self.assertEqual(res.returncode, 0, res.stderr)
+        no = lambda res: self.assertNotEqual(res.returncode, 0, res.stdout)
+        # secrets: root only
+        for u in (web, run, proxy):
+            no(as_user(u, "cat", str(root / ".env"))); no(as_user(u, "cat", str(root / "TEST_ACCOUNTS.txt")))
+        # gateway: reads accounts and build records, writes the inbox and new build records
+        ok(as_user(web, "cat", str(root / "state/users.json")))
+        ok(as_user(web, "cat", str(root / "state/builds/b-1.json")))
+        ok(as_user(web, "touch", str(root / "inbox/new.zip")))
+        ok(as_user(web, "touch", str(root / "state/builds/b-2.json")))
+        no(as_user(web, "touch", str(root / "library/shop/x")))           # never the library
+        # runner: reads accounts, works on everything it owns, including what the gateway wrote
+        ok(as_user(run, "cat", str(root / "state/users.json")))
+        no(as_user(run, "touch", str(root / "state/users.json")))        # but cannot change who is admin
+        ok(as_user(run, "mv", str(root / "inbox/new.zip"), str(root / "inbox/new.processed.zip")))
+        ok(as_user(run, "touch", str(root / "library/shop/x")))
+        ok(as_user(run, "cat", str(root / "library/shop/.env")))
+        # proxy user: can pass through the data folder, nothing else
+        no(as_user(proxy, "ls", str(root)))
+        no(as_user(proxy, "cat", str(root / "library/shop/.env")))
+        no(as_user(proxy, "ls", str(root / "state")))
+        ok(as_user(proxy, "ls", str(root / "proxy")))
+        # others: nothing at all
+        no(as_user("nobody", "ls", str(root / "state")))
+        # a container's data keeps its owner
+        self.assertEqual(os.stat(root / "state/runner/work/app1/data/db/pg").st_uid, 999)
+        self.assertEqual(stat.S_IMODE(os.stat(root / ".env").st_mode), 0o600)
+        self.assertEqual(stat.S_IMODE(os.stat(root).st_mode), 0o3771)
+        # sticky data folder: services manage their own entries, never root's .env
+        ok(as_user(run, "bash", "-c", f"rm -rf {root}/package && mkdir {root}/package"))
+        for u in (web, run):
+            no(as_user(u, "rm", "-f", str(root / ".env")))
+            no(as_user(u, "mv", str(root / ".env"), str(root / "stolen")))
+        self.assertTrue((root / ".env").is_file())
 
 
 class DockerReadiness(Tmp):

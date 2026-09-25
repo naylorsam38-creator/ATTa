@@ -11,6 +11,9 @@ APP = Path(os.environ.get("APP_BUILDER_APP", "/opt/app-builder"))
 # ADM's own folder. Releases, staging, backups, journals all live under here. Move it with ATTA_ADM_ROOT.
 ADM = Path(os.environ.get("ATTA_ADM_ROOT", str(ROOT / "adm")))
 INCOMING = ADM / "incoming"     # drop a bundle zip here (or use deployctl deploy) to queue a deploy
+# v116: the (non-root) pipeline hands web-uploaded bundles over here. Everything taken from it is a WEB job:
+# the uploading account must be an enabled admin, checked again by authz. Owned by the runner user.
+REQUESTS = ADM / "requests"
 QUEUE    = ADM / "state" / "queue"    # one <job>.zip + <job>.json per queued deploy, oldest first
 JOURNAL  = ADM / "state" / "journal"  # one <job>.json per deploy: every event, the verdict, the rollback if any
 STAGING  = ADM / "staging"      # bundle extracted and checked here before anything live is touched

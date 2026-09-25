@@ -57,22 +57,92 @@ atta_install_compose() {
   rm -f "$tmp"; return $rc
 }
 
+# v116: the services' own users. Only deployd (the installer itself) and Docker stay root.
+ATTA_GROUP="${ATTA_GROUP:-atta}"                   # shared by the gateway and the runner (inbox, build records)
+ATTA_WEB_USER="${ATTA_WEB_USER:-atta-web}"         # the web gateway: no Docker, no shell
+ATTA_RUN_USER="${ATTA_RUN_USER:-atta-run}"         # pipeline + watcher: drives Docker, so Docker-group
+ATTA_PROXY_USER="${ATTA_PROXY_USER:-atta-proxy}"   # skin proxies: nothing but its own copy of the overlay
+ATTA_RUN_HOME="${ATTA_RUN_HOME:-/var/lib/atta-run}"
+ATTA_BROWSERS="${ATTA_BROWSERS:-/opt/ms-playwright}"   # Playwright's Chromium, readable by the runner
+
+atta_ensure_users() {
+  # atta_ensure_users — create the service group and users (idempotent). Docker group membership is added
+  # by atta_join_docker once Docker is installed.
+  getent group "$ATTA_GROUP" >/dev/null || groupadd --system "$ATTA_GROUP"
+  getent passwd "$ATTA_PROXY_USER" >/dev/null || \
+    useradd --system --no-create-home --home-dir /nonexistent --shell /usr/sbin/nologin "$ATTA_PROXY_USER"
+  getent passwd "$ATTA_WEB_USER" >/dev/null || \
+    useradd --system --no-create-home --home-dir /nonexistent --shell /usr/sbin/nologin "$ATTA_WEB_USER"
+  getent passwd "$ATTA_RUN_USER" >/dev/null || \
+    useradd --system --create-home --home-dir "$ATTA_RUN_HOME" --shell /usr/sbin/nologin "$ATTA_RUN_USER"
+  usermod -aG "$ATTA_GROUP" "$ATTA_WEB_USER"
+  # the runner hands each proxy its run/ and state/ folders, so it is in the proxy user's group
+  usermod -aG "$ATTA_GROUP,$ATTA_PROXY_USER" "$ATTA_RUN_USER"
+  mkdir -p "$ATTA_RUN_HOME"; chown "$ATTA_RUN_USER:$ATTA_RUN_USER" "$ATTA_RUN_HOME"; chmod 700 "$ATTA_RUN_HOME"
+}
+
+atta_join_docker() {
+  getent group docker >/dev/null || groupadd --system docker
+  usermod -aG docker "$ATTA_RUN_USER"
+}
+
 atta_secure_state() {
-  # atta_secure_state ROOT — every run, not just the first: owner root, nothing readable by others.
-  # Directories are not recursed into: app containers write their own data under state/runner/work
-  # with their own users, and bind mounts don't depend on the host folders above them.
-  local root="$1" f
-  [ -f "$root/.env" ] && { [ "$(id -u)" = 0 ] && chown root:root "$root/.env"; chmod 600 "$root/.env"; }
-  for f in "$root/coolify_resources.json" "$root/TEST_ACCOUNTS.txt" "$root"/state/*.json "$root"/state/apps/*.json; do
+  # atta_secure_state ROOT — every run: who owns what under the data folder (v116 layout).
+  #   ROOT            root:atta 3771  services create/replace their OWN files here (catalogue, package/...);
+  #                                   the sticky bit stops anyone but root deleting or renaming another's
+  #                                   (.env above all); passable, not listable, by the proxy user
+  #   .env, TEST_ACCOUNTS.txt   root 0600 (systemd reads .env as root before starting a service)
+  #   inbox, state/{builds,alerts,front-door-choices}  runner:atta 2770  the gateway writes, the runner works
+  #   state/users.json          web:atta 0640  the gateway may disable accounts; the runner reads roles
+  #   state/gateway             web:atta 2770  login throttling, revoked sessions
+  #   state/**, library, package, work, catalogue files  runner:atta, group-readable, nothing for others
+  #   adm/requests              runner 0700    system-update requests handed to deployd (which re-checks admin)
+  # App data written by containers under state/runner/work/<app>/data/ keeps its owners.
+  local root="$1" f d
+  local as_root=0; [ "$(id -u)" = 0 ] && getent passwd "$ATTA_RUN_USER" >/dev/null && as_root=1
+  local run="$ATTA_RUN_USER" web="$ATTA_WEB_USER" g="$ATTA_GROUP"
+  mkdir -p "$root"/{inbox,state,state/builds,state/alerts,state/front-door-choices,state/gateway,state/apps,state/runner,library,package,work,proxy,adm/requests}
+  if [ "$as_root" = 1 ]; then
+    chown root:"$g" "$root"; chmod 3771 "$root"   # sticky + setgid: new entries join the shared group
+    for d in state library package work quarantine inbox; do
+      [ -e "$root/$d" ] || continue
+      find "$root/$d" -path "$root/state/runner/work/*/data/*" -prune -o -path "$root/state/gateway" -prune \
+           -o \( -type f -o -type d \) -exec chown -h "$run:$g" {} +
+      find "$root/$d" -path "$root/state/runner/work/*/data/*" -prune -o -type d -exec chmod g+rxs,o-rwx {} + \
+           -o -type f -exec chmod g+r,o-rwx {} +
+    done
+    for f in app_catalogue.json upstream_apps.json targets.json coolify_resources.json; do
+      [ -f "$root/$f" ] && { chown "$run:$g" "$root/$f"; chmod 640 "$root/$f"; }
+    done
+    for d in inbox state/builds state/alerts state/front-door-choices; do chmod 2770 "$root/$d"; done
+    chown -R "$web:$g" "$root/state/gateway"; chmod 2770 "$root/state/gateway"
+    [ -f "$root/state/users.json" ] && { chown "$web:$g" "$root/state/users.json"; chmod 640 "$root/state/users.json"; }
+    chown "$run:$g" "$root/proxy"; chmod 755 "$root/proxy"
+    chown root:root "$root/adm"; chmod 755 "$root/adm"
+    chown "$run:$run" "$root/adm/requests"; chmod 700 "$root/adm/requests"
+    # the pipeline replaces it from an admin's ATTa bundle; everyone reads it
+    [ -f "$root/front-door.html" ] && { chown "$run:$g" "$root/front-door.html"; chmod 644 "$root/front-door.html"; }
+    [ -f "$root/state/trusted_apps.json" ] && { chown root:root "$root/state/trusted_apps.json"; chmod 644 "$root/state/trusted_apps.json"; }
+  fi
+  for f in "$root/.env" "$root/TEST_ACCOUNTS.txt"; do
     [ -f "$f" ] || continue
     [ "$(id -u)" = 0 ] && chown root:root "$f"
     chmod 600 "$f"
   done
-  for f in "$root/state" "$root/state/apps"; do
-    [ -d "$f" ] || continue
-    [ "$(id -u)" = 0 ] && chown root:root "$f"
-    chmod 700 "$f"
-  done
+}
+
+atta_install_proxy_runner() {
+  # atta_install_proxy_runner SRC — the root-owned proxy wrapper and the ONE sudoers rule that lets the runner
+  # start/stop skin proxies as the proxy user (a user with fewer rights than the runner itself).
+  local src="$1" rule
+  install -d -o root -g root -m 0755 /usr/local/lib/atta
+  install -o root -g root -m 0755 "$src" /usr/local/lib/atta/run-proxy
+  rule="$(mktemp)"
+  printf '%s\n' "# v116 (ATTa): the runner may start and stop skin proxies as $ATTA_PROXY_USER. Nothing else." \
+    "Defaults:$ATTA_RUN_USER !requiretty" \
+    "$ATTA_RUN_USER ALL=($ATTA_PROXY_USER) NOPASSWD: /usr/local/lib/atta/run-proxy" > "$rule"
+  visudo -cf "$rule" >/dev/null || { rm -f "$rule"; echo "sudoers rule for the proxy runner is invalid" >&2; return 1; }
+  install -o root -g root -m 0440 "$rule" /etc/sudoers.d/atta-proxy; rm -f "$rule"
 }
 
 atta_env_run() {

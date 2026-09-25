@@ -153,8 +153,16 @@ def adm_html(r):
     a=r.get("adm")
     if not a: return ""
     if not a.get("queued"): return "<h2>System update</h2><p>Not applied: "+html.escape(str(a.get("reason") or a.get("error") or ""))+"</p>"
-    try: j=json.loads((ADM_JOURNAL/(a["job_id"]+".json")).read_text())
-    except (OSError,ValueError,KeyError): return "<h2>System update</h2><p>Queued with ADM (job "+html.escape(str(a.get("job_id")))+"), no journal yet.</p>"
+    j=None
+    try: j=json.loads((ADM_JOURNAL/(a["job_id"]+".json")).read_text()) if a.get("job_id") else None
+    except (OSError,ValueError): j=None
+    if j is None and r.get("id"):
+        # v116: handed over as a request; ADM names the job itself. Find it by this build's id.
+        for p in sorted(ADM_JOURNAL.glob("*.json"),reverse=True):
+            try: d=json.loads(p.read_text())
+            except (OSError,ValueError): continue
+            if d.get("build_id")==r["id"]: j=d; break
+    if j is None: return "<h2>System update</h2><p>Handed to ADM"+(" (job "+html.escape(str(a.get("job_id")))+")" if a.get("job_id") else "")+", waiting for it to start.</p>"
     ev=j.get("events") or []; last=ev[-1] if ev else {}
     rows="".join("<tr><td>"+html.escape(e.get("at",""))+"</td><td>"+html.escape(e.get("event",""))+"</td><td>"+html.escape(str(e.get("reason") or e.get("version") or ""))+"</td></tr>" for e in ev)
     return ("<h2>System update</h2><p>ADM job <code>"+html.escape(j.get("job_id",""))+"</code> &middot; verdict <b>"+html.escape(str(j.get("verdict")))+"</b>"

@@ -28,6 +28,7 @@ def main():
     while True:
         try:
             queue.sweep_incoming()
+            queue.sweep_requests()   # v116: web-uploaded bundles handed over by the non-root pipeline
             jobs = queue.pending()
             if jobs:
                 meta = jobs[0]

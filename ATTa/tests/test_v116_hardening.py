@@ -11,7 +11,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 DEP = HERE.parent / "04-deployment"
 TMP = Path(tempfile.mkdtemp(prefix="atta-v116-"))
-os.chmod(TMP, 0o711)   # like the server's data folder (0751): passable, not listable
+os.chmod(TMP, 0o711)   # like the server's data folder (3771): passable, not listable
 os.environ.setdefault("APP_BUILDER_ROOT", str(TMP / "root"))
 os.environ.setdefault("ATTA_ADM_ROOT", str(TMP / "adm"))
 for p in (str(DEP), str(DEP / "deployd")):
@@ -307,6 +307,104 @@ class SkinProxyRunsUnprivileged(_Isolated):
         for bad in ("http://169.254.169.254/", "http://127.0.0.1:1/;id", "file:///etc/passwd"):
             with self.assertRaises(proxy_launch.LaunchError):
                 proxy_launch.launch("gitea", self.ui, bad, self.port, SINK)
+
+
+# ============================================================================ #5 services as their own users
+
+import accounts  # noqa: E402
+from adm import config as adm_config, queue as adm_queue, authz  # noqa: E402
+
+
+class WebSystemUpdatesGoThroughDeployd(unittest.TestCase):
+    """The non-root pipeline hands web-uploaded bundles to deployd, which queues each as a WEB job."""
+    def setUp(self):
+        self.t = Path(tempfile.mkdtemp(dir=TMP))
+        self.saved = (pipeline.ADM_REQUESTS, adm_config.REQUESTS, adm_config.TRUSTED_UID, authz.USERS_FILE)
+        pipeline.ADM_REQUESTS = adm_config.REQUESTS = self.t / "requests"
+        adm_config.REQUESTS.mkdir(); os.chmod(adm_config.REQUESTS, 0o700)
+        adm_config.TRUSTED_UID = os.getuid(); adm_config.ensure_dirs()
+        authz.USERS_FILE = accounts.USERS_FILE
+        d = {"users": {"admin": {"name": "admin", "role": "admin"}, "tester01": {"name": "tester01", "role": "user"}}}
+        accounts.USERS_FILE.parent.mkdir(parents=True, exist_ok=True); accounts.USERS_FILE.write_text(json.dumps(d))
+        self.bundle = self.t / "ATTa.zip"
+        with zipfile.ZipFile(self.bundle, "w") as z:
+            z.writestr("x", "y")
+
+    def tearDown(self):
+        (pipeline.ADM_REQUESTS, adm_config.REQUESTS, adm_config.TRUSTED_UID, authz.USERS_FILE) = self.saved
+        for m in adm_queue.pending():
+            adm_queue.finish(m)
+
+    def job(self, jid):
+        return [m for m in adm_queue.pending() if m["job_id"] == jid][0]
+
+    def test_request_becomes_a_web_job(self):
+        pipeline.request_system_update(self.bundle, "b-20260925-000000-aaaaaaaa", "admin", "ATTa-deploy116.zip")
+        self.assertTrue((adm_config.REQUESTS / "b-20260925-000000-aaaaaaaa.json").is_file())
+        jobs = adm_queue.sweep_requests()
+        self.assertEqual(len(jobs), 1)
+        m = self.job(jobs[0])
+        self.assertEqual((m["origin"], m["requested_by"], m["build_id"]), ("web", "admin", "b-20260925-000000-aaaaaaaa"))
+        self.assertTrue(authz.allowed(m)[0])
+        self.assertEqual(list(adm_config.REQUESTS.iterdir()), [])           # consumed
+
+    def test_request_is_never_local_and_non_admin_is_refused(self):
+        pipeline.request_system_update(self.bundle, "b-20260925-000000-bbbbbbbb", "tester01", "x.zip")
+        m = self.job(adm_queue.sweep_requests()[0])
+        self.assertEqual(m["origin"], "web")
+        ok, why = authz.allowed(m)
+        self.assertFalse(ok); self.assertIn("not an admin", why)
+
+    def test_malformed_and_linked_requests_are_discarded(self):
+        r = adm_config.REQUESTS
+        (r / "a.json").write_text(json.dumps({"archive": "a.zip"})); shutil.copy(self.bundle, r / "a.zip")   # no account
+        (r / "b.json").write_text(json.dumps({"archive": "b.zip", "requested_by": "admin"}))
+        (r / "b.zip").symlink_to(self.bundle)                                                            # a link
+        (r / "c.json").write_text(json.dumps({"archive": "other.zip", "requested_by": "admin"}))
+        shutil.copy(self.bundle, r / "c.zip")                                                            # wrong name
+        self.assertEqual(adm_queue.sweep_requests(), [])
+        self.assertEqual(sorted(p.name for p in r.iterdir()), [])
+
+    def test_shared_request_folder_is_ignored(self):
+        pipeline.request_system_update(self.bundle, "b-20260925-000000-cccccccc", "admin", "x.zip")
+        os.chmod(adm_config.REQUESTS, 0o777)
+        try:
+            self.assertEqual(adm_queue.sweep_requests(), [])
+        finally:
+            os.chmod(adm_config.REQUESTS, 0o700)
+
+    def test_non_root_pipeline_hands_over_instead_of_queueing(self):
+        rec = builds.create("admin", origin="web")
+        stage = self.t / "stage"; (stage / "04-deployment").mkdir(parents=True)
+        (stage / "run").write_text(""); (stage / "release.json").write_text("{}")
+        (stage / "04-deployment" / "bootstrap.sh").write_text("")
+        real_euid, real_isdir = os.geteuid, Path.is_dir
+        os.geteuid = lambda: 1000
+        Path.is_dir = lambda self: True if str(self) == "/run/systemd/system" else real_isdir(self)
+        try:
+            out = pipeline.queue_system_update(self.bundle, stage, rec["id"], builds.get(rec["id"]))
+        finally:
+            os.geteuid, Path.is_dir = real_euid, real_isdir
+        self.assertEqual(out, rec["id"])
+        self.assertEqual(builds.get(rec["id"])["adm"]["request"], rec["id"])
+        self.assertTrue((adm_config.REQUESTS / f"{rec['id']}.json").is_file())
+
+
+class FilesKeepTheirOwnersAcrossRewrites(unittest.TestCase):
+    def test_build_records_are_group_readable(self):
+        import stat as st
+        rec = builds.create("admin", origin="web")
+        self.assertEqual(st.S_IMODE(builds.path(rec["id"]).stat().st_mode), 0o640)
+
+    @unittest.skipUnless(os.geteuid() == 0, "needs root to hand the file to another owner")
+    def test_accounts_file_keeps_owner_group_and_mode_when_root_rewrites_it(self):
+        import stat as st
+        accounts.save({"schema": "APP_BUILDER_USERS.v1", "users": {}})
+        os.chown(accounts.USERS_FILE, 4242, 4343); os.chmod(accounts.USERS_FILE, 0o640)
+        accounts.save({"schema": "APP_BUILDER_USERS.v1", "users": {"x": {}}})
+        s2 = accounts.USERS_FILE.stat()
+        self.assertEqual((s2.st_uid, s2.st_gid, st.S_IMODE(s2.st_mode)), (4242, 4343, 0o640))
+        os.chown(accounts.USERS_FILE, 0, 0)
 
 
 if __name__ == "__main__":

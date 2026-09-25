@@ -6,6 +6,8 @@ RELS=/opt/app-builder-releases
 ATTA_LIB_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "$ATTA_LIB_DIR/bootstrap-lib.sh"
 mkdir -p "$ROOT" "$ROOT"/{inbox,work,library,package,state,state/apps}
+# v116: the services run as their own users (atta-web, atta-run, atta-proxy); only deployd stays root.
+atta_ensure_users
 # Stage the new code in its own folder and finish it there, THEN switch $APP to it in one step.
 NEW_CODE="$(atta_stage_code "$ATTA_LIB_DIR" "$RELS")"
 # build.py is an offline/candidate-builder utility, not part of the AWS upload pipeline
@@ -36,6 +38,31 @@ EnvironmentFile=-$ROOT/.env
 ExecStart=/usr/bin/python3 $APP/gateway.py
 Restart=always
 RestartSec=5
+# v116: its own user, no Docker, and a sandbox: it only ever writes under $ROOT.
+User=$ATTA_WEB_USER
+Group=$ATTA_GROUP
+UMask=0027
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=$ROOT
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+CapabilityBoundingSet=
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -56,6 +83,27 @@ TimeoutStartSec=150
 ExecStart=/usr/bin/python3 $APP/pipeline.py
 Restart=always
 RestartSec=5
+# v116: the runner user. Docker access is root-equivalent, so it gets no more than it needs besides:
+# no new SUID files, a private /tmp, read-only /usr /boot /etc. (No NoNewPrivileges: skin proxies are started
+# through one sudoers rule that DROPS to the proxy user. No W^X filter: node and Chromium JIT.)
+User=$ATTA_RUN_USER
+Group=$ATTA_GROUP
+SupplementaryGroups=docker $ATTA_PROXY_USER
+UMask=0027
+Environment=HOME=$ATTA_RUN_HOME PLAYWRIGHT_BROWSERS_PATH=$ATTA_BROWSERS
+ProtectSystem=full
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+RestrictRealtime=yes
+ProtectClock=yes
+ProtectHostname=yes
+SystemCallArchitectures=native
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -132,6 +180,7 @@ if [ ! -f /etc/docker/daemon.json ]; then
   printf '{\n  "registry-mirrors": ["https://mirror.gcr.io"]\n}\n' > /etc/docker/daemon.json
 fi
 systemctl enable --now docker
+atta_join_docker   # v116: the runner user drives Docker (group added now that Docker exists)
 if ! docker compose version >/dev/null 2>&1; then
   # Amazon Linux has no compose package: install Docker's own compose plugin binary.
   DEBIAN_FRONTEND=noninteractive apt-get install -y docker-compose-v2 >/dev/null 2>&1 || \
@@ -211,12 +260,15 @@ pip_install(){ python3 -m pip install --break-system-packages "$@" 2>/dev/null |
 if ! python3 -c 'import playwright' >/dev/null 2>&1; then
   pip_install playwright
 fi
+# v116: Chromium goes where the runner user can read it (not root's home).
+export PLAYWRIGHT_BROWSERS_PATH="$ATTA_BROWSERS"
 python3 -m playwright install chromium
+chmod -R a+rX "$ATTA_BROWSERS"
 # Self-healing LLM tier uses the official Anthropic SDK.
 python3 -c 'import anthropic' >/dev/null 2>&1 || pip_install anthropic
 
-# Fail the deployment immediately if the real browser cannot launch.
-python3 - <<'PY'
+# Fail the deployment immediately if the real browser cannot launch AS THE RUNNER USER (v116).
+runuser -u "$ATTA_RUN_USER" -- env HOME="$ATTA_RUN_HOME" PLAYWRIGHT_BROWSERS_PATH="$ATTA_BROWSERS" python3 - <<'PY'
 from playwright.sync_api import sync_playwright
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
@@ -244,6 +296,27 @@ TimeoutStartSec=150
 ExecStart=/usr/bin/python3 $APP/system_watcher.py --loop
 Restart=always
 RestartSec=5
+# v116: the runner user. Docker access is root-equivalent, so it gets no more than it needs besides:
+# no new SUID files, a private /tmp, read-only /usr /boot /etc. (No NoNewPrivileges: skin proxies are started
+# through one sudoers rule that DROPS to the proxy user. No W^X filter: node and Chromium JIT.)
+User=$ATTA_RUN_USER
+Group=$ATTA_GROUP
+SupplementaryGroups=docker $ATTA_PROXY_USER
+UMask=0027
+Environment=HOME=$ATTA_RUN_HOME PLAYWRIGHT_BROWSERS_PATH=$ATTA_BROWSERS
+ProtectSystem=full
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+RestrictRealtime=yes
+ProtectClock=yes
+ProtectHostname=yes
+SystemCallArchitectures=native
 [Install]
 WantedBy=multi-user.target
 EOF
@@ -303,7 +376,10 @@ cp -f "$APP/deployd/systemd/atta-deployd.service" /etc/systemd/system/atta-deplo
 sed -i "s#/srv/app-builder#$ROOT#g; s#/opt/app-builder#$APP#g" /etc/systemd/system/atta-deployd.service
 chmod +x "$APP/deployd/deployctl" "$APP/deployd/deployd.py"
 ln -sf "$APP/deployd/deployctl" /usr/local/bin/deployctl
-mkdir -p "$ROOT/adm"/{incoming,staging,releases,backups,logs,state/queue,state/journal}
+mkdir -p "$ROOT/adm"/{incoming,staging,releases,backups,logs,state/queue,state/journal,requests}
+# v116: skin proxies run as the proxy user through one sudoers rule; ownership re-applied for the new units.
+atta_install_proxy_runner "$APP/run-proxy.sh" || { echo "DEPLOYMENT FAILED: could not install the proxy runner" >&2; exit 1; }
+atta_secure_state "$ROOT"
 systemctl daemon-reload
 systemctl enable app-builder-gateway.service app-builder-pipeline.service app-builder-watcher.service atta-deployd.service
 systemctl is-active --quiet atta-deployd.service || systemctl start atta-deployd.service

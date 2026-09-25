@@ -56,6 +56,7 @@ def _write(rec: dict) -> None:
     fd, tmp = tempfile.mkstemp(dir=BUILDS_DIR, prefix=".build.")
     with os.fdopen(fd, "w") as f:
         json.dump(rec, f, indent=2); f.write("\n")
+    os.chmod(tmp, 0o640)   # v116: the gateway (another user, same group) shows it; nobody else reads it
     os.replace(tmp, path(rec["id"]))
 
 

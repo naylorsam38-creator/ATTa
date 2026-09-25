@@ -95,10 +95,10 @@ def _prepare(app: str, ui_dir: Path) -> Path:
     os.chmod(PROXY_BASE, 0o755)
     if _proxy_user() is not None:
         # The proxy user must be able to pass through every folder above its copy (and nothing more: the data
-        # folder is 0751, traverse without listing). Say so plainly instead of letting the proxy fail.
+        # folder is 3771, traverse without listing). Say so plainly instead of letting the proxy fail.
         for d in [PROXY_BASE, *PROXY_BASE.parents]:
             if not os.stat(d).st_mode & 0o001:
-                raise LaunchError(f"{d} is not passable by {PROXY_USER} (needs o+x, e.g. chmod 751); "
+                raise LaunchError(f"{d} is not passable by {PROXY_USER} (needs o+x; the data folder is 3771); "
                                   "bootstrap.sh sets this on a server")
     if dest.exists():
         shutil.rmtree(dest)

@@ -18,7 +18,7 @@ Passwords are only ever printed (and, for `init`, written to TEST_ACCOUNTS.txt w
 permissions). The accounts file itself holds hashes only.
 """
 from __future__ import annotations
-import argparse, hashlib, hmac, json, os, re, secrets, sys, tempfile, threading, time
+import argparse, hashlib, hmac, json, os, re, secrets, stat, sys, tempfile, threading, time
 from pathlib import Path
 
 # ===================== CONFIG — edit here, nothing below needs reading =====================
@@ -101,7 +101,18 @@ def save(d: dict) -> None:
     with os.fdopen(fd, "w") as f:
         json.dump(d, f, indent=2); f.write("\n")
         f.flush(); os.fsync(f.fileno())
-    os.chmod(tmp, 0o600)
+    # v116: keep the file's owner, group and mode across rewrites (the gateway runs as its own user and must
+    # still read it after root runs `accounts.py reset`). A brand-new file is owner-only.
+    try:
+        st = USERS_FILE.stat()
+        mode = stat.S_IMODE(st.st_mode) & 0o660
+        if os.geteuid() == 0:
+            os.chown(tmp, st.st_uid, st.st_gid)
+        elif st.st_gid in os.getgroups():
+            os.chown(tmp, -1, st.st_gid)
+    except FileNotFoundError:
+        mode = 0o600
+    os.chmod(tmp, mode or 0o600)
     os.replace(tmp, USERS_FILE)
 
 

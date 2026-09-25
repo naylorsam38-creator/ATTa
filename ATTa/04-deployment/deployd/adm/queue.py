@@ -1,6 +1,6 @@
 """The deploy queue: a zip plus a small meta file per job, processed oldest first."""
 from pathlib import Path
-import json, os, shutil
+import json, os, shutil, stat
 from . import authz, config, journal
 
 
@@ -60,6 +60,43 @@ def sweep_incoming():
         job = enqueue(z, origin="local", requested_by="incoming", original_name=z.name)
         z.unlink(missing_ok=True)
         jobs.append(job)
+    return jobs
+
+
+def sweep_requests():
+    """v116: bundles the pipeline (running as its own user) asks ADM to deploy. Each becomes a job with origin
+    "web" (never "local", whoever owns the folder), so it runs only for an enabled admin. A request whose
+    files are links, or not owned by the folder's owner, is discarded. Returns the new job ids."""
+    jobs = []
+    d = config.REQUESTS
+    try:
+        dst = os.lstat(d)
+    except OSError:
+        return jobs
+    if not stat.S_ISDIR(dst.st_mode) or dst.st_mode & 0o022:
+        print(f"deployd: not taking requests from {d}: not a private real folder", flush=True)
+        return jobs
+    for m in sorted(d.glob("*.json")):
+        z = None
+        try:
+            ok = True
+            for f in (m, d / (m.stem + ".zip")):
+                st = os.lstat(f)
+                ok = ok and stat.S_ISREG(st.st_mode) and st.st_uid == dst.st_uid and st.st_nlink == 1
+            meta = json.loads(m.read_text()) if ok else {}
+            z = d / (m.stem + ".zip")
+            who = str(meta.get("requested_by") or "")
+            if not ok or meta.get("archive") != z.name or not who:
+                print(f"deployd: discarding malformed request {m.name}", flush=True)
+            else:
+                jobs.append(enqueue(z, origin="web", requested_by=who, build_id=meta.get("build_id"),
+                                    original_name=meta.get("original_name")))
+        except (OSError, ValueError) as e:
+            print(f"deployd: discarding request {m.name}: {e}", flush=True)
+        finally:
+            m.unlink(missing_ok=True)
+            if z is not None:
+                z.unlink(missing_ok=True)
     return jobs
 
 

@@ -358,8 +358,18 @@ def queue_system_update(b,stage,bid,rec,*,local=False):
     roots=[p.parent for p in stage.rglob('release.json') if (p.parent/'run').is_file() and (p.parent/'04-deployment/bootstrap.sh').is_file()]
     if len(roots)!=1:
         builds.update(bid,adm={'queued':False,'reason':'zip holds the skins package but not a full ATTa bundle (run + release.json + 04-deployment/); system code unchanged'}); return None
-    if os.geteuid()!=0 or not Path('/run/systemd/system').is_dir():
+    if not Path('/run/systemd/system').is_dir():
         builds.update(bid,adm={'queued':False,'reason':'local instance: code updates apply by re-running `bash run` from the new bundle'}); return None
+    if os.geteuid()!=0:
+        # v116: the runner is not root, so it cannot write ADM's root-only queue. It hands the bundle to
+        # deployd through adm/requests/; deployd queues EVERY request as a web job and re-checks the admin.
+        try:
+            req=request_system_update(b,bid,_owner_of(rec),rec.get('original_name') or b.name)
+            builds.update(bid,adm={'queued':True,'request':req,'note':'system code update handed to ADM; runs after this build finishes'})
+            step('SYSTEM_UPDATE_REQUESTED',request=req)
+            return req
+        except Exception as e:
+            builds.update(bid,adm={'queued':False,'error':f'ADM request failed: {e}'}); return None
     try:
         sys.path.insert(0,str(HERE/'deployd'))
         from adm import queue as adm_queue
@@ -370,6 +380,17 @@ def queue_system_update(b,stage,bid,rec,*,local=False):
         return job
     except Exception as e:
         builds.update(bid,adm={'queued':False,'error':f'ADM queue failed: {e}'}); return None
+
+ADM_REQUESTS=Path(os.environ.get('ATTA_ADM_ROOT',str(ROOT/'adm')))/'requests'
+def request_system_update(b,bid,owner,original_name):
+    """Copy the bundle into deployd's request folder: <bid>.zip, then <bid>.json (deployd keys on the .json)."""
+    ADM_REQUESTS.mkdir(parents=True,exist_ok=True)
+    z=ADM_REQUESTS/f'{bid}.zip'; tmp=ADM_REQUESTS/f'.{bid}.zip.part'
+    shutil.copyfile(b,tmp); os.chmod(tmp,0o600); os.replace(tmp,z)
+    meta={'build_id':bid,'requested_by':owner,'original_name':original_name,'archive':z.name}
+    tmp=ADM_REQUESTS/f'.{bid}.json.part'
+    tmp.write_text(json.dumps(meta)+'\n'); os.chmod(tmp,0o600); os.replace(tmp,ADM_REQUESTS/f'{bid}.json')
+    return bid
 
 def lock_is_stale():
     if not LOCK.exists(): return False
