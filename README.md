@@ -50,6 +50,7 @@ It's about 15 minutes of clicking and they matter.
 | `docs/RUNBOOK.md` | Step by step from buying a server to running ATT. |
 | `docs/DEPLOY-ATT.md` | How ATTa and Coolify connect, the live hand-off test results, and the status → fix table. |
 | `docs/TROUBLESHOOTING.md` | Every failure we hit or anticipate, with the fix. |
+| `docs/FIXES.md` | Every problem found and fixed, and what is still open. |
 | `tests/` | Unit tests (bats) and the destructive end-to-end test. |
 
 ## Development
