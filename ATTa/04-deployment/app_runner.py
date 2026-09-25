@@ -38,6 +38,7 @@ Command line (for a person):
 """
 from __future__ import annotations
 import json, os, re, secrets, shutil, signal, socket, subprocess, sys, time
+import compose_guard, trusted_apps
 from pathlib import Path
 from urllib.request import Request, build_opener, ProxyHandler
 from urllib.error import HTTPError, URLError
@@ -85,9 +86,10 @@ CPUS = os.environ.get("APP_BUILDER_CPUS", "2.0")
 SAFE_CAPS = ["CHOWN", "DAC_OVERRIDE", "FOWNER", "FSETID", "KILL", "SETGID", "SETUID", "SETPCAP", "NET_BIND_SERVICE"]
 # A compose file may not hand its containers the host. These service keys are removed, and host bind mounts
 # outside the app's own folder are dropped (the Docker socket above all: it is root on this server), except the
-# read-only time-zone files below. ALLOW_HOST_ACCESS=true restores them for apps an admin trusts (Portainer,
-# Coolify and other Docker managers need the socket and will not pass without it).
-ALLOW_HOST_ACCESS = os.environ.get("APP_BUILDER_ALLOW_HOST_ACCESS", "false").lower() in {"1", "true", "yes"}
+# read-only time-zone files below. v115: an app an admin has TRUSTED keeps them (trusted_apps.py; Portainer,
+# Coolify and other Docker managers need the socket and will not pass without it). The old server-wide
+# APP_BUILDER_ALLOW_HOST_ACCESS switch gave that to every uploaded app at once; it is now ignored.
+LEGACY_HOST_ACCESS_SWITCH = os.environ.get("APP_BUILDER_ALLOW_HOST_ACCESS", "false").lower() in {"1", "true", "yes"}
 HOST_KEYS = ("privileged", "devices", "device_cgroup_rules", "cgroup_parent", "userns_mode")
 HOST_MODES = ("network_mode", "pid", "ipc", "uts")
 HOST_BIND_OK = ("/etc/localtime", "/etc/timezone", "/usr/share/zoneinfo")
@@ -215,6 +217,10 @@ def learned_rules() -> list[dict]:
 
 
 def diagnose(text: str, skip: tuple = ()) -> dict | None:
+    # v115: a security refusal is an answer, not a symptom. Checked before any rule (learned ones included)
+    # so nothing tries to "fix" it: this way of starting the app is not used; its other ways still may be.
+    if compose_guard.REFUSED_MARK in (text or ""):
+        return {"rule": "security.refused", "fix": "next_part"}
     # v111a: a learned rule is PENDING until a full-catalogue run completes after it was learned
     # (rule_lifecycle.py). Pending rules are not consulted.
     learned = [r for r in learned_rules() if r.get("state", "candidate") != "pending"]
@@ -240,6 +246,10 @@ def safe_id(name: str) -> str:
 
 
 def sh(cmd, timeout=120, env=None, cwd=None) -> tuple[int, str]:
+    # v115: every docker/compose command runs with a clean environment unless the caller hands it the app's
+    # own (also clean) one: ATTa's secrets are never in a docker process's environment to be interpolated.
+    if env is None and cmd and os.path.basename(str(cmd[0])) == "docker":
+        env = compose_guard.clean_env()
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, env=env, cwd=cwd)
         return r.returncode, (r.stdout or "") + (r.stderr or "")
@@ -296,7 +306,8 @@ def fix_rate_limit(notes: list[str]) -> bool:
         return ok
     user, token = os.environ.get("DOCKERHUB_USERNAME"), os.environ.get("DOCKERHUB_TOKEN")
     if user and token and not getattr(fix_rate_limit, "_logged_in", False):
-        r = subprocess.run(["docker", "login", "-u", user, "--password-stdin"], input=token, text=True, capture_output=True, timeout=60)
+        r = subprocess.run(["docker", "login", "-u", user, "--password-stdin"], input=token, text=True, capture_output=True,
+                           timeout=60, env=compose_guard.clean_env())
         fix_rate_limit._logged_in = r.returncode == 0
         notes.append("Docker Hub rate limit: logged in as " + user + ("" if r.returncode == 0 else " (login FAILED)"))
         if r.returncode == 0:
@@ -785,7 +796,9 @@ def down(app: str, prune: bool | None = None) -> str:
 
 
 def _env_for(part: dict) -> dict:
-    return {**os.environ, **{k: str(v) for k, v in (part.get("env") or {}).items()}}
+    """v115: compose's environment = Docker's own settings + this app's approved values (generated ones, and
+    customer values supplied for this app). Never the server's environment: ATTa's secrets live there."""
+    return compose_guard.clean_env(part.get("env"))
 
 
 def _ensure_env_file(d: Path, compose_file: Path, notes: list[str]) -> None:
@@ -881,7 +894,9 @@ def _fill_blank_secrets(f: Path, part: dict, notes: list[str]) -> None:
                 k, v = line.split("=", 1)
                 have[k.strip()] = v.strip().strip("\"'")
     for n in sorted(names):
-        if SECRET_NAME.search(n) and not have.get(n) and not os.environ.get(n) and n not in part["env"]:
+        # v115: the server's own environment is NOT a source. It used to be, so an app asking for
+        # ${ANTHROPIC_API_KEY} silently got ATTa's key; now it gets its own value or a generated one.
+        if SECRET_NAME.search(n) and not have.get(n) and n not in part["env"]:
             part["env"][n] = secrets.token_hex(16)
             notes.append(f"{n} was blank: generated a value for this run")
 
@@ -904,7 +919,7 @@ def harden_service(name: str, s: dict, part: dict, notes: list[str], d: Path) ->
     """v114: the same fence for one compose service, plus removal of anything that hands it the host."""
     if not HARDEN:
         return
-    if not ALLOW_HOST_ACCESS:
+    if not part.get("_host_access"):
         for k in HOST_KEYS:
             if s.pop(k, None) not in (None, False, [], {}):
                 notes.append(f"{name}: removed `{k}` (a container may not reach the host)")
@@ -949,19 +964,73 @@ def harden_service(name: str, s: dict, part: dict, notes: list[str], d: Path) ->
         s["cap_add"] = sorted(set(s.get("cap_add") or []) | set(SAFE_CAPS))
 
 
+def _compose_json(out: str) -> dict:
+    # stdout (the JSON) and stderr (warnings) come back together: decode just the JSON object.
+    cfg, _ = json.JSONDecoder().raw_decode(out[out.index("{"):])
+    return cfg
+
+
+def host_access_for(app: str, notes: list[str]) -> bool:
+    """v115: may this app reach the host? Only if an admin trusted it (trusted_apps.py). Recorded either way."""
+    if trusted_apps.is_trusted(app):
+        rec = trusted_apps.load().get(safe_id(app), {})
+        notes.append(f"host access ALLOWED: trusted by {rec.get('approved_by')} at {rec.get('approved_at')} "
+                     f"({rec.get('reason')})")
+        return True
+    if LEGACY_HOST_ACCESS_SWITCH:
+        notes.append("APP_BUILDER_ALLOW_HOST_ACCESS is set but no longer grants host access to every app: "
+                     f"trust this one with `sudo python3 trusted_apps.py trust {safe_id(app)} --reason ...`")
+    return False
+
+
 def _render_compose(app: str, d: Path, part: dict, notes: list[str]) -> tuple[bool, str]:
     f = d / part["file"]
     _ensure_env_file(d, f, notes)
     _fill_blank_secrets(f, part, notes)
-    rc, out = sh(["docker", "compose", "-f", str(f), "--project-directory", str(f.parent), "config", "--format", "json"],
-                 timeout=120, env=_env_for(part), cwd=str(f.parent))
-    if rc != 0:
-        return False, out
+    # v115: what this app may touch. Its library folder, and its own folder under the runner (generated
+    # runtime compose files and remapped data live there). Nothing else on the server.
+    roots = [d, WORK / safe_id(app)]
+    part["_host_access"] = host_access_for(app, notes)
     try:
-        # stdout (the JSON) and stderr (warnings) come back together: decode just the JSON object.
-        cfg, _ = json.JSONDecoder().raw_decode(out[out.index("{"):])
-    except ValueError:
-        return False, "compose config did not return JSON:\n" + out[-2000:]
+        compose_guard.check_project_env(f, roots)
+        # The YAML itself first: env files, and the files it pulls in with include:/extends:, must be the app's.
+        # Needs PyYAML (usually present: cloud-init uses it). Without it, pass 1 below is the env_file check.
+        try:
+            compose_guard.validate_paths(compose_guard.raw_env_files(f), roots, host_access=part["_host_access"])
+            yaml_checked = True
+        except ImportError:
+            yaml_checked = False
+        # Pass 1: paths as written, env files NOT read, so every file the configuration would read is visible
+        # (compose otherwise inlines env_file and drops its path). Clean environment, as for every pass.
+        rc, out = sh(["docker", "compose", "-f", str(f), "--project-directory", str(f.parent), "config", "--format", "json",
+                      "--no-env-resolution"], timeout=120, env=_env_for(part), cwd=str(f.parent))
+        if rc != 0 and re.search(r"unknown flag|flag provided but not defined", out, re.I):
+            # A compose older than --no-env-resolution: the YAML check above is the env_file check.
+            if not yaml_checked:
+                raise compose_guard.ComposeSecurityError(
+                    "cannot check which env files this compose file reads: install PyYAML (python3-yaml / "
+                    "python3-pyyaml) or a Docker Compose that supports `config --no-env-resolution`")
+        elif rc != 0:
+            return False, out
+        else:
+            try:
+                compose_guard.validate_paths(_compose_json(out), roots, host_access=part["_host_access"])
+            except ValueError:
+                return False, "compose config did not return JSON:\n" + out[-2000:]
+        # Pass 2: the configuration that will actually run.
+        rc, out = sh(["docker", "compose", "-f", str(f), "--project-directory", str(f.parent), "config", "--format", "json"],
+                     timeout=120, env=_env_for(part), cwd=str(f.parent))
+        if rc != 0:
+            return False, out
+        try:
+            cfg = _compose_json(out)
+        except ValueError:
+            return False, "compose config did not return JSON:\n" + out[-2000:]
+        compose_guard.validate_paths(cfg, roots, host_access=part["_host_access"])
+        compose_guard.scan_rendered(cfg, compose_guard.protected_values())
+    except compose_guard.ComposeSecurityError as e:
+        notes.append(str(e))
+        return False, str(e)
     taken: set[int] = set()
     for name, s in (cfg.get("services") or {}).items():
         s.pop("container_name", None)
@@ -1032,7 +1101,12 @@ def _render_compose(app: str, d: Path, part: dict, notes: list[str]) -> tuple[bo
         harden_service(name, s, part, notes, d)
     cfg["name"] = project(app)
     wd = WORK / safe_id(app); wd.mkdir(parents=True, exist_ok=True)
-    (wd / "compose.rendered.json").write_text(json.dumps(cfg, indent=1))
+    # v115: it holds the app's approved customer secrets, so only the runner (root) may read it.
+    rendered = wd / "compose.rendered.json"
+    rendered.unlink(missing_ok=True)
+    fd = os.open(rendered, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(fd, "w") as fh:
+        fh.write(json.dumps(cfg, indent=1))
     return True, ""
 
 
@@ -1081,6 +1155,11 @@ def _start_inner(app: str, d: Path, part: dict, notes: list[str]) -> tuple[bool,
         cmd += ["--memory", mem_limit()]
     for p in ports:
         cmd += ["-p", f"127.0.0.1:{free_port(taken)}:{p}"]
+    try:
+        compose_guard.scan_env(part.get("env") or {}, compose_guard.protected_values())   # v115
+    except compose_guard.ComposeSecurityError as e:
+        notes.append(str(e))
+        return False, str(e)
     for k, v in (part.get("env") or {}).items():
         cmd += ["-e", f"{k}={v}"]
     for vol in (part.get("volumes") or []):

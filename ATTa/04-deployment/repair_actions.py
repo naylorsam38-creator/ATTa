@@ -418,7 +418,9 @@ def set_run_recipe(app: str, recipe_json: str) -> str:
         raise ActionError("env must be an object of VARIABLE_NAME: value")
     r["env"] = {str(k): str(v) for k, v in env.items()}
     if r["kind"] == "image":
-        rc = subprocess.run(["docker", "manifest", "inspect", str(r.get("image", ""))], capture_output=True, timeout=60).returncode
+        import compose_guard   # v115: every docker process gets a clean environment
+        rc = subprocess.run(["docker", "manifest", "inspect", str(r.get("image", ""))], capture_output=True, timeout=60,
+                            env=compose_guard.clean_env()).returncode
         if rc != 0:
             raise ActionError(f"image {r.get('image')!r} does not exist in its registry")
     for key in ("file", "dockerfile"):

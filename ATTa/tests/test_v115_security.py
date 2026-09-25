@@ -426,5 +426,394 @@ class EvidenceIsDataNotATTaUI(unittest.TestCase):
         self.assertEqual(self.gw.disable_reserved_at_startup(), [])        # nothing left to do, no new alert
 
 
+# ============================================================================ #1 ATTa secrets never reach an app
+
+import base64, subprocess  # noqa: E402
+from urllib.parse import quote  # noqa: E402
+import app_runner, compose_guard as cg, trusted_apps  # noqa: E402
+
+ATTA_SESSION = "atta-session-secret-" + "s" * 30
+ATTA_ANTHROPIC = "sk-ant-atta-own-key-" + "a" * 30
+CUSTOMER_ANTHROPIC = "sk-ant-customer-key-" + "c" * 30
+CUSTOMER_STRIPE = "sk_test_customer_" + "9" * 24
+
+
+def _have_compose():
+    try:
+        return subprocess.run(["docker", "compose", "version"], capture_output=True, timeout=30).returncode == 0
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+
+
+HAVE_COMPOSE = _have_compose()
+
+
+class _SecretsWorld(unittest.TestCase):
+    """ATTa's secrets in its .env and in this process's environment, as systemd loads them on a server."""
+    def setUp(self):
+        self.t = Path(tempfile.mkdtemp(dir=TMP))
+        self.env_file = self.t / "atta.env"
+        self.env_file.write_text(f"APP_BUILDER_PORT=8787\nAPP_BUILDER_SESSION_SECRET={ATTA_SESSION}\n"
+                                 f"ANTHROPIC_API_KEY={ATTA_ANTHROPIC}\nCOOLIFY_TOKEN=coolify-token-123456\n")
+        self.saved = (cg.ATTA_ENV_FILE, dict(os.environ))
+        cg.ATTA_ENV_FILE = self.env_file
+        os.environ.update(APP_BUILDER_SESSION_SECRET=ATTA_SESSION, ANTHROPIC_API_KEY=ATTA_ANTHROPIC,
+                          COOLIFY_TOKEN="coolify-token-123456", DOCKER_CONFIG=str(self.t / "docker"))
+        self.app = self.t / "library" / "shop"; self.app.mkdir(parents=True)
+
+    def tearDown(self):
+        cg.ATTA_ENV_FILE = self.saved[0]
+        os.environ.clear(); os.environ.update(self.saved[1])
+
+
+class ComposeGetsACleanEnvironment(_SecretsWorld):
+    def test_env_for_holds_no_atta_secret(self):
+        env = app_runner._env_for({"env": {"STRIPE_SECRET_KEY": CUSTOMER_STRIPE}})
+        for name in ("APP_BUILDER_SESSION_SECRET", "ANTHROPIC_API_KEY", "COOLIFY_TOKEN"):
+            self.assertNotIn(name, env)
+        self.assertNotIn(ATTA_SESSION, json.dumps(env))
+        self.assertEqual(env["STRIPE_SECRET_KEY"], CUSTOMER_STRIPE)     # the app's approved value is there
+        self.assertIn("PATH", env)
+
+    def test_every_docker_command_gets_a_clean_environment(self):
+        seen = []
+        real = subprocess.run
+        def fake(cmd, **kw):
+            seen.append(kw.get("env")); return subprocess.CompletedProcess(cmd, 0, "", "")
+        app_runner.subprocess.run = fake
+        try:
+            app_runner.sh(["docker", "ps"])
+            app_runner.sh(["/usr/bin/docker", "compose", "ls"])
+        finally:
+            app_runner.subprocess.run = real
+        for env in seen:
+            self.assertIsNotNone(env)
+            self.assertNotIn(ATTA_SESSION, json.dumps(env))
+
+    def test_blank_secret_is_generated_not_taken_from_the_server(self):
+        f = self.app / "docker-compose.yml"
+        f.write_text("services:\n  web:\n    image: x\n    environment:\n      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}\n")
+        part = {"env": {}}
+        app_runner._fill_blank_secrets(f, part, [])
+        self.assertIn("ANTHROPIC_API_KEY", part["env"])
+        self.assertNotEqual(part["env"]["ANTHROPIC_API_KEY"], ATTA_ANTHROPIC)   # v114.2 skipped it: ATTa's key leaked
+
+    def test_customer_value_in_the_apps_env_is_kept(self):
+        f = self.app / "docker-compose.yml"
+        f.write_text("services:\n  web:\n    image: x\n    environment:\n      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}\n")
+        (self.app / ".env").write_text(f"ANTHROPIC_API_KEY={CUSTOMER_ANTHROPIC}\n")
+        part = {"env": {}}
+        app_runner._fill_blank_secrets(f, part, [])
+        self.assertNotIn("ANTHROPIC_API_KEY", part["env"])   # compose reads the app's own .env value
+
+
+class ComposePathsStayInsideTheApp(_SecretsWorld):
+    def check(self, cfg, **kw):
+        cg.validate_paths(cfg, [self.app, self.t / "work"], **kw)
+
+    def refused(self, cfg, **kw):
+        with self.assertRaises(cg.ComposeSecurityError) as c:
+            self.check(cfg, **kw)
+        self.assertTrue(str(c.exception).startswith(cg.REFUSED_MARK))
+        return str(c.exception)
+
+    def test_env_file_outside_is_refused(self):
+        self.refused({"services": {"web": {"env_file": [{"path": "/srv/app-builder/.env"}]}}})
+        self.refused({"services": {"web": {"env_file": ["../../../../srv/app-builder/.env"]}}})
+        self.refused({"services": {"web": {"env_file": str(self.env_file)}}})
+        self.check({"services": {"web": {"env_file": [{"path": str(self.app / ".env")}, "config/app.env"]}}})
+
+    def test_symlink_inside_the_app_is_resolved(self):
+        (self.app / "looks-local.env").symlink_to(self.env_file)
+        (self.app / "etc").symlink_to("/etc")
+        self.refused({"services": {"web": {"env_file": [str(self.app / "looks-local.env")]}}})
+        self.refused({"secrets": {"s": {"file": str(self.app / "etc" / "shadow")}}})
+
+    def test_secrets_and_configs_files_outside_are_refused(self):
+        self.refused({"secrets": {"s": {"file": "/etc/shadow"}}})
+        self.refused({"configs": {"c": {"file": "../host/shadow"}}})
+        self.check({"secrets": {"s": {"file": str(self.app / "secret.txt")}}, "configs": {"c": {"file": "conf/x"}}})
+
+    def test_secret_sourced_from_the_runner_environment_is_refused(self):
+        why = self.refused({"secrets": {"s": {"environment": "APP_BUILDER_SESSION_SECRET"}}})
+        self.assertNotIn(ATTA_SESSION, why)
+
+    def test_build_contexts_outside_are_refused(self):
+        self.refused({"services": {"web": {"build": {"context": "/"}}}})
+        self.refused({"services": {"web": {"build": "/srv/app-builder"}}})
+        self.refused({"services": {"web": {"build": {"context": ".", "additional_contexts": {"x": "/srv/app-builder"}}}}})
+        self.refused({"services": {"web": {"build": {"context": ".", "dockerfile": "/etc/Dockerfile"}}}})
+        self.refused({"services": {"web": {"build": {"context": ".", "ssh": ["default"]}}}})
+        self.check({"services": {"web": {"build": {"context": str(self.app), "dockerfile": "Dockerfile",
+                                                    "additional_contexts": {"a": "service:base", "b": "docker-image://alpine:3",
+                                                                            "c": str(self.app / "extra")}}}}})
+        self.check({"services": {"web": {"build": {"context": "https://github.com/o/r.git#main"}}}})
+
+    def test_bind_style_named_volume_is_refused(self):
+        for opts in ({"type": "none", "o": "bind", "device": "/"}, {"type": "none", "o": "bind,rw", "device": "/etc"},
+                     {"o": "rbind", "device": "/root"}, {"type": "none", "o": "bind"}, {"type": "bind", "device": "relative"}):
+            self.refused({"volumes": {"host": {"driver": "local", "driver_opts": opts}}})
+        self.check({"volumes": {"t": {"driver_opts": {"type": "tmpfs", "device": "tmpfs", "o": "size=100m"}}}})
+        self.check({"volumes": {"in": {"driver_opts": {"type": "none", "o": "bind", "device": str(self.app / "data")}}}})
+        self.check({"volumes": {"plain": {}, "named": None}})
+
+    def test_trusted_host_access_relaxes_volumes_only(self):
+        self.check({"volumes": {"host": {"driver_opts": {"type": "none", "o": "bind", "device": "/"}}}}, host_access=True)
+        self.refused({"services": {"web": {"env_file": ["/srv/app-builder/.env"]}}}, host_access=True)
+        self.refused({"secrets": {"s": {"file": "/etc/shadow"}}}, host_access=True)
+
+    def test_project_env_link_to_atta_is_refused(self):
+        f = self.app / "docker-compose.yml"; f.write_text("services: {}\n")
+        (self.app / ".env").symlink_to(self.env_file)
+        with self.assertRaises(cg.ComposeSecurityError):
+            cg.check_project_env(f, [self.app])
+
+    def test_malformed_config_is_refused(self):
+        self.refused("not a dict"); self.refused({"services": ["web"]})
+
+
+class RenderedScanProtectsOnlyATTaSecrets(_SecretsWorld):
+    def protected(self):
+        return cg.protected_values()
+
+    def test_protected_set_is_atta_secrets_only(self):
+        p = self.protected()
+        self.assertIn(ATTA_SESSION, p); self.assertIn(ATTA_ANTHROPIC, p); self.assertIn("coolify-token-123456", p)
+        self.assertNotIn("8787", p)                                   # not secret, and too short
+        self.assertTrue(all(":" in label or label == "Docker login" for label in p.values()))
+
+    def test_atta_value_is_refused_wherever_it_hides(self):
+        p = self.protected()
+        b64 = base64.b64encode(ATTA_SESSION.encode()).decode()
+        for cfg in ({"services": {"web": {"environment": {"LEAKED": ATTA_SESSION}}}},
+                    {"services": {"web": {"command": ["sh", "-c", f"echo {ATTA_ANTHROPIC}"]}}},
+                    {"services": {"web": {"labels": {"x": "coolify-token-123456"}}}},
+                    {"services": {"web": {"environment": {ATTA_SESSION: "as a key"}}}},
+                    {"services": {"web": {"environment": {"B64": b64}}}},
+                    {"services": {"web": {"environment": {"B64": b64.rstrip("=")}}}},
+                    {"services": {"web": {"environment": {"URL": "https://x/?k=" + quote(ATTA_SESSION, safe="")}}}}):
+            with self.assertRaises(cg.ComposeSecurityError) as c:
+                cg.scan_rendered(cfg, p)
+            msg = str(c.exception)
+            self.assertNotIn(ATTA_SESSION, msg); self.assertNotIn(ATTA_ANTHROPIC, msg)   # never echoes a value
+
+    def test_customer_tokens_pass_even_under_atta_names(self):
+        cfg = {"services": {"web": {"environment": {
+            "ANTHROPIC_API_KEY": CUSTOMER_ANTHROPIC,          # same NAME as ATTa's key, different value
+            "STRIPE_SECRET_KEY": CUSTOMER_STRIPE, "OPENAI_API_KEY": "sk-proj-" + "o" * 40,
+            "PAYPAL_CLIENT_SECRET": "paypal-" + "p" * 30, "SMTP_PASSWORD": "mail-password-123",
+            "FLAG": "true", "PORT": "8787"}}}}
+        cg.scan_rendered(cfg, self.protected())
+
+    def test_customer_value_identical_to_atta_key_is_refused(self):
+        with self.assertRaises(cg.ComposeSecurityError):
+            cg.scan_rendered({"services": {"web": {"environment": {"ANTHROPIC_API_KEY": ATTA_ANTHROPIC}}}}, self.protected())
+
+    def test_docker_login_is_protected(self):
+        d = self.t / "docker"; d.mkdir()
+        auth = base64.b64encode(b"atta:dockerhub-token-abcdef").decode()
+        (d / "config.json").write_text(json.dumps({"auths": {"https://index.docker.io/v1/": {"auth": auth}}}))
+        p = self.protected()
+        self.assertIn("dockerhub-token-abcdef", p); self.assertIn(auth, p)
+
+    def test_docker_run_env_is_scanned_too(self):
+        cg.scan_env({"STRIPE_SECRET_KEY": CUSTOMER_STRIPE}, self.protected())
+        with self.assertRaises(cg.ComposeSecurityError):
+            cg.scan_env({"X": ATTA_SESSION}, self.protected())
+
+    def test_refusal_is_final_not_self_healed(self):
+        dx = app_runner.diagnose(cg.REFUSED_MARK + " the app's configuration contains an ATTa secret (X)")
+        self.assertEqual(dx, {"rule": "security.refused", "fix": "next_part"})
+
+
+@unittest.skipUnless(HAVE_COMPOSE, "docker compose not installed")
+class RealComposeEndToEnd(_SecretsWorld):
+    """The real app_runner._render_compose with the real `docker compose config` (no Docker daemon needed)."""
+    def setUp(self):
+        super().setUp()
+        self.saved_work = app_runner.WORK
+        app_runner.WORK = self.t / "work"; app_runner.WORK.mkdir()
+        trusted_apps.TRUSTED_UID = os.getuid()
+        self.saved_trusted = trusted_apps.TRUSTED_FILE
+        trusted_apps.TRUSTED_FILE = self.t / "trusted_apps.json"
+
+    def tearDown(self):
+        app_runner.WORK = self.saved_work
+        trusted_apps.TRUSTED_FILE = self.saved_trusted
+        super().tearDown()
+
+    def render(self, compose, app_env=None):
+        (self.app / "docker-compose.yml").write_text(compose)
+        if app_env is not None:
+            (self.app / ".env").write_text(app_env)
+        part = {"kind": "compose", "file": "docker-compose.yml", "env": {}}
+        notes = []
+        ok, err = app_runner._render_compose("shop", self.app, part, notes)
+        rendered = app_runner.WORK / "shop" / "compose.rendered.json"
+        return ok, err, (rendered.read_text() if ok else ""), notes
+
+    def test_interpolating_atta_secrets_gets_nothing(self):
+        ok, err, out, _ = self.render("services:\n  web:\n    image: nginx:1\n    environment:\n"
+                                      "      STOLEN: ${APP_BUILDER_SESSION_SECRET}\n      KEY: ${ANTHROPIC_API_KEY:-}\n"
+                                      "      TOKEN: ${COOLIFY_TOKEN}\n")
+        self.assertTrue(ok, err)
+        for v in (ATTA_SESSION, ATTA_ANTHROPIC, "coolify-token-123456"):
+            self.assertNotIn(v, out)
+        stolen = json.loads(out)["services"]["web"]["environment"]["STOLEN"]
+        self.assertNotEqual(stolen, ATTA_SESSION)                    # its own generated value, never ATTa's
+        self.assertRegex(stolen, r"^[0-9a-f]{32}$")
+
+    def test_customer_tokens_reach_the_app(self):
+        ok, err, out, _ = self.render(
+            "services:\n  web:\n    image: nginx:1\n    environment:\n      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}\n"
+            "      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}\n",
+            app_env=f"ANTHROPIC_API_KEY={CUSTOMER_ANTHROPIC}\nSTRIPE_SECRET_KEY={CUSTOMER_STRIPE}\n")
+        self.assertTrue(ok, err)
+        env = json.loads(out)["services"]["web"]["environment"]
+        self.assertEqual(env["ANTHROPIC_API_KEY"], CUSTOMER_ANTHROPIC)
+        self.assertEqual(env["STRIPE_SECRET_KEY"], CUSTOMER_STRIPE)
+        self.assertNotIn(ATTA_ANTHROPIC, out)
+        rendered = app_runner.WORK / "shop" / "compose.rendered.json"
+        self.assertEqual(stat.S_IMODE(rendered.stat().st_mode), 0o600)   # customer tokens: runner-only
+
+    def test_env_file_pointing_at_atta_env_is_refused(self):
+        ok, err, _, _ = self.render(f"services:\n  web:\n    image: nginx:1\n    env_file: [{self.env_file}]\n")
+        self.assertFalse(ok); self.assertIn(cg.REFUSED_MARK, err); self.assertIn("env_file", err)
+        self.assertNotIn(ATTA_SESSION, err)
+        self.assertFalse((app_runner.WORK / "shop" / "compose.rendered.json").exists())   # nothing to run
+
+    def test_env_file_hidden_in_an_include_is_refused(self):
+        (self.app / "inc").mkdir()
+        (self.app / "inc" / "extra.yml").write_text(f"services:\n  side:\n    image: busybox\n    env_file: [{self.env_file}]\n")
+        ok, err, _, _ = self.render("include:\n  - inc/extra.yml\nservices:\n  web:\n    image: nginx:1\n")
+        self.assertFalse(ok); self.assertIn(cg.REFUSED_MARK, err)
+
+    def test_host_file_secret_and_bind_volume_are_refused(self):
+        ok, err, _, _ = self.render("services:\n  web:\n    image: nginx:1\n    secrets: [s]\n"
+                                    f"secrets:\n  s:\n    file: {self.env_file}\n")
+        self.assertFalse(ok); self.assertIn("secrets.s.file", err)
+        ok, err, _, _ = self.render("services:\n  web:\n    image: nginx:1\n    volumes:\n      - hostvol:/data\n"
+                                    "volumes:\n  hostvol:\n    driver: local\n    driver_opts: {type: none, o: bind, device: /}\n")
+        self.assertFalse(ok); self.assertIn("named volume hostvol", err)   # (a one-letter name reads as a Windows drive)
+
+    def test_atta_value_pasted_into_the_apps_env_is_refused(self):
+        ok, err, _, _ = self.render("services:\n  web:\n    image: nginx:1\n    environment:\n      K: ${K}\n",
+                                    app_env=f"K={ATTA_SESSION}\n")
+        self.assertFalse(ok); self.assertIn("ATTa secret", err); self.assertNotIn(ATTA_SESSION, err)
+
+    def test_outside_service_bind_is_still_dropped_not_refused(self):
+        ok, err, out, notes = self.render("services:\n  web:\n    image: nginx:1\n    volumes:\n"
+                                          "      - /var/run/docker.sock:/var/run/docker.sock\n      - ./data:/data\n")
+        self.assertTrue(ok, err)
+        self.assertNotIn("docker.sock", json.dumps(json.loads(out)["services"]["web"].get("volumes")))
+        self.assertTrue(any("dropped host mount /var/run/docker.sock" in n for n in notes))
+
+    def test_trusted_app_keeps_the_socket_but_not_atta_secrets(self):
+        trusted_apps.trust("shop", "Portainer-style manager needs the Docker socket", by="admin")
+        ok, err, out, notes = self.render("services:\n  web:\n    image: nginx:1\n    volumes:\n"
+                                          "      - /var/run/docker.sock:/var/run/docker.sock\n    environment:\n"
+                                          "      STOLEN: ${APP_BUILDER_SESSION_SECRET}\n")
+        self.assertTrue(ok, err)
+        self.assertIn("docker.sock", out)
+        self.assertNotIn(ATTA_SESSION, out)
+        self.assertTrue(any("host access ALLOWED" in n for n in notes))
+
+    def test_legacy_global_switch_no_longer_grants_host_access(self):
+        saved = app_runner.LEGACY_HOST_ACCESS_SWITCH; app_runner.LEGACY_HOST_ACCESS_SWITCH = True
+        try:
+            ok, err, out, notes = self.render("services:\n  web:\n    image: nginx:1\n    volumes:\n"
+                                              "      - /var/run/docker.sock:/var/run/docker.sock\n")
+        finally:
+            app_runner.LEGACY_HOST_ACCESS_SWITCH = saved
+        self.assertTrue(ok, err)
+        self.assertNotIn("docker.sock", out)
+        self.assertTrue(any("no longer grants host access" in n for n in notes))
+
+
+    def test_env_file_via_extends_is_refused(self):
+        (self.app / "base.yml").write_text(f"services:\n  b:\n    image: busybox\n    env_file: [{self.env_file}]\n")
+        ok, err, _, _ = self.render("services:\n  web:\n    image: nginx:1\n    extends:\n      file: base.yml\n      service: b\n")
+        self.assertFalse(ok); self.assertIn(cg.REFUSED_MARK, err)
+
+    def test_include_from_outside_the_app_is_refused(self):
+        outside = self.t / "outside.yml"; outside.write_text("services:\n  x:\n    image: busybox\n")
+        ok, err, _, _ = self.render(f"include:\n  - {outside}\nservices:\n  web:\n    image: nginx:1\n")
+        self.assertFalse(ok); self.assertIn(cg.REFUSED_MARK, err)
+
+    def test_no_pyyaml_on_a_modern_compose_still_checks_env_files(self):
+        real = cg.raw_env_files
+        cg.raw_env_files = lambda _f: (_ for _ in ()).throw(ImportError("No module named 'yaml'"))
+        try:
+            ok, err, _, _ = self.render(f"services:\n  web:\n    image: nginx:1\n    env_file: [{self.env_file}]\n")
+            self.assertFalse(ok); self.assertIn("env_file", err)            # pass 1 caught it
+            ok, err, _, _ = self.render("services:\n  web:\n    image: nginx:1\n")
+            self.assertTrue(ok, err)                                        # and a clean app still runs
+        finally:
+            cg.raw_env_files = real
+
+@unittest.skipUnless(HAVE_COMPOSE, "docker compose not installed")
+class OlderComposeWithoutNoEnvResolution(RealComposeEndToEnd):
+    """The same guarantees on a compose too old for `config --no-env-resolution` (the YAML fallback)."""
+    def setUp(self):
+        super().setUp()
+        self.real_sh = app_runner.sh
+        def old_compose_sh(cmd, **kw):
+            if "--no-env-resolution" in cmd:
+                return 1, "unknown flag: --no-env-resolution"
+            return self.real_sh(cmd, **kw)
+        app_runner.sh = old_compose_sh
+
+    def tearDown(self):
+        app_runner.sh = self.real_sh
+        super().tearDown()
+
+    def test_no_pyyaml_on_a_modern_compose_still_checks_env_files(self):
+        self.skipTest("modern-compose case; this class is the old compose (see test_no_pyyaml_and_old_compose_fails_closed)")
+
+
+    def test_no_pyyaml_and_old_compose_fails_closed(self):
+        real = cg.raw_env_files
+        def no_yaml(_f):
+            raise ImportError("No module named 'yaml'")
+        cg.raw_env_files = no_yaml
+        try:
+            ok, err, _, _ = self.render("services:\n  web:\n    image: nginx:1\n")
+        finally:
+            cg.raw_env_files = real
+        self.assertFalse(ok); self.assertIn("PyYAML", err)
+
+class TrustedAppsFailClosed(unittest.TestCase):
+    def setUp(self):
+        self.t = Path(tempfile.mkdtemp(dir=TMP))
+        self.saved = (trusted_apps.TRUSTED_FILE, trusted_apps.TRUSTED_UID)
+        trusted_apps.TRUSTED_FILE = self.t / "trusted_apps.json"; trusted_apps.TRUSTED_UID = os.getuid()
+
+    def tearDown(self):
+        trusted_apps.TRUSTED_FILE, trusted_apps.TRUSTED_UID = self.saved
+
+    def test_trust_roundtrip_is_recorded(self):
+        r = trusted_apps.trust("Portainer", "needs the socket", by="sam")
+        self.assertEqual((r["approved_by"], r["reason"]), ("sam", "needs the socket"))
+        self.assertTrue(trusted_apps.is_trusted("portainer"))
+        self.assertEqual(stat.S_IMODE(trusted_apps.TRUSTED_FILE.stat().st_mode), 0o600)
+        self.assertTrue(trusted_apps.untrust("portainer")); self.assertFalse(trusted_apps.is_trusted("portainer"))
+
+    def test_reason_required(self):
+        with self.assertRaises(ValueError):
+            trusted_apps.trust("x", "  ")
+
+    def test_writable_or_foreign_file_is_ignored(self):
+        trusted_apps.trust("portainer", "socket")
+        trusted_apps.TRUSTED_FILE.chmod(0o666)
+        self.assertFalse(trusted_apps.is_trusted("portainer"))
+        trusted_apps.TRUSTED_FILE.chmod(0o600)
+        trusted_apps.TRUSTED_UID = os.getuid() + 1
+        self.assertFalse(trusted_apps.is_trusted("portainer"))
+
+    def test_garbage_file_is_ignored(self):
+        trusted_apps.TRUSTED_FILE.write_text("{nope"); trusted_apps.TRUSTED_FILE.chmod(0o600)
+        self.assertEqual(trusted_apps.load(), {})
+
+
 if __name__ == "__main__":
     unittest.main()
