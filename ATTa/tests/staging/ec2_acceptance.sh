@@ -63,10 +63,24 @@ IMG=alpine:3
 docker pull -q "$IMG" >/dev/null 2>&1
 need "container cannot reach the metadata service" docker run --rm "$IMG" wget -T 5 -q -O- http://169.254.169.254/latest/meta-data/
 HOSTIP="$(ip -4 route get 1.1.1.1 | sed -n 's/.* src \([0-9.]*\).*/\1/p')"
-# SSH listens on every address of an EC2 instance, so it proves the rule (not merely a closed port)
-check "SSH answers on $HOSTIP from the host itself (the control)" bash -c "timeout 4 bash -c '</dev/tcp/$HOSTIP/22'"
-need "container cannot reach this host's SSH ($HOSTIP:22)" docker run --rm "$IMG" nc -z -w 4 "$HOSTIP" 22
-need "container cannot reach the host via the docker0 gateway" docker run --rm "$IMG" nc -z -w 4 172.17.0.1 22
+# The control: a listener this check opens itself on every address of the host, so a refused connection proves the
+# rule and not merely a closed port (SSH is not running on every server; this does not depend on it).
+CPORT="$(python3 -c 'import socket;s=socket.socket();s.bind(("",0));print(s.getsockname()[1])')"
+python3 -c 'import socket,sys,time
+s=socket.socket(); s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1); s.bind(("0.0.0.0", int(sys.argv[1]))); s.listen(16)
+s.settimeout(1); end=time.time()+120
+while time.time()<end:
+    try: c,_=s.accept(); c.close()
+    except OSError: pass' "$CPORT" &
+CTRL=$!
+sleep 1
+check "a port on $HOSTIP answers from the host itself (the control, :$CPORT)" bash -c "timeout 4 bash -c '</dev/tcp/$HOSTIP/$CPORT'"
+need "container cannot reach this host ($HOSTIP:$CPORT)" docker run --rm "$IMG" nc -z -w 4 "$HOSTIP" "$CPORT"
+need "container cannot reach the host via the docker0 gateway (:$CPORT)" docker run --rm "$IMG" nc -z -w 4 172.17.0.1 "$CPORT"
+if timeout 2 bash -c "</dev/tcp/$HOSTIP/22" 2>/dev/null; then
+  need "container cannot reach this host's SSH ($HOSTIP:22)" docker run --rm "$IMG" nc -z -w 4 "$HOSTIP" 22
+fi
+kill "$CTRL" 2>/dev/null; wait "$CTRL" 2>/dev/null
 if [ "$(env_val APP_BUILDER_APP_EGRESS)" = deny ]; then
   need "deny mode: no internet" docker run --rm "$IMG" wget -T 8 -q -O- https://example.com/
 else
@@ -118,14 +132,16 @@ for c in $(docker ps -aq); do docker inspect "$c" | grep -qF "$SECRET" && leak=1
 [ -n "$SECRET" ] && [ "$leak" = 0 ] && ok "no container holds the session secret" || bad "a container holds the session secret"
 need "no app container has the Docker socket" bash -c "docker ps -aq | xargs -r docker inspect --format '{{range .Mounts}}{{.Source}} {{end}}' | grep -q docker.sock"
 pgrep -u atta-proxy -f proxy.js >/dev/null && ok "skin proxies run as atta-proxy" || echo "NOTE no skin proxy running right now (app not up); covered by the unit tests"
-need "no skin proxy runs as root or atta-run" bash -c "pgrep -f 'ui-bridge/proxy.js' -a | awk '{print \$1}' | xargs -r ps -o user= -p | grep -qE '^(root|atta-run)$'"
+# [u]: the pattern must not match this check's own command line (which runs as root)
+need "no skin proxy runs as root or atta-run" bash -c "pgrep -f '[u]i-bridge/proxy.js' | xargs -r ps -o user= -p | grep -qE '^(root|atta-run)$'"
 
 if [ -n "$DRILL" ]; then
   echo "== 7. deploy drill: deploy -> rollback -> deploy (ADM, with the test gate)"
   out="$(deployctl deploy "$DRILL" 2>&1 | tail -3)"; grep -q "RESULT: DEPLOYED" <<<"$out" && ok "deploy: $out" || bad "deploy: $out"
   job="$(deployctl jobs 2>/dev/null | tail -1 | awk '{print $1}')"
   deployctl journal "$job" 2>/dev/null | grep -q TESTED && ok "the bundle's tests ran before activation" || bad "no TESTED event in $job"
-  out="$(deployctl rollback 2>&1 | tail -2)"; grep -q "RESULT: ROLLED_BACK" <<<"$out" && ok "rollback: $out" || bad "rollback: $out"
+  # v117: a manual rollback is a deployment of its own (the previous known-good, reinstalled and checked by hash)
+  out="$(deployctl rollback 2>&1 | tail -2)"; grep -q "RESULT: DEPLOYED" <<<"$out" && ok "rollback: $out" || bad "rollback: $out"
   out="$(deployctl deploy "$DRILL" 2>&1 | tail -3)"; grep -q "RESULT: DEPLOYED" <<<"$out" && ok "redeploy: $out" || bad "redeploy: $out"
 fi
 
