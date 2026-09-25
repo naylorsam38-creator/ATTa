@@ -14,7 +14,7 @@ This repo wraps that installer so the install is:
 - **Proven after it runs.** Verification checks container health, the dashboard, the realtime server, the proxy, secrets, the admin account, that sign-up is closed, and that Coolify can actually run commands on the host over SSH.
 - **Connected to ATTa.** `connect-atta.sh` turns on the API, creates a least-privilege (`deploy`+`read`) token, and writes ATTa's `.env` lines and app map. ATTa's real hand-off code was run against Coolify installed by this kit and reached `DISPATCHED`.
 - **Recoverable.** It includes backup, restore to a new server, and upgrade with an automatic backup first.
-- **Tested.** 65 unit tests, plus a 51-assertion end-to-end test against real Coolify. It installs Coolify, deploys a real app through the API and loads it through the proxy, upgrades, wipes the server, reinstalls, restores, and proves the original login, data, API token and app came back.
+- **Tested.** 67 unit tests, plus a 51-assertion end-to-end test against real Coolify. It installs Coolify, deploys a real app through the API and loads it through the proxy, upgrades, wipes the server, reinstalls, restores, and proves the original login, data, API token and app came back.
 
 ## Quick start
 
@@ -56,7 +56,7 @@ It's about 15 minutes of clicking and they matter.
 
 ```bash
 make lint        # shellcheck on every script
-make test        # 65 unit tests, no Docker or network needed
+make test        # 67 unit tests, no Docker or network needed
 make e2e         # DESTRUCTIVE: real install/upgrade/backup/wipe/restore; throwaway VM only
 ```
 
