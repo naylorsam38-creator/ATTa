@@ -1,0 +1,124 @@
+#!/usr/bin/env python3
+"""deployctl — hand control over ADM from a terminal. Run as root on the server.
+
+  deployctl deploy <bundle.zip>   stage, check, back up, activate, health-check; rolls back on failure
+  deployctl rollback              put the previous release back (or the latest backup)
+  deployctl status                what is live, what was live before, last job and its verdict
+  deployctl releases              every kept release, newest first
+  deployctl jobs                  every journaled job with its verdict
+  deployctl journal <job>         the full event list for one job
+  deployctl log <job>             the FAIL lines and the last line of that job's bash-run log
+
+Every command prints one final line starting with RESULT: — read that line first.
+"""
+import json, os, sys
+from pathlib import Path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from adm import config, journal, queue, manager, activation
+
+# ===================== CONFIG — edit here, nothing below needs reading =====================
+# All settings are in adm/config.py.
+# ==========================================================================================
+
+
+def _v(p):
+    return manager._version_of(p) if p else "-"
+
+
+def cmd_deploy(args):
+    if len(args) != 1:
+        return usage()
+    job = queue.enqueue(args[0], requested_by="deployctl", origin="local")
+    meta = next(m for m in queue.pending() if m["job_id"] == job)
+    verdict = manager.process(meta)
+    doc = journal.load(job)
+    print(f"job {job}  log {doc.get('log')}")
+    print(f"RESULT: {verdict} {doc.get('version', '')}".rstrip())
+    return 0 if verdict == "DEPLOYED" else 1
+
+
+def cmd_rollback(args):
+    job = journal.new_job_id()
+    config.ensure_dirs()
+    logp = config.LOGS / f"{job}.log"
+    journal.record(job, "QUEUED", requested_by="deployctl rollback", log=str(logp))
+    with open(logp, "a") as log, manager.exclusive():
+        cur = activation.current()
+        ok = manager._rollback(job, log, failed_release=cur)
+    print(f"job {job}  log {logp}")
+    print(f"RESULT: {'ROLLED_BACK' if ok else 'ROLLBACK_FAILED'} now live: {_v(activation.current())}")
+    return 0 if ok else 1
+
+
+def cmd_status(args):
+    cur, prev = activation.current(), activation.previous()
+    print(f"live:     {_v(cur)}  {cur or '(not deployed through ADM yet)'}")
+    print(f"previous: {_v(prev)}  {prev or '-'}")
+    live = config.APP / "release.json"
+    print(f"live code folder: {config.APP}  ({live.read_text().strip() if live.is_file() else 'no release.json — deployed before ADM'})")
+    jobs = journal.all_jobs()
+    pend = queue.pending()
+    print(f"queued: {len(pend)}")
+    if jobs:
+        j = jobs[-1]
+        print(f"last job: {j['job_id']}  verdict {j.get('verdict')}  version {j.get('version', '-')}  build {j.get('build_id') or '-'}")
+        print(f"RESULT: {j.get('verdict')}")
+    else:
+        print("RESULT: NO_JOBS_YET")
+    return 0
+
+
+def cmd_releases(args):
+    rels = sorted((p for p in config.RELEASES.iterdir() if p.is_dir()), reverse=True) if config.RELEASES.is_dir() else []
+    cur = activation.current()
+    for r in rels:
+        print(f"{'LIVE ' if cur and r.resolve() == cur else '     '}{_v(r):<16} {r.name}")
+    print(f"RESULT: {len(rels)} releases kept")
+    return 0
+
+
+def cmd_jobs(args):
+    for j in journal.all_jobs():
+        print(f"{j['job_id']}  {j.get('verdict'):<16} {j.get('version', '-'):<14} build {j.get('build_id') or '-'}")
+    print(f"RESULT: {len(journal.all_jobs())} jobs")
+    return 0
+
+
+def cmd_journal(args):
+    if len(args) != 1:
+        return usage()
+    doc = journal.load(args[0])
+    print(json.dumps(doc, indent=2))
+    print(f"RESULT: {doc.get('verdict')}")
+    return 0
+
+
+def cmd_log(args):
+    if len(args) != 1:
+        return usage()
+    p = config.LOGS / f"{args[0]}.log"
+    if not p.is_file():
+        print(f"RESULT: no log for {args[0]}"); return 1
+    lines = p.read_text().splitlines()
+    for l in lines:
+        if l.startswith("FAIL"):
+            print(l)
+    print(f"RESULT: {lines[-1] if lines else '(empty log)'}")
+    return 0
+
+
+def usage():
+    print(__doc__); print("RESULT: USAGE"); return 2
+
+
+COMMANDS = {"deploy": cmd_deploy, "rollback": cmd_rollback, "status": cmd_status, "releases": cmd_releases,
+            "jobs": cmd_jobs, "journal": cmd_journal, "log": cmd_log}
+
+if __name__ == "__main__":
+    a = sys.argv[1:]
+    if not a or a[0] not in COMMANDS:
+        sys.exit(usage())
+    try:
+        sys.exit(COMMANDS[a[0]](a[1:]))
+    except RuntimeError as e:
+        print(f"FAIL {e}"); print("RESULT: FAILED"); sys.exit(1)
