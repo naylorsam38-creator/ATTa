@@ -130,12 +130,16 @@ def discovered_html(r,me=None):
  if d:
   out+="<h2>Apps found in the upload</h2><table><tr><th>App</th><th>Where in the zip</th><th>How it was recognised</th><th>Library</th></tr>"
   added=set(r.get("apps_added") or []); kept=set(r.get("apps_already_in_library") or [])
-  out+="".join("<tr><td>"+html.escape(a.get("name",""))+"</td><td><code>"+html.escape(a.get("rel",""))+"</code></td><td>"+html.escape(a.get("how",""))+"</td><td>"+("added" if a.get("name") in added else "already there (library copy kept)" if a.get("name") in kept else "")+"</td></tr>" for a in d)+"</table>"
+  filtered_d=[a for a in d if app_owners.can_access(me, a.get("name",""))] if me else d
+  shown=len(filtered_d); total=len(d)
+  out+="".join("<tr><td>"+html.escape(a.get("name",""))+"</td><td><code>"+html.escape(a.get("rel",""))+"</code></td><td>"+html.escape(a.get("how",""))+"</td><td>"+("added" if a.get("name") in added else "already there (library copy kept)" if a.get("name") in kept else "")+"</td></tr>" for a in filtered_d)+"</table>"
+  if shown < total:
+   out+="<p><small>(Showing "+str(shown)+" app(s) you can access out of "+str(total)+" found.)</small></p>"
  if ev:
   ev={a:e for a,e in ev.items() if app_owners.can_access(me,a)}
   if ev: out+="<h2>What the browser saw (stage 6 evidence)</h2><p>"+" &middot; ".join("<b>"+html.escape(a)+"</b>: "+" ".join("<a href=/evidence/"+html.escape(a)+"/"+f+">"+f+"</a>" for f in EVIDENCE_FILES if e.get({"screenshot.png":"screenshot","page.html":"html","browser.json":"browser"}[f])) for a,e in ev.items())+"</p>"
  return out
-def checklist_html(r):
+def checklist_html(r, me=None):
  cl=r.get("checklist")
  if not cl: return ""
  sym={"PASS":"&#10003;","FAIL":"&#10007;","SKIP":"&middot;","N/A":"&ndash;","INFO":"i"}
@@ -144,9 +148,14 @@ def checklist_html(r):
  def cells(x):
   st={s["no"]:s for s in x.get("steps",[])}
   return "".join("<td title=\""+html.escape(names.get(n,"")+": "+st.get(n,{}).get("note",""))+"\" class="+("QUALIFIED" if st.get(n,{}).get("tick")=="PASS" else "FAILED" if st.get(n,{}).get("tick")=="FAIL" else "")+">"+sym.get(st.get(n,{}).get("tick"),"?")+"</td>" for n in nos)
- rows="".join("<tr><td>"+html.escape(x["no"])+"</td><td>"+html.escape(x["app"])+"</td><td class="+("QUALIFIED" if x["tick"]=="PASS" else "FAILED")+">"+html.escape(x["tick"])+"</td>"+cells(x)+"<td>"+html.escape(str(x.get("stopped_at") or ""))+"</td><td>"+html.escape(next((s.get("note","") for s in x.get("steps",[]) if s["no"]=="S11"),""))+"</td><td>"+html.escape(str(x.get("seconds") if x.get("seconds") is not None else ""))+"</td></tr>" for x in cl.get("rows",[]))
+ all_rows=cl.get("rows",[])
+ filtered_rows=[x for x in all_rows if app_owners.can_access(me, x.get("app",""))] if me else all_rows
+ rows="".join("<tr><td>"+html.escape(x["no"])+"</td><td>"+html.escape(x["app"])+"</td><td class="+("QUALIFIED" if x["tick"]=="PASS" else "FAILED")+">"+html.escape(x["tick"])+"</td>"+cells(x)+"<td>"+html.escape(str(x.get("stopped_at") or ""))+"</td><td>"+html.escape(next((s.get("note","") for s in x.get("steps",[]) if s["no"]=="S11"),""))+"</td><td>"+html.escape(str(x.get("seconds") if x.get("seconds") is not None else ""))+"</td></tr>" for x in filtered_rows)
+ shown=len(filtered_rows); total=len(all_rows)
  key="<p><small>"+" &middot; ".join(html.escape(n+" "+names[n]) for n in nos)+"<br>&#10003; pass &nbsp; &#10007; fail &nbsp; &middot; not reached &nbsp; &ndash; not applicable &nbsp; i recorded</small></p>"
  head="<p>Expected <b>"+str(cl["expected"])+"</b> apps, ticked <b>"+str(cl["ticked"])+"</b>: "+str(cl["PASS"])+" pass, "+str(cl["FAIL"])+" fail, "+str(cl["NOT_CHECKED"])+" not checked &middot; <b>"+("COMPLETE" if cl["complete"] else "INCOMPLETE")+"</b></p>"
+ if shown < total:
+  head+="<p><small>(Showing "+str(shown)+" app(s) you can access out of "+str(total)+" tested.)</small></p>"
  if "regressions" in cl:
   head+="<p><b class="+("FAILED" if cl["regressions"] else "QUALIFIED")+">Regressions since last full run: "+str(len(cl["regressions"]))+"</b> "+html.escape(", ".join(cl["regressions"]))+" &middot; newly passing: "+html.escape(", ".join(cl.get("newly_passing") or []) or "none")+"</p>"
  return "<h2>Test checklist</h2>"+head+key+"<div style=overflow-x:auto><table><tr><th>No.</th><th>App</th><th>Result</th>"+"".join("<th>"+html.escape(n)+"</th>" for n in nos)+"<th>Stopped at</th><th>Adapter</th><th>Secs</th></tr>"+rows+"</table></div>"
@@ -388,9 +397,14 @@ class H(BaseHTTPRequestHandler):
    r=builds.get(m.group(2)) if builds.ID_RE.match(m.group(2)) else None
    # Someone else's build answers exactly like a missing one.
    if not r or not builds.can_see(me,r): self.send_error(404); return
-   if m.group(1): self.json_out(r); return
+   if m.group(1):
+    admin=me.get("role")=="admin"
+    record_to_show=r if admin else {k:v for k,v in r.items() if k not in ("apps_discovered","apps_added","apps_already_in_library","qualification","checklist")}
+    self.json_out(record_to_show); return
    hist="".join("<tr><td>"+when(h.get("at"))+"</td><td class="+html.escape(h.get("state",""))+">"+html.escape(h.get("state",""))+"</td><td>"+html.escape(h.get("error",""))+"</td></tr>" for h in r.get("history",[]))
-   self.out(page(r["id"],"<h1>Build "+html.escape(r["id"])+"</h1><p>Owner: <b>"+html.escape(r.get("owner",""))+"</b> &middot; State: <b class="+html.escape(r.get("state",""))+">"+html.escape(r.get("state",""))+"</b></p>"+("<p>"+html.escape(str(r["error"]))+"</p>" if r.get("error") else "")+discovered_html(r,me)+checklist_html(r)+adm_html(r)+"<h2>History</h2><table>"+hist+"</table>"+healing_html(r)+"<h2>Full record</h2><pre>"+html.escape(json.dumps(r,indent=2))+"</pre>",me)); return
+   admin=me.get("role")=="admin"
+   record_to_show=r if admin else {k:v for k,v in r.items() if k not in ("apps_discovered","apps_added","apps_already_in_library","qualification","checklist")}
+   self.out(page(r["id"],"<h1>Build "+html.escape(r["id"])+"</h1><p>Owner: <b>"+html.escape(r.get("owner",""))+"</b> &middot; State: <b class="+html.escape(r.get("state",""))+">"+html.escape(r.get("state",""))+"</b></p>"+("<p>"+html.escape(str(r["error"]))+"</p>" if r.get("error") else "")+discovered_html(r,me)+checklist_html(r,me)+adm_html(r)+"<h2>History</h2><table>"+hist+"</table>"+healing_html(r)+"<h2>Full record</h2><pre>"+html.escape(json.dumps(record_to_show,indent=2))+"</pre>",me)); return
   if p=="/alerts":
    # Human escalations (tier 4 of self-healing) span every user's builds: admin-only.
    if me["role"]!="admin": self.redirect("/builds"); return

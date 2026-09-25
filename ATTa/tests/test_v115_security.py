@@ -769,6 +769,99 @@ class Gateway(unittest.TestCase):
                                  {"Content-Type": "application/json"})
         self.assertEqual(code, 400); self.assertNotIn(ATTA_SECRET.encode(), body)
 
+    # ---- build-result authorization (v115 continuation)
+    def test_build_results_filtered_by_ownership(self):
+        # Create a build record with a checklist containing multiple apps (b-YYYYMMDD-HHMMSS-XXXXXXXX format)
+        import datetime
+        now = datetime.datetime.now()
+        bid = f"b-{now.strftime('%Y%m%d')}-{now.strftime('%H%M%S')}-12345678"
+        build_record = {
+            "id": bid,
+            "owner": "tester01",
+            "created": time.time(),
+            "updated": time.time(),
+            "state": "COMPLETE",
+            "origin": "web",
+            "apps_discovered": [{"name": "appa"}, {"name": "appb"}],
+            "checklist": {
+                "expected": 2,
+                "ticked": 2,
+                "PASS": 2,
+                "FAIL": 0,
+                "NOT_CHECKED": 0,
+                "complete": True,
+                "rows": [
+                    {"no": "1", "app": "appa", "tick": "PASS", "steps": []},
+                    {"no": "2", "app": "appb", "tick": "PASS", "steps": []}
+                ]
+            }
+        }
+        (self.root / "state/builds").mkdir(parents=True, exist_ok=True)
+        (self.root / f"state/builds/{bid}.json").write_text(json.dumps(build_record))
+        # Set appb owner to tester02
+        (self.root / "state/app_owners.json").write_text(json.dumps({
+            "appa": {"owner": "tester01", "build_id": None, "at": 0},
+            "appb": {"owner": "tester02", "build_id": None, "at": 0}
+        }))
+
+        # tester01 can see their own build page and checklist shows only apps they own
+        code, _, body = self.req(f"/builds/{bid}", "tester01")
+        self.assertEqual(code, 200, body[:400] if code != 200 else "")
+        self.assertIn(b"Test checklist", body)
+        self.assertIn(b">appa<", body)  # tester01 owns appa
+        self.assertNotIn(b">appb<", body)  # tester01 doesn't own appb
+        self.assertIn(b"Showing 1 app", body)  # Shows filtering note
+
+        # tester02 cannot see tester01's build
+        code, _, _ = self.req(f"/builds/{bid}", "tester02")
+        self.assertEqual(code, 404)
+
+        # admin can see everything
+        code, _, body = self.req(f"/builds/{bid}", "admin")
+        self.assertEqual(code, 200)
+        self.assertIn(b">appa<", body)
+        self.assertIn(b">appb<", body)
+        self.assertNotIn(b"Showing", body)  # No filtering note for admin
+
+    def test_build_api_filters_details_for_non_admin(self):
+        import datetime
+        now = datetime.datetime.now()
+        bid = f"b-{now.strftime('%Y%m%d')}-{now.strftime('%H%M%S')}-87654321"
+        build_record = {
+            "id": bid,
+            "owner": "tester01",
+            "created": time.time(),
+            "updated": time.time(),
+            "state": "COMPLETE",
+            "origin": "web",
+            "apps_discovered": [{"name": "appa"}],
+            "checklist": {"expected": 1, "rows": []},
+            "qualification": [{"app": "appa"}]
+        }
+        (self.root / "state/builds").mkdir(parents=True, exist_ok=True)
+        (self.root / f"state/builds/{bid}.json").write_text(json.dumps(build_record))
+
+        code, _, body = self.req(f"/api/builds/{bid}", "tester01")
+        self.assertEqual(code, 200)
+        rec = json.loads(body)
+        # Non-admin response omits apps_discovered, checklist, etc.
+        self.assertNotIn("apps_discovered", rec)
+        self.assertNotIn("apps_added", rec)
+        self.assertNotIn("apps_already_in_library", rec)
+        self.assertNotIn("qualification", rec)
+        self.assertNotIn("checklist", rec)
+        # But still has essential fields
+        self.assertIn("id", rec)
+        self.assertIn("owner", rec)
+        self.assertIn("state", rec)
+
+        # Admin response includes everything
+        code, _, body = self.req(f"/api/builds/{bid}", "admin")
+        self.assertEqual(code, 200)
+        rec = json.loads(body)
+        self.assertIn("apps_discovered", rec)
+        self.assertIn("checklist", rec)
+
 
 if __name__ == "__main__":
     unittest.main()

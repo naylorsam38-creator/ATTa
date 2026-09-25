@@ -53,6 +53,10 @@ The fixes sit underneath.
 - **Cross-site POSTs refused** (`same_origin_post`): `Sec-Fetch-Site` must be same-origin, and
   `Origin`/`Referer` must be this host and port. Closes the "script elsewhere acts as the admin" half of
   the chain, including apps deployed on a sibling subdomain.
+- **Build results filtered by ownership.** A non-admin user's build page shows only the test results (checklist
+  rows and discovered apps) for applications they own. The full build record JSON is also filtered to omit
+  apps, checklists, and qualification data. Admins see everything (needed for system oversight). This closes
+  information leakage where a user could learn about all library apps from viewing their own builds.
 
 **#3 Trust from origin, not names**
 - `reserved.py` (new, one list for the pipeline and ADM): `system`, `deployctl`, `incoming`, `local`,
@@ -87,8 +91,5 @@ The fixes sit underneath.
   An app that refuses to boot without a *valid* key will fail the local check. Its Coolify deployment is
   where it runs for real. The next step, if wanted, is a stage that checks the deployed Coolify URL.
 - **No token field on the Front Door yet.** Tokens are entered on the app's **tokens** page (or the API).
-- **Build records are still shared too widely.** Every build re-checks the whole library, so a user's build
-  record lists every app's results (names, errors), including other users' apps. Evidence files are now
-  owner-only. The record itself isn't yet trimmed per viewer.
 - Not run against a live Coolify or the AWS box. Pipeline and gateway still run as root (as in v114).
 - Builds queued before this upgrade have no origin and are refused: upload them again.
