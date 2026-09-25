@@ -11,3 +11,4 @@ config/coolify.env
 # Handover bundle generated from this repo (git archive); shared directly, not versioned.
 ATTa-handover.zip
 ATTa-Coolify-Bundle.zip
+ATTa-Coolify-Kit-only.zip
