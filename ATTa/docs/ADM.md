@@ -68,7 +68,26 @@ Authority comes from **where a job came from**, never from a name written in it:
   start with `admin-`.
 - A zip placed straight into `/srv/app-builder/inbox/` with no build record counts as the server's own
   only if root put it there and the inbox is not writable by anyone else; otherwise it is refused. For
-  system updates prefer `sudo deployctl deploy`.
+  system updates prefer `sudo deployctl deploy`. (v116: the inbox is shared by the gateway and the runner,
+  so such drops are always refused now.)
+
+### v116: web uploads reach ADM through a request folder
+
+The pipeline no longer runs as root, so it cannot write ADM's root-only queue. An admin's uploaded bundle
+is copied to `adm/requests/` (owned by the runner user); deployd takes every request from there as a
+**web** job (the uploading account must still be an enabled admin), and refuses links, files owned by
+anyone else and a shared folder. The build page finds the job by the build's id.
+
+### v116: nothing is activated before its own tests pass
+
+After a bundle is staged and checked, and before any backup or change to the live system, ADM runs the
+bundle's own test suite (`python3 -m unittest discover -s tests`) as `nobody`, with an empty environment and
+throwaway folders. The journal records `TESTED` with the count. A failure refuses the bundle ("bundle tests
+failed: ...", nothing live touched). Settings: `ATTA_ADM_RUN_TESTS=0` skips it (emergency only; journaled as
+`TESTS_SKIPPED`), `ATTA_ADM_TEST_TIMEOUT` (1200 s), `ATTA_ADM_TEST_USER` (`nobody`).
+
+A bundle is also refused if the zip holds anything beside the bundle's own folder, an entry in that folder
+that a bundle is not made of, a link, or a `run` that does not start with `#!`.
 
 ## deployctl
 

@@ -7,6 +7,13 @@
 - Security group: ports 80 and 443 open.
 - DNS: A records for `airexploit.com` and `www` → the server's Elastic IP.
 
+## v116 security notes
+- Security group: 80 and 443 for everyone, **22 from your own address only**. Nothing else (Coolify's 8000 only
+  from the ATTa server, on Coolify's own server).
+- Until step 3 has HTTPS, ATTa answers on 127.0.0.1 only: reach it with `ssh -L 8080:127.0.0.1:80 <server>`.
+- Try every new bundle on a staging instance first: `sudo bash tests/staging/ec2_acceptance.sh` (see
+  `docs/SECURITY-V116.md`).
+
 ## Steps (each one's purpose)
 1. **Unzip v109 and run `sudo bash run`.** Installs Docker + compose (with the Docker Hub mirror), Python,
    Playwright/Chromium, nginx, the three ATTa services, and creates `/srv/app-builder/.env`.

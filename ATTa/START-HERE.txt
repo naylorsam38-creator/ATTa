@@ -19,6 +19,11 @@ WHAT HAPPENS
 
 It creates the login password and secrets for you, so nothing stalls.
 
+v116: on a server, ATTa answers only on 127.0.0.1 until HTTPS is set up (APP_BUILDER_DOMAIN and
+APP_BUILDER_LETSENCRYPT_EMAIL in /srv/app-builder/.env, then `bash run` again). Meanwhile reach it with
+    ssh -L 8080:127.0.0.1:80 <server>        and open http://127.0.0.1:8080/
+What changed and why: docs/SECURITY-V116.md
+
 UPDATING A RUNNING SERVER
 -------------------------
     sudo deployctl deploy ATTa-deployNNN.zip     (or upload the zip on the web Add page)

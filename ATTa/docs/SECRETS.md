@@ -44,6 +44,14 @@ everything secret-looking in it is protected, and an app that receives it is ref
 The client form (collect a customer's service tokens per app, store them encrypted, inject them only into
 that app) is the next step; it plugs into the same place (`part["env"]`) and the same scan.
 
+## Everything else that keeps ATTa's secrets away from apps (v116)
+
+- Skin proxies (`run-ui.sh`) run as the `atta-proxy` user with an empty environment, from a verified copy of
+  their overlay: they never see the service's secrets or the library (which holds customers' `.env` files).
+- App containers can reach the internet but not the metadata service, private networks or the ATTa server
+  (`container-egress.sh`), so a secret could not be fetched from inside the network either.
+- git runs with a minimal environment; the LLM repair tier gets redacted text only and is off by default.
+
 ## Apps that need the host (Portainer, Coolify, other Docker managers)
 
 The old server-wide `APP_BUILDER_ALLOW_HOST_ACCESS=true` handed the Docker socket (root on this server) to

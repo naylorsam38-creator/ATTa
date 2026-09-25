@@ -1,5 +1,5 @@
 {
-  "version": "v115",
+  "version": "v116",
   "entrypoint": "run",
   "state_version": 1,
   "features": [
@@ -10,6 +10,7 @@
     "v114_hardening_admin_only_updates_container_isolation_metadata_block_llm_redaction",
     "v114_1_installer_env_as_data_pinned_compose_clean_code_releases_docker_ordering_perms",
     "v114_2_all_apps_at_once_no_start_gates_script_probe_learns_general_rules_llm_off",
-    "v115_secret_separation_evidence_isolation_origin_based_deploy_authority"
+    "v115_secret_separation_evidence_isolation_origin_based_deploy_authority",
+    "v116_services_unprivileged_overlay_integrity_https_default_egress_ssrf_throttling_pinned_deps_deploy_test_gate"
   ]
 }

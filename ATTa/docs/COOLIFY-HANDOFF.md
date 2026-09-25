@@ -60,7 +60,7 @@ QUEUED → VALIDATING → FETCHING_LIBRARY → INSTALLING_UI_CAPABILITY
 | Coolify | Install it with `sudo bash 05-coolify/install-coolify.sh`, ideally on its own server. |
 | Coolify → Settings → Advanced | Turn **API Access** on. Otherwise every call gets 403 "API is disabled". |
 | Coolify → Keys & Tokens | Create an API token with the **deploy** and **read** permissions. |
-| `<ROOT>/.env` | `COOLIFY_URL=http://your-coolify-host:8000` and `COOLIFY_TOKEN=<that token>` |
+| `<ROOT>/.env` | `COOLIFY_URL=http://<Coolify's PRIVATE address>:8000` (or `https://...`) and `COOLIFY_TOKEN=<that token>`. v116 only sends the token over HTTPS or to a private address (`COOLIFY_ALLOW_HTTP=true` overrides), and never follows a redirect with it. Restrict port 8000 to the ATTa server. |
 | `<ROOT>/coolify_resources.json` | Maps each app name (the `app` field above) to the Coolify resource UUID that runs it: `{"apps": {"Grafana": "<uuid>"}}` |
 
 Restart the pipeline service after you edit `.env`: `systemctl restart app-builder-pipeline`.
