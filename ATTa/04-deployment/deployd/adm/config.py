@@ -48,11 +48,22 @@ MAX_BUNDLE_FILES = int(os.environ.get("ATTA_ADM_MAX_BUNDLE_FILES", "20000"))
 MAX_COMPRESSION_RATIO = int(os.environ.get("ATTA_ADM_MAX_COMPRESSION_RATIO", "200"))
 # How often deployd looks at the queue (seconds).
 POLL_SECONDS = 5
+# v115: the only user whose files ADM trusts in its queue and incoming folders. Root on a server. Not read from
+# the environment on purpose: whoever sets deployd's environment is root already. Tests override it in-process.
+TRUSTED_UID = 0
 # ==========================================================================================
 
 DIRS = (INCOMING, QUEUE, JOURNAL, STAGING, RELEASES, BACKUPS, LOGS)
+# v115: nobody but TRUSTED_UID may read or write these. A job's authority depends on them (see authz.py).
+PRIVATE_DIRS = (INCOMING, QUEUE)
 
 
 def ensure_dirs():
     for d in DIRS:
         d.mkdir(parents=True, exist_ok=True)
+    for d in PRIVATE_DIRS:
+        try:
+            if d.stat().st_uid == os.geteuid():
+                d.chmod(0o700)
+        except OSError:
+            pass   # authz refuses jobs from a folder it cannot vouch for, so a failure here fails closed

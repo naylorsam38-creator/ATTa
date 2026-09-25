@@ -70,7 +70,7 @@ def process(meta):
         journal.record(job, "STAGING", log=str(logp))
         release = None
         try:
-            ok, why = authz.allowed(meta.get("requested_by"))
+            ok, why = authz.allowed(meta)
             if not ok:
                 raise staging.BundleRejected(f"not authorised: {why}")
             staged = staging.extract(meta["archive"], job)

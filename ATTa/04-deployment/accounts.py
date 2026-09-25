@@ -44,6 +44,32 @@ ROLES = ("admin", "user")
 NAME_RE = re.compile(r"^[a-z0-9][a-z0-9_.-]{1,31}$")
 _LOCK = threading.Lock()
 
+# v115: names that meant "trusted process" in older code (ADM treated a job from `system`, `incoming` or
+# `deployctl` as local). No account may use one: authority comes from where a job came from, never from a
+# name. Existing accounts with one of these names are disabled at startup (disable_reserved_accounts).
+# deployd/adm/authz.py keeps its own copy of this set (it cannot import this module); a test keeps them equal.
+RESERVED_EXACT_NAMES = frozenset({"system", "incoming", "deployctl", "local", "root"})
+# New accounts may not start with these either (look-alikes of the real admin). Existing ones are left alone:
+# disabling a real person's admin account at startup would lock them out.
+RESERVED_PREFIXES = ("admin-",)
+
+
+def is_reserved_name(name) -> bool:
+    """True for names no account may be created with."""
+    n = str(name or "").strip().lower()
+    return n in RESERVED_EXACT_NAMES or n.startswith(RESERVED_PREFIXES)
+
+
+def disable_reserved_accounts() -> list[str]:
+    """Disable every enabled account whose name is in RESERVED_EXACT_NAMES. Returns the names disabled now.
+    Called by the gateway and the pipeline at startup. Disabling also ends the account's sessions."""
+    done = []
+    for name, u in list(load()["users"].items()):
+        if str(name).strip().lower() in RESERVED_EXACT_NAMES and not u.get("disabled"):
+            update(name, disabled=True, disabled_reason="reserved account name (v115)")
+            done.append(name)
+    return done
+
 
 def _hash(password: str, salt: bytes, iterations: int) -> str:
     return hashlib.pbkdf2_hmac("sha256", password.encode(), salt, iterations).hex()
@@ -74,6 +100,7 @@ def save(d: dict) -> None:
     fd, tmp = tempfile.mkstemp(dir=USERS_FILE.parent, prefix=".users.")
     with os.fdopen(fd, "w") as f:
         json.dump(d, f, indent=2); f.write("\n")
+        f.flush(); os.fsync(f.fileno())
     os.chmod(tmp, 0o600)
     os.replace(tmp, USERS_FILE)
 
@@ -85,7 +112,7 @@ def get(name: str) -> dict | None:
 def verify(name: str, password: str) -> dict | None:
     """Return the account if name+password are right and the account is enabled, else None.
     Always does one hash, even for unknown names, so response time doesn't reveal which names exist."""
-    u = get(name)
+    u = None if str(name or "").strip().lower() in RESERVED_EXACT_NAMES else get(name)
     p = (u or {}).get("password") or {"salt": "00" * 16, "iterations": PBKDF2_ITERATIONS, "hash": ""}
     got = _hash(password, bytes.fromhex(p["salt"]), int(p["iterations"]))
     if u and not u.get("disabled") and hmac.compare_digest(got, p["hash"]):
@@ -94,6 +121,8 @@ def verify(name: str, password: str) -> dict | None:
 
 
 def create(name: str, role: str, password: str | None = None, note: str = "") -> str:
+    if is_reserved_name(name):
+        raise ValueError(f"account name {name!r} is reserved (system, incoming, deployctl, local, root, admin-*)")
     if not NAME_RE.match(name):
         raise ValueError(f"bad username {name!r}: 2-32 chars, lowercase letters, digits, _ . -")
     if role not in ROLES:
@@ -184,6 +213,8 @@ def main(argv=None) -> int:
         elif args.cmd == "disable":
             update(args.name, disabled=True); print(f"{args.name} disabled")
         elif args.cmd == "enable":
+            if is_reserved_name(args.name):
+                raise ValueError(f"{args.name!r} is a reserved name and stays disabled; create a new account instead")
             update(args.name, disabled=False); print(f"{args.name} enabled")
     except ValueError as e:
         print(f"error: {e}", file=sys.stderr)

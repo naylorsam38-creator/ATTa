@@ -48,6 +48,26 @@ def raise_alert(build_id: str, layer: str, items: list[dict], chain: list[dict])
     return alert
 
 
+def system_alert(kind: str, text: str, **fields) -> dict:
+    """v115: an alert about the system itself (no build), e.g. an account disabled for a reserved name.
+    Carries names only: never passwords, tokens or other secret values."""
+    now = time.time()
+    alert = {"schema": "APP_BUILDER_ALERT.v1", "at": now, "build_id": "", "layer": kind, "items": [],
+             "chain": [], "text": "[APP Builder] " + text, "delivered": [], **fields}
+    if WEBHOOK:
+        try:
+            req = Request(WEBHOOK, data=json.dumps({"text": alert["text"], "alert": alert}).encode(),
+                          headers={"Content-Type": "application/json"}, method="POST")
+            with urlopen(req, timeout=TIMEOUT) as r:
+                alert["delivered"].append(f"webhook HTTP {r.status}")
+        except Exception as e:
+            alert["delivered"].append(f"webhook FAILED: {e}")
+    ALERT_DIR.mkdir(parents=True, exist_ok=True)
+    (ALERT_DIR / f"{time.strftime('%Y%m%d-%H%M%S', time.gmtime(now))}-system-{kind}.json").write_text(
+        json.dumps(alert, indent=2) + "\n")
+    return alert
+
+
 def recent(limit: int = 50) -> list[dict]:
     out = []
     for p in sorted(ALERT_DIR.glob("*.json"), reverse=True)[:limit]:

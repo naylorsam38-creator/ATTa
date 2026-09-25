@@ -16,6 +16,13 @@ LOCAL_ADMIN={"name":"local","role":"admin"}
 for p in (INBOX,STATUS.parent,CHOICES): p.mkdir(parents=True,exist_ok=True)
 if not AUTH_DISABLED and not SECRET: raise SystemExit("APP_BUILDER_SESSION_SECRET is required")
 if not AUTH_DISABLED and not accounts.load()["users"]: raise SystemExit("No accounts exist. Run: python3 accounts.py init")
+def disable_reserved_at_startup():
+ """v115: an account named system/incoming/deployctl/local/root was once treated as a trusted process.
+ Disable any that exist (ends their sessions) and tell an admin. Names only in the alert, never secrets."""
+ gone=accounts.disable_reserved_accounts()
+ if gone:
+  alerts.system_alert("reserved-accounts","Disabled account(s) with a reserved name at startup: "+", ".join(sorted(gone))+". These names can no longer log in or deploy; create a normal account if a person needs access.",accounts_disabled=sorted(gone))
+ return gone
 def client_ip(h):
  x=h.headers.get("X-Real-IP") or h.client_address[0]
  return x.split(",",1)[0].strip()
@@ -319,7 +326,7 @@ class H(BaseHTTPRequestHandler):
    if me["role"]!="admin": self.redirect("/builds"); return
    rows=alerts.recent()
    body="<h1>Alerts</h1><p>Raised only after the known-fix script, the capability adapter and the LLM could not fix a failure.</p>"
-   body+="".join("<h3>"+when(a.get("at"))+" &middot; <a href=/builds/"+html.escape(a.get("build_id",""))+">"+html.escape(a.get("build_id",""))+"</a> &middot; "+html.escape(a.get("layer",""))+"</h3><pre>"+html.escape(a.get("text",""))+"</pre>" for a in rows) or "<p>No alerts.</p>"
+   body+="".join("<h3>"+when(a.get("at"))+" &middot; "+("<a href=/builds/"+html.escape(a["build_id"])+">"+html.escape(a["build_id"])+"</a>" if a.get("build_id") else "system")+" &middot; "+html.escape(a.get("layer",""))+"</h3><pre>"+html.escape(a.get("text",""))+"</pre>" for a in rows) or "<p>No alerts.</p>"
    self.out(page("Alerts",body,me)); return
   if p=="/status":
    # System-wide pipeline state spans every user's builds, so it is admin-only.
@@ -400,7 +407,7 @@ class H(BaseHTTPRequestHandler):
     try:f.with_suffix('.uploading').unlink()
     except OSError:pass
     self.out(page("Upload failed","<h1>Upload failed</h1><p>"+html.escape(str(exc))+"</p><a href=/upload>Try again</a>",me),400); return
-   b=builds.create(me["name"],bundle_bytes=written,original_name=getattr(self,"_upload_name","") or None)
+   b=builds.create(me["name"],origin="web",bundle_bytes=written,original_name=getattr(self,"_upload_name","") or None)
    f.replace(INBOX/(b["id"]+".zip"))
    # Redirect (Post/Redirect/Get): refreshing the build page can never upload the file again.
    self.redirect("/builds/"+b["id"]); return
@@ -411,10 +418,12 @@ class H(BaseHTTPRequestHandler):
    url=parse_qs(self.rfile.read(n).decode("utf-8","replace")).get("url",[""])[0].strip()
    if not re.fullmatch(r"https://[A-Za-z0-9.-]+/[A-Za-z0-9._~/-]+?(\.git)?/?",url):
     self.out(page("Not a repo URL","<h1>That isn't a usable repository address</h1><p>Use an https address like https://github.com/owner/name</p><a href=/upload>Back</a>",me),400); return
-   b=builds.create(me["name"],source=url,kind="git")
+   b=builds.create(me["name"],origin="web",source=url,kind="git")
    tmp=INBOX/(".incoming-"+b["id"]+".part")
    tmp.write_text(json.dumps({"url":url})+"\n"); tmp.replace(INBOX/(b["id"]+".repo.json"))
    self.redirect("/builds/"+b["id"]); return
   self.send_error(404)
  def log_message(self,*a): pass
-ThreadingHTTPServer((HOST,PORT),H).serve_forever()
+if __name__=="__main__":
+ if not AUTH_DISABLED: disable_reserved_at_startup()
+ ThreadingHTTPServer((HOST,PORT),H).serve_forever()

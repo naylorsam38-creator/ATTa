@@ -13,6 +13,7 @@ MAX_EXTRACTED=int(os.environ.get('APP_BUILDER_MAX_EXTRACTED','53687091200'))
 GIT_TIMEOUT=int(os.environ.get('APP_BUILDER_GIT_TIMEOUT','900'))
 INSTALL_TIMEOUT=int(os.environ.get('APP_BUILDER_INSTALL_TIMEOUT','1800'))
 for p in (INBOX,WORK,LIB,STATE,PKG): p.mkdir(parents=True,exist_ok=True)
+if str(HERE/'deployd') not in sys.path: sys.path.insert(0,str(HERE/'deployd'))   # adm: ADM queue + trust checks
 
 def state(**kw):
     d={}
@@ -295,24 +296,40 @@ def ingest_repo(url,bid,owner):
 
 # v114: only an admin may change the system itself. An ATTa bundle replaces the skins package (whose
 # install_all.py the pipeline then RUNS), the Front Door page every user sees, and queues a root
-# deploy with ADM. 'system' = a zip placed in the inbox from the server itself, not via the web.
-TRUSTED_OWNERS=('system',)
-def may_update_system(owner):
-    if owner in TRUSTED_OWNERS: return True
-    try: acct=accounts.get(owner) if owner else None
+# deploy with ADM.
+# v115: authority comes from where the upload came from, never from a name. `local` is decided by
+# process() itself (a zip root placed in a root-only inbox, see _local_inbox_drop); it is never read
+# back from a build record, so a record that merely says so is worth nothing.
+LOCAL_OWNER='(server)'   # shown as the owner of a zip placed in the inbox on the server; never an account name
+def may_update_system(owner,*,local=False):
+    if local: return True
+    name=str(owner or '').strip()
+    if not name or name.lower() in accounts.RESERVED_EXACT_NAMES: return False
+    try: acct=accounts.get(name)
     except Exception: acct=None
     return bool(acct) and acct.get('role')=='admin' and not acct.get('disabled')
+
+def _local_inbox_drop(b):
+    """(ok, reason): an inbox item with no build record counts as placed by the server itself only when the
+    inbox is a folder nobody but root can write and the item is a root-owned regular file with one link."""
+    from adm import authz
+    return authz.secure_file(b,INBOX)
+
+def _owner_of(rec):
+    o=str((rec or {}).get('owner') or '').strip()
+    if not o: raise RuntimeError('build record names no owner; refusing to process it')
+    return o
 
 class SystemUpdateRefused(RuntimeError):
     pass
 
-def queue_system_update(b,stage,bid,rec):
+def queue_system_update(b,stage,bid,rec,*,local=False):
     """An uploaded ATTa bundle also updates the system's own code. The zip is handed to ADM
     (deployd, 04-deployment/deployd/) which stages, checks, backs up the live code, runs the
     bundle's own `bash run`, health-checks, and rolls back on failure — after this build has
     finished, so the restart never kills a running build. Only the pipeline writes the build
     record: ADM's own progress lives in its journal, which the build page reads."""
-    if not may_update_system(rec.get('owner')):   # second check: process() already refuses first
+    if not may_update_system(rec.get('owner'),local=local):   # second check: process() already refuses first
         builds.update(bid,adm={'queued':False,'reason':'system updates need an admin account; system code unchanged'})
         step('SYSTEM_UPDATE_REFUSED',owner=rec.get('owner')); return None
     roots=[p.parent for p in stage.rglob('release.json') if (p.parent/'run').is_file() and (p.parent/'04-deployment/bootstrap.sh').is_file()]
@@ -323,7 +340,8 @@ def queue_system_update(b,stage,bid,rec):
     try:
         sys.path.insert(0,str(HERE/'deployd'))
         from adm import queue as adm_queue
-        job=adm_queue.enqueue(b,build_id=bid,original_name=rec.get('original_name') or b.name,requested_by=rec.get('owner','system'))
+        job=adm_queue.enqueue(b,origin='local' if local else 'web',requested_by=_owner_of(rec),
+                              build_id=bid,original_name=rec.get('original_name') or b.name)
         builds.update(bid,adm={'queued':True,'job_id':job,'note':'system code update queued with ADM; runs after this build finishes'})
         step('SYSTEM_UPDATE_QUEUED',adm_job=job)
         return job
@@ -359,27 +377,33 @@ def process(b):
       <id>.repo.json  {"url": "https://..."}                        -> clone a new app into the library
     Returns the build's final state."""
     global CURRENT_BUILD, LAST_BUILD
-    bid=build_id_of(b)
+    bid=build_id_of(b); local=False; refused_drop=None
     if not builds.ID_RE.match(bid) or builds.get(bid) is None:
-        # A zip dropped straight into the inbox (not via the gateway) still gets a build record.
-        bid=builds.create('system',bundle=b.name)['id']
+        # A zip dropped straight into the inbox (not via the gateway) still gets a build record. It acts
+        # for the server itself only if root put it in a root-only inbox; otherwise it is refused below.
+        local,why=_local_inbox_drop(b)
+        if not local: refused_drop=f'inbox item {b.name} has no build record and was not placed by root ({why}); refused'
+        bid=builds.create(LOCAL_OWNER,origin='local' if local else 'unknown',bundle=b.name)['id']
     rec=builds.get(bid) or {}
     CURRENT_BUILD=LAST_BUILD=bid
     step('VALIDATING',bundle=b.name)
     stage=WORK/f'run-{int(time.time())}-{os.getpid()}'; stage.mkdir()
     try:
         added=kept=[]
+        if refused_drop:
+            builds.update(bid,refused=True); raise SystemUpdateRefused(refused_drop)
+        owner=_owner_of(rec)
         if b.name.endswith('.repo.json'):
             url=json.loads(b.read_text()).get('url','')
             step('ADDING_APP',kind='git',source=url)
-            added,kept=ingest_repo(url,bid,rec.get('owner','system'))
+            added,kept=ingest_repo(url,bid,owner)
             builds.update(bid,package=ensure_package())
         else:
             with zipfile.ZipFile(b) as z: extract(z,stage)
             n=nested(stage,'UI_Skin_Capability_OneShot_v2.zip')
             if n:
                 builds.update(bid,kind='bundle')
-                if not may_update_system(rec.get('owner')):
+                if not may_update_system(owner,local=local):
                     # Refused before anything is touched: skins package, Front Door page and code stay as they are.
                     builds.update(bid,refused=True,adm={'queued':False,'reason':'system updates need an admin account; system code unchanged'})
                     raise SystemUpdateRefused(f"only an admin can upload an ATTa bundle (uploaded by {rec.get('owner')!r}); nothing was changed")
@@ -389,10 +413,10 @@ def process(b):
                 validate_package(PKG)
                 fronts=[p for p in stage.rglob('front-door.html') if p.parent.name=='02-front-door' and p.is_file()]
                 if len(fronts)==1: shutil.copy2(fronts[0],ROOT/'front-door.html')
-                queue_system_update(b,stage,bid,rec)
+                queue_system_update(b,stage,bid,rec,local=local)
             else:
                 step('ADDING_APP',kind='upload',source=rec.get('original_name') or b.name)
-                added,kept=ingest_upload(stage,bid,rec.get('owner','system'),rec.get('original_name'))
+                added,kept=ingest_upload(stage,bid,owner,rec.get('original_name'))
                 builds.update(bid,package=ensure_package())
         if added or kept: builds.update(bid,apps_added=added,apps_already_in_library=kept)
         step('FETCHING_LIBRARY'); lib=library()

@@ -52,6 +52,24 @@ labelled block at the top of `04-deployment/deployd/adm/config.py`.
 Only one deploy can run at a time (file lock). The daemon and the CLI never collide; the CLI just
 reports the lock if the daemon is mid-deploy.
 
+### Who may deploy (v115)
+
+Authority comes from **where a job came from**, never from a name written in it:
+
+- Every queued job records an `origin`: `web` (uploaded on the web) or `local` (queued on the server by
+  root: `deployctl deploy`, a zip in `incoming/`, or a zip root placed in the pipeline inbox).
+- A `web` job runs only if the account that uploaded it is an enabled **admin**.
+- Every job, of either origin, must sit in `state/queue/` as a root-owned file with one link, and that
+  folder must be `0700 root` (deployd sets this on start). Anyone able to write the queue could otherwise
+  forge any job. `incoming/` is only read while nobody but root can write it.
+- A job with no `origin` (queued by an older ATTa) or an unknown one is refused: queue it again.
+- The names `system`, `incoming`, `deployctl`, `local` and `root` cannot be accounts. An existing account
+  with one of them is disabled when the gateway starts, and an alert says so. New accounts also may not
+  start with `admin-`.
+- A zip placed straight into `/srv/app-builder/inbox/` with no build record counts as the server's own
+  only if root put it there and the inbox is not writable by anyone else; otherwise it is refused. For
+  system updates prefer `sudo deployctl deploy`.
+
 ## deployctl
 
 ```

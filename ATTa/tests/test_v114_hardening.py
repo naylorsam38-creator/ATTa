@@ -40,7 +40,9 @@ class SystemUpdateIsAdminOnly(unittest.TestCase):
 
     def test_roles(self):
         self.assertTrue(pipeline.may_update_system("admin"))
-        self.assertTrue(pipeline.may_update_system("system"))       # inbox drop on the server itself
+        # v115: a name never grants authority; a root-placed inbox drop is decided by process() (local=True)
+        self.assertFalse(pipeline.may_update_system("system"))
+        self.assertTrue(pipeline.may_update_system(None, local=True))
         self.assertFalse(pipeline.may_update_system("tester01"))
         self.assertFalse(pipeline.may_update_system("gone"))        # disabled admin
         self.assertFalse(pipeline.may_update_system("nobody"))
@@ -83,24 +85,32 @@ class SystemUpdateIsAdminOnly(unittest.TestCase):
 
 
 class AdmAuthorisation(unittest.TestCase):
+    # v115: jobs carry an origin; authority never comes from the requested_by name alone.
     def setUp(self):
         authz.USERS_FILE = accounts.USERS_FILE
+        adm_config.TRUSTED_UID = os.getuid()   # tests run unprivileged: "root" is the test user here
         users(admin="admin", tester01="user")
 
+    def _meta(self, origin, who):
+        z = make_zip(TMP / "q.zip", {"x.txt": "hi"})
+        job = adm_queue.enqueue(z, origin=origin, requested_by=who)
+        return [m for m in adm_queue.pending() if m["job_id"] == job][0]
+
     def test_allowed(self):
-        for who in ("deployctl", "incoming", "system", "admin"):
-            self.assertTrue(authz.allowed(who)[0], who)
-        for who in ("tester01", "nobody", None):
-            self.assertFalse(authz.allowed(who)[0], who)
+        self.assertTrue(authz.allowed(self._meta("local", "deployctl"))[0])
+        self.assertTrue(authz.allowed(self._meta("web", "admin"))[0])
+        for who in ("tester01", "nobody", "system", "deployctl", "incoming"):
+            self.assertFalse(authz.allowed(self._meta("web", who))[0], who)
 
     def test_unreadable_accounts_refuses_web_jobs(self):
+        web, local = self._meta("web", "admin"), self._meta("local", "deployctl")
         accounts.USERS_FILE.write_text("{not json")
-        self.assertFalse(authz.allowed("admin")[0])
-        self.assertTrue(authz.allowed("deployctl")[0])
+        self.assertFalse(authz.allowed(web)[0])
+        self.assertTrue(authz.allowed(local)[0])
 
     def test_non_admin_job_touches_nothing(self):
         z = make_zip(TMP / "b.zip", {"x.txt": "hi"})
-        job = adm_queue.enqueue(z, build_id="b-1", requested_by="tester01")
+        job = adm_queue.enqueue(z, origin="web", build_id="b-1", requested_by="tester01")
         meta = [m for m in adm_queue.pending() if m["job_id"] == job][0]
         self.assertEqual(manager.process(meta), "FAILED")
         j = json.loads((adm_config.JOURNAL / f"{job}.json").read_text())
