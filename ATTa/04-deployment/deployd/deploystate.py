@@ -7,6 +7,8 @@
   deploystate.py set KEY JSON                record a fact (attempted, transaction, local_restore, ...)
   deploystate.py rollback RESULT [REASON]    record the rollback outcome (succeeded|failed|not_needed|blocked)
   deploystate.py state                       print the current state
+  deploystate.py previous-live               record what is live now as the rollback target (adopting a healthy
+                                             release installed by an older ATTa); prints its folder, or nothing
 The record id comes from ATTA_DEPLOYMENT_ID. Exit 0 = done; 1 = refused (message on stderr); 2 = usage.
 """
 import json, os, sys
@@ -37,12 +39,17 @@ def main(argv):
             deployment.set_fields(job, **{a[0]: json.loads(a[1])}); return 0
         if cmd == "rollback" and 1 <= len(a) <= 2:
             deployment.set_rollback(job, a[0], **({"reason": a[1]} if len(a) == 2 else {})); return 0
+        if cmd == "previous-live" and not a:
+            from adm import manager
+            prev = manager.previous_live(job, sys.stderr)
+            deployment.set_fields(job, previous_live=prev)
+            print((prev or {}).get("release", "") if (prev or {}).get("verified") else ""); return 0
         if cmd == "state" and not a:
             d = deployment.get(job)
             print((d or {}).get("state", "")); return 0 if d else 1
     except deployment.IllegalTransition as e:
         print(f"deploystate: {e}", file=sys.stderr); return 1
-    except (ValueError, OSError) as e:
+    except (ValueError, OSError, RuntimeError) as e:   # RuntimeError: releases.ReleaseError, lock.Busy
         print(f"deploystate: {e}", file=sys.stderr); return 1
     print(__doc__, file=sys.stderr)
     return 2

@@ -221,6 +221,8 @@ def rollback(job, log, lock_fd, cancel=None):
 def _after_tree(job, res, log, lock_fd, cancel, shutting_down):
     """Decide what the installer's end means: timed out / interrupted / failed / verified."""
     doc = deployment.get(job)
+    if shutting_down() and not res.ok and not res.timed_out:
+        res.interrupted = True     # died from the stop signal itself: that is an interruption, not a failure
     if res.timed_out or res.interrupted:
         kind = "timed_out" if res.timed_out else "interrupted"
         why = (f"bash run did not finish within {config.DEPLOY_TIMEOUT}s" if res.timed_out

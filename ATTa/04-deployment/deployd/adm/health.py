@@ -25,7 +25,8 @@ def check(expect_release=None, legacy=False, browser=None):
         if not _active(unit):
             fails.append(f"FAIL service not active: {unit}")
     proxy_file = config.PROXY_FILE if Path(config.PROXY_FILE).is_file() else None
-    if proxy_file is None and config.REQUIRE_PROXY:
+    # A release from before v117 never recorded what nginx should serve (proxy.json): its checks are direct only.
+    if proxy_file is None and config.REQUIRE_PROXY and not legacy:
         fails.append(f"FAIL {config.PROXY_FILE} missing: bootstrap.sh did not record what nginx should serve")
     browser = config.BROWSER_CHECK if browser is None else browser
     os.environ.setdefault("PLAYWRIGHT_BROWSERS_PATH", config.PLAYWRIGHT_BROWSERS)   # v116: Chromium's shared folder
