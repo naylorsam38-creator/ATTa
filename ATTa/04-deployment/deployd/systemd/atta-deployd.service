@@ -1,0 +1,11 @@
+[Unit]
+Description=ATTa Deploy Manager (deployd)
+After=network.target
+[Service]
+WorkingDirectory=/srv/app-builder
+EnvironmentFile=-/srv/app-builder/.env
+ExecStart=/usr/bin/python3 /opt/app-builder/deployd/deployd.py
+Restart=always
+RestartSec=3
+[Install]
+WantedBy=multi-user.target
