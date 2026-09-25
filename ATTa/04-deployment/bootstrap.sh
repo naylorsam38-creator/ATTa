@@ -74,6 +74,9 @@ COOLIFY_URL=
 COOLIFY_TOKEN=
 # Self-healing tier 3 (LLM). Blank = that tier is skipped and failures go straight to a human.
 ANTHROPIC_API_KEY=
+# v116: the LLM repair tier needs this as well as the key (the Front Door uses the same key). It can only
+# edit overlay data (CSS/JSON), never code, and every proxy it restarts runs unprivileged.
+APP_BUILDER_HEAL_LLM=false
 # Public web address(es) and the email for the free HTTPS certificate (Let's Encrypt).
 # DNS for each name must already point at this server, ports 80+443 open. Re-run `bash run` after setting.
 APP_BUILDER_DOMAIN=

@@ -222,6 +222,7 @@ def library():
         else:
             try:
                 run(['git','clone','--depth','1',f'https://github.com/{repo}.git',str(dest)])
+                strip_foreign_overlays(dest)   # v116
                 out.append({**e,'result':'CLONED'})
             except RuntimeError as err:
                 if TRANSIENT_GIT.search(str(err)): raise   # known fix retries these
@@ -279,10 +280,31 @@ def ingest_upload(stage,bid,owner,original):
         src=Path(a['path']); name=a['name']; dest=LIB/name
         if dest.exists():
             kept.append(name); continue   # the library copy is authoritative (repairs live there)
+        for g in strip_foreign_overlays(src): print(f'removed an overlay shipped with the upload: {g}',flush=True)
         shutil.move(str(src),str(dest))
         _git_snapshot(dest,f'intake: {name} uploaded by {owner} (build {bid}) from {a["rel"]}')
         added.append(name)
     return added,kept
+
+def strip_foreign_overlays(app_root):
+    """v116: a .ui-capability overlay is written by ATTa's installer, never shipped by an app. Any that
+    arrive with an upload or a clone are removed before the app joins the library."""
+    gone=[]
+    for d in sorted(Path(app_root).rglob('.ui-capability'),key=lambda p:-len(p.parts)):
+        if d.is_symlink() or d.is_file(): d.unlink(); gone.append(str(d))
+        elif d.is_dir(): shutil.rmtree(d); gone.append(str(d))
+    return gone
+
+def record_overlays(md,bid):
+    """Record the code hashes of every overlay the installer produced in this run (status READY)."""
+    import overlay_integrity
+    bad=[]
+    for a in md.get('apps') or []:
+        if a.get('status')!='READY' or not a.get('path'): continue
+        ui=Path(a['path'])/'.ui-capability'
+        try: overlay_integrity.record(Path(a['path']).name,ui)
+        except overlay_integrity.IntegrityError as e: bad.append(str(e))
+    if bad: builds.update(bid,overlay_integrity_warnings=bad)
 
 REPO_URL=re.compile(r'^https://[A-Za-z0-9.-]+/[A-Za-z0-9._~/-]+?(\.git)?/?$')
 def ingest_repo(url,bid,owner):
@@ -292,6 +314,7 @@ def ingest_repo(url,bid,owner):
     try: run(['git','clone','--depth','1',url,str(dest)])
     except RuntimeError:
         shutil.rmtree(dest,ignore_errors=True); raise
+    strip_foreign_overlays(dest)
     return [name],[]
 
 # v114: only an admin may change the system itself. An ATTa bundle replaces the skins package (whose
@@ -445,6 +468,8 @@ def process(b):
         # Intake: fixed-rule check of each library app, once. Free, no AI. Leftovers are reported.
         step('INTAKE_CHECK'); checked=intake.run_all(LIB,PKG/'out')
         if checked['needs_attention']: builds.update(bid,intake_warnings=checked['needs_attention'])
+        # v116: the overlay code the installer and intake just wrote is the only overlay code ATTa will run.
+        record_overlays(md,bid)
         # Skin coverage: which of the package's live-verification categories have an app yet.
         # Reported, never a gate: the library grows into them.
         required=set(json.loads((PKG/'out/DEPLOYMENT_READY.json').read_text()).get('required_real_categories',[]))

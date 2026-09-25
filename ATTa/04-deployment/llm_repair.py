@@ -83,6 +83,10 @@ def _budget_ok() -> bool:
 
 
 def available() -> tuple[bool, str]:
+    # v116: its own switch, off by default. The API key alone used to turn it on, and the Front Door needs
+    # that same key, so enabling the Front Door silently let an LLM repair apps on the server.
+    if os.environ.get("APP_BUILDER_HEAL_LLM", "false").strip().lower() not in {"1", "true", "yes"}:
+        return False, "LLM tier off (set APP_BUILDER_HEAL_LLM=true to allow it)"
     if MAX_CALLS_PER_DAY <= 0:
         return False, "LLM tier switched off (APP_BUILDER_HEAL_LLM_PER_DAY=0)"
     if not (os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")):

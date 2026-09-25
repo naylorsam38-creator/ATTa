@@ -186,6 +186,15 @@ def quarantine_library_dir(name: str) -> str:
 
 
 # ---------------------------------------------------------------- capability overlay (tier 2 + LLM)
+def _refuse_code(rel: str) -> None:
+    """v116: the self-healer may fix overlay DATA (CSS, JSON); it never writes code ATTa would run
+    (run-ui.sh, the node proxy, any script). Broken code gets reinstall_app_overlay: the installer's own copy."""
+    import overlay_integrity
+    if overlay_integrity.is_code_path(rel):
+        raise ActionError(f"{rel} is code ATTa runs; it is never edited by self-healing. "
+                          "Use reinstall_app_overlay to restore the installer's own version")
+
+
 @action("Reinstall one app's .ui-capability overlay from the delivered package (skin, UI bridge, capability port).",
         {"app": {"type": "string"}})
 def reinstall_app_overlay(app: str) -> str:
@@ -195,6 +204,8 @@ def reinstall_app_overlay(app: str) -> str:
     category, _ = inst.resolve_category(appdir.name)
     variant = inst.choose_variant(category)
     inst.install_one(appdir, appdir.name, category, variant, "self-heal-reinstall")
+    import overlay_integrity
+    overlay_integrity.record(appdir.name, appdir / ".ui-capability")   # v116: the installer's code, just written
     return f"reinstalled {appdir.name} overlay ({category}/{variant})"
 
 
@@ -227,21 +238,21 @@ def reregister_target(app: str) -> str:
 @action("Start an app's UI proxy (run-ui.sh) when nothing is listening on its registered proxy port.",
         {"app": {"type": "string"}})
 def start_proxy(app: str) -> str:
+    # v116: the same path as the runner: verified overlay code, unprivileged proxy user, empty environment.
+    import proxy_launch
     _, t = target(app)
     ui = Path(t["ui_dir"]); port = urlparse(t["proxy_url"]).port
     if not port:
         raise ActionError("registered proxy_url has no port")
     if _port_open(port):
         return f"something is already listening on {port}"
-    log = (ROOT / "state" / f"proxy-{safe_id(app)}.log").open("a")
-    env = {**os.environ, "TARGET_URL": t["target_url"], "UI_PORT": str(port), "APP_BUILDER_ROOT": str(ROOT)}
-    subprocess.Popen(["bash", str(ui / "run-ui.sh")], env=env, stdout=log, stderr=log,
-                     stdin=subprocess.DEVNULL, start_new_session=True)
-    for _ in range(PROXY_START_WAIT * 2):
-        if _port_open(port):
-            return f"proxy listening on {port}"
-        time.sleep(0.5)
-    raise ActionError(f"proxy did not start listening on {port}; see state/proxy-{safe_id(app)}.log")
+    logp = ROOT / "state" / f"proxy-{safe_id(app)}.log"
+    try:
+        with logp.open("a") as log:
+            proxy_launch.launch(app, ui, t["target_url"], port, log)
+    except proxy_launch.LaunchError as e:
+        raise ActionError(f"proxy not started: {e}")
+    return f"proxy listening on {port}"
 
 
 @action("Write one file inside an app's .ui-capability overlay (never capability-port/). The old version is backed up.",
@@ -252,6 +263,7 @@ def write_overlay_file(app: str, path: str, content: str) -> str:
     rel = dest.relative_to(ui.resolve()).as_posix()
     if rel.startswith("capability-port/") or rel.startswith(BACKUP_DIRNAME):
         raise ActionError("capability-port/ is never modified; use reinstall_app_overlay to restore it")
+    _refuse_code(rel)
     if len(content.encode()) > MAX_WRITE:
         raise ActionError(f"content over {MAX_WRITE} bytes")
     if dest.exists():
@@ -340,6 +352,7 @@ def patch_overlay_file(app: str, path: str, old_text: str, new_text: str) -> str
     rel = dest.relative_to(ui.resolve()).as_posix()
     if rel.startswith("capability-port/") or rel.startswith(BACKUP_DIRNAME):
         raise ActionError("capability-port/ is never modified; use reinstall_app_overlay to restore it")
+    _refuse_code(rel)
     if not dest.is_file():
         raise ActionError(f"{rel} missing")
     if not syntax_triage.has_checker(dest):

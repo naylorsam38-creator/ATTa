@@ -1457,6 +1457,9 @@ def _proxy_pidfile(app: str) -> Path:
 
 
 def stop_proxy(app: str) -> None:
+    import proxy_launch
+    proxy_launch.stop(app)
+    # A proxy started by v115 or earlier (as root, from the library) is recorded here; stop it too.
     pf = _proxy_pidfile(app)
     try:
         pid = int(pf.read_text().strip())
@@ -1470,6 +1473,9 @@ def stop_proxy(app: str) -> None:
 
 
 def start_proxy(app: str, target_url: str) -> tuple[bool, str, dict | None]:
+    """v116: through proxy_launch only: integrity-verified overlay code, run as the unprivileged proxy user
+    from a copy of the overlay, with an empty environment (no ATTa secret ever reaches it)."""
+    import proxy_launch
     d = app_dir(app); ui = d / ".ui-capability"
     launcher = ui / "run-ui.sh"
     if not launcher.is_file():
@@ -1477,24 +1483,13 @@ def start_proxy(app: str, target_url: str) -> tuple[bool, str, dict | None]:
     stop_proxy(app)
     m = re.search(r'DEFAULT_UI_PORT="(\d+)"', launcher.read_text(errors="replace"))
     port = int(m.group(1)) if m else 8100
-    if port_open(port):
-        return False, f"the skin proxy port {port} is already taken by something else", None
-    logf = (RUNNER / f"proxy-{safe_id(app)}.log").open("a")
-    env = {**os.environ, "TARGET_URL": target_url, "UI_PORT": str(port), "APP_BUILDER_ROOT": str(ROOT)}
-    p = subprocess.Popen(["bash", str(launcher)], env=env, stdout=logf, stderr=logf, stdin=subprocess.DEVNULL, start_new_session=True)
-    _proxy_pidfile(app).write_text(str(p.pid))
-    for _ in range(40):
-        if port_open(port):
-            break
-        if p.poll() is not None:
-            return False, "skin proxy exited: " + (RUNNER / f"proxy-{safe_id(app)}.log").read_text(errors="replace")[-1500:], None
-        time.sleep(0.5)
-    else:
-        return False, f"skin proxy did not listen on {port}", None
+    logp = RUNNER / f"proxy-{safe_id(app)}.log"
     try:
-        t = json.loads((TARGETS / f"{safe_id(app)}.json").read_text())
-    except (OSError, ValueError):
-        return False, "run-ui.sh did not register the app", None
+        with logp.open("a") as logf:
+            t = proxy_launch.launch(app, ui, target_url, port, logf)
+    except proxy_launch.LaunchError as e:
+        tail = logp.read_text(errors="replace")[-1500:] if logp.is_file() else ""
+        return False, f"{e}" + (f"\n{tail}" if tail and "exited" in str(e) else ""), None
     return True, "", t
 
 
