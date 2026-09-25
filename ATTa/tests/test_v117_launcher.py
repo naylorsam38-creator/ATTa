@@ -33,8 +33,8 @@ class Local(unittest.TestCase):
         return e
 
     def run_(self, *args, **extra):
-        # `bash run` decides server vs laptop by systemd; this test machine may have neither, and is never a server
-        # here: force the laptop path by hiding /run/systemd/system via the launcher directly when needed.
+        # `bash run` alone treats any Linux with systemd as a server; the tests use `bash run local` (the laptop
+        # instance on purpose), so they behave the same on a laptop, a CI runner and a server's deploy gate.
         return subprocess.run(["bash", str(RUN), *args], env=self.env(**extra), capture_output=True, text=True,
                               timeout=180)
 
@@ -47,7 +47,7 @@ class Local(unittest.TestCase):
         vals = Launcher(self.root).ensure_env()
         text = (self.root / ".env").read_text().replace("APP_BUILDER_PORT=8787", f"APP_BUILDER_PORT={self.port}")
         (self.root / ".env").write_text(text)
-        return self.run_()
+        return self.run_("local")
 
     def state(self):
         return json.loads((self.root / "run-state.json").read_text())
@@ -89,7 +89,7 @@ class Local(unittest.TestCase):
         self.assertIn("pipeline exited", r.stdout)
         self.assertEqual(self.state()["status"], "DEGRADED")
         self.assertIn("pipeline exited", self.state()["failure"]["reason"])
-        r = self.run_()                                             # start again repairs it
+        r = self.run_("local")                                             # start again repairs it
         self.assertEqual(r.returncode, 0, r.stdout)
         self.assertIn("only partly running", r.stdout)
 
@@ -171,7 +171,7 @@ class Local(unittest.TestCase):
         self.first_start()
         self.run_("stop")
         out = []
-        ts = [threading.Thread(target=lambda: out.append(self.run_())) for _ in range(2)]
+        ts = [threading.Thread(target=lambda: out.append(self.run_("local"))) for _ in range(2)]
         [t.start() for t in ts]
         [t.join() for t in ts]
         self.assertEqual(sorted(r.returncode for r in out), [0, 0], [r.stdout for r in out])
@@ -183,7 +183,7 @@ class Local(unittest.TestCase):
     def test_stop_during_start_waits_for_it(self):
         self.first_start(); self.run_("stop")
         results = {}
-        t = threading.Thread(target=lambda: results.update(start=self.run_()))
+        t = threading.Thread(target=lambda: results.update(start=self.run_("local")))
         t.start()
         time.sleep(0.3)
         results["stop"] = self.run_("stop")
@@ -208,7 +208,7 @@ class Local(unittest.TestCase):
         Launcher(self.root).ensure_env()
         with open(self.root / ".env", "a") as f:
             f.write(f"APP_BUILDER_WATCHER_INTERVAL=$(touch {marker})\n")
-        r = self.run_()
+        r = self.run_("local")
         self.assertEqual(r.returncode, 1)
         self.assertIn("never run as shell", r.stdout)
         self.assertFalse(marker.exists())

@@ -422,7 +422,7 @@ def line():
 def main(argv):
     cmd = argv[0] if argv else "start"
     if cmd not in ("start", "stop", "status"):
-        return say("Usage: bash run [start|stop|status]", 1)
+        return say("Usage: bash run [start|local|stop|status]", 1)
     la = Launcher(root_dir())
     if cmd == "status":
         return la.status()

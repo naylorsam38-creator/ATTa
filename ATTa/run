@@ -57,6 +57,10 @@ full_deploy(){
 local_launcher(){ need_python; python3 "$DEPLOY/local_launcher.py" "$@"; }
 
 case "$CMD" in
+  local)
+    # v117: the laptop instance on purpose, even on a Linux desktop that runs systemd (which `bash run` would
+    # otherwise treat as a server and fully deploy).
+    local_launcher start ;;
   stop|status)
     if is_systemd_linux && [ -e /opt/app-builder ]; then
       say "This is a server: its services are managed by systemd and ADM. Try:  deployctl status"
@@ -64,6 +68,6 @@ case "$CMD" in
     local_launcher "$CMD" ;;
   start|"")
     if is_systemd_linux; then full_deploy "$@"; else local_launcher start; fi ;;
-  *) say "Usage: bash run [start|stop|status]"; exit 1 ;;
+  *) say "Usage: bash run [start|local|stop|status]"; exit 1 ;;
 esac
 
