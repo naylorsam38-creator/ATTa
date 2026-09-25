@@ -22,6 +22,7 @@ ATTa's own application code (`claude/atta-hardening-v116`) was **not changed**; 
 | 10 | The proxy isn't started until someone clicks through the onboarding screens | Apps can't be reached after install | The kit runs Coolify's own server validation during install, so the proxy is up straight away |
 | 11 | Coolify stores its server key under a different filename than the installer created | Restoring onto a new server would have broken Coolify's access to it | Restore and verify look the key up in Coolify's database |
 | 12 | Coolify's upgrade makes its secrets file look world-readable (mode 644) | A naive "fix" (`chmod 600`) would lock Coolify out of its own settings | `verify.sh` tests whether another user can *actually* read it (they can't, because the folder is locked) |
+| 12b | The kit's admin repair could run while Coolify was still building its database on first boot: the admin got created, but the "sign-up off" setting was lost when Coolify created its settings afterwards | Sign-up left **open** on a fresh install. **Found by the GitHub test**; `verify.sh` caught it and stopped the install | The kit waits for Coolify's first boot to finish, lets Coolify's own admin step run first, and treats "admin exists but sign-up on" as something to fix (it switches sign-up off exactly as Coolify's seeder does), with five regression tests |
 
 ## B. Problems connecting Coolify to ATTa
 
@@ -61,6 +62,6 @@ ATTa's own application code (`claude/atta-hardening-v116`) was **not changed**; 
 
 ## How it was proven
 
-- 67 automated unit tests.
-- A 51-step end-to-end test on real Coolify. It installs, logs in through the real login page, blocks an attacker's sign-up, deploys an app through the proxy, runs ATTa's exact deploy call, upgrades, wipes the whole server, reinstalls, restores, and checks everything came back.
+- 72 automated unit tests.
+- A 53-step end-to-end test on real Coolify. It installs, logs in through the real login page, blocks an attacker's sign-up, deploys an app through the proxy, runs ATTa's exact deploy call, upgrades, wipes the whole server, reinstalls, restores, and checks everything came back.
 - The same test passes on a clean GitHub machine against Coolify's live download servers.

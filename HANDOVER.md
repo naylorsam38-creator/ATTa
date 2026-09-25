@@ -16,7 +16,7 @@
 - `scripts/connect-atta.sh`: turns on Coolify's API, creates a deploy+read-only token, and writes `COOLIFY_URL`/`COOLIFY_TOKEN` and `coolify_resources.json` for ATTa.
 - `scripts/backup.sh` / `restore.sh` / `upgrade.sh`: recovery, including restore onto a new server.
 - `docs/RUNBOOK.md` (setup steps), `docs/DEPLOY-ATT.md` (the ATTa link), `docs/TROUBLESHOOTING.md`, and `docs/FIXES.md` (all 30 fixes, with what/why).
-- Tests: 67 unit tests (`make test`) and a 51-check end-to-end test on real Coolify (`tests/e2e/e2e.sh`, which is destructive, so throwaway VM only). Both pass locally and on GitHub.
+- Tests: 72 unit tests (`make test`) and a 53-check end-to-end test on real Coolify (`tests/e2e/e2e.sh`, which is destructive, so throwaway VM only). Both pass locally and on GitHub.
 
 ## The one remaining job: patch ATTa's `05-coolify/install-coolify.sh`
 

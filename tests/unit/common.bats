@@ -398,3 +398,72 @@ echo real-installer'
     [[ $output == *"never registered its localhost server"* ]]
     [[ $output != *"should not be called"* ]]
 }
+
+# ------------------------------------------------------------------ admin lockdown
+# Fake Coolify database: files in $DB hold seeded / admin / registration state, and the
+# stubbed `docker` changes them the way Coolify's seeder and settings update would.
+fake_coolify_db() {
+    DB="$BATS_TEST_TMPDIR/db"
+    mkdir -p "$DB"
+    echo "${1:-2}" >"$DB/seeded"  # 2 = settings row + localhost server exist
+    echo "${2:-0}" >"$DB/admin"   # users with id 0
+    echo "${3:-t}" >"$DB/reg"     # is_registration_enabled
+    export DB
+    coolify_db_query() {
+        case "$1" in
+        *"from users where id = 0"*) cat "$DB/admin" ;;
+        *"is_registration_enabled from instance_settings"*) cat "$DB/reg" ;;
+        *"from servers where id = 0"*) cat "$DB/seeded" ;;
+        esac
+    }
+    sleep() { :; }
+    stub docker '
+case "$*" in
+  *RootUserSeeder*) echo 1 >"$DB/admin"; echo f >"$DB/reg"; echo "SUCCESS Root user created" ;;
+  *is_registration_enabled*) echo f >"$DB/reg" ;;
+esac'
+}
+
+@test "ensure_admin_account: admin exists but sign-up left ON gets locked down" {
+    # Regression (CI): the seeder re-run beat Coolify's migrations; admin was created but the
+    # settings row came later with the default (sign-up on).
+    fake_coolify_db 2 1 t
+    ADMIN_BOOT_WAIT_TRIES=1 run ensure_admin_account
+    [ "$status" -eq 0 ]
+    [[ $output == *"switching it off"* ]]
+    [ "$(cat "$DB/reg")" = "f" ]
+}
+
+@test "ensure_admin_account: waits for first-boot seeding before touching anything" {
+    fake_coolify_db 1 0 t # settings row exists, localhost server not yet
+    SEED_WAIT_TRIES=3 run ensure_admin_account
+    [ "$status" -eq 1 ]
+    [[ $output == *"never finished its first-boot setup"* ]]
+    [ "$(cat "$DB/admin")" = "0" ] # seeder was never run early
+}
+
+@test "ensure_admin_account: missing admin is created by re-running Coolify's seeder" {
+    fake_coolify_db 2 0 t
+    ADMIN_BOOT_WAIT_TRIES=1 run ensure_admin_account
+    [ "$status" -eq 0 ]
+    [[ $output == *"re-running Coolify's admin seeder"* ]]
+    [ "$(cat "$DB/admin")" = "1" ]
+    [ "$(cat "$DB/reg")" = "f" ]
+}
+
+@test "ensure_admin_account: already locked down is a quiet no-op" {
+    fake_coolify_db 2 1 f
+    stub docker 'echo "docker should not be called" >&2; exit 1'
+    ADMIN_BOOT_WAIT_TRIES=1 run ensure_admin_account
+    [ "$status" -eq 0 ]
+    [[ $output != *"should not be called"* ]]
+    [[ $output == *"Public sign-up is off"* ]]
+}
+
+@test "ensure_admin_account: fails loudly if sign-up cannot be switched off" {
+    fake_coolify_db 2 1 t
+    stub docker 'exit 0' # the settings update silently does nothing
+    ADMIN_BOOT_WAIT_TRIES=1 run ensure_admin_account
+    [ "$status" -eq 1 ]
+    [[ $output == *"Could not switch off public sign-up"* ]]
+}

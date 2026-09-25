@@ -390,28 +390,67 @@ coolify_admin_exists() {
     [ "$(coolify_db_query 'select count(*) from users where id = 0')" = "1" ]
 }
 
-# Make sure the admin account exists, re-running Coolify's RootUserSeeder if its
-# first-boot attempt failed. Returns 1 (with Coolify's reason) if it still can't.
+registration_open() {
+    [ "$(coolify_db_query 'select is_registration_enabled from instance_settings where id = 0')" = "t" ]
+}
+
+# Coolify's first-boot ProductionSeeder creates the instance settings row and the localhost
+# server before it runs RootUserSeeder (its last step). Until both exist, the database is
+# still being built and nothing about the admin can be judged or fixed yet.
+first_boot_seeded() {
+    [ "$(coolify_db_query 'select (select count(*) from instance_settings where id = 0) + (select count(*) from servers where id = 0)')" = "2" ]
+}
+
+wait_first_boot_seeded() {
+    local i
+    for ((i = 0; i < ${SEED_WAIT_TRIES:-60}; i++)); do
+        first_boot_seeded && return 0
+        sleep "${SEED_WAIT_DELAY:-3}"
+    done
+    fail "Coolify never finished its first-boot setup. Check: docker logs coolify 2>&1 | grep -iE 'seed|error'"
+    return 1
+}
+
+# Lock the instance down: the admin exists AND public sign-up is off.
+# Coolify does both once, at first boot (RootUserSeeder). If its checks failed then, or ran
+# before the database was ready, it carries on with sign-up OPEN. So:
+#   1. wait until first-boot seeding has finished, then give Coolify's own admin step time;
+#   2. if the admin is still missing, re-run Coolify's own seeder (its own validation);
+#   3. if sign-up is still on, switch it off exactly as that seeder does.
+# The user row is never written by hand. Returns 1 with Coolify's reason if it can't.
 ensure_admin_account() {
     local attempts="${ADMIN_SEED_ATTEMPTS:-5}" delay="${ADMIN_SEED_DELAY:-10}" i out
+    wait_first_boot_seeded || return 1
+    for ((i = 0; i < ${ADMIN_BOOT_WAIT_TRIES:-20}; i++)); do
+        coolify_admin_exists && break
+        sleep "${ADMIN_BOOT_WAIT_DELAY:-3}"
+    done
     for ((i = 1; i <= attempts; i++)); do
-        if coolify_admin_exists; then
-            ok "Admin account is in place"
-            return 0
-        fi
+        coolify_admin_exists && break
         warn "Admin account not created yet (attempt $i/$attempts); re-running Coolify's admin seeder"
         out="$(docker exec coolify php artisan db:seed --class=RootUserSeeder --force 2>&1 || true)"
-        if coolify_admin_exists; then
-            ok "Admin account created by Coolify's seeder"
-            return 0
-        fi
+        coolify_admin_exists && break
         if printf '%s' "$out" | grep -q 'ERROR'; then
             printf '%s\n' "$out" | grep -A5 'ERROR' | sed 's/^/    coolify: /' >&2
         fi
         [ "$i" -eq "$attempts" ] || sleep "$delay"
     done
-    fail "Coolify would not create the admin account. Public sign-up may be OPEN: firewall port 8000 now. See docs/TROUBLESHOOTING.md"
-    return 1
+    if ! coolify_admin_exists; then
+        fail "Coolify would not create the admin account. Public sign-up may be OPEN: firewall port 8000 now. See docs/TROUBLESHOOTING.md"
+        return 1
+    fi
+    ok "Admin account is in place"
+    if registration_open; then
+        warn "Public sign-up is still on; switching it off (the same setting Coolify's admin seeder applies)"
+        docker exec coolify php artisan tinker --execute \
+            'App\Models\InstanceSettings::updateOrCreate(["id" => 0], ["is_registration_enabled" => false]);' >/dev/null 2>&1 || true
+        if registration_open; then
+            fail "Could not switch off public sign-up. Do it now in Settings > Configuration, and firewall port 8000 until then."
+            return 1
+        fi
+    fi
+    ok "Public sign-up is off"
+    return 0
 }
 
 # Path of the private key Coolify uses to manage its own host ("localhost", server 0).

@@ -332,6 +332,10 @@ assert "ensure_admin_account re-runs Coolify's seeder and restores the admin" en
 assert "sign-up is closed again" signup_page_closed
 assert "admin logs in after self-heal" can_login "$ADMIN_EMAIL" "$password_a"
 assert "admin is owner of the root team again" test "$(db "select role from team_user where user_id = 0 and team_id = 0")" = "owner"
+# The case CI hit: the admin exists, but sign-up was left on.
+db "update instance_settings set is_registration_enabled = true where id = 0" >/dev/null
+assert "ensure_admin_account switches sign-up off when the admin already exists" ensure_admin_account
+assert "sign-up is closed after that" signup_page_closed
 
 step "Upgrade $FROM_VERSION -> $TO_VERSION"
 prepare_ipv4_only "$TO_VERSION"
