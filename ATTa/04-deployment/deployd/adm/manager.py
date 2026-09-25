@@ -78,6 +78,12 @@ def process(meta):
             version = staging.check(root)
             journal.record(job, "CHECKED", version=version, root=str(root))
             log.write(f"checked bundle version {version}\n")
+            # v116: its own tests must pass before anything live is touched.
+            if config.RUN_TESTS:
+                ran = staging.run_tests(root, log)
+                journal.record(job, "TESTED", result=ran)
+            else:
+                journal.record(job, "TESTS_SKIPPED", reason="ATTA_ADM_RUN_TESTS=0")
             b = backup.snapshot(job)
             journal.record(job, "BACKED_UP", backup=str(b) if b else None)
             release = activation.promote(root, job, version)

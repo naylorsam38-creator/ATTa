@@ -134,11 +134,18 @@ def run(c):
     if r.returncode:
         raise RuntimeError(f'{c} -> {r.returncode}: {r.stdout[-1000:]} {r.stderr[-1000:]}')
 
+MAX_ARCHIVE_FILES=int(os.environ.get('APP_BUILDER_MAX_ARCHIVE_FILES','300000'))
+MAX_COMPRESSION_RATIO=int(os.environ.get('APP_BUILDER_MAX_COMPRESSION_RATIO','200'))
 def extract(z,d):
+    """Unpack an uploaded zip into d. v116: the bytes actually WRITTEN are counted (a header can lie about
+    its size), the number of entries is capped, and a member that inflates suspiciously (a zip bomb) is
+    refused, as ADM already does for system bundles."""
     total=0
     root=d.resolve()
     seen_paths=set()
-    for i in z.infolist():
+    infos=z.infolist()
+    if len(infos)>MAX_ARCHIVE_FILES: raise RuntimeError(f'archive has {len(infos)} entries (limit {MAX_ARCHIVE_FILES})')
+    for i in infos:
         if i.filename in seen_paths: raise RuntimeError(f'duplicate archive member: {i.filename}')
         seen_paths.add(i.filename)
         t=(d/i.filename).resolve()
@@ -146,10 +153,16 @@ def extract(z,d):
         if i.is_dir(): t.mkdir(parents=True,exist_ok=True); continue
         if i.file_size < 0 or total + i.file_size > MAX_EXTRACTED:
             raise RuntimeError(f'archive extracted size exceeds {MAX_EXTRACTED} bytes')
+        if i.compress_size and i.file_size > 1024**2 and i.file_size/i.compress_size > MAX_COMPRESSION_RATIO:
+            raise RuntimeError(f'suspicious compression ratio in archive member: {i.filename}')
         t.parent.mkdir(parents=True,exist_ok=True)
         with z.open(i,'r') as src, t.open('wb') as dst:
-            shutil.copyfileobj(src,dst,1024*1024)
-        total += i.file_size
+            while True:
+                chunk=src.read(1024*1024)
+                if not chunk: break
+                total+=len(chunk)
+                if total>MAX_EXTRACTED: raise RuntimeError(f'archive extracted size exceeds {MAX_EXTRACTED} bytes')
+                dst.write(chunk)
 
 def _sha_file(p):
     import hashlib

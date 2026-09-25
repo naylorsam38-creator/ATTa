@@ -49,6 +49,15 @@ KEEP_BACKUPS = 5
 MAX_BUNDLE_BYTES = int(os.environ.get("ATTA_ADM_MAX_BUNDLE_BYTES", str(2 * 1024**3)))
 MAX_BUNDLE_FILES = int(os.environ.get("ATTA_ADM_MAX_BUNDLE_FILES", "20000"))
 MAX_COMPRESSION_RATIO = int(os.environ.get("ATTA_ADM_MAX_COMPRESSION_RATIO", "200"))
+# v116: what an ATTa bundle's root folder may hold. Anything else (stray scripts, units, files beside the
+# bundle's own folder in the zip) refuses the bundle before anything live is touched.
+ALLOWED_TOP = {"run", "release.json", "START-HERE.txt", "README.md", ".gitignore", "01-specs", "02-front-door",
+               "03-ui-skins-capability-package", "04-deployment", "05-coolify", "docs", "tests"}
+# v116: a bundle's own test suite runs (as an unprivileged user, no secrets) before it can be activated.
+# 0 = skip (only for an emergency; the job's journal says it was skipped).
+RUN_TESTS = os.environ.get("ATTA_ADM_RUN_TESTS", "1") != "0"
+TEST_TIMEOUT = int(os.environ.get("ATTA_ADM_TEST_TIMEOUT", "1200"))
+TEST_USER = os.environ.get("ATTA_ADM_TEST_USER", "nobody")
 # How often deployd looks at the queue (seconds).
 POLL_SECONDS = 5
 # v115: the only user whose files ADM trusts in its queue and incoming folders. Root on a server. Not read from
