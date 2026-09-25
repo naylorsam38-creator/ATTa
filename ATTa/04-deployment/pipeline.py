@@ -561,8 +561,30 @@ def _inbox_items():
     repos=[p for p in INBOX.glob('*.repo.json')]
     return sorted(zips+repos,key=lambda p:p.name)
 
+INSTANCE_LOCK=STATE/'pipeline.instance.lock'; HEARTBEAT=STATE/'pipeline.heartbeat'
+def single_instance():
+    """v117: exactly one pipeline per data folder. A second one (a double `bash run`, a stray start beside the
+    systemd service) exits at once instead of processing the same inbox twice. The kernel frees the lock on exit."""
+    import fcntl
+    STATE.mkdir(parents=True,exist_ok=True)
+    fd=os.open(INSTANCE_LOCK,os.O_RDWR|os.O_CREAT|os.O_CLOEXEC,0o640)
+    try: fcntl.flock(fd,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    except BlockingIOError:
+        print(f'pipeline: another pipeline already runs on {ROOT} (lock {INSTANCE_LOCK}); this one exits',flush=True)
+        raise SystemExit(3)
+    return fd
+
+def heartbeat():
+    """v117: proof of life for status checks: this pid, now. Written every pass of the loop."""
+    try:
+        tmp=HEARTBEAT.with_name(HEARTBEAT.name+'.tmp'); tmp.write_text(json.dumps({'pid':os.getpid(),'at':time.time()})+'\n')
+        os.replace(tmp,HEARTBEAT)
+    except OSError as e: print(f'pipeline: heartbeat not written: {e}',flush=True)
+
 def loop():
+    _instance=single_instance()   # held (never closed) for the life of the process
     while True:
+        heartbeat()
         bs=_inbox_items()
         if LOCK.exists() and lock_is_stale():
             LOCK.unlink(missing_ok=True)
