@@ -261,19 +261,19 @@ fi
 # no apt chromium package, so use Playwright's managed Chromium binary.
 # pip >= 23 needs --break-system-packages on distro Pythons; older pip (Amazon Linux 2023's) rejects it.
 pip_install(){ python3 -m pip install --break-system-packages "$@" 2>/dev/null || python3 -m pip install "$@"; }
-if ! python3 -c 'import playwright' >/dev/null 2>&1; then
-  pip_install playwright
-fi
+# v116: the exact versions in requirements-server.txt, on every run (pip leaves them alone when they match).
+pip_install --disable-pip-version-check -r "$APP/requirements-server.txt" \
+  || { echo "DEPLOYMENT FAILED: could not install the pinned Python packages (requirements-server.txt)" >&2; exit 1; }
 # v116: Chromium goes where the runner user can read it (not root's home).
 export PLAYWRIGHT_BROWSERS_PATH="$ATTA_BROWSERS"
 python3 -m playwright install chromium
 chmod -R a+rX "$ATTA_BROWSERS"
 # v116: compose_guard reads every app's compose YAML (include:/extends: and their env files) before Docker
 # does; without PyYAML an older Docker Compose leaves it nothing to check with and apps are refused.
-python3 -c 'import yaml' >/dev/null 2>&1 || pip_install pyyaml
-python3 -c 'import yaml' >/dev/null 2>&1 || { echo "DEPLOYMENT FAILED: PyYAML could not be installed" >&2; exit 1; }
-# Self-healing LLM tier uses the official Anthropic SDK.
-python3 -c 'import anthropic' >/dev/null 2>&1 || pip_install anthropic
+# (PyYAML, Playwright and the Anthropic SDK all come from requirements-server.txt above.)
+for m in yaml playwright anthropic; do
+  python3 -c "import $m" >/dev/null 2>&1 || { echo "DEPLOYMENT FAILED: Python package $m is missing after install" >&2; exit 1; }
+done
 
 # Fail the deployment immediately if the real browser cannot launch AS THE RUNNER USER (v116).
 runuser -u "$ATTA_RUN_USER" -- env HOME="$ATTA_RUN_HOME" PLAYWRIGHT_BROWSERS_PATH="$ATTA_BROWSERS" python3 - <<'PY'

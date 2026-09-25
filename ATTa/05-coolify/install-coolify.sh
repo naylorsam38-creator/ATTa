@@ -25,12 +25,17 @@ SRC=/opt/coolify-source
 AUTOUPDATE="${AUTOUPDATE:-false}"
 # Seconds to wait for Coolify's health check after install.
 HEALTH_WAIT=600
+# v116: the SHA-256 of the coolify-main.zip shipped in this bundle. The installer runs as root, so a zip that
+# does not match is refused. A deliberately different zip: set COOLIFY_ZIP_SHA256 to its checksum.
+COOLIFY_ZIP_SHA256="${COOLIFY_ZIP_SHA256:-509f4abb54c0a5fab0bce1c7447a5dcb35e91a3cfab636a3c35f57e8bfdc6609}"
 # ==========================================================================================
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
 ZIP="$HERE/coolify-main.zip"
 [ "$(id -u)" -eq 0 ] || { echo "Run as root: sudo bash $0" >&2; exit 1; }
 [ -f "$ZIP" ] || { echo "Missing $ZIP" >&2; exit 1; }
+got="$(sha256sum "$ZIP" | awk '{print $1}')"
+[ "$got" = "$COOLIFY_ZIP_SHA256" ] || { echo "REFUSED: $ZIP has checksum $got, expected $COOLIFY_ZIP_SHA256" >&2; exit 1; }
 command -v unzip >/dev/null 2>&1 || { (command -v apt-get >/dev/null && apt-get update -y && apt-get install -y unzip) || dnf install -y unzip; }
 
 tmp="$(mktemp -d)"; unzip -q "$ZIP" -d "$tmp"
@@ -58,10 +63,12 @@ Next, in the Coolify dashboard (http://<this-server>:8000):
   1. Create the admin account (unless ROOT_* was set) and finish the onboarding.
   2. Settings -> Advanced -> turn API Access ON.
   3. Keys & Tokens -> API tokens -> create a token with "deploy" and "read" permissions.
+     v116: ATTa only sends that token over https://, or plain http:// to a PRIVATE address (same VPC).
+     Also restrict port 8000 to the ATTa server's address in the security group / firewall.
   4. Add each app as a resource. Name it exactly as the APP Builder names it (e.g. grafana)
      so the hand-off can find its UUID by itself, or list the UUIDs in coolify_resources.json.
 Then on the APP Builder server, in /srv/app-builder/.env:
-     COOLIFY_URL=http://<this-server>:8000
+     COOLIFY_URL=http://<this server's PRIVATE address>:8000   (or https://<its name> behind TLS)
      COOLIFY_TOKEN=<the token>
   and: systemctl restart app-builder-pipeline
 EOF

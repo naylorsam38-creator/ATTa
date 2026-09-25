@@ -4,7 +4,7 @@
 
 Tests marked "as root" create the unprivileged service users they check (atta-proxy ...) and are skipped
 when not run as root. Each test works in throwaway folders; the rest of the machine is not touched."""
-import http.server, importlib.util, io, json, os, pwd, shutil, socket, subprocess, sys, tempfile, threading
+import http.server, importlib.util, io, json, os, pwd, re, shutil, socket, subprocess, sys, tempfile, threading
 import time, unittest, zipfile
 from pathlib import Path
 
@@ -837,6 +837,101 @@ class DangerousSwitchesRefusedOnServers(unittest.TestCase):
         self.assertEqual(r.stdout.strip().splitlines()[-1], "True")
         r = self.run_py("import app_runner; print(app_runner.HARDEN)", APP_BUILDER_HARDEN="false", INVOCATION_ID="")
         self.assertEqual(r.stdout.strip().splitlines()[-1], "False")    # a laptop may still turn it off
+
+
+# ============================================================================ #15 pinned dependencies, Coolify token
+
+import coolify_handoff  # noqa: E402
+
+
+class PinnedDependencies(unittest.TestCase):
+    def test_requirements_are_exact(self):
+        lines = [l.strip() for l in (DEP / "requirements-server.txt").read_text().splitlines()
+                 if l.strip() and not l.lstrip().startswith("#")]
+        self.assertEqual(sorted(l.split("==")[0] for l in lines), ["anthropic", "playwright", "pyyaml"])
+        for l in lines:
+            self.assertRegex(l, r"^[a-z0-9-]+==\d+(\.\d+)+$", l)
+
+    def test_bootstrap_installs_the_pins_and_nothing_unpinned(self):
+        b = (DEP / "bootstrap.sh").read_text()
+        self.assertIn('-r "$APP/requirements-server.txt"', b)
+        self.assertNotRegex(b, r"pip_install (playwright|anthropic|pyyaml)\b")
+
+    def test_coolify_zip_checksum_is_pinned_and_matches(self):
+        import hashlib
+        sh_ = (HERE.parent / "05-coolify" / "install-coolify.sh").read_text()
+        want = re.search(r'COOLIFY_ZIP_SHA256:-([0-9a-f]{64})', sh_).group(1)
+        z = HERE.parent / "05-coolify" / "coolify-main.zip"
+        if z.is_file():
+            self.assertEqual(hashlib.sha256(z.read_bytes()).hexdigest(), want)
+
+    @unittest.skipUnless(os.geteuid() == 0, "the installer insists on root before it checks anything")
+    def test_coolify_installer_refuses_a_different_zip(self):
+        d = Path(tempfile.mkdtemp(dir=TMP))
+        shutil.copy(HERE.parent / "05-coolify" / "install-coolify.sh", d)
+        (d / "coolify-main.zip").write_bytes(b"not the supplied zip")
+        r = subprocess.run(["bash", str(d / "install-coolify.sh")], capture_output=True, text=True, timeout=60)
+        self.assertNotEqual(r.returncode, 0); self.assertIn("REFUSED", r.stderr)
+        self.assertFalse(Path("/opt/coolify-source").exists() and (d / "unzipped").exists())
+
+
+class CoolifyTokenTravelsSafely(unittest.TestCase):
+    def setUp(self):
+        self.saved = (coolify_handoff.COOLIFY_URL, os.environ.get("COOLIFY_ALLOW_HTTP"))
+
+    def tearDown(self):
+        coolify_handoff.COOLIFY_URL = self.saved[0]
+        os.environ.pop("COOLIFY_ALLOW_HTTP", None)
+        if self.saved[1] is not None:
+            os.environ["COOLIFY_ALLOW_HTTP"] = self.saved[1]
+
+    def route(self, url):
+        coolify_handoff.COOLIFY_URL = url
+        return coolify_handoff.token_route_ok()[0]
+
+    def test_routes(self):
+        with _FakeDNS({**DNS, "coolify.internal-vpc.example": "10.0.3.7", "coolify.example.org": "93.184.215.30"}):
+            self.assertTrue(self.route("https://coolify.example.org"))
+            self.assertTrue(self.route("http://10.0.3.7:8000"))
+            self.assertTrue(self.route("http://127.0.0.1:8000"))
+            self.assertTrue(self.route("http://coolify.internal-vpc.example:8000"))
+            self.assertFalse(self.route("http://coolify.example.org:8000"))        # public + plain http
+            self.assertFalse(self.route("http://93.184.215.30:8000"))
+            self.assertFalse(self.route("ftp://10.0.3.7"))
+            os.environ["COOLIFY_ALLOW_HTTP"] = "true"
+            self.assertTrue(self.route("http://coolify.example.org:8000"))        # the owner's explicit choice
+
+    def test_refused_route_sends_nothing(self):
+        with _FakeDNS({**DNS, "coolify.example.org": "93.184.215.30"}):
+            coolify_handoff.COOLIFY_URL = "http://coolify.example.org:8000"
+            ok, why = coolify_handoff._deploy("uuid-1")
+        self.assertFalse(ok); self.assertTrue(why.startswith("REFUSED"))
+
+    def test_redirect_never_carries_the_token(self):
+        got = []
+        class Catch(_Quiet):
+            def do_POST(self):
+                got.append(self.headers.get("Authorization")); self.send_response(200); self.end_headers()
+            do_GET = do_POST
+        thief = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Catch)
+        class Redirect(_Quiet):
+            def do_POST(self):
+                self.send_response(302); self.send_header("Location", f"http://127.0.0.1:{thief.server_address[1]}/x")
+                self.end_headers()
+        front = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Redirect)
+        for srv in (thief, front):
+            threading.Thread(target=srv.serve_forever, daemon=True).start()
+        saved_tok = coolify_handoff.COOLIFY_TOKEN
+        try:
+            coolify_handoff.COOLIFY_URL = f"http://127.0.0.1:{front.server_address[1]}"
+            coolify_handoff.COOLIFY_TOKEN = "coolify-secret-token"
+            ok, _ = coolify_handoff._deploy("uuid-2")
+            self.assertFalse(ok)
+            self.assertEqual(got, [])                                   # the redirect target saw nothing
+        finally:
+            coolify_handoff.COOLIFY_TOKEN = saved_tok
+            for srv in (thief, front):
+                srv.shutdown(); srv.server_close()
 
 
 if __name__ == "__main__":

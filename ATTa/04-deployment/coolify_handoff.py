@@ -23,7 +23,7 @@ from __future__ import annotations
 import json, os, time, tempfile
 from pathlib import Path
 from urllib.parse import urlencode
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener
 from urllib.error import HTTPError, URLError
 
 import builds
@@ -94,15 +94,44 @@ def hand_off(build_id: str, qualified_apps: list[dict]) -> dict:
     return dispatch(build_id)
 
 
+class _NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, *a, **k):
+        return None   # v116: never follow a redirect: it would carry the Bearer token to another address
+
+
+def token_route_ok() -> tuple[bool, str]:
+    """v116: the token only travels over HTTPS, or plain HTTP inside the network (loopback/private addresses).
+    COOLIFY_ALLOW_HTTP=true accepts plain HTTP to a public address (the token is then readable on the way)."""
+    from urllib.parse import urlsplit
+    import netguard
+    u = urlsplit(COOLIFY_URL)
+    if u.scheme == "https":
+        return True, ""
+    if u.scheme != "http":
+        return False, f"COOLIFY_URL must start with https:// (got {u.scheme or 'nothing'})"
+    if os.environ.get("COOLIFY_ALLOW_HTTP", "").lower() == "true":
+        return True, ""
+    host = u.hostname or ""
+    lit = netguard._literal(host)
+    addrs = [lit] if lit is not None else netguard._addresses(host)
+    if addrs and not any(a.is_global for a in addrs):
+        return True, ""   # inside the network: loopback, a private subnet, the VPC
+    return False, ("COOLIFY_URL is plain http:// to a public address, so the API token would cross the internet "
+                   "readable: use https://, a private address, or set COOLIFY_ALLOW_HTTP=true")
+
+
 def _deploy(uuid: str) -> tuple[bool, str]:
     # Coolify 4.3.x (checked against the supplied source, DeployController::deploy): POST only
     # (a GET answers 405 "This endpoint has changed to a POST request"). A 200 only means a deploy
     # was queued if `deployments` has an entry for this uuid carrying a deployment_uuid.
+    ok, why = token_route_ok()
+    if not ok:
+        return False, f"REFUSED: {why}"
     url = f"{COOLIFY_URL}{COOLIFY_DEPLOY_PATH}?{urlencode({'uuid': uuid, 'force': 'false'})}"
     req = Request(url, data=b"", method="POST",
                   headers={"Authorization": f"Bearer {COOLIFY_TOKEN}", "Accept": "application/json"})
     try:
-        with urlopen(req, timeout=TIMEOUT) as r:
+        with build_opener(_NoRedirect).open(req, timeout=TIMEOUT) as r:
             body = r.read(20000).decode("utf-8", "replace")
             try:
                 deps = json.loads(body).get("deployments") or []
