@@ -133,8 +133,12 @@ class CleanCodeReleases(Tmp):
         return root / "04-deployment"
 
     def deploy(self, src):
+        # v117: stage (adm/releases.py), migrate a pre-v114.1 folder, then the atomic switch. (bootstrap.sh switches
+        # only after its checks; the known-good record is tested in tests/test_v117_adm.py.)
         app, rels = self.t / "app", self.t / "rels"
-        r = bash(f'n="$(atta_stage_code "{src}" "{rels}")" && atta_activate_code "{app}" "{rels}" "$n" && echo "$n"')
+        rp = DEP / "deployd" / "adm" / "releases.py"
+        r = bash(f'n="$(atta_stage_code "{src}" "{rels}")" && python3 "{rp}" migrate-legacy "{app}" "{rels}" >/dev/null '
+                 f'&& python3 "{rp}" switch "{app}" "$n" && echo "$n"')
         return r, app, rels
 
     def test_stale_files_disappear(self):
@@ -174,19 +178,25 @@ class CleanCodeReleases(Tmp):
         self.assertFalse((app / "evil").exists() or (app / "evil").is_symlink())
 
     def test_restore_and_prune(self):
+        # v117: rollback goes to the previous KNOWN-GOOD release (verified while live), never "the folder before";
+        # prune keeps the live, known-good and previous-known-good releases whatever their age.
+        sys.path.insert(0, str(DEP / "deployd"))
+        from adm import releases
         for i in range(6):
             r, app, rels = self.deploy(self._src(f"s{i}", {"gateway.py": f"v={i}\n"}, f"v{i}"))
             self.assertEqual(r.returncode, 0, r.stderr)
+            if i < 5:                                                    # v5 goes live but never passes its checks
+                releases.mark_verified(app, releases.live(app), f"j{i}")
+                releases.promote(rels, app, releases.live(app), f"j{i}")
             time.sleep(1.05)                                             # distinct timestamps
-        prev = Path((rels / ".previous").read_text().strip())
-        r = bash(f'ATTA_KEEP_CODE_RELEASES=2; atta_prune_code_releases "{app}" "{rels}"')
-        self.assertEqual(r.returncode, 0, r.stderr)
-        left = sorted(p.name for p in rels.iterdir() if p.is_dir())
-        self.assertEqual(len(left), 2, left)
-        self.assertTrue(prev.is_dir())                                   # previous always kept
+        kg, pkg = releases.known_good(rels), releases.previous_known_good(rels)
         self.assertEqual((app / "gateway.py").read_text(), "v=5\n")
-        r = bash(f'atta_restore_previous_code "{app}" "{rels}"')
-        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertEqual(Path(kg["release"]).name.split("-")[0], "v4")
+        self.assertEqual(Path(pkg["release"]).name.split("-")[0], "v3")
+        releases.prune(rels, app, keep=1)
+        left = sorted(p.name.split("-")[0] for p in rels.iterdir() if p.is_dir())
+        self.assertEqual(left, ["v3", "v4", "v5"], left)                 # live (unverified) + known-good + previous
+        releases.switch(app, kg["release"])                              # what a rollback restores
         self.assertEqual((app / "gateway.py").read_text(), "v=4\n")
 
     def test_adm_backup_copies_through_the_symlink(self):

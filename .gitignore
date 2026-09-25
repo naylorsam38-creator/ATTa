@@ -1,2 +1,5 @@
 # Google App Engine generated folder
 appengine-generated/
+
+# release builds (tools/make_release.py); published separately, never committed
+dist/

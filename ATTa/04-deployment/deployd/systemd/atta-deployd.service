@@ -7,5 +7,10 @@ EnvironmentFile=-/srv/app-builder/.env
 ExecStart=/usr/bin/python3 /opt/app-builder/deployd/deployd.py
 Restart=always
 RestartSec=3
+# v117: on stop, SIGTERM goes to deployd ONLY; it stops a running deploy's whole tree itself (TERM, grace, KILL),
+# records it `interrupted`, and rolls it back on its next start. The default (control-group) would TERM the
+# installer at the same moment, behind deployd's back. Longer than ATTA_ADM_KILL_GRACE (30s) plus bookkeeping.
+KillMode=mixed
+TimeoutStopSec=120
 [Install]
 WantedBy=multi-user.target

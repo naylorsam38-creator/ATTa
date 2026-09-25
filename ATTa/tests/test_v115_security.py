@@ -231,15 +231,19 @@ class PipelineTrustIsNotAName(unittest.TestCase):
         self.assertTrue(pipeline.may_update_system(None, local=True))
 
     def test_inbox_drop_trust_follows_the_filesystem(self):
-        b = make_zip(pipeline.INBOX / "dropped-by-hand.zip", {"x": "y"})
+        # v117: only LOCAL_INBOX takes items from the server itself; the web inbox never does.
+        pipeline.LOCAL_INBOX.mkdir(mode=0o755, exist_ok=True); pipeline.LOCAL_INBOX.chmod(0o755)
+        b = make_zip(pipeline.LOCAL_INBOX / "dropped-by-hand.zip", {"x": "y"})
+        w = make_zip(pipeline.INBOX / "dropped-in-web-inbox.zip", {"x": "y"})
         try:
             self.assertTrue(pipeline._local_inbox_drop(b)[0])
-            pipeline.INBOX.chmod(0o777)
+            self.assertFalse(pipeline._local_inbox_drop(w)[0])
+            pipeline.LOCAL_INBOX.chmod(0o777)
             self.assertFalse(pipeline._local_inbox_drop(b)[0])
-            pipeline.INBOX.chmod(0o755); b.chmod(0o666)
+            pipeline.LOCAL_INBOX.chmod(0o755); b.chmod(0o666)
             self.assertFalse(pipeline._local_inbox_drop(b)[0])
         finally:
-            pipeline.INBOX.chmod(0o755); b.unlink(missing_ok=True)
+            pipeline.LOCAL_INBOX.chmod(0o755); b.unlink(missing_ok=True); w.unlink(missing_ok=True)
 
     def test_untrusted_inbox_drop_is_refused_before_anything_runs(self):
         inner = io.BytesIO()
@@ -261,14 +265,29 @@ class PipelineTrustIsNotAName(unittest.TestCase):
         self.assertEqual((pipeline.PKG / "marker").read_text(), "original")
 
     def test_trusted_inbox_drop_is_local(self):
-        b = make_zip(pipeline.INBOX / "by-root.zip", {"README.md": "no app here"})
+        pipeline.LOCAL_INBOX.mkdir(mode=0o755, exist_ok=True); pipeline.LOCAL_INBOX.chmod(0o755)
+        b = make_zip(pipeline.LOCAL_INBOX / "by-root.zip", {"README.md": "no app here"})
         try:
             pipeline.process(b)   # not an app: fails later, but the record shows who it acted for
+            self.assertIn(b, pipeline._inbox_items())
+            pipeline._local_done(b, builds.FAILED)                     # root's folder: recorded, not renamed
+            self.assertNotIn(b, pipeline._inbox_items())
+            self.assertTrue(b.exists())
         finally:
             b.unlink(missing_ok=True)
         rec = builds.get(pipeline.LAST_BUILD)
         self.assertEqual((rec["owner"], rec["origin"]), (pipeline.LOCAL_OWNER, "local"))
         self.assertFalse(rec.get("refused"))
+
+    def test_record_less_drop_in_the_web_inbox_is_refused(self):
+        b = make_zip(pipeline.INBOX / "no-record.zip", {"app/index.html": "<h1>x</h1>"})
+        try:
+            self.assertEqual(pipeline.process(b), builds.FAILED)
+        finally:
+            b.unlink(missing_ok=True)
+        rec = builds.get(pipeline.LAST_BUILD)
+        self.assertTrue(rec.get("refused"))
+        self.assertNotEqual(rec.get("origin"), "local")
 
     def test_build_without_owner_is_an_error_not_system(self):
         rec = builds.create("", origin="web")
@@ -377,10 +396,21 @@ class EvidenceIsDataNotATTaUI(unittest.TestCase):
         self.assertEqual(code, 200); self.assertTrue(h["Content-Type"].startswith("application/json"))
 
     def test_owner_sees_it_stranger_gets_404(self):
-        self.assertEqual(self.get("/evidence/evilapp/page.html", "tester01")[0], 200)
-        self.assertEqual(self.get("/evidence/evilapp/page.html", "tester02")[0], 404)
-        self.assertEqual(self.get("/evidence/nosuchapp/page.html", "tester02")[0], 404)   # same answer
-        self.assertEqual(self.get("/evidence/evilapp/page.html", None)[0], 302)            # login first
+        # v117: the owner is the account that ADDED the app (app_owners), not anyone whose build checked it.
+        import app_owners
+        app_owners.record("evilapp", "tester01", None, replace=True)
+        try:
+            self.assertEqual(self.get("/evidence/evilapp/page.html", "tester01")[0], 200)
+            self.assertEqual(self.get("/evidence/evilapp/page.html", "tester02")[0], 404)
+            self.assertEqual(self.get("/evidence/nosuchapp/page.html", "tester02")[0], 404)   # same answer
+            self.assertEqual(self.get("/evidence/evilapp/page.html", None)[0], 302)            # login first
+            # v116's leak: every build re-checks the whole catalogue, so tester02's own build names evilapp too.
+            # That must not open another user's evidence.
+            rec = builds.create("tester02", origin="web")
+            builds.update(rec["id"], qualification=[{"app": "evilapp", "qualified": True}])
+            self.assertEqual(self.get("/evidence/evilapp/page.html", "tester02")[0], 404)
+        finally:
+            app_owners.FILE.unlink(missing_ok=True)
 
     def test_unknown_and_traversal_names_are_404(self):
         (EVIDENCE_ROOT / "evilapp" / "other.txt").write_text("x")
@@ -758,9 +788,15 @@ class RealComposeEndToEnd(_SecretsWorld):
         cg.raw_env_files = lambda _f: (_ for _ in ()).throw(ImportError("No module named 'yaml'"))
         try:
             ok, err, _, _ = self.render(f"services:\n  web:\n    image: nginx:1\n    env_file: [{self.env_file}]\n")
-            self.assertFalse(ok); self.assertIn("env_file", err)            # pass 1 caught it
-            ok, err, _, _ = self.render("services:\n  web:\n    image: nginx:1\n")
-            self.assertTrue(ok, err)                                        # and a clean app still runs
+            self.assertFalse(ok)
+            if cg.no_env_resolution_works(lambda cmd, cwd: app_runner.sh(cmd, cwd=cwd)):
+                self.assertIn("env_file", err)                              # pass 1 caught it
+                ok, err, _, _ = self.render("services:\n  web:\n    image: nginx:1\n")
+                self.assertTrue(ok, err)                                    # and a clean app still runs
+            else:
+                # v117: a Compose whose --no-env-resolution still reads env files (Ubuntu 24.04's 2.40.3): without
+                # PyYAML nothing can see which files an app reads, so every compose app is refused (fails closed).
+                self.assertIn("cannot check which env files", err)
         finally:
             cg.raw_env_files = real
 

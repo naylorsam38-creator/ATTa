@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import json, os, re, shutil, subprocess, sys, time, zipfile
-import builds, coolify_handoff, maintenance, intake, app_classifier, app_discovery, accounts
+import builds, coolify_handoff, maintenance, intake, app_classifier, app_discovery, accounts, app_owners
 
 ROOT=Path(os.environ.get('APP_BUILDER_ROOT','/srv/app-builder'))
 INBOX=ROOT/'inbox'; WORK=ROOT/'work'; LIB=ROOT/'library'; STATE=ROOT/'state'; PKG=ROOT/'package'
@@ -350,11 +350,47 @@ def may_update_system(owner,*,local=False):
     except Exception: acct=None
     return bool(acct) and acct.get('role')=='admin' and not acct.get('disabled')
 
+# v117 (from PR #3): the one place for bundles put on the server ITSELF. The web inbox (INBOX) belongs to the gateway
+# and every item there needs the gateway's build record; LOCAL_INBOX belongs to the server's operator: root-owned
+# and not writable by anyone else (bootstrap.sh makes it 0755 so the unprivileged pipeline can READ it). The pipeline
+# can never write there, so it can't forge an item, and it records what it has done in LOCAL_DONE instead of
+# renaming. On a laptop (no systemd service) the operator is the user running `bash run`.
+LOCAL_INBOX=ROOT/'local-inbox'; LOCAL_DONE=STATE/'local-inbox-done.json'
+def _local_trusted_uids():
+    return {0} if os.environ.get('INVOCATION_ID') else {0,os.geteuid()}
+
 def _local_inbox_drop(b):
-    """(ok, reason): an inbox item with no build record counts as placed by the server itself only when the
-    inbox is a folder nobody but root can write and the item is a root-owned regular file with one link."""
+    """(ok, reason): an item counts as placed by the server itself only if it sits in LOCAL_INBOX, that folder is
+    owned by a trusted user and writable by nobody else, and the item is that user's regular file with one link."""
     from adm import authz
-    return authz.secure_file(b,INBOX)
+    if b.parent!=LOCAL_INBOX:
+        return False,f'only {LOCAL_INBOX} takes items from the server itself; {b.parent} is the web inbox'
+    why=''
+    for uid in sorted(_local_trusted_uids()):
+        ok,why=authz.secure_file(b,LOCAL_INBOX,uid=uid)
+        if ok: return True,''
+    return False,why
+
+def _local_seen():
+    try: return json.loads(LOCAL_DONE.read_text())
+    except (OSError,ValueError): return {}
+
+def _local_key(p):
+    st=os.stat(p); return f'{st.st_size}:{int(st.st_mtime)}'
+
+def _local_items():
+    if not LOCAL_INBOX.is_dir(): return []
+    seen=_local_seen()
+    return sorted(p for p in LOCAL_INBOX.glob('*.zip') if p.is_file() and (seen.get(p.name) or {}).get('key')!=_local_key(p))
+
+def _local_done(b,state):
+    seen=_local_seen()
+    import hashlib
+    h=hashlib.sha256()
+    with open(b,'rb') as f:
+        for chunk in iter(lambda:f.read(1<<20),b''): h.update(chunk)
+    seen[b.name]={'key':_local_key(b),'sha256':h.hexdigest(),'state':state,'build_id':LAST_BUILD,'at':time.time()}
+    tmp=LOCAL_DONE.with_name(LOCAL_DONE.name+'.tmp'); tmp.write_text(json.dumps(seen,indent=2)+'\n'); os.replace(tmp,LOCAL_DONE)
 
 def _owner_of(rec):
     o=str((rec or {}).get('owner') or '').strip()
@@ -378,6 +414,11 @@ def queue_system_update(b,stage,bid,rec,*,local=False):
         builds.update(bid,adm={'queued':False,'reason':'zip holds the skins package but not a full ATTa bundle (run + release.json + 04-deployment/); system code unchanged'}); return None
     if not Path('/run/systemd/system').is_dir():
         builds.update(bid,adm={'queued':False,'reason':'local instance: code updates apply by re-running `bash run` from the new bundle'}); return None
+    if local and os.geteuid()!=0:
+        # v117: a bundle put on the server by its operator: the root path for that is deployctl (ADM's own CLI).
+        builds.update(bid,adm={'queued':False,'reason':'a bundle placed on the server updates ATTa with: '
+                                                        f'sudo deployctl deploy {LOCAL_INBOX}/{b.name}'})
+        step('SYSTEM_UPDATE_USE_DEPLOYCTL'); return None
     if os.geteuid()!=0:
         # v116: the runner is not root, so it cannot write ADM's root-only queue. It hands the bundle to
         # deployd through adm/requests/; deployd queues EVERY request as a web job and re-checks the admin.
@@ -429,6 +470,13 @@ def lock_is_stale():
     # Never reclaim a live lock solely because it is old; the owner remains authoritative.
     return False
 
+def record_owners(added,owner,bid):
+    """v117 (from PR #3): the account that added an app owns its per-app data (evidence, checklist rows, tokens).
+    Only NEW apps: an app already in the library keeps its first owner. The server itself (LOCAL_OWNER) is not an
+    account, so what it adds is admin-only."""
+    for name in added or []:
+        app_owners.record(name,owner,bid)
+
 def build_id_of(b):
     return b.name.split('.',1)[0]
 
@@ -459,6 +507,7 @@ def process(b):
             url=json.loads(b.read_text()).get('url','')
             step('ADDING_APP',kind='git',source=url)
             added,kept=ingest_repo(url,bid,owner)
+            record_owners(added,owner,bid)
             builds.update(bid,package=ensure_package())
         else:
             with zipfile.ZipFile(b) as z: extract(z,stage)
@@ -479,6 +528,7 @@ def process(b):
             else:
                 step('ADDING_APP',kind='upload',source=rec.get('original_name') or b.name)
                 added,kept=ingest_upload(stage,bid,owner,rec.get('original_name'))
+                record_owners(added,owner,bid)
                 builds.update(bid,package=ensure_package())
         if added or kept: builds.update(bid,apps_added=added,apps_already_in_library=kept)
         step('FETCHING_LIBRARY'); lib=library()
@@ -559,10 +609,33 @@ def _inbox_items():
     done=('.processed.zip','.failed.zip','.processed.json','.failed.json')
     zips=[p for p in INBOX.glob('*.zip') if not p.name.endswith(done)]
     repos=[p for p in INBOX.glob('*.repo.json')]
-    return sorted(zips+repos,key=lambda p:p.name)
+    # v117: then what the server's operator placed in LOCAL_INBOX (zips only; a git address comes through the web).
+    return sorted(zips+repos,key=lambda p:p.name)+_local_items()
+
+INSTANCE_LOCK=STATE/'pipeline.instance.lock'; HEARTBEAT=STATE/'pipeline.heartbeat'
+def single_instance():
+    """v117: exactly one pipeline per data folder. A second one (a double `bash run`, a stray start beside the
+    systemd service) exits at once instead of processing the same inbox twice. The kernel frees the lock on exit."""
+    import fcntl
+    STATE.mkdir(parents=True,exist_ok=True)
+    fd=os.open(INSTANCE_LOCK,os.O_RDWR|os.O_CREAT|os.O_CLOEXEC,0o640)
+    try: fcntl.flock(fd,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    except BlockingIOError:
+        print(f'pipeline: another pipeline already runs on {ROOT} (lock {INSTANCE_LOCK}); this one exits',flush=True)
+        raise SystemExit(3)
+    return fd
+
+def heartbeat():
+    """v117: proof of life for status checks: this pid, now. Written every pass of the loop."""
+    try:
+        tmp=HEARTBEAT.with_name(HEARTBEAT.name+'.tmp'); tmp.write_text(json.dumps({'pid':os.getpid(),'at':time.time()})+'\n')
+        os.replace(tmp,HEARTBEAT)
+    except OSError as e: print(f'pipeline: heartbeat not written: {e}',flush=True)
 
 def loop():
+    _instance=single_instance()   # held (never closed) for the life of the process
     while True:
+        heartbeat()
         bs=_inbox_items()
         if LOCK.exists() and lock_is_stale():
             LOCK.unlink(missing_ok=True)
@@ -571,8 +644,11 @@ def loop():
             try:
                 b=bs[0]; st=process(b)
                 ok=st in (builds.QUALIFIED,builds.PARTIALLY_QUALIFIED,builds.PACKAGE_INSTALLED)
-                ext='.json' if b.name.endswith('.json') else '.zip'
-                b.rename(INBOX/(build_id_of(b)+('.processed' if ok else '.failed')+ext))
+                if b.parent==LOCAL_INBOX:
+                    _local_done(b,st)   # root's folder: recorded, never renamed
+                else:
+                    ext='.json' if b.name.endswith('.json') else '.zip'
+                    b.rename(INBOX/(build_id_of(b)+('.processed' if ok else '.failed')+ext))
                 # Self-healing: script -> adapter -> LLM -> human, for whatever didn't pass.
                 if st not in (builds.QUALIFIED,builds.PACKAGE_INSTALLED) and LAST_BUILD:
                     try: maintenance.on_failure(LAST_BUILD)

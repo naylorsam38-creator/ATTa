@@ -1,29 +1,206 @@
 #!/usr/bin/env bash
-set -euo pipefail
+# bootstrap.sh — install or upgrade ATTa on this server. Run by `sudo bash run`, by ADM (deployd/deployctl), or by
+# hand. v117: a TRANSACTION. Nothing live changes until everything that can fail has passed off to the side, and a
+# failure after the switch puts back EXACTLY what was live (docs/DEPLOYMENT.md).
+#
+#   0 lock      one deploy at a time, server-wide (the lock deployd/deployctl use; inherited from ADM, else taken here)
+#   1 record    the deployment record: deployctl journal <id>   (created/validating -> building -> built ->
+#               health_checking -> verified -> live; or failed/timed_out/interrupted -> rolled_back)
+#   2 validate  .env as data (never shell), the OS, the settings; what is live now is recorded as the rollback target
+#   3 build     OFF TO THE SIDE: the new release folder, packages, Docker, the browser, a smoke test of the new
+#               gateway from its own folder. Live code, units and nginx are untouched.            -> built
+#   4 switch    snapshot + restore.sh first; then units, nginx (whole site, HTTPS included), the code symlink;
+#               restart; ATTa-specific checks on the .env port, through nginx, and in a real browser; the HTTPS
+#               certificate when one is configured.                                                -> verified
+#               Any failure here: restore.sh puts back units, nginx, proxy.json and the symlink exactly, restarts,
+#               and re-checks the previous release.
+#   5 live      by hand: the release becomes known-good now. Under ADM: ADM checks independently, then makes it live.
+set -Eeuo pipefail
+umask 022
 ROOT=/srv/app-builder; APP=/opt/app-builder
 # v114.1: code lives in a fresh folder per deploy under $RELS; $APP is a symlink to the live one.
 RELS=/opt/app-builder-releases
 ATTA_LIB_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "$ATTA_LIB_DIR/bootstrap-lib.sh"
-mkdir -p "$ROOT" "$ROOT"/{inbox,work,library,package,state,state/apps}
+ADM_DIR="${ATTA_ADM_ROOT:-$ROOT/adm}"
+export APP_BUILDER_ROOT="$ROOT" ATTA_ADM_ROOT="$ADM_DIR" ATTA_CODE_RELEASES="$RELS" APP_BUILDER_APP="$APP"
+[ "$(id -u)" = 0 ] || { echo "DEPLOYMENT FAILED: run as root: sudo bash run" >&2; exit 1; }
+mkdir -p "$ROOT" "$ADM_DIR/state"
+SWITCHED=""; NEW_CODE=""; TXN=""; ATTA_LAST_FAIL=""
+
+# ---------------------------------------------------------------------------------------------------- 0 lock
+atta_deploy_lock "$ADM_DIR/state/deployd.lock" || exit 1
+
+# ---------------------------------------------------------------------------------------------------- 1 record
+ATTA_DEPLOYMENT_ID="$(atta_ds begin)" || { echo "DEPLOYMENT FAILED: could not open the deployment record" >&2; exit 1; }
+export ATTA_DEPLOYMENT_ID
+if [ -z "${ATTA_ADM_ACTIVE:-}" ]; then
+  # By hand: name this run as the lock's owner, so nobody mistakes it for the leftovers of a killed deploy.
+  python3 "$ATTA_LIB_DIR/deployd/adm/lock.py" owner "$ADM_DIR/state/deployd.lock" "$ATTA_DEPLOYMENT_ID" "$$"
+fi
+echo "deployment $ATTA_DEPLOYMENT_ID  (record: deployctl journal $ATTA_DEPLOYMENT_ID)"
+
+ATTA_SIGNALLED=""
+on_failure() {
+  # The ERR / INT / TERM / EXIT trap. Records why, puts back what was live if anything was switched, and says what is
+  # live now. Runs once: whichever trap fires first.
+  local rc=$? why="$1" kind="${2:-failed}" st restored=""
+  [ "$BASHPID" = "$$" ] || exit "$rc"          # inside $( ) or a subshell: let the main shell handle it, once
+  trap - ERR INT TERM EXIT
+  set +e
+  [ -n "$ATTA_LAST_FAIL" ] && why="$ATTA_LAST_FAIL"
+  echo "DEPLOYMENT FAILED: $why" >&2
+  st="$(atta_ds state 2>/dev/null)"
+  if [ -n "${ATTA_ADM_ACTIVE:-}" ] && [ -n "$ATTA_SIGNALLED" ]; then
+    # ADM sent the signal (time limit, cancel) or is recovering after its own death: IT records why (timed_out /
+    # interrupted). Writing "failed" here first would hide the real reason.
+    echo "(stopped by ADM; ADM records the outcome)" >&2
+  else
+    case "$st" in failed|timed_out|interrupted|rolled_back|live) ;; *) atta_ds to "$kind" "$why" ;; esac
+  fi
+  if [ -n "$SWITCHED" ]; then
+    echo "Putting back exactly what was live (snapshot $TXN) ..." >&2
+    if bash "$TXN/restore.sh"; then restored=1; atta_ds set local_restore '{"result": "verified"}'
+    else atta_ds set local_restore '{"result": "failed"}'; fi
+  fi
+  [ -n "$NEW_CODE" ] && [ -d "$NEW_CODE" ] && atta_rel failed "$NEW_CODE" "$ATTA_DEPLOYMENT_ID" "$why"
+  if [ -z "${ATTA_ADM_ACTIVE:-}" ]; then
+    # By hand this run settles its own record. (Under ADM, ADM re-checks and decides.)
+    if [ -z "$SWITCHED" ]; then atta_ds rollback not_needed "it failed before anything live was switched"
+    elif [ -n "$restored" ]; then atta_ds rollback succeeded && atta_ds to rolled_back
+    else atta_ds rollback failed "restore.sh did not bring the previous release back (see above)"; fi
+    atta_rel prune "$RELS" "$APP" "$ATTA_KEEP_CODE_RELEASES" >/dev/null
+  fi
+  if [ -z "$SWITCHED" ]; then echo "RESULT: FAILED — nothing live was changed. Still live: $(readlink -e "$APP" 2>/dev/null || echo "nothing (first install)")" >&2
+  elif [ -n "$restored" ]; then
+    if [ -e "$APP" ]; then echo "RESULT: ROLLED BACK — live again, and checked: $(readlink -e "$APP")" >&2
+    else echo "RESULT: ROLLED BACK — the first install was undone; nothing is live (fix the cause above and run again)" >&2; fi
+  else echo "RESULT: ROLLBACK FAILED — a person is needed. Live now: $(readlink -e "$APP" 2>/dev/null || echo "unclear"). See deployctl journal $ATTA_DEPLOYMENT_ID" >&2; fi
+  exit 1
+}
+trap 'on_failure "a step failed at line $LINENO (see the output above)"' ERR
+# Safety net: ANY other way out with a non-zero status (a plain `exit 1`, set -e in a place ERR doesn't cover) still
+# goes through on_failure, so no run ever ends with its record half-written or something half-switched.
+trap 'rc=$?; [ "$rc" = 0 ] || on_failure "stopped with status $rc (see the output above)"' EXIT
+if [ -n "${ATTA_ADM_ACTIVE:-}" ]; then
+  # ADM stops the whole tree itself and then records the outcome and rolls back
+  trap 'ATTA_SIGNALLED=1; exit 143' TERM; trap 'ATTA_SIGNALLED=1; exit 130' INT
+else
+  trap 'on_failure "stopped by a signal" interrupted' INT TERM
+fi
+
+# ---------------------------------------------------------------------------------------------------- 2 validate
+if [ ! -f "$ROOT/.env" ]; then
+  atta_write_default_env "$ROOT/.env" "$ROOT"
+  echo "created $ROOT/.env with a new session secret (edit it for the domain/email; it is data, never run)"
+fi
+# v114.1/v117: .env is read as data (envfile.py), never run as shell. A malformed or unsafe line stops the install.
+python3 "$ATTA_LIB_DIR/envfile.py" check "$ROOT/.env" || atta_fail "fix $ROOT/.env (the line named above); nothing was changed"
+PORT="$(atta_env_get "$ROOT/.env" APP_BUILDER_PORT 8787)"
+{ [[ "$PORT" =~ ^[0-9]{2,5}$ ]] && [ "$PORT" -lt 65536 ] && [ "$PORT" != 80 ] && [ "$PORT" != 443 ]; } \
+  || atta_fail "APP_BUILDER_PORT=$PORT is not a usable port (a number, not 80/443: nginx serves those)"
+DOMAINS="$(atta_env_get "$ROOT/.env" APP_BUILDER_DOMAIN)"
+EMAIL="$(atta_env_get "$ROOT/.env" APP_BUILDER_LETSENCRYPT_EMAIL)"
+ALLOW_PUBLIC_HTTP="$(atta_env_get "$ROOT/.env" APP_BUILDER_ALLOW_PUBLIC_HTTP false)"
+FIRST_DOMAIN="$(printf '%s' "$DOMAINS" | tr ',' ' ' | awk '{print $1}')"
+# The settings (domain names, email) are checked now, before anything changes (nothing is written).
+python3 "$ATTA_LIB_DIR/nginx_site.py" check --port "$PORT" --domains "$DOMAINS" --email "$EMAIL" \
+    --allow-public-http "$ALLOW_PUBLIC_HTTP" >/dev/null \
+  || atta_fail "fix APP_BUILDER_DOMAIN / APP_BUILDER_LETSENCRYPT_EMAIL in $ROOT/.env (see above); nothing was changed"
+OS="$(atta_os)"
+if ! atta_os_supported "$OS"; then
+  [ "${ATTA_ALLOW_UNSUPPORTED_OS:-}" = 1 ] \
+    || atta_fail "$OS is not a supported system (Ubuntu 24.04 or Amazon Linux 2023). ATTA_ALLOW_UNSUPPORTED_OS=1 tries anyway"
+  echo "WARNING: $OS is not a supported system; continuing because ATTA_ALLOW_UNSUPPORTED_OS=1" >&2
+fi
+echo "system: $OS"
+atta_rel migrate-legacy "$APP" "$RELS" >/dev/null
+if [ -z "${ATTA_ADM_ACTIVE:-}" ]; then
+  PREV="$(atta_ds previous-live)"      # ADM records this itself before it starts bootstrap
+  echo "rollback target: ${PREV:-none (first install, or nothing verified is live)}"
+fi
+[ "$(atta_ds state)" = validating ] && atta_ds to building
+
+# ---------------------------------------------------------------------------------------------------- 3 build
+mkdir -p "$ROOT"/{inbox,work,library,package,state,state/apps}
 # v116: the services run as their own users (atta-web, atta-run, atta-proxy); only deployd stays root.
 atta_ensure_users
-# Stage the new code in its own folder and finish it there, THEN switch $APP to it in one step.
-NEW_CODE="$(atta_stage_code "$ATTA_LIB_DIR" "$RELS")"
-# build.py is an offline/candidate-builder utility, not part of the AWS upload pipeline
-# (see 04-deployment/README runtime boundary notes). Do not leave it in the runtime path.
+# Stage the new code in its own folder and finish it there; $APP is switched only in step 4.
+NEW_CODE="$(atta_stage_code "$ATTA_LIB_DIR" "$RELS")" || atta_fail "the new release could not be staged (see above)"
+# A zip carries no exec bits: the two commands that are run directly get them here (deployctl is linked into PATH).
+chmod 755 "$NEW_CODE/deployd/deployctl" "$NEW_CODE/deployd/deployd.py"
+# build.py is an offline/candidate-builder utility, not part of the AWS upload pipeline. Not in the runtime path.
 rm -f "$NEW_CODE/build.py"
 # The skins package ships with the deployment, so apps can be added before any bundle upload.
-SKINS="$(dirname "$0")/../03-ui-skins-capability-package/UI_Skin_Capability_OneShot_v2.zip"
-[ -f "$SKINS" ] && cp -f "$SKINS" "$NEW_CODE/UI_Skin_Capability_OneShot_v2.zip"
-# A bundle carries the skins package beside 04-deployment; an ADM backup already has it inside.
-[ -f "$NEW_CODE/UI_Skin_Capability_OneShot_v2.zip" ] || { [ -L "$APP" ] && [ -f "$APP/UI_Skin_Capability_OneShot_v2.zip" ] && cp -f "$APP/UI_Skin_Capability_OneShot_v2.zip" "$NEW_CODE/"; } || true
-atta_activate_code "$APP" "$RELS" "$NEW_CODE"
-echo "code: $APP -> $NEW_CODE"
-# Seed repos are optional: the library grows from uploads and git addresses as well.
-[ -f "$APP/upstream_apps.json" ] && cp -f "$APP/upstream_apps.json" "$ROOT/upstream_apps.json"
-# Canonical front door source: 02-front-door/front-door.html in the handoff.
-if [ -f "$(dirname "$0")/../02-front-door/front-door.html" ]; then cp -f "$(dirname "$0")/../02-front-door/front-door.html" "$ROOT/front-door.html"; elif [ -f "$APP/front-door.html" ]; then cp -f "$APP/front-door.html" "$ROOT/front-door.html"; fi
+SKINS="$ATTA_LIB_DIR/../03-ui-skins-capability-package/UI_Skin_Capability_OneShot_v2.zip"
+if [ -f "$SKINS" ]; then install -m 0644 "$SKINS" "$NEW_CODE/UI_Skin_Capability_OneShot_v2.zip"
+elif [ -f "$APP/UI_Skin_Capability_OneShot_v2.zip" ]; then install -m 0644 "$APP/UI_Skin_Capability_OneShot_v2.zip" "$NEW_CODE/"; fi
+# The Front Door page travels with the release (installed into $ROOT at the switch).
+FRONT="$ATTA_LIB_DIR/../02-front-door/front-door.html"
+[ -f "$FRONT" ] && install -m 0644 "$FRONT" "$NEW_CODE/front-door.html"
+VERSION="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("version","unknown"))' "$NEW_CODE/release.json" 2>/dev/null || echo unknown)"
+atta_ds set attempted "$(python3 -c 'import json,sys; print(json.dumps({"release": sys.argv[1], "version": sys.argv[2], "code_sha256": sys.argv[3]}))' "$NEW_CODE" "$VERSION" "$(atta_rel sha "$NEW_CODE")")"
+echo "new release, not live yet: $NEW_CODE ($VERSION)"
+atta_install_packages "$OS"
+
+# Docker + Compose: the app runner (app_runner.py) starts every library app in a container so the
+# watcher can check it. Without Docker nothing can be started and every app stops at 2 APP_UP.
+if ! command -v docker >/dev/null 2>&1; then
+  if command -v dnf >/dev/null 2>&1; then dnf install -y docker
+  else DEBIAN_FRONTEND=noninteractive apt-get install -y docker.io; fi
+fi
+# Docker Hub limits anonymous downloads; send them through Google's public Docker Hub cache first.
+if [ ! -f /etc/docker/daemon.json ]; then
+  mkdir -p /etc/docker
+  printf '{\n  "registry-mirrors": ["https://mirror.gcr.io"]\n}\n' > /etc/docker/daemon.json
+fi
+systemctl enable --now docker
+atta_join_docker   # v116: the runner user drives Docker (group added now that Docker exists)
+if ! docker compose version >/dev/null 2>&1; then
+  # Amazon Linux has no compose package: install Docker's own compose plugin binary.
+  DEBIAN_FRONTEND=noninteractive apt-get install -y docker-compose-v2 >/dev/null 2>&1 || \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y docker-compose-plugin >/dev/null 2>&1 || \
+  atta_install_compose /usr/local/lib/docker/cli-plugins/docker-compose || \
+    atta_fail "Docker Compose ${ATTA_COMPOSE_VERSION} could not be installed and verified"
+fi
+docker compose version >/dev/null 2>&1 || atta_fail "docker compose is not available"
+docker run --rm hello-world >/dev/null || atta_fail "docker cannot run a container"
+# Second layer, on AWS: require IMDSv2 with a hop limit of 1, so a container that got past the rule still
+# can't get a token. Needs the AWS CLI and ec2:ModifyInstanceMetadataOptions; skipped otherwise.
+if command -v aws >/dev/null 2>&1; then
+  TOK=$(curl -fsS -m 2 -X PUT http://169.254.169.254/latest/api/token -H "X-aws-ec2-metadata-token-ttl-seconds: 60" 2>/dev/null || true)
+  if [ -n "$TOK" ]; then
+    IID=$(curl -fsS -m 2 -H "X-aws-ec2-metadata-token: $TOK" http://169.254.169.254/latest/meta-data/instance-id 2>/dev/null || true)
+    REG=$(curl -fsS -m 2 -H "X-aws-ec2-metadata-token: $TOK" http://169.254.169.254/latest/meta-data/placement/region 2>/dev/null || true)
+    if [ -n "$IID" ] && [ -n "$REG" ]; then
+      if aws ec2 modify-instance-metadata-options --region "$REG" --instance-id "$IID" --http-tokens required \
+           --http-put-response-hop-limit 1 >/dev/null 2>&1; then
+        echo "IMDSv2 required, hop limit 1 (instance $IID)"
+      else
+        echo "NOTE: could not set IMDSv2 / hop limit 1 (the instance role may lack ec2:ModifyInstanceMetadataOptions). The firewall rule still applies." >&2
+      fi
+    fi
+  fi
+fi
+echo "DOCKER_PASS"
+
+node_major="$(node --version 2>/dev/null | sed 's/^v//' | cut -d. -f1)"
+if [ -z "$node_major" ] || [ "$node_major" -lt 18 ]; then
+  atta_fail "Node.js >= 18 is required; found $(node --version 2>/dev/null || echo none)"
+fi
+# The browser stage is part of the acceptance gate: pinned Playwright + Chromium, the OS libraries it needs (per OS),
+# and a real launch as the runner user. Failures end in one "DEPLOYMENT FAILED: ..." line.
+atta_install_browser "$OS" "$NEW_CODE"
+# The new gateway, from its own folder, against a throwaway data folder: it must start and prove itself.
+atta_candidate_check "$NEW_CODE"
+atta_ds to built
+
+# ---------------------------------------------------------------------------------------------------- 4 switch
+TXN="$RELS/.txn/$ATTA_DEPLOYMENT_ID"
+atta_snapshot "$TXN" "$APP" "$ROOT" "$NEW_CODE"
+atta_ds set transaction "\"$TXN\""
+atta_ds to health_checking
+SWITCHED=1
 cat >/etc/systemd/system/app-builder-gateway.service <<EOF
 [Unit]
 Description=APP Builder web gateway
@@ -107,173 +284,6 @@ SystemCallArchitectures=native
 [Install]
 WantedBy=multi-user.target
 EOF
-if [ ! -f "$ROOT/.env" ]; then
- umask 077
- secret="$(python3 -c 'import secrets;print(secrets.token_urlsafe(48))')"
- cat >"$ROOT/.env" <<EOF
-APP_BUILDER_ROOT=$ROOT
-APP_BUILDER_HOST=127.0.0.1
-APP_BUILDER_PORT=8787
-APP_BUILDER_SESSION_SECRET=$secret
-APP_BUILDER_BROWSER_CHECK=true
-APP_BUILDER_WATCHER_INTERVAL=300
-# Coolify hand-off (docs/COOLIFY-HANDOFF.md). Qualified builds wait in the outbox until both are set.
-COOLIFY_URL=
-COOLIFY_TOKEN=
-# Self-healing tier 3 (LLM). Blank = that tier is skipped and failures go straight to a human.
-ANTHROPIC_API_KEY=
-# v116: the LLM repair tier needs this as well as the key (the Front Door uses the same key). It can only
-# edit overlay data (CSS/JSON), never code, and every proxy it restarts runs unprivileged.
-APP_BUILDER_HEAL_LLM=false
-# Public web address(es) and the email for the free HTTPS certificate (Let's Encrypt).
-# DNS for each name must already point at this server, ports 80+443 open. Re-run `bash run` after setting.
-APP_BUILDER_DOMAIN=
-APP_BUILDER_LETSENCRYPT_EMAIL=
-# v116: without HTTPS nginx answers on 127.0.0.1 only. true = serve plain HTTP publicly anyway (not advised).
-APP_BUILDER_ALLOW_PUBLIC_HTTP=false
-# v116: pre-made test accounts (tester01..NN). 0 on a server; set a number to create them, then hand them out.
-APP_BUILDER_TEST_ACCOUNTS=0
-# v116: what app containers may reach besides each other: public = the internet (never metadata, private
-# networks or this server); deny = nothing outside their own network.
-APP_BUILDER_APP_EGRESS=public
-# App runner (app_runner.py). true = apps stay running after their check; false = stopped after it
-# (frees memory for the next app; Coolify runs the qualified ones for real).
-APP_BUILDER_KEEP_RUNNING=false
-# true = delete an app's downloaded images after its check (use on small disks).
-APP_BUILDER_PRUNE_IMAGES=false
-# Seconds an app gets to answer after it starts, and the most it gets while still visibly starting.
-APP_BUILDER_BOOT_TIMEOUT=240
-APP_BUILDER_BOOT_TIMEOUT_MAX=900
-# Self-healing tier 4: incoming-webhook URL for human alerts (Slack/Discord/any JSON POST). Blank = /alerts page only.
-ALERT_WEBHOOK_URL=
-EOF
- chmod 600 "$ROOT/.env"
-fi
-# Accounts: admin + 10 pre-made test accounts. Idempotent: existing accounts are never changed.
-# On an upgraded server the old shared APP_BUILDER_PASSWORD (if still in .env) becomes the admin password.
-# v114.1: .env is read as data (envfile.py), never run as shell. A malformed or unsafe line stops the install.
-python3 "$APP/envfile.py" check "$ROOT/.env" || { echo "DEPLOYMENT FAILED: fix $ROOT/.env (line named above)" >&2; exit 1; }
-atta_env_run "$ROOT/.env" APP_BUILDER_ROOT,APP_BUILDER_USER,APP_BUILDER_PASSWORD,APP_BUILDER_TEST_ACCOUNTS -- python3 "$APP/accounts.py" init
-# App id -> Coolify resource UUID. Template only; the owner fills it in.
-if [ ! -f "$ROOT/coolify_resources.json" ]; then
- printf '{\n  "apps": {}\n}\n' >"$ROOT/coolify_resources.json"
-fi
-# v114.1: ownership and permissions enforced on every run, not only when the files are first made.
-atta_secure_state "$ROOT"
-# Runtime dependencies. This handoff targets Amazon Linux 2023 (dnf), while
-# retaining apt support for Debian/Ubuntu hosts.
-if command -v dnf >/dev/null 2>&1; then
-  dnf install -y nodejs python3-pip nginx unzip git \
-    nss nspr atk at-spi2-atk at-spi2-core cups-libs libdrm libxkbcommon \
-    libXcomposite libXdamage libXext libXfixes libXrandr libxshmfence \
-    pango cairo alsa-lib mesa-libgbm liberation-fonts
-elif command -v apt-get >/dev/null 2>&1; then
-  apt-get update -y
-  DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs python3-pip nginx unzip git
-else
-  echo 'Unsupported Linux package manager: expected dnf or apt-get.' >&2
-  exit 1
-fi
-
-# Docker + Compose: the app runner (app_runner.py) starts every library app in a container so the
-# watcher can check it. Without Docker nothing can be started and every app stops at 2 APP_UP.
-if ! command -v docker >/dev/null 2>&1; then
-  if command -v dnf >/dev/null 2>&1; then dnf install -y docker
-  else DEBIAN_FRONTEND=noninteractive apt-get install -y docker.io; fi
-fi
-# Docker Hub limits anonymous downloads; send them through Google's public Docker Hub cache first.
-if [ ! -f /etc/docker/daemon.json ]; then
-  mkdir -p /etc/docker
-  printf '{\n  "registry-mirrors": ["https://mirror.gcr.io"]\n}\n' > /etc/docker/daemon.json
-fi
-systemctl enable --now docker
-atta_join_docker   # v116: the runner user drives Docker (group added now that Docker exists)
-if ! docker compose version >/dev/null 2>&1; then
-  # Amazon Linux has no compose package: install Docker's own compose plugin binary.
-  DEBIAN_FRONTEND=noninteractive apt-get install -y docker-compose-v2 >/dev/null 2>&1 || \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y docker-compose-plugin >/dev/null 2>&1 || \
-  atta_install_compose /usr/local/lib/docker/cli-plugins/docker-compose || \
-    { echo "DEPLOYMENT FAILED: Docker Compose ${ATTA_COMPOSE_VERSION} could not be installed and verified" >&2; exit 1; }
-fi
-docker compose version >/dev/null 2>&1 || { echo "DEPLOYMENT FAILED: docker compose is not available" >&2; exit 1; }
-docker run --rm hello-world >/dev/null || { echo "DEPLOYMENT FAILED: docker cannot run a container" >&2; exit 1; }
-# v114: containers may not reach the cloud metadata service (on AWS it hands out this server's IAM
-# credentials). v116: nor private networks, link-local, loopback or this server itself; public internet only
-# (APP_BUILDER_APP_EGRESS=public, default) or nothing (=deny). The rules live in container-egress.sh; a
-# oneshot unit re-applies them after every Docker start, because Docker rebuilds its chains then.
-install -o root -g root -m 0755 "$APP/container-egress.sh" /usr/local/sbin/atta-block-metadata
-cat >/etc/systemd/system/atta-block-metadata.service <<BLOCKUNIT
-[Unit]
-Description=ATTa: restrict what app containers can reach (metadata, internal networks, this host)
-After=docker.service
-PartOf=docker.service
-[Service]
-Type=oneshot
-RemainAfterExit=yes
-EnvironmentFile=-$ROOT/.env
-ExecStart=/usr/local/sbin/atta-block-metadata
-[Install]
-WantedBy=docker.service
-BLOCKUNIT
-systemctl daemon-reload
-systemctl enable atta-block-metadata.service >/dev/null 2>&1 || true
-systemctl restart atta-block-metadata.service || echo "WARNING: could not restrict app containers' network access (see: systemctl status atta-block-metadata)" >&2
-# Second layer, on AWS: require IMDSv2 with a hop limit of 1, so a container that got past the rule still
-# can't get a token. Needs the AWS CLI and ec2:ModifyInstanceMetadataOptions; skipped otherwise.
-if command -v aws >/dev/null 2>&1; then
-  TOK=$(curl -fsS -m 2 -X PUT http://169.254.169.254/latest/api/token -H "X-aws-ec2-metadata-token-ttl-seconds: 60" 2>/dev/null || true)
-  if [ -n "$TOK" ]; then
-    IID=$(curl -fsS -m 2 -H "X-aws-ec2-metadata-token: $TOK" http://169.254.169.254/latest/meta-data/instance-id 2>/dev/null || true)
-    REG=$(curl -fsS -m 2 -H "X-aws-ec2-metadata-token: $TOK" http://169.254.169.254/latest/meta-data/placement/region 2>/dev/null || true)
-    if [ -n "$IID" ] && [ -n "$REG" ]; then
-      if aws ec2 modify-instance-metadata-options --region "$REG" --instance-id "$IID" --http-tokens required \
-           --http-put-response-hop-limit 1 >/dev/null 2>&1; then
-        echo "IMDSv2 required, hop limit 1 (instance $IID)"
-      else
-        echo "NOTE: could not set IMDSv2 / hop limit 1 (the instance role may lack ec2:ModifyInstanceMetadataOptions). The firewall rule still applies." >&2
-      fi
-    fi
-  fi
-fi
-echo "DOCKER_PASS"
-
-node_major="$(node --version | sed 's/^v//' | cut -d. -f1)"
-if [ -z "$node_major" ] || [ "$node_major" -lt 18 ]; then
-  echo "Node.js >= 18 is required; found $(node --version 2>/dev/null || echo missing)" >&2
-  exit 1
-fi
-
-# Browser stage is part of the acceptance gate. Install Playwright and its
-# Chromium browser if they are not already present. On Amazon Linux there is
-# no apt chromium package, so use Playwright's managed Chromium binary.
-# pip >= 23 needs --break-system-packages on distro Pythons; older pip (Amazon Linux 2023's) rejects it.
-pip_install(){ python3 -m pip install --break-system-packages "$@" 2>/dev/null || python3 -m pip install "$@"; }
-# v116: the exact versions in requirements-server.txt, on every run (pip leaves them alone when they match).
-pip_install --disable-pip-version-check -r "$APP/requirements-server.txt" \
-  || { echo "DEPLOYMENT FAILED: could not install the pinned Python packages (requirements-server.txt)" >&2; exit 1; }
-# v116: Chromium goes where the runner user can read it (not root's home).
-export PLAYWRIGHT_BROWSERS_PATH="$ATTA_BROWSERS"
-python3 -m playwright install chromium
-chmod -R a+rX "$ATTA_BROWSERS"
-# v116: compose_guard reads every app's compose YAML (include:/extends: and their env files) before Docker
-# does; without PyYAML an older Docker Compose leaves it nothing to check with and apps are refused.
-# (PyYAML, Playwright and the Anthropic SDK all come from requirements-server.txt above.)
-for m in yaml playwright anthropic; do
-  python3 -c "import $m" >/dev/null 2>&1 || { echo "DEPLOYMENT FAILED: Python package $m is missing after install" >&2; exit 1; }
-done
-
-# Fail the deployment immediately if the real browser cannot launch AS THE RUNNER USER (v116).
-runuser -u "$ATTA_RUN_USER" -- env HOME="$ATTA_RUN_HOME" PLAYWRIGHT_BROWSERS_PATH="$ATTA_BROWSERS" python3 - <<'PY'
-from playwright.sync_api import sync_playwright
-with sync_playwright() as p:
-    browser = p.chromium.launch(headless=True)
-    page = browser.new_page()
-    page.goto("data:text/html,<title>APP Builder browser gate</title>", wait_until="load")
-    assert page.title() == "APP Builder browser gate"
-    browser.close()
-print("PLAYWRIGHT_BROWSER_PASS")
-PY
-
 cat >/etc/systemd/system/app-builder-watcher.service <<EOF
 [Unit]
 Description=APP Builder six-stage system watcher
@@ -317,125 +327,125 @@ WantedBy=multi-user.target
 EOF
 # One persistent watcher service owns its own interval; do not also schedule the same service with a timer.
 rm -f /etc/systemd/system/app-builder-watcher.timer
-if [ -f "$APP/app-builder-nginx.conf" ]; then
-  if ! command -v nginx >/dev/null 2>&1; then
-    if command -v dnf >/dev/null 2>&1; then
-      dnf install -y nginx
-    elif command -v apt-get >/dev/null 2>&1; then
-      apt-get update -y
-      DEBIAN_FRONTEND=noninteractive apt-get install -y nginx
-    else
-      echo "nginx is required but no supported package manager is available." >&2
-      exit 1
-    fi
-  fi
-  # Domain + certificate email can live in .env (set once, kept across re-runs) or be passed in the environment.
-  if [ -z "${APP_BUILDER_DOMAIN:-}" ] && [ -f "$ROOT/.env" ]; then
-    APP_BUILDER_DOMAIN="$(sed -n 's/^APP_BUILDER_DOMAIN=//p' "$ROOT/.env" | tail -1)"
-    APP_BUILDER_LETSENCRYPT_EMAIL="${APP_BUILDER_LETSENCRYPT_EMAIL:-$(sed -n 's/^APP_BUILDER_LETSENCRYPT_EMAIL=//p' "$ROOT/.env" | tail -1)}"
-  fi
-  # Several names allowed, comma or space separated: "airexploit.com,www.airexploit.com".
-  DOMAINS="$(printf '%s' "${APP_BUILDER_DOMAIN:-}" | tr ',' ' ' | xargs)"
-  # v116: HTTPS by default. Without a domain + certificate email nginx answers on 127.0.0.1 only, so logins
-  # never cross the internet in clear text. APP_BUILDER_ALLOW_PUBLIC_HTTP=true is the explicit opt-out.
-  [ -z "${APP_BUILDER_ALLOW_PUBLIC_HTTP:-}" ] && [ -f "$ROOT/.env" ] && \
-    APP_BUILDER_ALLOW_PUBLIC_HTTP="$(sed -n 's/^APP_BUILDER_ALLOW_PUBLIC_HTTP=//p' "$ROOT/.env" | tail -1)"
-  NGINX_LISTEN="$(atta_nginx_listen "${DOMAINS:-}" "${APP_BUILDER_LETSENCRYPT_EMAIL:-}" "${APP_BUILDER_ALLOW_PUBLIC_HTTP:-}")"
-  atta_nginx_conf "$APP/app-builder-nginx.conf" "${DOMAINS:-_}" "$NGINX_LISTEN" > /etc/nginx/conf.d/app-builder.conf \
-    || { echo "DEPLOYMENT FAILED: could not write the nginx site" >&2; exit 1; }
-  rm -f /etc/nginx/conf.d/app-builder-default.conf
-  nginx -t
-  systemctl enable --now nginx
-  systemctl reload nginx
-  # Automatic TLS. Set APP_BUILDER_DOMAIN and APP_BUILDER_LETSENCRYPT_EMAIL and
-  # certbot issues + installs the certificate and adds the HTTPS redirect here,
-  # so the login never rides plain HTTP. This still needs the two things no
-  # script can supply: the domain's DNS must already point at this server, and
-  # ports 80+443 must be open in the security group. If the domain isn't set,
-  # we skip and say so clearly rather than pretending HTTPS is on.
-  if [ -n "${DOMAINS:-}" ] && [ "${DOMAINS}" != "_" ] && [ -n "${APP_BUILDER_LETSENCRYPT_EMAIL:-}" ]; then
-    if ! command -v certbot >/dev/null 2>&1; then
-      if command -v dnf >/dev/null 2>&1; then dnf install -y certbot python3-certbot-nginx
-      elif command -v apt-get >/dev/null 2>&1; then DEBIAN_FRONTEND=noninteractive apt-get install -y certbot python3-certbot-nginx; fi
-    fi
-    if certbot --nginx -n --agree-tos --redirect \
-        -m "${APP_BUILDER_LETSENCRYPT_EMAIL}" $(for d in $DOMAINS; do printf -- '-d %s ' "$d"; done); then
-      systemctl reload nginx
-      echo "TLS ISSUED for ${DOMAINS} — login is now HTTPS."
-    else
-      echo "TLS NOT ISSUED. Check that ${DOMAINS} points at this server and ports 80/443 are open, then re-run." >&2
-      if [ "${APP_BUILDER_ALLOW_PUBLIC_HTTP:-}" != "true" ]; then
-        # v116: no certificate, no public plain-HTTP login page.
-        atta_nginx_conf "$APP/app-builder-nginx.conf" "${DOMAINS:-_}" "127.0.0.1:80" > /etc/nginx/conf.d/app-builder.conf
-        nginx -t && systemctl reload nginx
-        echo "Serving on 127.0.0.1 only until HTTPS works (ssh -L 8080:127.0.0.1:80 this-server)." >&2
-      fi
-    fi
-  elif [ "$NGINX_LISTEN" = "80" ]; then
-    echo "WARNING: serving PUBLIC plain HTTP (APP_BUILDER_ALLOW_PUBLIC_HTTP=true): passwords cross the network in clear text." >&2
-  else
-    echo "TLS SKIPPED: set APP_BUILDER_DOMAIN and APP_BUILDER_LETSENCRYPT_EMAIL for automatic HTTPS. Until then ATTa answers on 127.0.0.1 only (ssh -L 8080:127.0.0.1:80 this-server)."
-  fi
-fi
-# ADM — Deploy Manager (04-deployment/deployd/). Watches its queue for uploaded ATTa bundles and
-# deploys them with backup + health check + rollback. Enabled, started if not running, but NOT
-# restarted here: deployd restarts itself after a successful deploy when its own code changed
-# (restarting it from inside a deploy it is running would kill that deploy).
-cp -f "$APP/deployd/systemd/atta-deployd.service" /etc/systemd/system/atta-deployd.service
+# Seed repos are optional: the library grows from uploads and git addresses as well.
+[ -f "$NEW_CODE/upstream_apps.json" ] && cp -f "$NEW_CODE/upstream_apps.json" "$ROOT/upstream_apps.json"
+[ -f "$NEW_CODE/front-door.html" ] && install -m 0644 "$NEW_CODE/front-door.html" "$ROOT/front-door.html"
+# App id -> Coolify resource UUID. Template only; the owner fills it in.
+[ -f "$ROOT/coolify_resources.json" ] || printf '{\n  "apps": {}\n}\n' >"$ROOT/coolify_resources.json"
+# Accounts: admin (+ test accounts if APP_BUILDER_TEST_ACCOUNTS says so). Idempotent: existing accounts never change.
+atta_env_run "$ROOT/.env" APP_BUILDER_ROOT,APP_BUILDER_USER,APP_BUILDER_PASSWORD,APP_BUILDER_TEST_ACCOUNTS -- python3 "$NEW_CODE/accounts.py" init
+# ADM — Deploy Manager (deployd/). Enabled, started if not running. Under ADM it is NOT restarted here: deployd
+# restarts itself after a successful deploy when its own code changed (restarting it mid-deploy would kill that deploy).
+install -m 0644 "$NEW_CODE/deployd/systemd/atta-deployd.service" /etc/systemd/system/atta-deployd.service
 sed -i "s#/srv/app-builder#$ROOT#g; s#/opt/app-builder#$APP#g" /etc/systemd/system/atta-deployd.service
-chmod +x "$APP/deployd/deployctl" "$APP/deployd/deployd.py"
-ln -sf "$APP/deployd/deployctl" /usr/local/bin/deployctl
-mkdir -p "$ROOT/adm"/{incoming,staging,releases,backups,logs,state/queue,state/journal,requests}
-# v116: skin proxies run as the proxy user through one sudoers rule; ownership re-applied for the new units.
-atta_install_proxy_runner "$APP/run-proxy.sh" || { echo "DEPLOYMENT FAILED: could not install the proxy runner" >&2; exit 1; }
+ln -sfn "$APP/deployd/deployctl" /usr/local/bin/deployctl
+mkdir -p "$ADM_DIR"/{incoming,staging,releases,backups,logs,state/queue,state/running,state/journal,requests}
+# v116: skin proxies run as the proxy user through one sudoers rule.
+atta_install_proxy_runner "$NEW_CODE/run-proxy.sh" || atta_fail "could not install the proxy runner"
+# nginx: the distribution's stock site out of the way; ATTa's WHOLE site (HTTPS too, once a certificate exists)
+# rendered from .env + the certificate on disk; nginx -t must pass WITHOUT warnings.
+command -v nginx >/dev/null 2>&1 || atta_fail "nginx is not installed"
+mkdir -p "$ATTA_ACME_ROOT" /etc/nginx/conf.d; chmod 755 "$ATTA_ACME_ROOT"
+python3 "$NEW_CODE/nginx_site.py" neutralize
+rm -f /etc/nginx/conf.d/app-builder-default.conf
+render_site() {
+  NGINX_MODE="$(python3 "$NEW_CODE/nginx_site.py" render --port "$PORT" --domains "$DOMAINS" --email "$EMAIL" \
+      --allow-public-http "$ALLOW_PUBLIC_HTTP" --letsencrypt "$ATTA_LETSENCRYPT" --acme-root "$ATTA_ACME_ROOT" \
+      --out /etc/nginx/conf.d/app-builder.conf --proxy-json "$ROOT/state/proxy.json")" || return 1
+  local t; t="$(mktemp)"
+  if ! nginx -t >"$t" 2>&1 || ! python3 "$NEW_CODE/nginx_site.py" check-output "$t" >/dev/null; then
+    cat "$t" >&2; rm -f "$t"; atta_fail "nginx -t failed or warned (above): the site may not be served as rendered"; return 1
+  fi
+  rm -f "$t"
+}
+render_site
+# v116: ownership/permissions of the data folder, re-applied for the new units and files.
 atta_secure_state "$ROOT"
+# ---- the switch itself: one atomic rename of the code symlink, then restart onto it
+atta_rel switch "$APP" "$NEW_CODE"
+echo "code: $APP -> $NEW_CODE"
+# v114: containers may not reach the cloud metadata service (on AWS it hands out this server's IAM
+# credentials). v116: nor private networks, link-local, loopback or this server itself; public internet only
+# (APP_BUILDER_APP_EGRESS=public, default) or nothing (=deny). The rules live in container-egress.sh; a
+# oneshot unit re-applies them after every Docker start, because Docker rebuilds its chains then.
+install -o root -g root -m 0755 "$APP/container-egress.sh" /usr/local/sbin/atta-block-metadata
+cat >/etc/systemd/system/atta-block-metadata.service <<BLOCKUNIT
+[Unit]
+Description=ATTa: restrict what app containers can reach (metadata, internal networks, this host)
+After=docker.service
+PartOf=docker.service
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+EnvironmentFile=-$ROOT/.env
+ExecStart=/usr/local/sbin/atta-block-metadata
+[Install]
+WantedBy=docker.service
+BLOCKUNIT
+systemctl daemon-reload
+systemctl enable atta-block-metadata.service >/dev/null 2>&1 || true
+systemctl restart atta-block-metadata.service || echo "WARNING: could not restrict app containers' network access (see: systemctl status atta-block-metadata)" >&2
 systemctl daemon-reload
 systemctl enable app-builder-gateway.service app-builder-pipeline.service app-builder-watcher.service atta-deployd.service
 systemctl is-active --quiet atta-deployd.service || systemctl start atta-deployd.service
-# restart, not just start: on a server that's already running ATTa, the new scripts only take effect
-# once the services are restarted (enable --now leaves an already-running service on the old code).
+# restart, not just start: on a server that's already running ATTa, the new code only runs once restarted.
 systemctl restart app-builder-gateway.service app-builder-pipeline.service app-builder-watcher.service
-
-# Deployment acceptance gate: do not report success until all runtime services
-# are active, the gateway health endpoint answers, and nginx answers locally.
-# v114.1: on failure, a run started by hand puts the previous code back and restarts it. Under ADM
-# (ATTA_ADM_ACTIVE=1) nothing is undone here: ADM's rollback is the one that decides.
-gate_failed() {
-  if [ -z "${ATTA_ADM_ACTIVE:-}" ] && atta_restore_previous_code "$APP" "$RELS"; then
-    echo "Restored the previous code ($(readlink "$APP")) and restarted it." >&2
-    systemctl restart app-builder-gateway.service app-builder-pipeline.service app-builder-watcher.service || true
-  fi
-  exit 1
-}
+systemctl enable --now nginx
+systemctl reload nginx
+# ---- the gate: every service active; THIS installation (identity proof) answering as THIS release, on the .env port
+# and through nginx; then HTTPS (if configured); then a real browser through nginx.
 for svc in app-builder-gateway.service app-builder-pipeline.service app-builder-watcher.service atta-deployd.service nginx.service; do
-  systemctl is-active --quiet "$svc" || {
-    echo "DEPLOYMENT FAILED: $svc is not active" >&2
-    systemctl --no-pager --full status "$svc" || true
-    gate_failed
-  }
+  systemctl is-active --quiet "$svc" || { systemctl --no-pager --full status "$svc" >&2 || true; atta_fail "$svc is not active"; }
 done
-for attempt in $(seq 1 30); do
-  if curl -fsS http://127.0.0.1:8787/health >/tmp/app-builder-health.txt 2>/dev/null; then
-    break
-  fi
-  if [ "$attempt" -eq 30 ]; then
-    echo "DEPLOYMENT FAILED: gateway health check did not pass" >&2
-    journalctl -u app-builder-gateway.service -n 100 --no-pager || true
-    gate_failed
-  fi
-  sleep 1
-done
-curl -fsSI http://127.0.0.1/ >/dev/null || {
-  echo "DEPLOYMENT FAILED: nginx did not answer locally" >&2
-  nginx -t || true
-  journalctl -u nginx.service -n 100 --no-pager || true
-  gate_failed
+gate() {
+  python3 "$APP/atta_health.py" --env "$ROOT/.env" --direct --proxy --proxy-file "$ROOT/state/proxy.json" \
+    --expect-release "$(basename "$NEW_CODE")" --timeout "${1:-90}"
 }
-echo "DEPLOYMENT VERIFIED"
-atta_prune_code_releases "$APP" "$RELS"   # healthy: older code folders can go (live + previous always kept)
-echo "Gateway health: $(cat /tmp/app-builder-health.txt)"
-case "${NGINX_LISTEN:-}" in
-  127.0.0.1:80) echo "Open it through an SSH tunnel: ssh -L 8080:127.0.0.1:80 <server>, then http://127.0.0.1:8080/ (public access needs HTTPS: set APP_BUILDER_DOMAIN + APP_BUILDER_LETSENCRYPT_EMAIL)." ;;
-  *) echo "Open https://${DOMAINS%% *}/ (or http://<server>/ if APP_BUILDER_ALLOW_PUBLIC_HTTP=true)." ;;
+gate 90 || { journalctl -u app-builder-gateway.service -n 60 --no-pager >&2 || true
+             atta_fail "ATTa did not answer as release $(basename "$NEW_CODE") on port $PORT and through nginx"; }
+if [ "$NGINX_MODE" = pending ]; then
+  # A domain + email are set and there is no certificate yet: nginx serves the ACME path on :80, so issue it now.
+  read -r -a DOMAIN_LIST <<<"$(printf '%s' "$DOMAINS" | tr ',' ' ')"
+  if atta_issue_certificate "$EMAIL" "${DOMAIN_LIST[@]}"; then
+    render_site
+    [ "$NGINX_MODE" = tls ] || atta_fail "a certificate was issued but $ATTA_LETSENCRYPT/live/$FIRST_DOMAIN is missing"
+    systemctl reload nginx
+    gate 60 || atta_fail "HTTPS was set up but ATTa did not answer through it"
+    echo "TLS ISSUED for $DOMAINS — ATTa is served over HTTPS (http redirects to https)."
+  else
+    echo "TLS NOT ISSUED: check that $DOMAINS points at this server and ports 80/443 are open, then run this again." >&2
+    echo "Until then ATTa answers on 127.0.0.1 only (public :80 serves only the certificate check)." >&2
+  fi
+fi
+if [ "$NGINX_MODE" = tls ]; then
+  atta_cert_renewal "$APP" "$ROOT"
+  python3 "$APP/tls_check.py" --env "$ROOT/.env" --letsencrypt "$ATTA_LETSENCRYPT" --warn-days 0 \
+    || atta_fail "the HTTPS certificate check failed (above)"
+fi
+runuser -u "$ATTA_RUN_USER" -- env HOME="$ATTA_RUN_HOME" PLAYWRIGHT_BROWSERS_PATH="$ATTA_BROWSERS" \
+    python3 "$APP/atta_health.py" --browser --proxy-file "$ROOT/state/proxy.json" --timeout 90 \
+  || atta_fail "a real browser could not open ATTa's login through nginx"
+
+# ---------------------------------------------------------------------------------------------------- 5 verified / live
+atta_rel verify "$APP" "$NEW_CODE" "$ATTA_DEPLOYMENT_ID" >/dev/null
+atta_ds to verified
+echo "DEPLOYMENT VERIFIED: $(basename "$NEW_CODE") answers as itself on port $PORT, through nginx ($NGINX_MODE), and in a browser"
+if [ -n "${ATTA_ADM_ACTIVE:-}" ]; then
+  echo "ADM checks it independently now and makes it live."
+  trap - ERR INT TERM EXIT
+  exit 0
+fi
+atta_rel promote "$RELS" "$APP" "$NEW_CODE" "$ATTA_DEPLOYMENT_ID" >/dev/null
+atta_ds to live
+SWITCHED=""; trap - ERR INT TERM EXIT
+# deployd runs the new code from now on (it waits for this run's lock, then starts).
+systemctl restart atta-deployd.service || echo "WARNING: could not restart atta-deployd (systemctl status atta-deployd)" >&2
+atta_rel prune "$RELS" "$APP" "$ATTA_KEEP_CODE_RELEASES" | sed 's/^/pruned: /'
+find "$RELS/.txn" -mindepth 1 -maxdepth 1 -type d -mtime +14 -exec rm -rf {} + 2>/dev/null || true
+echo "LIVE: $(basename "$NEW_CODE") is the known-good release (previous known-good kept for rollback: deployctl rollback)"
+case "$NGINX_MODE" in
+  tls) echo "Open https://${FIRST_DOMAIN}/" ;;
+  public) echo "Open http://<server>/ (plain HTTP: APP_BUILDER_ALLOW_PUBLIC_HTTP=true — logins cross the network in clear text)" ;;
+  *) echo "Open it through an SSH tunnel: ssh -L 8080:127.0.0.1:80 <server>, then http://127.0.0.1:8080/ (public access needs HTTPS: set APP_BUILDER_DOMAIN + APP_BUILDER_LETSENCRYPT_EMAIL)" ;;
 esac
 echo "Logins are in $ROOT/TEST_ACCOUNTS.txt (0600): hand each person one line, then delete the file."

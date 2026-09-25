@@ -177,6 +177,27 @@ def validate_paths(cfg: dict, app_root, *, host_access: bool = False) -> None:
                     raise ComposeSecurityError(f"named volume {k} is a bind of the host path {dev or '(unset)'}")
 
 
+_NO_ENV_RESOLUTION_WORKS = None
+
+
+def no_env_resolution_works(run) -> bool:
+    """v117: does THIS docker compose really leave env files unread under `config --no-env-resolution`?
+    Ubuntu 24.04's Compose 2.40.3 accepts the flag and still inlines the file (its path disappears), so the pass-1
+    env_file check would see nothing. Probed once per process with a throwaway project whose env file holds a marker;
+    `run(cmd, cwd)` -> (rc, output) is the caller's clean-environment runner. Unknown flag = False too."""
+    global _NO_ENV_RESOLUTION_WORKS
+    if _NO_ENV_RESOLUTION_WORKS is None:
+        import secrets as _s, tempfile as _t
+        marker = "atta-probe-" + _s.token_hex(8)
+        with _t.TemporaryDirectory(prefix="atta-compose-probe-") as d:
+            (Path(d) / "probe.env").write_text(f"ATTA_PROBE={marker}\n")
+            (Path(d) / "compose.yml").write_text("services:\n  probe:\n    image: scratch\n    env_file: [probe.env]\n")
+            rc, out = run(["docker", "compose", "-f", str(Path(d) / "compose.yml"), "--project-directory", d,
+                           "config", "--format", "json", "--no-env-resolution"], d)
+            _NO_ENV_RESOLUTION_WORKS = rc == 0 and marker not in out and "probe.env" in out
+    return _NO_ENV_RESOLUTION_WORKS
+
+
 def raw_env_files(compose_file: Path, _depth: int = 0) -> dict:
     """{"services": {name: {"env_file": [absolute paths]}}} read straight from the YAML, following `include:`
     and `extends: file:` (whose own paths are listed too, so they must be the app's files). Checked before

@@ -1,67 +1,130 @@
 #!/usr/bin/env python3
 """deployctl — hand control over ADM from a terminal. Run as root on the server.
 
-  deployctl deploy <bundle.zip>   stage, check, back up, activate, health-check; rolls back on failure
-  deployctl rollback              put the previous release back (or the latest backup)
-  deployctl status                what is live, what was live before, last job and its verdict
-  deployctl releases              every kept release, newest first
-  deployctl jobs                  every journaled job with its verdict
-  deployctl journal <job>         the full event list for one job
-  deployctl log <job>             the FAIL lines and the last line of that job's bash-run log
+  deployctl deploy <bundle.zip>   stage, check, test, deploy, verify; rolls back to the exact previous release on failure
+  deployctl rollback              go back to the previous known-good release (verified), as a deployment of its own
+  deployctl recover               finish off deploys that were killed (normally done by deployd/deployctl by itself)
+  deployctl status                what is live, the known-good and previous known-good, the lock, the last job
+  deployctl releases              every kept code release, newest first: LIVE / KNOWN-GOOD / PREVIOUS / verified / failed
+  deployctl jobs                  every deployment with its state and verdict
+  deployctl journal <job>         the full record of one deployment (state history, versions, pids, rollback)
+  deployctl log <job>             the FAIL lines and the last line of that job's log
 
 Every command prints one final line starting with RESULT: — read that line first.
+v117: deploy/rollback/recover take the server-wide deploy lock first; if another deployment holds it, nothing is
+started and RESULT: BUSY names it. Ctrl-C during a deploy stops its whole process tree, then rolls back.
 """
-import json, os, sys
+import json, os, signal, sys, threading
 from pathlib import Path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from adm import config, journal, queue, manager, activation
+from adm import config, journal, queue, manager, activation, deployment, releases  # noqa: E402
+from adm.lock import DeployLock, Busy, holder  # noqa: E402
 
-# ===================== CONFIG — edit here, nothing below needs reading =====================
-# All settings are in adm/config.py.
-# ==========================================================================================
+_stop = threading.Event()
+
+
+def _on_signal(signum, frame):
+    if _stop.is_set():
+        print("deployctl: already stopping; the rollback runs to its end", file=sys.stderr, flush=True)
+        return
+    print(f"deployctl: signal {signum}: stopping the deploy (its whole process tree), then rolling back",
+          file=sys.stderr, flush=True)
+    _stop.set()
 
 
 def _v(p):
-    return manager._version_of(p) if p else "-"
+    return releases.version_of(p) if p else "-"
+
+
+def _locked(job):
+    try:
+        return DeployLock(config.LOCK, job).acquire()
+    except Busy as e:
+        r = manager.reclaim_abandoned(log_to=lambda m: print(f"deployctl: {m}"))
+        if r is not None and r.stopped:
+            try:
+                return DeployLock(config.LOCK, job, wait=15).acquire()
+            except Busy as e2:
+                e = e2
+        print(f"deployctl: {e}")
+        print("RESULT: BUSY")
+        return None
 
 
 def cmd_deploy(args):
     if len(args) != 1:
         return usage()
-    job = queue.enqueue(args[0], origin="local", requested_by="deployctl")
-    meta = next(m for m in queue.pending() if m["job_id"] == job)
-    verdict = manager.process(meta)
+    config.ensure_dirs()
+    job = journal.new_job_id()
+    lk = _locked(job)
+    if lk is None:
+        return 1
+    try:
+        for j, v in manager.recover(lk):
+            print(f"recovered interrupted deploy {j}: {v}")
+        queue.enqueue(args[0], origin="local", requested_by="deployctl", claimed=True, job_id=job)
+        meta = json.loads((config.RUNNING / f"{job}.json").read_text())
+        signal.signal(signal.SIGINT, _on_signal)
+        signal.signal(signal.SIGTERM, _on_signal)
+        verdict = manager.process(meta, lk=lk, cancel=_stop.is_set)
+    finally:
+        lk.release()
     doc = journal.load(job)
-    print(f"job {job}  log {doc.get('log')}")
-    print(f"RESULT: {verdict} {doc.get('version', '')}".rstrip())
+    print(f"job {job}  state {doc.get('state')}  log {doc.get('log')}")
+    live = (doc.get("final_live") or {}).get("version") or _v(releases.live(config.APP))
+    print(f"RESULT: {verdict} {doc.get('version', '')} (live now: {live})".replace("  ", " "))
     return 0 if verdict == "DEPLOYED" else 1
 
 
 def cmd_rollback(args):
-    job = journal.new_job_id()
-    config.ensure_dirs()
-    logp = config.LOGS / f"{job}.log"
-    journal.record(job, "QUEUED", requested_by="deployctl rollback", log=str(logp))
-    with open(logp, "a") as log, manager.exclusive():
-        cur = activation.current()
-        ok = manager._rollback(job, log, failed_release=cur)
-    print(f"job {job}  log {logp}")
-    print(f"RESULT: {'ROLLED_BACK' if ok else 'ROLLBACK_FAILED'} now live: {_v(activation.current())}")
-    return 0 if ok else 1
+    job = journal.new_job_id() + "-manual-rollback"
+    lk = _locked(job)
+    if lk is None:
+        return 1
+    try:
+        manager.recover(lk)
+        pkg = releases.previous_known_good(config.CODE_RELEASES)
+        cur = releases.live(config.APP)
+        if not pkg:
+            print("deployctl: there is no previous known-good release to go back to")
+            print("RESULT: ROLLBACK_FAILED"); return 1
+        verdict = manager.manual_rollback(job, pkg, lk)
+    finally:
+        lk.release()
+    print(f"job {job}  log {config.LOGS / (job + '.log')}")
+    print(f"RESULT: {verdict} now live: {_v(releases.live(config.APP))} (was {_v(cur)})")
+    return 0 if verdict == "DEPLOYED" else 1
+
+
+def cmd_recover(args):
+    lk = _locked(journal.new_job_id() + "-recover")
+    if lk is None:
+        return 1
+    try:
+        done = manager.recover(lk)
+    finally:
+        lk.release()
+    print(f"RESULT: {len(done)} interrupted deploy(s) recovered")
+    return 0
 
 
 def cmd_status(args):
-    cur, prev = activation.current(), activation.previous()
-    print(f"live:     {_v(cur)}  {cur or '(not deployed through ADM yet)'}")
-    print(f"previous: {_v(prev)}  {prev or '-'}")
-    live = config.APP / "release.json"
-    print(f"live code folder: {config.APP}  ({live.read_text().strip() if live.is_file() else 'no release.json — deployed before ADM'})")
-    jobs = journal.all_jobs()
-    pend = queue.pending()
-    print(f"queued: {len(pend)}")
+    cur = releases.live(config.APP)
+    kg, pkg = releases.known_good(config.CODE_RELEASES), releases.previous_known_good(config.CODE_RELEASES)
+    print(f"live:               {_v(cur)}  {cur or '(nothing installed)'}")
+    print(f"known-good:         {kg['version'] + '  ' + kg['release'] if kg else '-'}"
+          + ("  (adopted)" if kg and kg.get("adopted") else ""))
+    print(f"previous known-good:{' ' + pkg['version'] + '  ' + pkg['release'] if pkg else ' -'}")
+    if cur and kg and Path(kg["release"]).resolve() != cur:
+        print("WARNING: the live release is not the known-good one (a deploy is running, or someone changed it by hand)")
+    held, owner = holder(config.LOCK)
+    print(f"deploy lock:        {'HELD by ' + json.dumps(owner) if held else 'free'}")
+    print(f"queued: {len(queue.pending())}   claimed/running: {len(queue.running())}")
+    jobs = [j for j in journal.all_jobs() if "state" in j or "verdict" in j]
     if jobs:
         j = jobs[-1]
-        print(f"last job: {j['job_id']}  verdict {j.get('verdict')}  version {j.get('version', '-')}  build {j.get('build_id') or '-'}")
+        print(f"last job: {j['job_id']}  state {j.get('state', '-')}  verdict {j.get('verdict')}  "
+              f"version {(j.get('attempted') or {}).get('version') or j.get('version', '-')}  build {j.get('build_id') or '-'}")
         print(f"RESULT: {j.get('verdict')}")
     else:
         print("RESULT: NO_JOBS_YET")
@@ -69,18 +132,28 @@ def cmd_status(args):
 
 
 def cmd_releases(args):
-    rels = sorted((p for p in config.RELEASES.iterdir() if p.is_dir()), reverse=True) if config.RELEASES.is_dir() else []
-    cur = activation.current()
-    for r in rels:
-        print(f"{'LIVE ' if cur and r.resolve() == cur else '     '}{_v(r):<16} {r.name}")
-    print(f"RESULT: {len(rels)} releases kept")
+    rels = config.CODE_RELEASES
+    dirs = sorted((p for p in rels.iterdir() if p.is_dir() and not p.name.startswith(".")),
+                  key=lambda p: p.stat().st_mtime, reverse=True) if rels.is_dir() else []
+    cur = releases.live(config.APP)
+    kg, pkg = releases.known_good(rels), releases.previous_known_good(rels)
+    for r in dirs:
+        tags = []
+        if cur and r.resolve() == cur: tags.append("LIVE")
+        if kg and Path(kg["release"]).resolve() == r.resolve(): tags.append("KNOWN-GOOD")
+        if pkg and Path(pkg["release"]).resolve() == r.resolve(): tags.append("PREVIOUS")
+        tags.append("verified" if releases.is_verified(r) else "FAILED" if (r / releases.FAILED).exists() else "unverified")
+        print(f"{' '.join(tags):<36} {_v(r):<14} {r.name}")
+    print(f"RESULT: {len(dirs)} code releases kept")
     return 0
 
 
 def cmd_jobs(args):
-    for j in journal.all_jobs():
-        print(f"{j['job_id']}  {j.get('verdict'):<16} {j.get('version', '-'):<14} build {j.get('build_id') or '-'}")
-    print(f"RESULT: {len(journal.all_jobs())} jobs")
+    jobs = journal.all_jobs()
+    for j in jobs:
+        print(f"{j['job_id']:<46} {str(j.get('state', '-')):<16} {str(j.get('verdict')):<16} "
+              f"{str((j.get('attempted') or {}).get('version') or j.get('version', '-')):<14} build {j.get('build_id') or '-'}")
+    print(f"RESULT: {len(jobs)} jobs")
     return 0
 
 
@@ -96,10 +169,13 @@ def cmd_journal(args):
 def cmd_log(args):
     if len(args) != 1:
         return usage()
-    p = config.LOGS / f"{args[0]}.log"
+    try:
+        p = config.LOGS / f"{journal.path(args[0]).stem}.log"
+    except ValueError:
+        return usage()
     if not p.is_file():
         print(f"RESULT: no log for {args[0]}"); return 1
-    lines = p.read_text().splitlines()
+    lines = p.read_text(errors="replace").splitlines()
     for l in lines:
         if l.startswith("FAIL"):
             print(l)
@@ -111,8 +187,8 @@ def usage():
     print(__doc__); print("RESULT: USAGE"); return 2
 
 
-COMMANDS = {"deploy": cmd_deploy, "rollback": cmd_rollback, "status": cmd_status, "releases": cmd_releases,
-            "jobs": cmd_jobs, "journal": cmd_journal, "log": cmd_log}
+COMMANDS = {"deploy": cmd_deploy, "rollback": cmd_rollback, "recover": cmd_recover, "status": cmd_status,
+            "releases": cmd_releases, "jobs": cmd_jobs, "journal": cmd_journal, "log": cmd_log}
 
 if __name__ == "__main__":
     a = sys.argv[1:]
@@ -120,5 +196,5 @@ if __name__ == "__main__":
         sys.exit(usage())
     try:
         sys.exit(COMMANDS[a[0]](a[1:]))
-    except RuntimeError as e:
+    except (RuntimeError, ValueError, OSError) as e:
         print(f"FAIL {e}"); print("RESULT: FAILED"); sys.exit(1)
