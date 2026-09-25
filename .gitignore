@@ -7,3 +7,6 @@ config/coolify.env
 # Backups and credentials must never land in git.
 *.tar.gz
 *credentials*.txt
+
+# Handover bundle generated from this repo (git archive); shared directly, not versioned.
+ATTa-handover.zip
