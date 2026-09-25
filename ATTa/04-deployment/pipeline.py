@@ -125,7 +125,10 @@ def requalify(bid):
 def run(c):
     try:
         timeout=INSTALL_TIMEOUT if any(str(x).endswith('install_all.py') for x in c) else GIT_TIMEOUT
-        r=subprocess.run(c,text=True,capture_output=True,timeout=timeout)
+        # v116: git gets a minimal environment (no service secrets, no prompts); other commands as before
+        import netguard
+        env=netguard.git_env() if c and c[0]=='git' else None
+        r=subprocess.run(c,text=True,capture_output=True,timeout=timeout,env=env)
     except subprocess.TimeoutExpired as e:
         raise RuntimeError(f'{c} -> timed out after {timeout}s') from e
     if r.returncode:
@@ -221,7 +224,8 @@ def library():
             raise RuntimeError(f'CONFLICT_NON_GIT: {dest}')
         else:
             try:
-                run(['git','clone','--depth','1',f'https://github.com/{repo}.git',str(dest)])
+                import netguard
+                run(netguard.git_clone_cmd(f'https://github.com/{repo}.git',dest,'--depth','1'))
                 strip_foreign_overlays(dest)   # v116
                 out.append({**e,'result':'CLONED'})
             except RuntimeError as err:
@@ -306,12 +310,13 @@ def record_overlays(md,bid):
         except overlay_integrity.IntegrityError as e: bad.append(str(e))
     if bad: builds.update(bid,overlay_integrity_warnings=bad)
 
-REPO_URL=re.compile(r'^https://[A-Za-z0-9.-]+/[A-Za-z0-9._~/-]+?(\.git)?/?$')
 def ingest_repo(url,bid,owner):
-    if not REPO_URL.match(url or ''): raise RuntimeError(f'Not a usable https git URL: {url!r}')
+    import netguard
+    try: url=netguard.check_repo_url(url)   # v116: allowed hosts only, never an internal address
+    except netguard.Refused as e: raise RuntimeError(f'Not a usable git address: {e}')
     name=app_name(url.rstrip('/').removesuffix('.git').rsplit('/',1)[-1]); dest=LIB/name
     if dest.exists(): return [],[name]
-    try: run(['git','clone','--depth','1',url,str(dest)])
+    try: run(netguard.git_clone_cmd(url,dest,'--depth','1'))
     except RuntimeError:
         shutil.rmtree(dest,ignore_errors=True); raise
     strip_foreign_overlays(dest)

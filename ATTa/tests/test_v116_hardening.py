@@ -210,6 +210,11 @@ class UploadsCannotShipAnOverlay(unittest.TestCase):
 SINK = open(os.devnull, "w")
 
 
+class _Quiet(http.server.SimpleHTTPRequestHandler):
+    def log_message(self, *a):
+        pass
+
+
 def _free_port():
     with socket.socket() as s:
         s.bind(("127.0.0.1", 0)); return s.getsockname()[1]
@@ -241,7 +246,7 @@ class SkinProxyRunsUnprivileged(_Isolated):
         self.ui = real_overlay(self.lib)
         self.port = _free_port()
         # a stand-in for the started app
-        self.app_srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), http.server.SimpleHTTPRequestHandler)
+        self.app_srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), _Quiet)
         threading.Thread(target=self.app_srv.serve_forever, daemon=True).start()
         self.target = f"http://127.0.0.1:{self.app_srv.server_address[1]}/"
         self.saved_env = dict(os.environ)
@@ -405,6 +410,208 @@ class FilesKeepTheirOwnersAcrossRewrites(unittest.TestCase):
         s2 = accounts.USERS_FILE.stat()
         self.assertEqual((s2.st_uid, s2.st_gid, st.S_IMODE(s2.st_mode)), (4242, 4343, 0o640))
         os.chown(accounts.USERS_FILE, 0, 0)
+
+
+# ============================================================================ #7 HTTPS by default, #13 nginx limits
+
+LIBSH = DEP / "bootstrap-lib.sh"
+
+
+def libsh(script):
+    return subprocess.run(["bash", "-c", f'set -u; . "{LIBSH}"\n{script}'], capture_output=True, text=True,
+                          env={**os.environ, "ATTA_LIB_DIR": str(DEP)}, timeout=60)
+
+
+class NginxListensPubliclyOnlyWithHttps(unittest.TestCase):
+    def listen(self, domains, email, allow=""):
+        return libsh(f'atta_nginx_listen "{domains}" "{email}" "{allow}"').stdout.strip()
+
+    def test_listen_choice(self):
+        self.assertEqual(self.listen("", ""), "127.0.0.1:80")                      # nothing set: local only
+        self.assertEqual(self.listen("_", "a@b.c"), "127.0.0.1:80")
+        self.assertEqual(self.listen("atta.example.com", ""), "127.0.0.1:80")      # no email, no certificate
+        self.assertEqual(self.listen("atta.example.com", "a@b.c"), "80")           # certbot can prove the domain
+        self.assertEqual(self.listen("", "", "true"), "80")                        # explicit opt-out only
+        self.assertEqual(self.listen("", "", "yes"), "127.0.0.1:80")               # nothing but "true"
+
+    def test_rendered_values_are_checked(self):
+        r = libsh(f'atta_nginx_conf "{DEP}/app-builder-nginx.conf" "evil;}} server {{" "80"')
+        self.assertNotEqual(r.returncode, 0)
+        r = libsh(f'atta_nginx_conf "{DEP}/app-builder-nginx.conf" "_" "0.0.0.0:80"')
+        self.assertNotEqual(r.returncode, 0)
+        r = libsh(f'atta_nginx_conf "{DEP}/app-builder-nginx.conf" "a.example.com www.a.example.com" "127.0.0.1:80"')
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("listen 127.0.0.1:80;", r.stdout); self.assertIn("server_name a.example.com www.a.example.com;", r.stdout)
+        self.assertNotIn("__LISTEN__", r.stdout); self.assertNotIn("YOUR_DOMAIN", r.stdout)
+
+
+@unittest.skipUnless(shutil.which("nginx") and os.geteuid() == 0, "needs nginx (and root to run it)")
+class RealNginx(unittest.TestCase):
+    """The rendered site, loaded by the real nginx: syntax, then the rate limits live."""
+    def setUp(self):
+        self.t = Path(tempfile.mkdtemp(dir=TMP)); os.chmod(self.t, 0o755)
+
+    def main_conf(self, site, port):
+        body = site.replace("listen 127.0.0.1:80;", f"listen 127.0.0.1:{port};")
+        (self.t / "site.conf").write_text(body)
+        conf = self.t / "nginx.conf"
+        conf.write_text(f"daemon off; pid {self.t}/nginx.pid; error_log {self.t}/error.log;\n"
+                        f"events {{}}\nhttp {{ access_log off; client_body_temp_path {self.t}/body;\n"
+                        f"proxy_temp_path {self.t}/proxy; include {self.t}/site.conf; }}\n")
+        return conf
+
+    def render(self, listen):
+        r = libsh(f'atta_nginx_conf "{DEP}/app-builder-nginx.conf" "_" "{listen}"')
+        self.assertEqual(r.returncode, 0, r.stderr)
+        return r.stdout
+
+    def test_both_modes_pass_nginx_t(self):
+        for listen in ("127.0.0.1:80", "80"):
+            conf = self.main_conf(self.render(listen), 80)
+            r = subprocess.run(["nginx", "-t", "-c", str(conf)], capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stderr)
+
+    def test_login_and_upload_are_rate_limited(self):
+        backend = http.server.ThreadingHTTPServer(("127.0.0.1", 8787), _Quiet)
+        threading.Thread(target=backend.serve_forever, daemon=True).start()
+        port = _free_port()
+        conf = self.main_conf(self.render("127.0.0.1:80"), port)
+        ngx = subprocess.Popen(["nginx", "-c", str(conf)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        try:
+            for _ in range(50):
+                if proxy_launch._port_open(port):
+                    break
+                time.sleep(0.1)
+            import urllib.request, urllib.error
+            def code(path):
+                try:
+                    return urllib.request.urlopen(f"http://127.0.0.1:{port}{path}", timeout=5).status
+                except urllib.error.HTTPError as e:
+                    return e.code
+            login = [code("/login") for _ in range(12)]
+            self.assertEqual(login[:6].count(429), 0, login)          # 1 + burst 5 get through
+            self.assertIn(429, login[6:], login)                     # then the limit answers
+            upload = [code("/upload") for _ in range(8)]
+            self.assertIn(429, upload, upload)
+            self.assertNotIn(429, [code("/") for _ in range(20)])      # ordinary pages are not limited
+        finally:
+            ngx.terminate(); ngx.wait(timeout=10)
+            backend.shutdown(); backend.server_close()
+
+
+# ============================================================================ #8 no fetching inside the network
+
+import socket as _socket  # noqa: E402
+import netguard, upstream  # noqa: E402
+
+
+class _FakeDNS:
+    """getaddrinfo stand-in: names map to fixed addresses; anything else really resolves (numeric forms)."""
+    def __init__(self, table):
+        self.table, self.real = table, _socket.getaddrinfo
+
+    def __call__(self, host, *a, **k):
+        if host in self.table:
+            ip = self.table[host]
+            fam = _socket.AF_INET6 if ":" in ip else _socket.AF_INET
+            return [(fam, _socket.SOCK_STREAM, 6, "", (ip, 0))]
+        return self.real(host, *a, **k)
+
+    def __enter__(self):
+        _socket.getaddrinfo = self; return self
+
+    def __exit__(self, *e):
+        _socket.getaddrinfo = self.real
+
+
+DNS = {"github.com": "140.82.112.3", "gitlab.com": "172.65.251.78", "docs.example.org": "93.184.215.14",
+       "evil-internal.example.org": "10.0.0.5", "rebind.example.org": "169.254.169.254",
+       "v6-local.example.org": "::1"}
+
+
+class GitAddressesStayPublic(unittest.TestCase):
+    def test_allowed_public_hosts(self):
+        with _FakeDNS(DNS):
+            self.assertEqual(netguard.check_repo_url("https://github.com/go-gitea/gitea"), "https://github.com/go-gitea/gitea")
+            netguard.check_repo_url("https://gitlab.com/o/r.git")
+
+    def test_refused(self):
+        with _FakeDNS({**DNS, "github.com": "10.1.2.3"}):
+            for url in ("https://169.254.169.254/latest/meta-data", "https://127.0.0.1/x/y", "https://localhost/x/y",
+                        "https://evil-internal.example.org/o/r", "http://github.com/o/r", "https://github.com/o/r",
+                        "ssh://git@github.com/o/r", "https://github.com/o/r;id", "file:///etc/passwd"):
+                with self.assertRaises(netguard.Refused, msg=url):
+                    netguard.check_repo_url(url)
+
+    def test_hosts_are_configurable(self):
+        saved = os.environ.get("APP_BUILDER_GIT_HOSTS")
+        os.environ["APP_BUILDER_GIT_HOSTS"] = "git.example.org"
+        try:
+            with _FakeDNS({**DNS, "git.example.org": "93.184.215.20"}):
+                netguard.check_repo_url("https://git.example.org/team/app")
+                with self.assertRaises(netguard.Refused):
+                    netguard.check_repo_url("https://github.com/o/r")
+        finally:
+            if saved is None:
+                os.environ.pop("APP_BUILDER_GIT_HOSTS", None)
+            else:
+                os.environ["APP_BUILDER_GIT_HOSTS"] = saved
+
+    def test_pipeline_refuses_before_cloning(self):
+        with _FakeDNS(DNS), self.assertRaisesRegex(RuntimeError, "not an allowed git host"):
+            pipeline.ingest_repo("https://evil-internal.example.org/o/r", "b-x", "admin")
+
+    def test_git_commands_are_https_only(self):
+        c = netguard.git_clone_cmd("https://github.com/o/r", "/tmp/x", "--depth", "1")
+        for flag in ("protocol.allow=never", "protocol.https.allow=always", "core.hooksPath=/dev/null",
+                     "submodule.recurse=false", "--no-recurse-submodules"):
+            self.assertIn(flag, c)
+        self.assertEqual(c[-3:], ["--", "https://github.com/o/r", "/tmp/x"])
+        self.assertNotIn("APP_BUILDER_SESSION_SECRET", netguard.git_env({"PATH": "/bin", "APP_BUILDER_SESSION_SECRET": "x"}))
+
+    @unittest.skipUnless(shutil.which("git"), "git not installed")
+    def test_real_git_refuses_other_transports(self):
+        src = Path(tempfile.mkdtemp(dir=TMP)) / "repo"
+        subprocess.run(["git", "init", "-q", str(src)], check=True)
+        for url in (f"file://{src}", "ext::sh -c touch% /tmp/atta-git-ext-pwned"):
+            dest = Path(tempfile.mkdtemp(dir=TMP)) / "out"
+            r = subprocess.run(netguard.git_clone_cmd(url, dest), capture_output=True, text=True,
+                               env=netguard.git_env(), timeout=60)
+            self.assertNotEqual(r.returncode, 0, url)
+            self.assertIn("not allowed", r.stderr + r.stdout, url)
+        self.assertFalse(Path("/tmp/atta-git-ext-pwned").exists())
+
+
+class DocumentationFetchesStayPublic(unittest.TestCase):
+    def test_internal_pages_are_refused(self):
+        with _FakeDNS(DNS):
+            for url in ("http://169.254.169.254/latest/meta-data/iam/security-credentials/",
+                        "http://127.0.0.1:8787/api/builds", "http://localhost/", "http://[::1]/", "http://[::ffff:127.0.0.1]/",
+                        "http://2130706433/", "http://0x7f000001/", "http://0/", "http://rebind.example.org/",
+                        "http://v6-local.example.org/", "http://evil-internal.example.org/", "http://metadata.google.internal/",
+                        "https://docs.example.org:8443/", "http://user:pw@docs.example.org/", "ftp://docs.example.org/",
+                        "http://no-such-host.invalid/"):
+                with self.assertRaises(netguard.Refused, msg=url):
+                    netguard.check_fetch_url(url)
+            netguard.check_fetch_url("https://docs.example.org/install/docker")
+
+    def test_redirect_into_the_network_is_not_followed(self):
+        h = netguard._CheckedRedirects()
+        with _FakeDNS(DNS), self.assertRaises(netguard.Refused):
+            h.redirect_request(None, None, 302, "Found", {}, "http://169.254.169.254/latest/meta-data/")
+
+    def test_upstream_really_does_not_fetch_a_local_page(self):
+        srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), _Quiet)
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        hits = []
+        orig = _Quiet.do_GET
+        _Quiet.do_GET = lambda self: (hits.append(self.path), orig(self))[1]
+        try:
+            self.assertEqual(upstream._get(f"http://127.0.0.1:{srv.server_address[1]}/"), "")
+            self.assertEqual(hits, [])                                   # no request ever reached it
+        finally:
+            _Quiet.do_GET = orig
+            srv.shutdown(); srv.server_close()
 
 
 if __name__ == "__main__":

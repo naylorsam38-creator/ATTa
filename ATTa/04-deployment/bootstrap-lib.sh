@@ -229,3 +229,20 @@ atta_restore_previous_code() {
   [ -n "$prev" ] && [ -d "$prev" ] || return 1
   ln -sfn "$prev" "$app.next" && mv -Tf "$app.next" "$app"
 }
+
+atta_nginx_listen() {
+  # atta_nginx_listen DOMAINS EMAIL ALLOW_PUBLIC_HTTP — v116: where nginx listens. Public only when HTTPS can be
+  # set up (certbot needs port 80 to prove the domain) or the owner explicitly accepts plain HTTP.
+  local domains="$1" email="$2" allow="${3:-}"
+  if [ -n "$domains" ] && [ "$domains" != "_" ] && [ -n "$email" ]; then echo 80
+  elif [ "$allow" = "true" ]; then echo 80
+  else echo 127.0.0.1:80; fi
+}
+
+atta_nginx_conf() {
+  # atta_nginx_conf TEMPLATE DOMAINS LISTEN — the site config on stdout. Values are checked, never pasted raw.
+  local tpl="$1" domains="${2:-_}" listen="$3"
+  [[ "$listen" =~ ^(127\.0\.0\.1:)?80$ ]] || { echo "bad nginx listen value: $listen" >&2; return 1; }
+  [[ "$domains" =~ ^[A-Za-z0-9._\ -]+$ ]] || { echo "bad domain list: $domains" >&2; return 1; }
+  sed -e "s/__LISTEN__/${listen}/" -e "s/YOUR_DOMAIN/${domains}/g" "$tpl"
+}

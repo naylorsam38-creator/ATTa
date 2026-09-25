@@ -93,8 +93,9 @@ def resolve_skin(category: str, auth: dict) -> str | None:
 # ---------------------------------------------------------------- source trees
 
 def _run_git(args: list[str], cwd: Path | None = None) -> subprocess.CompletedProcess:
-    env = {**os.environ, 'GIT_TERMINAL_PROMPT': '0'}
-    return subprocess.run(['git', *args], cwd=cwd, capture_output=True, text=True, timeout=GIT_TIMEOUT, env=env)
+    import netguard   # v116: https only, no hooks/submodules/prompts, no service secrets in git's environment
+    return subprocess.run(netguard.git_cmd(*args), cwd=cwd, capture_output=True, text=True, timeout=GIT_TIMEOUT,
+                          env=netguard.git_env())
 
 
 def repo_url(repo: str) -> str | None:
@@ -119,7 +120,13 @@ def fetch_tree(repo: str, cache: Path, refresh: bool) -> tuple[Path | None, str 
     bare, skel = cache / 'git' / name, cache / 'tree' / name
     if refresh or not (bare / 'HEAD').exists():
         shutil.rmtree(bare, ignore_errors=True); bare.parent.mkdir(parents=True, exist_ok=True)
-        r = _run_git(['clone', '--quiet', '--bare', '--depth', '1', '--filter=blob:none', url, str(bare)])
+        import netguard
+        try:
+            netguard.check_repo_url(url)
+        except netguard.Refused as e:
+            return None, f"not fetched: {e}"
+        r = _run_git(['clone', '--no-recurse-submodules', '--quiet', '--bare', '--depth', '1', '--filter=blob:none',
+                      '--', url, str(bare)])
         if r.returncode:
             shutil.rmtree(bare, ignore_errors=True)
             return None, (r.stderr or r.stdout).strip()[-300:]

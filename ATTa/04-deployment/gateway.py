@@ -489,8 +489,10 @@ class H(BaseHTTPRequestHandler):
    except ValueError:n=0
    if n<=0 or n>4096: self.send_error(413); return
    url=parse_qs(self.rfile.read(n).decode("utf-8","replace")).get("url",[""])[0].strip()
-   if not re.fullmatch(r"https://[A-Za-z0-9.-]+/[A-Za-z0-9._~/-]+?(\.git)?/?",url):
-    self.out(page("Not a repo URL","<h1>That isn't a usable repository address</h1><p>Use an https address like https://github.com/owner/name</p><a href=/upload>Back</a>",me),400); return
+   import netguard   # v116: allowed git hosts only, never an address inside the network
+   try: url=netguard.check_repo_url(url)
+   except netguard.Refused as e:
+    self.out(page("Not a repo URL","<h1>That isn't a usable repository address</h1><p>"+html.escape(str(e))+"</p><a href=/upload>Back</a>",me),400); return
    b=builds.create(me["name"],origin="web",source=url,kind="git")
    tmp=INBOX/(".incoming-"+b["id"]+".part")
    tmp.write_text(json.dumps({"url":url})+"\n"); tmp.replace(INBOX/(b["id"]+".repo.json"))

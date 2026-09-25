@@ -129,6 +129,8 @@ APP_BUILDER_HEAL_LLM=false
 # DNS for each name must already point at this server, ports 80+443 open. Re-run `bash run` after setting.
 APP_BUILDER_DOMAIN=
 APP_BUILDER_LETSENCRYPT_EMAIL=
+# v116: without HTTPS nginx answers on 127.0.0.1 only. true = serve plain HTTP publicly anyway (not advised).
+APP_BUILDER_ALLOW_PUBLIC_HTTP=false
 # App runner (app_runner.py). true = apps stay running after their check; false = stopped after it
 # (frees memory for the next app; Coolify runs the qualified ones for real).
 APP_BUILDER_KEEP_RUNNING=false
@@ -345,7 +347,13 @@ if [ -f "$APP/app-builder-nginx.conf" ]; then
   fi
   # Several names allowed, comma or space separated: "airexploit.com,www.airexploit.com".
   DOMAINS="$(printf '%s' "${APP_BUILDER_DOMAIN:-}" | tr ',' ' ' | xargs)"
-  sed "s/YOUR_DOMAIN/${DOMAINS:-_}/g" "$APP/app-builder-nginx.conf" > /etc/nginx/conf.d/app-builder.conf
+  # v116: HTTPS by default. Without a domain + certificate email nginx answers on 127.0.0.1 only, so logins
+  # never cross the internet in clear text. APP_BUILDER_ALLOW_PUBLIC_HTTP=true is the explicit opt-out.
+  [ -z "${APP_BUILDER_ALLOW_PUBLIC_HTTP:-}" ] && [ -f "$ROOT/.env" ] && \
+    APP_BUILDER_ALLOW_PUBLIC_HTTP="$(sed -n 's/^APP_BUILDER_ALLOW_PUBLIC_HTTP=//p' "$ROOT/.env" | tail -1)"
+  NGINX_LISTEN="$(atta_nginx_listen "${DOMAINS:-}" "${APP_BUILDER_LETSENCRYPT_EMAIL:-}" "${APP_BUILDER_ALLOW_PUBLIC_HTTP:-}")"
+  atta_nginx_conf "$APP/app-builder-nginx.conf" "${DOMAINS:-_}" "$NGINX_LISTEN" > /etc/nginx/conf.d/app-builder.conf \
+    || { echo "DEPLOYMENT FAILED: could not write the nginx site" >&2; exit 1; }
   rm -f /etc/nginx/conf.d/app-builder-default.conf
   nginx -t
   systemctl enable --now nginx
@@ -366,10 +374,18 @@ if [ -f "$APP/app-builder-nginx.conf" ]; then
       systemctl reload nginx
       echo "TLS ISSUED for ${DOMAINS} — login is now HTTPS."
     else
-      echo "TLS NOT ISSUED. Check that ${DOMAINS} points at this server and ports 80/443 are open, then re-run. Serving HTTP only for now." >&2
+      echo "TLS NOT ISSUED. Check that ${DOMAINS} points at this server and ports 80/443 are open, then re-run." >&2
+      if [ "${APP_BUILDER_ALLOW_PUBLIC_HTTP:-}" != "true" ]; then
+        # v116: no certificate, no public plain-HTTP login page.
+        atta_nginx_conf "$APP/app-builder-nginx.conf" "${DOMAINS:-_}" "127.0.0.1:80" > /etc/nginx/conf.d/app-builder.conf
+        nginx -t && systemctl reload nginx
+        echo "Serving on 127.0.0.1 only until HTTPS works (ssh -L 8080:127.0.0.1:80 this-server)." >&2
+      fi
     fi
+  elif [ "$NGINX_LISTEN" = "80" ]; then
+    echo "WARNING: serving PUBLIC plain HTTP (APP_BUILDER_ALLOW_PUBLIC_HTTP=true): passwords cross the network in clear text." >&2
   else
-    echo "TLS SKIPPED: set APP_BUILDER_DOMAIN and APP_BUILDER_LETSENCRYPT_EMAIL to get an automatic HTTPS certificate. Serving HTTP only until then."
+    echo "TLS SKIPPED: set APP_BUILDER_DOMAIN and APP_BUILDER_LETSENCRYPT_EMAIL for automatic HTTPS. Until then ATTa answers on 127.0.0.1 only (ssh -L 8080:127.0.0.1:80 this-server)."
   fi
 fi
 # ADM — Deploy Manager (04-deployment/deployd/). Watches its queue for uploaded ATTa bundles and
@@ -429,5 +445,8 @@ curl -fsSI http://127.0.0.1/ >/dev/null || {
 echo "DEPLOYMENT VERIFIED"
 atta_prune_code_releases "$APP" "$RELS"   # healthy: older code folders can go (live + previous always kept)
 echo "Gateway health: $(cat /tmp/app-builder-health.txt)"
-echo "Open http://<EC2-IP>/ . Logins (admin + tester01..tester10) are in $ROOT/TEST_ACCOUNTS.txt (0600) - hand out one line per tester, then delete the file."
-echo "For production, put nginx behind HTTPS before exposing it publicly."
+case "${NGINX_LISTEN:-}" in
+  127.0.0.1:80) echo "Open it through an SSH tunnel: ssh -L 8080:127.0.0.1:80 <server>, then http://127.0.0.1:8080/ (public access needs HTTPS: set APP_BUILDER_DOMAIN + APP_BUILDER_LETSENCRYPT_EMAIL)." ;;
+  *) echo "Open https://${DOMAINS%% *}/ (or http://<server>/ if APP_BUILDER_ALLOW_PUBLIC_HTTP=true)." ;;
+esac
+echo "Logins are in $ROOT/TEST_ACCOUNTS.txt (0600): hand each person one line, then delete the file."

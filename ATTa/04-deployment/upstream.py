@@ -19,7 +19,6 @@ Findings are cached per app (state/runner/upstream/<app>.json) so a re-run doesn
 from __future__ import annotations
 import html, json, re, subprocess, time
 from pathlib import Path
-from urllib.request import Request, urlopen
 
 # ============================ RULES / CONFIG — edit here, nothing below needs reading ============================
 # Words that make a README link worth opening (in the link's address or its text).
@@ -40,14 +39,14 @@ HEADERS = {"User-Agent": "ATTa-app-runner (deployment discovery)", "Accept": "te
 
 
 def _get(url: str) -> str:
+    # v116: links come from the app's own README, so they are untrusted: public addresses on the standard ports
+    # only, every redirect re-checked (netguard). An app can no longer make the server fetch internal pages.
+    import netguard
     try:
-        with urlopen(Request(url, headers=HEADERS), timeout=FETCH_TIMEOUT) as r:
-            ctype = r.headers.get("Content-Type", "")
-            if not any(t in ctype for t in ("html", "text", "markdown", "json", "yaml")):
-                return ""
-            return r.read(MAX_DOC_BYTES).decode("utf-8", "replace")
+        ctype, body = netguard.safe_get(url, HEADERS, FETCH_TIMEOUT, MAX_DOC_BYTES)
     except Exception:
         return ""
+    return body if any(t in ctype for t in ("html", "text", "markdown", "json", "yaml")) else ""
 
 
 def _readme_text(d: Path) -> str:
@@ -89,8 +88,10 @@ def owner_deploy_repos(owner: str, repo: str, host: str = "https://github.com") 
             continue
         url = f"{host}/{owner}/{name}"
         try:
-            r = subprocess.run(["git", "ls-remote", "-q", url, "HEAD"], capture_output=True, timeout=FETCH_TIMEOUT,
-                               env={"GIT_TERMINAL_PROMPT": "0", "PATH": "/usr/bin:/bin:/usr/local/bin"})
+            import netguard
+            netguard.check_repo_url(url)
+            r = subprocess.run(netguard.git_cmd("ls-remote", "-q", "--", url, "HEAD"), capture_output=True,
+                               timeout=FETCH_TIMEOUT, env=netguard.git_env())
             if r.returncode == 0 and r.stdout.strip():
                 out.append(url)
         except Exception:
@@ -133,8 +134,9 @@ def discover(app_id: str, d: Path, owner: str, repo: str, keys: set[str], work: 
         for url in owner_deploy_repos(owner, repo):
             dest = work / "upstream" / url.rstrip("/").rsplit("/", 1)[-1]
             if not dest.exists():
-                subprocess.run(["git", "clone", "--depth", "1", "-q", url, str(dest)], capture_output=True, timeout=300,
-                               env={"GIT_TERMINAL_PROMPT": "0", "PATH": "/usr/bin:/bin:/usr/local/bin"})
+                import netguard
+                subprocess.run(netguard.git_clone_cmd(url, dest, "--depth", "1", "-q"), capture_output=True, timeout=300,
+                               env=netguard.git_env())
             if dest.is_dir():
                 found["deploy_repos"].append({"url": url, "path": str(dest)})
         found["hub_images"] = hub_images(owner, keys)
