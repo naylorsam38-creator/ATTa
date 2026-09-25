@@ -68,7 +68,11 @@ MAX_COMPRESSION_RATIO = int(os.environ.get("ATTA_ADM_MAX_COMPRESSION_RATIO", "20
 # v116: what an ATTa bundle's root folder may hold. Anything else (stray scripts, units, files beside the
 # bundle's own folder in the zip) refuses the bundle before anything live is touched.
 ALLOWED_TOP = {"run", "release.json", "START-HERE.txt", "README.md", ".gitignore", "01-specs", "02-front-door",
-               "03-ui-skins-capability-package", "04-deployment", "05-coolify", "docs", "tests"}
+               "03-ui-skins-capability-package", "04-deployment", "05-coolify", "docs", "tests", "MANIFEST.sha256"}
+# v117: a bundle built by tools/make_release.py carries MANIFEST.sha256 (every file's hash). When present it must
+# match exactly (no file changed, missing or added). 1 = refuse bundles without one (recommended once every bundle
+# comes from make_release.py; hand-zipped development bundles have none).
+REQUIRE_MANIFEST = os.environ.get("ATTA_ADM_REQUIRE_MANIFEST", "0") == "1"
 # v116: a bundle's own test suite runs (as an unprivileged user, no secrets) before it can be activated.
 # 0 = skip (only for an emergency; the job's journal says it was skipped).
 RUN_TESTS = os.environ.get("ATTA_ADM_RUN_TESTS", "1") != "0"

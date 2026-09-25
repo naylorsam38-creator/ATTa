@@ -2,7 +2,7 @@
 A bundle is refused here (never activated) if it lacks a required file, its release.json is
 unreadable, or any Python file in 04-deployment fails to compile. The first FAIL line says why."""
 from pathlib import Path
-import json, py_compile, shutil, stat, zipfile
+import json, shutil, stat, zipfile
 from . import config
 
 
@@ -85,12 +85,15 @@ def check(root):
         version = str(rel["version"])
     except (OSError, ValueError, KeyError) as e:
         raise BundleRejected(f"release.json unreadable or has no version: {e}")
+    # v117: the manifest first, before anything could add a file; then the compile check IN MEMORY (py_compile
+    # wrote __pycache__ into the staged bundle, which then no longer matched its own manifest).
+    verify_manifest(root)
     bad = []
     for py in sorted((root / "04-deployment").rglob("*.py")):
         try:
-            py_compile.compile(str(py), doraise=True)
-        except py_compile.PyCompileError as e:
-            bad.append(f"{py.relative_to(root)}: {e.msg.splitlines()[-1] if e.msg else e}")
+            compile(py.read_bytes(), str(py.relative_to(root)), "exec")
+        except (SyntaxError, ValueError) as e:
+            bad.append(f"{py.relative_to(root)}: {type(e).__name__}: {getattr(e, 'msg', e)} (line {getattr(e, 'lineno', '?')})")
     if bad:
         raise BundleRejected("python does not compile: " + " | ".join(bad))
     run = root / "run"
@@ -100,6 +103,41 @@ def check(root):
     for sh in (root / "04-deployment").glob("*.sh"):
         sh.chmod(sh.stat().st_mode | stat.S_IXUSR)
     return version
+
+
+MANIFEST = "MANIFEST.sha256"
+
+
+def verify_manifest(root):
+    """v117: MANIFEST.sha256 (from tools/make_release.py) lists every file of the bundle with its sha256. If present,
+    the bundle must match it exactly: nothing changed, missing or added. Returns True/False (checked / none)."""
+    import hashlib
+    m = root / MANIFEST
+    if not m.is_file():
+        if config.REQUIRE_MANIFEST:
+            raise BundleRejected(f"no {MANIFEST}: only bundles built by tools/make_release.py are accepted here "
+                                 "(ATTA_ADM_REQUIRE_MANIFEST=1)")
+        return False
+    want = {}
+    for n, line in enumerate(m.read_text().splitlines(), 1):
+        parts = line.split("  ", 1)
+        if len(parts) != 2 or len(parts[0]) != 64 or ".." in Path(parts[1]).parts or parts[1].startswith("/"):
+            raise BundleRejected(f"{MANIFEST} line {n} is malformed")
+        want[parts[1]] = parts[0]
+    have = {}
+    for p in sorted(root.rglob("*")):
+        if p.is_symlink():
+            raise BundleRejected(f"the bundle holds a symlink: {p.relative_to(root)}")
+        if p.is_file() and p.name != MANIFEST:
+            have[str(p.relative_to(root))] = hashlib.sha256(p.read_bytes()).hexdigest()
+    missing = sorted(set(want) - set(have))
+    extra = sorted(set(have) - set(want))
+    changed = sorted(k for k in set(want) & set(have) if want[k] != have[k])
+    if missing or extra or changed:
+        raise BundleRejected("the bundle does not match its manifest: "
+                             + "; ".join(f"{what}: {', '.join(xs[:5])}" for what, xs in
+                                         (("changed", changed), ("missing", missing), ("added", extra)) if xs))
+    return True
 
 
 def run_tests(root, log, cancel=None):

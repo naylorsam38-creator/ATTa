@@ -1,0 +1,11 @@
+{
+  "_what": "Exact strings make_release.py's secret scan may meet in exact files. Every entry is a deliberately fake fixture; anything not listed here still refuses the build. Add entries only with a reason.",
+  "entries": [
+    {"file": "tests/test_v114_hardening.py", "match": "AKIAABCDEFGHIJKLMNOP",
+     "reason": "redaction test fixture: an alphabet-sequence fake AWS key id"},
+    {"file": "tests/test_v114_hardening.py", "match": "sk-ant-api03-abcdefghijklmnopqrstuvwxyz",
+     "reason": "redaction test fixture: an alphabet-sequence fake Anthropic key"},
+    {"file": "tests/test_v114_hardening.py", "match": "-----BEGIN RSA PRIVATE KEY-----",
+     "reason": "redaction test fixture: the key body is the 4 characters MIIE, not a key"}
+  ]
+}

@@ -331,8 +331,10 @@ def _process(meta, lk, cancel, shutting_down, log, logp):
     except (OSError, ValueError):
         rj = {}
     prev = previous_live(job, log)
+    man = root / staging.MANIFEST
     deployment.set_fields(job, previous_live=prev, attempted={"version": version},
-                          source={"source_commit": rj.get("source_commit"), "manifest_sha256": rj.get("manifest_sha256")})
+                          source={"source_commit": rj.get("source_commit"),
+                                  "manifest_sha256": _sha256(man) if man.is_file() else None})
     b = backup.snapshot(job)
     journal.record(job, "BACKED_UP", backup=str(b) if b else None)
     bundle_release = activation.promote(root, job, version)
