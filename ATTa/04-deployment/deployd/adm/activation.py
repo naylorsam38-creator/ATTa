@@ -112,12 +112,13 @@ def _env(job, lock_fd, extra=None):
     return env
 
 
-def run_tree_logged(cmd, cwd, log, *, job, lock_fd, timeout, cancel=None, on_start=None, extra_env=None):
+def run_tree_logged(cmd, cwd, log, *, job, lock_fd, timeout, cancel=None, on_start=None, on_stop=None,
+                    extra_env=None):
     """Run cmd as a stoppable tree with its output in the job log. Returns proc.TreeResult (never raises for it)."""
     log.write(f"=== {' '.join(cmd)}  (cwd {cwd}, timeout {timeout}s)\n"); log.flush()
     res = proc.run_tree(cmd, cwd=str(cwd), env=_env(job, lock_fd, extra_env), stdout=log, timeout=timeout,
                         grace=config.KILL_GRACE, pass_fds=(lock_fd,) if lock_fd is not None else (),
-                        cancel=cancel, on_start=on_start)
+                        cancel=cancel, on_start=on_start, on_stop=on_stop)
     log.flush()
     what = ("TIMED OUT" if res.timed_out else "INTERRUPTED" if res.interrupted else f"exit {res.returncode}")
     log.write(f"=== {cmd[-1]}: {what} after {res.seconds}s\n")
@@ -134,11 +135,12 @@ def run_tree_logged(cmd, cwd, log, *, job, lock_fd, timeout, cancel=None, on_sta
     return res
 
 
-def run_bootstrap(release, log, *, job, lock_fd, cancel=None, on_start=None, timeout=None, extra_env=None):
+def run_bootstrap(release, log, *, job, lock_fd, cancel=None, on_start=None, on_stop=None, timeout=None,
+                  extra_env=None):
     """`bash run` from a bundle root (a deploy, or a slow rollback re-running the known-good bundle)."""
     return run_tree_logged(["bash", "run"], release, log, job=job, lock_fd=lock_fd,
                            timeout=timeout or config.DEPLOY_TIMEOUT, cancel=cancel, on_start=on_start,
-                           extra_env=extra_env)
+                           on_stop=on_stop, extra_env=extra_env)
 
 
 def run_bootstrap_dir(code_dir, log, *, job, lock_fd, cancel=None, timeout=None, extra_env=None):

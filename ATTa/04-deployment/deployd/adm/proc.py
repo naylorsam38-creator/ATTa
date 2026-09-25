@@ -223,11 +223,13 @@ def stop_tree(tree: _Tree, grace: float, result: TreeResult, popen=None):
 
 
 def run_tree(cmd, *, cwd=None, env=None, stdout=None, stderr=subprocess.STDOUT, timeout=None, grace=20.0,
-             pass_fds=(), cancel=None, on_start=None) -> TreeResult:
+             pass_fds=(), cancel=None, on_start=None, on_stop=None) -> TreeResult:
     """Run cmd to completion, or stop its whole tree on timeout / cancel. Never raises for the child's failure.
 
     cancel: optional callable; if it returns True (or raises Cancelled) the tree is stopped as `interrupted`.
-    on_start: optional callable(pid, pgid) — e.g. to record them in the deployment record."""
+    on_start: optional callable(pid, pgid) — e.g. to record them in the deployment record.
+    on_stop: optional callable("timed_out" | "interrupted"), called BEFORE the tree gets any signal — so the caller's
+    record says why first, and nothing the signal wakes up in the tree can get in ahead of it."""
     become_subreaper()
     me = os.getpid()
     baseline = {pid for pid, s in _snapshot().items() if s[0] == me}
@@ -257,9 +259,11 @@ def run_tree(cmd, *, cwd=None, env=None, stdout=None, stderr=subprocess.STDOUT, 
     except BaseException:
         # KeyboardInterrupt / SystemExit in the caller: never leave the tree behind.
         res.interrupted = True
+        _notify(on_stop, "interrupted")
         stop_tree(tree, grace, res, p)
         raise
     if res.timed_out or res.interrupted:
+        _notify(on_stop, "timed_out" if res.timed_out else "interrupted")
         stop_tree(tree, grace, res, p)
     else:
         # Normal exit: anything it left running in the background is part of the deploy too. Stop it.
@@ -271,6 +275,16 @@ def run_tree(cmd, *, cwd=None, env=None, stdout=None, stderr=subprocess.STDOUT, 
     res.returncode = p.returncode if p.returncode is not None else p.poll()
     res.seconds = round(time.monotonic() - t0, 2)
     return res
+
+
+def _notify(on_stop, why):
+    """on_stop must never keep the tree from being stopped."""
+    if on_stop is None:
+        return
+    try:
+        on_stop(why)
+    except Exception:
+        pass
 
 
 def find_by_env(name, value):

@@ -40,6 +40,7 @@ if [ -z "${ATTA_ADM_ACTIVE:-}" ]; then
 fi
 echo "deployment $ATTA_DEPLOYMENT_ID  (record: deployctl journal $ATTA_DEPLOYMENT_ID)"
 
+ATTA_SIGNALLED=""
 on_failure() {
   # The ERR / INT / TERM / EXIT trap. Records why, puts back what was live if anything was switched, and says what is
   # live now. Runs once: whichever trap fires first.
@@ -50,7 +51,13 @@ on_failure() {
   [ -n "$ATTA_LAST_FAIL" ] && why="$ATTA_LAST_FAIL"
   echo "DEPLOYMENT FAILED: $why" >&2
   st="$(atta_ds state 2>/dev/null)"
-  case "$st" in failed|timed_out|interrupted|rolled_back|live) ;; *) atta_ds to "$kind" "$why" ;; esac
+  if [ -n "${ATTA_ADM_ACTIVE:-}" ] && [ -n "$ATTA_SIGNALLED" ]; then
+    # ADM sent the signal (time limit, cancel) or is recovering after its own death: IT records why (timed_out /
+    # interrupted). Writing "failed" here first would hide the real reason.
+    echo "(stopped by ADM; ADM records the outcome)" >&2
+  else
+    case "$st" in failed|timed_out|interrupted|rolled_back|live) ;; *) atta_ds to "$kind" "$why" ;; esac
+  fi
   if [ -n "$SWITCHED" ]; then
     echo "Putting back exactly what was live (snapshot $TXN) ..." >&2
     if bash "$TXN/restore.sh"; then restored=1; atta_ds set local_restore '{"result": "verified"}'
@@ -76,7 +83,8 @@ trap 'on_failure "a step failed at line $LINENO (see the output above)"' ERR
 # goes through on_failure, so no run ever ends with its record half-written or something half-switched.
 trap 'rc=$?; [ "$rc" = 0 ] || on_failure "stopped with status $rc (see the output above)"' EXIT
 if [ -n "${ATTA_ADM_ACTIVE:-}" ]; then
-  trap 'exit 143' TERM; trap 'exit 130' INT     # ADM stops the whole tree itself and then rolls back
+  # ADM stops the whole tree itself and then records the outcome and rolls back
+  trap 'ATTA_SIGNALLED=1; exit 143' TERM; trap 'ATTA_SIGNALLED=1; exit 130' INT
 else
   trap 'on_failure "stopped by a signal" interrupted' INT TERM
 fi

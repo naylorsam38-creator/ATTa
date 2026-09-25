@@ -218,6 +218,17 @@ def rollback(job, log, lock_fd, cancel=None):
     return _rollback_failed(job, "no rollback method brought the previous release back healthy (see the log)", log)
 
 
+def _stopping(job, kind, log):
+    """Record why ADM is stopping the deploy (timed_out / interrupted). Called by run_tree BEFORE the signal, so
+    bootstrap.sh, woken by it, can't record a plain "failed" in its place (it leaves the record to ADM anyway)."""
+    doc = deployment.get(job)
+    if doc["state"] == kind:
+        return doc
+    why = (f"bash run did not finish within {config.DEPLOY_TIMEOUT}s" if kind == "timed_out"
+           else "the deploy was stopped (deployd shutting down or cancelled)")
+    return _fail(job, kind, f"{why} (reached: {doc['state']})", log)
+
+
 def _after_tree(job, res, log, lock_fd, cancel, shutting_down):
     """Decide what the installer's end means: timed out / interrupted / failed / verified."""
     doc = deployment.get(job)
@@ -225,9 +236,7 @@ def _after_tree(job, res, log, lock_fd, cancel, shutting_down):
         res.interrupted = True     # died from the stop signal itself: that is an interruption, not a failure
     if res.timed_out or res.interrupted:
         kind = "timed_out" if res.timed_out else "interrupted"
-        why = (f"bash run did not finish within {config.DEPLOY_TIMEOUT}s" if res.timed_out
-               else "the deploy was stopped (deployd shutting down or cancelled)")
-        _fail(job, kind, f"{why} (reached: {doc['state']})", log)
+        _stopping(job, kind, log)      # normally already recorded by on_stop, before the tree got the signal
         if not res.stopped:
             return _rollback_failed(job, "processes of the deploy could not be stopped: "
                                     + "; ".join(f"{p} {c}" for p, c in res.survivors), log, deployment.BLOCKED)
@@ -347,7 +356,8 @@ def _process(meta, lk, cancel, shutting_down, log, logp):
         return rollback(job, log, lk.fd)
     res = activation.run_bootstrap(
         bundle_release, log, job=job, lock_fd=lk.fd, cancel=cancel,
-        on_start=lambda pid, pgid: deployment.set_fields(job, **deployment.process_fields(pid, pgid)))
+        on_start=lambda pid, pgid: deployment.set_fields(job, **deployment.process_fields(pid, pgid)),
+        on_stop=lambda kind: _stopping(job, kind, log))
     deployment.set_fields(job, process={"exit": res.returncode, "seconds": res.seconds, "timed_out": res.timed_out,
                                         "interrupted": res.interrupted, "stopped": res.stopped,
                                         "signalled": len(res.signalled), "escalated": res.escalated,
@@ -380,6 +390,14 @@ def _process(meta, lk, cancel, shutting_down, log, logp):
     return "DEPLOYED"
 
 
+def _mark_interrupted(job):
+    """A deploy whose process died: `interrupted`, unless it already has an outcome."""
+    doc = deployment.get(job)
+    if doc and "state" in doc and doc["state"] not in deployment.FAILURES and not deployment.is_final(doc):
+        deployment.transition(job, "interrupted", reason=f"the deploy process stopped while '{doc['state']}'"
+                                                         " (killed, crashed, or the server restarted)")
+
+
 def recover(lk, log_to=print, cancel=None):
     """Under the deploy lock: deal with every deploy that ended without finishing (killed/crashed/rebooted).
     Each is marked `interrupted` (never re-run), whatever survived it is stopped, and the previous release is put
@@ -390,14 +408,13 @@ def recover(lk, log_to=print, cancel=None):
         logp = config.LOGS / f"{job}.log"
         with open(logp, "a") as log:
             log.write(f"=== recovery by pid {os.getpid()}: this deploy ended without finishing\n")
+            _mark_interrupted(job)     # first: the processes stopped below must not get to call it anything else
             strays = proc.find_by_env("ATTA_DEPLOYMENT_ID", job)
             if strays:
                 r = proc.stop_pids(strays, grace=config.KILL_GRACE)
                 log.write(f"stopped {len(r.signalled)} process(es) still running for it\n")
                 if not r.stopped:
                     if deployment.get(job) and not deployment.is_final(deployment.get(job)):
-                        if deployment.get(job)["state"] not in deployment.FAILURES:
-                            deployment.transition(job, "interrupted", reason="the deploy process died")
                         _rollback_failed(job, "processes of the dead deploy could not be stopped", log, deployment.BLOCKED)
                     done.append((job, "ROLLBACK_FAILED"))
                     continue
@@ -407,10 +424,6 @@ def recover(lk, log_to=print, cancel=None):
                 journal.record(job, "INTERRUPTED", reason="claimed but never started")
                 verdict = "INTERRUPTED"
             else:
-                if doc["state"] not in deployment.FAILURES and not deployment.is_final(doc):
-                    deployment.transition(job, "interrupted", reason=f"the deploy process stopped while '{doc['state']}'"
-                                                                     " (killed, crashed, or the server restarted)")
-                doc = deployment.get(job)
                 if not deployment.is_final(doc):
                     try:
                         verdict = rollback(job, log, lk.fd)
@@ -494,4 +507,5 @@ def reclaim_abandoned(log_to=print):
         return None
     log_to(f"deploy lock held by what is left of deployment {owner['deployment_id']} (its owner pid {owner.get('pid')} "
            f"is gone): stopping {len(strays)} process(es)")
+    _mark_interrupted(owner["deployment_id"])   # before the signal: an installer woken by it can't record otherwise
     return proc.stop_pids(strays, grace=config.KILL_GRACE)
