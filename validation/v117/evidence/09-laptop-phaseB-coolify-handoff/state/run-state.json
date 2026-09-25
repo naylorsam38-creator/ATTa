@@ -1,0 +1,26 @@
+{
+  "status": "RUNNING",
+  "root": "/home/sam/.app-builder-local",
+  "port": 8787,
+  "services": {
+    "gateway": {
+      "pid": 19097,
+      "pgid": 19097,
+      "start": "399371",
+      "cmdline": "/usr/bin/python3 /home/sam/ATTa/04-deployment/gateway.py",
+      "script": "/home/sam/ATTa/04-deployment/gateway.py",
+      "started_at": 1790347021.630438
+    },
+    "pipeline": {
+      "pid": 19098,
+      "pgid": 19098,
+      "start": "399371",
+      "cmdline": "/usr/bin/python3 /home/sam/ATTa/04-deployment/pipeline.py",
+      "script": "/home/sam/ATTa/04-deployment/pipeline.py",
+      "started_at": 1790347021.6350799
+    }
+  },
+  "failure": null,
+  "started_at": 1790347021.6297143,
+  "updated_at": "2026-09-25T14:37:02+0000"
+}

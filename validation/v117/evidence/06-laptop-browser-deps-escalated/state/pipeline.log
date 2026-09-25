@@ -1,0 +1,44 @@
+discovered 1 app(s): static-landing (static-landing: code marker)
+[static-landing] qualifying
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[static-landing] BROKEN AT 6 CLEAN — PLAYWRIGHT_UNAVAILABLE
+[static-landing] qualifying
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+discovered 1 app(s): node-api (node-api: code marker)
+discovered 1 app(s): node-api (node-api: code marker)
+[node-api] qualifying
+[static-landing] qualifying
+  [node-api] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[static-landing] BROKEN AT 6 CLEAN — BROWSER_EXCEPTION
+[node-api] PASS
+[node-api] qualifying
+[static-landing] qualifying
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+  [node-api] attempt 1: recipe that worked before
+[node-api] PASS
+[static-landing] BROKEN AT 6 CLEAN — BROWSER_EXCEPTION
+[node-api] qualifying
+[static-landing] qualifying
+  [node-api] attempt 1: recipe that worked before
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[node-api] PASS
+[static-landing] BROKEN AT 6 CLEAN — BROWSER_EXCEPTION
+[node-api] qualifying
+[static-landing] qualifying
+  [node-api] attempt 1: recipe that worked before
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[node-api] PASS
+[static-landing] BROKEN AT 6 CLEAN — BROWSER_EXCEPTION
+[node-api] qualifying
+[static-landing] qualifying
+  [node-api] attempt 1: recipe that worked before
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[node-api] PASS
+[static-landing] BROKEN AT 6 CLEAN — BROWSER_EXCEPTION
+[node-api] qualifying
+[static-landing] qualifying
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+  [node-api] attempt 1: recipe that worked before
+[node-api] PASS
+[static-landing] BROKEN AT 6 CLEAN — BROWSER_EXCEPTION

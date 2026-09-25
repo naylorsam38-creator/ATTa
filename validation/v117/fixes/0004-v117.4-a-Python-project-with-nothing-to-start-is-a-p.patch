@@ -1,0 +1,104 @@
+From 4f767fc798fcd1944942b10223bc766b560ff30a Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 25 Sep 2026 18:03:53 +0000
+Subject: [PATCH 4/4] v117.4: a Python project with nothing to start is a
+ package (build-readiness check), not a web app
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01AQwycJi8eqTo6GVPCjUZqa
+---
+ ATTa/04-deployment/intake.py             | 25 ++++++++++++++++++++++++
+ ATTa/release.json                        |  5 +++--
+ ATTa/tests/test_v117_validation_fixes.py | 18 +++++++++++++++++
+ 3 files changed, 46 insertions(+), 2 deletions(-)
+
+diff --git a/ATTa/04-deployment/intake.py b/ATTa/04-deployment/intake.py
+index e23a294..5bb4a99 100644
+--- a/ATTa/04-deployment/intake.py
++++ b/ATTa/04-deployment/intake.py
+@@ -82,9 +82,34 @@ def classify(app: Path, frameworks: list[str]) -> str:
+         # Server-rendered Go apps (Gitea): the UI is Go templates plus a web_src/ bundle.
+         web_ui = web_ui or (app / 'web_src').is_dir() or _has_page_templates(app)
+         return 'web' if web_ui else 'service'
++    if _python_library(app):
++        return 'package'
+     return 'web'
+ 
+ 
++# Python code that starts a server imports one of these; a library/tool that never does is not an app to run.
++_PY_SERVER = re.compile(r'^\s*(from|import)\s+(fastapi|flask|django|uvicorn|gunicorn|aiohttp|starlette|streamlit|'
++                        r'gradio|tornado|sanic|bottle|http\.server|socketserver|quart|litestar)\b', re.M)
++
++
++def _python_library(app: Path) -> bool:
++    """A Python project with nothing to start: no container recipe, no web pages, and no module that imports a
++    server framework (e.g. a controller library with its tests). Its check is build readiness, not a browser."""
++    if any((app / n).exists() for n in ('Dockerfile', 'docker-compose.yml', 'docker-compose.yaml', 'compose.yml',
++                                          'compose.yaml', 'package.json', 'manage.py', 'Procfile', 'app.json')):
++        return False
++    py = [f for f in app.rglob('*.py') if not (set(f.relative_to(app).parts) & _SKIP) and '.ui-capability' not in f.parts]
++    if not py or web_evidence(app):
++        return False
++    for f in py[:400]:
++        try:
++            if _PY_SERVER.search(f.read_text(errors='replace')):
++                return False
++        except OSError:
++            continue
++    return True
++
++
+ def _has_page_templates(app: Path) -> bool:
+     t = app / 'templates'
+     if not t.is_dir():
+diff --git a/ATTa/release.json b/ATTa/release.json
+index 6da6368..8c5851e 100644
+--- a/ATTa/release.json
++++ b/ATTa/release.json
+@@ -1,5 +1,5 @@
+ {
+-  "version": "v117.3",
++  "version": "v117.4",
+   "entrypoint": "run",
+   "state_version": 1,
+   "features": [
+@@ -16,6 +16,7 @@
+     "v117_deploy_transaction_state_machine_exact_rollback_stoppable_deploys_one_at_a_time_env_as_data_https_rendered_by_atta",
+     "v117_1_validation_fixes_git_retry_setgid_copy_resume_heals_browser_deps_adm_test_gate_owner_reupload_local_root_seed_once",
+     "v117_2_proxy_dirs_without_setgid_builds_from_normalised_copy_plain_python_projects_discovered",
+-    "v117_3_skins_installer_takes_plain_python_projects_unchecked_apps_never_hide_in_qualified"
++    "v117_3_skins_installer_takes_plain_python_projects_unchecked_apps_never_hide_in_qualified",
++    "v117_4_python_libraries_qualify_as_packages"
+   ]
+ }
+diff --git a/ATTa/tests/test_v117_validation_fixes.py b/ATTa/tests/test_v117_validation_fixes.py
+index e81d084..ab8a35f 100644
+--- a/ATTa/tests/test_v117_validation_fixes.py
++++ b/ATTa/tests/test_v117_validation_fixes.py
+@@ -185,5 +185,23 @@ class PlainPythonProjectsAreApps(unittest.TestCase):
+         self.assertFalse(app_classifier._has_marker(d))
+ 
+ 
++class PythonLibrariesArePackages(unittest.TestCase):
++    def _proj(self, name, files):
++        d = TMP / name; d.mkdir()
++        for n, t in files.items():
++            (d / n).write_text(t)
++        return d
++
++    def test_python_library_without_a_server_is_a_package(self):
++        import intake
++        d = self._proj("pylib", {"controller.py": "import json\n", "test_controller.py": "import unittest\n"})
++        self.assertEqual(intake.classify(d, intake.fingerprint(d)), "package")
++
++    def test_python_code_that_starts_a_server_is_not(self):
++        import intake
++        d = self._proj("pyapi", {"main.py": "from fastapi import FastAPI\n", "util.py": "x = 1\n"})
++        self.assertEqual(intake.classify(d, intake.fingerprint(d)), "web")
++
++
+ if __name__ == "__main__":
+     unittest.main()
+-- 
+2.43.0
+

@@ -1,0 +1,2 @@
+const http = require('http'); const page = t => `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${t}</title></head><body><h1>${t}</h1></body></html>`;
+http.createServer((q, r) => { console.error('handler error: database connection refused'); r.writeHead(500, {'content-type': 'text/html'}); r.end(page('Internal Server Error')); }).listen(3000, '0.0.0.0', () => console.log('listening on 3000'));

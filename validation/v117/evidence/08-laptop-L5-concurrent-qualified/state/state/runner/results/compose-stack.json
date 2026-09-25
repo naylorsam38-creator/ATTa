@@ -1,0 +1,91 @@
+{
+  "app": "compose-stack",
+  "number": "A-006",
+  "verdict": "PASS",
+  "broken_at": null,
+  "code": null,
+  "stages": {
+    "1 INSTALLED": {
+      "status": "OK"
+    },
+    "2 APP_UP": {
+      "status": "OK",
+      "detail": "200"
+    },
+    "3 PROXY_UP": {
+      "status": "OK",
+      "detail": "200"
+    },
+    "4 SKIN": {
+      "status": "OK"
+    },
+    "5 HOOK": {
+      "status": "OK"
+    },
+    "6 CLEAN": {
+      "status": "OK",
+      "code": "CLEAN_OK",
+      "evidence": {
+        "dir": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack",
+        "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack/screenshot.png",
+        "html": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack/page.html",
+        "browser": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack/browser.json"
+      }
+    }
+  },
+  "ts": 1790346942.286459,
+  "adapter": {
+    "state": "dormant",
+    "capabilities": [],
+    "seen": {
+      "anchors": 0,
+      "owned": 0,
+      "capabilities": []
+    },
+    "expected": {
+      "mode": "dormant"
+    },
+    "matches_expected": true
+  },
+  "runner": {
+    "started": true,
+    "url": "http://127.0.0.1:20026/",
+    "part": "the app's own compose file docker-compose.yml (builds from source)",
+    "part_detail": {
+      "kind": "compose",
+      "file": "docker-compose.yml",
+      "env": {},
+      "why": "the app's own compose file docker-compose.yml (builds from source)",
+      "port_seen": 20026
+    },
+    "attempts": [
+      {
+        "n": 1,
+        "part": "the app's own compose file docker-compose.yml (builds from source)",
+        "outcome": "UP",
+        "url": "http://127.0.0.1:20026/",
+        "notes": [],
+        "download_start_s": 2.9,
+        "boot_wait_s": 30.2
+      }
+    ],
+    "seconds": 49,
+    "kept_running": false
+  },
+  "timing": {
+    "queued_s": 0,
+    "started_at": "14:35:06",
+    "finished_at": "14:35:56",
+    "total_s": 49,
+    "start_s": 33,
+    "check_s": 15,
+    "attempts": [
+      {
+        "n": 1,
+        "outcome": "UP",
+        "download_start_s": 2.9,
+        "boot_wait_s": 30.2
+      }
+    ]
+  }
+}

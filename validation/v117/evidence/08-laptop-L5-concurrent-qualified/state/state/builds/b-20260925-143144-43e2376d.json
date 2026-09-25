@@ -1,0 +1,520 @@
+{
+  "id": "b-20260925-143144-43e2376d",
+  "owner": "tester01",
+  "state": "QUALIFIED",
+  "created": 1790346704.7576547,
+  "updated": 1790346902.5065775,
+  "history": [
+    {
+      "state": "QUEUED",
+      "at": 1790346704.7576547
+    },
+    {
+      "state": "VALIDATING",
+      "at": 1790346704.9627619
+    },
+    {
+      "state": "ADDING_APP",
+      "at": 1790346704.9649599
+    },
+    {
+      "state": "DISCOVERING",
+      "at": 1790346704.965582
+    },
+    {
+      "state": "FETCHING_LIBRARY",
+      "at": 1790346704.9737148
+    },
+    {
+      "state": "CATALOGUE_SYNC",
+      "at": 1790346704.9744477
+    },
+    {
+      "state": "INSTALLING_UI_CAPABILITY",
+      "at": 1790346705.0630682
+    },
+    {
+      "state": "INTAKE_CHECK",
+      "at": 1790346705.1259453
+    },
+    {
+      "state": "READY_FOR_WATCHER",
+      "at": 1790346705.1421266
+    },
+    {
+      "state": "QUALIFYING",
+      "at": 1790346705.1427531
+    },
+    {
+      "state": "QUALIFIED",
+      "at": 1790346741.3704953
+    }
+  ],
+  "origin": "web",
+  "bundle_bytes": 1222,
+  "original_name": "static-landing.zip",
+  "bundle": "b-20260925-143144-43e2376d.zip",
+  "kind": "upload",
+  "source": "static-landing.zip",
+  "apps_discovered": [
+    {
+      "name": "static-landing",
+      "rel": "static-landing",
+      "how": "code marker"
+    }
+  ],
+  "package": "current",
+  "apps_added": [],
+  "apps_already_in_library": [
+    "static-landing"
+  ],
+  "catalogue_look": {
+    "static landing": [
+      "skin 'dashboard' is a low-confidence pick (no category words found; fallback skin)"
+    ]
+  },
+  "coverage_warnings": [
+    "no app uses skin category yet: devops_console"
+  ],
+  "library": "/home/sam/.app-builder-local/library",
+  "targets": "/home/sam/.app-builder-local/state/apps",
+  "apps": 2,
+  "parallel": 2,
+  "checklist": {
+    "expected": 2,
+    "ticked": 2,
+    "PASS": 2,
+    "FAIL": 0,
+    "NOT_CHECKED": 0,
+    "complete": true,
+    "rows": [
+      {
+        "no": "A-001",
+        "app": "static-landing",
+        "tick": "PASS",
+        "verdict": "PASS",
+        "stopped_at": null,
+        "seconds": 36,
+        "timing": {
+          "queued_s": 0,
+          "started_at": "14:31:45",
+          "finished_at": "14:32:21",
+          "total_s": 36,
+          "start_s": 30,
+          "check_s": 5,
+          "attempts": [
+            {
+              "n": 1,
+              "outcome": "UP",
+              "download_start_s": 0.5,
+              "boot_wait_s": 30.1
+            }
+          ]
+        },
+        "steps": [
+          {
+            "no": "S01",
+            "name": "IN_LIBRARY",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S02",
+            "name": "CATALOGUED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S03",
+            "name": "SKIN_INSTALLED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S04",
+            "name": "INTAKE_CHECKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S05",
+            "name": "STARTED",
+            "tick": "PASS",
+            "note": "the app's own Dockerfile Dockerfile (builds from source)"
+          },
+          {
+            "no": "S06",
+            "name": "APP_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S07",
+            "name": "PROXY_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S08",
+            "name": "SKIN_SERVED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S09",
+            "name": "ADAPTER_HOOKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S10",
+            "name": "BROWSER_CLEAN",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S11",
+            "name": "ADAPTER_STATE",
+            "tick": "INFO",
+            "note": "dormant"
+          },
+          {
+            "no": "S12",
+            "name": "RECIPE_SAVED",
+            "tick": "PASS",
+            "note": ""
+          }
+        ],
+        "was": "FAIL"
+      },
+      {
+        "no": "A-002",
+        "app": "node-api",
+        "tick": "PASS",
+        "verdict": "PASS",
+        "stopped_at": null,
+        "seconds": 34,
+        "timing": {
+          "queued_s": 0,
+          "started_at": "14:31:45",
+          "finished_at": "14:32:19",
+          "total_s": 34,
+          "start_s": 30,
+          "check_s": 3,
+          "attempts": [
+            {
+              "n": 1,
+              "outcome": "UP",
+              "download_start_s": 0.4,
+              "boot_wait_s": 30.1
+            }
+          ]
+        },
+        "steps": [
+          {
+            "no": "S01",
+            "name": "IN_LIBRARY",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S02",
+            "name": "CATALOGUED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S03",
+            "name": "SKIN_INSTALLED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S04",
+            "name": "INTAKE_CHECKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S05",
+            "name": "STARTED",
+            "tick": "PASS",
+            "note": "recipe that worked before"
+          },
+          {
+            "no": "S06",
+            "name": "APP_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S07",
+            "name": "PROXY_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S08",
+            "name": "SKIN_SERVED",
+            "tick": "N/A",
+            "note": ""
+          },
+          {
+            "no": "S09",
+            "name": "ADAPTER_HOOKED",
+            "tick": "N/A",
+            "note": ""
+          },
+          {
+            "no": "S10",
+            "name": "BROWSER_CLEAN",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S11",
+            "name": "ADAPTER_STATE",
+            "tick": "INFO",
+            "note": "not seen"
+          },
+          {
+            "no": "S12",
+            "name": "RECIPE_SAVED",
+            "tick": "PASS",
+            "note": ""
+          }
+        ],
+        "was": "PASS"
+      }
+    ],
+    "regressions": [],
+    "newly_passing": [
+      "A-001 static-landing"
+    ],
+    "rules_promoted": [],
+    "rule_suspects": []
+  },
+  "qualified_at": 1790346741.3703487,
+  "error": null,
+  "qualification": [
+    {
+      "app": "node-api",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/node-api/.ui-capability",
+      "target_url": "http://127.0.0.1:20013/",
+      "proxy_url": "http://127.0.0.1:9063/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": null
+    },
+    {
+      "app": "static-landing",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/static-landing/.ui-capability",
+      "target_url": "http://127.0.0.1:20012/",
+      "proxy_url": "http://127.0.0.1:8990/",
+      "started_by": "the app's own Dockerfile Dockerfile (builds from source)",
+      "kept_running": false,
+      "evidence": {
+        "dir": "/home/sam/.app-builder-local/state/runner/evidence/static-landing",
+        "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/screenshot.png",
+        "html": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/page.html",
+        "browser": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/browser.json"
+      }
+    }
+  ],
+  "qualification_results": [
+    {
+      "app": "node-api",
+      "number": "A-002",
+      "verdict": "PASS",
+      "broken_at": null,
+      "code": null,
+      "stages": {
+        "1 INSTALLED": {
+          "status": "OK"
+        },
+        "2 APP_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "3 PROXY_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "4 SKIN": {
+          "status": "NOT_APPLICABLE",
+          "code": "SERVICE"
+        },
+        "5 HOOK": {
+          "status": "NOT_APPLICABLE",
+          "code": "SERVICE"
+        },
+        "6 CLEAN": {
+          "status": "OK",
+          "code": "SERVICE_RESPONDS",
+          "detail": "app 200, proxy 200"
+        }
+      },
+      "ts": 1790346736.26788,
+      "runner": {
+        "started": true,
+        "url": "http://127.0.0.1:20013/",
+        "part": "recipe that worked before",
+        "part_detail": {
+          "kind": "dockerfile",
+          "dockerfile": "Dockerfile",
+          "context": ".",
+          "env": {},
+          "saved_at": 1790346582.336651,
+          "saved_by": "qualified: passed all six stages",
+          "why": "recipe that worked before",
+          "port_seen": 20013
+        },
+        "attempts": [
+          {
+            "n": 1,
+            "part": "recipe that worked before",
+            "outcome": "UP",
+            "url": "http://127.0.0.1:20013/",
+            "notes": [],
+            "download_start_s": 0.4,
+            "boot_wait_s": 30.1
+          }
+        ],
+        "seconds": 34,
+        "kept_running": false
+      },
+      "timing": {
+        "queued_s": 0,
+        "started_at": "14:31:45",
+        "finished_at": "14:32:19",
+        "total_s": 34,
+        "start_s": 30,
+        "check_s": 3,
+        "attempts": [
+          {
+            "n": 1,
+            "outcome": "UP",
+            "download_start_s": 0.4,
+            "boot_wait_s": 30.1
+          }
+        ]
+      }
+    },
+    {
+      "app": "static-landing",
+      "number": "A-001",
+      "verdict": "PASS",
+      "broken_at": null,
+      "code": null,
+      "stages": {
+        "1 INSTALLED": {
+          "status": "OK"
+        },
+        "2 APP_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "3 PROXY_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "4 SKIN": {
+          "status": "OK"
+        },
+        "5 HOOK": {
+          "status": "OK"
+        },
+        "6 CLEAN": {
+          "status": "OK",
+          "code": "CLEAN_OK",
+          "evidence": {
+            "dir": "/home/sam/.app-builder-local/state/runner/evidence/static-landing",
+            "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/screenshot.png",
+            "html": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/page.html",
+            "browser": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/browser.json"
+          }
+        }
+      },
+      "ts": 1790346737.902276,
+      "adapter": {
+        "state": "dormant",
+        "capabilities": [],
+        "seen": {
+          "anchors": 0,
+          "owned": 0,
+          "capabilities": []
+        },
+        "expected": {
+          "mode": "dormant"
+        },
+        "matches_expected": true
+      },
+      "runner": {
+        "started": true,
+        "url": "http://127.0.0.1:20012/",
+        "part": "the app's own Dockerfile Dockerfile (builds from source)",
+        "part_detail": {
+          "kind": "dockerfile",
+          "dockerfile": "Dockerfile",
+          "context": ".",
+          "env": {},
+          "why": "the app's own Dockerfile Dockerfile (builds from source)",
+          "port_seen": 20012
+        },
+        "attempts": [
+          {
+            "n": 1,
+            "part": "the app's own Dockerfile Dockerfile (builds from source)",
+            "outcome": "UP",
+            "url": "http://127.0.0.1:20012/",
+            "notes": [],
+            "download_start_s": 0.5,
+            "boot_wait_s": 30.1
+          }
+        ],
+        "seconds": 36,
+        "kept_running": false
+      },
+      "timing": {
+        "queued_s": 0,
+        "started_at": "14:31:45",
+        "finished_at": "14:32:21",
+        "total_s": 36,
+        "start_s": 30,
+        "check_s": 5,
+        "attempts": [
+          {
+            "n": 1,
+            "outcome": "UP",
+            "download_start_s": 0.5,
+            "boot_wait_s": 30.1
+          }
+        ]
+      }
+    }
+  ],
+  "qualified_apps": [
+    "node-api",
+    "static-landing"
+  ],
+  "coolify": {
+    "status": "BLOCKED_NOT_CONFIGURED",
+    "attempts": 3,
+    "next_attempt_at": 1790347022.5064666,
+    "manifest": "/home/sam/.app-builder-local/state/coolify/outbox/b-20260925-143144-43e2376d.json",
+    "apps": {
+      "node-api": {
+        "status": "PENDING"
+      },
+      "static-landing": {
+        "status": "PENDING"
+      }
+    },
+    "last_attempt_at": 1790346902.5064666,
+    "last_error": "COOLIFY_URL and COOLIFY_TOKEN must be set in the .env file"
+  }
+}

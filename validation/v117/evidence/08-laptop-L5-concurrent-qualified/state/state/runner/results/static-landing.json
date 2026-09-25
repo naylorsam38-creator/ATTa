@@ -1,0 +1,94 @@
+{
+  "app": "static-landing",
+  "number": "A-001",
+  "verdict": "PASS",
+  "broken_at": null,
+  "code": null,
+  "stages": {
+    "1 INSTALLED": {
+      "status": "OK"
+    },
+    "2 APP_UP": {
+      "status": "OK",
+      "detail": "200"
+    },
+    "3 PROXY_UP": {
+      "status": "OK",
+      "detail": "200"
+    },
+    "4 SKIN": {
+      "status": "OK"
+    },
+    "5 HOOK": {
+      "status": "OK"
+    },
+    "6 CLEAN": {
+      "status": "OK",
+      "code": "CLEAN_OK",
+      "evidence": {
+        "dir": "/home/sam/.app-builder-local/state/runner/evidence/static-landing",
+        "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/screenshot.png",
+        "html": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/page.html",
+        "browser": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/browser.json"
+      }
+    }
+  },
+  "ts": 1790346940.707999,
+  "adapter": {
+    "state": "dormant",
+    "capabilities": [],
+    "seen": {
+      "anchors": 0,
+      "owned": 0,
+      "capabilities": []
+    },
+    "expected": {
+      "mode": "dormant"
+    },
+    "matches_expected": true
+  },
+  "runner": {
+    "started": true,
+    "url": "http://127.0.0.1:20028/",
+    "part": "recipe that worked before",
+    "part_detail": {
+      "kind": "dockerfile",
+      "dockerfile": "Dockerfile",
+      "context": ".",
+      "env": {},
+      "saved_at": 1790346892.808195,
+      "saved_by": "qualified: passed all six stages",
+      "why": "recipe that worked before",
+      "port_seen": 20028
+    },
+    "attempts": [
+      {
+        "n": 1,
+        "part": "recipe that worked before",
+        "outcome": "UP",
+        "url": "http://127.0.0.1:20028/",
+        "notes": [],
+        "download_start_s": 1.1,
+        "boot_wait_s": 30.2
+      }
+    ],
+    "seconds": 37,
+    "kept_running": false
+  },
+  "timing": {
+    "queued_s": 0,
+    "started_at": "14:35:06",
+    "finished_at": "14:35:44",
+    "total_s": 37,
+    "start_s": 31,
+    "check_s": 5,
+    "attempts": [
+      {
+        "n": 1,
+        "outcome": "UP",
+        "download_start_s": 1.1,
+        "boot_wait_s": 30.2
+      }
+    ]
+  }
+}

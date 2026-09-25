@@ -1,0 +1,133 @@
+{
+  "job_id": "20260925T143127Z-9f039143",
+  "created_at": "2026-09-25T14:31:27+00:00",
+  "verdict": "FAILED",
+  "events": [
+    {
+      "at": "2026-09-25T14:31:27+00:00",
+      "event": "QUEUED",
+      "build_id": null,
+      "original_name": "ATTa-v117-819d42768954.zip",
+      "requested_by": "deployctl",
+      "origin": "local",
+      "archive": "/srv/app-builder/adm/state/queue/20260925T143127Z-9f039143.zip"
+    },
+    {
+      "at": "2026-09-25T14:31:27+00:00",
+      "event": "CREATED",
+      "kind": "adm"
+    },
+    {
+      "at": "2026-09-25T14:31:27+00:00",
+      "event": "VALIDATING"
+    },
+    {
+      "at": "2026-09-25T14:31:27+00:00",
+      "event": "CHECKED",
+      "version": "v117",
+      "root": "/srv/app-builder/adm/staging/20260925T143127Z-9f039143/ATTa"
+    },
+    {
+      "at": "2026-09-25T14:31:27+00:00",
+      "event": "TESTS_SKIPPED",
+      "reason": "ATTA_ADM_RUN_TESTS=0"
+    },
+    {
+      "at": "2026-09-25T14:31:27+00:00",
+      "event": "BACKED_UP",
+      "backup": "/srv/app-builder/adm/backups/20260925T143127Z-20260925T143127Z-9f039143"
+    },
+    {
+      "at": "2026-09-25T14:31:27+00:00",
+      "event": "BUILDING"
+    },
+    {
+      "at": "2026-09-25T14:32:20+00:00",
+      "event": "FAILED",
+      "reason": "the new release's gateway did not start and prove itself (smoke test, nothing live was changed)"
+    },
+    {
+      "at": "2026-09-25T14:32:20+00:00",
+      "event": "ROLLBACK_NOT_NEEDED",
+      "reason": "it failed before anything live was switched"
+    }
+  ],
+  "original_name": "ATTa-v117-819d42768954.zip",
+  "requested_by": "deployctl",
+  "origin": "local",
+  "updated_at": "2026-09-25T14:32:20+00:00",
+  "deployment_id": "20260925T143127Z-9f039143",
+  "kind": "adm",
+  "state": "failed",
+  "state_history": [
+    {
+      "state": "created",
+      "at": "2026-09-25T14:31:27+00:00"
+    },
+    {
+      "state": "validating",
+      "at": "2026-09-25T14:31:27+00:00"
+    },
+    {
+      "state": "building",
+      "at": "2026-09-25T14:31:27+00:00"
+    },
+    {
+      "state": "failed",
+      "at": "2026-09-25T14:32:20+00:00",
+      "reason": "the new release's gateway did not start and prove itself (smoke test, nothing live was changed)"
+    }
+  ],
+  "started_at": "2026-09-25T14:31:27+00:00",
+  "completed_at": "2026-09-25T14:32:20+00:00",
+  "source": {
+    "original_name": "ATTa-v117-819d42768954.zip",
+    "bundle_sha256": "0a32458efa02e008c355fa58f2e8b996b6c555f5d768448547b3247a58fd49eb",
+    "source_commit": "819d42768954665cf05c94ba9d7b136a4608a9c5",
+    "manifest_sha256": "3244d644ab28b078961e36ba7aead6b5c32c1d6ad2b83499f487841411cba0e0"
+  },
+  "previous_live": {
+    "release": "/opt/app-builder-releases/v117-20260925T134404Z",
+    "version": "v117",
+    "verified": true,
+    "adopted": false,
+    "code_sha256": "3fcc13b5ad384bc736771c6adcbbd271f1fdcea7c56dfe298f63be88387b5a1e",
+    "bundle": null
+  },
+  "attempted": {
+    "version": "v117",
+    "bundle": "/srv/app-builder/adm/releases/20260925T143127Z-9f039143-v117",
+    "release": "/opt/app-builder-releases/v117-20260925T143128Z",
+    "code_sha256": "0f9fa8b8c3399266261f353e2d3f6aae677693b8b2ae41159f836d00bd376b8c"
+  },
+  "failure_reason": "the new release's gateway did not start and prove itself (smoke test, nothing live was changed)",
+  "process": {
+    "host": "atta-server",
+    "pid": 5432,
+    "pgid": 5432,
+    "runner_pid": 5430,
+    "exit": 1,
+    "seconds": 52.7,
+    "timed_out": false,
+    "interrupted": false,
+    "stopped": true,
+    "signalled": 0,
+    "escalated": false,
+    "leftovers": [],
+    "survivors": []
+  },
+  "rollback": {
+    "result": "not_needed",
+    "at": "2026-09-25T14:32:20+00:00",
+    "reason": "it failed before anything live was switched"
+  },
+  "final_live": {
+    "release": "/opt/app-builder-releases/v117-20260925T134404Z",
+    "version": "v117",
+    "verified": true
+  },
+  "build_id": null,
+  "log": "/srv/app-builder/adm/logs/20260925T143127Z-9f039143.log",
+  "version": "v117",
+  "backup": "/srv/app-builder/adm/backups/20260925T143127Z-20260925T143127Z-9f039143"
+}

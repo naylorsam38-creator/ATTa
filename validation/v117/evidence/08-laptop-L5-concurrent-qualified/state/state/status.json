@@ -1,0 +1,12 @@
+{
+  "state": "QUALIFIED",
+  "bundle": "b-20260925-143144-c4bb3789.zip",
+  "updated_at": 1790346956.2305286,
+  "kind": "upload",
+  "source": "compose-stack.zip",
+  "library": "/home/sam/.app-builder-local/library",
+  "targets": "/home/sam/.app-builder-local/state/apps",
+  "apps": 6,
+  "parallel": 6,
+  "error": "['git', '-c', 'protocol.allow=never', '-c', 'protocol.https.allow=always', '-c', 'core.hooksPath=/dev/null', '-c', 'submodule.recurse=false', '-c', 'credential.helper=', '-c', 'core.askPass=/bin/false', 'clone', '--no-recurse-submodules', '--depth', '1', '--', 'https://github.com/moby/moby.git', '/home/sam/.app-builder-local/library/docker-moby'] -> 128:  Cloning into '/home/sam/.app-builder-local/library/docker-moby'...\nfatal: unable to access 'https://github.com/moby/moby.git/': server certificate verification failed. CAfile: none CRLfile: none\n"
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "APP_BUILDER_COOLIFY_HANDOFF.v1",
+  "build_id": "b-20260925-142537-e4e58493",
+  "owner": "tester02",
+  "qualified_at": 1790346582.8868232,
+  "apps": [
+    {
+      "app": "node-api",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/node-api/.ui-capability",
+      "target_url": "http://127.0.0.1:20011/",
+      "proxy_url": "http://127.0.0.1:9063/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": null
+    }
+  ]
+}

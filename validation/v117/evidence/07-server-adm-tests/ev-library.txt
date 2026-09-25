@@ -1,0 +1,5 @@
+RESOLVED_APP_SKIN_MAPPING.json
+UI_CAPABILITY_DEPLOYMENT_MANIFEST.json
+fastapi-service
+node-api
+static-landing

@@ -1,0 +1,1420 @@
+{
+  "id": "b-20260925-143144-c4bb3789",
+  "owner": "tester02",
+  "state": "QUALIFIED",
+  "created": 1790346704.8649702,
+  "updated": 1790347888.7213223,
+  "history": [
+    {
+      "state": "QUEUED",
+      "at": 1790346704.8649702
+    },
+    {
+      "state": "VALIDATING",
+      "at": 1790346904.5115535
+    },
+    {
+      "state": "ADDING_APP",
+      "at": 1790346904.5135174
+    },
+    {
+      "state": "DISCOVERING",
+      "at": 1790346904.5140157
+    },
+    {
+      "state": "FETCHING_LIBRARY",
+      "at": 1790346904.5360868
+    },
+    {
+      "state": "CATALOGUE_SYNC",
+      "at": 1790346904.5366874
+    },
+    {
+      "state": "INSTALLING_UI_CAPABILITY",
+      "at": 1790346904.633779
+    },
+    {
+      "state": "INTAKE_CHECK",
+      "at": 1790346904.726227
+    },
+    {
+      "state": "READY_FOR_WATCHER",
+      "at": 1790346906.774284
+    },
+    {
+      "state": "QUALIFYING",
+      "at": 1790346906.774913
+    },
+    {
+      "state": "QUALIFIED",
+      "at": 1790346956.2307875
+    }
+  ],
+  "origin": "web",
+  "bundle_bytes": 2002,
+  "original_name": "compose-stack.zip",
+  "bundle": "b-20260925-143144-c4bb3789.zip",
+  "kind": "upload",
+  "source": "compose-stack.zip",
+  "apps_discovered": [
+    {
+      "name": "compose-stack",
+      "rel": "compose-stack",
+      "how": "code marker"
+    }
+  ],
+  "package": "current",
+  "apps_added": [
+    "compose-stack"
+  ],
+  "apps_already_in_library": [],
+  "catalogue_look": {
+    "compose stack": [
+      "skin 'devops_console' is a low-confidence pick (words: docker)"
+    ],
+    "env guestbook": [
+      "skin 'dashboard' is a low-confidence pick (no category words found; fallback skin)"
+    ],
+    "fastapi service": [
+      "skin 'dashboard' is a low-confidence pick (words: backend)"
+    ],
+    "static landing": [
+      "skin 'dashboard' is a low-confidence pick (no category words found; fallback skin)"
+    ]
+  },
+  "catalogue_new": {
+    "compose-stack": {
+      "skin_category": "devops_console",
+      "skin_source": "auto",
+      "skin_confidence": "low",
+      "profile": "web",
+      "root": "."
+    }
+  },
+  "library": "/home/sam/.app-builder-local/library",
+  "targets": "/home/sam/.app-builder-local/state/apps",
+  "apps": 6,
+  "parallel": 6,
+  "checklist": {
+    "expected": 6,
+    "ticked": 6,
+    "PASS": 6,
+    "FAIL": 0,
+    "NOT_CHECKED": 0,
+    "complete": true,
+    "rows": [
+      {
+        "no": "A-001",
+        "app": "static-landing",
+        "tick": "PASS",
+        "verdict": "PASS",
+        "stopped_at": null,
+        "seconds": 37,
+        "timing": {
+          "queued_s": 0,
+          "started_at": "14:35:06",
+          "finished_at": "14:35:44",
+          "total_s": 37,
+          "start_s": 31,
+          "check_s": 5,
+          "attempts": [
+            {
+              "n": 1,
+              "outcome": "UP",
+              "download_start_s": 1.1,
+              "boot_wait_s": 30.2
+            }
+          ]
+        },
+        "steps": [
+          {
+            "no": "S01",
+            "name": "IN_LIBRARY",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S02",
+            "name": "CATALOGUED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S03",
+            "name": "SKIN_INSTALLED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S04",
+            "name": "INTAKE_CHECKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S05",
+            "name": "STARTED",
+            "tick": "PASS",
+            "note": "recipe that worked before"
+          },
+          {
+            "no": "S06",
+            "name": "APP_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S07",
+            "name": "PROXY_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S08",
+            "name": "SKIN_SERVED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S09",
+            "name": "ADAPTER_HOOKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S10",
+            "name": "BROWSER_CLEAN",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S11",
+            "name": "ADAPTER_STATE",
+            "tick": "INFO",
+            "note": "dormant"
+          },
+          {
+            "no": "S12",
+            "name": "RECIPE_SAVED",
+            "tick": "PASS",
+            "note": ""
+          }
+        ],
+        "was": "PASS"
+      },
+      {
+        "no": "A-002",
+        "app": "node-api",
+        "tick": "PASS",
+        "verdict": "PASS",
+        "stopped_at": null,
+        "seconds": 35,
+        "timing": {
+          "queued_s": 0,
+          "started_at": "14:35:06",
+          "finished_at": "14:35:42",
+          "total_s": 35,
+          "start_s": 32,
+          "check_s": 3,
+          "attempts": [
+            {
+              "n": 1,
+              "outcome": "UP",
+              "download_start_s": 1.2,
+              "boot_wait_s": 30.2
+            }
+          ]
+        },
+        "steps": [
+          {
+            "no": "S01",
+            "name": "IN_LIBRARY",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S02",
+            "name": "CATALOGUED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S03",
+            "name": "SKIN_INSTALLED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S04",
+            "name": "INTAKE_CHECKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S05",
+            "name": "STARTED",
+            "tick": "PASS",
+            "note": "recipe that worked before"
+          },
+          {
+            "no": "S06",
+            "name": "APP_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S07",
+            "name": "PROXY_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S08",
+            "name": "SKIN_SERVED",
+            "tick": "N/A",
+            "note": ""
+          },
+          {
+            "no": "S09",
+            "name": "ADAPTER_HOOKED",
+            "tick": "N/A",
+            "note": ""
+          },
+          {
+            "no": "S10",
+            "name": "BROWSER_CLEAN",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S11",
+            "name": "ADAPTER_STATE",
+            "tick": "INFO",
+            "note": "not seen"
+          },
+          {
+            "no": "S12",
+            "name": "RECIPE_SAVED",
+            "tick": "PASS",
+            "note": ""
+          }
+        ],
+        "was": "PASS"
+      },
+      {
+        "no": "A-003",
+        "app": "vite-react-dashboard",
+        "tick": "PASS",
+        "verdict": "PASS",
+        "stopped_at": null,
+        "seconds": 37,
+        "timing": {
+          "queued_s": 0,
+          "started_at": "14:35:06",
+          "finished_at": "14:35:44",
+          "total_s": 37,
+          "start_s": 32,
+          "check_s": 5,
+          "attempts": [
+            {
+              "n": 1,
+              "outcome": "UP",
+              "download_start_s": 1.6,
+              "boot_wait_s": 30.1
+            }
+          ]
+        },
+        "steps": [
+          {
+            "no": "S01",
+            "name": "IN_LIBRARY",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S02",
+            "name": "CATALOGUED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S03",
+            "name": "SKIN_INSTALLED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S04",
+            "name": "INTAKE_CHECKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S05",
+            "name": "STARTED",
+            "tick": "PASS",
+            "note": "recipe that worked before"
+          },
+          {
+            "no": "S06",
+            "name": "APP_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S07",
+            "name": "PROXY_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S08",
+            "name": "SKIN_SERVED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S09",
+            "name": "ADAPTER_HOOKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S10",
+            "name": "BROWSER_CLEAN",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S11",
+            "name": "ADAPTER_STATE",
+            "tick": "INFO",
+            "note": "dormant"
+          },
+          {
+            "no": "S12",
+            "name": "RECIPE_SAVED",
+            "tick": "PASS",
+            "note": ""
+          }
+        ],
+        "was": "PASS"
+      },
+      {
+        "no": "A-004",
+        "app": "fastapi-service",
+        "tick": "PASS",
+        "verdict": "PASS",
+        "stopped_at": null,
+        "seconds": 39,
+        "timing": {
+          "queued_s": 0,
+          "started_at": "14:35:06",
+          "finished_at": "14:35:46",
+          "total_s": 39,
+          "start_s": 35,
+          "check_s": 4,
+          "attempts": [
+            {
+              "n": 1,
+              "outcome": "UP",
+              "download_start_s": 1.3,
+              "boot_wait_s": 33.3
+            }
+          ]
+        },
+        "steps": [
+          {
+            "no": "S01",
+            "name": "IN_LIBRARY",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S02",
+            "name": "CATALOGUED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S03",
+            "name": "SKIN_INSTALLED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S04",
+            "name": "INTAKE_CHECKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S05",
+            "name": "STARTED",
+            "tick": "PASS",
+            "note": "recipe that worked before"
+          },
+          {
+            "no": "S06",
+            "name": "APP_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S07",
+            "name": "PROXY_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S08",
+            "name": "SKIN_SERVED",
+            "tick": "N/A",
+            "note": ""
+          },
+          {
+            "no": "S09",
+            "name": "ADAPTER_HOOKED",
+            "tick": "N/A",
+            "note": ""
+          },
+          {
+            "no": "S10",
+            "name": "BROWSER_CLEAN",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S11",
+            "name": "ADAPTER_STATE",
+            "tick": "INFO",
+            "note": "not seen"
+          },
+          {
+            "no": "S12",
+            "name": "RECIPE_SAVED",
+            "tick": "PASS",
+            "note": ""
+          }
+        ],
+        "was": "PASS"
+      },
+      {
+        "no": "A-005",
+        "app": "env-guestbook",
+        "tick": "PASS",
+        "verdict": "PASS",
+        "stopped_at": null,
+        "seconds": 46,
+        "timing": {
+          "queued_s": 0,
+          "started_at": "14:35:06",
+          "finished_at": "14:35:53",
+          "total_s": 46,
+          "start_s": 32,
+          "check_s": 14,
+          "attempts": [
+            {
+              "n": 1,
+              "outcome": "UP",
+              "download_start_s": 1.4,
+              "boot_wait_s": 30.2
+            }
+          ]
+        },
+        "steps": [
+          {
+            "no": "S01",
+            "name": "IN_LIBRARY",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S02",
+            "name": "CATALOGUED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S03",
+            "name": "SKIN_INSTALLED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S04",
+            "name": "INTAKE_CHECKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S05",
+            "name": "STARTED",
+            "tick": "PASS",
+            "note": "recipe that worked before"
+          },
+          {
+            "no": "S06",
+            "name": "APP_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S07",
+            "name": "PROXY_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S08",
+            "name": "SKIN_SERVED",
+            "tick": "N/A",
+            "note": ""
+          },
+          {
+            "no": "S09",
+            "name": "ADAPTER_HOOKED",
+            "tick": "N/A",
+            "note": ""
+          },
+          {
+            "no": "S10",
+            "name": "BROWSER_CLEAN",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S11",
+            "name": "ADAPTER_STATE",
+            "tick": "INFO",
+            "note": "not seen"
+          },
+          {
+            "no": "S12",
+            "name": "RECIPE_SAVED",
+            "tick": "PASS",
+            "note": ""
+          }
+        ],
+        "was": null
+      },
+      {
+        "no": "A-006",
+        "app": "compose-stack",
+        "tick": "PASS",
+        "verdict": "PASS",
+        "stopped_at": null,
+        "seconds": 49,
+        "timing": {
+          "queued_s": 0,
+          "started_at": "14:35:06",
+          "finished_at": "14:35:56",
+          "total_s": 49,
+          "start_s": 33,
+          "check_s": 15,
+          "attempts": [
+            {
+              "n": 1,
+              "outcome": "UP",
+              "download_start_s": 2.9,
+              "boot_wait_s": 30.2
+            }
+          ]
+        },
+        "steps": [
+          {
+            "no": "S01",
+            "name": "IN_LIBRARY",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S02",
+            "name": "CATALOGUED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S03",
+            "name": "SKIN_INSTALLED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S04",
+            "name": "INTAKE_CHECKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S05",
+            "name": "STARTED",
+            "tick": "PASS",
+            "note": "the app's own compose file docker-compose.yml (builds from source)"
+          },
+          {
+            "no": "S06",
+            "name": "APP_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S07",
+            "name": "PROXY_UP",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S08",
+            "name": "SKIN_SERVED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S09",
+            "name": "ADAPTER_HOOKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S10",
+            "name": "BROWSER_CLEAN",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S11",
+            "name": "ADAPTER_STATE",
+            "tick": "INFO",
+            "note": "dormant"
+          },
+          {
+            "no": "S12",
+            "name": "RECIPE_SAVED",
+            "tick": "PASS",
+            "note": ""
+          }
+        ],
+        "was": null
+      }
+    ],
+    "regressions": [],
+    "newly_passing": [],
+    "rules_promoted": [],
+    "rule_suspects": []
+  },
+  "qualified_at": 1790346956.2306354,
+  "error": null,
+  "qualification": [
+    {
+      "app": "compose-stack",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/compose-stack/.ui-capability",
+      "target_url": "http://127.0.0.1:20026/",
+      "proxy_url": "http://127.0.0.1:8451/",
+      "started_by": "the app's own compose file docker-compose.yml (builds from source)",
+      "kept_running": false,
+      "evidence": {
+        "dir": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack",
+        "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack/screenshot.png",
+        "html": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack/page.html",
+        "browser": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack/browser.json"
+      }
+    },
+    {
+      "app": "env-guestbook",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/env-guestbook/.ui-capability",
+      "target_url": "http://127.0.0.1:20027/",
+      "proxy_url": "http://127.0.0.1:8307/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": null
+    },
+    {
+      "app": "fastapi-service",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/fastapi-service/.ui-capability",
+      "target_url": "http://127.0.0.1:20030/",
+      "proxy_url": "http://127.0.0.1:8544/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": null
+    },
+    {
+      "app": "node-api",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/node-api/.ui-capability",
+      "target_url": "http://127.0.0.1:20029/",
+      "proxy_url": "http://127.0.0.1:9063/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": null
+    },
+    {
+      "app": "static-landing",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/static-landing/.ui-capability",
+      "target_url": "http://127.0.0.1:20028/",
+      "proxy_url": "http://127.0.0.1:8990/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": {
+        "dir": "/home/sam/.app-builder-local/state/runner/evidence/static-landing",
+        "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/screenshot.png",
+        "html": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/page.html",
+        "browser": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/browser.json"
+      }
+    },
+    {
+      "app": "vite-react-dashboard",
+      "verdict": "PASS",
+      "qualified": true,
+      "ui_dir": "/home/sam/.app-builder-local/library/vite-react-dashboard/.ui-capability",
+      "target_url": "http://127.0.0.1:20031/",
+      "proxy_url": "http://127.0.0.1:8520/",
+      "started_by": "recipe that worked before",
+      "kept_running": false,
+      "evidence": {
+        "dir": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard",
+        "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard/screenshot.png",
+        "html": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard/page.html",
+        "browser": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard/browser.json"
+      }
+    }
+  ],
+  "qualification_results": [
+    {
+      "app": "compose-stack",
+      "number": "A-006",
+      "verdict": "PASS",
+      "broken_at": null,
+      "code": null,
+      "stages": {
+        "1 INSTALLED": {
+          "status": "OK"
+        },
+        "2 APP_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "3 PROXY_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "4 SKIN": {
+          "status": "OK"
+        },
+        "5 HOOK": {
+          "status": "OK"
+        },
+        "6 CLEAN": {
+          "status": "OK",
+          "code": "CLEAN_OK",
+          "evidence": {
+            "dir": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack",
+            "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack/screenshot.png",
+            "html": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack/page.html",
+            "browser": "/home/sam/.app-builder-local/state/runner/evidence/compose-stack/browser.json"
+          }
+        }
+      },
+      "ts": 1790346942.286459,
+      "adapter": {
+        "state": "dormant",
+        "capabilities": [],
+        "seen": {
+          "anchors": 0,
+          "owned": 0,
+          "capabilities": []
+        },
+        "expected": {
+          "mode": "dormant"
+        },
+        "matches_expected": true
+      },
+      "runner": {
+        "started": true,
+        "url": "http://127.0.0.1:20026/",
+        "part": "the app's own compose file docker-compose.yml (builds from source)",
+        "part_detail": {
+          "kind": "compose",
+          "file": "docker-compose.yml",
+          "env": {},
+          "why": "the app's own compose file docker-compose.yml (builds from source)",
+          "port_seen": 20026
+        },
+        "attempts": [
+          {
+            "n": 1,
+            "part": "the app's own compose file docker-compose.yml (builds from source)",
+            "outcome": "UP",
+            "url": "http://127.0.0.1:20026/",
+            "notes": [],
+            "download_start_s": 2.9,
+            "boot_wait_s": 30.2
+          }
+        ],
+        "seconds": 49,
+        "kept_running": false
+      },
+      "timing": {
+        "queued_s": 0,
+        "started_at": "14:35:06",
+        "finished_at": "14:35:56",
+        "total_s": 49,
+        "start_s": 33,
+        "check_s": 15,
+        "attempts": [
+          {
+            "n": 1,
+            "outcome": "UP",
+            "download_start_s": 2.9,
+            "boot_wait_s": 30.2
+          }
+        ]
+      }
+    },
+    {
+      "app": "env-guestbook",
+      "number": "A-005",
+      "verdict": "PASS",
+      "broken_at": null,
+      "code": null,
+      "stages": {
+        "1 INSTALLED": {
+          "status": "OK"
+        },
+        "2 APP_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "3 PROXY_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "4 SKIN": {
+          "status": "NOT_APPLICABLE",
+          "code": "SERVICE"
+        },
+        "5 HOOK": {
+          "status": "NOT_APPLICABLE",
+          "code": "SERVICE"
+        },
+        "6 CLEAN": {
+          "status": "OK",
+          "code": "SERVICE_RESPONDS",
+          "detail": "app 200, proxy 200"
+        }
+      },
+      "ts": 1790346939.825706,
+      "runner": {
+        "started": true,
+        "url": "http://127.0.0.1:20027/",
+        "part": "recipe that worked before",
+        "part_detail": {
+          "kind": "compose",
+          "file": "docker-compose.yml",
+          "env": {
+            "GUESTBOOK_SECRET": "486498f7b20c33c4828dbe00b200f3a4"
+          },
+          "saved_at": 1790346902.4856286,
+          "saved_by": "qualified: passed all six stages",
+          "why": "recipe that worked before",
+          "port_seen": 20027
+        },
+        "attempts": [
+          {
+            "n": 1,
+            "part": "recipe that worked before",
+            "outcome": "UP",
+            "url": "http://127.0.0.1:20027/",
+            "notes": [],
+            "download_start_s": 1.4,
+            "boot_wait_s": 30.2
+          }
+        ],
+        "seconds": 46,
+        "kept_running": false
+      },
+      "timing": {
+        "queued_s": 0,
+        "started_at": "14:35:06",
+        "finished_at": "14:35:53",
+        "total_s": 46,
+        "start_s": 32,
+        "check_s": 14,
+        "attempts": [
+          {
+            "n": 1,
+            "outcome": "UP",
+            "download_start_s": 1.4,
+            "boot_wait_s": 30.2
+          }
+        ]
+      }
+    },
+    {
+      "app": "fastapi-service",
+      "number": "A-004",
+      "verdict": "PASS",
+      "broken_at": null,
+      "code": null,
+      "stages": {
+        "1 INSTALLED": {
+          "status": "OK"
+        },
+        "2 APP_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "3 PROXY_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "4 SKIN": {
+          "status": "NOT_APPLICABLE",
+          "code": "SERVICE"
+        },
+        "5 HOOK": {
+          "status": "NOT_APPLICABLE",
+          "code": "SERVICE"
+        },
+        "6 CLEAN": {
+          "status": "OK",
+          "code": "SERVICE_RESPONDS",
+          "detail": "app 200, proxy 200"
+        }
+      },
+      "ts": 1790346942.7174475,
+      "runner": {
+        "started": true,
+        "url": "http://127.0.0.1:20030/",
+        "part": "recipe that worked before",
+        "part_detail": {
+          "kind": "dockerfile",
+          "dockerfile": "Dockerfile",
+          "context": ".",
+          "env": {},
+          "saved_at": 1790346894.233151,
+          "saved_by": "qualified: passed all six stages",
+          "why": "recipe that worked before",
+          "port_seen": 20030
+        },
+        "attempts": [
+          {
+            "n": 1,
+            "part": "recipe that worked before",
+            "outcome": "UP",
+            "url": "http://127.0.0.1:20030/",
+            "notes": [],
+            "download_start_s": 1.3,
+            "boot_wait_s": 33.3
+          }
+        ],
+        "seconds": 39,
+        "kept_running": false
+      },
+      "timing": {
+        "queued_s": 0,
+        "started_at": "14:35:06",
+        "finished_at": "14:35:46",
+        "total_s": 39,
+        "start_s": 35,
+        "check_s": 4,
+        "attempts": [
+          {
+            "n": 1,
+            "outcome": "UP",
+            "download_start_s": 1.3,
+            "boot_wait_s": 33.3
+          }
+        ]
+      }
+    },
+    {
+      "app": "node-api",
+      "number": "A-002",
+      "verdict": "PASS",
+      "broken_at": null,
+      "code": null,
+      "stages": {
+        "1 INSTALLED": {
+          "status": "OK"
+        },
+        "2 APP_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "3 PROXY_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "4 SKIN": {
+          "status": "NOT_APPLICABLE",
+          "code": "SERVICE"
+        },
+        "5 HOOK": {
+          "status": "NOT_APPLICABLE",
+          "code": "SERVICE"
+        },
+        "6 CLEAN": {
+          "status": "OK",
+          "code": "SERVICE_RESPONDS",
+          "detail": "app 200, proxy 200"
+        }
+      },
+      "ts": 1790346939.2280958,
+      "runner": {
+        "started": true,
+        "url": "http://127.0.0.1:20029/",
+        "part": "recipe that worked before",
+        "part_detail": {
+          "kind": "dockerfile",
+          "dockerfile": "Dockerfile",
+          "context": ".",
+          "env": {},
+          "saved_at": 1790346891.405297,
+          "saved_by": "qualified: passed all six stages",
+          "why": "recipe that worked before",
+          "port_seen": 20029
+        },
+        "attempts": [
+          {
+            "n": 1,
+            "part": "recipe that worked before",
+            "outcome": "UP",
+            "url": "http://127.0.0.1:20029/",
+            "notes": [],
+            "download_start_s": 1.2,
+            "boot_wait_s": 30.2
+          }
+        ],
+        "seconds": 35,
+        "kept_running": false
+      },
+      "timing": {
+        "queued_s": 0,
+        "started_at": "14:35:06",
+        "finished_at": "14:35:42",
+        "total_s": 35,
+        "start_s": 32,
+        "check_s": 3,
+        "attempts": [
+          {
+            "n": 1,
+            "outcome": "UP",
+            "download_start_s": 1.2,
+            "boot_wait_s": 30.2
+          }
+        ]
+      }
+    },
+    {
+      "app": "static-landing",
+      "number": "A-001",
+      "verdict": "PASS",
+      "broken_at": null,
+      "code": null,
+      "stages": {
+        "1 INSTALLED": {
+          "status": "OK"
+        },
+        "2 APP_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "3 PROXY_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "4 SKIN": {
+          "status": "OK"
+        },
+        "5 HOOK": {
+          "status": "OK"
+        },
+        "6 CLEAN": {
+          "status": "OK",
+          "code": "CLEAN_OK",
+          "evidence": {
+            "dir": "/home/sam/.app-builder-local/state/runner/evidence/static-landing",
+            "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/screenshot.png",
+            "html": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/page.html",
+            "browser": "/home/sam/.app-builder-local/state/runner/evidence/static-landing/browser.json"
+          }
+        }
+      },
+      "ts": 1790346940.707999,
+      "adapter": {
+        "state": "dormant",
+        "capabilities": [],
+        "seen": {
+          "anchors": 0,
+          "owned": 0,
+          "capabilities": []
+        },
+        "expected": {
+          "mode": "dormant"
+        },
+        "matches_expected": true
+      },
+      "runner": {
+        "started": true,
+        "url": "http://127.0.0.1:20028/",
+        "part": "recipe that worked before",
+        "part_detail": {
+          "kind": "dockerfile",
+          "dockerfile": "Dockerfile",
+          "context": ".",
+          "env": {},
+          "saved_at": 1790346892.808195,
+          "saved_by": "qualified: passed all six stages",
+          "why": "recipe that worked before",
+          "port_seen": 20028
+        },
+        "attempts": [
+          {
+            "n": 1,
+            "part": "recipe that worked before",
+            "outcome": "UP",
+            "url": "http://127.0.0.1:20028/",
+            "notes": [],
+            "download_start_s": 1.1,
+            "boot_wait_s": 30.2
+          }
+        ],
+        "seconds": 37,
+        "kept_running": false
+      },
+      "timing": {
+        "queued_s": 0,
+        "started_at": "14:35:06",
+        "finished_at": "14:35:44",
+        "total_s": 37,
+        "start_s": 31,
+        "check_s": 5,
+        "attempts": [
+          {
+            "n": 1,
+            "outcome": "UP",
+            "download_start_s": 1.1,
+            "boot_wait_s": 30.2
+          }
+        ]
+      }
+    },
+    {
+      "app": "vite-react-dashboard",
+      "number": "A-003",
+      "verdict": "PASS",
+      "broken_at": null,
+      "code": null,
+      "stages": {
+        "1 INSTALLED": {
+          "status": "OK"
+        },
+        "2 APP_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "3 PROXY_UP": {
+          "status": "OK",
+          "detail": "200"
+        },
+        "4 SKIN": {
+          "status": "OK"
+        },
+        "5 HOOK": {
+          "status": "OK"
+        },
+        "6 CLEAN": {
+          "status": "OK",
+          "code": "CLEAN_OK",
+          "evidence": {
+            "dir": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard",
+            "screenshot": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard/screenshot.png",
+            "html": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard/page.html",
+            "browser": "/home/sam/.app-builder-local/state/runner/evidence/vite-react-dashboard/browser.json"
+          }
+        }
+      },
+      "ts": 1790346941.3195019,
+      "adapter": {
+        "state": "dormant",
+        "capabilities": [],
+        "seen": {
+          "anchors": 0,
+          "owned": 0,
+          "capabilities": []
+        },
+        "expected": {
+          "mode": "dormant"
+        },
+        "matches_expected": true
+      },
+      "runner": {
+        "started": true,
+        "url": "http://127.0.0.1:20031/",
+        "part": "recipe that worked before",
+        "part_detail": {
+          "kind": "dockerfile",
+          "dockerfile": "Dockerfile",
+          "context": ".",
+          "env": {},
+          "saved_at": 1790346893.282233,
+          "saved_by": "qualified: passed all six stages",
+          "why": "recipe that worked before",
+          "port_seen": 20031
+        },
+        "attempts": [
+          {
+            "n": 1,
+            "part": "recipe that worked before",
+            "outcome": "UP",
+            "url": "http://127.0.0.1:20031/",
+            "notes": [],
+            "download_start_s": 1.6,
+            "boot_wait_s": 30.1
+          }
+        ],
+        "seconds": 37,
+        "kept_running": false
+      },
+      "timing": {
+        "queued_s": 0,
+        "started_at": "14:35:06",
+        "finished_at": "14:35:44",
+        "total_s": 37,
+        "start_s": 32,
+        "check_s": 5,
+        "attempts": [
+          {
+            "n": 1,
+            "outcome": "UP",
+            "download_start_s": 1.6,
+            "boot_wait_s": 30.1
+          }
+        ]
+      }
+    }
+  ],
+  "qualified_apps": [
+    "compose-stack",
+    "env-guestbook",
+    "fastapi-service",
+    "node-api",
+    "static-landing",
+    "vite-react-dashboard"
+  ],
+  "coolify": {
+    "status": "DISPATCHED",
+    "attempts": 7,
+    "next_attempt_at": 1790348788.1799097,
+    "manifest": "/home/sam/.app-builder-local/state/coolify/outbox/b-20260925-143144-c4bb3789.json",
+    "apps": {
+      "compose-stack": {
+        "status": "ACCEPTED",
+        "uuid": "g53u4ud1ngmgugtyxszsq6ws",
+        "detail": "HTTP 200: queued ['gsl0w5bucrknt8bhlqpsranq']",
+        "at": 1790347888.6239812
+      },
+      "env-guestbook": {
+        "status": "ACCEPTED",
+        "uuid": "mhuznwqqa0kco7wouvktxu3c",
+        "detail": "HTTP 200: queued ['6ddayjejd7dtayjreoardnvc']",
+        "at": 1790347888.1799097
+      },
+      "fastapi-service": {
+        "status": "ACCEPTED",
+        "uuid": "xsawciyxgd4r9aoyzxslw3oy",
+        "detail": "HTTP 200: queued ['zg9pntnu73kwkfidvclzqvjk']",
+        "at": 1790347888.1799097
+      },
+      "node-api": {
+        "status": "ACCEPTED",
+        "uuid": "ubbzt0jcqosgwppznpmvyxsr",
+        "detail": "HTTP 200: queued ['vsjavicp2ckt8oagxg3qafi9']",
+        "at": 1790347046.3766224
+      },
+      "static-landing": {
+        "status": "ACCEPTED",
+        "uuid": "xt4vk29k2exq8ll4glnt1eib",
+        "detail": "HTTP 200: queued ['ir71kedw9y4sayjxwl7vhf91']",
+        "at": 1790347046.3766224
+      },
+      "vite-react-dashboard": {
+        "status": "ACCEPTED",
+        "uuid": "tty4gicvr9mweydgnd4a9hcf",
+        "detail": "HTTP 200: queued ['y2l66zxbknbwwdjkhyevr6t5']",
+        "at": 1790347888.1799097
+      }
+    },
+    "last_attempt_at": 1790347888.6239812,
+    "dispatched_at": 1790347888.6239812
+  },
+  "healing": {
+    "handoff": {
+      "status": "HEALED",
+      "rounds": 1,
+      "items": {
+        "handoff|UNMAPPED|compose-stack": {
+          "next_tier": 2,
+          "last_applied": {
+            "tier": 1,
+            "tier_name": "script",
+            "item": {
+              "key": "UNMAPPED",
+              "app": "compose-stack",
+              "detail": "no entry for 'compose-stack' in coolify_resources.json"
+            },
+            "at": 1790347888.5300474,
+            "rule": "handoff.unmapped",
+            "outcome": "APPLIED",
+            "actions": [
+              {
+                "name": "lookup_coolify_uuid",
+                "args": {
+                  "app": "compose-stack"
+                },
+                "result": "compose-stack -> g53u4ud1ngmgugtyxszsq6ws",
+                "error": false
+              }
+            ]
+          }
+        }
+      },
+      "chain": [
+        {
+          "tier": 1,
+          "tier_name": "script",
+          "item": {
+            "key": "UNMAPPED",
+            "app": "compose-stack",
+            "detail": "no entry for 'compose-stack' in coolify_resources.json"
+          },
+          "at": 1790347888.5300474,
+          "rule": "handoff.unmapped",
+          "outcome": "APPLIED",
+          "actions": [
+            {
+              "name": "lookup_coolify_uuid",
+              "args": {
+                "app": "compose-stack"
+              },
+              "result": "compose-stack -> g53u4ud1ngmgugtyxszsq6ws",
+              "error": false
+            }
+          ]
+        }
+      ],
+      "alerted": [],
+      "healed_at": 1790347888.7207954
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "job_id": "20260925T143050Z-c1071f84",
+  "created_at": "2026-09-25T14:30:50+00:00",
+  "verdict": "FAILED",
+  "events": [
+    {
+      "at": "2026-09-25T14:30:50+00:00",
+      "event": "QUEUED",
+      "build_id": null,
+      "original_name": "ATTa-v117-syntax.zip",
+      "requested_by": "deployctl",
+      "origin": "local",
+      "archive": "/srv/app-builder/adm/state/queue/20260925T143050Z-c1071f84.zip"
+    },
+    {
+      "at": "2026-09-25T14:30:50+00:00",
+      "event": "CREATED",
+      "kind": "adm"
+    },
+    {
+      "at": "2026-09-25T14:30:50+00:00",
+      "event": "VALIDATING"
+    },
+    {
+      "at": "2026-09-25T14:30:50+00:00",
+      "event": "FAILED",
+      "reason": "bundle rejected: the bundle does not match its manifest: changed: 04-deployment/app_owners.py"
+    },
+    {
+      "at": "2026-09-25T14:30:50+00:00",
+      "event": "ROLLBACK_NOT_NEEDED",
+      "reason": "nothing live was touched"
+    }
+  ],
+  "original_name": "ATTa-v117-syntax.zip",
+  "requested_by": "deployctl",
+  "origin": "local",
+  "updated_at": "2026-09-25T14:30:50+00:00",
+  "deployment_id": "20260925T143050Z-c1071f84",
+  "kind": "adm",
+  "state": "failed",
+  "state_history": [
+    {
+      "state": "created",
+      "at": "2026-09-25T14:30:50+00:00"
+    },
+    {
+      "state": "validating",
+      "at": "2026-09-25T14:30:50+00:00"
+    },
+    {
+      "state": "failed",
+      "at": "2026-09-25T14:30:50+00:00",
+      "reason": "bundle rejected: the bundle does not match its manifest: changed: 04-deployment/app_owners.py"
+    }
+  ],
+  "started_at": "2026-09-25T14:30:50+00:00",
+  "completed_at": "2026-09-25T14:30:50+00:00",
+  "source": {
+    "original_name": "ATTa-v117-syntax.zip",
+    "bundle_sha256": "44799309b7cfd864a1bf39fabff3c23791df6c54e3ed5b420914f9073da2317f"
+  },
+  "previous_live": null,
+  "attempted": {},
+  "failure_reason": "bundle rejected: the bundle does not match its manifest: changed: 04-deployment/app_owners.py",
+  "process": {
+    "host": "atta-server"
+  },
+  "rollback": {
+    "result": "not_needed",
+    "at": "2026-09-25T14:30:50+00:00",
+    "reason": "nothing live was touched"
+  },
+  "final_live": {
+    "release": "/opt/app-builder-releases/v117-20260925T134404Z",
+    "version": "v117",
+    "verified": true
+  },
+  "build_id": null,
+  "log": "/srv/app-builder/adm/logs/20260925T143050Z-c1071f84.log",
+  "touched_live": false
+}

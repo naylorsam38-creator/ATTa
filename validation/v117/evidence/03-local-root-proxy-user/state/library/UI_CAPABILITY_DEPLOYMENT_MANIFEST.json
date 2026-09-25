@@ -1,0 +1,31 @@
+{
+  "spec": "UI + Skin + Capability Universal Deployment v2",
+  "library": "/root/.app-builder-local/library",
+  "apps": [
+    {
+      "path": "/root/.app-builder-local/library/static-landing",
+      "status": "READY",
+      "mapping_method": "catalogue",
+      "app": "static-landing",
+      "app_id": "static-landing",
+      "skin": {
+        "category": "dashboard",
+        "variant": "skin-002",
+        "source": "skins_library"
+      },
+      "capability_port": {
+        "installed": true,
+        "entry": "capability-port/port.js",
+        "source": "Capability adapter"
+      },
+      "ui_bridge": {
+        "installed": true,
+        "proxy": "ui-bridge/proxy.js"
+      },
+      "source_preserved": true,
+      "mapping_source": "resolved-semantic-map"
+    }
+  ],
+  "errors": [],
+  "pending_review": []
+}

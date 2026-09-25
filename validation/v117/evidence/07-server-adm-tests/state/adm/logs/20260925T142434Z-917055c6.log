@@ -1,0 +1,52 @@
+checked bundle version v117
+=== bundle tests (as nobody): -m unittest discover -s tests
+.............s...s.................................deployd: not taking bundles from /tmp/atta-bundle-tests-wledehz4/atta-v114-u2fsgmsf/adm/incoming: /tmp/atta-bundle-tests-wledehz4/atta-v114-u2fsgmsf/adm/incoming is writable by group or others (mode 0o777)
+.........................................s.............................error: 'system' is a reserved name and stays disabled; create a new account instead
+.............ssss.......ss...s.............................s..ss....sssss.F.E.....note: the old shared APP_BUILDER_PASSWORD is shorter than 16 characters; a new admin password was generated instead
+.......deployd: discarding malformed request a.json
+deployd: discarding malformed request b.json
+deployd: discarding malformed request c.json
+....deployd: not taking requests from /tmp/atta-bundle-tests-wledehz4/atta-v116-zfvzo4pr/tmp4vygwsjv/requests: not a private real folder
+............deployd: waiting — deployment 20260925T142648Z-b60ab690 (pid 3511 on atta-server, since 2026-09-25T14:26:48+00:00) holds the deploy lock; nothing was started
+job 20260925T142648Z-df287d02: vJ-ok.zip (build None, origin local, by incoming)
+job 20260925T142648Z-df287d02: DEPLOYED
+.deploy lock held by what is left of deployment 20260925T142656Z-eefb658d (its owner pid 4495 is gone): stopping 2 process(es)
+recovered job 20260925T142656Z-eefb658d: ROLLED_BACK
+..................................................................recovered job 20260925T142700Z-c492d4e0: ROLLED_BACK
+note: /tmp/atta-bundle-tests-wledehz4/atta-local-izxkee74/.env had no session secret (made before local logins); kept as .env.old-20260925T142731
+..........sssss..................................
+======================================================================
+ERROR: test_this_bundle_passes (test_v116_hardening.StrictBundles.test_this_bundle_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/srv/app-builder/adm/staging/20260925T142434Z-917055c6/ATTa/tests/test_v116_hardening.py", line 1086, in test_this_bundle_passes
+    self.assertEqual(self.stage(bundle_zip(self.t / "ok.zip"), "sb-ok"), json.loads((REPO_BUNDLE / "release.json").read_text())["version"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/srv/app-builder/adm/staging/20260925T142434Z-917055c6/ATTa/tests/test_v116_hardening.py", line 1083, in stage
+    return adm_staging.check(root)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/srv/app-builder/adm/staging/20260925T142434Z-917055c6/ATTa/04-deployment/deployd/adm/staging.py", line 90, in check
+    verify_manifest(root)
+  File "/srv/app-builder/adm/staging/20260925T142434Z-917055c6/ATTa/04-deployment/deployd/adm/staging.py", line 137, in verify_manifest
+    raise BundleRejected("the bundle does not match its manifest: "
+adm.staging.BundleRejected: the bundle does not match its manifest: missing: 05-coolify/coolify-main.zip
+
+======================================================================
+FAIL: test_run_must_start_with_its_shebang (test_v116_hardening.StrictBundles.test_run_must_start_with_its_shebang)
+----------------------------------------------------------------------
+adm.staging.BundleRejected: the bundle does not match its manifest: changed: run; missing: 05-coolify/coolify-main.zip
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/srv/app-builder/adm/staging/20260925T142434Z-917055c6/ATTa/tests/test_v116_hardening.py", line 1101, in test_run_must_start_with_its_shebang
+    with self.assertRaisesRegex(adm_staging.BundleRejected, "#!"):
+AssertionError: "#!" does not match "the bundle does not match its manifest: changed: run; missing: 05-coolify/coolify-main.zip"
+
+----------------------------------------------------------------------
+Ran 343 tests in 228.626s
+
+FAILED (failures=1, errors=1, skipped=23)
+
+FAIL bundle rejected: bundle tests failed: ERROR: test_this_bundle_passes (test_v116_hardening.StrictBundles.test_this_bundle_passes) | FAIL: test_run_must_start_with_its_shebang (test_v116_hardening.StrictBundles.test_run_must_start_with_its_shebang) | Ran 343 tests in 228.626s | FAILED (failures=1, errors=1, skipped=23)
+FAILED (nothing live was touched)

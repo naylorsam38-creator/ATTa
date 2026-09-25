@@ -1,0 +1,12 @@
+{
+  "app": "vite-react-dashboard",
+  "app_id": "vite-react-dashboard",
+  "app_dir": "/home/sam/.app-builder-local/library/vite-react-dashboard",
+  "target_url": "http://127.0.0.1:20031/",
+  "proxy_url": "http://127.0.0.1:8520/",
+  "ui_dir": "/home/sam/.app-builder-local/library/vite-react-dashboard/.ui-capability",
+  "customer_id": "default",
+  "profile": "web",
+  "parked": true,
+  "parked_at": 1790346944.7572005
+}

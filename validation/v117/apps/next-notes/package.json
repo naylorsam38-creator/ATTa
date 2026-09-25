@@ -1,0 +1,8 @@
+{
+  "name": "next-notes",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Notes web app built with Next.js (app router, standalone server)",
+  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
+  "dependencies": { "next": "14.2.18", "react": "18.3.1", "react-dom": "18.3.1" }
+}

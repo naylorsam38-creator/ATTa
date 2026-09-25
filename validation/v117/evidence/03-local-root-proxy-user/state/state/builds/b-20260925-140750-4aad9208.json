@@ -1,0 +1,444 @@
+{
+  "id": "b-20260925-140750-4aad9208",
+  "owner": "tester01",
+  "state": "NOT_QUALIFIED",
+  "created": 1790345270.0198505,
+  "updated": 1790345422.1663697,
+  "history": [
+    {
+      "state": "QUEUED",
+      "at": 1790345270.0198505
+    },
+    {
+      "state": "VALIDATING",
+      "at": 1790345271.5348637
+    },
+    {
+      "state": "ADDING_APP",
+      "at": 1790345271.5378754
+    },
+    {
+      "state": "DISCOVERING",
+      "at": 1790345271.5383666
+    },
+    {
+      "state": "FETCHING_LIBRARY",
+      "at": 1790345271.7784111
+    },
+    {
+      "state": "CATALOGUE_SYNC",
+      "at": 1790345271.7790103
+    },
+    {
+      "state": "INSTALLING_UI_CAPABILITY",
+      "at": 1790345271.8540757
+    },
+    {
+      "state": "INTAKE_CHECK",
+      "at": 1790345271.901216
+    },
+    {
+      "state": "READY_FOR_WATCHER",
+      "at": 1790345273.7408834
+    },
+    {
+      "state": "QUALIFYING",
+      "at": 1790345273.7414339
+    },
+    {
+      "state": "NOT_QUALIFIED",
+      "at": 1790345306.793953,
+      "error": "static-landing: BROKEN AT 2 APP_UP \u2014 PROXY_NOT_STARTED"
+    }
+  ],
+  "origin": "web",
+  "bundle_bytes": 1222,
+  "original_name": "static-landing.zip",
+  "bundle": "b-20260925-140750-4aad9208.zip",
+  "kind": "upload",
+  "source": "static-landing.zip",
+  "apps_discovered": [
+    {
+      "name": "static-landing",
+      "rel": "static-landing",
+      "how": "code marker"
+    }
+  ],
+  "package": "shipped (UI_Skin_Capability_OneShot_v2.zip)",
+  "apps_added": [
+    "static-landing"
+  ],
+  "apps_already_in_library": [],
+  "catalogue_look": {
+    "static landing": [
+      "skin 'dashboard' is a low-confidence pick (no category words found; fallback skin)"
+    ]
+  },
+  "catalogue_new": {
+    "static-landing": {
+      "skin_category": "dashboard",
+      "skin_source": "auto",
+      "skin_confidence": "low",
+      "profile": "web",
+      "root": "."
+    }
+  },
+  "coverage_warnings": [
+    "no app uses skin category yet: developer_tools, devops_console"
+  ],
+  "library": "/root/.app-builder-local/library",
+  "targets": "/root/.app-builder-local/state/apps",
+  "apps": 1,
+  "parallel": 1,
+  "checklist": {
+    "expected": 1,
+    "ticked": 1,
+    "PASS": 0,
+    "FAIL": 1,
+    "NOT_CHECKED": 0,
+    "complete": true,
+    "rows": [
+      {
+        "no": "A-001",
+        "app": "static-landing",
+        "tick": "FAIL",
+        "verdict": "BROKEN AT 2 APP_UP \u2014 PROXY_NOT_STARTED",
+        "stopped_at": "S06 APP_UP",
+        "seconds": 32,
+        "timing": {
+          "queued_s": 0,
+          "started_at": "14:07:53",
+          "finished_at": "14:08:26",
+          "total_s": 32,
+          "start_s": 32,
+          "check_s": 0,
+          "attempts": [
+            {
+              "n": 1,
+              "outcome": "UP",
+              "download_start_s": 2.2,
+              "boot_wait_s": 30.1
+            }
+          ]
+        },
+        "steps": [
+          {
+            "no": "S01",
+            "name": "IN_LIBRARY",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S02",
+            "name": "CATALOGUED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S03",
+            "name": "SKIN_INSTALLED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S04",
+            "name": "INTAKE_CHECKED",
+            "tick": "PASS",
+            "note": ""
+          },
+          {
+            "no": "S05",
+            "name": "STARTED",
+            "tick": "PASS",
+            "note": "the app's own Dockerfile Dockerfile (builds from source)"
+          },
+          {
+            "no": "S06",
+            "name": "APP_UP",
+            "tick": "FAIL",
+            "note": ""
+          },
+          {
+            "no": "S07",
+            "name": "PROXY_UP",
+            "tick": "SKIP",
+            "note": ""
+          },
+          {
+            "no": "S08",
+            "name": "SKIN_SERVED",
+            "tick": "SKIP",
+            "note": ""
+          },
+          {
+            "no": "S09",
+            "name": "ADAPTER_HOOKED",
+            "tick": "SKIP",
+            "note": ""
+          },
+          {
+            "no": "S10",
+            "name": "BROWSER_CLEAN",
+            "tick": "SKIP",
+            "note": ""
+          },
+          {
+            "no": "S11",
+            "name": "ADAPTER_STATE",
+            "tick": "INFO",
+            "note": "not seen"
+          },
+          {
+            "no": "S12",
+            "name": "RECIPE_SAVED",
+            "tick": "FAIL",
+            "note": ""
+          }
+        ]
+      }
+    ],
+    "rules_promoted": [],
+    "rule_suspects": []
+  },
+  "error": "static-landing: BROKEN AT 2 APP_UP \u2014 PROXY_NOT_STARTED",
+  "qualification": [
+    {
+      "app": "static-landing",
+      "verdict": "BROKEN AT 2 APP_UP \u2014 PROXY_NOT_STARTED",
+      "qualified": false,
+      "ui_dir": null,
+      "target_url": null,
+      "proxy_url": null,
+      "started_by": "the app's own Dockerfile Dockerfile (builds from source)",
+      "kept_running": false,
+      "evidence": null
+    }
+  ],
+  "qualification_results": [
+    {
+      "app": "static-landing",
+      "number": "A-001",
+      "verdict": "BROKEN AT 2 APP_UP \u2014 PROXY_NOT_STARTED",
+      "broken_at": "2 APP_UP",
+      "code": "PROXY_NOT_STARTED",
+      "stages": {
+        "1 INSTALLED": {
+          "status": "OK"
+        },
+        "2 APP_UP": {
+          "status": "FAIL",
+          "code": "PROXY_NOT_STARTED",
+          "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)"
+        },
+        "3 PROXY_UP": {
+          "status": "SKIPPED",
+          "code": "UPSTREAM_FAILURE"
+        },
+        "4 SKIN": {
+          "status": "SKIPPED",
+          "code": "UPSTREAM_FAILURE"
+        },
+        "5 HOOK": {
+          "status": "SKIPPED",
+          "code": "UPSTREAM_FAILURE"
+        },
+        "6 CLEAN": {
+          "status": "SKIPPED",
+          "code": "UPSTREAM_FAILURE"
+        }
+      },
+      "ts": 1790345419.787328,
+      "runner": {
+        "started": true,
+        "url": "http://127.0.0.1:20003/",
+        "part": "the app's own Dockerfile Dockerfile (builds from source)",
+        "part_detail": {
+          "kind": "dockerfile",
+          "dockerfile": "Dockerfile",
+          "context": ".",
+          "env": {},
+          "why": "the app's own Dockerfile Dockerfile (builds from source)",
+          "port_seen": 20003
+        },
+        "attempts": [
+          {
+            "n": 1,
+            "part": "the app's own Dockerfile Dockerfile (builds from source)",
+            "outcome": "UP",
+            "url": "http://127.0.0.1:20003/",
+            "notes": [],
+            "download_start_s": 0.7,
+            "boot_wait_s": 30.1
+          }
+        ],
+        "seconds": 31,
+        "kept_running": false
+      },
+      "timing": {
+        "queued_s": 0,
+        "started_at": "14:09:48",
+        "finished_at": "14:10:20",
+        "total_s": 31,
+        "start_s": 30,
+        "check_s": 0,
+        "attempts": [
+          {
+            "n": 1,
+            "outcome": "UP",
+            "download_start_s": 0.7,
+            "boot_wait_s": 30.1
+          }
+        ]
+      }
+    }
+  ],
+  "qualified_apps": [],
+  "healing": {
+    "qualify": {
+      "status": "ESCALATED",
+      "rounds": 4,
+      "items": {
+        "qualify|2 APP_UP:PROXY_NOT_STARTED|static-landing": {
+          "next_tier": 4,
+          "probe_i": 5,
+          "last_applied": {
+            "tier": 3,
+            "tier_name": "probe",
+            "item": {
+              "key": "2 APP_UP:PROXY_NOT_STARTED",
+              "app": "static-landing",
+              "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)",
+              "syntax_errors": []
+            },
+            "at": 1790345374.764004,
+            "outcome": "APPLIED",
+            "actions": [
+              {
+                "name": "install_browser",
+                "args": {},
+                "result": "chromium installed",
+                "error": false
+              }
+            ],
+            "probe_more": false,
+            "note": "probe: general repair install_browser for 2 APP_UP:PROXY_NOT_STARTED"
+          }
+        }
+      },
+      "chain": [
+        {
+          "tier": 1,
+          "tier_name": "script",
+          "item": {
+            "key": "2 APP_UP:PROXY_NOT_STARTED",
+            "app": "static-landing",
+            "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)",
+            "syntax_errors": []
+          },
+          "at": 1790345308.6739204,
+          "outcome": "NOT_RECOGNISED"
+        },
+        {
+          "tier": 2,
+          "tier_name": "adapter",
+          "item": {
+            "key": "2 APP_UP:PROXY_NOT_STARTED",
+            "app": "static-landing",
+            "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)",
+            "syntax_errors": []
+          },
+          "at": 1790345308.6753435,
+          "outcome": "NOT_MINE"
+        },
+        {
+          "tier": 3,
+          "tier_name": "probe",
+          "item": {
+            "key": "2 APP_UP:PROXY_NOT_STARTED",
+            "app": "static-landing",
+            "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)",
+            "syntax_errors": []
+          },
+          "at": 1790345308.6753535,
+          "outcome": "APPLIED",
+          "actions": [
+            {
+              "name": "reinstall_app_overlay",
+              "args": {
+                "app": "static-landing"
+              },
+              "result": "reinstalled static-landing overlay (dashboard/skin-002)",
+              "error": false
+            }
+          ],
+          "probe_more": true,
+          "note": "probe: general repair reinstall_app_overlay for 2 APP_UP:PROXY_NOT_STARTED"
+        },
+        {
+          "tier": 3,
+          "tier_name": "probe",
+          "item": {
+            "key": "2 APP_UP:PROXY_NOT_STARTED",
+            "app": "static-landing",
+            "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)",
+            "syntax_errors": []
+          },
+          "at": 1790345341.8811975,
+          "outcome": "APPLIED",
+          "actions": [
+            {
+              "name": "chmod_launcher",
+              "args": {
+                "app": "static-landing"
+              },
+              "result": "run-ui.sh is executable",
+              "error": false
+            }
+          ],
+          "probe_more": true,
+          "note": "probe: general repair chmod_launcher for 2 APP_UP:PROXY_NOT_STARTED"
+        },
+        {
+          "tier": 3,
+          "tier_name": "probe",
+          "item": {
+            "key": "2 APP_UP:PROXY_NOT_STARTED",
+            "app": "static-landing",
+            "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)",
+            "syntax_errors": []
+          },
+          "at": 1790345374.764004,
+          "outcome": "APPLIED",
+          "actions": [
+            {
+              "name": "install_browser",
+              "args": {},
+              "result": "chromium installed",
+              "error": false
+            }
+          ],
+          "probe_more": false,
+          "note": "probe: general repair install_browser for 2 APP_UP:PROXY_NOT_STARTED"
+        },
+        {
+          "tier": 4,
+          "tier_name": "human",
+          "at": 1790345422.1661136,
+          "outcome": "ALERTED",
+          "items": [
+            {
+              "key": "2 APP_UP:PROXY_NOT_STARTED",
+              "app": "static-landing",
+              "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)",
+              "syntax_errors": []
+            }
+          ],
+          "delivered": []
+        }
+      ],
+      "alerted": [
+        "qualify|2 APP_UP:PROXY_NOT_STARTED|static-landing"
+      ]
+    }
+  }
+}

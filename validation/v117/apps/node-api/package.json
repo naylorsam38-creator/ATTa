@@ -1,0 +1,1 @@
+{ "name": "node-api", "version": "1.0.0", "description": "Small JSON API service with an HTML status page", "main": "server.js", "scripts": { "start": "node server.js" } }

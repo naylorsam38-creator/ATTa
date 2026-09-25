@@ -1,0 +1,10 @@
+{
+  "apps": {
+    "static-landing": "xt4vk29k2exq8ll4glnt1eib",
+    "node-api": "ubbzt0jcqosgwppznpmvyxsr",
+    "vite-react-dashboard": "tty4gicvr9mweydgnd4a9hcf",
+    "fastapi-service": "xsawciyxgd4r9aoyzxslw3oy",
+    "env-guestbook": "mhuznwqqa0kco7wouvktxu3c",
+    "compose-stack": "g53u4ud1ngmgugtyxszsq6ws"
+  }
+}

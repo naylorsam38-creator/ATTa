@@ -1,0 +1,12 @@
+{
+  "app": "static-landing",
+  "app_id": "static-landing",
+  "app_dir": "/home/sam/.app-builder-local/library/static-landing",
+  "target_url": "http://127.0.0.1:20010/",
+  "proxy_url": "http://127.0.0.1:8990/",
+  "ui_dir": "/home/sam/.app-builder-local/library/static-landing/.ui-capability",
+  "customer_id": "default",
+  "profile": "web",
+  "parked": true,
+  "parked_at": 1790346582.8829648
+}

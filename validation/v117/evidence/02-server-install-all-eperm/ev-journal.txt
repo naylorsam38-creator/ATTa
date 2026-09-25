@@ -1,0 +1,17 @@
+2026-09-25T13:45:05+00:00 atta-server systemd[1]: Started atta-deployd.service - ATTa Deploy Manager (deployd).
+2026-09-25T13:45:05+00:00 atta-server systemd[1]: Started app-builder-gateway.service - APP Builder web gateway.
+2026-09-25T13:45:05+00:00 atta-server systemd[1]: Starting app-builder-pipeline.service - APP Builder upload pipeline...
+2026-09-25T13:45:05+00:00 atta-server python3[2957]: deployd up: queue=/srv/app-builder/adm/state/queue incoming=/srv/app-builder/adm/incoming live=/opt/app-builder
+2026-09-25T13:45:05+00:00 atta-server systemd[1]: Started app-builder-pipeline.service - APP Builder upload pipeline.
+2026-09-25T13:45:05+00:00 atta-server systemd[1]: Starting app-builder-watcher.service - APP Builder six-stage system watcher...
+2026-09-25T13:45:05+00:00 atta-server systemd[1]: Started app-builder-watcher.service - APP Builder six-stage system watcher.
+2026-09-25T13:45:07+00:00 atta-server systemd[1]: Stopping atta-deployd.service - ATTa Deploy Manager (deployd)...
+2026-09-25T13:45:07+00:00 atta-server python3[2957]: deployd: signal 15: stopping (a running deploy is interrupted; its rollback runs on next start)
+2026-09-25T13:45:07+00:00 atta-server python3[2957]: deployd stopped
+2026-09-25T13:45:07+00:00 atta-server systemd[1]: atta-deployd.service: Deactivated successfully.
+2026-09-25T13:45:07+00:00 atta-server systemd[1]: Stopped atta-deployd.service - ATTa Deploy Manager (deployd).
+2026-09-25T13:45:07+00:00 atta-server systemd[1]: Started atta-deployd.service - ATTa Deploy Manager (deployd).
+2026-09-25T13:45:07+00:00 atta-server python3[3209]: deployd up: queue=/srv/app-builder/adm/state/queue incoming=/srv/app-builder/adm/incoming live=/opt/app-builder
+2026-09-25T14:03:42+00:00 atta-server python3[2990]: discovered 1 app(s): static-landing (static-landing: code marker)
+2026-09-25T14:04:44+00:00 atta-server python3[2990]: discovered 1 app(s): node-api (node-api: code marker)
+2026-09-25T14:05:24+00:00 atta-server python3[2990]: discovered 1 app(s): fastapi-service (fastapi-service: code marker)

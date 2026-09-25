@@ -1,0 +1,6 @@
+app-builder-gateway active
+app-builder-pipeline active
+app-builder-watcher active
+atta-deployd active
+nginx active
+docker active

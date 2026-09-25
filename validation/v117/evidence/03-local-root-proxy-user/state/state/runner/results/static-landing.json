@@ -1,0 +1,76 @@
+{
+  "app": "static-landing",
+  "number": "A-001",
+  "verdict": "BROKEN AT 2 APP_UP \u2014 PROXY_NOT_STARTED",
+  "broken_at": "2 APP_UP",
+  "code": "PROXY_NOT_STARTED",
+  "stages": {
+    "1 INSTALLED": {
+      "status": "OK"
+    },
+    "2 APP_UP": {
+      "status": "FAIL",
+      "code": "PROXY_NOT_STARTED",
+      "detail": "user atta-proxy does not exist; re-run `bash run` so the server creates it (skin proxies never run as a service user)"
+    },
+    "3 PROXY_UP": {
+      "status": "SKIPPED",
+      "code": "UPSTREAM_FAILURE"
+    },
+    "4 SKIN": {
+      "status": "SKIPPED",
+      "code": "UPSTREAM_FAILURE"
+    },
+    "5 HOOK": {
+      "status": "SKIPPED",
+      "code": "UPSTREAM_FAILURE"
+    },
+    "6 CLEAN": {
+      "status": "SKIPPED",
+      "code": "UPSTREAM_FAILURE"
+    }
+  },
+  "ts": 1790345419.787328,
+  "runner": {
+    "started": true,
+    "url": "http://127.0.0.1:20003/",
+    "part": "the app's own Dockerfile Dockerfile (builds from source)",
+    "part_detail": {
+      "kind": "dockerfile",
+      "dockerfile": "Dockerfile",
+      "context": ".",
+      "env": {},
+      "why": "the app's own Dockerfile Dockerfile (builds from source)",
+      "port_seen": 20003
+    },
+    "attempts": [
+      {
+        "n": 1,
+        "part": "the app's own Dockerfile Dockerfile (builds from source)",
+        "outcome": "UP",
+        "url": "http://127.0.0.1:20003/",
+        "notes": [],
+        "download_start_s": 0.7,
+        "boot_wait_s": 30.1
+      }
+    ],
+    "seconds": 31,
+    "kept_running": false
+  },
+  "timing": {
+    "queued_s": 0,
+    "started_at": "14:09:48",
+    "finished_at": "14:10:20",
+    "total_s": 31,
+    "start_s": 30,
+    "check_s": 0,
+    "attempts": [
+      {
+        "n": 1,
+        "outcome": "UP",
+        "download_start_s": 0.7,
+        "boot_wait_s": 30.1
+      }
+    ]
+  }
+}

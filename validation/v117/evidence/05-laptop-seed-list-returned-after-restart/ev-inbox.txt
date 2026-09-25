@@ -1,0 +1,5 @@
+total 16
+drwxr-xr-x 2 sam sam 4096 Sep 25 14:25 .
+drwxr-xr-x 8 sam sam 4096 Sep 25 14:13 ..
+-rw-r--r-- 1 sam sam 1222 Sep 25 14:12 b-20260925-141217-cbc9ea56.failed.zip
+-rw-r--r-- 1 sam sam 1555 Sep 25 14:25 b-20260925-142516-d62fe5cd.failed.zip

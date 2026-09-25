@@ -1,0 +1,12 @@
+{
+  "app": "compose-stack",
+  "app_id": "compose-stack",
+  "app_dir": "/home/sam/.app-builder-local/library/compose-stack",
+  "target_url": "http://127.0.0.1:20026/",
+  "proxy_url": "http://127.0.0.1:8451/",
+  "ui_dir": "/home/sam/.app-builder-local/library/compose-stack/.ui-capability",
+  "customer_id": "default",
+  "profile": "web",
+  "parked": true,
+  "parked_at": 1790346956.2185335
+}

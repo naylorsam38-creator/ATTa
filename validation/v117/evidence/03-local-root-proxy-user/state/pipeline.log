@@ -1,0 +1,13 @@
+discovered 1 app(s): static-landing (static-landing: code marker)
+[static-landing] qualifying
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[static-landing] BROKEN AT 2 APP_UP — PROXY_NOT_STARTED
+[static-landing] qualifying
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[static-landing] BROKEN AT 2 APP_UP — PROXY_NOT_STARTED
+[static-landing] qualifying
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[static-landing] BROKEN AT 2 APP_UP — PROXY_NOT_STARTED
+[static-landing] qualifying
+  [static-landing] attempt 1: the app's own Dockerfile Dockerfile (builds from source)
+[static-landing] BROKEN AT 2 APP_UP — PROXY_NOT_STARTED

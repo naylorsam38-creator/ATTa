@@ -1,0 +1,12 @@
+{
+  "app": "env-guestbook",
+  "app_id": "env-guestbook",
+  "app_dir": "/home/sam/.app-builder-local/library/env-guestbook",
+  "target_url": "http://127.0.0.1:20027/",
+  "proxy_url": "http://127.0.0.1:8307/",
+  "ui_dir": "/home/sam/.app-builder-local/library/env-guestbook/.ui-capability",
+  "customer_id": "default",
+  "profile": "service",
+  "parked": true,
+  "parked_at": 1790346953.491746
+}

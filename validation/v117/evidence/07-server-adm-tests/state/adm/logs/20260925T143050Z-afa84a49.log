@@ -1,0 +1,6 @@
+checked bundle version v117
+=== bundle tests (as nobody): -m unittest discover -s tests
+.............s...s.................................deployd: not taking bundles from /tmp/atta-bundle-tests-zwk0cgob/atta-v114-r2zly_za/adm/incoming: /tmp/atta-bundle-tests-zwk0cgob/atta-v114-r2zly_za/adm/incoming is writable by group or others (mode 0o777)
+......................
+FAIL bundle rejected: bundle tests failed: exit 1: .............s...s.................................deployd: not taking bundles from /tmp/atta-bundle-tests-zwk0cgob/atta-v114-r2zly_za/adm/incoming: /tmp/atta-bundle-tests-zwk0cgob/atta-v114-r2zly_za/adm/incoming is writable by group or others (mode 0o777) / ......................
+FAILED (nothing live was touched)

@@ -1,0 +1,182 @@
+From a13e141f7778651a83b986944e5e6084aedc7e23 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 25 Sep 2026 17:17:23 +0000
+Subject: [PATCH 2/4] v117.2: server-mode fixes found running real apps through
+ v117.1
+
+- proxy run/state folders: 0770 instead of 2770 (RestrictSUIDSGID refused the setgid chmod: RUNNER_EXCEPTION)
+- images are built from a copy with ordinary file modes; the library's 0640 files made nginx answer 403
+- a folder of Python modules with no packaging file is recognised as an app
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01AQwycJi8eqTo6GVPCjUZqa
+---
+ ATTa/04-deployment/app_classifier.py     |  9 ++++++-
+ ATTa/04-deployment/app_runner.py         | 32 ++++++++++++++++++++++--
+ ATTa/04-deployment/proxy_launch.py       |  4 ++-
+ ATTa/release.json                        |  5 ++--
+ ATTa/tests/test_v117_validation_fixes.py | 28 ++++++++++++++++++++-
+ 5 files changed, 71 insertions(+), 7 deletions(-)
+
+diff --git a/ATTa/04-deployment/app_classifier.py b/ATTa/04-deployment/app_classifier.py
+index 65ab031..d68b1d5 100644
+--- a/ATTa/04-deployment/app_classifier.py
++++ b/ATTa/04-deployment/app_classifier.py
+@@ -23,9 +23,16 @@ SKIP_DIRS = {'node_modules', '.git', 'vendor', 'test', 'tests', 'testing', 'docs
+ PREFERRED = ('app', 'server', 'backend', 'web', 'api', 'platform', 'src')
+ 
+ 
++# A plain Python project (modules + tests, no packaging file yet) is still code: two or more .py modules in one
++# folder count as a marker. One loose script does not (many repos carry a helper .py beside other code).
++PY_MODULES_MIN = 2
++
++
+ def _has_marker(d: Path) -> bool:
+     try:
+-        return any((d / m).is_file() for m in ROOT_MARKERS) or any(SLN.match(p.name) for p in d.iterdir() if p.is_file())
++        files = [p for p in d.iterdir() if p.is_file()]
++        return (any((d / m).is_file() for m in ROOT_MARKERS) or any(SLN.match(p.name) for p in files)
++                or sum(1 for p in files if p.suffix == ".py" and p.name != "__init__.py") >= PY_MODULES_MIN)
+     except OSError:
+         return False
+ 
+diff --git a/ATTa/04-deployment/app_runner.py b/ATTa/04-deployment/app_runner.py
+index 620343b..9713b62 100644
+--- a/ATTa/04-deployment/app_runner.py
++++ b/ATTa/04-deployment/app_runner.py
+@@ -987,6 +987,24 @@ def host_access_for(app: str, notes: list[str]) -> bool:
+     return False
+ 
+ 
++def build_source(app: str, d: Path) -> Path:
++    """A copy of the app to build images from, with ordinary file modes (files 0644, executables 0755, folders
++    0755). On a server the library is 0640/0750 (UMask 0027, o-rwx) and a Dockerfile's COPY keeps those modes in
++    the image, so a non-root process in the container (nginx's worker, a node user) cannot read its own files
++    and answers 403. The library itself stays locked down; only this build copy is normalised."""
++    dst = WORK / safe_id(app) / "build-src"
++    if dst.exists():
++        shutil.rmtree(dst)
++    safe_copy.copytree(d, dst, symlinks=True, ignore=shutil.ignore_patterns(".git", ".ui-capability"))
++    for dirpath, dirnames, filenames in os.walk(dst):
++        os.chmod(dirpath, 0o755)
++        for n in filenames:
++            f = Path(dirpath) / n
++            if not f.is_symlink():
++                os.chmod(f, 0o755 if os.stat(f).st_mode & 0o100 else 0o644)
++    return dst
++
++
+ def _render_compose(app: str, d: Path, part: dict, notes: list[str]) -> tuple[bool, str]:
+     f = d / part["file"]
+     _ensure_env_file(d, f, notes)
+@@ -1112,6 +1130,15 @@ def _render_compose(app: str, d: Path, part: dict, notes: list[str]) -> tuple[bo
+     cfg["name"] = project(app)
+     wd = WORK / safe_id(app); wd.mkdir(parents=True, exist_ok=True)
+     # v115: it holds the app's approved customer secrets, so only the runner (root) may read it.
++    # Services built from the app's source build from the normalised copy (see build_source).
++    if any(isinstance(sv, dict) and sv.get("build") for sv in (cfg.get("services") or {}).values()):
++        src = build_source(app, d)
++        for sv in (cfg.get("services") or {}).values():
++            b = sv.get("build") if isinstance(sv, dict) else None
++            if isinstance(b, dict) and b.get("context"):
++                c = Path(b["context"])
++                if c.is_absolute() and (c == d or d in c.parents):
++                    b["context"] = str(src / c.relative_to(d))
+     rendered = wd / "compose.rendered.json"
+     rendered.unlink(missing_ok=True)
+     fd = os.open(rendered, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+@@ -1153,8 +1180,9 @@ def _start_inner(app: str, d: Path, part: dict, notes: list[str]) -> tuple[bool,
+     image = part.get("image")
+     if part["kind"] == "dockerfile":
+         image = f"atta-local/{safe_id(app)}:latest"
+-        ctx = d / part.get("context", ".")
+-        rc, out = sh(["docker", "build", "-t", image, "-f", str(d / part["dockerfile"]), str(ctx)], timeout=BUILD_TIMEOUT)
++        src = build_source(app, d)
++        ctx = src / part.get("context", ".")
++        rc, out = sh(["docker", "build", "-t", image, "-f", str(src / part["dockerfile"]), str(ctx)], timeout=BUILD_TIMEOUT)
+         if rc != 0:
+             return False, out[-6000:]
+     else:
+diff --git a/ATTa/04-deployment/proxy_launch.py b/ATTa/04-deployment/proxy_launch.py
+index d6242fe..daca5f0 100644
+--- a/ATTa/04-deployment/proxy_launch.py
++++ b/ATTa/04-deployment/proxy_launch.py
+@@ -124,7 +124,9 @@ def _prepare(app: str, ui_dir: Path) -> Path:
+             except PermissionError:
+                 raise LaunchError(f"cannot hand {d} to group {grp.getgrgid(gid).gr_name}; "
+                                   f"the service user must be in that group (bootstrap.sh sets this)")
+-            os.chmod(d, 0o2770)
++            # 0770, not 2770: the services run with RestrictSUIDSGID=yes, which refuses a chmod that sets setgid.
++            # Not needed either: the folder's group is the proxy user's own group, so what it writes stays shared.
++            os.chmod(d, 0o770)
+     return dest
+ 
+ 
+diff --git a/ATTa/release.json b/ATTa/release.json
+index 715e02c..b1ad711 100644
+--- a/ATTa/release.json
++++ b/ATTa/release.json
+@@ -1,5 +1,5 @@
+ {
+-  "version": "v117.1",
++  "version": "v117.2",
+   "entrypoint": "run",
+   "state_version": 1,
+   "features": [
+@@ -14,6 +14,7 @@
+     "v116_services_unprivileged_overlay_integrity_https_default_egress_ssrf_throttling_pinned_deps_deploy_test_gate",
+     "health_identity_v1",
+     "v117_deploy_transaction_state_machine_exact_rollback_stoppable_deploys_one_at_a_time_env_as_data_https_rendered_by_atta",
+-    "v117_1_validation_fixes_git_retry_setgid_copy_resume_heals_browser_deps_adm_test_gate_owner_reupload_local_root_seed_once"
++    "v117_1_validation_fixes_git_retry_setgid_copy_resume_heals_browser_deps_adm_test_gate_owner_reupload_local_root_seed_once",
++    "v117_2_proxy_dirs_without_setgid_builds_from_normalised_copy_plain_python_projects_discovered"
+   ]
+ }
+diff --git a/ATTa/tests/test_v117_validation_fixes.py b/ATTa/tests/test_v117_validation_fixes.py
+index 47f2510..e81d084 100644
+--- a/ATTa/tests/test_v117_validation_fixes.py
++++ b/ATTa/tests/test_v117_validation_fixes.py
+@@ -16,7 +16,8 @@ for p in (str(DEP), str(DEP / "deployd")):
+     if p not in sys.path:
+         sys.path.insert(0, p)
+ 
+-import app_owners, builds, failure_keys, known_fixes, pipeline, proxy_launch, repair_actions, safe_copy  # noqa: E402
++import app_classifier, app_owners, app_runner, builds, failure_keys, known_fixes, pipeline, proxy_launch  # noqa: E402
++import repair_actions, safe_copy  # noqa: E402
+ 
+ # The exact error a seed clone produced on the validation server (git puts "fatal:" on its own line).
+ GIT_ERR = ("['git', '-c', 'protocol.allow=never', 'clone', '--depth', '1', '--', 'https://github.com/moby/moby.git', "
+@@ -159,5 +160,30 @@ class OwnerReupload(unittest.TestCase):
+         self.assertTrue(builds.get(b3)["refused"])
+ 
+ 
++class ServerBuildsReadTheirOwnFiles(unittest.TestCase):
++    def test_build_copy_has_ordinary_modes_and_skips_git(self):
++        app = TMP / "lib-app"; (app / "public").mkdir(parents=True); (app / ".git").mkdir()
++        (app / "public" / "index.html").write_text("<h1>x</h1>"); (app / "run.sh").write_text("#!/bin/sh\n")
++        os.chmod(app / "public" / "index.html", 0o640); os.chmod(app / "run.sh", 0o750)
++        os.chmod(app / "public", 0o2750)
++        src = app_runner.build_source("lib-app", app)
++        self.assertEqual(stat.S_IMODE(os.stat(src / "public" / "index.html").st_mode), 0o644)
++        self.assertEqual(stat.S_IMODE(os.stat(src / "run.sh").st_mode), 0o755)
++        self.assertEqual(stat.S_IMODE(os.stat(src / "public").st_mode), 0o755)
++        self.assertFalse((src / ".git").exists())
++        self.assertEqual(stat.S_IMODE(os.stat(app / "public" / "index.html").st_mode), 0o640)   # library untouched
++
++
++class PlainPythonProjectsAreApps(unittest.TestCase):
++    def test_modules_without_a_packaging_file_are_code(self):
++        d = TMP / "py-proj"; d.mkdir()
++        (d / "controller.py").write_text("x = 1\n"); (d / "test_controller.py").write_text("import controller\n")
++        self.assertTrue(app_classifier._has_marker(d))
++
++    def test_one_loose_script_is_not(self):
++        d = TMP / "one-script"; d.mkdir(); (d / "helper.py").write_text("print(1)\n")
++        self.assertFalse(app_classifier._has_marker(d))
++
++
+ if __name__ == "__main__":
+     unittest.main()
+-- 
+2.43.0
+
