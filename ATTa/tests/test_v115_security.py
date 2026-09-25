@@ -446,6 +446,11 @@ def _have_compose():
 
 
 HAVE_COMPOSE = _have_compose()
+try:
+    import yaml  # noqa: F401  (bootstrap.sh installs it on a server; the YAML fallback path needs it)
+    HAVE_YAML = True
+except ImportError:
+    HAVE_YAML = False
 
 
 class _SecretsWorld(unittest.TestCase):
@@ -735,6 +740,7 @@ class RealComposeEndToEnd(_SecretsWorld):
         ok, err, _, _ = self.render("services:\n  web:\n    image: nginx:1\n    extends:\n      file: base.yml\n      service: b\n")
         self.assertFalse(ok); self.assertIn(cg.REFUSED_MARK, err)
 
+    @unittest.skipUnless(HAVE_YAML, "the include-file check itself is the YAML check (PyYAML)")
     def test_include_from_outside_the_app_is_refused(self):
         outside = self.t / "outside.yml"; outside.write_text("services:\n  x:\n    image: busybox\n")
         ok, err, _, _ = self.render(f"include:\n  - {outside}\nservices:\n  web:\n    image: nginx:1\n")
@@ -751,7 +757,7 @@ class RealComposeEndToEnd(_SecretsWorld):
         finally:
             cg.raw_env_files = real
 
-@unittest.skipUnless(HAVE_COMPOSE, "docker compose not installed")
+@unittest.skipUnless(HAVE_COMPOSE and HAVE_YAML, "docker compose or PyYAML not installed")
 class OlderComposeWithoutNoEnvResolution(RealComposeEndToEnd):
     """The same guarantees on a compose too old for `config --no-env-resolution` (the YAML fallback)."""
     def setUp(self):

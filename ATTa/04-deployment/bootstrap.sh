@@ -264,6 +264,10 @@ fi
 export PLAYWRIGHT_BROWSERS_PATH="$ATTA_BROWSERS"
 python3 -m playwright install chromium
 chmod -R a+rX "$ATTA_BROWSERS"
+# v116: compose_guard reads every app's compose YAML (include:/extends: and their env files) before Docker
+# does; without PyYAML an older Docker Compose leaves it nothing to check with and apps are refused.
+python3 -c 'import yaml' >/dev/null 2>&1 || pip_install pyyaml
+python3 -c 'import yaml' >/dev/null 2>&1 || { echo "DEPLOYMENT FAILED: PyYAML could not be installed" >&2; exit 1; }
 # Self-healing LLM tier uses the official Anthropic SDK.
 python3 -c 'import anthropic' >/dev/null 2>&1 || pip_install anthropic
 
