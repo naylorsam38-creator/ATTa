@@ -1,0 +1,7 @@
+services:
+  guestbook:
+    build: .
+    ports:
+      - "4000:4000"
+    environment:
+      GUESTBOOK_SECRET: ${GUESTBOOK_SECRET:?GUESTBOOK_SECRET must be set}
