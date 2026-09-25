@@ -1,5 +1,3 @@
-detect_aws(){ TOKEN=$(curl -fsS -m2 -X PUT http://169.254.169.254/latest/api/token -H "X-aws-ec2-metadata-token-ttl-seconds:21600" 2>/dev/null||true); [ -n "$TOKEN" ] && echo "AWS detected"; }
-first_boot(){ [ -f .initialized ]||touch .initialized; }
 #!/usr/bin/env bash
 # ---------------------------------------------------------------------------
 # One command. Turn the machine on, open a terminal here, type:  bash run
@@ -161,6 +159,3 @@ case "$CMD" in
   *) say "Usage: bash run [start|stop|status]"; exit 1 ;;
 esac
 
-
-detect_aws || true
-first_boot
