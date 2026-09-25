@@ -1,0 +1,93 @@
+# App catalogue changelog
+
+Written by catalogue_sync.py. One section per run that changed something.
+
+## 2026-09-24 03:37:53Z
+
+- ADDED agno: skin=developer_tools (MAPPED), profile=web (NEEDS_REVIEW), deployable=False
+- ADDED apache airflow: skin=project_management (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED appsmith: skin=form_builder_and_survey (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED archivebox: skin=None (NEEDS_REVIEW), profile=web (MAPPED), deployable=True
+- ADDED billionmail: skin=email_client (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED botpress: skin=helpdesk_ticketing (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED clearflask: skin=helpdesk_ticketing (MAPPED), profile=web (NEEDS_REVIEW), deployable=False
+- ADDED codex: skin=None (BLOCKED), profile=None (NEEDS_REVIEW), deployable=None
+- ADDED colanode: skin=team_chat (MAPPED), profile=web (MAPPED), deployable=False
+- ADDED coolify: skin=devops_console (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED docker moby: skin=devops_console (MAPPED), profile=system (MAPPED), deployable=True
+- ADDED flarum: skin=social_feed (MAPPED), profile=web (NEEDS_REVIEW), deployable=False
+- ADDED formbee: skin=form_builder_and_survey (MAPPED), profile=web (NEEDS_REVIEW), deployable=False
+- ADDED frp: skin=devops_console (MAPPED), profile=web (MAPPED), deployable=False
+- ADDED ghost: skin=note_taking (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED gitea: skin=None (NEEDS_REVIEW), profile=web (MAPPED), deployable=True
+- ADDED grafana: skin=dashboard (MAPPED), profile=service (NEEDS_REVIEW), deployable=True
+- ADDED graphite: skin=project_management (MAPPED), profile=web (MAPPED), deployable=False
+- ADDED krayin crm: skin=crm (MAPPED), profile=web (MAPPED), deployable=False
+- ADDED langflow: skin=online_course_lms (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED medplum: skin=appointment_booking (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED memos: skin=note_taking (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED next ai draw io: skin=collaborative_document_editor (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED open design: skin=collaborative_document_editor (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED opencart: skin=e_commerce_storefront (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED opencloud: skin=file_storage_and_sync (MAPPED), profile=service (NEEDS_REVIEW), deployable=True
+- ADDED plane: skin=project_management (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED polar: skin=e_commerce_storefront (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED stride: skin=project_management (MAPPED), profile=web (NEEDS_REVIEW), deployable=False
+- ADDED supabase: skin=dashboard (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED super productivity: skin=todo_list (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED tidb: skin=accounting_ledger (MAPPED), profile=service (MAPPED), deployable=True
+- ADDED traefik: skin=devops_console (MAPPED), profile=web (MAPPED), deployable=True
+- ADDED umami: skin=dashboard (MAPPED), profile=web (MAPPED), deployable=True
+
+## 2026-09-24 03:52:54Z
+
+- CHANGED agno.profile: 'web' -> 'package'
+- CHANGED agno.root: None -> 'libs/agno'
+- CHANGED agno.status: 'NEEDS_REVIEW' -> 'MAPPED'
+- CHANGED apache airflow.root: None -> '.'
+- CHANGED appsmith.root: None -> '.'
+- CHANGED archivebox.skin_category: None -> 'file_storage_and_sync'
+- CHANGED archivebox.skin_source: None -> 'auto'
+- CHANGED archivebox.root: None -> '.'
+- CHANGED archivebox.status: 'NEEDS_REVIEW' -> 'MAPPED'
+- CHANGED billionmail.root: None -> '.'
+- CHANGED botpress.root: None -> '.'
+- CHANGED clearflask.root: None -> '.'
+- CHANGED clearflask.status: 'NEEDS_REVIEW' -> 'MAPPED'
+- UPDATED codex: evidence refreshed
+- CHANGED colanode.root: None -> '.'
+- CHANGED coolify.root: None -> '.'
+- CHANGED docker moby.root: None -> '.'
+- CHANGED flarum.root: None -> '.'
+- CHANGED flarum.status: 'NEEDS_REVIEW' -> 'MAPPED'
+- CHANGED formbee.root: None -> 'server'
+- CHANGED formbee.status: 'NEEDS_REVIEW' -> 'MAPPED'
+- CHANGED frp.root: None -> '.'
+- CHANGED ghost.root: None -> '.'
+- CHANGED gitea.skin_category: None -> 'developer_tools'
+- CHANGED gitea.skin_source: None -> 'auto'
+- CHANGED gitea.root: None -> '.'
+- CHANGED gitea.status: 'NEEDS_REVIEW' -> 'MAPPED'
+- CHANGED grafana.profile: 'service' -> 'web'
+- CHANGED grafana.root: None -> '.'
+- CHANGED grafana.status: 'NEEDS_REVIEW' -> 'MAPPED'
+- CHANGED graphite.root: None -> '.'
+- CHANGED krayin crm.root: None -> '.'
+- CHANGED langflow.root: None -> '.'
+- CHANGED medplum.root: None -> '.'
+- CHANGED memos.root: None -> '.'
+- CHANGED next ai draw io.root: None -> '.'
+- CHANGED open design.root: None -> '.'
+- CHANGED opencart.root: None -> '.'
+- CHANGED opencloud.root: None -> '.'
+- CHANGED opencloud.status: 'NEEDS_REVIEW' -> 'MAPPED'
+- CHANGED plane.root: None -> '.'
+- CHANGED polar.root: None -> '.'
+- CHANGED stride.profile: 'web' -> 'system'
+- CHANGED stride.root: None -> '.'
+- CHANGED stride.status: 'NEEDS_REVIEW' -> 'MAPPED'
+- CHANGED supabase.root: None -> '.'
+- CHANGED super productivity.root: None -> '.'
+- CHANGED tidb.root: None -> '.'
+- CHANGED traefik.root: None -> '.'
+- CHANGED umami.root: None -> '.'

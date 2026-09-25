@@ -1,0 +1,7 @@
+# v116: exact versions of the Python packages bootstrap.sh installs (never "latest").
+# Checked to install on Python 3.9 (Amazon Linux 2023), 3.12 and 3.13, on x86_64 and aarch64:
+#   playwright 1.61+ and anthropic 1.x no longer support Python 3.9, so these are the newest that do.
+# A new version is a deliberate edit here, re-checked with docs/SECURITY-V116.md "Changing a pinned version".
+playwright==1.60.0
+anthropic==0.125.0
+pyyaml==6.0.3

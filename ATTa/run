@@ -1,0 +1,162 @@
+#!/usr/bin/env bash
+# ---------------------------------------------------------------------------
+# One command. Turn the machine on, open a terminal here, type:  bash run
+#
+#   - On a real Linux server (EC2 / systemd, as root): runs the full deploy
+#     via bootstrap.sh — installs services, nginx, browser stage, everything.
+#   - On a laptop (macOS / Windows-WSL / non-root Linux): brings up the working
+#     LOCAL instance you can log into and upload to in a browser, at a
+#     127.0.0.1 URL, with the login password generated for you.
+#
+# It generates the secrets for you, so nothing stalls waiting on a password.
+#
+# HONEST LIMITATION (no script can change this): a public, live URL needs the
+# actual AWS box — a domain, a TLS certificate, and the machine reachable on
+# the internet. Those do not live in a file. On a laptop this gives you the
+# real thing running locally; it does not pretend to be a public deployment.
+# ---------------------------------------------------------------------------
+set -euo pipefail
+
+HERE="$(cd "$(dirname "$0")" && pwd)"
+DEPLOY="$HERE/04-deployment"
+FRONT_SRC="$HERE/02-front-door/front-door.html"
+CMD="${1:-start}"
+
+say(){ printf '%s\n' "$*"; }
+line(){ printf '%s\n' "------------------------------------------------------------"; }
+
+need_python(){
+  if ! command -v python3 >/dev/null 2>&1; then
+    say "python3 is not installed. Install Python 3, then run this again."
+    say "  macOS:    brew install python"
+    say "  Ubuntu:   sudo apt-get install -y python3"
+    exit 1
+  fi
+}
+
+# --- Full server deploy path -------------------------------------------------
+is_systemd_linux(){ [ "$(uname -s)" = "Linux" ] && [ -d /run/systemd/system ]; }
+
+full_deploy(){
+  if [ "$(id -u)" -ne 0 ]; then
+    if command -v sudo >/dev/null 2>&1; then
+      say "This is a Linux server — running the full deploy (needs root)."
+      exec sudo -E bash "$0" "$@"
+    fi
+    say "Full server deploy needs root. Re-run as:  sudo bash run"
+    exit 1
+  fi
+  line; say "FULL SERVER DEPLOY (bootstrap.sh)"; line
+  bash "$DEPLOY/bootstrap.sh"
+  # bootstrap.sh prints DEPLOYMENT VERIFIED and the login file location itself.
+}
+
+# --- Local laptop instance ---------------------------------------------------
+local_root(){ printf '%s' "${APP_BUILDER_ROOT:-$HOME/.app-builder-local}"; }
+
+ensure_env(){
+  local root; root="$(local_root)"
+  mkdir -p "$root"
+  # Older local instances ran with no login; replace that env so local matches the server (real accounts).
+  if [ -f "$root/.env" ] && ! grep -q '^APP_BUILDER_SESSION_SECRET=' "$root/.env"; then rm -f "$root/.env"; fi
+  if [ ! -f "$root/.env" ]; then
+    umask 077
+    local secret; secret="$(python3 -c 'import secrets;print(secrets.token_urlsafe(48))')"
+    # Browser check is on, as on the server: without Playwright a build ends NOT_QUALIFIED
+    # rather than falsely QUALIFIED. Install: python3 -m pip install playwright && python3 -m playwright install chromium
+    cat >"$root/.env" <<EOF
+APP_BUILDER_ROOT=$root
+APP_BUILDER_HOST=127.0.0.1
+APP_BUILDER_PORT=8787
+APP_BUILDER_SESSION_SECRET=$secret
+APP_BUILDER_BROWSER_CHECK=true
+APP_BUILDER_WATCHER_INTERVAL=300
+APP_BUILDER_TEST_ACCOUNTS=10
+COOLIFY_URL=
+COOLIFY_TOKEN=
+EOF
+    chmod 600 "$root/.env"
+  fi
+  # export every var from the env file into this shell
+  set -a; . "$root/.env"; set +a
+}
+
+start_local(){
+  need_python
+  ensure_env
+  local root; root="$(local_root)"
+  mkdir -p "$root/inbox" "$root/state" "$root/state/apps"
+  python3 "$DEPLOY/accounts.py" init
+  [ -f "$FRONT_SRC" ] && cp -f "$FRONT_SRC" "$root/front-door.html"
+  [ -f "$DEPLOY/upstream_apps.json" ] && cp -f "$DEPLOY/upstream_apps.json" "$root/upstream_apps.json"
+
+  # already up?
+  if curl -fsS "http://127.0.0.1:${APP_BUILDER_PORT}/health" >/dev/null 2>&1; then
+    say "Already running."
+  else
+    # exec: the background subshell BECOMES the service, so the saved pid is the service's own
+    # (previously it was a wrapper shell, and `run stop` left the real service running).
+    ( cd "$root" && exec nohup python3 "$DEPLOY/gateway.py"  >"$root/gateway.log"  2>&1 </dev/null ) & echo $! >"$root/gateway.pid"
+    ( cd "$root" && exec nohup python3 "$DEPLOY/pipeline.py" >"$root/pipeline.log" 2>&1 </dev/null ) & echo $! >"$root/pipeline.pid"
+    local ok=""
+    for _ in $(seq 1 30); do
+      if curl -fsS "http://127.0.0.1:${APP_BUILDER_PORT}/health" >/dev/null 2>&1; then ok=1; break; fi
+      sleep 1
+    done
+    if [ -z "$ok" ]; then
+      say "Gateway did not come up. Last lines of gateway.log:"; tail -n 20 "$root/gateway.log" || true
+      exit 1
+    fi
+  fi
+
+  line
+  say "RUNNING (local instance)"
+  line
+  say "  Open:      http://127.0.0.1:${APP_BUILDER_PORT}/"
+  say "  Logins:    $root/TEST_ACCOUNTS.txt   (admin + tester01..tester10)"
+  say "  Stop it any time with:   bash run stop"
+  line
+  say "Done for a laptop. NOT done for the public internet — a live public URL"
+  say "still needs the AWS server (domain + TLS + reachable host). Run this same"
+  say "command on that server and it will do the full deploy automatically."
+}
+
+stop_local(){
+  local root; root="$(local_root)"
+  ensure_env >/dev/null 2>&1 || true
+  local port="${APP_BUILDER_PORT:-8787}"
+  for svc in gateway pipeline; do
+    if [ -f "$root/$svc.pid" ]; then
+      local pid; pid="$(cat "$root/$svc.pid")"
+      kill "$pid" 2>/dev/null || true
+      for _ in $(seq 1 10); do kill -0 "$pid" 2>/dev/null || break; sleep 0.3; done
+      kill -9 "$pid" 2>/dev/null || true
+      rm -f "$root/$svc.pid"
+    fi
+  done
+  # Wait until the gateway port stops answering before returning.
+  for _ in $(seq 1 15); do
+    curl -fsS "http://127.0.0.1:${port}/health" >/dev/null 2>&1 || { say "Stopped."; return 0; }
+    sleep 0.3
+  done
+  say "NOT STOPPED: something still answers on port ${port}. Check: ss -ltnp | grep ${port}"
+  return 1
+}
+
+status_local(){
+  local root; root="$(local_root)"; ensure_env >/dev/null 2>&1 || true
+  if curl -fsS "http://127.0.0.1:${APP_BUILDER_PORT:-8787}/health" >/dev/null 2>&1; then
+    say "Local instance: UP  (http://127.0.0.1:${APP_BUILDER_PORT:-8787}/)"
+  else
+    say "Local instance: down.  Start it with:  bash run"
+  fi
+}
+
+case "$CMD" in
+  stop)   stop_local ;;
+  status) status_local ;;
+  start|"")
+    if is_systemd_linux; then full_deploy "$@"; else start_local; fi ;;
+  *) say "Usage: bash run [start|stop|status]"; exit 1 ;;
+esac
+

@@ -1,0 +1,248 @@
+# bootstrap-lib.sh — functions bootstrap.sh uses (v114.1). Sourced, never run on its own.
+# Kept separate so tests/ can exercise each step without root, systemd or a real server.
+
+# ===================== CONFIG — edit here =====================
+# Docker Compose used ONLY when the package manager has none. Pinned and checked: a new version is a
+# deliberate edit of these three lines (hashes from the release's checksums.txt), never "latest".
+ATTA_COMPOSE_VERSION="${ATTA_COMPOSE_VERSION:-v5.5.1}"
+ATTA_COMPOSE_SHA256_X86_64="db1889184726840f75c4f9c001048430d4f25b3be3cb084d3ddd762bc0aed576"
+ATTA_COMPOSE_SHA256_AARCH64="732e3a84c1a0f67256ce80bc2598a24546b10ca05f9faa97efceb1171ece2ef7"
+# Code releases: each run of bootstrap.sh installs into a fresh folder here, and $APP becomes a
+# symlink to it. How many to keep (the live one is never removed).
+ATTA_KEEP_CODE_RELEASES="${ATTA_KEEP_CODE_RELEASES:-3}"
+# ==============================================================
+
+atta_arch() {
+  # Supported machine types, mapped explicitly (never pasted into a URL unchecked).
+  case "${ATTA_UNAME_M:-$(uname -m)}" in
+    x86_64|amd64)  echo x86_64 ;;
+    aarch64|arm64) echo aarch64 ;;
+    *) echo "unsupported machine type: ${ATTA_UNAME_M:-$(uname -m)} (supported: x86_64, aarch64)" >&2; return 1 ;;
+  esac
+}
+
+atta_compose_sha() {
+  case "$1" in
+    x86_64)  echo "$ATTA_COMPOSE_SHA256_X86_64" ;;
+    aarch64) echo "$ATTA_COMPOSE_SHA256_AARCH64" ;;
+    *) return 1 ;;
+  esac
+}
+
+atta_verify_install() {
+  # atta_verify_install FILE SHA256 DEST — installs FILE at DEST only if its hash matches.
+  local file="$1" want="$2" dest="$3" got
+  [ -n "$want" ] || { echo "no expected checksum given; refusing to install $dest" >&2; return 1; }
+  got="$(sha256sum "$file" | awk '{print $1}')"
+  if [ "$got" != "$want" ]; then
+    echo "CHECKSUM MISMATCH for $(basename "$dest"): expected $want, got $got. Not installed." >&2
+    rm -f "$file"; return 1
+  fi
+  mkdir -p "$(dirname "$dest")"
+  if [ "$(id -u)" = 0 ]; then install -o root -g root -m 0755 "$file" "$dest"; else install -m 0755 "$file" "$dest"; fi
+}
+
+atta_install_compose() {
+  # atta_install_compose DEST — pinned download over HTTPS only, checksum verified before install.
+  local dest="${1:-/usr/local/lib/docker/cli-plugins/docker-compose}" arch sha tmp url
+  arch="$(atta_arch)" || return 1
+  sha="$(atta_compose_sha "$arch")" || return 1
+  url="https://github.com/docker/compose/releases/download/${ATTA_COMPOSE_VERSION}/docker-compose-linux-${arch}"
+  tmp="$(mktemp)"
+  if ! curl --fail --silent --show-error --location --proto '=https' --proto-redir '=https' --tlsv1.2 \
+       --max-time 300 -o "$tmp" "$url"; then
+    rm -f "$tmp"; echo "could not download Docker Compose ${ATTA_COMPOSE_VERSION}" >&2; return 1
+  fi
+  atta_verify_install "$tmp" "$sha" "$dest"; local rc=$?
+  rm -f "$tmp"; return $rc
+}
+
+# v116: the services' own users. Only deployd (the installer itself) and Docker stay root.
+ATTA_GROUP="${ATTA_GROUP:-atta}"                   # shared by the gateway and the runner (inbox, build records)
+ATTA_WEB_USER="${ATTA_WEB_USER:-atta-web}"         # the web gateway: no Docker, no shell
+ATTA_RUN_USER="${ATTA_RUN_USER:-atta-run}"         # pipeline + watcher: drives Docker, so Docker-group
+ATTA_PROXY_USER="${ATTA_PROXY_USER:-atta-proxy}"   # skin proxies: nothing but its own copy of the overlay
+ATTA_RUN_HOME="${ATTA_RUN_HOME:-/var/lib/atta-run}"
+ATTA_BROWSERS="${ATTA_BROWSERS:-/opt/ms-playwright}"   # Playwright's Chromium, readable by the runner
+
+atta_ensure_users() {
+  # atta_ensure_users — create the service group and users (idempotent). Docker group membership is added
+  # by atta_join_docker once Docker is installed.
+  getent group "$ATTA_GROUP" >/dev/null || groupadd --system "$ATTA_GROUP"
+  getent passwd "$ATTA_PROXY_USER" >/dev/null || \
+    useradd --system --no-create-home --home-dir /nonexistent --shell /usr/sbin/nologin "$ATTA_PROXY_USER"
+  getent passwd "$ATTA_WEB_USER" >/dev/null || \
+    useradd --system --no-create-home --home-dir /nonexistent --shell /usr/sbin/nologin "$ATTA_WEB_USER"
+  getent passwd "$ATTA_RUN_USER" >/dev/null || \
+    useradd --system --create-home --home-dir "$ATTA_RUN_HOME" --shell /usr/sbin/nologin "$ATTA_RUN_USER"
+  usermod -aG "$ATTA_GROUP" "$ATTA_WEB_USER"
+  # the runner hands each proxy its run/ and state/ folders, so it is in the proxy user's group
+  usermod -aG "$ATTA_GROUP,$ATTA_PROXY_USER" "$ATTA_RUN_USER"
+  mkdir -p "$ATTA_RUN_HOME"; chown "$ATTA_RUN_USER:$ATTA_RUN_USER" "$ATTA_RUN_HOME"; chmod 700 "$ATTA_RUN_HOME"
+}
+
+atta_join_docker() {
+  getent group docker >/dev/null || groupadd --system docker
+  usermod -aG docker "$ATTA_RUN_USER"
+}
+
+atta_secure_state() {
+  # atta_secure_state ROOT — every run: who owns what under the data folder (v116 layout).
+  #   ROOT            root:atta 3771  services create/replace their OWN files here (catalogue, package/...);
+  #                                   the sticky bit stops anyone but root deleting or renaming another's
+  #                                   (.env above all); passable, not listable, by the proxy user
+  #   .env, TEST_ACCOUNTS.txt   root 0600 (systemd reads .env as root before starting a service)
+  #   inbox, state/{builds,alerts,front-door-choices}  runner:atta 2770  the gateway writes, the runner works
+  #   state/users.json          web:atta 0640  the gateway may disable accounts; the runner reads roles
+  #   state/gateway             web:atta 2770  login throttling, revoked sessions
+  #   state/**, library, package, work, catalogue files  runner:atta, group-readable, nothing for others
+  #   adm/requests              runner 0700    system-update requests handed to deployd (which re-checks admin)
+  # App data written by containers under state/runner/work/<app>/data/ keeps its owners.
+  local root="$1" f d
+  local as_root=0; [ "$(id -u)" = 0 ] && getent passwd "$ATTA_RUN_USER" >/dev/null && as_root=1
+  local run="$ATTA_RUN_USER" web="$ATTA_WEB_USER" g="$ATTA_GROUP"
+  mkdir -p "$root"/{inbox,state,state/builds,state/alerts,state/front-door-choices,state/gateway,state/apps,state/runner,library,package,work,proxy,adm/requests}
+  if [ "$as_root" = 1 ]; then
+    chown root:"$g" "$root"; chmod 3771 "$root"   # sticky + setgid: new entries join the shared group
+    for d in state library package work quarantine inbox; do
+      [ -e "$root/$d" ] || continue
+      find "$root/$d" -path "$root/state/runner/work/*/data/*" -prune -o -path "$root/state/gateway" -prune \
+           -o \( -type f -o -type d \) -exec chown -h "$run:$g" {} +
+      find "$root/$d" -path "$root/state/runner/work/*/data/*" -prune -o -type d -exec chmod g+rxs,o-rwx {} + \
+           -o -type f -exec chmod g+r,o-rwx {} +
+    done
+    for f in app_catalogue.json upstream_apps.json targets.json coolify_resources.json; do
+      [ -f "$root/$f" ] && { chown "$run:$g" "$root/$f"; chmod 640 "$root/$f"; }
+    done
+    for d in inbox state/builds state/alerts state/front-door-choices; do chmod 2770 "$root/$d"; done
+    chown -R "$web:$g" "$root/state/gateway"; chmod 2770 "$root/state/gateway"
+    [ -f "$root/state/users.json" ] && { chown "$web:$g" "$root/state/users.json"; chmod 640 "$root/state/users.json"; }
+    chown "$run:$g" "$root/proxy"; chmod 755 "$root/proxy"
+    chown root:root "$root/adm"; chmod 755 "$root/adm"
+    chown "$run:$run" "$root/adm/requests"; chmod 700 "$root/adm/requests"
+    # the pipeline replaces it from an admin's ATTa bundle; everyone reads it
+    [ -f "$root/front-door.html" ] && { chown "$run:$g" "$root/front-door.html"; chmod 644 "$root/front-door.html"; }
+    [ -f "$root/state/trusted_apps.json" ] && { chown root:root "$root/state/trusted_apps.json"; chmod 644 "$root/state/trusted_apps.json"; }
+  fi
+  for f in "$root/.env" "$root/TEST_ACCOUNTS.txt"; do
+    [ -f "$f" ] || continue
+    [ "$(id -u)" = 0 ] && chown root:root "$f"
+    chmod 600 "$f"
+  done
+}
+
+atta_install_proxy_runner() {
+  # atta_install_proxy_runner SRC — the root-owned proxy wrapper and the ONE sudoers rule that lets the runner
+  # start/stop skin proxies as the proxy user (a user with fewer rights than the runner itself).
+  local src="$1" rule
+  install -d -o root -g root -m 0755 /usr/local/lib/atta
+  install -o root -g root -m 0755 "$src" /usr/local/lib/atta/run-proxy
+  rule="$(mktemp)"
+  printf '%s\n' "# v116 (ATTa): the runner may start and stop skin proxies as $ATTA_PROXY_USER. Nothing else." \
+    "Defaults:$ATTA_RUN_USER !requiretty" \
+    "$ATTA_RUN_USER ALL=($ATTA_PROXY_USER) NOPASSWD: /usr/local/lib/atta/run-proxy" > "$rule"
+  visudo -cf "$rule" >/dev/null || { rm -f "$rule"; echo "sudoers rule for the proxy runner is invalid" >&2; return 1; }
+  install -o root -g root -m 0440 "$rule" /etc/sudoers.d/atta-proxy; rm -f "$rule"
+}
+
+atta_env_run() {
+  # atta_env_run ENVFILE KEYS -- command... — run a command with KEYS read from ENVFILE as data.
+  local envf="$1" keys="$2"; shift 2; [ "${1:-}" = "--" ] && shift
+  if [ -f "$envf" ]; then
+    python3 "$ATTA_LIB_DIR/envfile.py" run "$envf" --keys "$keys" -- "$@"
+  else
+    "$@"
+  fi
+}
+
+atta_stage_code() {
+  # atta_stage_code SRC RELEASES — copy SRC into a fresh release folder and check it. Prints the folder.
+  # Nothing live is touched; atta_activate_code switches to it. Nothing from an older release is
+  # carried over, so files deleted upstream really disappear.
+  local src="$1" rels="$2" ver stamp new bad rj
+  rj="$src/../release.json"; [ -f "$rj" ] || rj="$src/release.json"   # a bundle, or an ADM backup of the live folder
+  ver="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("version","unknown"))' "$rj" 2>/dev/null || echo unknown)"
+  ver="$(printf '%s' "$ver" | tr -c 'A-Za-z0-9._-' '_')"
+  stamp="$(date -u +%Y%m%dT%H%M%SZ)"
+  mkdir -p "$rels"
+  find "$rels" -maxdepth 1 -name '.incoming-*' -mmin +60 -exec rm -rf {} + 2>/dev/null || true   # leftovers of an interrupted run
+  new="$(mktemp -d "$rels/.incoming-${ver}-${stamp}-XXXX")"
+  # Copy only what the code needs: regular files and folders, no symlinks, no caches.
+  (cd "$src" && find . -path '*/__pycache__' -prune -o \( -type f -o -type d \) -print0 \
+     | while IFS= read -r -d '' p; do
+         if [ -d "$p" ]; then mkdir -p "$new/$p"; else cp -p "$p" "$new/$p"; fi
+       done)
+  [ -n "$(find "$src" -type l -not -path '*/__pycache__/*' -print -quit)" ] && \
+    echo "note: symlinks in $src were not copied into the release" >&2
+  bad="$(cd "$new" && python3 - <<'PY'
+import pathlib
+for p in sorted(pathlib.Path(".").rglob("*.py")):
+    try: compile(p.read_bytes(), str(p), "exec")   # checked in memory: nothing written
+    except (SyntaxError, ValueError): print(p)
+PY
+)"
+  if [ -n "$bad" ]; then
+    echo "DEPLOYMENT FAILED: python does not compile in the new release: $bad" >&2
+    rm -rf "$new"; return 1
+  fi
+  local final="$rels/${ver}-${stamp}"
+  [ -e "$final" ] && final="${final}-$$"
+  mv "$new" "$final"
+  echo "$final"
+}
+
+atta_activate_code() {
+  # atta_activate_code APP RELEASES NEW — point APP at NEW with one atomic rename. The release that was
+  # live is remembered in RELEASES/.previous and kept until pruned after a healthy deploy.
+  local app="$1" rels="$2" final="$3" stamp
+  stamp="$(date -u +%Y%m%dT%H%M%SZ)"
+  # First run on a server laid out the old way: the live folder becomes a release of its own.
+  if [ -d "$app" ] && [ ! -L "$app" ]; then
+    mv "$app" "$rels/legacy-${stamp}"
+    echo "note: moved the old code folder to $rels/legacy-${stamp}" >&2
+  fi
+  if [ -L "$app" ]; then readlink "$app" > "$rels/.previous"; else rm -f "$rels/.previous"; fi
+  ln -sfn "$final" "$app.next"
+  mv -Tf "$app.next" "$app"      # rename(2): the switch is atomic
+}
+
+atta_prune_code_releases() {
+  # atta_prune_code_releases APP RELEASES — after a healthy deploy: keep the newest N and never the
+  # live or previous one.
+  local app="$1" rels="$2" live prev n=0 d
+  live="$(readlink -f "$app" 2>/dev/null || true)"
+  prev="$(cat "$rels/.previous" 2>/dev/null || true)"
+  [ -n "$prev" ] && prev="$(readlink -f "$prev" 2>/dev/null || true)"
+  for d in $(ls -1dt "$rels"/*/ 2>/dev/null); do
+    d="${d%/}"; n=$((n + 1))
+    [ "$(readlink -f "$d")" = "$live" ] && continue
+    [ -n "$prev" ] && [ "$(readlink -f "$d")" = "$prev" ] && continue
+    [ "$n" -le "$ATTA_KEEP_CODE_RELEASES" ] && continue
+    rm -rf "$d"
+  done
+}
+
+atta_restore_previous_code() {
+  # atta_restore_previous_code APP RELEASES — point APP back at the release that was live before.
+  local app="$1" rels="$2" prev
+  prev="$(cat "$rels/.previous" 2>/dev/null || true)"
+  [ -n "$prev" ] && [ -d "$prev" ] || return 1
+  ln -sfn "$prev" "$app.next" && mv -Tf "$app.next" "$app"
+}
+
+atta_nginx_listen() {
+  # atta_nginx_listen DOMAINS EMAIL ALLOW_PUBLIC_HTTP — v116: where nginx listens. Public only when HTTPS can be
+  # set up (certbot needs port 80 to prove the domain) or the owner explicitly accepts plain HTTP.
+  local domains="$1" email="$2" allow="${3:-}"
+  if [ -n "$domains" ] && [ "$domains" != "_" ] && [ -n "$email" ]; then echo 80
+  elif [ "$allow" = "true" ]; then echo 80
+  else echo 127.0.0.1:80; fi
+}
+
+atta_nginx_conf() {
+  # atta_nginx_conf TEMPLATE DOMAINS LISTEN — the site config on stdout. Values are checked, never pasted raw.
+  local tpl="$1" domains="${2:-_}" listen="$3"
+  [[ "$listen" =~ ^(127\.0\.0\.1:)?80$ ]] || { echo "bad nginx listen value: $listen" >&2; return 1; }
+  [[ "$domains" =~ ^[A-Za-z0-9._\ -]+$ ]] || { echo "bad domain list: $domains" >&2; return 1; }
+  sed -e "s/__LISTEN__/${listen}/" -e "s/YOUR_DOMAIN/${domains}/g" "$tpl"
+}

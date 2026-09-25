@@ -1,0 +1,59 @@
+START HERE
+==========
+
+One command. Open a terminal in this folder and type:
+
+    bash run
+
+That's it.
+
+WHAT HAPPENS
+------------
+- On your AWS server (Linux):   it runs the full deploy automatically
+                                (services, nginx, browser stage, the works).
+                                If it needs root it will ask for your password.
+
+- On your laptop (Mac/Windows-  it starts the real system LOCALLY and prints a
+  WSL/plain Linux):             web address plus the login it made for you.
+                                Open that address, log in, upload the bundle.
+
+It creates the login password and secrets for you, so nothing stalls.
+
+v116: on a server, ATTa answers only on 127.0.0.1 until HTTPS is set up (APP_BUILDER_DOMAIN and
+APP_BUILDER_LETSENCRYPT_EMAIL in /srv/app-builder/.env, then `bash run` again). Meanwhile reach it with
+    ssh -L 8080:127.0.0.1:80 <server>        and open http://127.0.0.1:8080/
+What changed and why: docs/SECURITY-V116.md
+
+UPDATING A RUNNING SERVER
+-------------------------
+    sudo deployctl deploy ATTa-deployNNN.zip     (or upload the zip on the web Add page)
+Backs up, activates, health-checks, rolls back by itself. Details: docs/ADM.md
+
+To stop the local instance:   bash run stop
+To check if it's running:     bash run status
+
+THE ONE THING NO FILE CAN DO
+----------------------------
+A public, live URL on the internet needs three things that only exist on the
+actual AWS box, not in any zip: a domain name, a TLS certificate, and the
+server being reachable online. So on a laptop this gives you the system running
+for real, locally — it does not fake a public deployment. Run the same
+`bash run` on the AWS server and it finishes the public part there.
+
+COOLIFY (runs the finished apps)
+--------------------------------
+On the server that will run Coolify (best a separate one):
+
+    sudo bash 05-coolify/install-coolify.sh
+
+It installs Coolify 4.3.23 (the version you supplied) and prints the four
+steps to connect it to the APP Builder. Details: docs/COOLIFY-HANDOFF.md
+
+WHAT TO UPLOAD ONCE IT'S RUNNING
+--------------------------------
+Log in and go to "Add app". Upload any app's source zip (gitea-main.zip,
+coolify-main.zip, ...) or paste its git address. It joins the library and gets
+its skin and checks automatically: there's no list to update first.
+
+To update ATTa itself, log in as admin and upload THIS ZIP the same way.
+(Tester accounts can add apps but can't update the system.)
