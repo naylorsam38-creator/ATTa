@@ -3,7 +3,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 import hashlib,hmac,html,json,os,secrets,time,re,threading,zipfile
-import accounts, builds, alerts
+import accounts, builds, alerts, atta_identity
 ROOT=Path(os.environ.get("APP_BUILDER_ROOT","/srv/app-builder"));
 LOGIN_WINDOW=int(os.environ.get("APP_BUILDER_LOGIN_WINDOW","900")); LOGIN_MAX_FAILURES=int(os.environ.get("APP_BUILDER_LOGIN_MAX_FAILURES","8")); _LOGIN_FAILURES={}
 # v116: failures also counted per ACCOUNT (a guesser rotating addresses is still stopped), kept on disk so a
@@ -27,6 +27,8 @@ if AUTH_DISABLED and (os.environ.get("INVOCATION_ID") or HOST not in ("127.0.0.1
  raise SystemExit("APP_BUILDER_AUTH_DISABLED=1 is for a laptop only: refused on a server or a non-loopback address")
 for p in (INBOX,STATUS.parent,CHOICES): p.mkdir(parents=True,exist_ok=True)
 if not AUTH_DISABLED and not SECRET: raise SystemExit("APP_BUILDER_SESSION_SECRET is required")
+# v117: which release this is (release.json is copied beside the code); reported by /health.
+IDENTITY=atta_identity.release_info(Path(__file__).resolve().parent)
 if not AUTH_DISABLED and not accounts.load()["users"]: raise SystemExit("No accounts exist. Run: python3 accounts.py init")
 def disable_reserved_at_startup():
  """v115: an account named system/incoming/deployctl/local/root was once treated as a trusted process.
@@ -114,7 +116,7 @@ def auth(h):
  u=accounts.get(name)
  if u and not u.get("disabled") and int(u.get("session_version",1))==ver: return u
  return None
-def page(title,body,me=None):
+def page(title,body,me=None,head=""):
  nav=""
  if me:
   links='<a href=/>Front Door</a> <a href=/builds>'+("All builds" if me["role"]=="admin" else "My builds")+'</a> <a href=/upload>Add app</a> <a href=/library>Library</a>'
@@ -122,7 +124,7 @@ def page(title,body,me=None):
   nav='<nav>'+links+'<span>'+html.escape(me["name"])+' ('+html.escape(me["role"])+')'+(' <a href=/logout>Log out</a> <a href=/logout-all title="End this account\'s sessions on every device">everywhere</a>' if not AUTH_DISABLED else '')+'</span></nav>'
   if me["role"]=="admin" and (ROOT/"TEST_ACCOUNTS.txt").exists():
    nav+='<p style="background:#fff4d6;padding:8px 12px;border-radius:6px">The file of generated passwords (TEST_ACCOUNTS.txt) is still on the server. Hand each person their line, then delete it.</p>'
- return ('<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+html.escape(title)+'</title><style>body{font-family:system-ui;margin:40px;max-width:900px}input,button{padding:10px;margin:6px 0}pre{background:#f4f4f4;padding:12px;overflow:auto}nav{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #ddd}nav span{margin-left:auto;color:#666}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:6px 8px;border-bottom:1px solid #eee}.QUALIFIED,.MAPPED{color:#0a7a2f;font-weight:600}.PARTIALLY_QUALIFIED{color:#9a6700;font-weight:600}.FAILED,.NOT_QUALIFIED{color:#b00020;font-weight:600}</style></head><body>'+nav+body+'</body></html>').encode()
+ return ('<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+html.escape(title)+'</title>'+head+'<style>body{font-family:system-ui;margin:40px;max-width:900px}input,button{padding:10px;margin:6px 0}pre{background:#f4f4f4;padding:12px;overflow:auto}nav{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #ddd}nav span{margin-left:auto;color:#666}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:6px 8px;border-bottom:1px solid #eee}.QUALIFIED,.MAPPED{color:#0a7a2f;font-weight:600}.PARTIALLY_QUALIFIED{color:#9a6700;font-weight:600}.FAILED,.NOT_QUALIFIED{color:#b00020;font-weight:600}</style></head><body>'+nav+body+'</body></html>').encode()
 EVIDENCE_FILES=("screenshot.png","page.html","browser.json")   # linked from the build page
 # v115: evidence is what an UNTRUSTED app produced. It is data, never ATTa UI: page.html is the app's own HTML
 # and would run its scripts on this origin (in an admin's session) if served as a page. So it is plain text
@@ -418,12 +420,24 @@ class H(BaseHTTPRequestHandler):
   if cookie:self.send_header("Set-Cookie",cookie)
   self.end_headers()
  def json_out(self,d,code=200): self.out((json.dumps(d,indent=2)+"\n").encode(),code,ctype="application/json")
+ def health(self):
+  # v117: "OK" alone proves only that something listens here. Every answer names the service and release;
+  # ?challenge=<32-128 letters/digits> is answered with a proof only this installation can make (atta_identity).
+  hdr={"X-ATTa-Service":atta_identity.SERVICE,"X-ATTa-Version":IDENTITY["version"],"X-ATTa-Release":IDENTITY["release"],
+       "X-ATTa-Instance":atta_identity.instance_id(SECRET)}
+  q=parse_qs(urlparse(self.path).query)
+  if "challenge" not in q: self.out(b"OK\n",ctype="text/plain; charset=utf-8",headers=hdr); return
+  try: answer=atta_identity.proof(SECRET,q["challenge"][0])
+  except ValueError as e: self.out((json.dumps({"ok":False,"error":str(e)})+"\n").encode(),400,ctype="application/json",headers=hdr); return
+  self.out((json.dumps({"ok":True,"service":atta_identity.SERVICE,"protocol":atta_identity.PROTOCOL,"version":IDENTITY["version"],
+                        "release":IDENTITY["release"],"instance":hdr["X-ATTa-Instance"],"proof":answer})+"\n").encode(),
+           ctype="application/json",headers=hdr)
  def do_GET(self):
   p=urlparse(self.path).path
-  if p=="/health": self.out(b"OK\n"); return
+  if p=="/health": self.health(); return
   me=auth(self)
   if not me:
-   if p=="/login": self.out(page("Login","<h1>APP Builder</h1><form method=post action=/login><input name=user placeholder=User autocomplete=username><br><input name=password type=password placeholder=Password autocomplete=current-password><br><button>Log in</button></form>")); return
+   if p=="/login": self.out(page("Login","<h1>APP Builder</h1><form method=post action=/login><input name=user placeholder=User autocomplete=username><br><input name=password type=password placeholder=Password autocomplete=current-password><br><button>Log in</button></form>",head=atta_identity.LOGIN_MARKER)); return
    self.redirect("/login"); return
   if p=="/logout":
    # v116: the token itself is ended server-side, not just deleted from this browser.
