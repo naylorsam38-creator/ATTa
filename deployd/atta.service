@@ -1,0 +1,9 @@
+[Unit]
+Description=ATTa
+After=docker.service network-online.target
+[Service]
+WorkingDirectory=/opt/atta
+ExecStart=/usr/bin/bash /opt/atta/run start
+Restart=always
+[Install]
+WantedBy=multi-user.target
