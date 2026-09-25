@@ -1006,10 +1006,16 @@ def _render_compose(app: str, d: Path, part: dict, notes: list[str]) -> tuple[bo
             yaml_checked = False
         # Pass 1: paths as written, env files NOT read, so every file the configuration would read is visible
         # (compose otherwise inlines env_file and drops its path). Clean environment, as for every pass.
-        rc, out = sh(["docker", "compose", "-f", str(f), "--project-directory", str(f.parent), "config", "--format", "json",
-                      "--no-env-resolution"], timeout=120, env=_env_for(part), cwd=str(f.parent))
+        # v117: only where that flag really works (Ubuntu 24.04's Compose 2.40 accepts it and still inlines the files).
+        flag_works = compose_guard.no_env_resolution_works(
+            lambda cmd, cwd: sh(cmd, timeout=60, env=_env_for(part), cwd=cwd))
+        if flag_works:
+            rc, out = sh(["docker", "compose", "-f", str(f), "--project-directory", str(f.parent), "config", "--format",
+                          "json", "--no-env-resolution"], timeout=120, env=_env_for(part), cwd=str(f.parent))
+        else:
+            rc, out = 1, "unknown flag: --no-env-resolution (or it does not stop env files being read here)"
         if rc != 0 and re.search(r"unknown flag|flag provided but not defined", out, re.I):
-            # A compose older than --no-env-resolution: the YAML check above is the env_file check.
+            # A compose without a working --no-env-resolution: the YAML check above is the env_file check.
             if not yaml_checked:
                 raise compose_guard.ComposeSecurityError(
                     "cannot check which env files this compose file reads: install PyYAML (python3-yaml / "
