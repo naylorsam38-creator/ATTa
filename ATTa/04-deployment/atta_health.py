@@ -118,10 +118,11 @@ def check_login(scheme, connect_host, port, host_header, *, legacy=False, timeou
         raise CheckFailed(f"{where} is not ATTa's login page")
 
 
-def check_redirect_to_https(connect_host, host_header, timeout=5.0):
-    status, hdr, _ = _get("http", connect_host, 80, "/login", host_header, timeout)
+def check_redirect_to_https(connect_host, host_header, timeout=5.0, http_port=80, https_port=443):
+    status, hdr, _ = _get("http", connect_host, http_port, "/login", host_header, timeout)
     loc = hdr.get("location", "")
-    if status not in (301, 302, 307, 308) or not loc.startswith(f"https://{host_header}/"):
+    want = f"https://{host_header}/" if https_port == 443 else f"https://{host_header}:{https_port}/"
+    if status not in (301, 302, 307, 308) or not loc.startswith(want):
         raise CheckFailed(f"http://{host_header}/login answered {status} {loc!r}: plain HTTP must redirect to HTTPS")
 
 
@@ -190,7 +191,8 @@ def proxy_target(proxy_file):
         raise CheckFailed(f"{proxy_file}: scheme must be http or https")
     return {"scheme": scheme, "host": str(d.get("host") or "127.0.0.1"), "port": int(d.get("port") or
             (443 if scheme == "https" else 80)), "connect": str(d.get("connect") or "127.0.0.1"),
-            "redirect": bool(d.get("redirect_http")), "cafile": d.get("cafile")}
+            "redirect": bool(d.get("redirect_http")), "cafile": d.get("cafile"),
+            "http_port": int(d.get("http_port") or 80)}
 
 
 def run_checks(env_file, *, proxy_file=None, direct=True, proxy=False, browser=False, expect_release=None,
@@ -216,7 +218,7 @@ def run_checks(env_file, *, proxy_file=None, direct=True, proxy=False, browser=F
                                    expect_release=expect_release, legacy=legacy, cafile=t["cafile"])
                     check_login(t["scheme"], t["connect"], t["port"], t["host"], legacy=legacy, cafile=t["cafile"])
                     if t["redirect"]:
-                        check_redirect_to_https(t["connect"], t["host"])
+                        check_redirect_to_https(t["connect"], t["host"], http_port=t["http_port"], https_port=t["port"])
                     lines.append(f"PASS proxy {t['scheme']}://{t['host']}:{t['port']} (via {t['connect']})"
                                  + (" + http->https redirect" if t["redirect"] else ""))
                 if browser:
