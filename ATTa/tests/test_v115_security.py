@@ -303,5 +303,128 @@ class PipelineTrustIsNotAName(unittest.TestCase):
         pipeline.INBOX.chmod(0o755)
 
 
+# ============================================================================ #2 evidence is data
+
+import threading, urllib.error, urllib.request  # noqa: E402
+from http.server import ThreadingHTTPServer  # noqa: E402
+
+
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *a, **k):
+        return None
+
+
+def load_gateway():
+    """Import the real gateway (it needs a session secret and at least one account at import)."""
+    os.environ.setdefault("APP_BUILDER_SESSION_SECRET", "test-session-secret-" + "x" * 32)
+    if not accounts.load()["users"]:
+        write_users(admin="admin")
+    import gateway
+    return gateway
+
+
+EVIDENCE_ROOT = builds.ROOT / "state" / "runner" / "evidence"   # where the watcher writes it (both versions)
+
+
+class EvidenceIsDataNotATTaUI(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.gw = load_gateway()
+        cls.srv = ThreadingHTTPServer(("127.0.0.1", 0), cls.gw.H)
+        threading.Thread(target=cls.srv.serve_forever, daemon=True).start()
+        cls.base = f"http://127.0.0.1:{cls.srv.server_address[1]}"
+        cls.opener = urllib.request.build_opener(_NoRedirect)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.srv.shutdown(); cls.srv.server_close()
+
+    def setUp(self):
+        write_users(admin="admin", tester01="user", tester02="user")
+        ev = EVIDENCE_ROOT / "evilapp"
+        shutil.rmtree(ev, ignore_errors=True); ev.mkdir(parents=True)
+        (ev / "page.html").write_text("<script>fetch('/upload',{method:'POST'})</script>")
+        (ev / "screenshot.png").write_bytes(b"\x89PNG\r\n\x1a\n fake")
+        (ev / "browser.json").write_text('{"console": []}')
+        # tester01's build checked evilapp; tester02 has nothing to do with it.
+        rec = builds.create("tester01", origin="web")
+        builds.update(rec["id"], qualification=[{"app": "evilapp", "qualified": False}])
+
+    def get(self, path, who):
+        req = urllib.request.Request(self.base + path)
+        if who:
+            req.add_header("Cookie", "session=" + self.gw.token(accounts.get(who)))
+        try:
+            with self.opener.open(req) as r:
+                return r.status, dict(r.headers), r.read()
+        except urllib.error.HTTPError as e:
+            return e.code, dict(e.headers), e.read()
+
+    def test_page_html_is_plain_text_download(self):
+        code, h, body = self.get("/evidence/evilapp/page.html", "admin")
+        self.assertEqual(code, 200)
+        self.assertTrue(h["Content-Type"].startswith("text/plain"))
+        self.assertIn("attachment", h["Content-Disposition"])
+        self.assertIn("sandbox", h["Content-Security-Policy"])
+        self.assertEqual(h["X-Content-Type-Options"], "nosniff")
+        self.assertIn(b"<script>", body)                     # delivered intact, as text
+
+    def test_screenshot_and_json_stay_viewable(self):
+        code, h, _ = self.get("/evidence/evilapp/screenshot.png", "admin")
+        self.assertEqual((code, h["Content-Type"], h["Content-Disposition"]), (200, "image/png", "inline"))
+        self.assertIn("sandbox", h["Content-Security-Policy"])
+        code, h, _ = self.get("/evidence/evilapp/browser.json", "admin")
+        self.assertEqual(code, 200); self.assertTrue(h["Content-Type"].startswith("application/json"))
+
+    def test_owner_sees_it_stranger_gets_404(self):
+        self.assertEqual(self.get("/evidence/evilapp/page.html", "tester01")[0], 200)
+        self.assertEqual(self.get("/evidence/evilapp/page.html", "tester02")[0], 404)
+        self.assertEqual(self.get("/evidence/nosuchapp/page.html", "tester02")[0], 404)   # same answer
+        self.assertEqual(self.get("/evidence/evilapp/page.html", None)[0], 302)            # login first
+
+    def test_unknown_and_traversal_names_are_404(self):
+        (EVIDENCE_ROOT / "evilapp" / "other.txt").write_text("x")
+        for path in ("/evidence/evilapp/other.txt", "/evidence/evilapp/..%2f..%2fusers.json",
+                     "/evidence/../state/users.json", "/evidence/evilapp/../../users.json"):
+            self.assertEqual(self.get(path, "admin")[0], 404, path)
+
+    def test_unknown_files_would_be_opaque_downloads(self):
+        h = self.gw.evidence_headers('x"\r\nSet-Cookie: a=b.bin')
+        self.assertEqual(h["Content-Type"], "application/octet-stream")
+        self.assertTrue(h["Content-Disposition"].startswith("attachment"))
+        self.assertNotIn("\r", h["Content-Disposition"]); self.assertNotIn('x"', h["Content-Disposition"])
+
+    def test_symlinks_out_of_the_evidence_folder_are_refused(self):
+        secret = TMP / "secret.json"; secret.write_text('{"s": 1}')
+        f = EVIDENCE_ROOT / "evilapp" / "browser.json"; f.unlink(); f.symlink_to(secret)
+        self.assertEqual(self.get("/evidence/evilapp/browser.json", "admin")[0], 404)
+        linked = EVIDENCE_ROOT / "linkedapp"
+        linked.unlink(missing_ok=True); linked.symlink_to(EVIDENCE_ROOT / "evilapp")
+        self.assertEqual(self.get("/evidence/linkedapp/page.html", "admin")[0], 404)
+
+    def test_every_response_carries_the_site_headers(self):
+        for path, who, code in (("/builds", "tester01", 200), ("/api/me", "tester01", 200),
+                                ("/nope", "tester01", 404), ("/", None, 302)):
+            c, h, _ = self.get(path, who)
+            self.assertEqual(c, code, path)
+            self.assertIn("frame-ancestors 'none'", h.get("Content-Security-Policy", ""), path)
+            self.assertEqual(h.get("X-Content-Type-Options"), "nosniff", path)
+            self.assertEqual(h.get("X-Frame-Options"), "DENY", path)
+
+    def test_evidence_csp_replaces_the_site_csp(self):
+        _, h, _ = self.get("/evidence/evilapp/page.html", "admin")
+        self.assertNotIn("script-src", h["Content-Security-Policy"])
+
+    def test_startup_disables_reserved_accounts_and_alerts(self):
+        write_users(admin="admin", system="admin")
+        before = set(alerts.ALERT_DIR.glob("*.json")) if alerts.ALERT_DIR.exists() else set()
+        self.assertEqual(self.gw.disable_reserved_at_startup(), ["system"])
+        new = [json.loads(p.read_text()) for p in set(alerts.ALERT_DIR.glob("*.json")) - before]
+        self.assertEqual(len(new), 1)
+        self.assertEqual(new[0]["accounts_disabled"], ["system"])
+        self.assertNotIn("password", json.dumps(new[0]).lower())
+        self.assertEqual(self.gw.disable_reserved_at_startup(), [])        # nothing left to do, no new alert
+
+
 if __name__ == "__main__":
     unittest.main()

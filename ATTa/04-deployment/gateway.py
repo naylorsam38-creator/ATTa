@@ -73,7 +73,51 @@ def page(title,body,me=None):
   if me["role"]=="admin": links+=' <a href=/status>System status</a> <a href=/alerts>Alerts</a>'
   nav='<nav>'+links+'<span>'+html.escape(me["name"])+' ('+html.escape(me["role"])+')'+(' <a href=/logout>Log out</a>' if not AUTH_DISABLED else '')+'</span></nav>'
  return ('<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+html.escape(title)+'</title><style>body{font-family:system-ui;margin:40px;max-width:900px}input,button{padding:10px;margin:6px 0}pre{background:#f4f4f4;padding:12px;overflow:auto}nav{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #ddd}nav span{margin-left:auto;color:#666}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:6px 8px;border-bottom:1px solid #eee}.QUALIFIED,.MAPPED{color:#0a7a2f;font-weight:600}.PARTIALLY_QUALIFIED{color:#9a6700;font-weight:600}.FAILED,.NOT_QUALIFIED{color:#b00020;font-weight:600}</style></head><body>'+nav+body+'</body></html>').encode()
-EVIDENCE_FILES={"screenshot.png":"image/png","page.html":"text/html; charset=utf-8","browser.json":"application/json"}
+EVIDENCE_FILES=("screenshot.png","page.html","browser.json")   # linked from the build page
+# v115: evidence is what an UNTRUSTED app produced. It is data, never ATTa UI: page.html is the app's own HTML
+# and would run its scripts on this origin (in an admin's session) if served as a page. So it is plain text
+# and a download; the screenshot and JSON stay viewable; anything else is a download. Every evidence response
+# is sandboxed (no scripts, no same-origin access) and never content-sniffed.
+EVIDENCE_ROOT=ROOT/"state/runner/evidence"
+EVIDENCE_POLICY={
+ "page.html":("text/plain; charset=utf-8","attachment; filename=\"page.html\""),
+ "browser.json":("application/json; charset=utf-8","inline"),
+ "screenshot.png":("image/png","inline"),
+}
+EVIDENCE_CSP="sandbox; default-src 'none'; img-src 'self'; style-src 'unsafe-inline'"
+def evidence_headers(name):
+ """Headers for one evidence file. Unknown names are an opaque download."""
+ safe=re.sub(r'[^A-Za-z0-9._-]','_',Path(str(name)).name) or "evidence"
+ ctype,disp=EVIDENCE_POLICY.get(safe,("application/octet-stream",'attachment; filename="'+safe+'"'))
+ return {"Content-Type":ctype,"Content-Disposition":disp,"Content-Security-Policy":EVIDENCE_CSP,
+         "X-Content-Type-Options":"nosniff","Cross-Origin-Resource-Policy":"same-origin"}
+def evidence_path(app,name):
+ """The evidence file for app/name, or None. Refuses anything that is not a regular file really inside
+ EVIDENCE_ROOT/<app>/ (symlinks included: the resolved path must stay inside)."""
+ if not re.fullmatch(r"[a-z0-9-]+",app or "") or name not in EVIDENCE_POLICY: return None
+ root=EVIDENCE_ROOT.resolve()
+ f=EVIDENCE_ROOT/app/name
+ try:
+  if f.is_symlink() or (EVIDENCE_ROOT/app).is_symlink(): return None
+  r=f.resolve(strict=True)
+ except (OSError,RuntimeError): return None
+ if r.parent!=(root/app) or not r.is_file(): return None
+ return r
+def _app_ids(r):
+ """Every app id a build record names: what it checked, found, added or kept."""
+ ids=set()
+ for key in ("qualification","qualification_results","apps_discovered"):
+  for a in (r.get(key) or []):
+   if isinstance(a,dict):
+    for k in ("app","name"):
+     if a.get(k): ids.add(str(a[k]))
+ for key in ("qualified_apps","apps_added","apps_already_in_library"):
+  ids.update(str(x) for x in (r.get(key) or []))
+ return {re.sub(r"[^a-z0-9-]+","-",i.lower()).strip("-") for i in ids}
+def can_see_app(me,app):
+ """Admins see every app's evidence; anyone else only apps named by a build they can see (their own)."""
+ if me.get("role")=="admin": return True
+ return any(app in _app_ids(r) for r in builds.visible_to(me))
 def discovered_html(r):
  """v112: what the upload held (every app found in the zip) and, once checked, what the browser saw."""
  d=r.get("apps_discovered")
@@ -85,7 +129,7 @@ def discovered_html(r):
   added=set(r.get("apps_added") or []); kept=set(r.get("apps_already_in_library") or [])
   out+="".join("<tr><td>"+html.escape(a.get("name",""))+"</td><td><code>"+html.escape(a.get("rel",""))+"</code></td><td>"+html.escape(a.get("how",""))+"</td><td>"+("added" if a.get("name") in added else "already there (library copy kept)" if a.get("name") in kept else "")+"</td></tr>" for a in d)+"</table>"
  if ev:
-  out+="<h2>What the browser saw (stage 6 evidence)</h2><p>"+" &middot; ".join("<b>"+html.escape(a)+"</b>: "+" ".join("<a href=/evidence/"+html.escape(a)+"/"+f+">"+f+"</a>" for f in EVIDENCE_FILES if e.get({"screenshot.png":"screenshot","page.html":"html","browser.json":"browser"}[f])) for a,e in ev.items())+"</p>"
+  out+="<h2>What the browser saw (stage 6 evidence)</h2><p>"+" &middot; ".join("<b>"+html.escape(a)+"</b>: "+" ".join("<a href=/evidence/"+html.escape(a)+"/"+f+">"+f+(" (download, not run)" if f=="page.html" else "")+"</a>" for f in EVIDENCE_FILES if e.get({"screenshot.png":"screenshot","page.html":"html","browser.json":"browser"}[f])) for a,e in ev.items())+"</p>"
  return out
 def checklist_html(r):
  cl=r.get("checklist")
@@ -266,9 +310,27 @@ def multipart_upload(handler, content_type, content_length, destination, max_byt
                     break
     raise ValueError("multipart upload incomplete")
 
+# v115: sent with EVERY response (pages, JSON, redirects, error pages) unless the handler set its own.
+# The CSP allows exactly what ATTa's pages use: their inline script/style, Google Fonts (Front Door skins),
+# same-origin API calls, and https app iframes on the Front Door. 'unsafe-inline' scripts are transitional:
+# front-door.html is one inline script; moving it to a hashed or external file removes it.
+SITE_CSP=("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+          "font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-src 'self' https:; "
+          "object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'")
+SECURITY_HEADERS=(("Content-Security-Policy",SITE_CSP),("X-Content-Type-Options","nosniff"),("X-Frame-Options","DENY"),
+                  ("Referrer-Policy","same-origin"),("Cross-Origin-Opener-Policy","same-origin"))
 class H(BaseHTTPRequestHandler):
- def out(self,b,code=200,cookie=None,ctype="text/html; charset=utf-8"):
+ def send_header(self,k,v):
+  self.__dict__.setdefault("_sent",set()).add(k.lower()); super().send_header(k,v)
+ def end_headers(self):
+  sent=self.__dict__.get("_sent",set())
+  for k,v in SECURITY_HEADERS:
+   if k.lower() not in sent: super().send_header(k,v)
+  self._sent=set(); super().end_headers()
+ def out(self,b,code=200,cookie=None,ctype="text/html; charset=utf-8",headers=None):
   self.send_response(code); self.send_header("Content-Type",ctype); self.send_header("Content-Length",str(len(b))); self.send_header("Cache-Control","no-store")
+  for k,v in (headers or {}).items():
+   if k!="Content-Type": self.send_header(k,v)
   if cookie:self.send_header("Set-Cookie",cookie)
   self.end_headers(); self.wfile.write(b)
  def redirect(self,to,cookie=None):
@@ -305,11 +367,14 @@ class H(BaseHTTPRequestHandler):
     return "<span class="+cls+">"+html.escape(r.get("verdict",""))+"</span><br><small>"+html.escape(how)+"</small>"
    rows="".join("<tr><td>"+html.escape(e.get("app",k))+"</td><td>"+("yes" if inlib(e) else "not yet")+"</td><td>"+last_check(e)+"</td><td>"+html.escape(e.get("skin_category") or "—")+"</td><td>"+html.escape(str(e.get("skin_source") or ""))+" / "+html.escape(str(e.get("skin_confidence") or ""))+"</td><td>"+html.escape(str(e.get("profile") or "—"))+"</td><td>"+html.escape(str(e.get("root") or ""))+"</td><td>"+html.escape(", ".join(e.get("sources",[])))+"</td><td class="+html.escape(e.get("status",""))+">"+html.escape(e.get("status",""))+("<br><small>"+html.escape("; ".join(e["look"]))+"</small>" if e.get("look") else "")+"</td></tr>" for k,e in order)
    self.out(page("Library","<h1>Library</h1><p>"+str(n_in)+" apps in the library, "+str(len(cat))+" known in total (seed repos are cloned on the next build). Grows with every app added; skin and profile come from each app's own files.</p><table><tr><th>App</th><th>In library</th><th>Last check (started how)</th><th>Skin</th><th>Decided by / confidence</th><th>Profile</th><th>Code root</th><th>Came from</th><th>Status</th></tr>"+rows+"</table>",me)); return
-  m=re.fullmatch(r"/evidence/([a-z0-9-]+)/(screenshot\.png|page\.html|browser\.json)",p)
+  m=re.fullmatch(r"/evidence/([a-z0-9-]+)/([A-Za-z0-9._-]+)",p)
   if m:
-   f=ROOT/"state/runner/evidence"/m.group(1)/m.group(2)
-   if not f.is_file(): self.send_error(404); return
-   self.out(f.read_bytes(),ctype=EVIDENCE_FILES[m.group(2)]); return
+   # Someone else's evidence answers exactly like missing evidence.
+   if not can_see_app(me,m.group(1)): self.send_error(404); return
+   f=evidence_path(m.group(1),m.group(2))
+   if not f: self.send_error(404); return
+   h=evidence_headers(m.group(2))
+   self.out(f.read_bytes(),ctype=h["Content-Type"],headers=h); return
   if p=="/builds": self.out(page("Builds","<h1>"+("All builds" if me["role"]=="admin" else "My builds")+"</h1>"+builds_table(builds.visible_to(me),me),me)); return
   if p=="/api/me": self.json_out({"name":me["name"],"role":me["role"]}); return
   if p=="/api/builds": self.json_out(builds.visible_to(me)); return
