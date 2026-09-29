@@ -34,15 +34,15 @@ if (-not (Test-Path $Key)) { throw "SSH key not found: $Key (run again with -Key
 
 $tmp = Join-Path $env:TEMP "atta-deploy"
 New-Item -ItemType Directory -Force -Path $tmp | Out-Null
-Invoke-WebRequest -UseBasicParsing "$Raw/atta-deploy-target.sh" -OutFile "$tmp\atta-deploy-target.sh"
-Invoke-WebRequest -UseBasicParsing "$Raw/patches/v121-kit-registry-mirror-domains.patch" -OutFile "$tmp\v121-kit.patch"
+Invoke-WebRequest -UseBasicParsing "$Raw/atta-deploy-target.sh" -OutFile (Join-Path $tmp "atta-deploy-target.sh")
+Invoke-WebRequest -UseBasicParsing "$Raw/patches/v121-kit-registry-mirror-domains.patch" -OutFile (Join-Path $tmp "v121-kit.patch")
 Say "downloaded the server-side script and the shared kit fix"
 
 $o = @("-o", "StrictHostKeyChecking=accept-new", "-o", "ServerAliveInterval=30", "-o", "ConnectTimeout=15", "-i", $Key)
 & ssh @o $Server "echo connected to `$(hostname)"
 if ($LASTEXITCODE -ne 0) { throw "SSH to $Server failed (key, username or port 22). Nothing was changed." }
 Say "uploading (about 25 MB)..."
-& scp @o $Zip "$tmp\atta-deploy-target.sh" "$tmp\v121-kit.patch" "${Server}:/tmp/"
+& scp @o $Zip (Join-Path $tmp "atta-deploy-target.sh") (Join-Path $tmp "v121-kit.patch") "${Server}:/tmp/"
 if ($LASTEXITCODE -ne 0) { throw "upload to $Server failed. Nothing was changed." }
 
 $zipName = Split-Path $Zip -Leaf
@@ -61,6 +61,8 @@ sleep 2
 sudo tail -n +`$((n+1)) -F `$L 2>/dev/null & T=`$!
 while sudo systemctl is-active --quiet atta-deploy; do sleep 5; done
 sleep 3; kill `$T 2>/dev/null
+m=`$(sudo sh -c "wc -l < `$L" 2>/dev/null || echo 0)
+if [ "`$m" -le "`$n" ]; then echo '[server] the deploy job wrote no log; its system journal:'; sudo journalctl -u atta-deploy -n 40 --no-pager; fi
 "@
 Say "starting the deploy on the server (it continues even if this window closes)"
 & ssh @o $Server ($remote -replace "`r", "")
