@@ -1,0 +1,2478 @@
+diff --git a/04-deployment/app_runner.py b/04-deployment/app_runner.py
+index 67dea5e..afaf47d 100644
+--- a/04-deployment/app_runner.py
++++ b/04-deployment/app_runner.py
+@@ -42,7 +42,9 @@ from pathlib import Path
+ from urllib.request import Request, build_opener, ProxyHandler
+ from urllib.error import HTTPError, URLError
+ 
+-from resilience import safe_http_probe, deployment_revision, verification_snapshot, revision_stable
++import resilience
++from resilience import (safe_http_probe, deployment_revision, app_revision, new_correlation_id, revision_stable,
++                        handoff_state, levels, passed_all_stages)
+ 
+ # ============================ RULES / CONFIG — edit here, nothing below needs reading ============================
+ # Seconds an app gets to answer HTTP after it starts. Raise for slow machines; lower = faster give-up.
+@@ -131,6 +133,14 @@ UPSTREAM_SEARCH = os.environ.get("APP_BUILDER_UPSTREAM_SEARCH", "true").lower()
+ # Most seconds the runner spends trying to start ONE app, across all its parts and fixes, before it
+ # stops and hands the app to the self-healer / a person. The per-app limit that stops endless looping.
+ APP_TIME_BUDGET = int(os.environ.get("APP_BUILDER_APP_TIME_BUDGET", "3600"))
++# Hard wall-clock limit on ONE app's whole job (start + all checks), counted from when it leaves the queue.
++# A worker still busy after this is recorded TIMEOUT, its containers are stopped, and the fleet run carries
++# on without it: one stuck app can never hold the aggregate report hostage. 0 = no limit.
++APP_HARD_TIMEOUT = int(os.environ.get("APP_BUILDER_APP_HARD_TIMEOUT", str(max(2 * APP_TIME_BUDGET, 7200))))
++# Final verification barrier: when the deployment or the app changed while it was being checked, the
++# result is thrown away and the app is checked again against the current revision, this many times.
++# Still changing after that = UNVERIFIED (never QUALIFIED on evidence from another revision).
++REVISION_RERUNS = int(os.environ.get("APP_BUILDER_REVISION_RERUNS", "1"))
+ # Ports tried when an image doesn't say which port it listens on.
+ COMMON_PORTS = [80, 8080, 3000, 8000, 5000, 5173, 4000, 9000, 8081, 3001]
+ # Registries checked for an image named only by owner/repo in the app's files.
+@@ -1358,9 +1368,16 @@ def _pick_command(help_text: str) -> str | None:
+     return next((c for c in SERVER_COMMANDS if c in listed), None)
+ 
+ 
+-def _write_result(app: str, r: dict) -> None:
+-    """Write-then-rename: a full disk leaves the old result, never an empty file."""
++def _write_result(app: str, r: dict, force: bool = False) -> None:
++    """Write-then-rename: a full disk leaves the old result, never an empty file.
++    A job the fleet already recorded as WORKER_TIMEOUT that finishes late writes to results/late/, never over
++    the recorded result (force=True is the fleet writing that record itself)."""
+     dest = RESULTS / f"{safe_id(app)}.json"
++    job = getattr(_CTX, "job", None)
++    if not force and job and job.get("app") == safe_id(app) and job.get("run_id") in _ABANDONED_RUNS:
++        dest = RESULTS / "late" / f"{safe_id(app)}.{job['run_id']}.json"
++        dest.parent.mkdir(parents=True, exist_ok=True)
++        r = {**r, "late_after_worker_timeout": True}
+     tmp = dest.with_suffix(".tmp")
+     try:
+         tmp.write_text(json.dumps(r, indent=2, default=str) + "\n"); os.replace(tmp, dest)
+@@ -1381,8 +1398,14 @@ def _record_evidence(app: str, part: dict, dx: dict, reason: str) -> None:
+     """Every failed start, kept forever (state/runner/evidence.jsonl): what was tried, which rule it
+     matched, and the real error/log lines. "unrecognised" rows are where the next rule comes from;
+     tests/run_tests.py replays the rules against these real failures."""
+-    row = {"at": time.time(), "app": safe_id(app), "part": part.get("why"), "rule": dx.get("rule"), "fix": dx.get("fix"),
++    now = time.time()
++    row = {"at": now, "app": safe_id(app), "part": part.get("why"), "rule": dx.get("rule"), "fix": dx.get("fix"),
+            "evidence": _evidence(reason), "raw_tail": (reason or "")[-6000:]}
++    # v121.2: the row names the job it came from, so it can never be read as another app's or another
++    # revision's evidence. Only this app's own job context is used (a row written outside a job has none).
++    row.update({"ts": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now)), "stage": "2 APP_UP",
++                "source": "app_runner.run_app", "observation": row["evidence"],
++                "result": {"rule": dx.get("rule"), "fix": dx.get("fix")}, **_job_identity(app)})
+     try:
+         with _EVIDENCE_LOCK, (RUNNER / "evidence.jsonl").open("a") as f:
+             f.write(json.dumps(row) + "\n")
+@@ -1391,6 +1414,17 @@ def _record_evidence(app: str, part: dict, dx: dict, reason: str) -> None:
+ 
+ 
+ _EVIDENCE_LOCK = threading.Lock()
++# The job this thread is running: set by _qualify_one_inner for each attempt, read by everything that
++# records evidence. Thread-local because every app runs in its own worker thread.
++_CTX = threading.local()
++_IDENTITY_KEYS = ("fleet_run_id", "run_id", "attempt", "correlation_id", "deployment_revision", "app_revision")
++
++
++def _job_identity(app: str) -> dict:
++    job = getattr(_CTX, "job", None)
++    if not job or job.get("app") != safe_id(app):
++        return {}
++    return {k: job.get(k) for k in _IDENTITY_KEYS}
+ 
+ 
+ def _evidence(text: str) -> str:
+@@ -1482,11 +1516,21 @@ def qualify_app(app: str, keep: bool | None = None, log=print, run_id: str | Non
+     t0 = time.time()
+     if prof in {"system", "package"}:
+         t = register_static(app, prof)
+-        r = _watcher().check(t)
++        r = _watcher().check({**t, "_identity": {**_job_identity(app), "source": "app_runner.qualify_app"}})
+         r["runner"] = {"profile": prof, "started": False, "why": f"{prof} project: nothing to run, stage 6 checks build readiness"}
+     else:
+         run = run_app(app, log=log)
+         t_up = time.time()
++        obs = None
++        if run["ok"]:
++            # The lowest rungs of the ladder, observed once and kept: TCP reachable, HTTP answered (status,
++            # type). Neither is health, and neither is a verdict: the watcher's six stages decide that.
++            try:
++                obs = safe_http_probe(f"http://127.0.0.1:{int(run['url'].rsplit(':', 1)[1].strip('/'))}/", timeout=6)
++            except (ValueError, IndexError) as e:
++                obs = {"status": "INCONCLUSIVE", "classification": "PROBE_INTERNAL_ERROR", "tcp_connected": False,
++                       "error": f"{type(e).__name__}: {e}"}
++            obs["observed_at"] = time.time()
+         if not run["ok"]:
+             r = _synth(app, run["code"], run["detail"] + "\n" + "\n".join(
+                 f"#{a['n']} {a['part']}: {a.get('rule')} ({a.get('fix')})" for a in run["attempts"]))
+@@ -1498,18 +1542,13 @@ def qualify_app(app: str, keep: bool | None = None, log=print, run_id: str | Non
+             else:
+                 # It runs and answers, but with no web page (frp answers 401 JSON): it's a service, not a
+                 # website. Check it as one, and say so, instead of failing it for not being HTML.
+-                code, ctype = http_probe(int(run["url"].rsplit(":", 1)[1].strip("/")))
++                code, ctype = (obs or {}).get("http_status"), str((obs or {}).get("content_type") or "")
+                 if prof == "web" and code is not None and (code < 400 or code == 401) and ctype and "html" not in ctype.lower():
+                     prof = "service"
+                     log(f"  [{app}] answers {code} {ctype.split(';')[0]}, no web page: checking it as a service")
+                     run.setdefault("attempts", []).append({"n": 0, "part": "profile", "outcome": "RECLASSIFIED",
+                                                            "notes": [f"answers {code} {ctype}; checked as a service"]})
+                 t["profile"] = prof
+-                if run_id:
+-                    t["_run_id"] = run_id
+-                if deployment_revision_id:
+-                    t["_deployment_revision"] = deployment_revision_id
+-                t["_attempt"] = len(run.get("attempts") or [])
+                 # v119: the runtime journey is part of the qualification contract, not a best-effort browser check.
+                 # v121: a web app without a contract gets one AUTHORED now (journey_author.py): a test account
+                 # provisioned by class, a contract derived from the real post-login page, dry-run once. The
+@@ -1527,6 +1566,9 @@ def qualify_app(app: str, keep: bool | None = None, log=print, run_id: str | Non
+                     else:
+                         t["journey"] = {"error": authored["code"], "detail": authored["detail"]}
+                 (TARGETS / f"{safe_id(app)}.json").write_text(json.dumps(t, indent=2) + "\n")
++                # The job identity goes to the watcher in memory only. Written into the target file, the
++                # --loop watcher would stamp ITS later checks with this job's run id and revision.
++                t = {**t, "_identity": {**_job_identity(app), "source": "app_runner.qualify_app"}}
+                 r = _watcher().check(t)
+                 if authored is not None:
+                     r["journey_author"] = {k: authored.get(k) for k in ("account", "code", "detail")}
+@@ -1537,8 +1579,10 @@ def qualify_app(app: str, keep: bool | None = None, log=print, run_id: str | Non
+                     log(f"  [{app}] {r['verdict']}: still warming up, re-checking in {WARMUP_RECHECK_WAIT}s ({i + 1}/{WARMUP_RECHECKS})")
+                     time.sleep(WARMUP_RECHECK_WAIT)
+                     r = _watcher().check(t)
+-            r["runner"] = {"started": True, "url": run["url"], "part": run["part"].get("why"),
++            r["runner"] = {"started": True, "profile": prof, "url": run["url"], "part": run["part"].get("why"),
+                            "part_detail": {k: v for k, v in run["part"].items() if not k.startswith("_")}, "attempts": run["attempts"]}
++        if obs is not None:
++            r.setdefault("observations", {})["app_http"] = obs
+         if not keep:
+             down(app)
+     # The recipe rule: a way of starting an app is saved ONLY when the app passed the full check with it
+@@ -1744,6 +1788,33 @@ def _free_disk_gb() -> float:
+ 
+ 
+ _QUEUED: dict[str, float] = {}
++# v121.2 fleet bookkeeping. Every app is one job in its own worker; these record what the fleet did so the
++# aggregate report says it instead of inferring it.
++_STARTED: dict[str, float] = {}       # app -> when its job left the queue (the hard timeout counts from here)
++_CURRENT_RUN: dict[str, str] = {}     # app -> run id of the job now checking it
++_ABANDONED_RUNS: set[str] = set()     # run ids the fleet stopped waiting for (hard timeout)
++_FLEET: dict = {}                     # the running fleet: id, events, peak concurrency, gate waits
++_FLEET_LOCK = threading.Lock()
++_POOL_POLL = 15                       # seconds between the fleet's looks at its workers
++_GATE_POLL = 20                       # seconds between a queued app's looks for machine room
++LAST_REPORT: dict | None = None       # the aggregate report of the last fleet run (also on disk)
++
++
++def _event(kind: str, app: str | None = None, detail: str = "", **facts) -> None:
++    """A timeout or resource event of the running fleet, kept for its aggregate report."""
++    e = {"at": time.time(), "kind": kind, "detail": detail, **facts}
++    if app:
++        e["app"] = safe_id(app)
++    with _FLEET_LOCK:
++        _FLEET.setdefault("events", []).append(e)
++
++
++def _mark_running(a: str) -> None:
++    """Caller holds _RUNNING_LOCK. The job leaves the queue: count it for the peak and start its clock."""
++    _RUNNING.add(a)
++    _STARTED[safe_id(a)] = time.time()
++    with _FLEET_LOCK:
++        _FLEET["peak"] = max(_FLEET.get("peak", 0), len(_RUNNING))
+ 
+ 
+ def _wait_for_memory(a: str, log) -> None:
+@@ -1758,6 +1829,7 @@ def _wait_for_memory(a: str, log) -> None:
+ 
+ 
+ def _wait_for_memory_inner(a: str, log, cleared: float) -> None:
++    announced = False
+     while True:
+         total, avail = _meminfo()
+         disk = _free_disk_gb()
+@@ -1765,15 +1837,26 @@ def _wait_for_memory_inner(a: str, log, cleared: float) -> None:
+             mem_ok = not total or avail >= total * START_FREE_MEMORY
+             disk_ok = disk >= START_FREE_DISK_GB
+             if (mem_ok and disk_ok) or not _RUNNING:
+-                _RUNNING.add(a); return
++                _mark_running(a); return
+             if not disk_ok and time.time() - cleared > 300:
+                 cleared = time.time()
+                 sh(["docker", "builder", "prune", "-af"], timeout=600)
+                 sh(["docker", "image", "prune", "-f"], timeout=600)   # dangling only: never an image another app is about to use
+                 log(f"[{a}] disk low ({disk:.1f} GB free): cleared Docker build cache and dangling images")
++                _event("DISK_LOW_PRUNE", a, f"{disk:.1f} GB free (< {START_FREE_DISK_GB} GB): cleared build cache and dangling images")
+                 continue
+-        log(f"[{a}] waiting: {avail // 2**20} MB memory, {disk:.1f} GB disk free, {len(_RUNNING)} app(s) running")
+-        time.sleep(20)
++            running = len(_RUNNING)
++        if not announced:
++            # Recorded once per app: the gate made it wait. A fleet that ends up one-at-a-time because the
++            # machine is small says so in its report (peak concurrency + these events), never silently.
++            announced = True
++            why = " and ".join(x for x, bad in (("memory", not mem_ok), ("disk", not disk_ok)) if bad)
++            _event("WAIT_FOR_ROOM", a, f"not enough {why} to start another app while {running} run",
++                   memory_mb=avail // 2**20, disk_gb=round(disk, 1), running=running)
++            with _FLEET_LOCK:
++                _FLEET["gate_waits"] = _FLEET.get("gate_waits", 0) + 1
++        log(f"[{a}] waiting: {avail // 2**20} MB memory, {disk:.1f} GB disk free, {running} app(s) running")
++        time.sleep(_GATE_POLL)
+ 
+ 
+ _RUNNING: set[str] = set()
+@@ -1781,70 +1864,288 @@ _RUNNING_LOCK = threading.Lock()
+ 
+ 
+ def qualify_all(apps: list[str] | None = None, log=print, parallel: int | None = None) -> list[dict]:
+-    """Every app queued at once (or PARALLEL at a time if set); each starts when memory and disk allow.
+-    Results come back in library order."""
++    """Every app queued at once (or `parallel` / APP_BUILDER_RUN_PARALLEL at a time if set); each starts when
++    memory and disk allow, as its own job with its own identity, workspace, containers, ports, evidence and
++    verification barrier. One app's crash, hang or timeout becomes that app's recorded result and never
++    stops, corrupts or hides another's. Results come back in library order, one per app, and the aggregate
++    report (state/runner/RUN-REPORT.md, runs/<fleet id>/) records totals, failures by class, the concurrency
++    actually used, and every timeout and resource event."""
++    global LAST_REPORT
+     names = list(apps if apps is not None else library_apps())
+     number_all(library_apps() + names)
+-    n = max(1, parallel or PARALLEL or len(names))
+-    if n == 1 or len(names) < 2:
+-        return [_qualify_one(a, log) for a in names]
+-    from concurrent.futures import ThreadPoolExecutor
+-    with ThreadPoolExecutor(max_workers=n) as pool:
+-        out = list(pool.map(lambda a: _qualify_one(a, log, gate=True), names))
+-    # Second pass: apps that failed only because the machine ran short while everything ran at once
+-    # (disk full, memory, Docker Hub limit) are checked again one at a time, with room cleared first.
+-    starved = [i for i, r in enumerate(out) if r.get("broken_at") is not None and _host_starved(r)]
+-    if starved:
+-        log(f"second pass: {len(starved)} app(s) failed for lack of machine room; re-checking one at a time")
+-    for i in starved:
+-        sh(["docker", "builder", "prune", "-af"], timeout=600)
+-        # Dangling images only. Under Coolify the live qualified apps' images (atta-qualified/...) share
+-        # this Docker; "-a" would delete any that aren't running at this moment, and Coolify can't pull them back.
+-        sh(["docker", "image", "prune", "-f"], timeout=900)
+-        out[i] = _qualify_one(names[i], log)
+-        out[i].setdefault("runner", {})["second_pass"] = True
++    # One identity per app. Two DIFFERENT names that reduce to the same id would share a workspace,
++    # containers, ports, results and evidence: the first is checked, the others are reported, not run.
++    by_id: dict[str, list[str]] = {}
++    for n in names:
++        by_id.setdefault(safe_id(n), [])
++        if n not in by_id[safe_id(n)]:
++            by_id[safe_id(n)].append(n)
++    collisions = {k: v for k, v in by_id.items() if len(v) > 1}
++    unique = [v[0] for v in by_id.values()]
++    cap = max(1, parallel or PARALLEL or len(unique) or 1)
++    n = min(cap, max(1, len(unique)))
++    if len(unique) < 2:
++        mode, reason = "single", "one app"
++    elif n == 1:
++        mode, reason = "sequential", ("parallel=1 requested by the caller" if parallel
++                                      else "APP_BUILDER_RUN_PARALLEL=1 (operator cap)")
++    elif n < len(unique):
++        mode, reason = "capped", f"at most {n} apps at once ({'caller' if parallel else 'APP_BUILDER_RUN_PARALLEL'})"
++    else:
++        mode, reason = "parallel", ""
++    fleet_id = f"fleet-{time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())}-{secrets.token_hex(3)}"
++    with _FLEET_LOCK:
++        _FLEET.clear()
++        _FLEET.update(fleet_run_id=fleet_id, events=[], peak=0, gate_waits=0)
++    for k, v in collisions.items():
++        log(f"IDENTITY COLLISION: {', '.join(v)} all map to '{k}'; only '{v[0]}' is checked. Rename the others.")
++        _event("IDENTITY_COLLISION", v[0], f"{', '.join(v)} share the id '{k}'; only '{v[0]}' was run", names=v)
++    if mode == "sequential":
++        log(f"WARNING: {len(unique)} apps will be checked ONE AT A TIME: {reason}")
++    started_at = time.time()
++    rev0 = deployment_revision(ROOT)
++    log(f"fleet {fleet_id}: {len(unique)} app(s), mode {mode}, up to {n} at once, revision {rev0}")
++    out = _run_pool(unique, log, n, gate=n > 1)
++    second: list[str] = []
++    if n > 1:
++        # Second pass: apps that failed only because the machine ran short while everything ran at once
++        # (disk full, memory, Docker Hub limit) are checked again one at a time, with room cleared first.
++        # Sequential by design, and recorded as such: the report lists every app it re-ran.
++        starved = [a for a in unique if out[safe_id(a)].get("broken_at") is not None and _host_starved(out[safe_id(a)])]
++        if starved:
++            log(f"second pass: {len(starved)} app(s) failed for lack of machine room; re-checking one at a time")
++        for a in starved:
++            _event("SEQUENTIAL_SECOND_PASS", a, "failed for lack of machine room while all apps ran at once; "
++                   "re-checked alone after clearing build cache and dangling images")
++            sh(["docker", "builder", "prune", "-af"], timeout=600)
++            # Dangling images only. Under Coolify the live qualified apps' images (atta-qualified/...) share
++            # this Docker; "-a" would delete any that aren't running at this moment, and Coolify can't pull them back.
++            sh(["docker", "image", "prune", "-f"], timeout=900)
++            r = _run_pool([a], log, 1, gate=False)[safe_id(a)]
++            r.setdefault("runner", {})["second_pass"] = True
++            out[safe_id(a)] = r
++            _write_result(a, r)
++            second.append(safe_id(a))
++    # Final barrier for the fleet: a QUALIFIED result must carry the revision that is live NOW. One checked
++    # against a revision that has since been replaced is invalidated and re-checked (REVISION_RERUNS), and
++    # stays UNVERIFIED if it still does not match. Evidence from the old revision is never carried over.
++    rev1 = deployment_revision(ROOT)
++    stale = [a for a in unique if handoff_state(out[safe_id(a)]) == "QUALIFIED"
++             and (out[safe_id(a)].get("verification") or {}).get("deployment_revision") != rev1]
++    if stale:
++        _event("FLEET_REVISION_CHANGED", None, f"deployment revision is now {rev1}; {len(stale)} QUALIFIED "
++               "result(s) were checked against an earlier one", apps=[safe_id(a) for a in stale])
++        if REVISION_RERUNS > 0:
++            log(f"deployment changed during the run: re-checking {len(stale)} app(s) against {rev1}")
++            again = _run_pool(stale, log, min(n, len(stale)), gate=n > 1)
++            out.update(again)
++            rev1 = deployment_revision(ROOT)
++        for a in stale:
++            r = out[safe_id(a)]
++            if handoff_state(r) == "QUALIFIED" and (r.get("verification") or {}).get("deployment_revision") != rev1:
++                _invalidate(r, "DEPLOYMENT_CHANGED_DURING_FLEET_RUN",
++                            f"checked against {(r.get('verification') or {}).get('deployment_revision')}, live is {rev1}")
++                _write_result(a, r)
++    with _FLEET_LOCK:
++        facts = dict(_FLEET)
++    ctx = {"fleet_run_id": fleet_id, "started_at": started_at, "finished_at": time.time(),
++           "revision_at_start": rev0, "revision_at_end": rev1, "events": facts.get("events") or [],
++           "concurrency": {"mode": mode, "cap": n, "configured": parallel or PARALLEL, "reason": reason,
++                           "apps": len(unique), "peak": facts.get("peak", 0), "gate_waits": facts.get("gate_waits", 0),
++                           "second_pass": second, "hard_timeout_s": APP_HARD_TIMEOUT}}
++    rep = resilience.build_report(ctx, names, out, safe_id, collisions)
++    try:
++        where = resilience.write_report(RUNNER, rep)
++        log(f"fleet {fleet_id}: " + ", ".join(f"{k} {v}" for k, v in rep["totals"].items() if v)
++            + f"; peak {ctx['concurrency']['peak']} at once; report {where}")
++    except Exception as e:   # the report must never cost the results
++        log(f"fleet {fleet_id}: report not written: {type(e).__name__}: {e}")
++    LAST_REPORT = rep
++    return [out[safe_id(a)] for a in unique]
++
++
++def _run_pool(apps: list[str], log, n: int, gate: bool) -> dict[str, dict]:
++    """Run each app's job in a worker (at most n at once). Every app gets a result: its own, a contained
++    WORKER_EXCEPTION, or WORKER_TIMEOUT when its job outlives APP_HARD_TIMEOUT (then the fleet stops
++    waiting for it, stops its containers, and a late result is kept aside, never over the recorded one)."""
++    from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
++    out: dict[str, dict] = {}
++    pool = ThreadPoolExecutor(max_workers=max(1, n), thread_name_prefix="atta-app")
++    futs = {}
++    for a in apps:
++        _STARTED.pop(safe_id(a), None)
++        futs[pool.submit(_qualify_one, a, log, gate)] = a
++    pending = set(futs)
++    abandoned = False
++    try:
++        while pending:
++            done, pending = wait(pending, timeout=_POOL_POLL, return_when=FIRST_COMPLETED)
++            for f in done:
++                a = futs[f]
++                try:
++                    out[safe_id(a)] = f.result()
++                except KeyboardInterrupt:
++                    raise
++                except BaseException as e:   # _qualify_one contains everything; this is the last line
++                    out[safe_id(a)] = _contained_failure(a, "WORKER_EXCEPTION", e)
++            if APP_HARD_TIMEOUT > 0:
++                now = time.time()
++                for f in list(pending):
++                    a = futs[f]
++                    t0 = _STARTED.get(safe_id(a))
++                    if t0 is not None and now - t0 > APP_HARD_TIMEOUT:
++                        pending.discard(f)
++                        abandoned = True
++                        out[safe_id(a)] = _abandon(a, now - t0, log)
++    finally:
++        pool.shutdown(wait=not abandoned)
+     return out
+ 
+ 
++def _abandon(a: str, secs: float, log) -> dict:
++    k = safe_id(a)
++    run_id = _CURRENT_RUN.get(k)
++    if run_id:
++        _ABANDONED_RUNS.add(run_id)
++    detail = (f"the job was still running after {int(secs)}s (APP_BUILDER_APP_HARD_TIMEOUT={APP_HARD_TIMEOUT}s); "
++              "the fleet stopped waiting for it and stopped its containers")
++    log(f"[{a}] WORKER_TIMEOUT: {detail}")
++    _event("WORKER_TIMEOUT", a, detail, run_id=run_id, seconds=int(secs))
++    try:
++        down(a, prune=False)
++    except Exception:
++        pass
++    r = _contained_failure(a, "WORKER_TIMEOUT", None, detail)
++    r.setdefault("verification", {}).update({"run_id": run_id, "status": "ABANDONED", "abandoned": True,
++                                             "fleet_run_id": _FLEET.get("fleet_run_id")})
++    r["handoff_state"] = handoff_state(r)
++    r["levels"] = levels(r)
++    _write_result(a, r, force=True)
++    return r
++
++
++def _contained_failure(a: str, code: str, exc: BaseException | None, detail: str | None = None) -> dict:
++    """A crash or hang in one app's job, turned into that app's result (never the fleet's problem).
++    Built without the app's folder when it is gone, and without the watcher module if that is what broke."""
++    import traceback
++    tb = traceback.format_exc() if exc is not None else ""
++    text = detail or f"{type(exc).__name__}: {exc}"
++    body = text + ("\n" + tb[-2000:] if tb and tb.strip() != "NoneType: None" else "")
++    try:
++        r = _synth(a, code, body)
++    except Exception:
++        try:
++            r = _watcher().fail(safe_id(a), {}, "2 APP_UP", code, body)
++        except Exception:
++            r = {"app": safe_id(a), "verdict": f"BROKEN AT 2 APP_UP — {code}", "broken_at": "2 APP_UP", "code": code,
++                 "stages": {"2 APP_UP": {"status": "FAIL", "code": code, "detail": body}}, "ts": time.time()}
++    r["runner"] = {"started": False, "contained": code, "exception": text, "traceback": tb[-4000:] if tb else None}
++    if code != "RUNNER_EXCEPTION":
++        _event(code, a, text[:300])
++    return r
++
++
++def _invalidate(r: dict, code: str, detail: str) -> None:
++    """The checks ran against a revision that is no longer the one being verified: nothing they saw may
++    stand as qualification evidence for the current one."""
++    v = r.setdefault("verification", {})
++    v["status"] = "UNVERIFIED"
++    v["original"] = {"verdict": r.get("verdict"), "broken_at": r.get("broken_at"), "code": r.get("code"),
++                     "stage_6": (r.get("stages") or {}).get("6 CLEAN")}
++    r["verdict"] = "UNVERIFIED"
++    r["broken_at"] = r.get("broken_at") or "6 CLEAN"
++    r["code"] = code
++    r.setdefault("stages", {})["6 CLEAN"] = {"status": "FAIL", "code": code,
++                                             "detail": detail + "; rerun against the current revision"}
++    r["handoff_state"] = handoff_state(r)
++    r["levels"] = levels(r)
++
++
+ def _qualify_one(a: str, log, gate: bool = False) -> dict:
+-    if gate:
+-        _wait_for_memory(a, log)
+     try:
++        if gate:
++            _wait_for_memory(a, log)
++        else:
++            with _RUNNING_LOCK:
++                _mark_running(a)
+         return _qualify_one_inner(a, log)
++    except Exception as e:   # anything the job's own containment missed is still only this app's result
++        r = _contained_failure(a, "WORKER_EXCEPTION", e)
++        r["handoff_state"] = handoff_state(r)
++        r["levels"] = levels(r)
++        _write_result(a, r)
++        return r
+     finally:
+         with _RUNNING_LOCK:
+             _RUNNING.discard(a)
++        _CTX.job = None
++
++
++def _app_revision_of(a: str) -> str:
++    try:
++        return app_revision(app_dir(a))
++    except (FileNotFoundError, OSError):
++        return "missing"
+ 
+ 
+ def _qualify_one_inner(a: str, log) -> dict:
++    """One app's job, inside the final verification barrier:
++      capture the revision (the ATTa code AND this app) -> readiness + qualification (qualify_app: start it,
++      settle, six stages, stage-6 browser evidence) -> confirm both revisions are unchanged -> accept.
++    Changed = this attempt is invalidated (its evidence stays on the attempt record, never on the result)
++    and the app is checked again, up to REVISION_RERUNS times; still changing = UNVERIFIED.
++    The fleet-wide regression comparison is pipeline.qualify's (the checklist against the last full run)."""
+     log(f"[{a}] qualifying")
+-    run_id = f"run-{int(time.time()*1000)}-{safe_id(a)}-{secrets.token_hex(4)}"
+-    rev_before = deployment_revision(ROOT)
+-    try:
+-        r = qualify_app(a, log=log, run_id=run_id, deployment_revision_id=rev_before)
+-    except Exception as e:   # one app's crash never stops the others
+-        import traceback
+-        tb = traceback.format_exc()
+-        r = _synth(a, "RUNNER_EXCEPTION", f"{type(e).__name__}: {e}\n{tb[-2000:]}")
+-        r["runner"] = {"exception": str(e), "traceback": tb[-4000:]}
++    k = safe_id(a)
++    run_id = f"run-{int(time.time() * 1000)}-{k}-{secrets.token_hex(4)}"
++    invalidated: list[dict] = []
++    r: dict = {}
++    stable = False
++    for attempt in range(1, REVISION_RERUNS + 2):
++        job = {"app": k, "fleet_run_id": _FLEET.get("fleet_run_id"), "run_id": run_id, "attempt": attempt,
++               "correlation_id": new_correlation_id(), "deployment_revision": deployment_revision(ROOT),
++               "app_revision": _app_revision_of(a)}
++        _CTX.job = job
++        _CURRENT_RUN[k] = run_id
++        t0 = time.time()
+         try:
+-            down(a, prune=False)
+-        except Exception:
+-            pass
+-    rev_after = deployment_revision(ROOT)
+-    stable = revision_stable(rev_before, rev_after)
+-    r.setdefault("verification", {})
+-    r["verification"].update({"run_id":run_id, "deployment_revision":rev_before,
+-                              "revision_after":rev_after, "revision_stable":stable,
+-                              "status":"CURRENT" if stable else "UNVERIFIED"})
++            r = qualify_app(a, log=log, run_id=run_id, deployment_revision_id=job["deployment_revision"])
++        except Exception as e:   # one app's crash never stops the others
++            r = _contained_failure(a, "RUNNER_EXCEPTION", e)
++            try:
++                down(a, prune=False)
++            except Exception:
++                pass
++        after_dep, after_app = deployment_revision(ROOT), _app_revision_of(a)
++        stable = revision_stable(job["deployment_revision"], after_dep) and revision_stable(job["app_revision"], after_app)
++        r["verification"] = {**{x: job[x] for x in _IDENTITY_KEYS}, "revision_after": after_dep,
++                             "app_revision_after": after_app, "revision_stable": stable,
++                             "passed_checks": passed_all_stages(r), "started_at": t0, "finished_at": time.time(),
++                             "status": "CURRENT" if stable else "UNVERIFIED", "invalidated_attempts": invalidated}
++        if stable:
++            break
++        what = " and ".join(x for x, ch in (("the deployment", job["deployment_revision"] != after_dep),
++                                            ("the app", job["app_revision"] != after_app)) if ch) or "the revision"
++        invalidated.append({"attempt": attempt, "correlation_id": job["correlation_id"],
++                            "deployment_revision": job["deployment_revision"], "revision_after": after_dep,
++                            "app_revision": job["app_revision"], "app_revision_after": after_app,
++                            "verdict": r.get("verdict"), "code": r.get("code"),
++                            "evidence": ((r.get("stages") or {}).get("6 CLEAN") or {}).get("evidence")})
++        if attempt <= REVISION_RERUNS:
++            log(f"[{a}] {what} changed during the check: result discarded, checking again (attempt {attempt + 1})")
++            _event("REVISION_CHANGED_RERUN", a, f"{what} changed during attempt {attempt}; re-checked", run_id=run_id)
++            try:
++                down(a, prune=False)
++            except Exception:
++                pass
++        else:
++            _event("REVISION_UNSTABLE", a, f"{what} still changing after {attempt} attempt(s): UNVERIFIED", run_id=run_id)
+     if not stable:
+-        r["verdict"] = "UNVERIFIED"
+-        r["broken_at"] = r.get("broken_at") or "DEPLOYMENT_CHANGED_DURING_CHECK"
+-        r["code"] = "DEPLOYMENT_CHANGED_DURING_CHECK"
+-        r.setdefault("stages", {})["6 CLEAN"] = {"status":"FAIL", "code":"DEPLOYMENT_CHANGED_DURING_CHECK",
+-            "detail":"deployment revision changed during qualification; rerun against the current revision"}
++        _invalidate(r, "DEPLOYMENT_CHANGED_DURING_CHECK", "the deployment or the app changed during qualification")
++    r["handoff_state"] = handoff_state(r)
++    r["levels"] = levels(r)
+     _write_result(a, r)
+-    log(f"[{a}] {r['verdict']}")
++    log(f"[{a}] {r['verdict']} ({r['handoff_state']})")
+     return r
+ 
+ def main(argv: list[str]) -> int:
+@@ -1862,12 +2163,12 @@ def main(argv: list[str]) -> int:
+         rs = [json.loads(p.read_text()) for p in sorted(RESULTS.glob("*.json"))]
+         cl = checklist(library_apps(), rs)
+         (RUNNER / "CHECKLIST.md").write_text(checklist_text(cl, "app_runner.py all"))
+-        import journey_author; journey_author.journey_report(out)
++        try:   # v121.1 passed an undefined name here: every `all` run ended in a NameError after the work
++            import journey_author; journey_author.journey_report(rs)
++        except Exception as e:
++            print(f"journey report: {type(e).__name__}: {e}")
+         print(checklist_text(cl, "app_runner.py all"))
+         return 0 if cl["complete"] and cl["FAIL"] == 0 else 1
+-        for r in rs:
+-            print(f"{r['app']:<24} {r['verdict']}")
+-        return 0 if all(r.get("broken_at") is None for r in rs) else 1
+     if not app:
+         print("which app?"); return 2
+     if cmd == "recipe":
+@@ -1882,7 +2183,7 @@ def main(argv: list[str]) -> int:
+         else:
+             print(f"NOT STARTED: {r['code']}: {r['detail']}")
+         return 0 if r["ok"] else 1
+-    r = qualify_app(app)
++    r = _qualify_one(app, print)   # the same job as a fleet run: identity, barrier, evidence
+     _watcher().print_result(r)
+     print(f"  HOW: {r['runner'].get('part') or r['runner'].get('why') or r['runner'].get('detail')}")
+     return 0 if r.get("broken_at") is None else 1
+diff --git a/04-deployment/gateway.py b/04-deployment/gateway.py
+index c654cb9..39398fa 100644
+--- a/04-deployment/gateway.py
++++ b/04-deployment/gateway.py
+@@ -78,7 +78,7 @@ def discovered_html(r):
+   added=set(r.get("apps_added") or []); kept=set(r.get("apps_already_in_library") or [])
+   out+="".join("<tr><td>"+html.escape(a.get("name",""))+"</td><td><code>"+html.escape(a.get("rel",""))+"</code></td><td>"+html.escape(a.get("how",""))+"</td><td>"+("added" if a.get("name") in added else "already there (library copy kept)" if a.get("name") in kept else "")+"</td></tr>" for a in d)+"</table>"
+  if ev:
+-  out+="<h2>What the browser saw (stage 6 evidence)</h2><p>"+" &middot; ".join("<b>"+html.escape(a)+"</b>: "+" ".join("<a href=/evidence/"+html.escape(a)+"/"+f+">"+f+"</a>" for f in EVIDENCE_FILES if e.get({"screenshot.png":"screenshot","page.html":"html","browser.json":"browser"}[f])) for a,e in ev.items())+"</p>"
++  out+="<h2>What the browser saw (stage 6 evidence)</h2><p>"+" &middot; ".join("<b>"+html.escape(a)+"</b>: "+" ".join("<a href=/evidence/"+html.escape(a)+"/"+(html.escape(e["run"])+"/" if re.fullmatch(r"[a-z0-9-]+",str(e.get("run") or "")) else "")+f+">"+f+"</a>" for f in EVIDENCE_FILES if e.get({"screenshot.png":"screenshot","page.html":"html","browser.json":"browser"}[f])) for a,e in ev.items())+"</p>"
+  return out
+ def checklist_html(r):
+  cl=r.get("checklist")
+@@ -305,11 +305,13 @@ class H(BaseHTTPRequestHandler):
+     return "<span class="+cls+">"+html.escape(r.get("verdict",""))+"</span><br><small>"+html.escape(how)+"</small>"
+    rows="".join("<tr><td>"+html.escape(e.get("app",k))+"</td><td>"+("yes" if inlib(e) else "not yet")+"</td><td>"+last_check(e)+"</td><td>"+html.escape(e.get("skin_category") or "—")+"</td><td>"+html.escape(str(e.get("skin_source") or ""))+" / "+html.escape(str(e.get("skin_confidence") or ""))+"</td><td>"+html.escape(str(e.get("profile") or "—"))+"</td><td>"+html.escape(str(e.get("root") or ""))+"</td><td>"+html.escape(", ".join(e.get("sources",[])))+"</td><td class="+html.escape(e.get("status",""))+">"+html.escape(e.get("status",""))+("<br><small>"+html.escape("; ".join(e["look"]))+"</small>" if e.get("look") else "")+"</td></tr>" for k,e in order)
+    self.out(page("Library","<h1>Library</h1>"+users_see+"<p>"+str(n_in)+" apps in the library, "+str(len(cat))+" known in total (seed repos are cloned on the next build). Grows with every app added; skin and profile come from each app's own files.</p><table><tr><th>App</th><th>In library</th><th>Last check (started how)</th><th>Skin</th><th>Decided by / confidence</th><th>Profile</th><th>Code root</th><th>Came from</th><th>Status</th></tr>"+rows+"</table>",me)); return
+-  m=re.fullmatch(r"/evidence/([a-z0-9-]+)/(screenshot\.png|page\.html|browser\.json)",p)
++  # v121.2: /evidence/<app>/<run>/<file> is one check's own folder. The old /evidence/<app>/<file> serves only
++  # the pre-v121.2 flat files; it never falls through to a newer run, which could be another revision's picture.
++  m=re.fullmatch(r"/evidence/([a-z0-9-]+)/(?:([a-z0-9-]+)/)?(screenshot\.png|page\.html|browser\.json)",p)
+   if m:
+-   f=ROOT/"state/runner/evidence"/m.group(1)/m.group(2)
++   f=ROOT/"state/runner/evidence"/m.group(1)/(m.group(2) or "")/m.group(3)
+    if not f.is_file(): self.send_error(404); return
+-   self.out(f.read_bytes(),ctype=EVIDENCE_FILES[m.group(2)]); return
++   self.out(f.read_bytes(),ctype=EVIDENCE_FILES[m.group(3)]); return
+   if p=="/builds": self.out(page("Builds","<h1>"+("All builds" if me["role"]=="admin" else "My builds")+"</h1>"+builds_table(builds.visible_to(me),me),me)); return
+   if p=="/api/me": self.json_out({"name":me["name"],"role":me["role"]}); return
+   if p=="/api/front-door/library": self.json_out(user_catalogue.for_user(ROOT)); return
+diff --git a/04-deployment/pipeline.py b/04-deployment/pipeline.py
+index 4bf3d5a..dd80a23 100644
+--- a/04-deployment/pipeline.py
++++ b/04-deployment/pipeline.py
+@@ -34,7 +34,7 @@ def qualify(only=None, previous=None):
+     passed; only those go to Coolify) or NOT_QUALIFIED (none).
+     only/previous: re-check just these apps and keep the earlier results for the rest (healing).
+     Returns (state, all apps, problems, results)."""
+-    import system_watcher as w, app_runner, rule_lifecycle
++    import system_watcher as w, app_runner, rule_lifecycle, resilience
+     run_started=time.time()
+     names=app_runner.library_apps()
+     if not names: return builds.NOT_QUALIFIED,[],'NO_APPS: the library has no installed apps yet',[]
+@@ -49,16 +49,27 @@ def qualify(only=None, previous=None):
+     with w.LOG.open('a') as f:
+         for r in results: f.write(json.dumps(r,default=str)+'\n')
+     apps=[]; problems=[]
++    live_rev=resilience.deployment_revision(ROOT)
+     for r in results:
+         clean=r.get('stages',{}).get('6 CLEAN',{}).get('status')
+         why=None
++        state=r.get('handoff_state') or resilience.handoff_state(r)
+         if r.get('broken_at') is not None: why=f"{r['app']}: {r['verdict']}"
+         elif clean!='OK': why=f"{r['app']}: browser stage 6 not passed ({clean or 'missing'})"
++        # v121.2: only a result that passed the final verification barrier (same revision before and after,
++        # evidence from that revision) is QUALIFIED. Anything else stays here, whatever its stages say.
++        elif state!='QUALIFIED': why=f"{r['app']}: {state} (verification barrier not passed)"
++        elif (r.get('verification') or {}).get('deployment_revision')!=live_rev:
++            # A result kept from an earlier check (healing re-checks only some apps) counts only while it
++            # was made on the revision that is live now.
++            state='UNVERIFIED'; why=f"{r['app']}: UNVERIFIED (checked on another deployment revision; re-check it)"
+         if why: problems.append(why)
+         try: t=json.loads((ROOT/'state/apps'/f"{r['app']}.json").read_text())
+         except (OSError,ValueError): t={}
+         run=r.get('runner') or {}
+-        apps.append({'app':r['app'],'verdict':r['verdict'],'qualified':why is None,'ui_dir':t.get('ui_dir'),
++        apps.append({'app':r['app'],'verdict':r['verdict'],'qualified':why is None,'state':state,
++                     'run_id':(r.get('verification') or {}).get('run_id'),
++                     'deployment_revision':(r.get('verification') or {}).get('deployment_revision'),'ui_dir':t.get('ui_dir'),
+                      'target_url':t.get('target_url'),'proxy_url':t.get('proxy_url'),
+                      'started_by':run.get('part') or run.get('why'),'kept_running':run.get('kept_running',False),
+                      'evidence':r.get('stages',{}).get('6 CLEAN',{}).get('evidence')})
+@@ -68,6 +79,9 @@ def qualify(only=None, previous=None):
+     try:
+         import journey_author; journey_author.journey_report(results)
+     except Exception as e: print(f'journey report: {e}',flush=True)
++    frep=app_runner.LAST_REPORT or {}
++    if CURRENT_BUILD and frep:
++        builds.update(CURRENT_BUILD,fleet_report={k:frep.get(k) for k in ('fleet_run_id','totals','concurrency','deployment_revision','timeouts')})
+     if CURRENT_BUILD:
+         builds.update(CURRENT_BUILD,checklist=cl)
+         (STATE/'checklists').mkdir(parents=True,exist_ok=True)
+diff --git a/04-deployment/resilience/__init__.py b/04-deployment/resilience/__init__.py
+index 7468254..e15198b 100644
+--- a/04-deployment/resilience/__init__.py
++++ b/04-deployment/resilience/__init__.py
+@@ -1,4 +1,11 @@
+-"""ATTa resilience boundary: safe observation and deployment identity helpers.
+-Existing deployd, watcher and lifecycle code remain authoritative."""
+-from .identity import deployment_revision, verification_snapshot, revision_stable
++"""ATTa resilience boundary: safe observation, deployment/app identity, outcome vocabulary and the fleet
++report. Existing deployd, watcher and lifecycle code remain authoritative."""
++from .identity import (deployment_revision, code_revision, app_revision, new_correlation_id,
++                       verification_snapshot, revision_stable)
+ from .probes import safe_http_probe, safe_tcp_probe
++from .states import STATES, handoff_state, levels, passed_all_stages
++from .report import build_report, report_markdown, write_report
++
++__all__ = ["deployment_revision", "code_revision", "app_revision", "new_correlation_id", "verification_snapshot",
++           "revision_stable", "safe_http_probe", "safe_tcp_probe", "STATES", "handoff_state", "levels",
++           "passed_all_stages", "build_report", "report_markdown", "write_report"]
+diff --git a/04-deployment/resilience/identity.py b/04-deployment/resilience/identity.py
+index 1dcad4b..00ee762 100644
+--- a/04-deployment/resilience/identity.py
++++ b/04-deployment/resilience/identity.py
+@@ -1,35 +1,123 @@
+ from __future__ import annotations
+-import hashlib, json, os, time
++import hashlib, json, secrets, time
+ from pathlib import Path
+ 
++# The code folder this module runs from (04-deployment). Under Coolify it is /opt/atta/04-deployment inside
++# the image; on a plain server it is the folder systemd starts from. It is the code actually executing.
++CODE_DIR = Path(__file__).resolve().parents[1]
++# Code that decides a verdict. A change to any of these files is a new deployment revision.
++_CODE_GLOBS = ("*.py", "resilience/*.py", "deployd/**/*.py", "upstream_apps.json", "app_catalogue.json")
+ 
+-def deployment_revision(root: Path | str) -> str:
+-    """Stable identity for the currently deployed ATTa code plus release metadata."""
++
++def code_revision(code_dir: Path | str | None = None) -> str:
++    """Content identity of the running ATTa code: release.json next to the code folder plus every file
++    that decides a verdict. v121.1 looked only under APP_BUILDER_ROOT for release.json; inside the Coolify
++    container nothing is ever put there, so every app read "unknown" and was marked UNVERIFIED."""
++    code_dir = Path(code_dir) if code_dir else CODE_DIR
++    h = hashlib.sha256()
++    seen = 0
++    rel = code_dir.parent / "release.json"
++    files = [rel] if rel.is_file() else []
++    for g in _CODE_GLOBS:
++        files += sorted(p for p in code_dir.glob(g) if p.is_file() and "__pycache__" not in p.parts)
++    for p in dict.fromkeys(files):
++        try:
++            data = p.read_bytes()
++        except OSError:
++            continue
++        name = "release.json" if p == rel else p.relative_to(code_dir).as_posix()
++        h.update(name.encode() + b"\0" + hashlib.sha256(data).digest())
++        seen += 1
++    return "code:" + h.hexdigest()[:24] if seen else "unknown"
++
++
++def deployment_revision(root: Path | str, code_dir: Path | str | None = None) -> str:
++    """Stable identity for the currently deployed ATTa: the ADM-promoted release (when ADM manages this
++    machine) plus the content of the code that is actually running. Never "unknown" while the running
++    code can be read, so a missing release.json can't turn every verdict into UNVERIFIED."""
+     root = Path(root)
+     candidates = [root / "adm" / "current" / "release.json", root / "current" / "release.json", root / "app" / "release.json", root / "release.json"]
+     release = None
+-    source = None
+     for p in candidates:
+         try:
+             if p.is_file():
+                 release = json.loads(p.read_text())
+-                source = str(p.resolve())
+                 break
+         except (OSError, ValueError, json.JSONDecodeError):
+             continue
++    parts = []
+     if release is not None:
+         raw = json.dumps(release, sort_keys=True, separators=(",", ":")).encode()
+-        return "release:" + hashlib.sha256(raw).hexdigest()[:24]
++        parts.append("release:" + hashlib.sha256(raw).hexdigest()[:24])
++    else:
++        try:
++            cur = root / "adm" / "current"
++            parts.append("path:" + str(cur.resolve(strict=True)))
++        except OSError:
++            pass
++    code = code_revision(code_dir)
++    if code != "unknown":
++        parts.append(code)
++    return "+".join(parts) or "unknown"
++
++
++def _git_head(d: Path) -> str | None:
++    """HEAD commit read from the repository files (no subprocess: this runs twice per app per check)."""
++    g = d / ".git"
+     try:
+-        cur = root / "adm" / "current"
+-        return "path:" + str(cur.resolve(strict=True))
++        if g.is_file():   # worktree / submodule: "gitdir: <path>"
++            txt = g.read_text().strip()
++            if txt.startswith("gitdir:"):
++                g = (d / txt.split(":", 1)[1].strip()).resolve()
++        head = (g / "HEAD").read_text().strip()
++        if not head.startswith("ref:"):
++            return head or None
++        ref = head.split(":", 1)[1].strip()
++        if (g / ref).is_file():
++            return (g / ref).read_text().strip() or None
++        packed = g / "packed-refs"
++        if packed.is_file():
++            for line in packed.read_text().splitlines():
++                if line.endswith(" " + ref):
++                    return line.split(" ", 1)[0]
++        return "unborn:" + ref
+     except OSError:
+-        return "unknown"
++        return None
++
++
++def app_revision(app_dir: Path | str) -> str:
++    """Identity of ONE app as it is being tested: its source commit, the intake record of every change
++    made to it, and the skin/port files stages 4 and 5 compare against. Deliberately not a whole-tree
++    fingerprint: the runner creates .env files in the app folder while starting it, and that must not
++    read as "the app changed under the check". A re-import (new commit, new intake) or a new skin does."""
++    d = Path(app_dir)
++    if not d.is_dir():
++        return "missing"
++    h = hashlib.sha256()
++    head = _git_head(d)
++    h.update(b"head\0" + (head or "none").encode())
++    try:
++        h.update(b"intake\0" + hashlib.sha256((d / ".atta-intake.json").read_bytes()).digest())
++    except OSError:
++        h.update(b"intake\0none")
++    ui = d / ".ui-capability"
++    if ui.is_dir():
++        for p in sorted(x for x in ui.rglob("*") if x.is_file()):
++            try:
++                h.update(p.relative_to(ui).as_posix().encode() + b"\0" + hashlib.sha256(p.read_bytes()).digest())
++            except OSError:
++                h.update(p.relative_to(ui).as_posix().encode() + b"\0unreadable")
++    return "app:" + h.hexdigest()[:24] + (":" + head[:12] if head else "")
++
++
++def new_correlation_id() -> str:
++    return "c-" + secrets.token_hex(8)
+ 
+ 
+-def verification_snapshot(root: Path | str, app: str, attempt: int = 1) -> dict:
++def verification_snapshot(root: Path | str, app: str, attempt: int = 1, app_dir: Path | str | None = None) -> dict:
+     return {
+         "deployment_revision": deployment_revision(root),
++        "app_revision": app_revision(app_dir) if app_dir is not None else None,
+         "app": str(app),
+         "attempt": int(attempt),
+         "captured_at": time.time(),
+diff --git a/04-deployment/resilience/report.py b/04-deployment/resilience/report.py
+new file mode 100644
+index 0000000..f7eab98
+--- /dev/null
++++ b/04-deployment/resilience/report.py
+@@ -0,0 +1,133 @@
++"""The aggregate report of one fleet run: per-app outcome plus totals, failures by class, the concurrency
++actually used, and every timeout / resource event. Built only from the per-app results and the events the
++runner recorded while it ran: nothing is inferred, and an app without a result is reported NOT_STARTED."""
++from __future__ import annotations
++import json, os, time
++from pathlib import Path
++
++from .states import STATES, handoff_state, levels
++
++
++def _row(name: str, r: dict | None, safe) -> dict:
++    v = (r or {}).get("verification") or {}
++    run = (r or {}).get("runner") or {}
++    ev = (((r or {}).get("stages") or {}).get("6 CLEAN") or {}).get("evidence") or {}
++    state = handoff_state(r)
++    return {
++        "app": safe(name),
++        "number": (r or {}).get("number"),
++        "state": state,
++        "levels": levels(r),
++        "verdict": (r or {}).get("verdict"),
++        "broken_at": (r or {}).get("broken_at"),
++        "code": (r or {}).get("code"),
++        "run_id": v.get("run_id"),
++        "correlation_id": v.get("correlation_id"),
++        "attempt": v.get("attempt"),
++        "deployment_revision": v.get("deployment_revision"),
++        "app_revision": v.get("app_revision"),
++        "revision_stable": v.get("revision_stable"),
++        "invalidated_attempts": len(v.get("invalidated_attempts") or []),
++        "evidence_dir": ev.get("dir"),
++        "seconds": run.get("seconds"),
++        "queued_s": ((r or {}).get("timing") or {}).get("queued_s"),
++        "second_pass": bool(run.get("second_pass")),
++    }
++
++
++def build_report(ctx: dict, names: list[str], results: dict, safe, collisions: dict | None = None) -> dict:
++    """ctx: fleet facts the runner measured (ids, times, revisions, concurrency, events).
++    results: safe_id(app) -> result dict (or missing). collisions: safe_id -> [names that share it]."""
++    rows, seen = [], set()
++    for n in names:
++        k = safe(n)
++        if k in seen:
++            continue
++        seen.add(k)
++        rows.append(_row(n, results.get(k), safe))
++    for k, dup in sorted((collisions or {}).items()):
++        for extra in dup[1:]:
++            rows.append({"app": extra, "state": "NOT_STARTED", "code": "IDENTITY_COLLISION",
++                         "levels": levels(None), "verdict": None, "broken_at": None,
++                         "detail": f"'{extra}' has the same identity ({k}) as '{dup[0]}': its workspace, "
++                                   "containers, ports and evidence would be shared, so it was not run. Rename one."})
++    totals = {s: sum(1 for x in rows if x["state"] == s) for s in STATES}
++    by_class: dict[str, dict] = {}
++    for x in rows:
++        if x["state"] in ("QUALIFIED",):
++            continue
++        key = f"{x['state']}:{x.get('broken_at') or '-'}:{x.get('code') or '-'}"
++        c = by_class.setdefault(key, {"state": x["state"], "stage": x.get("broken_at"), "code": x.get("code"), "apps": []})
++        c["apps"].append(x["app"])
++    events = list(ctx.get("events") or [])
++    fleet_stable = bool(ctx.get("revision_at_start")) and ctx.get("revision_at_start") == ctx.get("revision_at_end") \
++        and ctx.get("revision_at_start") != "unknown"
++    return {
++        "schema": "ATTA_FLEET_RUN_REPORT.v1",
++        "fleet_run_id": ctx.get("fleet_run_id"),
++        "started_at": ctx.get("started_at"),
++        "finished_at": ctx.get("finished_at"),
++        "seconds": round((ctx.get("finished_at") or 0) - (ctx.get("started_at") or 0), 1),
++        "deployment_revision": {"at_start": ctx.get("revision_at_start"), "at_end": ctx.get("revision_at_end"),
++                                "stable": fleet_stable},
++        "apps_requested": len(names),
++        "apps_reported": len(rows),
++        "totals": totals,
++        "failures_by_class": sorted(by_class.values(), key=lambda c: (-len(c["apps"]), c["state"], str(c["code"]))),
++        "concurrency": ctx.get("concurrency") or {},
++        "timeouts": [x["app"] for x in rows if x["state"] == "TIMEOUT"],
++        "resource_events": events,
++        "apps": rows,
++    }
++
++
++def report_markdown(rep: dict) -> str:
++    c = rep.get("concurrency") or {}
++    t = rep["totals"]
++    L = [f"# Fleet run {rep['fleet_run_id']}", "",
++         f"Apps requested {rep['apps_requested']}, reported {rep['apps_reported']}. "
++         + ", ".join(f"{k} {t[k]}" for k in STATES) + ".", "",
++         f"Deployment revision: {rep['deployment_revision']['at_start']} -> {rep['deployment_revision']['at_end']} "
++         f"({'stable' if rep['deployment_revision']['stable'] else 'CHANGED: results from the old revision are UNVERIFIED'})", "",
++         f"Concurrency: mode {c.get('mode')}, cap {c.get('cap')}, peak {c.get('peak')} apps at once"
++         + (f"; reason: {c.get('reason')}" if c.get("reason") else "")
++         + f"; waited for machine room {c.get('gate_waits', 0)} time(s)"
++         + f"; sequential second pass {len(c.get('second_pass') or [])} app(s)", ""]
++    if rep["timeouts"]:
++        L += ["Timeouts: " + ", ".join(rep["timeouts"]), ""]
++    if rep["failures_by_class"]:
++        L += ["## Not qualified, by class", "", "| State | Stage | Code | Apps |", "|---|---|---|---|"]
++        L += [f"| {x['state']} | {x['stage'] or ''} | {x['code'] or ''} | {', '.join(x['apps'])} |" for x in rep["failures_by_class"]]
++        L += [""]
++    if rep["resource_events"]:
++        L += ["## Resource and timeout events", ""]
++        L += [f"- {time.strftime('%H:%M:%S', time.localtime(e.get('at') or 0))} {e.get('kind')}"
++              f"{' [' + e['app'] + ']' if e.get('app') else ''}: {e.get('detail', '')}" for e in rep["resource_events"][:500]]
++        L += [""]
++    L += ["## Every app", "", "| App | State | TCP | HTTP | Healthy | Qualified | Verified | Stage | Code | Attempt | Run |",
++          "|---|---|---|---|---|---|---|---|---|---|---|"]
++    mark = {True: "yes", False: "no", None: "n/a"}
++    for x in rep["apps"]:
++        lv = x.get("levels") or {}
++        L.append(f"| {x['app']} | {x['state']} | " + " | ".join(mark[lv.get(k)] for k in
++                 ("tcp_reachable", "http_response", "healthy", "qualified", "verified"))
++                 + f" | {x.get('broken_at') or ''} | {x.get('code') or ''} | {x.get('attempt') or ''} | {x.get('run_id') or ''} |")
++    return "\n".join(L) + "\n"
++
++
++def write_report(out_dir: Path, rep: dict) -> Path:
++    """runs/<fleet_run_id>/report.{json,md} (kept) plus RUN-REPORT.{json,md} (the latest), each written
++    whole-then-renamed so a reader never sees half a report."""
++    out_dir = Path(out_dir)
++    d = out_dir / "runs" / str(rep["fleet_run_id"])
++    d.mkdir(parents=True, exist_ok=True)
++    js = json.dumps(rep, indent=2, default=str) + "\n"
++    md = report_markdown(rep)
++    for dest, text in ((d / "report.json", js), (d / "report.md", md),
++                       (out_dir / "RUN-REPORT.json", js), (out_dir / "RUN-REPORT.md", md)):
++        tmp = dest.with_suffix(dest.suffix + ".tmp")
++        try:
++            tmp.write_text(text); os.replace(tmp, dest)
++        except OSError:
++            tmp.unlink(missing_ok=True)
++    return d / "report.json"
+diff --git a/04-deployment/resilience/states.py b/04-deployment/resilience/states.py
+new file mode 100644
+index 0000000..3e36591
+--- /dev/null
++++ b/04-deployment/resilience/states.py
+@@ -0,0 +1,87 @@
++"""The per-app outcome vocabulary of a fleet run, and the observation ladder behind it.
++
++Outcome (exactly one per app, never inferred beyond the evidence on the result):
++  NOT_STARTED   no job ran for the app (no result, identity collision, never dequeued)
++  START_FAILED  the runner could not bring the app up (no way of running it worked)
++  TIMEOUT       the app, or the worker checking it, ran out of time
++  INCONCLUSIVE  the check itself could not reach a verdict (runner/watcher/probe exception, no Docker,
++                no browser); says nothing about the app
++  FAILED        the app ran and a qualification stage failed
++  QUALIFIED     every stage passed AND the final verification barrier held (same revision before/after)
++  UNVERIFIED    the checks ran but the deployment or the app changed underneath them; must be re-run
++
++Observation ladder (each rung recorded separately; a higher rung never implies itself from a lower one):
++  tcp_reachable -> http_response -> healthy -> qualified -> verified
++"""
++from __future__ import annotations
++
++STATES = ("NOT_STARTED", "START_FAILED", "TIMEOUT", "INCONCLUSIVE", "FAILED", "QUALIFIED", "UNVERIFIED")
++
++# The check could not decide: nothing here is evidence about the app itself.
++INCONCLUSIVE_CODES = {"RUNNER_EXCEPTION", "WORKER_EXCEPTION", "WATCHER_EXCEPTION", "SMOKE_EXCEPTION",
++                      "BROWSER_EXCEPTION", "PLAYWRIGHT_UNAVAILABLE", "RUNNER_NO_DOCKER", "IDENTITY_COLLISION"}
++TIMEOUT_CODES = {"TIMEOUT", "WORKER_TIMEOUT", "PROBE_TIMEOUT"}
++# Runner rules that mean "waited as long as allowed and it never came up".
++TIMEOUT_RULES = {"budget.spent", "app.still_starting", "app.stalled"}
++START_STAGES = {"1 INSTALLED", "2 APP_UP"}
++
++
++def _stage_ok(r: dict, name: str) -> bool:
++    return ((r.get("stages") or {}).get(name) or {}).get("status") == "OK"
++
++
++def passed_all_stages(r: dict | None) -> bool:
++    """Every stage passed, stage 6 included (what v121 called PASS). Not yet QUALIFIED: the barrier decides."""
++    return bool(r) and r.get("broken_at") is None and _stage_ok(r, "6 CLEAN")
++
++
++def _ran_out_of_time(r: dict) -> bool:
++    run = r.get("runner") or {}
++    attempts = run.get("attempts") or []
++    if r.get("code") != "RUNNER_EXHAUSTED" or not attempts:
++        return False
++    return any(a.get("rule") == "budget.spent" for a in attempts) or attempts[-1].get("rule") in TIMEOUT_RULES
++
++
++def handoff_state(r: dict | None) -> str:
++    if not r:
++        return "NOT_STARTED"
++    if r.get("handoff_state") == "NOT_STARTED":
++        return "NOT_STARTED"
++    v = r.get("verification") or {}
++    if r.get("verdict") == "UNVERIFIED" or v.get("status") == "UNVERIFIED":
++        return "UNVERIFIED"
++    code = str(r.get("code") or "")
++    if r.get("broken_at") is None:
++        # Nothing failed, but QUALIFIED needs stage 6 OK and a barrier that held. Anything less is not a pass.
++        return "QUALIFIED" if passed_all_stages(r) and v.get("status") == "CURRENT" else "INCONCLUSIVE"
++    if code in INCONCLUSIVE_CODES or code.startswith("PROBE_"):
++        return "INCONCLUSIVE"
++    if code in TIMEOUT_CODES or _ran_out_of_time(r):
++        return "TIMEOUT"
++    if r.get("broken_at") in START_STAGES and not (r.get("runner") or {}).get("started"):
++        return "START_FAILED"
++    return "FAILED"
++
++
++def levels(r: dict | None) -> dict:
++    """What was actually observed for the app, rung by rung. None = not applicable (a system project or
++    package is never started, so it has no port to reach), False = checked and not seen / not checked."""
++    if not r:
++        return {"tcp_reachable": False, "http_response": False, "healthy": False, "qualified": False, "verified": False}
++    run = r.get("runner") or {}
++    probe = (r.get("observations") or {}).get("app_http") or {}
++    v = r.get("verification") or {}
++    qualified = bool(v.get("passed_checks")) if "passed_checks" in v else passed_all_stages(r)
++    verified = qualified and v.get("status") == "CURRENT" and handoff_state(r) == "QUALIFIED"
++    if run.get("profile") in ("system", "package"):
++        return {"tcp_reachable": None, "http_response": None, "healthy": None, "qualified": qualified, "verified": verified}
++    started = bool(run.get("started"))
++    return {
++        "tcp_reachable": bool(probe.get("tcp_connected")) if probe else False,
++        "http_response": probe.get("http_status") is not None if probe else False,
++        # healthy: the runner saw it settle (no 5xx for SETTLE_SECONDS) and the watcher reached app and proxy
++        "healthy": started and _stage_ok(r, "2 APP_UP") and _stage_ok(r, "3 PROXY_UP"),
++        "qualified": qualified,
++        "verified": verified,
++    }
+diff --git a/04-deployment/system_watcher.py b/04-deployment/system_watcher.py
+index f5a6661..3efdf28 100644
+--- a/04-deployment/system_watcher.py
++++ b/04-deployment/system_watcher.py
+@@ -40,8 +40,13 @@ BASELINE_COMPARE=os.environ.get('APP_BUILDER_BASELINE_COMPARE','true').lower() i
+ CAPTURE_EVIDENCE=os.environ.get('APP_BUILDER_CAPTURE_EVIDENCE','true').lower() in {'1','true','yes'}
+ # Where results go. One JSON line per app per sweep.
+ ROOT=Path(os.environ.get('APP_BUILDER_ROOT','/srv/app-builder'))
+-# v112: per-app browser evidence lives here: <app>/screenshot.png, page.html, browser.json (console + failed requests).
++# v112: per-app browser evidence lives here. v121.2: one folder per check, <app>/<run id>-a<attempt>/ (or
++# <app>/watch-<time>-<rand>/ for a --loop or ad-hoc check): screenshot.png, page.html, browser.json. A new check
++# never writes over an older one, so a result can only ever point at the pictures of its own run and revision.
+ EVIDENCE_DIR=ROOT/'state/runner/evidence'
++# Check folders kept per app (oldest removed first). The folder of the check being written is never removed.
++EVIDENCE_KEEP=int(os.environ.get('APP_BUILDER_EVIDENCE_KEEP','20'))
++_IDENTITY_FIELDS=('fleet_run_id','run_id','attempt','correlation_id','deployment_revision','app_revision','source')
+ TARGET_DIR=ROOT/'state/apps'; LOG=ROOT/'state/system-watcher.log'
+ SKIN_RE=re.compile(r'<link\s+[^>]*href=["\'](/_cs/[^"\']+\.css)[^>]*>',re.I)
+ HOOK_RE=re.compile(r'<script\s+[^>]*(?:data-capability-hook=["\']1["\'][^>]*src=["\']([^"\']*?_cp/port\.js)["\']|src=["\']([^"\']*?_cp/port\.js)["\'][^>]*data-capability-hook=["\']1["\'])[^>]*>',re.I)
+@@ -199,20 +204,57 @@ def _capture(app,page,console_errors,request_failures,errors,metadata=None):
+     """v112 evidence: what stage 6 saw, written before any verdict so a FAIL keeps its picture too.
+     Never fails the stage: a capture problem is recorded on the result, not turned into a verdict."""
+     if not (CAPTURE_EVIDENCE and app): return None
+-    d=EVIDENCE_DIR/re.sub(r'[^a-z0-9-]+','-',str(app).lower()).strip('-')
++    d=evidence_dir(app,metadata)
++    ident={k:metadata.get(k) for k in _IDENTITY_FIELDS if isinstance(metadata,dict) and metadata.get(k) is not None}
+     try:
+-        d.mkdir(parents=True,exist_ok=True)
++        d.mkdir(parents=True,exist_ok=False)
+         page.screenshot(path=str(d/'screenshot.png'),full_page=True)
+         (d/'page.html').write_text(page.content(),errors='replace')
+-        payload={'url':page.url,'title':page.title(),'captured_at':time.time(),
+-            'page_errors':errors[:50],'console_errors':console_errors[:50],'request_failures':request_failures[:50]}
+-        if isinstance(metadata,dict):
+-            for k in ('run_id','deployment_revision','attempt'):
+-                if metadata.get(k) is not None: payload[k]=metadata[k]
++        now=time.time()
++        payload={'app':_safe(app),'stage':'6 CLEAN','source':ident.get('source') or 'system_watcher','url':page.url,
++            'title':page.title(),'captured_at':now,'ts':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime(now)),
++            'page_errors':errors[:50],'console_errors':console_errors[:50],'request_failures':request_failures[:50],**ident}
+         (d/'browser.json').write_text(json.dumps(payload,indent=2,default=str)+'\n')
+-        return {'dir':str(d),'screenshot':str(d/'screenshot.png'),'html':str(d/'page.html'),'browser':str(d/'browser.json')}
++        _prune_evidence(d)
++        return {'dir':str(d),'run':d.name,'screenshot':str(d/'screenshot.png'),'html':str(d/'page.html'),'browser':str(d/'browser.json'),**ident}
+     except Exception as e:
+-        return {'dir':str(d),'error':f'{type(e).__name__}: {e}'}
++        return {'dir':str(d),'run':d.name,'error':f'{type(e).__name__}: {e}',**ident}
++
++def _safe(x):
++    return re.sub(r'[^a-z0-9-]+','-',str(x).lower()).strip('-') or 'app'
++
++def evidence_dir(app,metadata=None):
++    """This check's own evidence folder. Named by the job (run id + attempt) when the app runner is checking
++    the app, else a fresh watch-<ms>-<rand> folder: never a folder another check wrote."""
++    m=metadata if isinstance(metadata,dict) else {}
++    if m.get('run_id'):
++        name=_safe(f"{m['run_id']}-a{m.get('attempt') or 1}")
++    else:
++        name=f"watch-{int(time.time()*1000)}-{os.urandom(3).hex()}"
++    d=EVIDENCE_DIR/_safe(app)/name
++    if d.exists():   # the same job capturing twice (a warm-up re-check): its own next folder
++        i=2
++        while (EVIDENCE_DIR/_safe(app)/f'{name}-{i}').exists(): i+=1
++        d=EVIDENCE_DIR/_safe(app)/f'{name}-{i}'
++    return d
++
++def _prune_evidence(keep_dir):
++    """Oldest check folders first, EVIDENCE_KEEP per app and per kind: --loop checks (watch-) never push out
++    the runner's (run-). The folder the app's recorded result points at is never removed."""
++    try:
++        kind='watch-' if keep_dir.name.startswith('watch-') else 'run-'
++        pinned=set()
++        try:
++            res=json.loads((ROOT/'state/runner/results'/f'{keep_dir.parent.name}.json').read_text())
++            ev=((res.get('stages') or {}).get('6 CLEAN') or {}).get('evidence') or {}
++            if ev.get('dir'): pinned.add(Path(ev['dir']).name)
++            for inv in (res.get('verification') or {}).get('invalidated_attempts') or []:
++                if (inv.get('evidence') or {}).get('dir'): pinned.add(Path(inv['evidence']['dir']).name)
++        except (OSError,ValueError,AttributeError): pass
++        runs=sorted((x for x in keep_dir.parent.iterdir() if x.is_dir() and x!=keep_dir and x.name.startswith(kind)
++                     and x.name not in pinned), key=lambda x:x.stat().st_mtime)
++        for x in runs[:max(0,len(runs)-(EVIDENCE_KEEP-1))]: shutil.rmtree(x,ignore_errors=True)
++    except OSError: pass
+ 
+ def _journey_spec(t, app=None):
+     """Return the explicit runtime journey contract for this app.
+@@ -574,7 +616,7 @@ def check(t):
+         if sha(rb)!=sha((ui/'capability-port/port.js').read_bytes()): return fail(app,stages,'5 HOOK','PORT_MISMATCH')
+         stages['5 HOOK']=stage(); current_stage='6 CLEAN'
+         exp=adapter_expected(t); _TL.seen=None; _TL.evidence=None
+-        stages['6 CLEAN']=browser_check(proxy,app_url,exp,app=app,journey=_journey_spec(t,app),metadata={'run_id':t.get('_run_id'),'deployment_revision':t.get('_deployment_revision'),'attempt':t.get('_attempt',1)})
++        stages['6 CLEAN']=browser_check(proxy,app_url,exp,app=app,journey=_journey_spec(t,app),metadata=t.get('_identity') or None)
+         if getattr(_TL,'evidence',None): stages['6 CLEAN']['evidence']=_TL.evidence
+         if getattr(_TL,'journey',None): stages['6 CLEAN']['journey']=_TL.journey
+         r=result(app,stages)
+diff --git a/05-coolify/kit/scripts/deploy-atta.sh b/05-coolify/kit/scripts/deploy-atta.sh
+index 147a172..190d09a 100755
+--- a/05-coolify/kit/scripts/deploy-atta.sh
++++ b/05-coolify/kit/scripts/deploy-atta.sh
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env bash
+ # Puts ATTa on this Coolify server, run BY Coolify. Run after scripts/install.sh.
+ #
+-# Usage: sudo ./scripts/deploy-atta.sh --domain atta.example.com [--atta-dir PATH] [--no-build]
++# Usage: sudo ./scripts/deploy-atta.sh --domain atta.example.com[,www.atta.example.com] [--atta-dir PATH] [--no-build]
+ #
+ #   1. Connects ATTa to this Coolify (connect-atta.sh: API on, read+write+deploy token).
+ #   2. Builds the ATTa image (atta:v121) from the ATTa folder this kit ships in.
+@@ -60,14 +60,29 @@ done
+ [ -n "$ATTA_DIR" ] && [ -f "$ATTA_DIR/Dockerfile" ] && [ -f "$ATTA_DIR/docker-compose.coolify.yml" ] ||
+     die "No ATTa folder with a Dockerfile at '${ATTA_DIR:-?}'. Pass --atta-dir /path/to/ATTa"
+ command -v jq >/dev/null 2>&1 || die "jq is not installed (apt-get install -y jq)"
++# --domain takes one host name or a comma-separated list (e.g. example.com,www.example.com): every
++# name gets the same route and certificate. The first one is the address ATTa is announced at.
++ATTA_DOMAINS=()
+ if [ -n "$ATTA_DOMAIN" ]; then
+-    ATTA_DOMAIN="${ATTA_DOMAIN#https://}"; ATTA_DOMAIN="${ATTA_DOMAIN#http://}"; ATTA_DOMAIN="${ATTA_DOMAIN%%/*}"
+-    printf '%s' "$ATTA_DOMAIN" | grep -Eq '^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$' ||
+-        die "--domain '$ATTA_DOMAIN' is not a plain host name (e.g. atta.example.com)"
++    IFS=',' read -r -a _doms <<<"$ATTA_DOMAIN"
++    for d in "${_doms[@]}"; do
++        d="${d// /}"; d="${d#https://}"; d="${d#http://}"; d="${d%%/*}"
++        [ -n "$d" ] || continue
++        printf '%s' "$d" | grep -Eq '^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$' ||
++            die "--domain '$d' is not a plain host name (e.g. atta.example.com)"
++        ATTA_DOMAINS+=("$d")
++    done
++    [ "${#ATTA_DOMAINS[@]}" -gt 0 ] || die "--domain has no host name in it"
++    ATTA_DOMAIN="${ATTA_DOMAINS[0]}"
+ fi
+ require_root
+ [ -f "$COOLIFY_ENV_FILE" ] || die "Coolify is not installed here. Run scripts/install.sh first."
+ 
++# 0. Docker Hub mirror: shared fix for HTTP 429 rate limits, before the image build and before ATTa
++#    pulls any app's images. Restarting Docker restarts Coolify, so wait for its API afterwards.
++ensure_registry_mirror || warn "Continuing WITHOUT the Docker Hub mirror: expect HTTP 429 from Docker Hub under load"
++wait_for_coolify_api || die "Coolify's API is not answering on port $APP_PORT. Check: docker ps; docker logs coolify"
++
+ # 1. Token. ATTa runs on this same server with host networking, so it reaches Coolify on loopback.
+ url="http://127.0.0.1:$APP_PORT"
+ OUT_DIR="$OUT_DIR" APP_PORT="$APP_PORT" "$SCRIPT_DIR/connect-atta.sh" --url "$url"
+@@ -197,17 +212,19 @@ ok "ATTa is up on port $ATTA_PORT"
+ if [ -n "$ATTA_DOMAIN" ]; then
+     [ -d "$PROXY_DYNAMIC_DIR" ] || die "Coolify's proxy folder $PROXY_DYNAMIC_DIR is missing. Is Coolify's proxy (Traefik) running?"
+     tmp="$(mktemp "$PROXY_DYNAMIC_DIR/.atta.XXXXXX")"
++    host_rule=""
++    for d in "${ATTA_DOMAINS[@]}"; do host_rule="${host_rule:+$host_rule || }Host(\`$d\`)"; done
+     cat >"$tmp" <<ROUTE
+-# Written by ATTa deploy-atta.sh (v118). ATTa at https://$ATTA_DOMAIN. Delete this file to remove the route.
++# Written by ATTa deploy-atta.sh (v118). ATTa at https://${ATTA_DOMAINS[*]:-$ATTA_DOMAIN}. Delete this file to remove the route.
+ http:
+   routers:
+     atta-http:
+-      rule: "Host(\`$ATTA_DOMAIN\`)"
++      rule: "${host_rule:-Host(\`$ATTA_DOMAIN\`)}"
+       entryPoints: [http]
+       middlewares: [atta-to-https]
+       service: atta
+     atta-https:
+-      rule: "Host(\`$ATTA_DOMAIN\`)"
++      rule: "${host_rule:-Host(\`$ATTA_DOMAIN\`)}"
+       entryPoints: [https]
+       service: atta
+       tls:
+@@ -225,19 +242,21 @@ http:
+ ROUTE
+     chmod 644 "$tmp"
+     mv -f "$tmp" "$PROXY_DYNAMIC_DIR/atta.yaml"
+-    ok "Coolify's proxy now routes https://$ATTA_DOMAIN to ATTa"
+-    info "Waiting for https://$ATTA_DOMAIN (certificate from Let's Encrypt; DNS must already point here)"
+-    https_ok=false
+-    for _ in $(seq 1 60); do
+-        if curl -fsS -o /dev/null -m 10 "https://$ATTA_DOMAIN/health"; then https_ok=true; break; fi
+-        sleep 5
++    ok "Coolify's proxy now routes ${ATTA_DOMAINS[*]} (https) to ATTa"
++    for d in "${ATTA_DOMAINS[@]}"; do
++        info "Waiting for https://$d (certificate from Let's Encrypt; DNS must already point here)"
++        https_ok=false
++        for _ in $(seq 1 60); do
++            if curl -fsS -o /dev/null -m 10 "https://$d/health"; then https_ok=true; break; fi
++            sleep 5
++        done
++        if [ "$https_ok" != true ]; then
++            warn "https://$d does not answer with a valid certificate yet."
++            warn "Check: dig +short $d (must be this server's IP), ports 80/443 open, then re-run this script."
++            die "Stage 1 is NOT done: no working HTTPS address yet for $d."
++        fi
++        ok "ATTa is live: https://$d/ (valid certificate)"
+     done
+-    if [ "$https_ok" != true ]; then
+-        warn "https://$ATTA_DOMAIN does not answer with a valid certificate yet."
+-        warn "Check: dig +short $ATTA_DOMAIN (must be this server's IP), ports 80/443 open, then re-run this script."
+-        die "Stage 1 is NOT done: no working HTTPS address yet."
+-    fi
+-    ok "ATTa is live: https://$ATTA_DOMAIN/ (valid certificate)"
+     echo "Close port $ATTA_PORT to the internet (AWS security group): people use https://$ATTA_DOMAIN/ only."
+     echo "Stage 1 is proven only when a person opens https://$ATTA_DOMAIN/ in a browser, logs in and reaches the Front Door."
+ else
+diff --git a/05-coolify/kit/scripts/install.sh b/05-coolify/kit/scripts/install.sh
+index c5955c4..9e221f7 100755
+--- a/05-coolify/kit/scripts/install.sh
++++ b/05-coolify/kit/scripts/install.sh
+@@ -153,6 +153,10 @@ done
+ run_coolify_installer "$COOLIFY_VERSION" "${install_env[@]}" ||
+     die "Coolify installation failed. Fix the error above and re-run; the installer is safe to re-run."
+ 
++# Coolify's installer rewrites /etc/docker/daemon.json, so the Docker Hub mirror goes in after it.
++ensure_registry_mirror || warn "Docker Hub mirror not set: app builds may hit Docker Hub's HTTP 429 rate limit"
++wait_for_coolify_api || die "Coolify's API did not come back after the Docker restart. Check: docker logs coolify"
++
+ # ---------------------------------------------------------------- admin lockdown
+ # Coolify creates the admin (and closes sign-up) once, during first boot. If its checks
+ # fail at that moment (e.g. a DNS hiccup while validating the email domain) it carries
+diff --git a/05-coolify/kit/scripts/lib/common.sh b/05-coolify/kit/scripts/lib/common.sh
+index c6dad1d..e3b11e2 100644
+--- a/05-coolify/kit/scripts/lib/common.sh
++++ b/05-coolify/kit/scripts/lib/common.sh
+@@ -507,3 +507,100 @@ wait_for_stable_proxy() {
+     fail "Reverse proxy did not come up and stay up. Check: docker logs coolify-proxy, and Servers > localhost > Proxy in the dashboard"
+     return 1
+ }
++
++# ---------------------------------------------------------------- Docker Hub mirror
++# Docker Hub rate-limits anonymous pulls (HTTP 429 "toomanyrequests"). ATTa pulls many base
++# images at once, so every Docker Hub download is sent through Google's public Docker Hub
++# cache first; Docker falls back to Docker Hub itself on a miss.
++#
++# This must be done on the HOST, after Coolify's installer: that installer rewrites
++# /etc/docker/daemon.json (dropping any mirror set earlier), and ATTa's own runtime 429 repair
++# (app_runner.fix_rate_limit) cannot reach the host's Docker config from inside its container.
++# Idempotent: merges into the existing file (Coolify's log and address-pool settings are kept),
++# backs it up, restarts Docker only when something changed, and puts the old file back if Docker
++# will not start with the new one.
++DOCKER_DAEMON_JSON="${DOCKER_DAEMON_JSON:-/etc/docker/daemon.json}"
++ATTA_REGISTRY_MIRROR="${ATTA_REGISTRY_MIRROR-https://mirror.gcr.io}" # empty = leave Docker as it is
++
++registry_mirror_set() { # registry_mirror_set FILE MIRROR -> 0 if FILE already lists MIRROR
++    [ -f "$1" ] && jq -e --arg m "$2" '(.["registry-mirrors"] // []) | index($m) != null' "$1" >/dev/null 2>&1
++}
++
++docker_restart() {
++    if [ -n "${DOCKER_RESTART_CMD:-}" ]; then
++        eval "$DOCKER_RESTART_CMD"
++    elif [ -d /run/systemd/system ]; then
++        systemctl restart docker
++    else
++        service docker restart
++    fi
++}
++
++docker_ready() { # docker_ready SECONDS
++    local deadline=$((SECONDS + ${1:-90}))
++    until docker info >/dev/null 2>&1; do
++        [ "$SECONDS" -lt "$deadline" ] || return 1
++        sleep 2
++    done
++}
++
++docker_mirrors_active() { # docker_mirrors_active MIRROR -> 0 if the running daemon uses it
++    docker info --format '{{json .RegistryConfig.Mirrors}}' 2>/dev/null | jq -e --arg m "$1" \
++        'map(rtrimstr("/")) | index($m | rtrimstr("/")) != null' >/dev/null 2>&1
++}
++
++ensure_registry_mirror() {
++    local m="$ATTA_REGISTRY_MIRROR" f="$DOCKER_DAEMON_JSON" backup="" tmp
++    if [ -z "$m" ]; then
++        info "Docker Hub mirror disabled (ATTA_REGISTRY_MIRROR is empty)"
++        return 0
++    fi
++    if registry_mirror_set "$f" "$m"; then
++        if docker_mirrors_active "$m"; then
++            ok "Docker Hub downloads already go through $m"
++            return 0
++        fi
++        info "Docker Hub mirror is in $f but the running Docker does not use it yet"
++    else
++        if [ -f "$f" ] && ! jq -e 'type == "object"' "$f" >/dev/null 2>&1; then
++            warn "$f is not a JSON object; not changing it. Docker Hub downloads are NOT mirrored."
++            return 1
++        fi
++        mkdir -p "$(dirname "$f")"
++        tmp="$(mktemp "$f.XXXXXX")"
++        if [ -f "$f" ]; then
++            backup="$f.atta-backup-$(date -u +%Y%m%dT%H%M%SZ)"
++            cp -p "$f" "$backup"
++            jq --arg m "$m" '.["registry-mirrors"] = ((.["registry-mirrors"] // []) + [$m])' "$f" >"$tmp"
++        else
++            jq -n --arg m "$m" '{"registry-mirrors": [$m]}' >"$tmp"
++        fi
++        chmod 644 "$tmp"
++        mv -f "$tmp" "$f"
++        info "Added Docker Hub mirror $m to $f${backup:+ (previous file: $backup)}"
++    fi
++    info "Restarting Docker to load the mirror (running containers come back by their restart policy)"
++    if docker_restart && docker_ready "${DOCKER_READY_SECONDS:-90}" && docker_mirrors_active "$m"; then
++        ok "Docker Hub downloads now go through $m"
++        return 0
++    fi
++    fail "Docker did not come back using the mirror."
++    if [ -n "$backup" ]; then
++        warn "Putting the previous $f back"
++        cp -p "$backup" "$f"
++    elif [ -f "$f" ] && [ "$(jq -c 'keys' "$f" 2>/dev/null)" = '["registry-mirrors"]' ]; then
++        warn "Removing the $f this step created"
++        rm -f "$f"
++    fi
++    docker_restart || true
++    docker_ready "${DOCKER_READY_SECONDS:-90}" || fail "Docker is still not running. Check: journalctl -u docker"
++    return 1
++}
++
++wait_for_coolify_api() { # wait_for_coolify_api [SECONDS] -> 0 once /api/health says OK
++    local deadline=$((SECONDS + ${1:-240}))
++    until [ "$(curl -fsS -m 5 "http://127.0.0.1:${APP_PORT:-8000}/api/health" 2>/dev/null)" = "OK" ]; do
++        [ "$SECONDS" -lt "$deadline" ] || return 1
++        sleep 3
++    done
++}
+diff --git a/05-coolify/kit/scripts/upgrade.sh b/05-coolify/kit/scripts/upgrade.sh
+index 1f94751..edb6210 100755
+--- a/05-coolify/kit/scripts/upgrade.sh
++++ b/05-coolify/kit/scripts/upgrade.sh
+@@ -30,5 +30,7 @@ fi
+ info "Upgrading Coolify $current -> $target"
+ "$SCRIPT_DIR/backup.sh" || die "Backup failed; not upgrading."
+ run_coolify_installer "$target" || die "Upgrade failed. Restore with scripts/restore.sh and the backup above if needed."
++ensure_registry_mirror || warn "Docker Hub mirror not set: app builds may hit Docker Hub's HTTP 429 rate limit"
++wait_for_coolify_api || die "Coolify's API did not come back after the Docker restart. Check: docker logs coolify"
+ EXPECTED_VERSION="$target" "$SCRIPT_DIR/verify.sh" || die "Upgrade ran but verification failed."
+ ok "Coolify upgraded to $target."
+diff --git a/05-coolify/kit/tests/unit/deploy_domains.bats b/05-coolify/kit/tests/unit/deploy_domains.bats
+new file mode 100644
+index 0000000..25ab22f
+--- /dev/null
++++ b/05-coolify/kit/tests/unit/deploy_domains.bats
+@@ -0,0 +1,74 @@
++#!/usr/bin/env bats
++# deploy-atta.sh end to end with Coolify, Docker and the network stubbed: the Docker Hub mirror is
++# set before the build, and --domain (one name or a comma list) becomes one Traefik route + checks.
++
++load test_helper
++
++setup() {
++    T="$BATS_TEST_TMPDIR"
++    mkdir -p "$T/kit/scripts/lib" "$T/proxy" "$T/out" "$T/root" "$T/etc/docker" "$T/coolify/source"
++    cp "$KIT_DIR/scripts/deploy-atta.sh" "$T/kit/scripts/"
++    cp "$KIT_DIR/scripts/lib/common.sh" "$T/kit/scripts/lib/"
++    cat >"$T/kit/scripts/connect-atta.sh" <<'SH'
++#!/usr/bin/env bash
++mkdir -p "$OUT_DIR"; echo 'COOLIFY_TOKEN="tok-123"' >"$OUT_DIR/atta.env"
++SH
++    chmod +x "$T/kit/scripts/connect-atta.sh"
++    echo 'APP_VERSION=4.3.23' >"$T/coolify/source/.env"
++    echo '{"log-driver":"json-file"}' >"$T/etc/docker/daemon.json"
++    echo '[]' >"$T/active"
++    : >"$T/calls"
++    export T
++    export COOLIFY_ENV_FILE="$T/coolify/source/.env" PROXY_DYNAMIC_DIR="$T/proxy" OUT_DIR="$T/out" ATTA_ROOT="$T/root"
++    export ATTA_DIR="$(cd "$KIT_DIR/../.." && pwd)" DOCKER_DAEMON_JSON="$T/etc/docker/daemon.json" DOCKER_READY_SECONDS=2
++    export DOCKER_RESTART_CMD='echo restart >>"$T/calls"; jq -c ".[\"registry-mirrors\"] // []" "$DOCKER_DAEMON_JSON" >"$T/active"'
++    stub docker '
++echo "docker $*" >>"$T/calls"
++case "$1" in
++  info) [ "${2:-}" = --format ] && cat "$T/active"; exit 0;;
++  build|image) exit 0;;
++esac
++exit 0'
++    stub iptables 'exit 0'
++    stub ip6tables 'exit 0'
++    stub systemctl 'exit 0'
++    stub curl '
++url=""; method=GET; w=""
++while [ $# -gt 0 ]; do case "$1" in -X) method="$2"; shift 2;; -w) w="$2"; shift 2;; -H|-d|-m|-o) shift 2;; http*) url="$1"; shift;; *) shift;; esac; done
++echo "curl $method $url" >>"$T/calls"
++case "$url" in
++  */api/health) echo OK; exit 0;;
++  */api/v1/servers) body="[{\"name\":\"localhost\",\"uuid\":\"srv1\"}]";;
++  */api/v1/projects) [ "$method" = POST ] && body="{\"uuid\":\"p1\"}" || body="[]";;
++  */api/v1/services) [ "$method" = POST ] && body="{\"uuid\":\"svc1\"}" || body="[]";;
++  */health) exit 0;;
++  *) exit 7;;
++esac
++printf "%s\n%s" "$body" 200'
++}
++
++@test "one domain: route for that host, mirror set before the build" {
++    run "$T/kit/scripts/deploy-atta.sh" --domain airexploit.com --no-build
++    [ "$status" -eq 0 ]
++    grep -q 'rule: "Host(`airexploit.com`)"' "$T/proxy/atta.yaml"
++    [[ "$output" == *"ATTa is live: https://airexploit.com/"* ]]
++    jq -e '.["registry-mirrors"] == ["https://mirror.gcr.io"] and .["log-driver"] == "json-file"' "$DOCKER_DAEMON_JSON"
++    grep -q 'curl GET https://airexploit.com/health' "$T/calls"
++}
++
++@test "comma list: one route and certificate for every name, each one checked over https" {
++    run "$T/kit/scripts/deploy-atta.sh" --domain 'https://airexploit.com, www.airexploit.com/' --no-build
++    [ "$status" -eq 0 ]
++    [ "$(grep -c 'rule: "Host(`airexploit.com`) || Host(`www.airexploit.com`)"' "$T/proxy/atta.yaml")" -eq 2 ]
++    grep -q 'curl GET https://airexploit.com/health' "$T/calls"
++    grep -q 'curl GET https://www.airexploit.com/health' "$T/calls"
++    [[ "$output" == *"ATTa is live: https://www.airexploit.com/"* ]]
++}
++
++@test "a bad name anywhere in the list is refused before anything changes" {
++    run "$T/kit/scripts/deploy-atta.sh" --domain 'airexploit.com,bad_name!' --no-build
++    [ "$status" -ne 0 ]
++    [[ "$output" == *"is not a plain host name"* ]]
++    [ ! -e "$T/proxy/atta.yaml" ]
++    [ ! -s "$T/calls" ]
++}
+diff --git a/05-coolify/kit/tests/unit/mirror.bats b/05-coolify/kit/tests/unit/mirror.bats
+new file mode 100644
+index 0000000..77b41c3
+--- /dev/null
++++ b/05-coolify/kit/tests/unit/mirror.bats
+@@ -0,0 +1,134 @@
++#!/usr/bin/env bats
++# ensure_registry_mirror: the shared Docker Hub 429 fix (scripts/lib/common.sh).
++# Docker is a stub: "restarting" it loads daemon.json's mirrors into the running config,
++# unless $BATS_TEST_TMPDIR/broken exists (then Docker refuses to start with the new file).
++
++load test_helper
++
++setup() {
++    load_common
++    export DOCKER_DAEMON_JSON="$BATS_TEST_TMPDIR/etc/docker/daemon.json"
++    export ATTA_REGISTRY_MIRROR="https://mirror.gcr.io"
++    export DOCKER_READY_SECONDS=2
++    mkdir -p "$BATS_TEST_TMPDIR/etc/docker"
++    ACTIVE="$BATS_TEST_TMPDIR/active"   # mirrors the "running daemon" uses
++    RESTARTS="$BATS_TEST_TMPDIR/restarts"
++    echo '[]' >"$ACTIVE"
++    : >"$RESTARTS"
++    export ACTIVE RESTARTS
++    stub docker '
++if [ "$1" = info ]; then
++  [ -f "$BATS_TEST_TMPDIR/down" ] && exit 1
++  if [ "${2:-}" = --format ]; then cat "$ACTIVE"; fi
++  exit 0
++fi
++exit 0'
++    export DOCKER_RESTART_CMD='echo x >>"$RESTARTS";
++      if [ -f "$BATS_TEST_TMPDIR/broken" ] && jq -e ".[\"registry-mirrors\"]" "$DOCKER_DAEMON_JSON" >/dev/null 2>&1; then
++        touch "$BATS_TEST_TMPDIR/down"; false;
++      else rm -f "$BATS_TEST_TMPDIR/down";
++        if [ -f "$DOCKER_DAEMON_JSON" ]; then jq -c ".[\"registry-mirrors\"] // []" "$DOCKER_DAEMON_JSON" >"$ACTIVE"; else echo "[]" >"$ACTIVE"; fi
++      fi'
++}
++
++coolify_daemon_json() {
++    cat >"$DOCKER_DAEMON_JSON" <<'JSON'
++{
++  "log-driver": "json-file",
++  "log-opts": {"max-size": "10m", "max-file": "3"},
++  "default-address-pools": [{"base": "10.0.0.0/8", "size": 24}]
++}
++JSON
++}
++
++@test "mirror is merged into Coolify's daemon.json, its settings kept, Docker restarted once" {
++    coolify_daemon_json
++    run ensure_registry_mirror
++    [ "$status" -eq 0 ]
++    [[ "$output" == *"now go through https://mirror.gcr.io"* ]]
++    jq -e '.["registry-mirrors"] == ["https://mirror.gcr.io"]' "$DOCKER_DAEMON_JSON"
++    jq -e '.["log-opts"]["max-size"] == "10m" and .["default-address-pools"][0].base == "10.0.0.0/8"' "$DOCKER_DAEMON_JSON"
++    [ "$(wc -l <"$RESTARTS")" -eq 1 ]
++    ls "$DOCKER_DAEMON_JSON".atta-backup-* >/dev/null
++}
++
++@test "already set and active: nothing written, Docker not restarted" {
++    coolify_daemon_json
++    ensure_registry_mirror
++    before="$(sha256sum "$DOCKER_DAEMON_JSON")"
++    : >"$RESTARTS"
++    run ensure_registry_mirror
++    [ "$status" -eq 0 ]
++    [[ "$output" == *"already go through"* ]]
++    [ "$(sha256sum "$DOCKER_DAEMON_JSON")" = "$before" ]
++    [ ! -s "$RESTARTS" ]
++}
++
++@test "in the file but not loaded yet: Docker restarted, file untouched" {
++    echo '{"registry-mirrors":["https://mirror.gcr.io"]}' >"$DOCKER_DAEMON_JSON"
++    before="$(sha256sum "$DOCKER_DAEMON_JSON")"
++    run ensure_registry_mirror
++    [ "$status" -eq 0 ]
++    [ "$(sha256sum "$DOCKER_DAEMON_JSON")" = "$before" ]
++    [ "$(wc -l <"$RESTARTS")" -eq 1 ]
++}
++
++@test "no daemon.json: one is created with just the mirror" {
++    run ensure_registry_mirror
++    [ "$status" -eq 0 ]
++    [ "$(jq -c . "$DOCKER_DAEMON_JSON")" = '{"registry-mirrors":["https://mirror.gcr.io"]}' ]
++}
++
++@test "an existing mirror is kept and ours is added after it" {
++    echo '{"registry-mirrors":["https://my.mirror.example"]}' >"$DOCKER_DAEMON_JSON"
++    run ensure_registry_mirror
++    [ "$status" -eq 0 ]
++    jq -e '.["registry-mirrors"] == ["https://my.mirror.example","https://mirror.gcr.io"]' "$DOCKER_DAEMON_JSON"
++}
++
++@test "a daemon.json that is not a JSON object is never changed" {
++    printf 'not json {' >"$DOCKER_DAEMON_JSON"
++    run ensure_registry_mirror
++    [ "$status" -eq 1 ]
++    [[ "$output" == *"not changing it"* ]]
++    [ "$(cat "$DOCKER_DAEMON_JSON")" = 'not json {' ]
++    [ ! -s "$RESTARTS" ]
++}
++
++@test "Docker will not start with the new file: previous file restored and Docker started again" {
++    coolify_daemon_json
++    original="$(jq -S . "$DOCKER_DAEMON_JSON")"
++    touch "$BATS_TEST_TMPDIR/broken"
++    run ensure_registry_mirror
++    [ "$status" -eq 1 ]
++    [[ "$output" == *"Putting the previous"* ]]
++    [ "$(jq -S . "$DOCKER_DAEMON_JSON")" = "$original" ]
++    [ "$(wc -l <"$RESTARTS")" -eq 2 ]
++    [ ! -f "$BATS_TEST_TMPDIR/down" ]
++}
++
++@test "Docker will not start with a file this step created: the file is removed again" {
++    touch "$BATS_TEST_TMPDIR/broken"
++    run ensure_registry_mirror
++    [ "$status" -eq 1 ]
++    [ ! -f "$DOCKER_DAEMON_JSON" ]
++    [ ! -f "$BATS_TEST_TMPDIR/down" ]
++}
++
++@test "ATTA_REGISTRY_MIRROR empty: Docker left exactly as it is" {
++    coolify_daemon_json
++    before="$(sha256sum "$DOCKER_DAEMON_JSON")"
++    ATTA_REGISTRY_MIRROR="" run ensure_registry_mirror
++    [ "$status" -eq 0 ]
++    [ "$(sha256sum "$DOCKER_DAEMON_JSON")" = "$before" ]
++    [ ! -s "$RESTARTS" ]
++}
++
++@test "deploy-atta.sh, install.sh and upgrade.sh all set the mirror after Coolify's installer" {
++    grep -q '^ensure_registry_mirror' "$KIT_DIR/scripts/deploy-atta.sh"
++    for s in install.sh upgrade.sh; do
++        awk '/run_coolify_installer/{i=NR} /^ensure_registry_mirror/{m=NR} END{exit !(i && m && m>i)}' "$KIT_DIR/scripts/$s"
++    done
++    # deploy-atta.sh: before the image build (the build pulls base images from Docker Hub)
++    awk '/^ensure_registry_mirror/{m=NR} /docker build -t/{b=NR} END{exit !(m && b && m<b)}' "$KIT_DIR/scripts/deploy-atta.sh"
++}
+diff --git a/START-HERE.txt b/START-HERE.txt
+index bf9a56c..14d9aa9 100644
+--- a/START-HERE.txt
++++ b/START-HERE.txt
+@@ -55,6 +55,24 @@ its skin and checks automatically: there's no list to update first.
+ To update ATTa itself, log in as admin and upload THIS ZIP the same way.
+ (Tester accounts can add apps but can't update the system.)
+ 
++ATTa v121.2: every app is its own isolated, parallel job (2026-09-29)
++--------------------------------------------------------------------
++- All apps run at once by default. Each app gets its own workspace, containers, ports, browser,
++  run ID, correlation ID and evidence folder (state/runner/evidence/<app>/<run>-a<attempt>/).
++- One app crashing, hanging (APP_BUILDER_APP_HARD_TIMEOUT) or vanishing becomes that app's
++  own result. It never stops or hides another app.
++- Final verification barrier: the deployment revision and the app's revision are captured
++  before the check and again after it. If either changed, the check is thrown away and run
++  again (APP_BUILDER_REVISION_RERUNS). If it is still changing, the app is UNVERIFIED.
++  Only QUALIFIED apps, checked on the live revision, go to Coolify.
++- Each app ends in exactly one state: NOT_STARTED, START_FAILED, TIMEOUT, INCONCLUSIVE,
++  FAILED, QUALIFIED or UNVERIFIED. The report also shows TCP reachable / HTTP response /
++  healthy / qualified / verified as separate observations.
++- After every run: state/runner/RUN-REPORT.md (totals, failures by class, how many apps really
++  ran at once, and every timeout and resource wait).
++- The kit sets a Docker Hub registry mirror, and --domain accepts "example.com,www.example.com".
++See docs/history/CHANGES-2026-09-29-V121.2-ISOLATED-PARALLEL-JOBS.md.
++
+ ATTa v121.1 resilience hardening (2026-09-29)
+ -----------------------------------------------
+ The resilience fixes are integrated into the existing ATTa runner/watcher boundary.
+diff --git a/docs/history/CHANGES-2026-09-29-V121.2-ISOLATED-PARALLEL-JOBS.md b/docs/history/CHANGES-2026-09-29-V121.2-ISOLATED-PARALLEL-JOBS.md
+new file mode 100644
+index 0000000..09e5d14
+--- /dev/null
++++ b/docs/history/CHANGES-2026-09-29-V121.2-ISOLATED-PARALLEL-JOBS.md
+@@ -0,0 +1,119 @@
++# ATTa v121.2: every app is its own isolated, parallel, revision-bound job
++
++v121.2 builds on v121.1 and carries out the parallel-isolated-testing handoff. It works inside the existing
++architecture. deployd, ADM, the six-stage watcher, qualification, the repair and lifecycle code, Stage-6
++evidence and the Coolify handoff all stay authoritative. Nothing here is a sidecar.
++
++## What was wrong in v121.1 (reproduced before fixing)
++
++| # | Defect | Effect | Proof |
++|---|---|---|---|
++| 1 | `deployment_revision()` looked for `release.json` only under `APP_BUILDER_ROOT`. Inside the Coolify container nothing puts it there, so it returned `unknown`, and `revision_stable("unknown", "unknown")` is False. | **Every app would have been marked UNVERIFIED.** No app could ever reach Coolify. | Run against the v121.1 code with a Coolify layout: `revision = unknown, stable = False` |
++| 2 | The job identity (`_run_id`, `_deployment_revision`, `_attempt`) was written into `state/apps/<app>.json`. | The `--loop` watcher reads that file, so its later checks were stamped with a finished job's run ID and revision. That is cross-attached evidence. | Test `test_identity_travels_in_memory_never_in_the_target_file` |
++| 3 | Stage-6 evidence was written to `evidence/<app>/`, one folder per app. | Each new check (a rerun, the loop watcher, the next build) overwrote the pictures that an older result still pointed at. That is evidence from another run or revision. | Test `test_each_check_has_its_own_folder_with_its_identity` |
++| 4 | The fleet used `pool.map(...)`, and `_synth()` needs the app's folder. | Any exception outside `qualify_app` aborted the whole fleet and lost every result. That included a crash inside the revision code, or an app removed while it was being checked. | Test `test_a_crash_outside_the_check_and_a_vanished_app_are_contained` |
++| 5 | When the revision changed, the app was only marked UNVERIFIED. | The spec requires: invalidate and **rerun**. | Test `test_revision_change_mid_check_is_discarded_and_rechecked` |
++| 6 | Nothing limited how long one job could run. | A hung job blocked the fleet forever, so there was no aggregate. | Test `test_a_hung_app_is_timeout_and_the_fleet_still_reports` |
++| 7 | Two different names with the same `safe_id` (for example `My_App` and `my-app`) were both run. | They shared a workspace, containers, ports, result file and evidence. | Test `test_colliding_identities_are_reported_not_merged` |
++| 8 | There was no aggregate report: no totals, no failures by class, no concurrency record, no timeouts or resource events. The memory/disk gate could quietly reduce the fleet to one app at a time. | The spec's report was missing, and sequential runs could go unnoticed. | Tests `test_report_totals_and_classes_add_up`, `test_machine_room_waits_are_reported`, `test_one_at_a_time_is_never_silent` |
++| 9 | Rows in `evidence.jsonl` (failed starts) carried no run ID, revision, attempt or correlation ID. | Rows could not be tied to a job, so they could be attached to the wrong one. | Test `test_failed_start_evidence_rows_name_their_own_job` |
++| 10 | `app_runner.py all` called `journey_report(out)`, but `out` was undefined. | Every CLI `all` run ended in a NameError after the work was done. The bug is present in v121 too. | Test `test_main_all_finishes_without_a_name_error` |
++| 11 | The two version-pin tests still expected `v121`. | The suite was red: 114 passed, 2 failed. | Full suite run |
++| 12 | The shared kit fix (Docker Hub registry mirror, `--domain a,b`) was not in the bundle. | The Docker Hub 429 failures seen in the live run would come back, and the www domain would have no route. | `grep ensure_registry_mirror` found 0 matches. The kit is byte-identical to v121. |
++
++## What v121.2 does
++
++**Job identity.** Each app's job has its own:
++- run ID
++- fleet run ID
++- attempt number
++- correlation ID (new for every attempt)
++- deployment revision: the ADM release plus a content hash of the running code, never `unknown` while the code can be read
++- app revision: source commit, intake record, and the skin/port files
++
++This identity is recorded on the result, on every `evidence.jsonl` row and in every Stage-6 `browser.json`. It is held in a per-thread job context and only ever attached to that same app's records.
++
++**Isolation.** The runner already gave each app its own:
++- workspace (`work/<app>`)
++- Compose project and network (`atta-<app>`)
++- host ports, handed out under a lock
++- data folder
++- skin-proxy process
++- browser process (a fresh Chromium for every check, with no shared profile)
++
++v121.2 adds:
++- one evidence folder per check: `evidence/<app>/<run>-a<attempt>/`, or `watch-…` for loop checks. Folders are never overwritten and are pruned oldest-first, keeping `APP_BUILDER_EVIDENCE_KEEP` (default 20).
++- identity kept out of shared files.
++- identity-collision detection.
++
++**Concurrency.** All apps are still queued at once by default (`APP_BUILDER_RUN_PARALLEL=0`). The memory and disk gates remain as safeguards. The report records:
++- the mode (`parallel`, `capped`, `sequential` or `single`) and the reason
++- the cap
++- the **peak number of apps actually running at once**
++- each wait for machine room
++- each disk prune
++- each app re-checked in the sequential second pass
++
++`APP_BUILDER_RUN_PARALLEL=1` logs `WARNING: … ONE AT A TIME`.
++
++**Failure containment.** Every exception becomes that app's own recorded result:
++- `RUNNER_EXCEPTION`: inside the check.
++- `WORKER_EXCEPTION`: anywhere else in the job, or thrown out of the worker.
++- `WORKER_TIMEOUT`: the job outlived `APP_BUILDER_APP_HARD_TIMEOUT`, which defaults to `max(2 × APP_TIME_BUDGET, 7200)` seconds counted from when the job leaves the queue. The fleet stops waiting, stops the app's containers and carries on. If the job finishes later, its result goes to `results/late/` and never overwrites the recorded one.
++
++The fallback builders work even when the app's folder or the watcher module is what broke.
++
++**Final verification barrier, per app:**
++1. Capture the deployment and app revisions.
++2. Readiness and qualification (`qualify_app`: start, settle, six stages, Stage-6 evidence).
++3. Capture both revisions again.
++4. If both are unchanged, accept the result.
++5. If either changed, record the attempt (with its evidence) under `verification.invalidated_attempts`, never on the result, and check the app again. This repeats `APP_BUILDER_REVISION_RERUNS` times (default 1). If the revision is still changing, the result is `UNVERIFIED`, stage 6 is set to FAIL with `DEPLOYMENT_CHANGED_DURING_CHECK`, and no old-revision evidence is kept on it.
++
++**Fleet barrier.** At the end of the run, any QUALIFIED result checked against a revision that is no longer live is re-checked, then marked `UNVERIFIED` (`DEPLOYMENT_CHANGED_DURING_FLEET_RUN`) if it still doesn't match. The pipeline hands off only results that are `QUALIFIED` **and** were made on the revision live at hand-off time. Results kept from earlier checks, and pre-v121.2 results with no barrier, are not accepted.
++
++**Outcome vocabulary** (`result.handoff_state`, exactly one per app):
++- NOT_STARTED
++- START_FAILED
++- TIMEOUT
++- INCONCLUSIVE
++- FAILED
++- QUALIFIED
++- UNVERIFIED
++
++**Observation ladder** (`result.levels`). Each level is recorded separately; a higher level is never inferred from a lower one:
++- `tcp_reachable`
++- `http_response`: from the contained probe, which runs right after start
++- `healthy`: settled, and the watcher reached the app and the proxy
++- `qualified`: all six stages passed
++- `verified`: qualified, and the barrier held
++
++**Aggregate report.** Written to `state/runner/RUN-REPORT.{json,md}` (the latest run) and `state/runner/runs/<fleet run id>/report.{json,md}` (kept). It contains:
++- one row per app: state, levels, stage, code, run, attempt, revisions, evidence folder
++- totals by state
++- failures grouped by state, stage and code
++- concurrency used
++- timeouts
++- every resource or timeout event
++- whether the deployment revision stayed stable for the whole run
++
++The build record carries a summary as `fleet_report`.
++
++**Gateway.** Evidence links are `/evidence/<app>/<run>/<file>`. The old `/evidence/<app>/<file>` form serves only the flat files from before v121.2. It never falls through to a newer run.
++
++**Kit.** Includes the tested shared fix from the deployment PR:
++- `ensure_registry_mirror`: sets the Docker Hub mirror before the installer and before every build, with a Docker restart only when needed.
++- `wait_for_coolify_api`
++- `--domain` accepts a comma-separated list.
++- Tests: `mirror.bats` and `deploy_domains.bats`.
++
++## Validation (run here, 2026-09-29)
++
++- Full Python suite: 142 passed, 4 skipped. v121.1 as received: 114 passed, 2 failed, 4 skipped.
++- New suite `tests/test_v121_2_parallel_isolation.py`: 26 tests. They run the real runner, watcher, pipeline, gateway (as a process) and resilience code. Only the Docker host is stood in, with jobs that sleep, crash, hang or change the app mid-check.
++- Mutation check: 14 of the fixes above were reverted one at a time, and a test failed every time.
++- Image layout: the tree was laid out the way the Dockerfile's COPY and rm steps leave it, and a fleet was run from it. The revision was stable, the peak was 3 of 3, and the report was written.
++- ADM `staging.check` accepts the bundle.
++- Kit: bats 80/80, shellcheck clean.
++
++Not validated here: a live fleet run on the server. That needs the operator's go-ahead, because ATTa is stopped by instruction.
+diff --git a/release.json b/release.json
+index 6fa17a1..a28e4e3 100644
+--- a/release.json
++++ b/release.json
+@@ -1,5 +1,5 @@
+ {
+-  "version": "v121.1",
++  "version": "v121.2",
+   "entrypoint": "run",
+   "state_version": 2,
+   "features": [
+@@ -16,6 +16,8 @@
+     "v121_journey_author_feeds_the_gate_test_accounts_by_class_stored_600_contracts_never_carry_secrets_dry_run_watcher_decides_fleet_report_by_code",
+     "v121_1_probe_containment_protocol_classification_no_watcher_crash",
+     "v121_1_revision_bound_qualification_evidence_and_final_verification_barrier",
+-    "v121_1_parallel_runs_preserve_per_app_isolation_and_current_revision_identity"
++    "v121_1_parallel_runs_preserve_per_app_isolation_and_current_revision_identity",
++    "v121_2_isolated_parallel_jobs_revision_barrier_rerun_per_run_evidence_handoff_states_fleet_report",
++    "v121_2_kit_registry_mirror_and_multi_domain_route"
+   ]
+ }
+diff --git a/tests/test_v117_coolify.py b/tests/test_v117_coolify.py
+index 7f84146..5dd6718 100644
+--- a/tests/test_v117_coolify.py
++++ b/tests/test_v117_coolify.py
+@@ -392,7 +392,7 @@ class Packaging(unittest.TestCase):
+     def test_release_is_v117(self):
+         # v118 carries v117 forward: the version moved on, the v117 feature must still be listed.
+         rel = json.loads((self.ATTA / "release.json").read_text())
+-        self.assertEqual(rel["version"], "v121")
++        self.assertEqual(rel["version"], "v121.2")
+         self.assertTrue(any(f.startswith("v117_runs_under_coolify") for f in rel["features"]))
+ 
+     def test_single_app_list(self):
+diff --git a/tests/test_v118_merge.py b/tests/test_v118_merge.py
+index 9d07d08..c0908c3 100644
+--- a/tests/test_v118_merge.py
++++ b/tests/test_v118_merge.py
+@@ -113,7 +113,7 @@ class RunnerAndHealer(unittest.TestCase):
+         self.assertIn('"APP_BUILDER_RUN_PARALLEL", "0"', src)
+         self.assertIn("def _wait_for_memory(", src)
+         self.assertIn("_DOWNLOAD_SLOTS", src)
+-        self.assertIn("parallel or PARALLEL or len(names)", src)
++        self.assertIn("parallel or PARALLEL or len(unique)", src)   # v121.2: names deduplicated by identity first
+         # Never a global "-a" image prune: live Coolify apps' images share this Docker.
+         self.assertIsNone(re.search(r'"image", "prune", "-af"|"-f" if len\(_RUNNING\) > 1 else "-af"', src))
+ 
+diff --git a/tests/test_v120_stage2.py b/tests/test_v120_stage2.py
+index 7eef3a5..57cef06 100644
+--- a/tests/test_v120_stage2.py
++++ b/tests/test_v120_stage2.py
+@@ -150,7 +150,7 @@ class JourneyGateIsWired(unittest.TestCase):
+ 
+     def test_release_says_v120_and_carries_v118(self):
+         rel = json.loads((HERE / "release.json").read_text())
+-        self.assertEqual(rel["version"], "v121")
++        self.assertEqual(rel["version"], "v121.2")
+         self.assertTrue(any(f.startswith("v118_") for f in rel["features"]))
+         self.assertTrue(any(f.startswith("v120_") for f in rel["features"]))
+ 
+diff --git a/tests/test_v121_2_parallel_isolation.py b/tests/test_v121_2_parallel_isolation.py
+new file mode 100644
+index 0000000..35ac17e
+--- /dev/null
++++ b/tests/test_v121_2_parallel_isolation.py
+@@ -0,0 +1,656 @@
++"""v121.2: every app is discovered and tested as its own isolated job, in parallel; one app's failure never
++stops, corrupts or hides another's; evidence is bound to its app, run and revision; the fleet writes an
++aggregate report. These tests run the REAL runner, watcher, pipeline and resilience code. What they replace
++is only what needs a Docker host: the per-app start+check (qualify_app / run_app / start_proxy / down) is a
++stand-in that behaves like a real job (sleeps, crashes, hangs, changes the app) so the fleet machinery around
++it is exercised for real. The live Docker path is covered by the existing suites and the live run.
++Run: python3 -m pytest -q tests/test_v121_2_parallel_isolation.py
++"""
++import http.server, importlib, json, os, shutil, socket, subprocess, sys, tempfile, threading, time, unittest
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent.parent
++DEP = HERE / "04-deployment"
++sys.path.insert(0, str(DEP))
++
++import resilience  # noqa: E402  (no ROOT dependency)
++from resilience import (app_revision, code_revision, deployment_revision, handoff_state, levels,  # noqa: E402
++                        revision_stable, safe_http_probe, safe_tcp_probe)
++
++MODULES = ("app_runner", "system_watcher", "journey_author", "pipeline", "builds", "coolify_handoff",
++           "maintenance", "rule_lifecycle", "known_fixes", "accounts", "intake")
++
++
++def _git(d, *args):
++    subprocess.run(["git", "-C", str(d), *args], check=True, capture_output=True,
++                   env={**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t", "GIT_COMMITTER_NAME": "t",
++                        "GIT_COMMITTER_EMAIL": "t@t"})
++
++
++def make_app(lib: Path, name: str, qualification: str = "web") -> Path:
++    d = lib / name
++    (d / ".ui-capability").mkdir(parents=True)
++    (d / ".ui-capability" / "run-ui.sh").write_text("#!/bin/sh\n")
++    (d / ".ui-capability" / "skin.css").write_text("body{}\n")
++    (d / "README.md").write_text(name + "\n")
++    _git(d, "init", "-q"); _git(d, "add", "-A"); _git(d, "commit", "-qm", "init")
++    (d / ".atta-intake.json").write_text(json.dumps({"app": name, "status": "READY", "qualification": qualification}))
++    return d
++
++
++class _Root(unittest.TestCase):
++    """A fresh APP_BUILDER_ROOT and freshly imported modules for every test."""
++    def setUp(self):
++        self.root = Path(tempfile.mkdtemp())
++        os.environ["APP_BUILDER_ROOT"] = str(self.root)
++        os.environ["APP_BUILDER_SESSION_SECRET"] = "x"
++        for m in MODULES:
++            sys.modules.pop(m, None)
++        self.ar = importlib.import_module("app_runner")
++        self.w = importlib.import_module("system_watcher")
++        self.lib = self.ar.LIB
++        self.ar.START_FREE_MEMORY = 0.0
++        self.ar.START_FREE_DISK_GB = 0.0
++        self.ar._POOL_POLL = 0.05
++        self.ar._GATE_POLL = 0.05
++        self.sh_calls = []
++        self.ar.sh = lambda cmd, timeout=120, env=None, cwd=None: (self.sh_calls.append(cmd) or (0, ""))
++        self.ar.down = lambda app, prune=None: "stopped"
++        self.logs = []
++        self.log = self.logs.append
++
++    def tearDown(self):
++        shutil.rmtree(self.root, ignore_errors=True)
++
++    # A stand-in for one app's start + six-stage check: a real watcher-shaped PASS unless told otherwise.
++    def passing(self, app):
++        st = {k: self.w.stage() for k in ("1 INSTALLED", "2 APP_UP", "3 PROXY_UP", "4 SKIN", "5 HOOK", "6 CLEAN")}
++        r = self.w.result(self.ar.safe_id(app), st)
++        r["runner"] = {"started": True, "profile": "web", "attempts": []}
++        r["observations"] = {"app_http": {"tcp_connected": True, "http_status": 200}}
++        return r
++
++
++# ------------------------------------------------------------------------------------------ revision identity
++class RevisionIdentity(unittest.TestCase):
++    def test_container_layout_is_never_unknown(self):
++        """Under Coolify, APP_BUILDER_ROOT holds no release.json and no adm/current. v121.1 returned "unknown"
++        there, and revision_stable("unknown", "unknown") is False: every app would have been UNVERIFIED."""
++        root = Path(tempfile.mkdtemp())
++        try:
++            a = deployment_revision(root); b = deployment_revision(root)
++            self.assertNotEqual(a, "unknown")
++            self.assertIn("code:", a)
++            self.assertTrue(revision_stable(a, b))
++        finally:
++            shutil.rmtree(root)
++
++    def test_code_change_is_a_new_revision(self):
++        code = Path(tempfile.mkdtemp()) / "04-deployment"
++        try:
++            code.mkdir(); (code.parent / "release.json").write_text('{"version":"x"}')
++            (code / "a.py").write_text("x = 1\n")
++            r1 = code_revision(code)
++            (code / "a.py").write_text("x = 2\n")
++            self.assertNotEqual(r1, code_revision(code))
++            r2 = code_revision(code)
++            (code.parent / "release.json").write_text('{"version":"y"}')
++            self.assertNotEqual(r2, code_revision(code))
++            self.assertEqual(code_revision(code), code_revision(code))
++        finally:
++            shutil.rmtree(code.parent)
++
++    def test_adm_release_still_changes_the_revision(self):
++        root = Path(tempfile.mkdtemp())
++        try:
++            (root / "adm" / "current").mkdir(parents=True)
++            (root / "adm" / "current" / "release.json").write_text('{"version":"a"}')
++            a = deployment_revision(root)
++            (root / "adm" / "current" / "release.json").write_text('{"version":"b"}')
++            self.assertFalse(revision_stable(a, deployment_revision(root)))
++        finally:
++            shutil.rmtree(root)
++
++    def test_app_revision_sees_source_changes_not_runner_env_files(self):
++        lib = Path(tempfile.mkdtemp())
++        try:
++            d = make_app(lib, "demo")
++            r0 = app_revision(d)
++            (d / ".env").write_text("A=1\n")               # the runner does this while starting an app
++            (d / "sub").mkdir(); (d / "sub" / ".env").write_text("B=2\n")
++            self.assertEqual(r0, app_revision(d))
++            (d / "README.md").write_text("new\n"); _git(d, "commit", "-qam", "change")
++            r1 = app_revision(d)
++            self.assertNotEqual(r0, r1)                    # new commit = new app revision
++            (d / ".ui-capability" / "skin.css").write_text("body{color:red}\n")
++            r2 = app_revision(d)
++            self.assertNotEqual(r1, r2)                    # new skin = what stages 4/5 compare changed
++            (d / ".atta-intake.json").write_text('{"status":"READY","changes":["x"]}')
++            self.assertNotEqual(r2, app_revision(d))       # intake changed the code
++            self.assertEqual(app_revision(lib / "nope"), "missing")
++        finally:
++            shutil.rmtree(lib)
++
++
++# ------------------------------------------------------------------------------------------ states + ladder
++class OutcomeStates(unittest.TestCase):
++    def r(self, **kw):
++        base = {"app": "x", "verdict": "PASS", "broken_at": None, "code": None,
++                "stages": {"6 CLEAN": {"status": "OK"}}, "runner": {"started": True},
++                "verification": {"status": "CURRENT", "passed_checks": True}}
++        base.update(kw)
++        return base
++
++    def test_every_state(self):
++        self.assertEqual(handoff_state(None), "NOT_STARTED")
++        self.assertEqual(handoff_state(self.r()), "QUALIFIED")
++        self.assertEqual(handoff_state(self.r(verification={})), "INCONCLUSIVE")   # no barrier = no pass
++        self.assertEqual(handoff_state(self.r(verdict="UNVERIFIED", broken_at="6 CLEAN",
++                                              verification={"status": "UNVERIFIED"})), "UNVERIFIED")
++        self.assertEqual(handoff_state(self.r(broken_at="2 APP_UP", code="RUNNER_EXHAUSTED",
++                                              runner={"started": False, "attempts": [{"rule": "build.failed"}]})), "START_FAILED")
++        self.assertEqual(handoff_state(self.r(broken_at="2 APP_UP", code="RUNNER_EXHAUSTED",
++                                              runner={"started": False, "attempts": [{"rule": "app.still_starting"}]})), "TIMEOUT")
++        self.assertEqual(handoff_state(self.r(broken_at="2 APP_UP", code="RUNNER_EXHAUSTED",
++                                              runner={"started": False, "attempts": [{"rule": "budget.spent"}, {"rule": "x"}]})), "TIMEOUT")
++        self.assertEqual(handoff_state(self.r(broken_at="2 APP_UP", code="TIMEOUT")), "TIMEOUT")
++        self.assertEqual(handoff_state(self.r(broken_at="2 APP_UP", code="WORKER_TIMEOUT")), "TIMEOUT")
++        self.assertEqual(handoff_state(self.r(broken_at="2 APP_UP", code="RUNNER_EXCEPTION")), "INCONCLUSIVE")
++        self.assertEqual(handoff_state(self.r(broken_at="6 CLEAN", code="PLAYWRIGHT_UNAVAILABLE")), "INCONCLUSIVE")
++        self.assertEqual(handoff_state(self.r(broken_at="4 SKIN", code="NO_LINK")), "FAILED")
++        self.assertEqual(handoff_state(self.r(stages={"6 CLEAN": {"status": "NOT_RUN"}})), "INCONCLUSIVE")
++        for s in ("NOT_STARTED", "START_FAILED", "TIMEOUT", "INCONCLUSIVE", "FAILED", "QUALIFIED", "UNVERIFIED"):
++            self.assertIn(s, resilience.STATES)
++
++    def test_ladder_rungs_are_separate_observations(self):
++        # TCP accepted but nothing that speaks HTTP: reachable, no HTTP response, not healthy.
++        # The probe connects twice: a bare TCP connect, then the HTTP request. Answer every connection with junk.
++        srv = socket.socket(); srv.bind(("127.0.0.1", 0)); srv.listen(4); port = srv.getsockname()[1]
++        def junk():
++            for _ in range(2):
++                c, _ = srv.accept()
++                try:
++                    if c.recv(1024):
++                        c.sendall(b"\x00\x01garbage\r\n\r\n")
++                finally:
++                    c.close()
++        th = threading.Thread(target=junk, daemon=True); th.start()
++        try:
++            obs = safe_http_probe(f"http://127.0.0.1:{port}/", timeout=3)
++        finally:
++            th.join(3); srv.close()
++        self.assertTrue(obs["tcp_connected"])
++        self.assertIsNone(obs.get("http_status"))
++        self.assertEqual(obs["classification"], "HTTP_PROTOCOL_MISMATCH")
++        lv = levels({"broken_at": "2 APP_UP", "code": "X", "stages": {"2 APP_UP": {"status": "FAIL"}},
++                     "runner": {"started": True}, "observations": {"app_http": obs}})
++        self.assertEqual((lv["tcp_reachable"], lv["http_response"], lv["healthy"], lv["qualified"], lv["verified"]),
++                         (True, False, False, False, False))
++        # HTTP 500 answered: a response, still not healthy.
++        lv = levels({"broken_at": "2 APP_UP", "code": "UPSTREAM_5XX", "stages": {"2 APP_UP": {"status": "FAIL"}},
++                     "runner": {"started": True}, "observations": {"app_http": {"tcp_connected": True, "http_status": 500}}})
++        self.assertEqual((lv["tcp_reachable"], lv["http_response"], lv["healthy"]), (True, True, False))
++        # Every stage passed but the barrier did not hold: qualified checks, NOT verified.
++        ok = {k: {"status": "OK"} for k in ("2 APP_UP", "3 PROXY_UP", "6 CLEAN")}
++        lv = levels({"broken_at": "6 CLEAN", "verdict": "UNVERIFIED", "stages": ok, "runner": {"started": True},
++                     "verification": {"status": "UNVERIFIED", "passed_checks": True},
++                     "observations": {"app_http": {"tcp_connected": True, "http_status": 200}}})
++        self.assertEqual((lv["healthy"], lv["qualified"], lv["verified"]), (True, True, False))
++        # Not listening at all.
++        s = socket.socket(); s.bind(("127.0.0.1", 0)); p = s.getsockname()[1]; s.close()
++        self.assertEqual(safe_tcp_probe("127.0.0.1", p, 1)["classification"], "ENDPOINT_NOT_LISTENING")
++
++
++# ------------------------------------------------------------------------------------------ the fleet
++class Fleet(_Root):
++    def apps(self, *names):
++        for n in names:
++            make_app(self.lib, n)
++        return list(names)
++
++    def test_every_app_runs_at_the_same_time_by_default(self):
++        names = self.apps("a1", "a2", "a3", "a4", "a5", "a6")
++        live, peak, lock = [0], [0], threading.Lock()
++        def fake(app, log=print, **kw):
++            with lock:
++                live[0] += 1; peak[0] = max(peak[0], live[0])
++            time.sleep(0.4)
++            with lock:
++                live[0] -= 1
++            return self.passing(app)
++        self.ar.qualify_app = fake
++        t0 = time.time()
++        out = self.ar.qualify_all(names, log=self.log)
++        self.assertLess(time.time() - t0, 6 * 0.4)            # not one after another
++        self.assertEqual(peak[0], 6)
++        self.assertEqual([r["app"] for r in out], names)       # library order, one result each
++        self.assertEqual({r["handoff_state"] for r in out}, {"QUALIFIED"})
++        rep = self.ar.LAST_REPORT
++        self.assertEqual(rep["concurrency"]["mode"], "parallel")
++        self.assertEqual(rep["concurrency"]["peak"], 6)
++        self.assertEqual(rep["totals"]["QUALIFIED"], 6)
++        self.assertTrue((self.ar.RUNNER / "RUN-REPORT.json").is_file())
++        self.assertTrue((self.ar.RUNNER / "runs" / rep["fleet_run_id"] / "report.md").is_file())
++        # Each job has its own identity; none shared.
++        ids = [r["verification"]["run_id"] for r in out]
++        cids = [r["verification"]["correlation_id"] for r in out]
++        self.assertEqual(len(set(ids)), 6); self.assertEqual(len(set(cids)), 6)
++        for r in out:
++            self.assertIn(r["app"], r["verification"]["run_id"])
++            self.assertEqual(r["verification"]["fleet_run_id"], rep["fleet_run_id"])
++            self.assertTrue(r["verification"]["deployment_revision"].startswith(("code:", "release:")))
++            self.assertTrue(r["verification"]["app_revision"].startswith("app:"))
++            self.assertEqual(r["levels"], {"tcp_reachable": True, "http_response": True, "healthy": True,
++                                           "qualified": True, "verified": True})
++
++    def test_one_app_crashing_is_only_that_apps_result(self):
++        names = self.apps("good1", "boom", "good2")
++        def fake(app, log=print, **kw):
++            if app == "boom":
++                raise RuntimeError("kaboom in the runner")
++            time.sleep(0.1)
++            return self.passing(app)
++        self.ar.qualify_app = fake
++        out = {r["app"]: r for r in self.ar.qualify_all(names, log=self.log)}
++        self.assertEqual(out["boom"]["handoff_state"], "INCONCLUSIVE")
++        self.assertEqual(out["boom"]["code"], "RUNNER_EXCEPTION")
++        self.assertIn("kaboom in the runner", out["boom"]["runner"]["traceback"])
++        self.assertEqual(out["good1"]["handoff_state"], "QUALIFIED")
++        self.assertEqual(out["good2"]["handoff_state"], "QUALIFIED")
++        saved = json.loads((self.ar.RESULTS / "boom.json").read_text())
++        self.assertEqual(saved["code"], "RUNNER_EXCEPTION")
++
++    def test_a_crash_outside_the_check_and_a_vanished_app_are_contained(self):
++        names = self.apps("ok", "weird") + ["ghost"]          # ghost: not in the library at all
++        self.ar.qualify_app = lambda app, log=print, **kw: self.passing(app) if app != "ghost" else (_ for _ in ()).throw(FileNotFoundError("ghost is not in the library"))
++        real = self.ar._app_revision_of
++        def rev(a):
++            if a == "weird":
++                raise ValueError("identity code blew up")
++            return real(a)
++        self.ar._app_revision_of = rev
++        out = {r["app"]: r for r in self.ar.qualify_all(names, log=self.log)}
++        self.assertEqual(out["ok"]["handoff_state"], "QUALIFIED")
++        self.assertEqual(out["weird"]["code"], "WORKER_EXCEPTION")
++        self.assertEqual(out["weird"]["handoff_state"], "INCONCLUSIVE")
++        self.assertEqual(out["ghost"]["code"], "RUNNER_EXCEPTION")   # built without its (missing) folder
++        self.assertEqual(out["ghost"]["handoff_state"], "INCONCLUSIVE")
++        self.assertEqual(self.ar.LAST_REPORT["apps_reported"], 3)
++
++    def test_revision_change_mid_check_is_discarded_and_rechecked(self):
++        names = self.apps("steady", "moving")
++        calls = {"moving": 0}
++        def fake(app, log=print, **kw):
++            if app == "moving":
++                calls["moving"] += 1
++                if calls["moving"] == 1:   # a re-import lands while the first check runs
++                    (self.lib / "moving" / "README.md").write_text("v2\n")
++                    _git(self.lib / "moving", "commit", "-qam", "v2")
++            return self.passing(app)
++        self.ar.qualify_app = fake
++        out = {r["app"]: r for r in self.ar.qualify_all(names, log=self.log)}
++        m = out["moving"]
++        self.assertEqual(calls["moving"], 2)
++        self.assertEqual(m["handoff_state"], "QUALIFIED")
++        self.assertEqual(m["verification"]["attempt"], 2)
++        self.assertEqual(len(m["verification"]["invalidated_attempts"]), 1)
++        inv = m["verification"]["invalidated_attempts"][0]
++        self.assertNotEqual(inv["app_revision"], inv["app_revision_after"])
++        self.assertEqual(m["verification"]["app_revision"], m["verification"]["app_revision_after"])
++        self.assertNotEqual(inv["correlation_id"], m["verification"]["correlation_id"])
++        self.assertIn("REVISION_CHANGED_RERUN", [e["kind"] for e in self.ar.LAST_REPORT["resource_events"]])
++        self.assertEqual(out["steady"]["verification"]["attempt"], 1)
++
++    def test_revision_that_keeps_changing_is_unverified_never_qualified(self):
++        names = self.apps("churn")
++        n = [0]
++        def fake(app, log=print, **kw):
++            n[0] += 1
++            (self.lib / "churn" / ".ui-capability" / "skin.css").write_text(f"body{{order:{n[0]}}}\n")
++            return self.passing(app)
++        self.ar.qualify_app = fake
++        [r] = self.ar.qualify_all(names, log=self.log)
++        self.assertEqual(n[0], 1 + self.ar.REVISION_RERUNS)
++        self.assertEqual(r["handoff_state"], "UNVERIFIED")
++        self.assertEqual(r["verdict"], "UNVERIFIED")
++        self.assertEqual(r["code"], "DEPLOYMENT_CHANGED_DURING_CHECK")
++        self.assertEqual(r["stages"]["6 CLEAN"]["status"], "FAIL")
++        self.assertNotIn("evidence", r["stages"]["6 CLEAN"])       # old-revision pictures are not the result's
++        self.assertFalse(r["levels"]["verified"])
++        self.assertIn("REVISION_UNSTABLE", [e["kind"] for e in self.ar.LAST_REPORT["resource_events"]])
++
++    def test_a_hung_app_is_timeout_and_the_fleet_still_reports(self):
++        names = self.apps("quick", "stuck")
++        self.ar.APP_HARD_TIMEOUT = 1
++        release = threading.Event()
++        def fake(app, log=print, **kw):
++            if app == "stuck":
++                release.wait(10)
++            return self.passing(app)
++        self.ar.qualify_app = fake
++        t0 = time.time()
++        out = {r["app"]: r for r in self.ar.qualify_all(names, log=self.log)}
++        self.assertLess(time.time() - t0, 5)
++        self.assertEqual(out["stuck"]["handoff_state"], "TIMEOUT")
++        self.assertEqual(out["stuck"]["code"], "WORKER_TIMEOUT")
++        self.assertEqual(out["quick"]["handoff_state"], "QUALIFIED")
++        self.assertIn("stuck", self.ar.LAST_REPORT["timeouts"])
++        self.assertIn("WORKER_TIMEOUT", [e["kind"] for e in self.ar.LAST_REPORT["resource_events"]])
++        # The hung job finishing later never overwrites the recorded result.
++        release.set()
++        late_dir = self.ar.RESULTS / "late"
++        for _ in range(100):
++            if late_dir.is_dir() and list(late_dir.glob("stuck.*.json")):
++                break
++            time.sleep(0.05)
++        self.assertTrue(list(late_dir.glob("stuck.*.json")))
++        self.assertEqual(json.loads((self.ar.RESULTS / "stuck.json").read_text())["code"], "WORKER_TIMEOUT")
++
++    def test_one_at_a_time_is_never_silent(self):
++        names = self.apps("s1", "s2", "s3")
++        self.ar.qualify_app = lambda app, log=print, **kw: self.passing(app)
++        self.ar.qualify_all(names, log=self.log, parallel=1)
++        c = self.ar.LAST_REPORT["concurrency"]
++        self.assertEqual((c["mode"], c["cap"], c["peak"]), ("sequential", 1, 1))
++        self.assertIn("parallel=1", c["reason"])
++        self.assertTrue(any("ONE AT A TIME" in l for l in self.logs))
++        self.ar.qualify_all(names, log=self.log, parallel=2)
++        self.assertEqual(self.ar.LAST_REPORT["concurrency"]["mode"], "capped")
++
++    def test_machine_room_waits_are_reported(self):
++        names = self.apps("r1", "r2", "r3")
++        self.ar.START_FREE_DISK_GB = 10.0
++        disk = {"gb": 1.0}
++        self.ar._free_disk_gb = lambda: disk["gb"]
++        def fake(app, log=print, **kw):
++            time.sleep(0.3); disk["gb"] = 50.0   # room appears once the first app has run a while
++            return self.passing(app)
++        self.ar.qualify_app = fake
++        out = self.ar.qualify_all(names, log=self.log)
++        self.assertEqual({r["handoff_state"] for r in out}, {"QUALIFIED"})
++        rep = self.ar.LAST_REPORT
++        kinds = [e["kind"] for e in rep["resource_events"]]
++        self.assertIn("WAIT_FOR_ROOM", kinds)
++        self.assertIn("DISK_LOW_PRUNE", kinds)
++        self.assertGreaterEqual(rep["concurrency"]["gate_waits"], 1)
++
++    def test_starved_apps_get_a_recorded_sequential_second_pass(self):
++        names = self.apps("big", "small")
++        n = {"big": 0}
++        def fake(app, log=print, **kw):
++            if app == "big":
++                n["big"] += 1
++                if n["big"] == 1:
++                    r = self.w.fail("big", {"1 INSTALLED": self.w.stage()}, "2 APP_UP", "RUNNER_EXHAUSTED", "No space left on device")
++                    r["runner"] = {"started": False, "attempts": [{"rule": "disk.full"}]}
++                    return r
++            return self.passing(app)
++        self.ar.qualify_app = fake
++        out = {r["app"]: r for r in self.ar.qualify_all(names, log=self.log)}
++        self.assertEqual(out["big"]["handoff_state"], "QUALIFIED")
++        self.assertTrue(out["big"]["runner"]["second_pass"])
++        self.assertTrue(json.loads((self.ar.RESULTS / "big.json").read_text())["runner"]["second_pass"])
++        self.assertEqual(self.ar.LAST_REPORT["concurrency"]["second_pass"], ["big"])
++        self.assertIn("SEQUENTIAL_SECOND_PASS", [e["kind"] for e in self.ar.LAST_REPORT["resource_events"]])
++
++    def test_colliding_identities_are_reported_not_merged(self):
++        make_app(self.lib, "My_App")
++        self.ar.qualify_app = lambda app, log=print, **kw: self.passing(app)
++        out = self.ar.qualify_all(["My_App", "my-app", "My_App"], log=self.log)
++        self.assertEqual(len(out), 1)
++        rows = self.ar.LAST_REPORT["apps"]
++        self.assertEqual([(x["app"], x["state"]) for x in rows], [("my-app", "QUALIFIED"), ("my-app", "NOT_STARTED")])
++        self.assertEqual(rows[1]["code"], "IDENTITY_COLLISION")
++        self.assertTrue(any("IDENTITY COLLISION" in l for l in self.logs))
++
++    def test_failed_start_evidence_rows_name_their_own_job(self):
++        names = self.apps("e1", "e2", "e3", "e4")
++        def fake(app, log=print, **kw):
++            for i in range(25):
++                self.ar._record_evidence(app, {"why": "compose"}, {"rule": "app.env_required", "fix": "set_env"},
++                                         f"{app} error line {i}: FOO is required")
++                time.sleep(0.001)
++            return self.passing(app)
++        self.ar.qualify_app = fake
++        out = {r["app"]: r for r in self.ar.qualify_all(names, log=self.log)}
++        rows = [json.loads(l) for l in (self.ar.RUNNER / "evidence.jsonl").read_text().splitlines()]
++        self.assertEqual(len(rows), 100)
++        for row in rows:
++            v = out[row["app"]]["verification"]
++            self.assertEqual(row["run_id"], v["run_id"])
++            self.assertEqual(row["correlation_id"], v["correlation_id"])
++            self.assertEqual(row["deployment_revision"], v["deployment_revision"])
++            self.assertEqual(row["app_revision"], v["app_revision"])
++            self.assertIn(row["app"], row["raw_tail"])
++            for k in ("ts", "stage", "attempt", "source", "observation", "result"):
++                self.assertIn(k, row)
++        # Outside any job, a row carries no identity at all rather than a wrong one.
++        self.ar._record_evidence("e1", {"why": "x"}, {"rule": "r"}, "later")
++        last = json.loads((self.ar.RUNNER / "evidence.jsonl").read_text().splitlines()[-1])
++        self.assertNotIn("run_id", last)
++
++    def test_report_totals_and_classes_add_up(self):
++        names = self.apps("p1", "p2", "skin", "nostart")
++        def fake(app, log=print, **kw):
++            if app == "skin":
++                r = self.w.fail("skin", {k: self.w.stage() for k in ("1 INSTALLED", "2 APP_UP", "3 PROXY_UP")}, "4 SKIN", "NO_LINK")
++                r["runner"] = {"started": True}
++                return r
++            if app == "nostart":
++                r = self.w.fail("nostart", {"1 INSTALLED": self.w.stage()}, "2 APP_UP", "RUNNER_EXHAUSTED", "no way worked")
++                r["runner"] = {"started": False, "attempts": [{"rule": "build.failed"}]}
++                return r
++            return self.passing(app)
++        self.ar.qualify_app = fake
++        self.ar.qualify_all(names, log=self.log)
++        rep = json.loads((self.ar.RUNNER / "RUN-REPORT.json").read_text())
++        self.assertEqual(sum(rep["totals"].values()), rep["apps_reported"])
++        self.assertEqual((rep["totals"]["QUALIFIED"], rep["totals"]["FAILED"], rep["totals"]["START_FAILED"]), (2, 1, 1))
++        classes = {(c["state"], c["stage"], c["code"]): c["apps"] for c in rep["failures_by_class"]}
++        self.assertEqual(classes[("FAILED", "4 SKIN", "NO_LINK")], ["skin"])
++        self.assertEqual(classes[("START_FAILED", "2 APP_UP", "RUNNER_EXHAUSTED")], ["nostart"])
++        self.assertTrue(rep["deployment_revision"]["stable"])
++        md = (self.ar.RUNNER / "RUN-REPORT.md").read_text()
++        self.assertIn("| skin | FAILED |", md)
++        self.assertIn("Concurrency: mode parallel", md)
++
++    def test_main_all_finishes_without_a_name_error(self):
++        self.apps("m1", "m2")
++        self.ar.qualify_app = lambda app, log=print, **kw: self.passing(app)
++        rc = self.ar.main(["app_runner.py", "all", "--fresh"])
++        self.assertIn(rc, (0, 1))
++        self.assertTrue((self.ar.RUNNER / "CHECKLIST.md").is_file())
++
++
++# ------------------------------------------------------------------------------------------ the real qualify_app
++class RealQualifyApp(_Root):
++    """qualify_app itself runs; only Docker (run_app/start_proxy/down) and the watcher's check are stood in."""
++    def test_identity_travels_in_memory_never_in_the_target_file(self):
++        make_app(self.lib, "svc", qualification="service")
++        class H(http.server.BaseHTTPRequestHandler):
++            def do_GET(self):
++                self.send_response(200); self.send_header("Content-Type", "text/html"); self.end_headers(); self.wfile.write(b"<html></html>")
++            def log_message(self, *a): pass
++        srv = http.server.HTTPServer(("127.0.0.1", 0), H)
++        th = threading.Thread(target=srv.serve_forever, daemon=True); th.start()
++        seen = {}
++        try:
++            url = f"http://127.0.0.1:{srv.server_port}"
++            self.ar.run_app = lambda app, log=print: {"ok": True, "url": url, "part": {"why": "test part", "kind": "image"}, "attempts": []}
++            self.ar.start_proxy = lambda app, u: (True, "", {"app": "svc", "target_url": u, "proxy_url": u})
++            class FakeW:
++                stage = staticmethod(self.w.stage); fail = staticmethod(self.w.fail); result = staticmethod(self.w.result)
++                def check(inner, t):
++                    seen["t"] = t
++                    seen["file"] = json.loads((self.ar.TARGETS / "svc.json").read_text())
++                    return self.passing("svc")
++            self.ar._watcher = lambda: FakeW()
++            r = self.ar._qualify_one("svc", self.log)
++        finally:
++            srv.shutdown(); srv.server_close(); th.join(3)
++        self.assertNotIn("_identity", seen["file"])
++        for k in ("_run_id", "_deployment_revision", "_attempt"):
++            self.assertNotIn(k, seen["file"])
++        ident = seen["t"]["_identity"]
++        self.assertEqual(ident["run_id"], r["verification"]["run_id"])
++        self.assertEqual(ident["correlation_id"], r["verification"]["correlation_id"])
++        self.assertEqual(ident["source"], "app_runner.qualify_app")
++        self.assertEqual(r["observations"]["app_http"]["http_status"], 200)
++        self.assertTrue(r["observations"]["app_http"]["tcp_connected"])
++        self.assertEqual(r["handoff_state"], "QUALIFIED")
++        self.assertEqual(json.loads((self.ar.RESULTS / "svc.json").read_text())["handoff_state"], "QUALIFIED")
++
++
++# ------------------------------------------------------------------------------------------ stage-6 evidence
++class _Page:
++    def __init__(self, n): self.url = f"http://p/{n}"; self.n = n
++    def screenshot(self, path, full_page=True): Path(path).write_bytes(b"PNG" + str(self.n).encode())
++    def content(self): return f"<html>{self.n}</html>"
++    def title(self): return f"t{self.n}"
++
++
++class Stage6Evidence(_Root):
++    def test_each_check_has_its_own_folder_with_its_identity(self):
++        m1 = {"run_id": "run-1-app-aa", "attempt": 1, "correlation_id": "c-1", "deployment_revision": "code:1",
++              "app_revision": "app:1", "fleet_run_id": "fleet-1", "source": "app_runner.qualify_app"}
++        m2 = {**m1, "attempt": 2, "correlation_id": "c-2", "app_revision": "app:2"}
++        e1 = self.w._capture("app", _Page(1), [], [], [], metadata=m1)
++        e2 = self.w._capture("app", _Page(2), [], [], [], metadata=m2)
++        e3 = self.w._capture("app", _Page(3), [], [], [], metadata=None)       # a --loop check
++        e4 = self.w._capture("app", _Page(4), [], [], [], metadata=m1)       # same job capturing again
++        dirs = {e["dir"] for e in (e1, e2, e3, e4)}
++        self.assertEqual(len(dirs), 4)
++        self.assertTrue(Path(e3["dir"]).name.startswith("watch-"))
++        self.assertEqual((Path(e1["dir"]) / "screenshot.png").read_bytes(), b"PNG1")
++        b1 = json.loads((Path(e1["dir"]) / "browser.json").read_text())
++        b2 = json.loads((Path(e2["dir"]) / "browser.json").read_text())
++        self.assertEqual((b1["correlation_id"], b1["app_revision"], b1["attempt"], b1["stage"], b1["app"]), ("c-1", "app:1", 1, "6 CLEAN", "app"))
++        self.assertEqual((b2["correlation_id"], b2["app_revision"], b2["attempt"]), ("c-2", "app:2", 2))
++        b3 = json.loads((Path(e3["dir"]) / "browser.json").read_text())
++        self.assertNotIn("run_id", b3)
++        self.assertIn("ts", b1)
++
++    def test_old_check_folders_are_pruned_oldest_first(self):
++        self.w.EVIDENCE_KEEP = 2
++        es = []
++        for i in range(4):
++            es.append(self.w._capture("app", _Page(i), [], [], [], metadata={"run_id": f"run-{i}-app-x", "attempt": 1}))
++            time.sleep(0.02)
++        left = sorted(p.name for p in (self.w.EVIDENCE_DIR / "app").iterdir())
++        self.assertEqual(left, [Path(es[2]["dir"]).name, Path(es[3]["dir"]).name])
++
++    def test_loop_checks_never_prune_the_evidence_a_result_points_at(self):
++        self.w.EVIDENCE_KEEP = 2
++        mine = self.w._capture("app", _Page(0), [], [], [], metadata={"run_id": "run-1-app-x", "attempt": 1})
++        res = {"app": "app", "stages": {"6 CLEAN": {"status": "OK", "evidence": mine}}}
++        (self.ar.RESULTS / "app.json").write_text(json.dumps(res))
++        older = self.w._capture("app", _Page(1), [], [], [], metadata={"run_id": "run-0-app-y", "attempt": 1})
++        for i in range(6):                       # hours of --loop sweeps with KEEP_RUNNING=true
++            self.w._capture("app", _Page(10 + i), [], [], [], metadata=None)
++            time.sleep(0.01)
++        names = {p.name for p in (self.w.EVIDENCE_DIR / "app").iterdir()}
++        self.assertIn(Path(mine["dir"]).name, names)      # the recorded result's pictures
++        self.assertIn(Path(older["dir"]).name, names)     # runner folders are not pushed out by loop folders
++        self.assertEqual(len([n for n in names if n.startswith("watch-")]), 2)
++
++
++# ------------------------------------------------------------------------------------------ gateway evidence links
++class GatewayEvidence(unittest.TestCase):
++    """The real gateway.py, as a process: a run folder is served, the old flat URL never falls through to a
++    newer run (another revision's picture), and nothing outside the evidence tree is reachable."""
++    def setUp(self):
++        self.root = Path(tempfile.mkdtemp())
++        s = socket.socket(); s.bind(("127.0.0.1", 0)); self.port = s.getsockname()[1]; s.close()
++        env = {**os.environ, "APP_BUILDER_ROOT": str(self.root), "APP_BUILDER_AUTH_DISABLED": "1",
++               "APP_BUILDER_HOST": "127.0.0.1", "APP_BUILDER_PORT": str(self.port), "APP_BUILDER_SESSION_SECRET": "x"}
++        self.proc = subprocess.Popen([sys.executable, "gateway.py"], cwd=DEP, env=env,
++                                     stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
++        for _ in range(100):
++            try:
++                socket.create_connection(("127.0.0.1", self.port), 0.2).close(); break
++            except OSError:
++                time.sleep(0.05)
++
++    def tearDown(self):
++        self.proc.terminate(); self.proc.wait(5); self.proc.stderr.close()
++        shutil.rmtree(self.root, ignore_errors=True)
++
++    def get(self, path):
++        import urllib.request, urllib.error
++        try:
++            with urllib.request.build_opener(urllib.request.ProxyHandler({})).open(f"http://127.0.0.1:{self.port}{path}", timeout=5) as r:
++                return r.status, r.read()
++        except urllib.error.HTTPError as e:
++            return e.code, b""
++
++    def test_routes(self):
++        ev = self.root / "state/runner/evidence/memos"
++        (ev / "run-1-memos-ab-a1").mkdir(parents=True)
++        (ev / "run-1-memos-ab-a1" / "browser.json").write_text('{"run":"new"}')
++        self.assertEqual(self.get("/evidence/memos/run-1-memos-ab-a1/browser.json"), (200, b'{"run":"new"}'))
++        self.assertEqual(self.get("/evidence/memos/browser.json")[0], 404)        # no fall-through to a run
++        (ev / "browser.json").write_text('{"run":"legacy"}')
++        self.assertEqual(self.get("/evidence/memos/browser.json"), (200, b'{"run":"legacy"}'))
++        (self.root / "state/secret.json").write_text("nope")
++        for bad in ("/evidence/memos/../../secret.json", "/evidence/memos/..%2f..%2fsecret.json/browser.json",
++                    "/evidence/memos/run-1/../browser.json", "/evidence/memos/RUN-1-MEMOS-AB-A1/browser.json"):
++            self.assertNotEqual(self.get(bad)[1], b"nope", bad)
++            self.assertNotEqual(self.get(bad)[1], b'{"run":"new"}', bad)
++        self.assertIsNone(self.proc.poll(), "gateway died")
++
++    def test_links_name_the_run(self):
++        import http.server as hs
++        real = hs.ThreadingHTTPServer
++        class NoServe:
++            def __init__(self, *a, **k): pass
++            def serve_forever(self): pass
++        hs.ThreadingHTTPServer = NoServe
++        os.environ["APP_BUILDER_ROOT"] = str(self.root); os.environ["APP_BUILDER_SESSION_SECRET"] = "x"
++        os.environ["APP_BUILDER_AUTH_DISABLED"] = "1"
++        try:
++            sys.modules.pop("gateway", None)
++            gw = importlib.import_module("gateway")
++        finally:
++            hs.ThreadingHTTPServer = real
++            sys.modules.pop("gateway", None)
++            os.environ.pop("APP_BUILDER_AUTH_DISABLED", None)
++        out = gw.discovered_html({"qualification": [
++            {"app": "memos", "evidence": {"dir": "/x/memos/run-1-memos-ab-a1", "run": "run-1-memos-ab-a1", "browser": "b", "screenshot": "s"}},
++            {"app": "old", "evidence": {"dir": "/x/old", "browser": "b"}},
++            {"app": "evil", "evidence": {"run": "../../etc", "browser": "b"}}]})
++        self.assertIn("/evidence/memos/run-1-memos-ab-a1/browser.json", out)
++        self.assertIn("/evidence/memos/run-1-memos-ab-a1/screenshot.png", out)
++        self.assertIn("/evidence/old/browser.json", out)
++        self.assertNotIn("../", out)
++
++
++# ------------------------------------------------------------------------------------------ the hand-off gate
++class PipelineGate(_Root):
++    def test_only_barrier_passed_current_revision_results_are_qualified(self):
++        pl = importlib.import_module("pipeline")
++        import rule_lifecycle
++        live = resilience.deployment_revision(self.root)
++        def res(app, **kw):
++            r = self.passing(app)
++            r["verification"] = {"status": "CURRENT", "deployment_revision": live, "run_id": "run-" + app}
++            r.update(kw); r["handoff_state"] = handoff_state(r)
++            return r
++        good = res("good")
++        unver = res("unver", verdict="UNVERIFIED", broken_at="6 CLEAN", code="DEPLOYMENT_CHANGED_DURING_CHECK",
++                    verification={"status": "UNVERIFIED", "deployment_revision": live})
++        old = res("old", verification={"status": "CURRENT", "deployment_revision": "code:someotherrevision"})
++        nobarrier = self.passing("nobarrier")                     # a pre-v121.2 result: no verification at all
++        results = [good, unver, old, nobarrier]
++        self.ar.library_apps = lambda: [r["app"] for r in results]
++        self.ar.qualify_all = lambda todo, log=print, parallel=None: results
++        rule_lifecycle.after_full_run = lambda *a, **k: {"promoted": [], "suspects": []}
++        st, apps, why, _ = pl.qualify()
++        q = {a["app"]: a["qualified"] for a in apps}
++        self.assertEqual(q, {"good": True, "unver": False, "old": False, "nobarrier": False})
++        self.assertIn("old: UNVERIFIED", why)
++        self.assertIn("nobarrier: INCONCLUSIVE", why)
++        self.assertEqual(st, "PARTIALLY_QUALIFIED")
++
++
++if __name__ == "__main__":
++    unittest.main()
