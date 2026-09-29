@@ -1,0 +1,112 @@
+{
+  "schema_version": "v121.3-record-diagnostic-fixture-v1",
+  "source_run": "fleet-20260929T061331Z-9b37b3",
+  "deployment_revision": "code:e46676963529e1afb54f957b",
+  "attempt": 1,
+  "source": "ATTa-v121.3-FAILURES.md / RUN-REPORT.md supplied with this package task",
+  "records_root": "/srv/app-builder/state/runner/failures",
+  "evidence_root": "/srv/app-builder/state/runner/evidence",
+  "apps": [
+    "apache-airflow",
+    "appsmith",
+    "billionmail",
+    "botpress",
+    "clearflask",
+    "colanode",
+    "coolify",
+    "flarum",
+    "ghost",
+    "krayin-crm",
+    "langflow",
+    "medplum",
+    "memos",
+    "open-design",
+    "opencart",
+    "opencloud",
+    "plane",
+    "polar",
+    "supabase",
+    "super-productivity",
+    "traefik",
+    "umami"
+  ],
+  "expected_observable_classifications": {
+    "apache-airflow": [
+      "AUTH_STRATEGY_MISSING",
+      "PROFILE_JOURNEY_INCOMPATIBLE"
+    ],
+    "appsmith": [
+      "UPSTREAM_502"
+    ],
+    "billionmail": [
+      "STARTUP_CONFIG_MISSING",
+      "STARTUP_TIMEOUT"
+    ],
+    "botpress": [
+      "BUILD_CONTEXT_SOURCE_MISSING"
+    ],
+    "clearflask": [
+      "STARTUP_CONFIG_MISSING",
+      "STARTUP_TIMEOUT"
+    ],
+    "colanode": [
+      "STARTUP_DEPENDENCY_UNAVAILABLE",
+      "PROFILE_JOURNEY_INCOMPATIBLE"
+    ],
+    "coolify": [
+      "SELECTED_SERVICE_NOT_DECLARED"
+    ],
+    "flarum": [
+      "CORS_BLOCKED"
+    ],
+    "ghost": [
+      "BUILD_CONTEXT_SOURCE_MISSING",
+      "STARTUP_DEPENDENCY_UNAVAILABLE"
+    ],
+    "krayin-crm": [
+      "INJECTION_ASSET_MISSING"
+    ],
+    "langflow": [
+      "STARTUP_CONFIG_MISSING",
+      "CONTAINER_EXITED"
+    ],
+    "medplum": [
+      "CONTAINER_EXITED",
+      "STARTUP_DEPENDENCY_UNAVAILABLE"
+    ],
+    "memos": [
+      "BROWSER_NETWORK_ERROR"
+    ],
+    "open-design": [
+      "BUILD_CONTEXT_SOURCE_MISSING"
+    ],
+    "opencart": [
+      "BUILD_CONTEXT_SOURCE_MISSING"
+    ],
+    "opencloud": [
+      "STARTUP_CONFIG_MISSING"
+    ],
+    "plane": [
+      "STARTUP_CONFIG_MISSING"
+    ],
+    "polar": [
+      "STARTUP_TIMEOUT",
+      "STARTUP_CONFIG_MISSING"
+    ],
+    "supabase": [
+      "HTTP_PROTOCOL_MISMATCH",
+      "STARTUP_CONFIG_MISSING"
+    ],
+    "super-productivity": [
+      "BROWSER_NETWORK_ERROR"
+    ],
+    "traefik": [
+      "SELECTED_SERVICE_NOT_DECLARED",
+      "PROFILE_JOURNEY_INCOMPATIBLE"
+    ],
+    "umami": [
+      "STARTUP_CONFIG_MISSING"
+    ]
+  },
+  "notes": "This is a binding/expectation manifest, not a substitute for the original failure JSON. Regression execution must consume the real records under records_root and must fail if they are absent."
+}

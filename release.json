@@ -1,0 +1,23 @@
+{
+  "version": "v121.2",
+  "entrypoint": "run",
+  "state_version": 2,
+  "features": [
+    "upload_app_discovery_any_depth",
+    "per_app_queue_into_parallel_pool",
+    "stage6_browser_evidence",
+    "repair_loop_v109_v110_v111a_unchanged",
+    "v114_hardening_admin_only_updates_container_isolation_metadata_block_llm_redaction",
+    "v114_1_installer_env_as_data_pinned_compose_clean_code_releases_docker_ordering_perms",
+    "v114_2_all_apps_at_once_no_start_gates_script_probe_learns_general_rules_llm_off",
+    "v117_runs_under_coolify_container_image_first_start_fetches_whole_app_list_each_qualified_app_gets_own_coolify_service",
+    "v118_merge_catalogue_guarantee_qualified_live_only_front_door_and_library_verified_repos_only_start_gates_restored_https_domain_under_coolify_heal_model_fixed",
+    "v120_on_v118_runtime_journey_gate_from_v119_login_needs_expectation_server_chooses_one_foundation_no_names_coolify_handoff_qualified_only",
+    "v121_journey_author_feeds_the_gate_test_accounts_by_class_stored_600_contracts_never_carry_secrets_dry_run_watcher_decides_fleet_report_by_code",
+    "v121_1_probe_containment_protocol_classification_no_watcher_crash",
+    "v121_1_revision_bound_qualification_evidence_and_final_verification_barrier",
+    "v121_1_parallel_runs_preserve_per_app_isolation_and_current_revision_identity",
+    "v121_2_isolated_parallel_jobs_revision_barrier_rerun_per_run_evidence_handoff_states_fleet_report",
+    "v121_2_kit_registry_mirror_and_multi_domain_route"
+  ]
+}
