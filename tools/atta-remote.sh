@@ -8,12 +8,13 @@
 #   --log [N]      last N lines of the deploy log and whether it is still running
 #   --start-run    queue exactly ONE full library run
 #   --progress     live run: pipeline state, app containers, results written, recent runner lines
+#   --live         each handed-off app's real Coolify state: DISPATCHED/DEPLOYING/RUNNING/VERIFIED/LIVE_FAILED
 #   --dump <path>  print a file under /srv/app-builder/state (reports, results, failure records)
 #   --ls <path>    list a folder under /srv/app-builder/state
 set -euo pipefail
-URL="https://raw.githubusercontent.com/naylorsam38-creator/ATTa/627d418/tools/atta-upgrade-v121.3.sh"
-SHA=6bb83b8bba918811f03ad136ec0a74522014bcbf6a120e2ef557e72cd9f76ace
-S=/tmp/atta-upgrade-v121.3.sh
+URL="https://raw.githubusercontent.com/naylorsam38-creator/ATTa/54d623d/tools/atta-upgrade.sh"
+SHA=25c99d6fbcd286377bf5e287e8fd7af2c931d0a50b9764f8cd47c835c09934de
+S=/tmp/atta-upgrade.sh
 LOG=/var/log/atta-upgrade-v121.3.log
 DATA=/srv/app-builder
 mode="${1:---check}"
@@ -34,7 +35,7 @@ case "$mode" in
     fetch; sudo -n bash "$S" "$mode" ;;
 --start-run)
     fetch
-    sudo -n bash "$S" --start-run
+    sudo -n bash "$S" --start-run "${2:-}"
     sudo -n touch "$DATA/state/runner/.firstpass-start" ;;
 --deploy-bg)
     fetch
@@ -62,6 +63,23 @@ case "$mode" in
     p=$(inside "${2:?path}"); sudo -n cat "$p" ;;
 --ls)
     p=$(inside "${2:-.}"); sudo -n ls -la "$p" ;;
+--live)
+    # Every handed-off app's REAL Coolify state from the build records (coolify_live.py).
+    sudo -n python3 - "$DATA/state/builds" <<'PY'
+import json, sys
+from pathlib import Path
+for f in sorted(Path(sys.argv[1]).glob("*.json"), key=lambda p: p.stat().st_mtime)[-3:]:
+    r = json.loads(f.read_text()); c = r.get("coolify") or {}
+    if not c: continue
+    print(f"build {r.get('id')} state {r.get('state')} coolify {c.get('status')} live {c.get('live_summary')}")
+    for a, st in sorted((c.get("apps") or {}).items()):
+        lv = st.get("live") or {}
+        ch = lv.get("check") or {}
+        print(f"  {a:<20} {st.get('status'):<10} {lv.get('state') or '-':<12} uuid={st.get('uuid')} url={lv.get('url')} "
+              f"http={(lv.get('http') or {}).get('http_status')} svc={(lv.get('coolify_service') or {}).get('status')} "
+              f"live={ch.get('broken_at') or ''} {ch.get('code') or ''} {lv.get('failed_at') or ''} {str(lv.get('reason') or '')[:160]}")
+PY
+    ;;
 --logs-atta)
     c=$(atta_ctr); sudo -n docker logs --tail "${2:-200}" "$c" 2>&1 ;;
 *) echo "unknown mode $mode"; exit 64 ;;
