@@ -1,0 +1,373 @@
+====================================================================================================
+APP apache-airflow | FAILED | stage 6 CLEAN | code JOURNEY_NOT_AUTHORED:ACCOUNT_NO_STRATEGY | class JOURNEY_NOT_AUTHORED | repair NO_MATCHING_REPAIR
+  where: part="published image apache/airflow:latest, named in the app's own files" attempt=1 rule=cli.needs_command fix_tried=pick_command
+  error: login required; no account class worked: signup: no sign-up or first-run form found
+  record: /srv/app-builder/state/runner/failures/apache-airflow/run-1790662411393-apache-airflow-9b24d976-a1-f1.json
+  container_log: /srv/app-builder/state/runner/failures/apache-airflow/run-1790662411393-apache-airflow-9b24d976-a1-f1.container.log
+  browser evidence: /srv/app-builder/state/runner/evidence/apache-airflow/run-1790662411393-apache-airflow-9b24d976-a1  files: screenshot.png page.html browser.json
+  start attempts: 2
+    #1 published image apache/airflow:latest, named in the app's own files -> FAILED rule=cli.needs_command fix=pick_command
+       evidence: ROUP_OR_COMMAND, see help above. |                         Rotate encrypted connection credentials and variables |       scheduler         Start a scheduler instance |       standalone        Run an all-in-one copy of Airflow |       sync-perm         Update permissions for existing roles and optionally |                         DAGs |       triggerer         Start a triggerer instance |       version           Show the version | Options: |   -h, --help            show this help message and exit
+    #2 published image apache/airflow:latest, named in the app's own files -> UP rule=None fix=None
+  container log tail:
+    api-server | 2026-09-29T06:20:18.550604Z [info     ] request finished               [http.access] client_addr=10.0.0.1:51144 duration_us=19850 loc=http_access_log.py:130 method=GET path=/static/i18n/locales/en/components
+    api-server | 2026-09-29T06:20:18.551472Z [info     ] request finished               [http.access] client_addr=10.0.0.1:51122 duration_us=28014 loc=http_access_log.py:130 method=GET path=/static/i18n/locales/en/browse.jso
+    api-server | 2026-09-29T06:20:21.672584Z [info     ] request finished               [http.access] client_addr=10.0.0.1:51138 duration_us=13478 loc=http_access_log.py:130 method=POST path=/auth/token query= status_code=40
+    api-server | 2026-09-29T06:20:22.267400Z [info     ] request finished               [http.access] client_addr=10.0.0.1:51138 duration_us=9646 loc=http_access_log.py:130 method=POST path=/auth/token query= status_code=401
+    api-server | 2026-09-29T06:20:23.352105Z [info     ] request finished               [http.access] client_addr=10.0.0.1:34772 duration_us=6211 loc=http_access_log.py:130 method=GET path=/ query= status_code=200
+    api-server | 2026-09-29T06:20:23.449007Z [info     ] request finished               [http.access] client_addr=10.0.0.1:34784 duration_us=2799 loc=http_access_log.py:130 method=GET path=/ query= status_code=200
+  browser.json: url=http://127.0.0.1:8198/auth/login?next=%2F title='Airflow' page_errors=0 console=1 request_failures=0
+    1 x Failed to load resource: the server responded with a status of 401 (Unauthorized)
+====================================================================================================
+APP appsmith | FAILED | stage 6 CLEAN | code BROWSER_HTTP | class APP_SERVER_ERROR | repair NO_MATCHING_REPAIR
+  error: 502
+  record: /srv/app-builder/state/runner/failures/appsmith/run-1790662411395-appsmith-051c24b3-a1-f1.json
+  container_log: /srv/app-builder/state/runner/failures/appsmith/run-1790662411395-appsmith-051c24b3-a1-f1.container.log
+  browser evidence: /srv/app-builder/state/runner/evidence/appsmith/run-1790662411395-appsmith-051c24b3-a1-w1  files: screenshot.png page.html browser.json
+  start attempts: 1
+    #1 published image appsmith/appsmith-ce:latest, named in the app's own files -> UP rule=None fix=None
+  container log tail:
+    ng":["identity"],"Connection":["close"]}},"bytes_read":0,"user_id":"","duration":0.013547646,"size":2090,"status":200,"resp_headers":{"X-Request-Id":["invalid_request_id"],"Vary":["Accept-Encoding"],"Etag":["\"dlrkvv8ugl
+    editor stdout | {"level":"info","ts":1790662797.503734,"logger":"http.log.access.log0","msg":"handled request","request":{"remote_ip":"10.0.0.1","remote_port":"41848","client_ip":"10.0.0.1","proto":"HTTP/1.1","method":"G
+    editor stdout | {"level":"info","ts":1790662801.8091748,"logger":"http.log.access.log0","msg":"handled request","request":{"remote_ip":"::1","remote_port":"34006","client_ip":"::1","proto":"HTTP/1.1","method":"GET","host
+    mcp stderr | {"event":"appsmith_mcp_request","timestamp":"2026-09-29T06:20:01.885Z","requestId":"a5fb0119-1115-48c8-9a47-2562222517ce","path":"/health","httpMethod":"GET","status":200,"statusClass":"success","gates":"dat
+    editor stdout | {"level":"info","ts":1790662802.7474656,"logger":"http.log.access.log0","msg":"handled request","request":{"remote_ip":"10.0.0.1","remote_port":"44180","client_ip":"10.0.0.1","proto":"HTTP/1.1","method":"
+  browser.json: url=http://127.0.0.1:8652/ title='' page_errors=0 console=1 request_failures=0
+    1 x Failed to load resource: the server responded with a status of 502 (Bad Gateway)
+====================================================================================================
+APP billionmail | TIMEOUT | stage 2 APP_UP | code RUNNER_EXHAUSTED | class START_TIMEOUT | repair NO_MATCHING_REPAIR
+  where: part="the app's own Dockerfile Dockerfiles/dovecot/Dockerfile (builds from source)" attempt=8 rule=app.still_starting fix_tried=wait_longer
+  error: 8 attempts over 5 ways of running it; last: the app's own Dockerfile Dockerfiles/dovecot/Dockerfile (builds from source) -> app.still_starting
+#1 published image billionmail/core:4.9.3, named in the app's own files: app.still_starting (wait_longer)
+#2 published image billionmail/core:4.9.3, named in the app's own files: app.still_starting (wait_longer)
+#3 the app's own Dockerfile Dockerfiles/core/Dockerfile (builds from source): build.failed (next_part)
+#4 the app's own Dockerfile Dockerfiles/rs
+  record: /srv/app-builder/state/runner/failures/billionmail/run-1790662411397-billionmail-37fa19d0-a1-f1.json
+  container_log: None
+  start attempts: 8
+    #6 the app's own Dockerfile Dockerfiles/postfix/Dockerfile (builds from source) -> FAILED rule=app.still_starting fix=wait_longer
+       evidence: such file or directory | /postfix.sh: line 45: /etc/postfix/sql/pgsql_virtual_alias_domain_maps.cf: No such file or directory | /postfix.sh: line 56: /etc/postfix/sql/pgsql_virtual_alias_maps.cf: No such file or directory | /postfix.sh: line 68: /etc/postfix/sql/pgsql_virtual_domains_maps.cf: No such file or directory | /postfix.sh: line 80: /etc/postfix/sql/pgsql_virtual_mailbox_maps.cf: No such file or directory | touch: cannot touch '/etc/postfix/conf/vmail_ssl.map': No such file or directory
+    #7 the app's own Dockerfile Dockerfiles/dovecot/Dockerfile (builds from source) -> FAILED rule=container.caps fix=relax_caps
+       evidence: dovecot.pipe'. | report-ham: line 1: error: require command: unknown Sieve capability `imapsieve'. | report-ham: line 15: error: unknown command 'pipe' (only reported once at first occurrence). | report-ham: error: validation failed. | sievec: Fatal: failed to compile sieve script '/usr/lib/dovecot/sieve/report-ham.sieve' | rsyslogd: activation of module imklog failed [v8.2302.0 try https://www.rsyslog.com/e/2145 ] | rsyslogd: imklog: cannot open kernel log (/proc/kmsg): Operation not permitted.
+    #8 the app's own Dockerfile Dockerfiles/dovecot/Dockerfile (builds from source) -> FAILED rule=app.still_starting fix=wait_longer
+       evidence: dovecot.pipe'. | report-ham: line 1: error: require command: unknown Sieve capability `imapsieve'. | report-ham: line 15: error: unknown command 'pipe' (only reported once at first occurrence). | report-ham: error: validation failed. | sievec: Fatal: failed to compile sieve script '/usr/lib/dovecot/sieve/report-ham.sieve' | rsyslogd: activation of module imklog failed [v8.2302.0 try https://www.rsyslog.com/e/2145 ] | rsyslogd: imklog: cannot open kernel log (/proc/kmsg): Operation not permitted.
+====================================================================================================
+APP botpress | START_FAILED | stage 2 APP_UP | code RUNNER_EXHAUSTED | class BUILD_FAILED | repair NO_MATCHING_REPAIR
+  where: part="the app's own Dockerfile integrations/chat/Dockerfile (builds from source)" attempt=3 rule=build.failed fix_tried=next_part
+  error: 3 attempts over 2 ways of running it; last: the app's own Dockerfile integrations/chat/Dockerfile (builds from source) -> build.failed
+#1 the app's own Dockerfile Dockerfile (builds from source): app.still_starting (wait_longer)
+#2 the app's own Dockerfile Dockerfile (builds from source): app.still_starting (wait_longer)
+#3 the app's own Dockerfile integrations/chat/Dockerfile (builds from source): build.failed (next_part)
+  record: /srv/app-builder/state/runner/failures/botpress/run-1790662411398-botpress-ad788b63-a1-f1.json
+  container_log: None
+  start attempts: 3
+    #1 the app's own Dockerfile Dockerfile (builds from source) -> FAILED rule=app.still_starting fix=wait_longer
+       evidence: Error while handling request { error: 'Missing bot header' }
+    #2 the app's own Dockerfile Dockerfile (builds from source) -> FIX_DID_NOT_RESOLVE rule=app.still_starting fix=wait_longer
+       evidence: Error while handling request { error: 'Missing bot header' }
+    #3 the app's own Dockerfile integrations/chat/Dockerfile (builds from source) -> FAILED rule=build.failed fix=next_part
+       evidence: workspace.yaml": not found | ERROR: failed to build: failed to solve: failed to compute cache key: failed to calculate checksum of ref sd1ebt3s7uz9r4mferf2uf8qf::unuw6spkpfq3g7qmoc2s0ya4c: "/integrations/chat/server.js": not found | ------ | Dockerfile:47 | -------------------- |   45 |      |   46 |     COPY --from=base /usr/app/integrations/chat/.botpress/dist/index.cjs ./index.cjs |   47 | >>> COPY integrations/chat/server.js ./server.js |   48 |      |   49 |     # set port env and expose it
+====================================================================================================
+APP clearflask | TIMEOUT | stage 2 APP_UP | code RUNNER_EXHAUSTED | class START_TIMEOUT | repair NO_MATCHING_REPAIR
+  where: part="published image ghcr.io/clearflask/clearflask-server:latest, named in the app's own files" attempt=3 rule=app.stalled fix_tried=next_part
+  error: 3 attempts over 2 ways of running it; last: published image ghcr.io/clearflask/clearflask-server:latest, named in the app's own files -> app.stalled
+#1 published image ghcr.io/clearflask/clearflask-connect:latest, named in the app's own files: container.missing_path (add_volume)
+#2 published image ghcr.io/clearflask/clearflask-connect:latest, named in the app's own files: container.missing_path (add_volume)
+#3 published image ghcr.io/clearflask/clearflask-server:latest, named in the app's own fi
+  record: /srv/app-builder/state/runner/failures/clearflask/run-1790662411396-clearflask-bb982647-a1-f1.json
+  container_log: None
+  start attempts: 3
+    #1 published image ghcr.io/clearflask/clearflask-connect:latest, named in the app's own files -> FAILED rule=container.missing_path fix=add_volume
+       evidence: ENT: no such file or directory, open '/opt/clearflask/connect.config.json' |     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10) |     at Module.load (node:internal/modules/cjs/loader:1266:32) |     at Module._load (node:internal/modules/cjs/loader:1091:12) |     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:164:12) { |   errno: -2, |   code: 'ENOENT', |   syscall: 'open', |   path: '/opt/clearflask/connect.config.json' | } | Node.js v20.20.2
+    #2 published image ghcr.io/clearflask/clearflask-connect:latest, named in the app's own files -> FIX_DID_NOT_RESOLVE rule=container.missing_path fix=add_volume
+       evidence: ENT: no such file or directory, open '/opt/clearflask/connect.config.json' |     at Module._extensions..js (node:internal/modules/cjs/loader:1623:10) |     at Module.load (node:internal/modules/cjs/loader:1266:32) |     at Module._load (node:internal/modules/cjs/loader:1091:12) |     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:164:12) { |   errno: -2, |   code: 'ENOENT', |   syscall: 'open', |   path: '/opt/clearflask/connect.config.json' | } | Node.js v20.20.2
+    #3 published image ghcr.io/clearflask/clearflask-server:latest, named in the app's own files -> FAILED rule=app.stalled fix=next_part
+       evidence: .apache.catalina.startup.Bootstrap.main(Bootstrap.java:485) | 29-Sep-2026 06:19:00.259 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/usr/local/tomcat/webapps/ROOT] has finished in [183,340] ms | 29-Sep-2026 06:19:00.321 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"] | 29-Sep-2026 06:19:00.536 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [184678] milliseconds
+====================================================================================================
+APP colanode | FAILED | stage 6 CLEAN | code JOURNEY_NOT_AUTHORED:SMOKE_NO_CONTROL | class JOURNEY_NOT_AUTHORED | repair NO_MATCHING_REPAIR
+  where: part="published image ghcr.io/colanode/server:latest, named in the app's own files" attempt=3 rule=container.exited fix_tried=next_part
+  error: no login form and no internal link that changes the page
+  record: /srv/app-builder/state/runner/failures/colanode/run-1790662411401-colanode-48ff93cd-a1-f1.json
+  container_log: /srv/app-builder/state/runner/failures/colanode/run-1790662411401-colanode-48ff93cd-a1-f1.container.log
+  browser evidence: /srv/app-builder/state/runner/evidence/colanode/run-1790662411401-colanode-48ff93cd-a1  files: screenshot.png page.html browser.json
+  start attempts: 4
+    #2 published image ghcr.io/colanode/server:latest, named in the app's own files -> FAILED rule=app.env_required fix=set_env
+       evidence: __EXITED__ 1 container(s) stopped with an error | Configuration validation error: | == atta-colanode Exited (1) 2 seconds ago | - redis.url: Environment variable "REDIS_URL" is not set
+    #3 published image ghcr.io/colanode/server:latest, named in the app's own files -> FAILED rule=container.exited fix=next_part
+       evidence: ist/lib/client/index.js:303:38) |     at new RedisClient (/app/node_modules/@redis/client/dist/lib/client/index.js:223:46) |     at new Class (/app/node_modules/@redis/client/dist/lib/commander.js:9:45) |     at /app/node_modules/@redis/client/dist/lib/client/index.js:105:34 |     at create (/app/node_modules/@redis/client/dist/lib/client/index.js:109:35) |     at file:///app/apps/server/dist/index.js:1926:13 |     at ModuleJob.run (node:internal/modules/esm/module_job:343:25) | Node.js v22.22.2
+    #4 published image ghcr.io/colanode/web:latest, named in the app's own files -> UP rule=None fix=None
+  container log tail:
+    2026/09/29 06:16:34 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1024:524288
+    2026/09/29 06:16:34 [notice] 1#1: start worker processes
+    2026/09/29 06:16:34 [notice] 1#1: start worker process 30
+    2026/09/29 06:16:34 [notice] 1#1: start worker process 31
+    2026/09/29 06:16:34 [notice] 1#1: start worker process 32
+    2026/09/29 06:16:34 [notice] 1#1: start worker process 33
+  browser.json: url=http://127.0.0.1:8268/ title='Colanode' page_errors=0 console=0 request_failures=0
+====================================================================================================
+APP coolify | FAILED | stage 3 PROXY_UP | code NOT_HTML | class NO_WEB_UI | repair NO_MATCHING_REPAIR
+  where: part="image coollabsio/coolify-helper from the owner's Docker Hub namespace" attempt=4 rule=app.still_starting fix_tried=wait_longer
+  error: 
+  record: /srv/app-builder/state/runner/failures/coolify/run-1790662411408-coolify-c5ddc6ee-a1-f1.json
+  container_log: /srv/app-builder/state/runner/failures/coolify/run-1790662411408-coolify-c5ddc6ee-a1-f1.container.log
+  start attempts: 5
+    #3 image coollabsio/coolify-helper from the owner's Docker Hub namespace -> FAILED rule=app.still_starting fix=wait_longer
+       evidence: __STILL_STARTING__ no answer after 240s
+    #4 image coollabsio/coolify-helper from the owner's Docker Hub namespace -> FIX_DID_NOT_RESOLVE rule=app.still_starting fix=wait_longer
+       evidence: __STILL_STARTING__ no answer after 900s
+    #5 image coollabsio/coolify-realtime from the owner's Docker Hub namespace -> UP rule=None fix=None
+  container log tail:
+    2026-09-29 06:54:28 [SOKETI] 
+    2026-09-29 06:54:28 [SOKETI] (node:17) NOTE: We are formalizing our plans to enter AWS SDK for JavaScript (v2) into maintenance mode in 2023.
+    2026-09-29 06:54:28 [SOKETI] 
+    2026-09-29 06:54:28 [SOKETI] Please migrate your code to use AWS SDK for JavaScript (v3).
+    2026-09-29 06:54:28 [SOKETI] For more information, check the migration guide at https://a.co/7PzMCcy
+    2026-09-29 06:54:28 [SOKETI] (Use `node --trace-warnings ...` to show where the warning was created)
+====================================================================================================
+APP flarum | FAILED | stage 6 CLEAN | code CONSOLE_ERRORS:4 | class HUMAN_REVIEW | repair NO_MATCHING_REPAIR
+  error: ["Access to font at 'http://127.0.0.1:20000/assets/fonts/fa-regular-400.woff2' from origin 'http://127.0.0.1:8426' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. (http://127.0.0.1:8426/)", "Access to font at 'http://127.0.0.1:20000/assets/fonts/fa-solid-900.woff2' from origin 'http://127.0.0.1:8426' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. (http://127.0.0.1:8426/)
+  record: /srv/app-builder/state/runner/failures/flarum/run-1790662411410-flarum-14195f66-a1-f1.json
+  container_log: /srv/app-builder/state/runner/failures/flarum/run-1790662411410-flarum-14195f66-a1-f1.container.log
+  browser evidence: /srv/app-builder/state/runner/evidence/flarum/run-1790662411410-flarum-14195f66-a1  files: screenshot.png page.html browser.json
+  start attempts: 1
+    #1 reusable PHP runtime (PHP 8.3, web root public): the app ships no way to start it -> UP rule=None fix=None
+  container log tail:
+    Error response from daemon: No such container: atta-flarum
+  browser.json: url=http://127.0.0.1:8426/ title='ATTa QA' page_errors=1 console=8 request_failures=4
+    4 x Failed to load resource: net::ERR_FAILED
+    4 x net::ERR_FAILED
+    1 x Access to font at 'http://127.0.0.1:20000/assets/fonts/fa-regular-400.woff2' from origin 'http://127.0.0.1:8426' has been blocked by CORS po
+    1 x Access to font at 'http://127.0.0.1:20000/assets/fonts/fa-solid-900.woff2' from origin 'http://127.0.0.1:8426' has been blocked by CORS poli
+    1 x Access to font at 'http://127.0.0.1:20000/assets/fonts/fa-solid-900.woff2?v=9fe5ae714d714fb4288306266d91d6a4' from origin 'http://127.0.0.1:
+====================================================================================================
+APP ghost | START_FAILED | stage 2 APP_UP | code RUNNER_EXHAUSTED | class BUILD_FAILED | repair NO_MATCHING_REPAIR
+  where: part="the app's own Dockerfile docker/tb-cli/Dockerfile (builds from source)" attempt=8 rule=build.failed fix_tried=next_part
+  error: 8 attempts over 7 ways of running it; last: the app's own Dockerfile docker/tb-cli/Dockerfile (builds from source) -> build.failed
+#1 published image ghcr.io/tryghost/ghost:latest, named in the app's own files: app.needs_database (next_part)
+#2 published image ghcr.io/tryghost/ghost-devcontainer:latest, named in the app's own files: container.exited (next_part)
+#3 the app's own Dockerfile docker/dev-gateway/Dockerfile (builds from source): app.still_starting (wait_longer)
+#4 the app's own Docker
+  record: /srv/app-builder/state/runner/failures/ghost/run-1790662411408-ghost-98feb11a-a1-f1.json
+  container_log: None
+  start attempts: 8
+    #6 the app's own Dockerfile docker/fake-mailgun/Dockerfile (builds from source) -> FAILED rule=build.failed fix=next_part
+       evidence: pdv5u3: "/docker/fake-mailgun/entrypoint.sh": not found | ------ | Dockerfile:22 | -------------------- |   20 |     COPY e2e/helpers/services/fake-server.ts e2e/helpers/services/fake-server.ts |   21 |     COPY e2e/helpers/services/mailgun/fake-mailgun-server.ts e2e/helpers/services/mailgun/fake-mailgun-server.ts |   22 | >>> COPY --chmod=755 docker/fake-mailgun/entrypoint.sh /usr/local/bin/fake-mailgun |   23 |     WORKDIR /home/ghost/e2e |   24 |     ENTRYPOINT ["/usr/local/bin/fake-mailgun"]
+    #7 the app's own Dockerfile docker/ghost-dev/Dockerfile (builds from source) -> FAILED rule=build.failed fix=next_part
+       evidence: 0pdvg7os: "/pnpm-workspace.yaml": not found | ERROR: failed to build: failed to solve: failed to compute cache key: failed to calculate checksum of ref sd1ebt3s7uz9r4mferf2uf8qf::yqubn5nv7ef5g9wzq0pdvg7os: "/docker/ghost-dev/entrypoint.sh": not found | ------ | Dockerfile:81 | -------------------- |   79 |      |   80 |     # Copy entrypoint script that optionally loads Tinybird config |   81 | >>> COPY docker/ghost-dev/entrypoint.sh entrypoint.sh |   82 |     RUN chmod +x entrypoint.sh |   83 |
+    #8 the app's own Dockerfile docker/tb-cli/Dockerfile (builds from source) -> FAILED rule=build.failed fix=next_part
+       evidence: sh": not found | ERROR: failed to build: failed to solve: failed to compute cache key: failed to calculate checksum of ref sd1ebt3s7uz9r4mferf2uf8qf::a9aj6q2a92uhk0fcovzo5ik79: "/docker/tb-cli/entrypoint.sh": not found | ------ | Dockerfile:27 | -------------------- |   25 |     ENV PATH="/root/.local/bin:$PATH" |   26 |      |   27 | >>> COPY docker/tb-cli/entrypoint.sh /usr/local/bin |   28 |     RUN chmod +x /usr/local/bin/entrypoint.sh |   29 |     ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+====================================================================================================
+APP krayin-crm | FAILED | stage 4 SKIN | code NO_LINK | class SKIN_INJECTION | repair NO_MATCHING_REPAIR
+  error: 
+  record: /srv/app-builder/state/runner/failures/krayin-crm/run-1790662411413-krayin-crm-b8ebcb55-a1-f1.json
+  container_log: /srv/app-builder/state/runner/failures/krayin-crm/run-1790662411413-krayin-crm-b8ebcb55-a1-f1.container.log
+  start attempts: 1
+    #1 image webkul/krayin:2.0.1 named in the app's own docs (https://devdocs.krayincrm.com/2.0/introduction/docker.html) -> UP rule=None fix=None
+  container log tail:
+    2026-09-29 06:13:57,848 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+    2026-09-29 06:13:57,848 INFO supervisord started with pid 1
+    2026-09-29 06:13:58,851 INFO spawned: 'apache2' with pid 8
+    2026-09-29 06:13:58,857 INFO spawned: 'mysql' with pid 9
+    2026-09-29 06:14:00,734 INFO success: apache2 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+    2026-09-29 06:14:00,734 INFO success: mysql entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+====================================================================================================
+APP langflow | START_FAILED | stage 2 APP_UP | code RUNNER_EXHAUSTED | class HUMAN_REVIEW | repair NO_MATCHING_REPAIR
+  where: part="compose file from the app's docs (https://docs.langflow.org/deployment-docker)" attempt=5 rule=unrecognised fix_tried=next_part
+  error: 5 attempts over 4 ways of running it; last: compose file from the app's docs (https://docs.langflow.org/deployment-docker) -> unrecognised
+#1 published image langflowai/langflow:latest, named in the app's own files: container.exited (next_part)
+#2 published image langflowai/langflow-backend:latest, named in the app's own files: container.exited (next_part)
+#3 published image langflowai/langflow-frontend:latest, named in the app's own files: app.env_required (set_env)
+#4 published image langflowa
+  record: /srv/app-builder/state/runner/failures/langflow/run-1790662411427-langflow-2aa2dd01-a1-f1.json
+  container_log: None
+  start attempts: 5
+    #3 published image langflowai/langflow-frontend:latest, named in the app's own files -> FAILED rule=app.env_required fix=set_env
+       evidence: __EXITED__ every container stopped | BACKEND_URL must be set as an environment variable or as first parameter. (e.g. http://localhost:7860)
+    #4 published image langflowai/langflow-frontend:latest, named in the app's own files -> FAILED rule=app.still_starting fix=wait_longer
+       evidence: in /tmp/nginx/default.conf:12 | nginx: [warn] duplicate extension "css", content type: "text/css", previous content type: "text/css" in /tmp/nginx/default.conf:12 | 2026/09/29 06:21:27 [warn] 1#1: duplicate extension "js", content type: "application/javascript", previous content type: "application/javascript" in /tmp/nginx/default.conf:13 | nginx: [warn] duplicate extension "js", content type: "application/javascript", previous content type: "application/javascript" in /tmp/nginx/default.conf:13
+    #5 compose file from the app's docs (https://docs.langflow.org/deployment-docker) -> FAILED rule=unrecognised fix=next_part
+       evidence: go-yaml load error in scanner at L1.C20: mapping values are not allowed in this context
+====================================================================================================
+APP medplum | FAILED | stage 6 CLEAN | code JOURNEY_NOT_AUTHORED:SMOKE_NO_CONTROL | class JOURNEY_NOT_AUTHORED | repair NO_MATCHING_REPAIR
+  where: part="published image medplum/medplum-server:latest, named in the app's own files" attempt=1 rule=container.exited fix_tried=next_part
+  error: no login form and no internal link that changes the page
+  record: /srv/app-builder/state/runner/failures/medplum/run-1790662411427-medplum-6560f4b0-a1-f1.json
+  container_log: /srv/app-builder/state/runner/failures/medplum/run-1790662411427-medplum-6560f4b0-a1-f1.container.log
+  browser evidence: /srv/app-builder/state/runner/evidence/medplum/run-1790662411427-medplum-6560f4b0-a1  files: screenshot.png page.html browser.json
+  start attempts: 2
+    #1 published image medplum/medplum-server:latest, named in the app's own files -> FAILED rule=container.exited fix=next_part
+       evidence: :"2026-09-29T06:15:47.431Z","msg":"Starting Medplum Server...","configName":"file:medplum.config.json","version":"5.1.42"} | (node:1) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`: | --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("%40opentelemetry/instrumentation/hook.mjs", pathToFileURL("./"));' | (Use `node --trace-warnings ...` to show where the warning was created)
+    #2 published image medplum/medplum-app:latest, named in the app's own files -> UP rule=None fix=None
+  container log tail:
+    2026/09/29 06:16:45 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1024:524288
+    2026/09/29 06:16:45 [notice] 1#1: start worker processes
+    2026/09/29 06:16:45 [notice] 1#1: start worker process 14
+    2026/09/29 06:16:45 [notice] 1#1: start worker process 15
+    2026/09/29 06:16:45 [notice] 1#1: start worker process 16
+    2026/09/29 06:16:45 [notice] 1#1: start worker process 17
+  browser.json: url=http://127.0.0.1:8669/Patient?_count=20&_fields=id,_lastUpdated,name,birthDate,gender&_sort=-_lastUpdated title='Medplum' page_errors=0 console=3 request_failures=3
+    3 x Failed to load resource: net::ERR_CONNECTION_REFUSED
+    3 x net::ERR_CONNECTION_REFUSED
+====================================================================================================
+APP memos | FAILED | stage 6 CLEAN | code CONSOLE_ERRORS:19 | class HUMAN_REVIEW | repair NO_MATCHING_REPAIR
+  error: ["Failed to load resource: net::ERR_NETWORK_CHANGED (http://127.0.0.1:8185/_cs/memos/skin-002.1.css)", "Failed to load resource: net::ERR_NETWORK_CHANGED (http://127.0.0.1:8185/assets/dist-Buz-No-8.js)", "Failed to load resource: net::ERR_NETWORK_CHANGED (http://127.0.0.1:8185/assets/button-s6wbZU6S.js)", "Failed to load resource: net::ERR_NETWORK_CHANGED (http://127.0.0.1:8185/assets/react-dom-De4ljgjk.js)", "Failed to load resource: net::ERR_NETWORK_CHANGED (http://127.0.0.1:8185/assets/useOpe
+  record: /srv/app-builder/state/runner/failures/memos/run-1790662411421-memos-e2b8ce1d-a1-f1.json
+  container_log: /srv/app-builder/state/runner/failures/memos/run-1790662411421-memos-e2b8ce1d-a1-f1.container.log
+  browser evidence: /srv/app-builder/state/runner/evidence/memos/run-1790662411421-memos-e2b8ce1d-a1  files: screenshot.png page.html browser.json
+  start attempts: 1
+    #1 published image neosmemo/memos:stable, named in the app's own files -> UP rule=None fix=None
+  container log tail:
+    time=2026-09-29T06:14:59.540Z level=INFO msg=OK method=/memos.api.v1.AuthService/GetCurrentUser
+    time=2026-09-29T06:14:59.552Z level=INFO msg=OK method=/memos.api.v1.UserService/ListUserSettings
+    time=2026-09-29T06:15:33.519Z level=INFO msg="client error" method=/memos.api.v1.AuthService/RefreshToken error="unauthenticated: refresh token not found"
+    time=2026-09-29T06:15:33.923Z level=INFO msg=OK method=/memos.api.v1.InstanceService/GetInstanceProfile
+    time=2026-09-29T06:15:33.944Z level=INFO msg=OK method=/memos.api.v1.InstanceService/BatchGetInstanceSettings
+    time=2026-09-29T06:15:33.986Z level=INFO msg=OK method=/memos.api.v1.InstanceService/GetInstanceSetting
+  browser.json: url=http://127.0.0.1:8185/ title='Memos' page_errors=0 console=19 request_failures=19
+    38 x ERR_NETWORK_CHANGED
+====================================================================================================
+APP open-design | START_FAILED | stage 2 APP_UP | code RUNNER_EXHAUSTED | class BUILD_FAILED | repair NO_MATCHING_REPAIR
+  where: part="the app's own Dockerfile deploy/Dockerfile (builds from source)" attempt=1 rule=build.failed fix_tried=next_part
+  error: 1 attempts over 1 ways of running it; last: the app's own Dockerfile deploy/Dockerfile (builds from source) -> build.failed
+#1 the app's own Dockerfile deploy/Dockerfile (builds from source): build.failed (next_part)
+  record: /srv/app-builder/state/runner/failures/open-design/run-1790662411429-open-design-5a0fee65-a1-f1.json
+  container_log: None
+  start attempts: 1
+    #1 the app's own Dockerfile deploy/Dockerfile (builds from source) -> FAILED rule=build.failed fix=next_part
+       evidence: 7uz9r4mferf2uf8qf::jbomdq03oeexdcd66ny2izfn1: "/craft": not found | ERROR: failed to build: failed to solve: failed to compute cache key: failed to calculate checksum of ref sd1ebt3s7uz9r4mferf2uf8qf::jbomdq03oeexdcd66ny2izfn1: "/plugins/_official": not found | ------ | Dockerfile:79 | -------------------- |   77 |     COPY prompt-templates ./prompt-templates |   78 |     COPY assets ./assets |   79 | >>> COPY plugins/_official ./plugins/_official |   80 |      |   81 |     FROM ${RUNTIME_IMAGE}
+====================================================================================================
+APP opencart | START_FAILED | stage 2 APP_UP | code RUNNER_EXHAUSTED | class BUILD_FAILED | repair NO_MATCHING_REPAIR
+  where: part="the app's own Dockerfile docker/apache/Dockerfile (builds from source)" attempt=8 rule=build.failed fix_tried=next_part
+  error: 8 attempts over 6 ways of running it; last: the app's own Dockerfile docker/apache/Dockerfile (builds from source) -> build.failed
+#1 compose file from the app's docs (https://docs.docker.com/compose/profiles/): image.missing (next_part)
+#2 compose file from the app's docs (https://docs.docker.com/compose/profiles/): image.missing (next_part)
+#3 compose file from the app's docs (https://docs.docker.com/compose/profiles/): image.missing (next_part)
+#4 the app's own Dockerfile tools/Dockerfile (bu
+  record: /srv/app-builder/state/runner/failures/opencart/run-1790662411431-opencart-0d28f42e-a1-f1.json
+  container_log: None
+  start attempts: 8
+    #6 the app's own Dockerfile docker/php/Dockerfile (builds from source) -> FAILED rule=build.failed fix=next_part
+       evidence: php/supervisor/services": not found | ERROR: failed to build: failed to solve: failed to compute cache key: failed to calculate checksum of ref sd1ebt3s7uz9r4mferf2uf8qf::nvwbzeoqatxxid3voivb5yahw: "/docker/php/docker-opencart-entrypoint": not found | ------ | Dockerfile:51 | -------------------- |   49 |      |   50 |     # Copy OpenCart entrypoint |   51 | >>> COPY docker/php/docker-opencart-entrypoint /usr/local/bin/ |   52 |     RUN chmod +x /usr/local/bin/docker-opencart-entrypoint |   53 |
+    #7 the app's own Dockerfile docker/nginx/Dockerfile (builds from source) -> FAILED rule=build.failed fix=next_part
+       evidence: ERROR: failed to build: failed to solve: failed to compute cache key: failed to calculate checksum of ref sd1ebt3s7uz9r4mferf2uf8qf::ob3gmmejrsx5868oia7sn0knh: "/docker/nginx/conf/default.conf": not found | ------ | Dockerfile:70 | -------------------- |   68 |     # Copy nginx configurations |   69 |     COPY docker/nginx/conf/nginx.conf /etc/nginx/nginx.conf |   70 | >>> COPY docker/nginx/conf/default.conf /etc/nginx/conf.d/default.conf |   71 |      |   72 |     # Create necessary directories
+    #8 the app's own Dockerfile docker/apache/Dockerfile (builds from source) -> FAILED rule=build.failed fix=next_part
+       evidence: ncart.conf": not found | ERROR: failed to build: failed to solve: failed to compute cache key: failed to calculate checksum of ref sd1ebt3s7uz9r4mferf2uf8qf::yiie1qgp7lmq1c5zaj4mafux1: "/docker/apache/conf/opencart.conf": not found | ------ | Dockerfile:7 | -------------------- |    5 |     RUN mkdir -p /usr/local/apache2/conf/sites-available |    6 |      |    7 | >>> COPY docker/apache/conf/opencart.conf /usr/local/apache2/conf/sites-available/opencart.conf |    8 |      |    9 |     EXPOSE 80
+====================================================================================================
+APP opencloud | START_FAILED | stage 2 APP_UP | code RUNNER_EXHAUSTED | class CONTAINER_EXITED | repair NO_MATCHING_REPAIR
+  where: part="the app's own Dockerfile Dockerfile (builds from source)" attempt=1 rule=container.exited fix_tried=next_part
+  error: 1 attempts over 1 ways of running it; last: the app's own Dockerfile Dockerfile (builds from source) -> container.exited
+#1 the app's own Dockerfile Dockerfile (builds from source): container.exited (next_part)
+  record: /srv/app-builder/state/runner/failures/opencloud/run-1790662411425-opencloud-0418f34a-a1-f1.json
+  container_log: None
+  start attempts: 1
+    #1 the app's own Dockerfile Dockerfile (builds from source) -> FAILED rule=container.exited fix=next_part
+       evidence: __EXITED__ every container stopped | {"level":"error","error":"unknown edition channel ''","time":"2026-09-29T06:32:19.534185947Z","caller":"/opencloud/pkg/version/version.go:55","message":"falling back to dev"} | The jwt_secret has not been set properly in your config for opencloud. Make sure your /root/.opencloud/config config contains the proper values (e.g. by using 'opencloud init --diff' and applying the patch or setting a value manually in the config/corresponding environment variable).
+====================================================================================================
+APP plane | START_FAILED | stage 2 APP_UP | code RUNNER_EXHAUSTED | class CONTAINER_EXITED | repair NO_MATCHING_REPAIR
+  where: part="image makeplane/plane-live from the owner's Docker Hub namespace" attempt=8 rule=container.exited fix_tried=next_part
+  error: 8 attempts over 8 ways of running it; last: image makeplane/plane-live from the owner's Docker Hub namespace -> container.exited
+#1 published image makeplane/plane-backend:latest, named in the app's own files: container.exited (next_part)
+#2 published image makeplane/plane-frontend:latest, named in the app's own files: container.exited (next_part)
+#3 published image makeplane/plane-space:latest, named in the app's own files: container.exited (next_part)
+#4 published image makeplane/plane-admin:l
+  record: /srv/app-builder/state/runner/failures/plane/run-1790662411432-plane-32342756-a1-f1.json
+  container_log: None
+  start attempts: 8
+    #6 image makeplane/plane-proxy from the owner's Docker Hub namespace -> FAILED rule=container.exited fix=next_part
+       evidence: __EXITED__ every container stopped | 2026/09/29 06:18:58 [emerg] 1#1: invalid number of arguments in "client_max_body_size" directive in /etc/nginx/nginx.conf:12 | nginx: [emerg] invalid number of arguments in "client_max_body_size" directive in /etc/nginx/nginx.conf:12
+    #7 image makeplane/plane-deploy from the owner's Docker Hub namespace -> FAILED rule=container.exited fix=next_part
+       evidence: __EXITED__ every container stopped
+    #8 image makeplane/plane-live from the owner's Docker Hub namespace -> FAILED rule=container.exited fix=next_part
+       evidence: __EXITED__ every container stopped
+====================================================================================================
+APP polar | TIMEOUT | stage 2 APP_UP | code RUNNER_EXHAUSTED | class START_TIMEOUT | repair NO_MATCHING_REPAIR
+  where: part="the app's own Dockerfile infra/tailscale/Dockerfile (builds from source)" attempt=7 rule=app.still_starting fix_tried=wait_longer
+  error: 7 attempts over 3 ways of running it; last: the app's own Dockerfile infra/tailscale/Dockerfile (builds from source) -> app.still_starting
+#1 the app's own Dockerfile server/Dockerfile (builds from source): build.failed (next_part)
+#2 the app's own Dockerfile infra/pgbouncer/Dockerfile (builds from source): app.env_required (set_env)
+#3 the app's own Dockerfile infra/pgbouncer/Dockerfile (builds from source): app.env_required (set_env)
+#4 the app's own Dockerfile infra/pgbouncer/Dockerfile (buil
+  record: /srv/app-builder/state/runner/failures/polar/run-1790662411434-polar-12b7a70d-a1-f1.json
+  container_log: None
+  start attempts: 7
+    #5 the app's own Dockerfile infra/pgbouncer/Dockerfile (builds from source) -> FAILED rule=app.still_starting fix=wait_longer
+       evidence: :29:42.972 UTC [1] LOG stats: 0 xacts/s, 0 queries/s, 0 client parses/s, 0 server parses/s, 0 binds/s, in 0 B/s, out 0 B/s, xact 0 us, query 0 us, wait 0 us | 2026-09-29 06:30:42.972 UTC [1] LOG stats: 0 xacts/s, 0 queries/s, 0 client parses/s, 0 server parses/s, 0 binds/s, in 0 B/s, out 0 B/s, xact 0 us, query 0 us, wait 0 us | 2026-09-29 06:31:42.978 UTC [1] LOG stats: 0 xacts/s, 0 queries/s, 0 client parses/s, 0 server parses/s, 0 binds/s, in 0 B/s, out 0 B/s, xact 0 us, query 0 us, wait 0 us
+    #6 the app's own Dockerfile infra/tailscale/Dockerfile (builds from source) -> FAILED rule=app.still_starting fix=wait_longer
+       evidence: ol: client.Login(2) | 2026/09/29 06:46:42 control: LoginInteractive -> regen=true | 2026/09/29 06:46:42 control: doLogin(regen=true, hasUrl=false) | 2026/09/29 06:46:43 control: control server key from https://controlplane.tailscale.com: ts2021=[fSeS+], legacy=[nlFWp] | 2026/09/29 06:46:43 control: Generating a new nodekey. | 2026/09/29 06:46:43 control: RegisterReq: onode= node=[xNnuo] fup=false nks=false | 2026/09/29 06:46:43 control: controlhttp: forcing port 443 dial due to recent noise dial
+    #7 the app's own Dockerfile infra/tailscale/Dockerfile (builds from source) -> FIX_DID_NOT_RESOLVE rule=app.still_starting fix=wait_longer
+       evidence: ol: client.Login(2) | 2026/09/29 07:01:40 control: LoginInteractive -> regen=true | 2026/09/29 07:01:40 control: doLogin(regen=true, hasUrl=false) | 2026/09/29 07:01:41 control: control server key from https://controlplane.tailscale.com: ts2021=[fSeS+], legacy=[nlFWp] | 2026/09/29 07:01:41 control: Generating a new nodekey. | 2026/09/29 07:01:41 control: RegisterReq: onode= node=[nNRZx] fup=false nks=false | 2026/09/29 07:01:41 control: controlhttp: forcing port 443 dial due to recent noise dial
+====================================================================================================
+APP supabase | FAILED | stage 6 CLEAN | code JOURNEY_NOT_AUTHORED:SMOKE_NO_CONTROL | class JOURNEY_NOT_AUTHORED | repair NO_MATCHING_REPAIR
+  where: part="published image supabase/studio:2026.09.07-sha-7996410, named in the app's own files" attempt=1 rule=app.stalled fix_tried=next_part
+  error: no login form and no internal link that changes the page
+  record: /srv/app-builder/state/runner/failures/supabase/run-1790662411444-supabase-7e51f756-a1-f1.json
+  container_log: /srv/app-builder/state/runner/failures/supabase/run-1790662411444-supabase-7e51f756-a1-f1.container.log
+  browser evidence: /srv/app-builder/state/runner/evidence/supabase/run-1790662411444-supabase-7e51f756-a1  files: screenshot.png page.html browser.json
+  start attempts: 2
+    #1 published image supabase/studio:2026.09.07-sha-7996410, named in the app's own files -> FAILED rule=app.stalled fix=next_part
+       evidence: __STALLED__ not healthy and no new log output for 240s | Γû▓ Next.js 16.2.11 | - Local:         http://bdcf5eef69ba:3000 | - Network:       http://bdcf5eef69ba:3000 | Γ£ô Ready in 0ms
+    #2 image supabase/supabase-dev from the owner's Docker Hub namespace -> UP rule=None fix=None
+  container log tail:
+    {"details":"could not translate host name \"docker.for.mac.localhost\" to address: No address associated with hostname\n","code":"","message":"Database connection error"}
+    {"details":"could not translate host name \"docker.for.mac.localhost\" to address: No address associated with hostname\n","code":"","message":"Database connection error"}
+    {"details":"could not translate host name \"docker.for.mac.localhost\" to address: No address associated with hostname\n","code":"","message":"Database connection error"}
+    Kernel pid terminated (application_controller) ({application_start_failure,realtime,{{shutdown,{failed_to_start_child,'Elixir.Realtime.Replication',nxdomain}},{'Elixir.Realtime.Application',start,[nor
+    
+    Crash dump is being written to: erl_crash.dump...{"details":"could not translate host name \"docker.for.mac.localhost\" to address: No address associated with hostname\n","code":"","message":"Database connection error"}
+  browser.json: url=http://127.0.0.1:8139/ title='400 The plain HTTP request was sent to HTTPS port' page_errors=0 console=1 request_failures=0
+    1 x Failed to load resource: the server responded with a status of 400 (Bad Request)
+====================================================================================================
+APP super-productivity | FAILED | stage 6 CLEAN | code CONSOLE_ERRORS:151 | class HUMAN_REVIEW | repair NO_MATCHING_REPAIR
+  error: ["Failed to load resource: net::ERR_NETWORK_CHANGED (http://127.0.0.1:8815/chunk-MOUDD2QE.js)", "Failed to load resource: net::ERR_NETWORK_CHANGED (http://127.0.0.1:8815/chunk-H4PCEQEH.js)", "Failed to load resource: net::ERR_NETWORK_CHANGED (http://127.0.0.1:8815/chunk-T453MWBS.js)", "Failed to load resource: net::ERR_NETWORK_CHANGED (http://127.0.0.1:8815/chunk-SQRNYO5K.js)", "Failed to load resource: net::ERR_NETWORK_CHANGED (http://127.0.0.1:8815/chunk-RFGDSY53.js)", "Failed to load resource
+  record: /srv/app-builder/state/runner/failures/super-productivity/run-1790662411454-super-productivity-6adfb2c6-a1-f1.json
+  container_log: /srv/app-builder/state/runner/failures/super-productivity/run-1790662411454-super-productivity-6adfb2c6-a1-f1.container.log
+  browser evidence: /srv/app-builder/state/runner/evidence/super-productivity/run-1790662411454-super-productivity-6adfb2c6-a1  files: screenshot.png page.html browser.json
+  start attempts: 1
+    #1 published image johannesjo/super-productivity:latest, named in the app's own files -> UP rule=None fix=None
+  container log tail:
+    10.0.0.1 - - [29/Sep/2026:06:16:30 +0000] "GET /chunk-4TF56XW3.js HTTP/1.1" 200 1759 "http://127.0.0.1:20022/ngsw-worker.js" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.80
+    10.0.0.1 - - [29/Sep/2026:06:16:30 +0000] "GET /chunk-4Y6RGMIT.js HTTP/1.1" 200 3427 "http://127.0.0.1:20022/ngsw-worker.js" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.80
+    10.0.0.1 - - [29/Sep/2026:06:16:31 +0000] "GET /chunk-5I65NKZA.js HTTP/1.1" 200 2562 "http://127.0.0.1:20022/ngsw-worker.js" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.80
+    10.0.0.1 - - [29/Sep/2026:06:16:31 +0000] "GET /chunk-5MQSSPNC.js HTTP/1.1" 200 12110 "http://127.0.0.1:20022/ngsw-worker.js" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8
+    10.0.0.1 - - [29/Sep/2026:06:16:31 +0000] "GET /chunk-5SZGUJHV.js HTTP/1.1" 200 4193 "http://127.0.0.1:20022/ngsw-worker.js" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.80
+    10.0.0.1 - - [29/Sep/2026:06:16:32 +0000] "GET /chunk-67W64CEA.js HTTP/1.1" 200 1786 "http://127.0.0.1:20022/ngsw-worker.js" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.80
+  browser.json: url=http://127.0.0.1:8815/ title='Super Productivity' page_errors=0 console=50 request_failures=50
+    100 x ERR_NETWORK_CHANGED
+====================================================================================================
+APP traefik | FAILED | stage 6 CLEAN | code JOURNEY_NOT_AUTHORED:SMOKE_NO_CONTROL | class JOURNEY_NOT_AUTHORED | repair NO_MATCHING_REPAIR
+  where: part="image traefik/traefikee from the owner's Docker Hub namespace" attempt=4 rule=cli.needs_command fix_tried=pick_command
+  error: no login form and no internal link that changes the page
+  record: /srv/app-builder/state/runner/failures/traefik/run-1790662411453-traefik-ac582852-a1-f1.json
+  container_log: /srv/app-builder/state/runner/failures/traefik/run-1790662411453-traefik-ac582852-a1-f1.container.log
+  browser evidence: /srv/app-builder/state/runner/evidence/traefik/run-1790662411453-traefik-ac582852-a1  files: screenshot.png page.html browser.json
+  start attempts: 5
+    #3 image traefik/traefik-migration-tool from the owner's Docker Hub namespace -> FAILED rule=cli.needs_command fix=pick_command
+       evidence: ands: |   acme        Migrate acme.json file from Traefik v1 to Traefik v2. |   help        Help about any command |   ingress     Migrate 'Ingress' to Traefik 'IngressRoute' resources. |   static      Migrate static configuration file from Traefik v1 to Traefik v2. |   version     Display version | Flags: |   -h, --help      help for traefik-migration-tool |   -v, --version   version for traefik-migration-tool | Use "traefik-migration-tool [command] --help" for more information about a command.
+    #4 image traefik/traefikee from the owner's Docker Hub namespace -> FAILED rule=cli.needs_command fix=pick_command
+       evidence: ller         Start a new controller |              proxy              Start a new proxy |              tokens             Get tokens from the cluster |              version            Print version |              generate           Generate assets |              recover            Recovers a cluster that has lost quorum |              plugin-registry    Start a new plugin registry |              healthcheck        Calls Traefik /ping endpoint (disabled by default) to check the health of Traefik.
+    #5 image traefik/traefikee-webapp-demo from the owner's Docker Hub namespace -> UP rule=None fix=None
+  container log tail:
+    false
+    false
+    false
+    false
+    false
+    false
+  browser.json: url=http://127.0.0.1:8864/ title='Traefik Labs: Makes Networking Boring' page_errors=0 console=0 request_failures=0
+====================================================================================================
+APP umami | START_FAILED | stage 2 APP_UP | code RUNNER_EXHAUSTED | class CONTAINER_EXITED | repair NO_MATCHING_REPAIR
+  where: part="the app's own Dockerfile Dockerfile (builds from source)" attempt=4 rule=container.exited fix_tried=next_part
+  error: 4 attempts over 4 ways of running it; last: the app's own Dockerfile Dockerfile (builds from source) -> container.exited
+#1 published image umamisoftware/umami:latest, named in the app's own files: container.exited (next_part)
+#2 published image docker.umami.is/umami-software/umami:latest, named in the app's own files: container.exited (next_part)
+#3 published image ghcr.io/umami-software/umami:latest, named in the app's own files: container.exited (next_part)
+#4 the app's own Dockerfile Dockerf
+  record: /srv/app-builder/state/runner/failures/umami/run-1790662411461-umami-4e629c4e-a1-f1.json
+  container_log: None
+  start attempts: 4
+    #2 published image docker.umami.is/umami-software/umami:latest, named in the app's own files -> FAILED rule=container.exited fix=next_part
+       evidence: __EXITED__ every container stopped | TypeError: Invalid URL |     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26) |     at new URL (node:internal/url:818:25) |     at file:///app/scripts/check-db.js:16:13 |     at ModuleJob.run (node:internal/modules/esm/module_job:343:25) |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) { |   code: 'ERR_INVALID_URL', |   input: 'undefined' | } | Node.js v22.23.2
+    #3 published image ghcr.io/umami-software/umami:latest, named in the app's own files -> FAILED rule=container.exited fix=next_part
+       evidence: __EXITED__ every container stopped | TypeError: Invalid URL |     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26) |     at new URL (node:internal/url:818:25) |     at file:///app/scripts/check-db.js:16:13 |     at ModuleJob.run (node:internal/modules/esm/module_job:343:25) |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) { |   code: 'ERR_INVALID_URL', |   input: 'undefined' | } | Node.js v22.23.2
+    #4 the app's own Dockerfile Dockerfile (builds from source) -> FAILED rule=container.exited fix=next_part
+       evidence: __EXITED__ every container stopped | TypeError: Invalid URL |     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26) |     at new URL (node:internal/url:818:25) |     at file:///app/scripts/check-db.js:16:13 |     at ModuleJob.run (node:internal/modules/esm/module_job:343:25) |     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) { |   code: 'ERR_INVALID_URL', |   input: 'undefined' | } | Node.js v22.23.3
