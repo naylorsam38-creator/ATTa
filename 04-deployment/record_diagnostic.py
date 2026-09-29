@@ -216,14 +216,25 @@ def _json_file(path: Path) -> Any:
         return None
 
 
+def _depth(path: str) -> int:
+    return path.count(".") + path.count("[")
+
+
 def _identity(obj: Any) -> dict[str, Any]:
-    out = {}
+    """The record's own identity: for each key, the occurrence nearest the top of the record wins.
+    v121.4: this was last-wins over a depth-first walk, so a nested copy (an invalidated earlier attempt, a
+    stage's status) overrode the record's own top-level value, and a record's own browser evidence then
+    read as an identity mismatch."""
+    out: dict[str, Any] = {}
+    best: dict[str, int] = {}
+    wanted = {x.lower() for x in IDENTITY_KEYS}
     if isinstance(obj, dict):
         for path, value in _walk(obj):
             key = path.rsplit(".", 1)[-1].lower()
-            if key in {x.lower() for x in IDENTITY_KEYS} and value not in (None, ""):
+            if key in wanted and value not in (None, ""):
                 # Prefer scalar values and do not expose secrets.
-                if isinstance(value, (str, int, float, bool)):
+                if isinstance(value, (str, int, float, bool)) and _depth(path) < best.get(key, 1 << 30):
+                    best[key] = _depth(path)
                     out[key] = _safe_value(key, value)
     return out
 

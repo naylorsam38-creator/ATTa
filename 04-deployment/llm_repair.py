@@ -18,6 +18,7 @@ import json, os, time
 
 import builds, repair_actions as ra
 from redact import redact, contains_mark, MARK
+from atta_control import gate as control_gate
 
 # ===================== CONFIG — edit here, nothing below needs reading =====================
 # Model for diagnosis. Change only if you deliberately want a different Claude model.
@@ -149,7 +150,13 @@ def attempt(layer: str, item: dict, rec: dict, chain: list[dict]) -> dict:
                 try:
                     if spec and spec["mutating"] and contains_mark(dict(c.input)):
                         raise ValueError(f"refused: the input contains {MARK}, a hidden secret; it would overwrite the real value")
-                    out = redact(ra.run(c.name, dict(c.input)))
+                    # v121.4: a mutating action goes through the repair gate like every other tier's; read-only
+                    # actions (read_file, list_dir, ...) change nothing and are not gated.
+                    if spec and spec["mutating"]:
+                        out = redact(control_gate.execute({"layer": layer, "item": item, "rec": rec, "tier": 3, "rule": "llm"},
+                                                          c.name, dict(c.input), ra.run))
+                    else:
+                        out = redact(ra.run(c.name, dict(c.input)))
                     err = False
                 except Exception as e:
                     out, err = redact(f"{type(e).__name__}: {e}"), True

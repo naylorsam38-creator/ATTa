@@ -27,6 +27,7 @@ from __future__ import annotations
 import re, time
 
 import builds, known_fixes, capability_adapter, llm_repair, alerts, syntax_triage, repair_actions as ra, rule_lifecycle
+from atta_control import gate as control_gate
 
 # ===================== CONFIG — edit here, nothing below needs reading =====================
 # Tier 3 when the LLM is off (APP_BUILDER_HEAL_LLM_PER_DAY=0 or no API key): the SCRIPT PROBE.
@@ -106,11 +107,14 @@ def _sig(layer, it):
 
 
 # ---------------------------------------------------------------- tiers
-def _run_actions(steps) -> tuple[bool, list[dict]]:
+def _run_actions(steps, ctx: dict | None = None) -> tuple[bool, list[dict]]:
+    """v121.4: each action goes through the repair gate (atta_control/gate.py) with what is known about the
+    failure (ctx). Gate off, or no ctx: exactly ra.run. Enforce mode: a refused action raises here like any
+    failing action, so the tier is FIX_FAILED and healing moves on to the next tier or a person."""
     done, ok = [], True
     for name, args in steps:
         try:
-            out, err = ra.run(name, args), False
+            out, err = control_gate.execute(ctx, name, args, ra.run), False
         except Exception as e:
             out, err, ok = f"{type(e).__name__}: {e}", True, False
         done.append({"name": name, "args": args, "result": str(out)[:1000], "error": err})
@@ -132,7 +136,7 @@ def _probe(layer: str, it: dict, rec: dict, st: dict, e: dict) -> dict:
         args = {k: (v.format(**ctx) if isinstance(v, str) else v) for k, v in tmpl.items()}
         if any(v == "" for v in args.values()):
             continue   # needs an app and this failure has none
-        ok, done = _run_actions([(name, args)])
+        ok, done = _run_actions([(name, args)], {"layer": layer, "item": it, "rec": rec, "tier": 3, "rule": "probe"})
         tried += done
         if ok:
             st["probe_i"] = i
@@ -154,7 +158,7 @@ def _tier(n: int, layer: str, it: dict, rec: dict, chain: list[dict], st: dict |
             return {**e, "outcome": "NEEDS_HUMAN", "why": fix["human"]}
         if fix.get("retry"):
             return {**e, "outcome": "APPLIED", "actions": [], "note": "known transient failure: run the layer again"}
-        ok, done = _run_actions(fix["actions"])
+        ok, done = _run_actions(fix["actions"], {"layer": layer, "item": it, "rec": rec, "tier": 1, "rule": fix["rule"]})
         return {**e, "outcome": "APPLIED" if ok else "FIX_FAILED", "actions": done}
     if n == 2:
         p = capability_adapter.plan(it)
@@ -162,7 +166,7 @@ def _tier(n: int, layer: str, it: dict, rec: dict, chain: list[dict], st: dict |
             return {**e, "outcome": "NOT_MINE"}
         if not p["actions"]:
             return {**e, "outcome": "NOT_REPAIRABLE", "findings": p["findings"]}
-        ok, done = _run_actions(p["actions"])
+        ok, done = _run_actions(p["actions"], {"layer": layer, "item": it, "rec": rec, "tier": 2, "rule": "capability_adapter"})
         return {**e, "outcome": "APPLIED" if ok else "FIX_FAILED", "findings": p["findings"], "actions": done}
     if n == 3:
         if not llm_repair.available()[0]:
