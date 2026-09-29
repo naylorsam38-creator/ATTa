@@ -3,6 +3,7 @@
 # runs one step as root. Read-only except --deploy-bg and --start-run.
 #
 #   --check        rebuild/verify v121.3 in a new release folder; show server + ATTa state (read-only)
+#   --verify       prove the RUNNING ATTa container is the tested v121.3 code (read-only)
 #   --deploy-bg    deploy v121.3 in the background (systemd unit atta-upgrade-v1213; survives ssh drops)
 #   --log [N]      last N lines of the deploy log and whether it is still running
 #   --start-run    queue exactly ONE full library run
@@ -10,8 +11,8 @@
 #   --dump <path>  print a file under /srv/app-builder/state (reports, results, failure records)
 #   --ls <path>    list a folder under /srv/app-builder/state
 set -euo pipefail
-URL="https://raw.githubusercontent.com/naylorsam38-creator/ATTa/8f6a44b/tools/atta-upgrade-v121.3.sh"
-SHA=c6f1451cb542510aec482bc49c0cad47da051dda000a13f1957619735637ad5b
+URL="https://raw.githubusercontent.com/naylorsam38-creator/ATTa/627d418/tools/atta-upgrade-v121.3.sh"
+SHA=6bb83b8bba918811f03ad136ec0a74522014bcbf6a120e2ef557e72cd9f76ace
 S=/tmp/atta-upgrade-v121.3.sh
 LOG=/var/log/atta-upgrade-v121.3.log
 DATA=/srv/app-builder
@@ -29,8 +30,8 @@ inside() {   # refuse anything outside $DATA/state
 atta_ctr() { sudo -n docker ps --filter label=coolify.type=service --format '{{.Names}}' | grep -E '^atta-[a-z0-9]{24}$' | head -1; }
 
 case "$mode" in
---check)
-    fetch; sudo -n bash "$S" --check ;;
+--check | --verify)
+    fetch; sudo -n bash "$S" "$mode" ;;
 --start-run)
     fetch
     sudo -n bash "$S" --start-run
