@@ -1,5 +1,5 @@
 diff --git a/04-deployment/app_runner.py b/04-deployment/app_runner.py
-index 67dea5e..afaf47d 100644
+index 67dea5e..9a77ef0 100644
 --- a/04-deployment/app_runner.py
 +++ b/04-deployment/app_runner.py
 @@ -42,7 +42,9 @@ from pathlib import Path
@@ -28,7 +28,25 @@ index 67dea5e..afaf47d 100644
  # Ports tried when an image doesn't say which port it listens on.
  COMMON_PORTS = [80, 8080, 3000, 8000, 5000, 5173, 4000, 9000, 8081, 3001]
  # Registries checked for an image named only by owner/repo in the app's files.
-@@ -1358,9 +1368,16 @@ def _pick_command(help_text: str) -> str | None:
+@@ -1268,6 +1278,17 @@ def run_app(app: str, log=print) -> dict:
+                              "notes": notes, "evidence": _evidence(reason), **timing})
+             _record_evidence(app, part, dx, reason)
+             log(f"  [{app}]   -> {dx['rule']} -> {dx['fix']}")
++            # v121.3: the previous attempt of this same way of running it applied a fix and got the SAME failure
++            # (same rule, same evidence once times/ports/ids are set aside): the fix did not resolve it. Say so
++            # and stop retrying this way; no more fixes of the same kind on an unchanged failure.
++            prev = attempts[-2] if len(attempts) >= 2 else {}
++            if prev.get("part") == part["why"] and prev.get("outcome") == "FAILED" and prev.get("rule") == dx["rule"] \
++                    and resilience.failures.norm(prev.get("evidence")) == resilience.failures.norm(attempts[-1].get("evidence")):
++                attempts[-1]["outcome"] = "FIX_DID_NOT_RESOLVE"
++                attempts[-1]["notes"] = notes + [f"the same failure ({dx['rule']}) came back after the fix {prev.get('fix')!r} "
++                                                 "with nothing else changed: the fix did not resolve it; not retrying this way"]
++                log(f"  [{app}]   -> the same failure after the fix: stopping this way of running it")
++                dx = {**dx, "fix": "next_part"}
+             fixes_here += 1
+             pending_rule = dx["rule"] if dx.get("learned") and dx["fix"] != "next_part" else None
+             if dx["fix"] == "set_env" and dx.get("var") and dx["var"] not in part["env"] and fixes_here <= 8:
+@@ -1358,9 +1379,16 @@ def _pick_command(help_text: str) -> str | None:
      return next((c for c in SERVER_COMMANDS if c in listed), None)
  
  
@@ -47,7 +65,7 @@ index 67dea5e..afaf47d 100644
      tmp = dest.with_suffix(".tmp")
      try:
          tmp.write_text(json.dumps(r, indent=2, default=str) + "\n"); os.replace(tmp, dest)
-@@ -1381,8 +1398,14 @@ def _record_evidence(app: str, part: dict, dx: dict, reason: str) -> None:
+@@ -1381,8 +1409,14 @@ def _record_evidence(app: str, part: dict, dx: dict, reason: str) -> None:
      """Every failed start, kept forever (state/runner/evidence.jsonl): what was tried, which rule it
      matched, and the real error/log lines. "unrecognised" rows are where the next rule comes from;
      tests/run_tests.py replays the rules against these real failures."""
@@ -63,7 +81,7 @@ index 67dea5e..afaf47d 100644
      try:
          with _EVIDENCE_LOCK, (RUNNER / "evidence.jsonl").open("a") as f:
              f.write(json.dumps(row) + "\n")
-@@ -1391,6 +1414,17 @@ def _record_evidence(app: str, part: dict, dx: dict, reason: str) -> None:
+@@ -1391,6 +1425,20 @@ def _record_evidence(app: str, part: dict, dx: dict, reason: str) -> None:
  
  
  _EVIDENCE_LOCK = threading.Lock()
@@ -77,11 +95,14 @@ index 67dea5e..afaf47d 100644
 +    job = getattr(_CTX, "job", None)
 +    if not job or job.get("app") != safe_id(app):
 +        return {}
-+    return {k: job.get(k) for k in _IDENTITY_KEYS}
++    out = {k: job.get(k) for k in _IDENTITY_KEYS}
++    if job.get("repair"):
++        out["repair"] = job["repair"]   # a retest after repair n: its own evidence folder and records
++    return out
  
  
  def _evidence(text: str) -> str:
-@@ -1482,11 +1516,21 @@ def qualify_app(app: str, keep: bool | None = None, log=print, run_id: str | Non
+@@ -1482,11 +1530,21 @@ def qualify_app(app: str, keep: bool | None = None, log=print, run_id: str | Non
      t0 = time.time()
      if prof in {"system", "package"}:
          t = register_static(app, prof)
@@ -104,7 +125,7 @@ index 67dea5e..afaf47d 100644
          if not run["ok"]:
              r = _synth(app, run["code"], run["detail"] + "\n" + "\n".join(
                  f"#{a['n']} {a['part']}: {a.get('rule')} ({a.get('fix')})" for a in run["attempts"]))
-@@ -1498,18 +1542,13 @@ def qualify_app(app: str, keep: bool | None = None, log=print, run_id: str | Non
+@@ -1498,18 +1556,13 @@ def qualify_app(app: str, keep: bool | None = None, log=print, run_id: str | Non
              else:
                  # It runs and answers, but with no web page (frp answers 401 JSON): it's a service, not a
                  # website. Check it as one, and say so, instead of failing it for not being HTML.
@@ -124,7 +145,7 @@ index 67dea5e..afaf47d 100644
                  # v119: the runtime journey is part of the qualification contract, not a best-effort browser check.
                  # v121: a web app without a contract gets one AUTHORED now (journey_author.py): a test account
                  # provisioned by class, a contract derived from the real post-login page, dry-run once. The
-@@ -1527,6 +1566,9 @@ def qualify_app(app: str, keep: bool | None = None, log=print, run_id: str | Non
+@@ -1527,34 +1580,42 @@ def qualify_app(app: str, keep: bool | None = None, log=print, run_id: str | Non
                      else:
                          t["journey"] = {"error": authored["code"], "detail": authored["detail"]}
                  (TARGETS / f"{safe_id(app)}.json").write_text(json.dumps(t, indent=2) + "\n")
@@ -134,19 +155,80 @@ index 67dea5e..afaf47d 100644
                  r = _watcher().check(t)
                  if authored is not None:
                      r["journey_author"] = {k: authored.get(k) for k in ("account", "code", "detail")}
-@@ -1537,8 +1579,10 @@ def qualify_app(app: str, keep: bool | None = None, log=print, run_id: str | Non
+                 # Known fix: a 5xx means the app is still warming up, not broken. Wait, check again.
++                # v121.3: one wait is the bounded fix. Another wait only if the failure CHANGED since the last
++                # check (the app is progressing); the same failure after a wait = the wait did not resolve it.
++                warm = []
+                 for i in range(WARMUP_RECHECKS):
+                     if not _warming(r):
+                         break
                      log(f"  [{app}] {r['verdict']}: still warming up, re-checking in {WARMUP_RECHECK_WAIT}s ({i + 1}/{WARMUP_RECHECKS})")
++                    sig0 = resilience.failures.signature(r)
++                    ev0 = ((r.get("stages") or {}).get("6 CLEAN") or {}).get("evidence")
                      time.sleep(WARMUP_RECHECK_WAIT)
-                     r = _watcher().check(t)
+-                    r = _watcher().check(t)
 -            r["runner"] = {"started": True, "url": run["url"], "part": run["part"].get("why"),
++                    r = _watcher().check({**t, "_identity": {**_job_identity(app), "source": "app_runner.warmup_recheck",
++                                                             "recheck": i + 1}})
++                    sig1 = resilience.failures.signature(r)
++                    same = r.get("broken_at") is not None and sig1 == sig0
++                    warm.append({"n": i + 1, "wait_s": WARMUP_RECHECK_WAIT, "signature_before": sig0, "signature_after": sig1,
++                                 "evidence_before": ev0, "outcome": "PASSED" if r.get("broken_at") is None
++                                 else "FIX_DID_NOT_RESOLVE" if same else "CHANGED"})
++                    if same:
++                        log(f"  [{app}] {r['verdict']}: the same failure after waiting; not waiting again")
++                        break
++                if warm:
++                    r["warmup_rechecks"] = warm
 +            r["runner"] = {"started": True, "profile": prof, "url": run["url"], "part": run["part"].get("why"),
                             "part_detail": {k: v for k, v in run["part"].items() if not k.startswith("_")}, "attempts": run["attempts"]}
 +        if obs is not None:
 +            r.setdefault("observations", {})["app_http"] = obs
          if not keep:
              down(app)
-     # The recipe rule: a way of starting an app is saved ONLY when the app passed the full check with it
-@@ -1744,6 +1788,33 @@ def _free_disk_gb() -> float:
+-    # The recipe rule: a way of starting an app is saved ONLY when the app passed the full check with it
+-    # (every stage, including the real browser). Self-healer proposals follow the same rule.
+-    run_ = r.get("runner") or {}
+-    passed = r.get("broken_at") is None and (r.get("stages") or {}).get("6 CLEAN", {}).get("status") == "OK"
+-    used = (run_.get("part_detail") or None)
+-    if used and run_.get("started"):
+-        if passed:
+-            save_recipe(app, used, "qualified: passed all six stages")
+-            (RECIPES / f"{safe_id(app)}.candidate.json").unlink(missing_ok=True)
+-        else:
+-            if used.get("why", "").startswith("self-healer's proposed"):
+-                (RECIPES / f"{safe_id(app)}.candidate.json").unlink(missing_ok=True)
+-            if load_recipe(app) and used.get("why") == "recipe that worked before":
+-                forget_recipe(app)
++    _recipe_rule(app, r)
+     r["number"] = app_number(app)
+     t_end = time.time()
+     r["runner"]["seconds"] = int(t_end - t0)
+@@ -1573,6 +1634,23 @@ def qualify_app(app: str, keep: bool | None = None, log=print, run_id: str | Non
+     return r
+ 
+ 
++def _recipe_rule(app: str, r: dict) -> None:
++    """The recipe rule: a way of starting an app is saved ONLY when the app passed the full check with it
++    (every stage, including the real browser). Self-healer proposals follow the same rule."""
++    run_ = r.get("runner") or {}
++    passed = r.get("broken_at") is None and (r.get("stages") or {}).get("6 CLEAN", {}).get("status") == "OK"
++    used = (run_.get("part_detail") or None)
++    if used and run_.get("started"):
++        if passed:
++            save_recipe(app, used, "qualified: passed all six stages")
++            (RECIPES / f"{safe_id(app)}.candidate.json").unlink(missing_ok=True)
++        else:
++            if used.get("why", "").startswith("self-healer's proposed"):
++                (RECIPES / f"{safe_id(app)}.candidate.json").unlink(missing_ok=True)
++            if load_recipe(app) and used.get("why") == "recipe that worked before":
++                forget_recipe(app)
++
++
+ def _warming(r: dict) -> bool:
+     st = (r.get("stages") or {}).get(r.get("broken_at") or "", {})
+     return (r.get("code") in ("UPSTREAM_5XX", "UPSTREAM_502", "BROWSER_HTTP")
+@@ -1744,6 +1822,33 @@ def _free_disk_gb() -> float:
  
  
  _QUEUED: dict[str, float] = {}
@@ -180,7 +262,7 @@ index 67dea5e..afaf47d 100644
  
  
  def _wait_for_memory(a: str, log) -> None:
-@@ -1758,6 +1829,7 @@ def _wait_for_memory(a: str, log) -> None:
+@@ -1758,6 +1863,7 @@ def _wait_for_memory(a: str, log) -> None:
  
  
  def _wait_for_memory_inner(a: str, log, cleared: float) -> None:
@@ -188,7 +270,7 @@ index 67dea5e..afaf47d 100644
      while True:
          total, avail = _meminfo()
          disk = _free_disk_gb()
-@@ -1765,15 +1837,26 @@ def _wait_for_memory_inner(a: str, log, cleared: float) -> None:
+@@ -1765,15 +1871,26 @@ def _wait_for_memory_inner(a: str, log, cleared: float) -> None:
              mem_ok = not total or avail >= total * START_FREE_MEMORY
              disk_ok = disk >= START_FREE_DISK_GB
              if (mem_ok and disk_ok) or not _RUNNING:
@@ -218,7 +300,7 @@ index 67dea5e..afaf47d 100644
  
  
  _RUNNING: set[str] = set()
-@@ -1781,70 +1864,288 @@ _RUNNING_LOCK = threading.Lock()
+@@ -1781,70 +1898,581 @@ _RUNNING_LOCK = threading.Lock()
  
  
  def qualify_all(apps: list[str] | None = None, log=print, parallel: int | None = None) -> list[dict]:
@@ -324,6 +406,28 @@ index 67dea5e..afaf47d 100644
 +                _invalidate(r, "DEPLOYMENT_CHANGED_DURING_FLEET_RUN",
 +                            f"checked against {(r.get('verification') or {}).get('deployment_revision')}, live is {rev1}")
 +                _write_result(a, r)
++    # Regression for repairs that are not limited to one app (SHARED_ACTIONS): every app that qualified on a
++    # check that finished BEFORE such a repair is checked again, so its QUALIFIED stands on the current state.
++    with _FLEET_LOCK:
++        shared = list(_FLEET.get("shared_fixes") or [])
++    if shared:
++        last_fix = max(x["at"] for x in shared)
++        again = [a for a in unique if handoff_state(out[safe_id(a)]) == "QUALIFIED"
++                 and ((out[safe_id(a)].get("verification") or {}).get("finished_at") or 0) < last_fix]
++        if again:
++            _event("SHARED_REPAIR_REGRESSION", None, f"{len(again)} app(s) qualified before a shared repair "
++                   f"({', '.join(sorted({n for x in shared for n in x['actions']}))}): re-checked",
++                   apps=[safe_id(a) for a in again])
++            log(f"regression: re-checking {len(again)} app(s) that qualified before a shared repair")
++            redo = _run_pool(again, log, min(n, len(again)), gate=n > 1)
++            for a in again:
++                k = safe_id(a)
++                if handoff_state(redo[k]) != "QUALIFIED":
++                    _event("REGRESSION", a, f"qualified before the shared repair, {handoff_state(redo[k])} after it "
++                           f"({redo[k].get('broken_at')} {redo[k].get('code')})")
++                redo[k].setdefault("runner", {})["regression_recheck"] = True
++                out[k] = redo[k]
++                _write_result(a, redo[k])
 +    with _FLEET_LOCK:
 +        facts = dict(_FLEET)
 +    ctx = {"fleet_run_id": fleet_id, "started_at": started_at, "finished_at": time.time(),
@@ -466,6 +570,266 @@ index 67dea5e..afaf47d 100644
 +        return app_revision(app_dir(a))
 +    except (FileNotFoundError, OSError):
 +        return "missing"
++
++
++# ------------------------------------------------------------------ v121.3: stop, record, one bounded fix, retest
++# TEST -> FAIL -> STOP THAT APP -> RECORD EXACTLY WHERE -> CLASSIFY -> ONE BOUNDED FIX (ATTa's own repair tiers:
++# known fixes, then the capability adapter) -> RETEST THE FAILED STAGE (+ the earlier stages as regression)
++# -> same failure = the fix did not resolve it, stop; passes = continue to the final barrier; a different
++# failure = record it and repeat, at most REPAIR_CYCLES times, never the same fix twice for the same failure.
++# There is no blind retry: a failure no tier has an evidence-based fix for stops the app and is reported for
++# the next repair decision. Every failure, fix and retest has its own record, evidence and revision identity.
++REPAIR_CYCLES = int(os.environ.get("APP_BUILDER_REPAIR_CYCLES", "3"))
++FAILURES = RUNNER / "failures"
++# Repairs whose effect is not limited to one app. After one is applied, apps that already qualified before
++# it are checked again at the end of the run (the regression check it needs).
++SHARED_ACTIONS = {"install_browser", "add_runner_rule"}
++_NOT_HERE = {"ATTA_INTERNAL", "REVISION_CHANGED"}
++
++
++def _unique(path: Path) -> Path:
++    """Never overwrite a record: <name>.json, <name>-2.json, ..."""
++    if not path.exists():
++        return path
++    i = 2
++    while path.with_name(f"{path.stem}-{i}{path.suffix}").exists():
++        i += 1
++    return path.with_name(f"{path.stem}-{i}{path.suffix}")
++
++
++def _record_failure(a: str, r: dict, repair_n: int) -> dict:
++    """The failure exactly as it happened, kept forever (state/runner/failures/<app>/...). Written while the
++    app is still up, so the container log is the one that belongs to this failure."""
++    from resilience import failures as fx
++    k = safe_id(a)
++    job = getattr(_CTX, "job", None) or {}
++    cls, change = fx.classify(r)
++    loc = fx.location(r)
++    plan = fx.retest_plan(cls, r.get("broken_at"))
++    d = FAILURES / k
++    d.mkdir(parents=True, exist_ok=True)
++    base = f"{job.get('run_id') or 'norun'}-a{job.get('attempt') or 1}-f{repair_n}"
++    logs, log_file = "", None
++    part = (r.get("runner") or {}).get("part_detail")
++    if part and (r.get("runner") or {}).get("started"):
++        try:
++            logs = _logs(a, part, 300)
++        except Exception as e:
++            logs = f"(container log not readable: {type(e).__name__}: {e})"
++        log_file = _unique(d / f"{base}.container.log")
++        try:
++            log_file.write_text(logs)
++        except OSError:
++            log_file = None
++    now = time.time()
++    rec = {"app": k, "failure_no": repair_n, "ts": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now)), "at": now,
++           **{x: job.get(x) for x in _IDENTITY_KEYS}, "signature": fx.signature(r),
++           "stage": r.get("broken_at"), "code": r.get("code"), "location": loc, "class": cls, "what_to_change": change,
++           "retest": plan, "error": loc.get("detail"), "verdict": r.get("verdict"),
++           "start_attempts": [{k2: x.get(k2) for k2 in ("n", "part", "outcome", "rule", "fix", "evidence", "notes")}
++                              for x in (r.get("runner") or {}).get("attempts") or []],
++           "evidence": ((r.get("stages") or {}).get("6 CLEAN") or {}).get("evidence"),
++           "observations": r.get("observations"), "container_log_file": str(log_file) if log_file else None,
++           "container_log_tail": logs[-4000:] if logs else None, "stages": r.get("stages")}
++    path = _unique(d / f"{base}.json")
++    try:
++        tmp = path.with_suffix(".tmp"); tmp.write_text(json.dumps(rec, indent=2, default=str) + "\n"); os.replace(tmp, path)
++        rec["record"] = str(path)
++    except OSError as e:
++        rec["record"] = None; rec["record_error"] = str(e)
++    return rec
++
++
++def _condition(a: str) -> str:
++    """What a repair can change for this app: its overlay files and source identity, its target registration,
++    whether its skin proxy is listening, whether the launcher can run. Same value before and after a fix =
++    the fix changed nothing, so re-running the test would be a blind retry."""
++    import hashlib
++    h = hashlib.sha256(_app_revision_of(a).encode())
++    tp = TARGETS / f"{safe_id(a)}.json"
++    try:
++        t = json.loads(tp.read_text())
++        h.update(json.dumps({k: v for k, v in t.items() if k not in ("parked", "parked_at")}, sort_keys=True).encode())
++        port = int(str(t.get("proxy_url") or "").rsplit(":", 1)[1].strip("/")) if t.get("proxy_url") else None
++        h.update(b"proxy:" + (b"up" if port and port_open(port) else b"down"))
++        launcher = Path(t.get("ui_dir") or "") / "run-ui.sh"
++        h.update(b"x:" + (b"1" if launcher.is_file() and os.access(launcher, os.X_OK) else b"0"))
++    except (OSError, ValueError, IndexError):
++        h.update(b"no-target")
++    # Shared environment a repair can install (stage 6's browser).
++    pw = Path(os.environ.get("PLAYWRIGHT_BROWSERS_PATH") or Path.home() / ".cache" / "ms-playwright")
++    try:
++        h.update(b"pw:" + ",".join(sorted(x.name for x in pw.iterdir())).encode())
++    except OSError:
++        h.update(b"pw:none")
++    return h.hexdigest()[:16]
++
++
++def _select_fix(a: str, r: dict, tried: set) -> dict | None:
++    """ATTa's own repair tiers, cheapest first, evidence-based only: tier 1 known fixes (built-in and learned
++    rules keyed on the failure), tier 2 the capability adapter (repairs what its inspection actually finds).
++    The self-healer's blind probe is NOT used here. A fix already tried for this failure is not offered again."""
++    st = r.get("broken_at")
++    item = {"key": f"{st}:{r.get('code')}", "app": safe_id(a),
++            "detail": str(((r.get("stages") or {}).get(st) or {}).get("detail") or "")[:2000]}
++    try:
++        import known_fixes
++        m = known_fixes.match("qualify", item, _FLEET.get("fleet_run_id") or "")
++    except Exception as e:
++        m = None
++        item["tier1_error"] = f"{type(e).__name__}: {e}"
++    if m and m.get("human"):
++        return {"tier": 1, "rule": m["rule"], "human": m["human"], "item": item}
++    if m and m.get("actions"):
++        key = (m["rule"], json.dumps(m["actions"], sort_keys=True, default=str))
++        if key not in tried:
++            return {"tier": 1, "rule": m["rule"], "actions": m["actions"], "key": key, "item": item}
++    try:
++        import capability_adapter
++        p = capability_adapter.plan(item)
++    except Exception as e:
++        p = None
++        item["tier2_error"] = f"{type(e).__name__}: {e}"
++    if p and p.get("actions"):
++        key = ("adapter", json.dumps(p["actions"], sort_keys=True, default=str))
++        if key not in tried:
++            return {"tier": 2, "rule": "capability_adapter", "findings": p.get("findings"), "actions": p["actions"],
++                    "key": key, "item": item}
++    if p and not p.get("actions"):
++        return {"tier": 2, "rule": "capability_adapter", "human": "; ".join(p.get("findings") or []) or "adapter: nothing it can repair",
++                "item": item}
++    return None
++
++
++def _apply(actions) -> tuple[bool, list[dict]]:
++    import repair_actions as ra
++    done, ok = [], True
++    for name, args in actions:
++        try:
++            out, err = ra.run(name, args), False
++        except Exception as e:
++            out, err, ok = f"{type(e).__name__}: {e}", True, False
++        done.append({"name": name, "args": args, "result": str(out)[:1000], "error": err})
++        if err:
++            break
++    return ok, done
++
++
++def _retest(a: str, r: dict, plan: dict, log) -> dict:
++    """Re-run the failed stage. The app stays up when the fix did not touch how it starts: the watcher walks
++    stages 1 -> 6 again on the running app (the earlier stages are read-only checks: they are the regression
++    check). A fix to how it starts restarts it through the normal runner."""
++    run = r.get("runner") or {}
++    tp = TARGETS / f"{safe_id(a)}.json"
++    if not plan.get("restart_app") and run.get("started") and tp.is_file():
++        try:
++            t = json.loads(tp.read_text())
++        except (OSError, ValueError):
++            t = None
++        if t is not None:
++            t.pop("parked", None); t.pop("parked_at", None)
++            r2 = _watcher().check({**t, "_identity": {**_job_identity(a), "source": "app_runner.repair_retest"}})
++            r2["runner"] = {**run, "retest": "watcher on the running app"}
++            for k in ("observations", "journey_author", "timing", "number"):
++                if k in r and k not in r2:
++                    r2[k] = r[k]
++            return r2
++    log(f"  [{a}] retest restarts the app (the fix changes how it starts, or it is not running)")
++    return qualify_app(a, keep=True, log=log)
++
++
++def _repair_cycle(a: str, r: dict, log) -> dict:
++    k = safe_id(a)
++    cycles: list[dict] = []
++    tried: set = set()
++    status = "PASSED"
++    first_failure = None
++    n = 0
++    while r.get("broken_at") is not None or not passed_all_stages(r):
++        n += 1
++        fail = _record_failure(a, r, n)
++        first_failure = first_failure or fail
++        entry = {"n": n, "failure": {x: fail.get(x) for x in ("record", "signature", "stage", "code", "class",
++                                                                "what_to_change", "location", "container_log_file")}}
++        cycles.append(entry)
++        log(f"[{a}] FAILED at {fail['stage']} {fail['code']} ({fail['class']}): {str(fail.get('error') or '')[:160]}")
++        if fail["class"] in _NOT_HERE or r.get("broken_at") is None:
++            status = entry["outcome"] = "NOT_REPAIRABLE_BY_APP_FIX"
++            entry["next"] = fail["what_to_change"]
++            break
++        if n > REPAIR_CYCLES:
++            status = entry["outcome"] = "REPAIR_LIMIT_REACHED"
++            entry["next"] = f"{REPAIR_CYCLES} bounded repairs applied; next repair decision needed: {fail['what_to_change']}"
++            break
++        fix = _select_fix(a, r, tried)
++        if fix is None:
++            status = entry["outcome"] = "NO_MATCHING_REPAIR"
++            entry["next"] = "next repair decision needed (no evidence-based fix in ATTa's repair tiers): " + fail["what_to_change"]
++            log(f"[{a}] stopped: no evidence-based repair for {fail['stage']} {fail['code']}; reported for the next repair decision")
++            break
++        entry["fix"] = {x: fix.get(x) for x in ("tier", "rule", "findings", "actions", "human")}
++        if fix.get("human"):
++            status = entry["outcome"] = "NEEDS_HUMAN"
++            entry["next"] = fix["human"]
++            log(f"[{a}] stopped: {fix['rule']} needs a person: {fix['human'][:160]}")
++            break
++        tried.add(fix["key"])
++        before = _condition(a)
++        ok, done = _apply(fix["actions"])
++        after = _condition(a)
++        entry["fix"].update({"applied": done, "condition_before": before, "condition_after": after, "at": time.time()})
++        log(f"[{a}] repair {n}: tier {fix['tier']} {fix['rule']}: " + ", ".join(x["name"] for x in done))
++        if any(x["name"] in SHARED_ACTIONS for x in done):
++            with _FLEET_LOCK:
++                _FLEET.setdefault("shared_fixes", []).append({"app": k, "at": time.time(), "actions": [x["name"] for x in done]})
++        if not ok:
++            status = entry["outcome"] = "FIX_FAILED"
++            entry["next"] = "the repair action itself failed: " + next((x["result"] for x in done if x["error"]), "")
++            break
++        if before == after:
++            status = entry["outcome"] = "FIX_CHANGED_NOTHING"
++            entry["next"] = "the fix changed nothing it could affect, so retesting would repeat an unchanged test: " + fail["what_to_change"]
++            log(f"[{a}] stopped: the repair changed nothing; not retesting an unchanged condition")
++            break
++        # The retest is its own check: new correlation id, the revision as it is now (after the fix).
++        job = dict(getattr(_CTX, "job", None) or {})
++        job.update({"repair": n, "correlation_id": new_correlation_id(), "deployment_revision": deployment_revision(ROOT),
++                    "app_revision": _app_revision_of(a)})
++        _CTX.job = job
++        r2 = _retest(a, r, fail["retest"], log)
++        entry["retest"] = {"correlation_id": job["correlation_id"], "deployment_revision": job["deployment_revision"],
++                           "app_revision": job["app_revision"], "verdict": r2.get("verdict"), "stage": r2.get("broken_at"),
++                           "code": r2.get("code"), "signature": resilience.failures.signature(r2),
++                           "evidence": ((r2.get("stages") or {}).get("6 CLEAN") or {}).get("evidence"),
++                           "restarted_app": fail["retest"].get("restart_app")}
++        if passed_all_stages(r2):
++            status = entry["outcome"] = "RESOLVED"
++            log(f"[{a}] repair {n} RESOLVED {fail['stage']} {fail['code']}: retest passed every stage")
++            r = r2
++            _recipe_rule(a, r)
++            break
++        if r2.get("broken_at") and entry["retest"]["signature"] == fail["signature"]:
++            status = entry["outcome"] = "FIX_DID_NOT_RESOLVE"
++            entry["next"] = f"the same failure after {fix['rule']}: next repair decision needed: {fail['what_to_change']}"
++            log(f"[{a}] repair {n} did NOT resolve {fail['stage']} {fail['code']}: stopped")
++            r = r2
++            _record_failure(a, r, n + 1)
++            if fix["tier"] == 1 and str(fix["rule"]).startswith("learned."):
++                try:
++                    import known_fixes, rule_lifecycle
++                    rule_lifecycle.record(known_fixes.LEARNED_FILE, fix["rule"], "failed",
++                                          {"app": k, "detail": fail["signature"]})
++                except Exception:
++                    pass
++            break
++        entry["outcome"] = "PROGRESSED"
++        log(f"[{a}] repair {n} moved the failure: {fail['stage']} {fail['code']} -> {r2.get('broken_at')} {r2.get('code')}")
++        r = r2
++    if cycles:
++        r["repair"] = {"status": status, "cycles": cycles, "first_failure": first_failure.get("record") if first_failure else None}
++        r["failure"] = {x: first_failure.get(x) for x in ("record", "stage", "code", "class", "what_to_change", "location",
++                                                            "retest", "signature", "container_log_file", "ts")}
++    return r
  
  
  def _qualify_one_inner(a: str, log) -> dict:
@@ -507,16 +871,27 @@ index 67dea5e..afaf47d 100644
 -    r["verification"].update({"run_id":run_id, "deployment_revision":rev_before,
 -                              "revision_after":rev_after, "revision_stable":stable,
 -                              "status":"CURRENT" if stable else "UNVERIFIED"})
-+            r = qualify_app(a, log=log, run_id=run_id, deployment_revision_id=job["deployment_revision"])
++            # The app stays up through its repair cycle (a retest of a later stage must not restart it) and is
++            # stopped afterwards, unless APP_BUILDER_KEEP_RUNNING says keep it.
++            r = qualify_app(a, keep=True, log=log, run_id=run_id, deployment_revision_id=job["deployment_revision"])
++            r = _repair_cycle(a, r, log)
 +        except Exception as e:   # one app's crash never stops the others
 +            r = _contained_failure(a, "RUNNER_EXCEPTION", e)
++        if not KEEP_RUNNING:
 +            try:
-+                down(a, prune=False)
++                down(a)   # as qualify_app always did: images pruned only if APP_BUILDER_PRUNE_IMAGES
 +            except Exception:
 +                pass
++        if isinstance(r.get("runner"), dict):
++            r["runner"]["kept_running"] = bool(KEEP_RUNNING and r["runner"].get("started"))
++        # The barrier compares against the revision the FINAL check ran on: a repair that changed the app
++        # (e.g. reinstalled its overlay) is recorded on its cycle, and the retest after it is the check.
++        basis = getattr(_CTX, "job", None) or job
 +        after_dep, after_app = deployment_revision(ROOT), _app_revision_of(a)
-+        stable = revision_stable(job["deployment_revision"], after_dep) and revision_stable(job["app_revision"], after_app)
-+        r["verification"] = {**{x: job[x] for x in _IDENTITY_KEYS}, "revision_after": after_dep,
++        stable = revision_stable(basis["deployment_revision"], after_dep) and revision_stable(basis["app_revision"], after_app)
++        job = {**job, **{x: basis.get(x) for x in ("deployment_revision", "app_revision", "correlation_id")},
++               "repair": basis.get("repair")}
++        r["verification"] = {**{x: job[x] for x in _IDENTITY_KEYS}, "repair": job.get("repair"), "revision_after": after_dep,
 +                             "app_revision_after": after_app, "revision_stable": stable,
 +                             "passed_checks": passed_all_stages(r), "started_at": t0, "finished_at": time.time(),
 +                             "status": "CURRENT" if stable else "UNVERIFIED", "invalidated_attempts": invalidated}
@@ -553,7 +928,7 @@ index 67dea5e..afaf47d 100644
      return r
  
  def main(argv: list[str]) -> int:
-@@ -1862,12 +2163,12 @@ def main(argv: list[str]) -> int:
+@@ -1862,12 +2490,12 @@ def main(argv: list[str]) -> int:
          rs = [json.loads(p.read_text()) for p in sorted(RESULTS.glob("*.json"))]
          cl = checklist(library_apps(), rs)
          (RUNNER / "CHECKLIST.md").write_text(checklist_text(cl, "app_runner.py all"))
@@ -570,7 +945,7 @@ index 67dea5e..afaf47d 100644
      if not app:
          print("which app?"); return 2
      if cmd == "recipe":
-@@ -1882,7 +2183,7 @@ def main(argv: list[str]) -> int:
+@@ -1882,7 +2510,7 @@ def main(argv: list[str]) -> int:
          else:
              print(f"NOT STARTED: {r['code']}: {r['detail']}")
          return 0 if r["ok"] else 1
@@ -609,6 +984,52 @@ index c654cb9..39398fa 100644
    if p=="/builds": self.out(page("Builds","<h1>"+("All builds" if me["role"]=="admin" else "My builds")+"</h1>"+builds_table(builds.visible_to(me),me),me)); return
    if p=="/api/me": self.json_out({"name":me["name"],"role":me["role"]}); return
    if p=="/api/front-door/library": self.json_out(user_catalogue.for_user(ROOT)); return
+diff --git a/04-deployment/maintenance.py b/04-deployment/maintenance.py
+index a726222..2824b8a 100644
+--- a/04-deployment/maintenance.py
++++ b/04-deployment/maintenance.py
+@@ -75,14 +75,18 @@ def failures(rec: dict, layer: str) -> list[dict]:
+             return [{"key": "TARGETS:NO_TARGETS", "detail": rec.get("error") or ""}]
+         out = []
+         for r in res:
++            # v121.3: the app's own job already ran tiers 1-2 on this failure (stop, one bounded fix, retest).
++            # Carried on the item so heal() does not repeat them and never falls back to blind retries.
++            done = (r.get("repair") or {}).get("status")
++            extra = {"in_job_repair": done, "repair_record": (r.get("repair") or {}).get("first_failure")} if done else {}
+             if r.get("broken_at"):
+                 st = r["broken_at"]; d = (r.get("stages") or {}).get(st, {})
+-                out.append({"key": f"{st}:{r.get('code')}", "app": r.get("app"), "detail": str(d.get("detail") or "")[:2000]})
++                out.append({"key": f"{st}:{r.get('code')}", "app": r.get("app"), "detail": str(d.get("detail") or "")[:2000], **extra})
+             else:
+                 c = (r.get("stages") or {}).get("6 CLEAN", {})
+                 if c.get("status") != "OK":
+                     out.append({"key": f"6 CLEAN:{c.get('status', 'MISSING')}:{c.get('code', '')}", "app": r.get("app"),
+-                                "detail": str(c.get("detail") or "")[:2000]})
++                                "detail": str(c.get("detail") or "")[:2000], **extra})
+         return out
+     if layer == "handoff":
+         c = rec.get("coolify") or {}
+@@ -166,6 +170,11 @@ def _tier(n: int, layer: str, it: dict, rec: dict, chain: list[dict], st: dict |
+         return {**e, "outcome": "APPLIED" if ok else "FIX_FAILED", "findings": p["findings"], "actions": done}
+     if n == 3:
+         if not llm_repair.available()[0]:
++            if it.get("in_job_repair"):
++                # Tiers 1-2 already ran in the app's job and were retested there. The probe would only try
++                # general repairs that no evidence points to, then re-run the whole catalogue: a blind retry.
++                return {**e, "tier_name": "probe", "outcome": "NO_FIX",
++                        "note": f"in-job repair ended {it['in_job_repair']}; no evidence-based fix left, blind probe not run"}
+             return _probe(layer, it, rec, st if st is not None else {}, e)
+         r = llm_repair.attempt(layer, it, rec, chain)
+         return {**e, "outcome": "APPLIED" if r["applied"] else "NO_FIX", "actions": r["actions"], "note": r["note"]}
+@@ -269,7 +278,7 @@ def heal(bid: str, layer: str) -> str:
+         h["rounds"] += 1; h["status"] = "HEALING"
+         applied, exhausted = False, []
+         for it in items:
+-            st = h["items"].setdefault(_sig(layer, it), {"next_tier": 1})
++            st = h["items"].setdefault(_sig(layer, it), {"next_tier": 3 if it.get("in_job_repair") else 1})
+             done_this_round = False
+             while st["next_tier"] <= 3:
+                 n = st["next_tier"]; st["next_tier"] += 1
 diff --git a/04-deployment/pipeline.py b/04-deployment/pipeline.py
 index 4bf3d5a..dd80a23 100644
 --- a/04-deployment/pipeline.py
@@ -662,10 +1083,10 @@ index 4bf3d5a..dd80a23 100644
          builds.update(CURRENT_BUILD,checklist=cl)
          (STATE/'checklists').mkdir(parents=True,exist_ok=True)
 diff --git a/04-deployment/resilience/__init__.py b/04-deployment/resilience/__init__.py
-index 7468254..e15198b 100644
+index 7468254..4acdaca 100644
 --- a/04-deployment/resilience/__init__.py
 +++ b/04-deployment/resilience/__init__.py
-@@ -1,4 +1,11 @@
+@@ -1,4 +1,12 @@
 -"""ATTa resilience boundary: safe observation and deployment identity helpers.
 -Existing deployd, watcher and lifecycle code remain authoritative."""
 -from .identity import deployment_revision, verification_snapshot, revision_stable
@@ -676,10 +1097,184 @@ index 7468254..e15198b 100644
  from .probes import safe_http_probe, safe_tcp_probe
 +from .states import STATES, handoff_state, levels, passed_all_stages
 +from .report import build_report, report_markdown, write_report
++from . import failures
 +
 +__all__ = ["deployment_revision", "code_revision", "app_revision", "new_correlation_id", "verification_snapshot",
 +           "revision_stable", "safe_http_probe", "safe_tcp_probe", "STATES", "handoff_state", "levels",
-+           "passed_all_stages", "build_report", "report_markdown", "write_report"]
++           "passed_all_stages", "build_report", "report_markdown", "write_report", "failures"]
+diff --git a/04-deployment/resilience/failures.py b/04-deployment/resilience/failures.py
+new file mode 100644
+index 0000000..7b65f72
+--- /dev/null
++++ b/04-deployment/resilience/failures.py
+@@ -0,0 +1,167 @@
++"""Where an app failed, what it most likely means, what has to change and what must be retested.
++
++Everything here is read from the result the runner and the watcher produced; nothing is guessed. The
++classification is a table from the failure's own code (watcher) or rule (runner): a failure no row
++covers is HUMAN_REVIEW with "evidence insufficient", never a made-up cause.
++"""
++from __future__ import annotations
++import hashlib, re
++
++STAGES = ("1 INSTALLED", "2 APP_UP", "3 PROXY_UP", "4 SKIN", "5 HOOK", "6 CLEAN")
++
++# Runner rule (stage 2, how the app failed to start) -> (class, what needs to change)
++RULE_CLASS = {
++    "compose.required_var": ("CONFIG_MISSING_ENV", "give the variable the compose file requires a value"),
++    "app.env_required": ("CONFIG_MISSING_ENV", "give the variable the app asks for a value"),
++    "app.env_required2": ("CONFIG_MISSING_ENV", "give the variable the app asks for a value"),
++    "app.env_specify": ("CONFIG_MISSING_ENV", "give the variable the app asks for a value"),
++    "compose.env_file_missing": ("CONFIG_MISSING_FILE", "create the env file the compose file names"),
++    "app.needs_database": ("MISSING_COMPANION_SERVICE", "start the database / cache the app connects to with it (a compose part that includes it)"),
++    "app.dependency_not_ready": ("MISSING_COMPANION_SERVICE", "let the app's dependency finish starting before the app (dependency health / start order)"),
++    "container.missing_path": ("MOUNT_OR_PATH", "provide the path the container expects (volume / config file)"),
++    "container.caps": ("CONTAINER_PERMISSIONS", "start with the kernel capability the app needs"),
++    "server.rlimit": ("CONTAINER_PERMISSIONS", "start without the ulimit the host refuses"),
++    "build.failed": ("BUILD_FAILED", "fix the image build (the failing build step is in the log excerpt)"),
++    "image.missing": ("IMAGE_NOT_FOUND", "use an image that exists in the registry, or build it"),
++    "image.arch": ("IMAGE_WRONG_ARCH", "use an image built for this CPU"),
++    "app.oom": ("OUT_OF_MEMORY", "give the app more memory, or start fewer apps at once"),
++    "disk.full": ("HOST_RESOURCES", "free disk space on the host"),
++    "host.memory": ("HOST_RESOURCES", "free memory on the host"),
++    "registry.rate_limit": ("REGISTRY_RATE_LIMIT", "registry mirror / Docker Hub login"),
++    "port.clash": ("PORT_CLASH", "free or change the host port"),
++    "host.no_ipv6": ("HOST_CONFIG", "enable IPv6 on the host"),
++    "compose.invalid": ("COMPOSE_INVALID", "fix the compose file"),
++    "cli.needs_command": ("WRONG_ENTRYPOINT", "start the app's server subcommand"),
++    "app.host_rejected": ("HOST_HEADER_REJECTED", "allow the proxy host in the app's allowed-hosts setting"),
++    "app.no_page": ("NO_WEB_UI", "this part serves no page: another part, or check it as a service"),
++    "container.exited": ("CONTAINER_EXITED", "read the container log excerpt: the process exits on start"),
++    "app.stalled": ("START_TIMEOUT", "the app stopped printing and never answered: read the log excerpt"),
++    "app.still_starting": ("START_TIMEOUT", "the app never answered within the boot timeout"),
++    "budget.spent": ("START_TIMEOUT", "the per-app time budget ran out"),
++    "unrecognised": ("HUMAN_REVIEW", "evidence insufficient: no rule recognises this failure; read the log excerpt"),
++}
++
++# Watcher code (stages 1, 3-6) -> (class, what needs to change). Prefix match, first wins.
++CODE_CLASS = [
++    ("DEPLOYMENT_CHANGED", "REVISION_CHANGED", "nothing in the app: re-run against the current revision"),
++    ("RUNNER_EXCEPTION", "ATTA_INTERNAL", "ATTa itself raised: fix the traceback in ATTa, not the app"),
++    ("WORKER_", "ATTA_INTERNAL", "ATTa's job for this app crashed or hung: see the event and traceback"),
++    ("WATCHER_EXCEPTION", "ATTA_INTERNAL", "the watcher raised: fix the traceback in ATTa"),
++    ("PLAYWRIGHT_UNAVAILABLE", "ATTA_ENVIRONMENT", "install the browser stage 6 needs"),
++    ("RUNNER_NO_DOCKER", "ATTA_ENVIRONMENT", "Docker must run on the host"),
++    ("RUNNER_NO_RECIPE", "NO_WAY_TO_RUN", "the app ships no compose file, image or Dockerfile: give it one"),
++    ("RUNNER_HOST_NO_IPV6", "HOST_CONFIG", "enable IPv6 on the host"),
++    ("PROXY_NOT_STARTED", "SKIN_PROXY", "the skin proxy (run-ui.sh) did not start: read its error"),
++    ("FILE_MISSING", "OVERLAY_INSTALL", "reinstall the app's .ui-capability overlay"),
++    ("NOT_EXECUTABLE", "OVERLAY_INSTALL", "make run-ui.sh executable"),
++    ("BAD_JSON", "OVERLAY_INSTALL", "repair the overlay JSON"),
++    ("UNREACHABLE", "APP_NOT_ANSWERING", "the app or its proxy stopped answering after start"),
++    ("TIMEOUT", "APP_NOT_ANSWERING", "the app or its proxy answered too slowly"),
++    ("UPSTREAM_5", "APP_SERVER_ERROR", "the app answers 5xx: read its log excerpt (backend/database not ready or crashing)"),
++    ("HTTP_", "APP_HTTP_ERROR", "the app answers an error status through the proxy"),
++    ("NOT_HTML", "NO_WEB_UI", "the page is not HTML: check it as a service, or open its web UI path"),
++    ("REDIRECT", "REDIRECT_OFF_PROXY", "set the app's base URL / single-domain setting to the proxy address"),
++    ("PORT_REDIRECT", "REDIRECT_OFF_PROXY", "set the app's base URL to the proxy address"),
++    ("NO_HEAD", "SKIN_INJECTION", "the page has no <head> for the skin link: the proxy cannot inject"),
++    ("NO_LINK", "SKIN_INJECTION", "the skin <link> is not in the page the proxy serves (injection did not happen on this page)"),
++    ("DUPLICATE_", "SKIN_INJECTION", "the skin/hook is injected more than once"),
++    ("LINK_AFTER_HEAD", "SKIN_INJECTION", "the skin link lands after </head>"),
++    ("TAG_AFTER_HEAD", "SKIN_INJECTION", "the hook tag lands after </head>"),
++    ("NO_TAG", "SKIN_INJECTION", "the capability hook <script> is not in the page"),
++    ("CSS_", "SKIN_ASSET", "the skin CSS is missing, empty or differs from the package: reinstall the overlay"),
++    ("NOT_CSS", "SKIN_ASSET", "the skin CSS is served with the wrong type"),
++    ("PORT_", "CAPABILITY_PORT", "the capability port script is missing, wrong or redirected: reinstall the overlay"),
++    ("NOT_JAVASCRIPT", "CAPABILITY_PORT", "the capability port script is served with the wrong type"),
++    ("BROWSER_HTTP", "APP_SERVER_ERROR", "the real browser got an error status: read the app log excerpt"),
++    ("REQUEST_FAILED", "BROWSER_REQUEST_FAILED", "requests the page makes fail (see request_failures: absolute URLs, CORS, missing assets)"),
++    ("PAGE_ERROR", "BROWSER_PAGE_ERROR", "the page throws JavaScript errors in the browser (see page_errors)"),
++    ("CSS_FAILED_TO_LOAD", "SKIN_ASSET", "the browser could not load the skin CSS"),
++    ("EMPTY_BODY", "BROWSER_EMPTY_PAGE", "the page renders nothing in the browser"),
++    ("BROWSER_", "BROWSER_CHECK", "the browser stage saw a skin/hook count or exception problem"),
++    ("ADAPTER_", "CAPABILITY_ADAPTER", "the capability adapter's state differs from what the app should show"),
++    ("JOURNEY_NOT_AUTHORED", "JOURNEY_NOT_AUTHORED", "author a login/smoke journey for this app (account strategy)"),
++    ("JOURNEY_", "JOURNEY_CONFIG", "fix the app's journey contract"),
++    ("TEST_ACCOUNT_MISSING", "JOURNEY_ACCOUNT", "create the test account the journey uses"),
++    ("LOGIN_", "JOURNEY_LOGIN", "the login journey failed at the step named: check the account and the post-login expectation"),
++    ("SMOKE_", "JOURNEY_SMOKE", "the smoke journey failed at the step named"),
++    ("TOOLCHAIN_TOO_OLD", "TOOLCHAIN", "the app needs a newer toolchain than the host has"),
++    ("NO_INTAKE_RECORD", "INTAKE", "the app has no intake record: run intake"),
++    ("RUNNER_EXHAUSTED", None, None),   # resolved from the runner's last rule
++]
++
++# What must be retested once the cause is changed: the failed stage and every stage after it; the stages
++# before it are re-checked too (read-only, seconds) because the watcher always walks 1 -> 6, which is the
++# regression check that the change did not break what already passed. A change to how the app STARTS
++# (stage 2 classes) means the app itself is restarted.
++RESTART_CLASSES = {"CONFIG_MISSING_ENV", "CONFIG_MISSING_FILE", "MISSING_COMPANION_SERVICE", "MOUNT_OR_PATH",
++                   "CONTAINER_PERMISSIONS", "BUILD_FAILED", "IMAGE_NOT_FOUND", "IMAGE_WRONG_ARCH", "OUT_OF_MEMORY",
++                   "HOST_RESOURCES", "REGISTRY_RATE_LIMIT", "PORT_CLASH", "HOST_CONFIG", "COMPOSE_INVALID",
++                   "WRONG_ENTRYPOINT", "HOST_HEADER_REJECTED", "NO_WEB_UI", "CONTAINER_EXITED", "START_TIMEOUT",
++                   "NO_WAY_TO_RUN", "REDIRECT_OFF_PROXY", "APP_SERVER_ERROR"}
++
++
++def _last_rule(r: dict) -> dict:
++    attempts = (r.get("runner") or {}).get("attempts") or []
++    failed = [a for a in attempts if a.get("rule")]
++    return failed[-1] if failed else {}
++
++
++def classify(r: dict) -> tuple[str, str]:
++    code = str(r.get("code") or "")
++    for prefix, cls, change in CODE_CLASS:
++        if code.startswith(prefix):
++            if cls is None:
++                break
++            return cls, change
++    last = _last_rule(r)
++    rule = last.get("rule") or ("unrecognised" if code == "RUNNER_EXHAUSTED" else None)
++    if rule and rule in RULE_CLASS:
++        cls, change = RULE_CLASS[rule]
++        return cls, change
++    return "HUMAN_REVIEW", "evidence insufficient: no classification covers this failure code; read the evidence"
++
++
++def norm(text: str) -> str:
++    """A failure's text without what changes between two identical failures (times, ports, ids, paths)."""
++    t = re.sub(r"(/[\w.\-]+)+", "<path>", str(text or ""))
++    t = re.sub(r"\b[0-9a-f]{8,}\b", "<id>", t)
++    t = re.sub(r"\d+", "#", t)
++    return re.sub(r"\s+", " ", t).strip()[:600]
++
++
++def signature(r: dict) -> str:
++    """Same signature = the same failure: same stage, same code, same (normalised) detail."""
++    st = r.get("broken_at") or ""
++    d = ((r.get("stages") or {}).get(st) or {}).get("detail") or ""
++    last = _last_rule(r)
++    raw = f"{st}|{r.get('code')}|{norm(d)}|{last.get('rule') or ''}|{norm(last.get('evidence') or '')[:300]}"
++    return hashlib.sha256(raw.encode()).hexdigest()[:16]
++
++
++def location(r: dict) -> dict:
++    """Exactly where: the stage, the code, and for a start failure which way of running it, which attempt
++    and which rule; for a browser failure the URL the browser was on and the journey step."""
++    st = r.get("broken_at")
++    sd = (r.get("stages") or {}).get(st) or {}
++    loc = {"stage": st, "code": r.get("code"), "detail": str(sd.get("detail") or "")[:2000]}
++    last = _last_rule(r)
++    if last:
++        loc.update({"part": last.get("part"), "attempt": last.get("n"), "rule": last.get("rule"), "fix_tried": last.get("fix")})
++    s6 = (r.get("stages") or {}).get("6 CLEAN") or {}
++    j = s6.get("journey") or {}
++    if st == "6 CLEAN" and j:
++        loc.update({"journey_type": j.get("type"), "journey_step": j.get("step") or j.get("code"),
++                    "journey_detail": str(j.get("detail") or "")[:600]})
++    ev = s6.get("evidence") or {}
++    if st == "6 CLEAN" and ev.get("browser"):
++        loc["browser_evidence"] = ev.get("browser")
++    return loc
++
++
++def retest_plan(cls: str, stage: str | None) -> dict:
++    after = [s for s in STAGES if stage and STAGES.index(s) >= STAGES.index(stage)] if stage in STAGES else list(STAGES)
++    before = [s for s in STAGES if s not in after]
++    restart = cls in RESTART_CLASSES or stage == "2 APP_UP"
++    return {"retest": after, "regression": before, "restart_app": restart,
++            "note": ("restart the app with the change, then " if restart else "app stays up; ")
++                    + f"re-run {', '.join(after)}" + (f"; re-check {', '.join(before)} (regression)" if before else "")}
 diff --git a/04-deployment/resilience/identity.py b/04-deployment/resilience/identity.py
 index 1dcad4b..00ee762 100644
 --- a/04-deployment/resilience/identity.py
@@ -820,10 +1415,10 @@ index 1dcad4b..00ee762 100644
          "captured_at": time.time(),
 diff --git a/04-deployment/resilience/report.py b/04-deployment/resilience/report.py
 new file mode 100644
-index 0000000..f7eab98
+index 0000000..70116e6
 --- /dev/null
 +++ b/04-deployment/resilience/report.py
-@@ -0,0 +1,133 @@
+@@ -0,0 +1,193 @@
 +"""The aggregate report of one fleet run: per-app outcome plus totals, failures by class, the concurrency
 +actually used, and every timeout / resource event. Built only from the per-app results and the events the
 +runner recorded while it ran: nothing is inferred, and an app without a result is reported NOT_STARTED."""
@@ -858,6 +1453,41 @@ index 0000000..f7eab98
 +        "seconds": run.get("seconds"),
 +        "queued_s": ((r or {}).get("timing") or {}).get("queued_s"),
 +        "second_pass": bool(run.get("second_pass")),
++        "repair_status": ((r or {}).get("repair") or {}).get("status"),
++    }
++
++
++def failure_entry(r: dict) -> dict:
++    """One row of the failure report, straight from the app's own records: where it first failed, the exact
++    error, its logs and evidence, the likely class, what has to change, what to retest, and every bounded
++    repair tried with its retest outcome. The ORIGINAL failure is shown even when a later retest passed."""
++    from .failures import classify, location, retest_plan
++    rep_ = r.get("repair") or {}
++    first = r.get("failure") or {}
++    if not first:   # a result with no repair cycle (e.g. contained exception): describe it from the result
++        cls, change = classify(r)
++        first = {"stage": r.get("broken_at"), "code": r.get("code"), "class": cls, "what_to_change": change,
++                 "location": location(r), "retest": retest_plan(cls, r.get("broken_at"))}
++    cycles = rep_.get("cycles") or []
++    return {
++        "app": r.get("app"),
++        "state": handoff_state(r),
++        "failed_stage": first.get("stage"),
++        "code": first.get("code"),
++        "location": first.get("location"),
++        "error": ((first.get("location") or {}).get("detail") or "")[:1500],
++        "evidence": {"failure_record": first.get("record"), "container_log": first.get("container_log_file"),
++                     "browser": ((r.get("stages") or {}).get("6 CLEAN") or {}).get("evidence")},
++        "classification": first.get("class"),
++        "what_to_change": first.get("what_to_change"),
++        "what_to_retest": (first.get("retest") or {}).get("note"),
++        "repairs": [{"n": c.get("n"), "fix": ((c.get("fix") or {}).get("rule")),
++                     "tier": (c.get("fix") or {}).get("tier"),
++                     "actions": [x.get("name") for x in (c.get("fix") or {}).get("applied") or []],
++                     "outcome": c.get("outcome"), "retest": (c.get("retest") or {}).get("code") or
++                     ((c.get("retest") or {}).get("verdict")), "next": c.get("next")} for c in cycles],
++        "repair_status": rep_.get("status"),
++        "final": {"stage": r.get("broken_at"), "code": r.get("code"), "verdict": r.get("verdict")},
 +    }
 +
 +
@@ -902,6 +1532,8 @@ index 0000000..f7eab98
 +        "failures_by_class": sorted(by_class.values(), key=lambda c: (-len(c["apps"]), c["state"], str(c["code"]))),
 +        "concurrency": ctx.get("concurrency") or {},
 +        "timeouts": [x["app"] for x in rows if x["state"] == "TIMEOUT"],
++        "failure_report": [failure_entry(results[safe(n)]) for n in dict.fromkeys(names)
++                           if results.get(safe(n)) and (results[safe(n)].get("repair") or handoff_state(results[safe(n)]) != "QUALIFIED")],
 +        "resource_events": events,
 +        "apps": rows,
 +    }
@@ -930,6 +1562,29 @@ index 0000000..f7eab98
 +        L += [f"- {time.strftime('%H:%M:%S', time.localtime(e.get('at') or 0))} {e.get('kind')}"
 +              f"{' [' + e['app'] + ']' if e.get('app') else ''}: {e.get('detail', '')}" for e in rep["resource_events"][:500]]
 +        L += [""]
++    fr = rep.get("failure_report") or []
++    if fr:
++        L += ["## Failure report", "",
++              "Each app stopped at its first failed stage. The original failure is kept even when a bounded repair",
++              "later resolved it. Nothing here is marked VERIFIED unless its state column says QUALIFIED.", ""]
++        for f in fr:
++            loc = f.get("location") or {}
++            where = ", ".join(f"{k} {loc[k]}" for k in ("part", "attempt", "rule", "journey_step") if loc.get(k))
++            L += [f"### {f['app']}: {f['state']}", "",
++                  f"- **Failed stage:** {f.get('failed_stage') or '-'} `{f.get('code') or '-'}`",
++                  f"- **Exact location:** {f.get('failed_stage') or '-'}" + (f" ({where})" if where else ""),
++                  f"- **Error/output:** `{(f.get('error') or '').replace('`', ' ')[:400]}`",
++                  f"- **Logs/evidence:** record `{(f.get('evidence') or {}).get('failure_record')}`"
++                  + (f", container log `{f['evidence']['container_log']}`" if (f.get('evidence') or {}).get('container_log') else "")
++                  + (f", browser `{((f['evidence'].get('browser') or {}).get('dir'))}`" if (f.get('evidence') or {}).get('browser') else ""),
++                  f"- **Likely classification:** {f.get('classification')}",
++                  f"- **What needs to change:** {f.get('what_to_change')}",
++                  f"- **What to retest:** {f.get('what_to_retest')}"]
++            for c in f.get("repairs") or []:
++                L.append(f"- **Repair {c['n']}:** " + (f"tier {c['tier']} {c['fix']} ({', '.join(c['actions'])})" if c.get("fix") else "none")
++                         + f" -> {c['outcome']}" + (f"; retest {c['retest']}" if c.get("retest") else "")
++                         + (f"; next: {c['next']}" if c.get("next") else ""))
++            L += [f"- **Result:** {f['state']}" + (f" (repair {f['repair_status']})" if f.get("repair_status") else ""), ""]
 +    L += ["## Every app", "", "| App | State | TCP | HTTP | Healthy | Qualified | Verified | Stage | Code | Attempt | Run |",
 +          "|---|---|---|---|---|---|---|---|---|---|---|"]
 +    mark = {True: "yes", False: "no", None: "n/a"}
@@ -1051,7 +1706,7 @@ index 0000000..3e36591
 +        "verified": verified,
 +    }
 diff --git a/04-deployment/system_watcher.py b/04-deployment/system_watcher.py
-index f5a6661..3efdf28 100644
+index f5a6661..df4f267 100644
 --- a/04-deployment/system_watcher.py
 +++ b/04-deployment/system_watcher.py
 @@ -40,8 +40,13 @@ BASELINE_COMPARE=os.environ.get('APP_BUILDER_BASELINE_COMPARE','true').lower() i
@@ -1065,11 +1720,11 @@ index f5a6661..3efdf28 100644
  EVIDENCE_DIR=ROOT/'state/runner/evidence'
 +# Check folders kept per app (oldest removed first). The folder of the check being written is never removed.
 +EVIDENCE_KEEP=int(os.environ.get('APP_BUILDER_EVIDENCE_KEEP','20'))
-+_IDENTITY_FIELDS=('fleet_run_id','run_id','attempt','correlation_id','deployment_revision','app_revision','source')
++_IDENTITY_FIELDS=('fleet_run_id','run_id','attempt','repair','recheck','correlation_id','deployment_revision','app_revision','source')
  TARGET_DIR=ROOT/'state/apps'; LOG=ROOT/'state/system-watcher.log'
  SKIN_RE=re.compile(r'<link\s+[^>]*href=["\'](/_cs/[^"\']+\.css)[^>]*>',re.I)
  HOOK_RE=re.compile(r'<script\s+[^>]*(?:data-capability-hook=["\']1["\'][^>]*src=["\']([^"\']*?_cp/port\.js)["\']|src=["\']([^"\']*?_cp/port\.js)["\'][^>]*data-capability-hook=["\']1["\'])[^>]*>',re.I)
-@@ -199,20 +204,57 @@ def _capture(app,page,console_errors,request_failures,errors,metadata=None):
+@@ -199,20 +204,58 @@ def _capture(app,page,console_errors,request_failures,errors,metadata=None):
      """v112 evidence: what stage 6 saw, written before any verdict so a FAIL keeps its picture too.
      Never fails the stage: a capture problem is recorded on the result, not turned into a verdict."""
      if not (CAPTURE_EVIDENCE and app): return None
@@ -1106,7 +1761,8 @@ index f5a6661..3efdf28 100644
 +    the app, else a fresh watch-<ms>-<rand> folder: never a folder another check wrote."""
 +    m=metadata if isinstance(metadata,dict) else {}
 +    if m.get('run_id'):
-+        name=_safe(f"{m['run_id']}-a{m.get('attempt') or 1}")
++        name=_safe(f"{m['run_id']}-a{m.get('attempt') or 1}"+(f"-r{m['repair']}" if m.get('repair') else '')
++                   +(f"-w{m['recheck']}" if m.get('recheck') else ''))
 +    else:
 +        name=f"watch-{int(time.time()*1000)}-{os.urandom(3).hex()}"
 +    d=EVIDENCE_DIR/_safe(app)/name
@@ -1136,7 +1792,7 @@ index f5a6661..3efdf28 100644
  
  def _journey_spec(t, app=None):
      """Return the explicit runtime journey contract for this app.
-@@ -574,7 +616,7 @@ def check(t):
+@@ -574,7 +617,7 @@ def check(t):
          if sha(rb)!=sha((ui/'capability-port/port.js').read_bytes()): return fail(app,stages,'5 HOOK','PORT_MISMATCH')
          stages['5 HOOK']=stage(); current_stage='6 CLEAN'
          exp=adapter_expected(t); _TL.seen=None; _TL.evidence=None
@@ -1601,13 +2257,25 @@ index 0000000..77b41c3
 +    awk '/^ensure_registry_mirror/{m=NR} /docker build -t/{b=NR} END{exit !(m && b && m<b)}' "$KIT_DIR/scripts/deploy-atta.sh"
 +}
 diff --git a/START-HERE.txt b/START-HERE.txt
-index bf9a56c..14d9aa9 100644
+index bf9a56c..5a44fe8 100644
 --- a/START-HERE.txt
 +++ b/START-HERE.txt
-@@ -55,6 +55,24 @@ its skin and checks automatically: there's no list to update first.
+@@ -55,6 +55,36 @@ its skin and checks automatically: there's no list to update first.
  To update ATTa itself, log in as admin and upload THIS ZIP the same way.
  (Tester accounts can add apps but can't update the system.)
  
++ATTa v121.3: stop, record, one bounded fix, retest (2026-09-29)
++---------------------------------------------------------------
++- A failing app stops at its failed stage. Where it failed (stage, exact location, error, container
++  log, evidence, attempt, revision, class) is kept in state/runner/failures/<app>/ and never overwritten.
++- One bounded fix from ATTa's own repair tiers (known fixes, capability adapter), then the failed
++  stage is retested. The app is not restarted unless the fix changed how it starts.
++- The same failure again after the fix = FIX_DID_NOT_RESOLVE, and the app stops. No blind retries:
++  warm-up waits, start retries and the self-healer no longer repeat unchanged tests.
++- state/runner/RUN-REPORT.md has a "Failure report": failed stage, location, error, logs/evidence,
++  classification, what to change, what to retest, and every repair with its outcome.
++See docs/history/CHANGES-2026-09-29-V121.3-STOP-FIX-RETEST.md.
++
 +ATTa v121.2: every app is its own isolated, parallel job (2026-09-29)
 +--------------------------------------------------------------------
 +- All apps run at once by default. Each app gets its own workspace, containers, ports, browser,
@@ -1754,29 +2422,115 @@ index 0000000..09e5d14
 +- Kit: bats 80/80, shellcheck clean.
 +
 +Not validated here: a live fleet run on the server. That needs the operator's go-ahead, because ATTa is stopped by instruction.
+diff --git a/docs/history/CHANGES-2026-09-29-V121.3-STOP-FIX-RETEST.md b/docs/history/CHANGES-2026-09-29-V121.3-STOP-FIX-RETEST.md
+new file mode 100644
+index 0000000..19656e3
+--- /dev/null
++++ b/docs/history/CHANGES-2026-09-29-V121.3-STOP-FIX-RETEST.md
+@@ -0,0 +1,79 @@
++# ATTa v121.3: stop, record, one bounded fix, retest, with no blind retries
++
++Built on v121.2 (isolated parallel jobs). Every app still runs as its own job in parallel. v121.3 changes
++what happens when one of them fails:
++
++```
++TEST -> FAIL -> STOP THAT APP -> RECORD EXACTLY WHERE -> CLASSIFY -> ONE BOUNDED FIX -> RETEST THE FAILED STAGE
++     -> REGRESSION -> CONTINUE -> FINAL VERIFICATION
++```
++
++## Per app (`app_runner._repair_cycle`)
++
++1. **The app stops at its first failed stage.** The watcher already stops at the first FAIL, and later stages are marked SKIPPED.
++
++2. **Where it failed is recorded, append-only**, in `state/runner/failures/<app>/<run>-a<attempt>-f<n>.json`. The record holds:
++   - app, run, attempt, repair number, correlation ID, deployment and app revision, timestamp
++   - stage and code
++   - exact location: for a start failure, the way of running it, the attempt and the rule; for a browser failure, the URL and journey step
++   - the error, the start attempts and their evidence, and the stage-6 evidence folder
++   - the container log, captured while the app is still up (`.container.log`)
++   - the likely class and what needs to change, from a table (`resilience/failures.py`); an uncovered failure is HUMAN_REVIEW with "evidence insufficient"
++   - the retest plan
++
++   Records are never overwritten.
++
++3. **One bounded fix comes from ATTa's own repair tiers,** cheapest first:
++   - tier 1: known fixes (built-in and learned rules keyed on the failure)
++   - tier 2: the capability adapter, which repairs only what its inspection actually finds
++
++   The self-healer's blind probe is **not** used. The same fix is never applied twice to the same failure.
++
++4. **The app stops without a retest when:**
++   - no evidence-based fix exists: **NO_MATCHING_REPAIR**, reported for the next repair decision
++   - a known rule says a person is needed: **NEEDS_HUMAN**
++   - the fix changed nothing it could affect (same app files, registration, proxy and browser state): **FIX_CHANGED_NOTHING**. Retesting would repeat an unchanged test.
++
++5. **Retest the failed stage.** If the fix did not change how the app starts, the app stays up. The watcher walks stages 1 → 6 again on the running app, so the earlier stages are the regression check. If the fix changed how it starts, the app is restarted through the normal runner. Each retest has its own correlation ID, its own revision snapshot and its own evidence folder (`…-r<n>`).
++
++6. **Compare.** Retest results:
++   - same failure (same stage, code and normalised detail): **FIX_DID_NOT_RESOLVE**, and the app stops. Both failures are kept, and a learned rule that was applied takes a FAILED.
++   - passes every stage: **RESOLVED**, then the final verification barrier.
++   - a different failure: **PROGRESSED**. It is recorded and gets its own bounded fix, at most `APP_BUILDER_REPAIR_CYCLES` (default 3) times.
++
++7. **The barrier verifies against the revision the final check ran on.** A repair that changed the app is on its cycle record; the retest after it is the check.
++
++## Blind retries removed
++
++| Where | v121 / v121.2 | v121.3 |
++|---|---|---|
++| Start loop (`run_app`) | A fix of the same kind could be retried on the same failure (up to 3 port clashes, rate-limit waits) | The same rule with the same evidence right after a fix gives FIX_DID_NOT_RESOLVE for that way of running it |
++| Warm-up rechecks (5xx) | Up to 3 identical re-runs after 60 s waits | One wait. Another only if the failure changed (the app is progressing) |
++| Self-healer (`maintenance.heal`, qualify layer) | Tiers 1-2 again, then the probe (general repairs no evidence points to), then a full-catalogue re-run, for up to 8 rounds | Items already repaired in-job skip tiers 1-2. There is no probe; the LLM tier runs only if configured; otherwise the item goes straight to a person. No catalogue re-run unless something was actually applied |
++
++## Regression
++
++- **App-scoped repairs** (chmod, overlay, registration, proxy): the retest re-checks every stage of that app.
++- **Repairs that aren't limited to one app** (`install_browser`, `add_runner_rule`): at the end of the run, every app that qualified before the repair is checked again. A change of verdict is recorded as a `REGRESSION` event.
++
++## Failure report
++
++`state/runner/RUN-REPORT.md` has a "Failure report" section, and `RUN-REPORT.json` has `failure_report`. Each entry gives:
++
++- app
++- failed stage
++- exact location
++- error/output
++- logs and evidence (paths)
++- likely classification
++- what needs to change
++- what to retest
++- every repair tried, with its outcome and retest result
++- final state
++
++An app that was repaired still shows its original failure.
++
++## Validation
++
++- Python: 154 passed, 4 skipped. That includes the 12 new tests in `tests/test_v121_3_stop_fix_retest.py`, which use the real `repair_actions`, known fixes, adapter, maintenance and report.
++- Mutation check: 8 of the new behaviours were reverted one at a time, and a test failed every time.
 diff --git a/release.json b/release.json
-index 6fa17a1..a28e4e3 100644
+index 6fa17a1..41e670c 100644
 --- a/release.json
 +++ b/release.json
 @@ -1,5 +1,5 @@
  {
 -  "version": "v121.1",
-+  "version": "v121.2",
++  "version": "v121.3",
    "entrypoint": "run",
    "state_version": 2,
    "features": [
-@@ -16,6 +16,8 @@
+@@ -16,6 +16,9 @@
      "v121_journey_author_feeds_the_gate_test_accounts_by_class_stored_600_contracts_never_carry_secrets_dry_run_watcher_decides_fleet_report_by_code",
      "v121_1_probe_containment_protocol_classification_no_watcher_crash",
      "v121_1_revision_bound_qualification_evidence_and_final_verification_barrier",
 -    "v121_1_parallel_runs_preserve_per_app_isolation_and_current_revision_identity"
 +    "v121_1_parallel_runs_preserve_per_app_isolation_and_current_revision_identity",
 +    "v121_2_isolated_parallel_jobs_revision_barrier_rerun_per_run_evidence_handoff_states_fleet_report",
-+    "v121_2_kit_registry_mirror_and_multi_domain_route"
++    "v121_2_kit_registry_mirror_and_multi_domain_route",
++    "v121_3_stop_record_one_bounded_fix_retest_failed_stage_no_blind_retries_failure_report"
    ]
  }
 diff --git a/tests/test_v117_coolify.py b/tests/test_v117_coolify.py
-index 7f84146..5dd6718 100644
+index 7f84146..0356ad3 100644
 --- a/tests/test_v117_coolify.py
 +++ b/tests/test_v117_coolify.py
 @@ -392,7 +392,7 @@ class Packaging(unittest.TestCase):
@@ -1784,7 +2538,7 @@ index 7f84146..5dd6718 100644
          # v118 carries v117 forward: the version moved on, the v117 feature must still be listed.
          rel = json.loads((self.ATTA / "release.json").read_text())
 -        self.assertEqual(rel["version"], "v121")
-+        self.assertEqual(rel["version"], "v121.2")
++        self.assertEqual(rel["version"], "v121.3")
          self.assertTrue(any(f.startswith("v117_runs_under_coolify") for f in rel["features"]))
  
      def test_single_app_list(self):
@@ -1802,7 +2556,7 @@ index 9d07d08..c0908c3 100644
          self.assertIsNone(re.search(r'"image", "prune", "-af"|"-f" if len\(_RUNNING\) > 1 else "-af"', src))
  
 diff --git a/tests/test_v120_stage2.py b/tests/test_v120_stage2.py
-index 7eef3a5..57cef06 100644
+index 7eef3a5..8a7874b 100644
 --- a/tests/test_v120_stage2.py
 +++ b/tests/test_v120_stage2.py
 @@ -150,7 +150,7 @@ class JourneyGateIsWired(unittest.TestCase):
@@ -1810,7 +2564,7 @@ index 7eef3a5..57cef06 100644
      def test_release_says_v120_and_carries_v118(self):
          rel = json.loads((HERE / "release.json").read_text())
 -        self.assertEqual(rel["version"], "v121")
-+        self.assertEqual(rel["version"], "v121.2")
++        self.assertEqual(rel["version"], "v121.3")
          self.assertTrue(any(f.startswith("v118_") for f in rel["features"]))
          self.assertTrue(any(f.startswith("v120_") for f in rel["features"]))
  
@@ -2472,6 +3226,311 @@ index 0000000..35ac17e
 +        self.assertIn("old: UNVERIFIED", why)
 +        self.assertIn("nobarrier: INCONCLUSIVE", why)
 +        self.assertEqual(st, "PARTIALLY_QUALIFIED")
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/tests/test_v121_3_stop_fix_retest.py b/tests/test_v121_3_stop_fix_retest.py
+new file mode 100644
+index 0000000..8bf5dac
+--- /dev/null
++++ b/tests/test_v121_3_stop_fix_retest.py
+@@ -0,0 +1,299 @@
++"""v121.3: TEST -> FAIL -> STOP THAT APP -> RECORD EXACTLY WHERE -> ONE BOUNDED FIX (ATTa's own repair tiers)
++-> RETEST THE FAILED STAGE -> REGRESSION -> CONTINUE -> FINAL VERIFICATION, with no blind retries.
++
++The runner, its repair cycle, known_fixes, the capability adapter, repair_actions (the REAL chmod_launcher etc.),
++the failure records, the report and maintenance run for real. Only what needs a Docker host is stood in:
++run_app / start_proxy / down, and the watcher's check, which here reads the real app files on disk (is the
++launcher executable? is the flag there?) so a real repair really changes what the next check sees.
++Run: python3 -m pytest -q tests/test_v121_3_stop_fix_retest.py
++"""
++import importlib, json, os, shutil, sys, tempfile, threading, time, unittest
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent.parent
++DEP = HERE / "04-deployment"
++sys.path.insert(0, str(DEP))
++sys.path.insert(0, str(HERE / "tests"))
++
++from test_v121_2_parallel_isolation import MODULES, make_app  # noqa: E402
++
++MODS = MODULES + ("repair_actions", "capability_adapter", "failure_keys", "alerts", "llm_repair", "syntax_triage")
++STAGES = ("1 INSTALLED", "2 APP_UP", "3 PROXY_UP", "4 SKIN", "5 HOOK", "6 CLEAN")
++
++
++class _Env(unittest.TestCase):
++    def setUp(self):
++        self.root = Path(tempfile.mkdtemp())
++        os.environ["APP_BUILDER_ROOT"] = str(self.root)
++        os.environ["APP_BUILDER_SESSION_SECRET"] = "x"
++        os.environ["PLAYWRIGHT_BROWSERS_PATH"] = str(self.root / "pw")
++        for m in MODS:
++            sys.modules.pop(m, None)
++        self.ar = importlib.import_module("app_runner")
++        self.w = importlib.import_module("system_watcher")
++        self.ar.START_FREE_MEMORY = 0.0; self.ar.START_FREE_DISK_GB = 0.0
++        self.ar._POOL_POLL = 0.05; self.ar._GATE_POLL = 0.05
++        self.ar.WARMUP_RECHECK_WAIT = 0
++        self.ar.sh = lambda *a, **k: (0, "")
++        self.downs = []
++        self.ar.down = lambda app, prune=None: self.downs.append(app) or "stopped"
++        self.ar._logs = lambda app, part, tail=200: f"container log of {app}: ERROR something real\n"
++        self.runs = {}
++        self.checks = {}
++        self.logs = []
++
++    def tearDown(self):
++        shutil.rmtree(self.root, ignore_errors=True)
++        os.environ.pop("PLAYWRIGHT_BROWSERS_PATH", None)
++
++    # --- the Docker stand-ins -------------------------------------------------------------------
++    def app(self, name, executable=True):
++        d = make_app(self.ar.LIB, name, qualification="service")
++        (d / ".ui-capability" / "run-ui.sh").chmod(0o755 if executable else 0o644)
++        return d
++
++    def stub_start(self):
++        def run_app(app, log=print):
++            self.runs[app] = self.runs.get(app, 0) + 1
++            return {"ok": True, "url": "http://127.0.0.1:59999/", "part": {"why": "own image", "kind": "image"},
++                    "attempts": [{"n": 1, "part": "own image", "outcome": "UP"}]}
++        def start_proxy(app, url):
++            t = {"app": app, "target_url": url, "proxy_url": "http://127.0.0.1:59998",
++                 "ui_dir": str(self.ar.app_dir(app) / ".ui-capability")}
++            (self.ar.TARGETS / f"{self.ar.safe_id(app)}.json").write_text(json.dumps(t))
++            return True, "", t
++        self.ar.run_app = run_app
++        self.ar.start_proxy = start_proxy
++        self.ar.safe_http_probe = lambda url, timeout=6: {"status": "PASS", "tcp_connected": True, "http_status": 200,
++                                                          "content_type": "application/json"}
++
++    def watcher(self, decide):
++        """decide(app, t) -> (failed_stage, code, detail) or None for a pass. Every call is counted and
++        captured as real stage-6 evidence into the job's own folder."""
++        outer = self
++        class W:
++            stage = staticmethod(outer.w.stage); fail = staticmethod(outer.w.fail); result = staticmethod(outer.w.result)
++            def check(inner, t):
++                app = t["app"]
++                outer.checks[app] = outer.checks.get(app, 0) + 1
++                ev = outer.w._capture(app, _Page(outer.checks[app]), [], [], [], metadata=t.get("_identity"))
++                d = decide(app, t)
++                st = {}
++                for s in STAGES:
++                    if d and s == d[0]:
++                        r = outer.w.fail(app, st, s, d[1], d[2])
++                        break
++                    st[s] = outer.w.stage()
++                else:
++                    r = outer.w.result(app, st)
++                r["stages"]["6 CLEAN"] = {**r["stages"].get("6 CLEAN", {}), "evidence": ev}
++                return r
++        self.ar._watcher = lambda: W()
++
++    def launcher_decides(self, app, t):
++        f = Path(t["ui_dir"]) / "run-ui.sh"
++        return None if os.access(f, os.X_OK) else ("1 INSTALLED", "NOT_EXECUTABLE", f"{f} is not executable")
++
++    def job(self, name):
++        return self.ar._qualify_one(name, self.logs.append)
++
++
++class _Page:
++    def __init__(self, n): self.url = f"http://p/{n}"; self.n = n
++    def screenshot(self, path, full_page=True): Path(path).write_bytes(b"PNG" + str(self.n).encode())
++    def content(self): return f"<html>{self.n}</html>"
++    def title(self): return f"t{self.n}"
++
++
++class StopFixRetest(_Env):
++    def test_failure_is_recorded_fixed_once_retested_without_restart_and_qualifies(self):
++        self.app("launch", executable=False)
++        self.stub_start(); self.watcher(self.launcher_decides)
++        r = self.job("launch")
++        self.assertEqual(r["handoff_state"], "QUALIFIED")
++        self.assertEqual(self.runs["launch"], 1)             # the app was NOT restarted for the retest
++        self.assertEqual(self.checks["launch"], 2)           # the check, then ONE retest
++        rep = r["repair"]
++        self.assertEqual(rep["status"], "RESOLVED")
++        c = rep["cycles"][0]
++        self.assertEqual((c["fix"]["tier"], c["fix"]["rule"]), (1, "qualify.launcher_not_executable"))
++        self.assertEqual([x["name"] for x in c["fix"]["applied"]], ["chmod_launcher"])     # the REAL action
++        self.assertNotEqual(c["fix"]["condition_before"], c["fix"]["condition_after"])
++        self.assertTrue(os.access(self.ar.app_dir("launch") / ".ui-capability" / "run-ui.sh", os.X_OK))
++        # The original failure is kept, with exactly where, and its own identity; the retest has its own.
++        rec = json.loads(Path(rep["first_failure"]).read_text())
++        self.assertEqual((rec["stage"], rec["code"], rec["class"]), ("1 INSTALLED", "NOT_EXECUTABLE", "OVERLAY_INSTALL"))
++        self.assertIn("is not executable", rec["error"])
++        self.assertEqual(r["failure"]["stage"], "1 INSTALLED")
++        self.assertNotEqual(rec["correlation_id"], c["retest"]["correlation_id"])
++        self.assertEqual(r["verification"]["correlation_id"], c["retest"]["correlation_id"])
++        self.assertEqual(r["verification"]["repair"], 1)
++        self.assertEqual(r["verification"]["status"], "CURRENT")     # the barrier holds on the post-fix revision
++        first_ev, retest_ev = rec["evidence"]["dir"], c["retest"]["evidence"]["dir"]
++        self.assertNotEqual(first_ev, retest_ev)
++        self.assertTrue(Path(first_ev).is_dir(), first_ev); self.assertTrue(Path(retest_ev).is_dir(), retest_ev)   # neither overwrote the other
++        self.assertTrue(Path(retest_ev).name.endswith("-r1"))
++        self.assertIn("launch", self.downs)                   # stopped after the cycle
++        self.assertTrue(r["levels"]["verified"])
++
++    def test_same_failure_after_the_fix_stops_the_app_no_loop(self):
++        self.app("stubborn", executable=False)
++        self.stub_start()
++        self.watcher(lambda app, t: ("1 INSTALLED", "NOT_EXECUTABLE", "run-ui.sh is not executable"))   # never changes
++        r = self.job("stubborn")
++        self.assertEqual(r["repair"]["status"], "FIX_DID_NOT_RESOLVE")
++        self.assertEqual(self.checks["stubborn"], 2)          # one retest, then stop
++        self.assertEqual(r["handoff_state"], "FAILED")
++        self.assertFalse(r["levels"]["verified"])
++        recs = sorted((self.ar.FAILURES / "stubborn").glob("*.json"))
++        self.assertEqual(len(recs), 2)                        # the original and the retest failure, both kept
++        self.assertIn("next repair decision", r["repair"]["cycles"][0]["next"])
++
++    def test_no_evidence_based_fix_means_stop_and_report_not_retry(self):
++        self.app("cors")
++        self.stub_start()
++        self.watcher(lambda app, t: ("6 CLEAN", "REQUEST_FAILED", "GET http://localhost:8080/api -> net::ERR_CONNECTION_REFUSED"))
++        r = self.job("cors")
++        self.assertEqual(r["repair"]["status"], "NO_MATCHING_REPAIR")
++        self.assertEqual(self.checks["cors"], 1)              # never re-run unchanged
++        rec = json.loads(Path(r["repair"]["first_failure"]).read_text())
++        self.assertEqual(rec["class"], "BROWSER_REQUEST_FAILED")
++        self.assertIn("container log of cors", Path(rec["container_log_file"]).read_text())
++        self.assertEqual(rec["retest"]["retest"], ["6 CLEAN"])
++        self.assertFalse(rec["retest"]["restart_app"])
++
++    def test_a_fix_that_changes_nothing_is_not_followed_by_a_retest(self):
++        self.app("noop", executable=True)                     # already executable: chmod changes nothing
++        self.stub_start()
++        self.watcher(lambda app, t: ("1 INSTALLED", "NOT_EXECUTABLE", "claims not executable"))
++        r = self.job("noop")
++        self.assertEqual(r["repair"]["status"], "FIX_CHANGED_NOTHING")
++        self.assertEqual(self.checks["noop"], 1)
++
++    def test_known_human_only_failure_goes_to_a_person(self):
++        self.app("redir")
++        self.stub_start()
++        self.watcher(lambda app, t: ("3 PROXY_UP", "REDIRECT_OFF_PROXY", "http://redir.example/login"))
++        r = self.job("redir")
++        self.assertEqual(r["repair"]["status"], "NEEDS_HUMAN")
++        self.assertIn("base URL", r["repair"]["cycles"][0]["next"])
++        self.assertEqual(self.checks["redir"], 1)
++
++    def test_warmup_waits_stop_when_the_failure_does_not_change(self):
++        self.app("slow")
++        self.stub_start()
++        self.watcher(lambda app, t: ("2 APP_UP", "UPSTREAM_5XX", "502"))
++        r = self.job("slow")
++        self.assertEqual(len(r["warmup_rechecks"]), 1)        # was 3 identical re-runs in v121
++        self.assertEqual(r["warmup_rechecks"][0]["outcome"], "FIX_DID_NOT_RESOLVE")
++
++    def test_warmup_keeps_waiting_while_the_app_progresses(self):
++        self.app("boot")
++        self.stub_start()
++        seq = iter([("2 APP_UP", "UPSTREAM_5XX", "502"), ("2 APP_UP", "UPSTREAM_5XX", "503 starting"), None, None])
++        self.watcher(lambda app, t: next(seq))
++        r = self.job("boot")
++        self.assertEqual([x["outcome"] for x in r["warmup_rechecks"]], ["CHANGED", "PASSED"])
++        self.assertEqual(r["handoff_state"], "QUALIFIED")
++
++
++class StartLoopNoBlindRetry(_Env):
++    def test_same_start_failure_after_a_fix_stops_that_way_of_running_it(self):
++        self.app("clash")
++        self.ar.docker_ok = lambda: (True, "")
++        self.ar.parts = lambda app, d: [{"why": "own image", "kind": "image", "env": {}}]
++        starts = []
++        def start(app, d, part, notes):
++            starts.append(1)
++            return False, f"Bind for 0.0.0.0:{8000 + len(starts)} failed: port is already allocated"
++        self.ar._start = start
++        out = self.ar.run_app("clash", log=self.logs.append)
++        self.assertFalse(out["ok"])
++        self.assertEqual(len(starts), 2)                      # v121 allowed 3 identical clashes
++        self.assertEqual([a["outcome"] for a in out["attempts"]], ["FAILED", "FIX_DID_NOT_RESOLVE"])
++        self.assertIn("did not resolve", " ".join(out["attempts"][-1]["notes"]))
++
++    def test_a_fix_that_changes_the_failure_is_allowed_to_continue(self):
++        self.app("envs")
++        self.ar.docker_ok = lambda: (True, "")
++        self.ar.parts = lambda app, d: [{"why": "own image", "kind": "image", "env": {}}]
++        errs = iter(["required variable DB_URL is missing a value", "required variable SECRET_KEY is missing a value", None])
++        def start(app, d, part, notes):
++            e = next(errs)
++            return (e is None), (e or "")
++        self.ar._start = start
++        self.ar._wait_http = lambda app, part: (8080, "")
++        out = self.ar.run_app("envs", log=self.logs.append)
++        self.assertTrue(out["ok"])
++        self.assertEqual(sorted(out["part"]["env"]), ["DB_URL", "SECRET_KEY"])
++
++
++class FleetKeepsGoing(_Env):
++    def test_other_apps_finish_while_one_is_in_repair(self):
++        self.app("fixme", executable=False)
++        for n in ("a", "b", "c"):
++            self.app(n)
++        self.stub_start()
++        def decide(app, t):
++            if app == "fixme":
++                time.sleep(0.4)
++                return self.launcher_decides(app, t)
++            return None
++        self.watcher(decide)
++        out = {r["app"]: r for r in self.ar.qualify_all(["fixme", "a", "b", "c"], log=self.logs.append)}
++        self.assertEqual({k: v["handoff_state"] for k, v in out.items()}, dict.fromkeys(("fixme", "a", "b", "c"), "QUALIFIED"))
++        done_fix = out["fixme"]["verification"]["finished_at"]
++        for n in ("a", "b", "c"):
++            self.assertLess(out[n]["verification"]["finished_at"], done_fix)
++        rep = self.ar.LAST_REPORT
++        self.assertEqual(rep["concurrency"]["peak"], 4)
++        [f] = rep["failure_report"]
++        self.assertEqual((f["app"], f["failed_stage"], f["classification"], f["state"]), ("fixme", "1 INSTALLED", "OVERLAY_INSTALL", "QUALIFIED"))
++        self.assertEqual(f["repairs"][0]["outcome"], "RESOLVED")
++        md = (self.ar.RUNNER / "RUN-REPORT.md").read_text()
++        for label in ("**Failed stage:**", "**Exact location:**", "**Error/output:**", "**Logs/evidence:**",
++                      "**Likely classification:**", "**What needs to change:**", "**What to retest:**", "**Repair 1:**"):
++            self.assertIn(label, md)
++
++    def test_a_shared_repair_rechecks_apps_that_qualified_before_it(self):
++        self.app("early")
++        self.app("needsbrowser")
++        self.stub_start()
++        pw = Path(os.environ["PLAYWRIGHT_BROWSERS_PATH"])
++        import repair_actions as ra
++        ra.ACTIONS["install_browser"]["fn"] = lambda: (pw / "chromium-1").mkdir(parents=True) or "chromium installed"
++        def decide(app, t):
++            if app == "needsbrowser":
++                time.sleep(0.3)
++                return None if pw.is_dir() else ("6 CLEAN", "PLAYWRIGHT_UNAVAILABLE", "no browser")
++            return None
++        self.watcher(decide)
++        out = {r["app"]: r for r in self.ar.qualify_all(["early", "needsbrowser"], log=self.logs.append)}
++        self.assertEqual(out["needsbrowser"]["repair"]["status"], "RESOLVED")
++        self.assertTrue(out["early"]["runner"].get("regression_recheck"))
++        self.assertEqual(out["early"]["handoff_state"], "QUALIFIED")
++        kinds = [e["kind"] for e in self.ar.LAST_REPORT["resource_events"]]
++        self.assertIn("SHARED_REPAIR_REGRESSION", kinds)
++
++
++class SelfHealerNoBlindRerun(_Env):
++    def test_heal_does_not_repeat_in_job_repairs_or_rerun_the_catalogue(self):
++        import builds, maintenance, alerts, pipeline
++        rec = builds.create("system")
++        res = {"app": "x", "verdict": "BROKEN AT 6 CLEAN — REQUEST_FAILED", "broken_at": "6 CLEAN", "code": "REQUEST_FAILED",
++               "stages": {"6 CLEAN": {"status": "FAIL", "code": "REQUEST_FAILED", "detail": "d"}},
++               "repair": {"status": "NO_MATCHING_REPAIR", "first_failure": "/r.json", "cycles": []}}
++        builds.update(rec["id"], state="PARTIALLY_QUALIFIED", qualification_results=[res])
++        pipeline.requalify = lambda bid: self.fail("the whole catalogue was re-run blindly")
++        seen = []
++        alerts.raise_alert = lambda bid, layer, items, chain: seen.append(items) or {"delivered": []}
++        st = maintenance.heal(rec["id"], "qualify")
++        self.assertEqual(st, "ESCALATED")
++        self.assertEqual(seen[0][0]["in_job_repair"], "NO_MATCHING_REPAIR")
++        chain = (builds.get(rec["id"])["healing"]["qualify"]["chain"])
++        self.assertNotIn(1, [c.get("tier") for c in chain])        # tiers 1-2 not repeated
++        self.assertIn("blind probe not run", chain[0]["note"])
 +
 +
 +if __name__ == "__main__":
