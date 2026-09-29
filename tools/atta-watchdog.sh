@@ -2,7 +2,7 @@
 # Installed on the ATTa server as /usr/local/sbin/atta-watchdog, run every 5 minutes by
 # atta-watchdog.timer. Keeps Docker, Coolify and ATTa running without touching healthy services:
 #   - Docker daemon down               -> start it
-#   - a Coolify/ATTa container stopped  -> start it (its data and state are on volumes/disk)
+#   - a Coolify platform / ATTa service container stopped -> start it (its data and state are on volumes/disk)
 #   - a container unhealthy 3 checks in a row (15 min) -> restart that one container
 #   - Docker Hub mirror missing         -> put it back (kit's ensure_registry_mirror)
 #   - ATTa /health or Coolify /api/health failing is logged; the container rules above act on it
@@ -19,7 +19,10 @@ if ! docker info >/dev/null 2>&1; then
   docker info >/dev/null 2>&1 || { log "ALERT docker still down"; exit 1; }
 fi
 
-for c in coolify coolify-db coolify-redis coolify-realtime coolify-proxy $(docker ps -a --format '{{.Names}}' | grep -E '^atta-' ); do
+# Only the Coolify platform and the ATTa service itself. ATTa's own app test containers (also named
+# atta-<app>) belong to ATTa's runner and are never touched here.
+atta_svc=$(docker ps -a --filter label=coolify.type=service --filter ancestor=atta:v121 --format '{{.Names}}' | grep -E '^atta-[a-z0-9]{24}$')
+for c in coolify coolify-db coolify-redis coolify-realtime coolify-proxy $atta_svc; do
   st=$(docker inspect -f '{{.State.Status}}' "$c" 2>/dev/null) || continue
   hl=$(docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' "$c" 2>/dev/null)
   if [ "$st" != running ]; then
