@@ -6,6 +6,7 @@
 #   atta-upgrade-v121.3.sh --deploy      the above, then keep the current image as a rollback tag and run
 #                                        the kit's deploy-atta.sh (builds atta:v121 from v121.3, restarts the
 #                                        Coolify service "atta"); verifies the RUNNING container's code
+#   atta-upgrade-v121.3.sh --verify      check the RUNNING container is the tested v121.3 (read-only)
 #   atta-upgrade-v121.3.sh --start-run   queue ONE full library run (inbox/<id>.library.json), only if the
 #                                        pipeline is idle and no run is already queued
 #
@@ -87,13 +88,18 @@ say "status: $(python3 -c 'import json;d=json.load(open("'"$ROOT_DATA"'/state/st
 say "apps in library: $(find "$ROOT_DATA/library" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l)"
 [ "$MODE" = --check ] && { say "check only: nothing changed"; exit 0; }
 
-if [ "$MODE" = --deploy ]; then
-    if docker image inspect atta:v121 >/dev/null 2>&1; then
+if [ "$MODE" = --verify ]; then
+    MODE=--deploy-verify-only
+fi
+if [ "$MODE" = --deploy ] || [ "$MODE" = --deploy-verify-only ]; then
+    if [ "$MODE" = --deploy ] && docker image inspect atta:v121 >/dev/null 2>&1; then
         tag="atta:v121-before-v121.3"
         docker image inspect "$tag" >/dev/null 2>&1 || docker tag atta:v121 "$tag"
         say "rollback image kept: $tag ($(docker image inspect "$tag" --format '{{.Id}}'))"
     fi
-    "$REL/ATTa/05-coolify/kit/scripts/deploy-atta.sh" --atta-dir "$REL/ATTa" --domain "$DOMAINS" || die "deploy-atta.sh failed"
+    if [ "$MODE" = --deploy ]; then
+        "$REL/ATTa/05-coolify/kit/scripts/deploy-atta.sh" --atta-dir "$REL/ATTa" --domain "$DOMAINS" || die "deploy-atta.sh failed"
+    fi
     for _ in $(seq 1 60); do
         C=$(atta_ctr || true)
         [ -n "$C" ] && [ "$(docker inspect "$C" --format '{{.State.Running}}')" = true ] && curl -fsS -m 5 http://127.0.0.1:8787/health >/dev/null 2>&1 && break
@@ -101,7 +107,7 @@ if [ "$MODE" = --deploy ]; then
     done
     C=$(atta_ctr); [ -n "$C" ] || die "no ATTa container after deploy"
     ver=$(docker exec "$C" python3 -c 'import json;print(json.load(open("/opt/atta/release.json"))["version"])')
-    img=$(docker exec "$C" python3 - <<'PY'
+    img=$(docker exec -i "$C" python3 - <<'PY'
 import hashlib
 from pathlib import Path
 root = Path("/opt/atta"); h = hashlib.sha256(); n = 0
