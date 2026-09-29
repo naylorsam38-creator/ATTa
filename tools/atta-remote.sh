@@ -9,6 +9,7 @@
 #   --start-run    queue exactly ONE full library run
 #   --progress     live run: pipeline state, app containers, results written, recent runner lines
 #   --live         each handed-off app's real Coolify state: DISPATCHED/DEPLOYING/RUNNING/VERIFIED/LIVE_FAILED
+#   --containers   read-only: ATTa's app containers with created/started times, compose project, image
 #   --dump <path>  print a file under /srv/app-builder/state (reports, results, failure records)
 #   --ls <path>    list a folder under /srv/app-builder/state
 set -euo pipefail
@@ -80,6 +81,10 @@ for f in sorted(Path(sys.argv[1]).glob("*.json"), key=lambda p: p.stat().st_mtim
               f"live={ch.get('broken_at') or ''} {ch.get('code') or ''} {lv.get('failed_at') or ''} {str(lv.get('reason') or '')[:160]}")
 PY
     ;;
+--containers)
+    # read-only: every container ATTa's runner made (project atta-<app> / label atta.app) with create/start times
+    sudo -n docker ps -a --format '{{.Names}}|{{.CreatedAt}}|{{.Status}}|{{.Label "com.docker.compose.project"}}|{{.Label "atta.app"}}|{{.Image}}' \
+      | grep -E '^atta-' | sort -t'|' -k2 ;;
 --logs-atta)
     c=$(atta_ctr); sudo -n docker logs --tail "${2:-200}" "$c" 2>&1 ;;
 *) echo "unknown mode $mode"; exit 64 ;;
