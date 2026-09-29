@@ -1,0 +1,45 @@
+name: E2E
+
+# Installs real Coolify on a fresh runner, deploys an app through it, upgrades, wipes the
+# machine, reinstalls and restores from backup. ~15 minutes.
+on:
+  push:
+    paths:
+      - "scripts/**"
+      - "tests/e2e/**"
+      - ".github/workflows/e2e.yml"
+  pull_request:
+    paths:
+      - "scripts/**"
+      - "tests/e2e/**"
+      - ".github/workflows/e2e.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq dnsutils openssh-server jq
+      - name: Free ports and disk used by the runner image
+        run: |
+          for svc in nginx apache2 mysql postgresql; do sudo systemctl disable --now "$svc" 2>/dev/null || true; done
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+      - name: End-to-end test (live Coolify CDN)
+        run: sudo E2E_CONFIRM_WIPE=yes E2E_CDN_MODE=live tests/e2e/e2e.sh
+      - name: Diagnostics on failure
+        if: failure()
+        run: |
+          sudo docker ps -a
+          sudo docker logs coolify 2>&1 | tail -200 || true
+          sudo sh -c 'tail -n 100 /data/coolify/source/*.log' || true

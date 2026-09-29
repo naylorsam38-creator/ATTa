@@ -1,0 +1,90 @@
+START HERE
+==========
+
+One command. Open a terminal in this folder and type:
+
+    bash run
+
+That's it.
+
+WHAT HAPPENS
+------------
+- On your AWS server (Linux):   it runs the full deploy automatically
+                                (services, nginx, browser stage, the works).
+                                If it needs root it will ask for your password.
+
+- On your laptop (Mac/Windows-  it starts the real system LOCALLY and prints a
+  WSL/plain Linux):             web address plus the login it made for you.
+                                Open that address, log in, upload the bundle.
+
+It creates the login password and secrets for you, so nothing stalls.
+
+UPDATING A RUNNING SERVER
+-------------------------
+    sudo deployctl deploy ATTa-deployNNN.zip     (or upload the zip on the web Add page)
+Backs up, activates, health-checks, rolls back by itself. Details: docs/ADM.md
+
+To stop the local instance:   bash run stop
+To check if it's running:     bash run status
+
+THE ONE THING NO FILE CAN DO
+----------------------------
+A public, live URL on the internet needs three things that only exist on the
+actual AWS box, not in any zip: a domain name, a TLS certificate, and the
+server being reachable online. So on a laptop this gives you the system running
+for real, locally — it does not fake a public deployment. Run the same
+`bash run` on the AWS server and it finishes the public part there.
+
+COOLIFY (the goal's route: ATTa and every qualified app run on Coolify)
+-----------------------------------------------------------------------
+On one Ubuntu server (ATTa and the apps it qualifies must share it), as root,
+in 05-coolify/kit:
+
+    ./scripts/install.sh                                     installs Coolify 4.3.23
+    ./scripts/deploy-atta.sh --domain atta.yourdomain.com    runs ATTa under Coolify
+                                                             at https://atta.yourdomain.com
+
+Point the domain's DNS at the server first. Step by step: 05-coolify/kit/docs/RUNBOOK.md
+
+WHAT TO UPLOAD ONCE IT'S RUNNING
+--------------------------------
+Log in and go to "Add app". Upload any app's source zip (gitea-main.zip,
+coolify-main.zip, ...) or paste its git address. It joins the library and gets
+its skin and checks automatically: there's no list to update first.
+
+To update ATTa itself, log in as admin and upload THIS ZIP the same way.
+(Tester accounts can add apps but can't update the system.)
+
+ATTa v121.2: every app is its own isolated, parallel job (2026-09-29)
+--------------------------------------------------------------------
+- All apps run at once by default. Each app gets its own workspace, containers, ports, browser,
+  run ID, correlation ID and evidence folder (state/runner/evidence/<app>/<run>-a<attempt>/).
+- One app crashing, hanging (APP_BUILDER_APP_HARD_TIMEOUT) or vanishing becomes that app's
+  own result. It never stops or hides another app.
+- Final verification barrier: the deployment revision and the app's revision are captured
+  before the check and again after it. If either changed, the check is thrown away and run
+  again (APP_BUILDER_REVISION_RERUNS). If it is still changing, the app is UNVERIFIED.
+  Only QUALIFIED apps, checked on the live revision, go to Coolify.
+- Each app ends in exactly one state: NOT_STARTED, START_FAILED, TIMEOUT, INCONCLUSIVE,
+  FAILED, QUALIFIED or UNVERIFIED. The report also shows TCP reachable / HTTP response /
+  healthy / qualified / verified as separate observations.
+- After every run: state/runner/RUN-REPORT.md (totals, failures by class, how many apps really
+  ran at once, and every timeout and resource wait).
+- The kit sets a Docker Hub registry mirror, and --domain accepts "example.com,www.example.com".
+See docs/history/CHANGES-2026-09-29-V121.2-ISOLATED-PARALLEL-JOBS.md.
+
+ATTa v121.1 resilience hardening (2026-09-29)
+-----------------------------------------------
+The resilience fixes are integrated into the existing ATTa runner/watcher boundary.
+Do not install a separate sidecar as a replacement for these changes.
+
+Key guarantees:
+- HTTP/protocol probe errors are contained and classified; probe exceptions do not crash the runner.
+- TCP reachability is evidence only, not application health.
+- Qualification records a run ID and deployment revision and invalidates verification if the revision changes during the run.
+- Stage-6 browser evidence carries run/revision/attempt identity.
+- APP_BUILDER_RUN_PARALLEL=0 means all discovered apps are queued into the parallel pool, subject to existing host resource gates.
+- One app failure does not abort the other app runs.
+- deployd, the six-stage watcher, qualification, repair flow, Stage-6 evidence and lifecycle state remain authoritative.
+
+See docs/history/CHANGES-2026-09-29-V121.1-RESILIENCE.md.
