@@ -1,0 +1,447 @@
+diff -ruN a/05-coolify/kit/scripts/deploy-atta.sh b/05-coolify/kit/scripts/deploy-atta.sh
+--- a/05-coolify/kit/scripts/deploy-atta.sh	2026-09-28 14:29:58.000000000 +0000
++++ b/05-coolify/kit/scripts/deploy-atta.sh	2026-09-29 00:28:35.525712764 +0000
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env bash
+ # Puts ATTa on this Coolify server, run BY Coolify. Run after scripts/install.sh.
+ #
+-# Usage: sudo ./scripts/deploy-atta.sh --domain atta.example.com [--atta-dir PATH] [--no-build]
++# Usage: sudo ./scripts/deploy-atta.sh --domain atta.example.com[,www.atta.example.com] [--atta-dir PATH] [--no-build]
+ #
+ #   1. Connects ATTa to this Coolify (connect-atta.sh: API on, read+write+deploy token).
+ #   2. Builds the ATTa image (atta:v121) from the ATTa folder this kit ships in.
+@@ -60,14 +60,29 @@
+ [ -n "$ATTA_DIR" ] && [ -f "$ATTA_DIR/Dockerfile" ] && [ -f "$ATTA_DIR/docker-compose.coolify.yml" ] ||
+     die "No ATTa folder with a Dockerfile at '${ATTA_DIR:-?}'. Pass --atta-dir /path/to/ATTa"
+ command -v jq >/dev/null 2>&1 || die "jq is not installed (apt-get install -y jq)"
++# --domain takes one host name or a comma-separated list (e.g. example.com,www.example.com): every
++# name gets the same route and certificate. The first one is the address ATTa is announced at.
++ATTA_DOMAINS=()
+ if [ -n "$ATTA_DOMAIN" ]; then
+-    ATTA_DOMAIN="${ATTA_DOMAIN#https://}"; ATTA_DOMAIN="${ATTA_DOMAIN#http://}"; ATTA_DOMAIN="${ATTA_DOMAIN%%/*}"
+-    printf '%s' "$ATTA_DOMAIN" | grep -Eq '^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$' ||
+-        die "--domain '$ATTA_DOMAIN' is not a plain host name (e.g. atta.example.com)"
++    IFS=',' read -r -a _doms <<<"$ATTA_DOMAIN"
++    for d in "${_doms[@]}"; do
++        d="${d// /}"; d="${d#https://}"; d="${d#http://}"; d="${d%%/*}"
++        [ -n "$d" ] || continue
++        printf '%s' "$d" | grep -Eq '^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$' ||
++            die "--domain '$d' is not a plain host name (e.g. atta.example.com)"
++        ATTA_DOMAINS+=("$d")
++    done
++    [ "${#ATTA_DOMAINS[@]}" -gt 0 ] || die "--domain has no host name in it"
++    ATTA_DOMAIN="${ATTA_DOMAINS[0]}"
+ fi
+ require_root
+ [ -f "$COOLIFY_ENV_FILE" ] || die "Coolify is not installed here. Run scripts/install.sh first."
+ 
++# 0. Docker Hub mirror: shared fix for HTTP 429 rate limits, before the image build and before ATTa
++#    pulls any app's images. Restarting Docker restarts Coolify, so wait for its API afterwards.
++ensure_registry_mirror || warn "Continuing WITHOUT the Docker Hub mirror: expect HTTP 429 from Docker Hub under load"
++wait_for_coolify_api || die "Coolify's API is not answering on port $APP_PORT. Check: docker ps; docker logs coolify"
++
+ # 1. Token. ATTa runs on this same server with host networking, so it reaches Coolify on loopback.
+ url="http://127.0.0.1:$APP_PORT"
+ OUT_DIR="$OUT_DIR" APP_PORT="$APP_PORT" "$SCRIPT_DIR/connect-atta.sh" --url "$url"
+@@ -197,17 +212,19 @@
+ if [ -n "$ATTA_DOMAIN" ]; then
+     [ -d "$PROXY_DYNAMIC_DIR" ] || die "Coolify's proxy folder $PROXY_DYNAMIC_DIR is missing. Is Coolify's proxy (Traefik) running?"
+     tmp="$(mktemp "$PROXY_DYNAMIC_DIR/.atta.XXXXXX")"
++    host_rule=""
++    for d in "${ATTA_DOMAINS[@]}"; do host_rule="${host_rule:+$host_rule || }Host(\`$d\`)"; done
+     cat >"$tmp" <<ROUTE
+-# Written by ATTa deploy-atta.sh (v118). ATTa at https://$ATTA_DOMAIN. Delete this file to remove the route.
++# Written by ATTa deploy-atta.sh (v118). ATTa at https://${ATTA_DOMAINS[*]:-$ATTA_DOMAIN}. Delete this file to remove the route.
+ http:
+   routers:
+     atta-http:
+-      rule: "Host(\`$ATTA_DOMAIN\`)"
++      rule: "${host_rule:-Host(\`$ATTA_DOMAIN\`)}"
+       entryPoints: [http]
+       middlewares: [atta-to-https]
+       service: atta
+     atta-https:
+-      rule: "Host(\`$ATTA_DOMAIN\`)"
++      rule: "${host_rule:-Host(\`$ATTA_DOMAIN\`)}"
+       entryPoints: [https]
+       service: atta
+       tls:
+@@ -225,19 +242,21 @@
+ ROUTE
+     chmod 644 "$tmp"
+     mv -f "$tmp" "$PROXY_DYNAMIC_DIR/atta.yaml"
+-    ok "Coolify's proxy now routes https://$ATTA_DOMAIN to ATTa"
+-    info "Waiting for https://$ATTA_DOMAIN (certificate from Let's Encrypt; DNS must already point here)"
+-    https_ok=false
+-    for _ in $(seq 1 60); do
+-        if curl -fsS -o /dev/null -m 10 "https://$ATTA_DOMAIN/health"; then https_ok=true; break; fi
+-        sleep 5
++    ok "Coolify's proxy now routes ${ATTA_DOMAINS[*]} (https) to ATTa"
++    for d in "${ATTA_DOMAINS[@]}"; do
++        info "Waiting for https://$d (certificate from Let's Encrypt; DNS must already point here)"
++        https_ok=false
++        for _ in $(seq 1 60); do
++            if curl -fsS -o /dev/null -m 10 "https://$d/health"; then https_ok=true; break; fi
++            sleep 5
++        done
++        if [ "$https_ok" != true ]; then
++            warn "https://$d does not answer with a valid certificate yet."
++            warn "Check: dig +short $d (must be this server's IP), ports 80/443 open, then re-run this script."
++            die "Stage 1 is NOT done: no working HTTPS address yet for $d."
++        fi
++        ok "ATTa is live: https://$d/ (valid certificate)"
+     done
+-    if [ "$https_ok" != true ]; then
+-        warn "https://$ATTA_DOMAIN does not answer with a valid certificate yet."
+-        warn "Check: dig +short $ATTA_DOMAIN (must be this server's IP), ports 80/443 open, then re-run this script."
+-        die "Stage 1 is NOT done: no working HTTPS address yet."
+-    fi
+-    ok "ATTa is live: https://$ATTA_DOMAIN/ (valid certificate)"
+     echo "Close port $ATTA_PORT to the internet (AWS security group): people use https://$ATTA_DOMAIN/ only."
+     echo "Stage 1 is proven only when a person opens https://$ATTA_DOMAIN/ in a browser, logs in and reaches the Front Door."
+ else
+diff -ruN a/05-coolify/kit/scripts/install.sh b/05-coolify/kit/scripts/install.sh
+--- a/05-coolify/kit/scripts/install.sh	2026-09-28 14:29:58.000000000 +0000
++++ b/05-coolify/kit/scripts/install.sh	2026-09-29 00:24:05.596319316 +0000
+@@ -153,6 +153,10 @@
+ run_coolify_installer "$COOLIFY_VERSION" "${install_env[@]}" ||
+     die "Coolify installation failed. Fix the error above and re-run; the installer is safe to re-run."
+ 
++# Coolify's installer rewrites /etc/docker/daemon.json, so the Docker Hub mirror goes in after it.
++ensure_registry_mirror || warn "Docker Hub mirror not set: app builds may hit Docker Hub's HTTP 429 rate limit"
++wait_for_coolify_api || die "Coolify's API did not come back after the Docker restart. Check: docker logs coolify"
++
+ # ---------------------------------------------------------------- admin lockdown
+ # Coolify creates the admin (and closes sign-up) once, during first boot. If its checks
+ # fail at that moment (e.g. a DNS hiccup while validating the email domain) it carries
+diff -ruN a/05-coolify/kit/scripts/lib/common.sh b/05-coolify/kit/scripts/lib/common.sh
+--- a/05-coolify/kit/scripts/lib/common.sh	2026-09-28 14:29:58.000000000 +0000
++++ b/05-coolify/kit/scripts/lib/common.sh	2026-09-29 00:25:01.189670852 +0000
+@@ -507,3 +507,100 @@
+     fail "Reverse proxy did not come up and stay up. Check: docker logs coolify-proxy, and Servers > localhost > Proxy in the dashboard"
+     return 1
+ }
++
++# ---------------------------------------------------------------- Docker Hub mirror
++# Docker Hub rate-limits anonymous pulls (HTTP 429 "toomanyrequests"). ATTa pulls many base
++# images at once, so every Docker Hub download is sent through Google's public Docker Hub
++# cache first; Docker falls back to Docker Hub itself on a miss.
++#
++# This must be done on the HOST, after Coolify's installer: that installer rewrites
++# /etc/docker/daemon.json (dropping any mirror set earlier), and ATTa's own runtime 429 repair
++# (app_runner.fix_rate_limit) cannot reach the host's Docker config from inside its container.
++# Idempotent: merges into the existing file (Coolify's log and address-pool settings are kept),
++# backs it up, restarts Docker only when something changed, and puts the old file back if Docker
++# will not start with the new one.
++DOCKER_DAEMON_JSON="${DOCKER_DAEMON_JSON:-/etc/docker/daemon.json}"
++ATTA_REGISTRY_MIRROR="${ATTA_REGISTRY_MIRROR-https://mirror.gcr.io}" # empty = leave Docker as it is
++
++registry_mirror_set() { # registry_mirror_set FILE MIRROR -> 0 if FILE already lists MIRROR
++    [ -f "$1" ] && jq -e --arg m "$2" '(.["registry-mirrors"] // []) | index($m) != null' "$1" >/dev/null 2>&1
++}
++
++docker_restart() {
++    if [ -n "${DOCKER_RESTART_CMD:-}" ]; then
++        eval "$DOCKER_RESTART_CMD"
++    elif [ -d /run/systemd/system ]; then
++        systemctl restart docker
++    else
++        service docker restart
++    fi
++}
++
++docker_ready() { # docker_ready SECONDS
++    local deadline=$((SECONDS + ${1:-90}))
++    until docker info >/dev/null 2>&1; do
++        [ "$SECONDS" -lt "$deadline" ] || return 1
++        sleep 2
++    done
++}
++
++docker_mirrors_active() { # docker_mirrors_active MIRROR -> 0 if the running daemon uses it
++    docker info --format '{{json .RegistryConfig.Mirrors}}' 2>/dev/null | jq -e --arg m "$1" \
++        'map(rtrimstr("/")) | index($m | rtrimstr("/")) != null' >/dev/null 2>&1
++}
++
++ensure_registry_mirror() {
++    local m="$ATTA_REGISTRY_MIRROR" f="$DOCKER_DAEMON_JSON" backup="" tmp
++    if [ -z "$m" ]; then
++        info "Docker Hub mirror disabled (ATTA_REGISTRY_MIRROR is empty)"
++        return 0
++    fi
++    if registry_mirror_set "$f" "$m"; then
++        if docker_mirrors_active "$m"; then
++            ok "Docker Hub downloads already go through $m"
++            return 0
++        fi
++        info "Docker Hub mirror is in $f but the running Docker does not use it yet"
++    else
++        if [ -f "$f" ] && ! jq -e 'type == "object"' "$f" >/dev/null 2>&1; then
++            warn "$f is not a JSON object; not changing it. Docker Hub downloads are NOT mirrored."
++            return 1
++        fi
++        mkdir -p "$(dirname "$f")"
++        tmp="$(mktemp "$f.XXXXXX")"
++        if [ -f "$f" ]; then
++            backup="$f.atta-backup-$(date -u +%Y%m%dT%H%M%SZ)"
++            cp -p "$f" "$backup"
++            jq --arg m "$m" '.["registry-mirrors"] = ((.["registry-mirrors"] // []) + [$m])' "$f" >"$tmp"
++        else
++            jq -n --arg m "$m" '{"registry-mirrors": [$m]}' >"$tmp"
++        fi
++        chmod 644 "$tmp"
++        mv -f "$tmp" "$f"
++        info "Added Docker Hub mirror $m to $f${backup:+ (previous file: $backup)}"
++    fi
++    info "Restarting Docker to load the mirror (running containers come back by their restart policy)"
++    if docker_restart && docker_ready "${DOCKER_READY_SECONDS:-90}" && docker_mirrors_active "$m"; then
++        ok "Docker Hub downloads now go through $m"
++        return 0
++    fi
++    fail "Docker did not come back using the mirror."
++    if [ -n "$backup" ]; then
++        warn "Putting the previous $f back"
++        cp -p "$backup" "$f"
++    elif [ -f "$f" ] && [ "$(jq -c 'keys' "$f" 2>/dev/null)" = '["registry-mirrors"]' ]; then
++        warn "Removing the $f this step created"
++        rm -f "$f"
++    fi
++    docker_restart || true
++    docker_ready "${DOCKER_READY_SECONDS:-90}" || fail "Docker is still not running. Check: journalctl -u docker"
++    return 1
++}
++
++wait_for_coolify_api() { # wait_for_coolify_api [SECONDS] -> 0 once /api/health says OK
++    local deadline=$((SECONDS + ${1:-240}))
++    until [ "$(curl -fsS -m 5 "http://127.0.0.1:${APP_PORT:-8000}/api/health" 2>/dev/null)" = "OK" ]; do
++        [ "$SECONDS" -lt "$deadline" ] || return 1
++        sleep 3
++    done
++}
+diff -ruN a/05-coolify/kit/scripts/upgrade.sh b/05-coolify/kit/scripts/upgrade.sh
+--- a/05-coolify/kit/scripts/upgrade.sh	2026-09-28 14:29:58.000000000 +0000
++++ b/05-coolify/kit/scripts/upgrade.sh	2026-09-29 00:24:05.596423236 +0000
+@@ -30,5 +30,7 @@
+ info "Upgrading Coolify $current -> $target"
+ "$SCRIPT_DIR/backup.sh" || die "Backup failed; not upgrading."
+ run_coolify_installer "$target" || die "Upgrade failed. Restore with scripts/restore.sh and the backup above if needed."
++ensure_registry_mirror || warn "Docker Hub mirror not set: app builds may hit Docker Hub's HTTP 429 rate limit"
++wait_for_coolify_api || die "Coolify's API did not come back after the Docker restart. Check: docker logs coolify"
+ EXPECTED_VERSION="$target" "$SCRIPT_DIR/verify.sh" || die "Upgrade ran but verification failed."
+ ok "Coolify upgraded to $target."
+diff -ruN a/05-coolify/kit/tests/unit/deploy_domains.bats b/05-coolify/kit/tests/unit/deploy_domains.bats
+--- a/05-coolify/kit/tests/unit/deploy_domains.bats	1970-01-01 00:00:00.000000000 +0000
++++ b/05-coolify/kit/tests/unit/deploy_domains.bats	2026-09-29 00:26:27.801610356 +0000
+@@ -0,0 +1,74 @@
++#!/usr/bin/env bats
++# deploy-atta.sh end to end with Coolify, Docker and the network stubbed: the Docker Hub mirror is
++# set before the build, and --domain (one name or a comma list) becomes one Traefik route + checks.
++
++load test_helper
++
++setup() {
++    T="$BATS_TEST_TMPDIR"
++    mkdir -p "$T/kit/scripts/lib" "$T/proxy" "$T/out" "$T/root" "$T/etc/docker" "$T/coolify/source"
++    cp "$KIT_DIR/scripts/deploy-atta.sh" "$T/kit/scripts/"
++    cp "$KIT_DIR/scripts/lib/common.sh" "$T/kit/scripts/lib/"
++    cat >"$T/kit/scripts/connect-atta.sh" <<'SH'
++#!/usr/bin/env bash
++mkdir -p "$OUT_DIR"; echo 'COOLIFY_TOKEN="tok-123"' >"$OUT_DIR/atta.env"
++SH
++    chmod +x "$T/kit/scripts/connect-atta.sh"
++    echo 'APP_VERSION=4.3.23' >"$T/coolify/source/.env"
++    echo '{"log-driver":"json-file"}' >"$T/etc/docker/daemon.json"
++    echo '[]' >"$T/active"
++    : >"$T/calls"
++    export T
++    export COOLIFY_ENV_FILE="$T/coolify/source/.env" PROXY_DYNAMIC_DIR="$T/proxy" OUT_DIR="$T/out" ATTA_ROOT="$T/root"
++    export ATTA_DIR="$(cd "$KIT_DIR/../.." && pwd)" DOCKER_DAEMON_JSON="$T/etc/docker/daemon.json" DOCKER_READY_SECONDS=2
++    export DOCKER_RESTART_CMD='echo restart >>"$T/calls"; jq -c ".[\"registry-mirrors\"] // []" "$DOCKER_DAEMON_JSON" >"$T/active"'
++    stub docker '
++echo "docker $*" >>"$T/calls"
++case "$1" in
++  info) [ "${2:-}" = --format ] && cat "$T/active"; exit 0;;
++  build|image) exit 0;;
++esac
++exit 0'
++    stub iptables 'exit 0'
++    stub ip6tables 'exit 0'
++    stub systemctl 'exit 0'
++    stub curl '
++url=""; method=GET; w=""
++while [ $# -gt 0 ]; do case "$1" in -X) method="$2"; shift 2;; -w) w="$2"; shift 2;; -H|-d|-m|-o) shift 2;; http*) url="$1"; shift;; *) shift;; esac; done
++echo "curl $method $url" >>"$T/calls"
++case "$url" in
++  */api/health) echo OK; exit 0;;
++  */api/v1/servers) body="[{\"name\":\"localhost\",\"uuid\":\"srv1\"}]";;
++  */api/v1/projects) [ "$method" = POST ] && body="{\"uuid\":\"p1\"}" || body="[]";;
++  */api/v1/services) [ "$method" = POST ] && body="{\"uuid\":\"svc1\"}" || body="[]";;
++  */health) exit 0;;
++  *) exit 7;;
++esac
++printf "%s\n%s" "$body" 200'
++}
++
++@test "one domain: route for that host, mirror set before the build" {
++    run "$T/kit/scripts/deploy-atta.sh" --domain airexploit.com --no-build
++    [ "$status" -eq 0 ]
++    grep -q 'rule: "Host(`airexploit.com`)"' "$T/proxy/atta.yaml"
++    [[ "$output" == *"ATTa is live: https://airexploit.com/"* ]]
++    jq -e '.["registry-mirrors"] == ["https://mirror.gcr.io"] and .["log-driver"] == "json-file"' "$DOCKER_DAEMON_JSON"
++    grep -q 'curl GET https://airexploit.com/health' "$T/calls"
++}
++
++@test "comma list: one route and certificate for every name, each one checked over https" {
++    run "$T/kit/scripts/deploy-atta.sh" --domain 'https://airexploit.com, www.airexploit.com/' --no-build
++    [ "$status" -eq 0 ]
++    [ "$(grep -c 'rule: "Host(`airexploit.com`) || Host(`www.airexploit.com`)"' "$T/proxy/atta.yaml")" -eq 2 ]
++    grep -q 'curl GET https://airexploit.com/health' "$T/calls"
++    grep -q 'curl GET https://www.airexploit.com/health' "$T/calls"
++    [[ "$output" == *"ATTa is live: https://www.airexploit.com/"* ]]
++}
++
++@test "a bad name anywhere in the list is refused before anything changes" {
++    run "$T/kit/scripts/deploy-atta.sh" --domain 'airexploit.com,bad_name!' --no-build
++    [ "$status" -ne 0 ]
++    [[ "$output" == *"is not a plain host name"* ]]
++    [ ! -e "$T/proxy/atta.yaml" ]
++    [ ! -s "$T/calls" ]
++}
+diff -ruN a/05-coolify/kit/tests/unit/mirror.bats b/05-coolify/kit/tests/unit/mirror.bats
+--- a/05-coolify/kit/tests/unit/mirror.bats	1970-01-01 00:00:00.000000000 +0000
++++ b/05-coolify/kit/tests/unit/mirror.bats	2026-09-29 00:24:44.588449544 +0000
+@@ -0,0 +1,134 @@
++#!/usr/bin/env bats
++# ensure_registry_mirror: the shared Docker Hub 429 fix (scripts/lib/common.sh).
++# Docker is a stub: "restarting" it loads daemon.json's mirrors into the running config,
++# unless $BATS_TEST_TMPDIR/broken exists (then Docker refuses to start with the new file).
++
++load test_helper
++
++setup() {
++    load_common
++    export DOCKER_DAEMON_JSON="$BATS_TEST_TMPDIR/etc/docker/daemon.json"
++    export ATTA_REGISTRY_MIRROR="https://mirror.gcr.io"
++    export DOCKER_READY_SECONDS=2
++    mkdir -p "$BATS_TEST_TMPDIR/etc/docker"
++    ACTIVE="$BATS_TEST_TMPDIR/active"   # mirrors the "running daemon" uses
++    RESTARTS="$BATS_TEST_TMPDIR/restarts"
++    echo '[]' >"$ACTIVE"
++    : >"$RESTARTS"
++    export ACTIVE RESTARTS
++    stub docker '
++if [ "$1" = info ]; then
++  [ -f "$BATS_TEST_TMPDIR/down" ] && exit 1
++  if [ "${2:-}" = --format ]; then cat "$ACTIVE"; fi
++  exit 0
++fi
++exit 0'
++    export DOCKER_RESTART_CMD='echo x >>"$RESTARTS";
++      if [ -f "$BATS_TEST_TMPDIR/broken" ] && jq -e ".[\"registry-mirrors\"]" "$DOCKER_DAEMON_JSON" >/dev/null 2>&1; then
++        touch "$BATS_TEST_TMPDIR/down"; false;
++      else rm -f "$BATS_TEST_TMPDIR/down";
++        if [ -f "$DOCKER_DAEMON_JSON" ]; then jq -c ".[\"registry-mirrors\"] // []" "$DOCKER_DAEMON_JSON" >"$ACTIVE"; else echo "[]" >"$ACTIVE"; fi
++      fi'
++}
++
++coolify_daemon_json() {
++    cat >"$DOCKER_DAEMON_JSON" <<'JSON'
++{
++  "log-driver": "json-file",
++  "log-opts": {"max-size": "10m", "max-file": "3"},
++  "default-address-pools": [{"base": "10.0.0.0/8", "size": 24}]
++}
++JSON
++}
++
++@test "mirror is merged into Coolify's daemon.json, its settings kept, Docker restarted once" {
++    coolify_daemon_json
++    run ensure_registry_mirror
++    [ "$status" -eq 0 ]
++    [[ "$output" == *"now go through https://mirror.gcr.io"* ]]
++    jq -e '.["registry-mirrors"] == ["https://mirror.gcr.io"]' "$DOCKER_DAEMON_JSON"
++    jq -e '.["log-opts"]["max-size"] == "10m" and .["default-address-pools"][0].base == "10.0.0.0/8"' "$DOCKER_DAEMON_JSON"
++    [ "$(wc -l <"$RESTARTS")" -eq 1 ]
++    ls "$DOCKER_DAEMON_JSON".atta-backup-* >/dev/null
++}
++
++@test "already set and active: nothing written, Docker not restarted" {
++    coolify_daemon_json
++    ensure_registry_mirror
++    before="$(sha256sum "$DOCKER_DAEMON_JSON")"
++    : >"$RESTARTS"
++    run ensure_registry_mirror
++    [ "$status" -eq 0 ]
++    [[ "$output" == *"already go through"* ]]
++    [ "$(sha256sum "$DOCKER_DAEMON_JSON")" = "$before" ]
++    [ ! -s "$RESTARTS" ]
++}
++
++@test "in the file but not loaded yet: Docker restarted, file untouched" {
++    echo '{"registry-mirrors":["https://mirror.gcr.io"]}' >"$DOCKER_DAEMON_JSON"
++    before="$(sha256sum "$DOCKER_DAEMON_JSON")"
++    run ensure_registry_mirror
++    [ "$status" -eq 0 ]
++    [ "$(sha256sum "$DOCKER_DAEMON_JSON")" = "$before" ]
++    [ "$(wc -l <"$RESTARTS")" -eq 1 ]
++}
++
++@test "no daemon.json: one is created with just the mirror" {
++    run ensure_registry_mirror
++    [ "$status" -eq 0 ]
++    [ "$(jq -c . "$DOCKER_DAEMON_JSON")" = '{"registry-mirrors":["https://mirror.gcr.io"]}' ]
++}
++
++@test "an existing mirror is kept and ours is added after it" {
++    echo '{"registry-mirrors":["https://my.mirror.example"]}' >"$DOCKER_DAEMON_JSON"
++    run ensure_registry_mirror
++    [ "$status" -eq 0 ]
++    jq -e '.["registry-mirrors"] == ["https://my.mirror.example","https://mirror.gcr.io"]' "$DOCKER_DAEMON_JSON"
++}
++
++@test "a daemon.json that is not a JSON object is never changed" {
++    printf 'not json {' >"$DOCKER_DAEMON_JSON"
++    run ensure_registry_mirror
++    [ "$status" -eq 1 ]
++    [[ "$output" == *"not changing it"* ]]
++    [ "$(cat "$DOCKER_DAEMON_JSON")" = 'not json {' ]
++    [ ! -s "$RESTARTS" ]
++}
++
++@test "Docker will not start with the new file: previous file restored and Docker started again" {
++    coolify_daemon_json
++    original="$(jq -S . "$DOCKER_DAEMON_JSON")"
++    touch "$BATS_TEST_TMPDIR/broken"
++    run ensure_registry_mirror
++    [ "$status" -eq 1 ]
++    [[ "$output" == *"Putting the previous"* ]]
++    [ "$(jq -S . "$DOCKER_DAEMON_JSON")" = "$original" ]
++    [ "$(wc -l <"$RESTARTS")" -eq 2 ]
++    [ ! -f "$BATS_TEST_TMPDIR/down" ]
++}
++
++@test "Docker will not start with a file this step created: the file is removed again" {
++    touch "$BATS_TEST_TMPDIR/broken"
++    run ensure_registry_mirror
++    [ "$status" -eq 1 ]
++    [ ! -f "$DOCKER_DAEMON_JSON" ]
++    [ ! -f "$BATS_TEST_TMPDIR/down" ]
++}
++
++@test "ATTA_REGISTRY_MIRROR empty: Docker left exactly as it is" {
++    coolify_daemon_json
++    before="$(sha256sum "$DOCKER_DAEMON_JSON")"
++    ATTA_REGISTRY_MIRROR="" run ensure_registry_mirror
++    [ "$status" -eq 0 ]
++    [ "$(sha256sum "$DOCKER_DAEMON_JSON")" = "$before" ]
++    [ ! -s "$RESTARTS" ]
++}
++
++@test "deploy-atta.sh, install.sh and upgrade.sh all set the mirror after Coolify's installer" {
++    grep -q '^ensure_registry_mirror' "$KIT_DIR/scripts/deploy-atta.sh"
++    for s in install.sh upgrade.sh; do
++        awk '/run_coolify_installer/{i=NR} /^ensure_registry_mirror/{m=NR} END{exit !(i && m && m>i)}' "$KIT_DIR/scripts/$s"
++    done
++    # deploy-atta.sh: before the image build (the build pulls base images from Docker Hub)
++    awk '/^ensure_registry_mirror/{m=NR} /docker build -t/{b=NR} END{exit !(m && b && m<b)}' "$KIT_DIR/scripts/deploy-atta.sh"
++}

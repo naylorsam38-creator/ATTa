@@ -1,0 +1,541 @@
+diff --git a/04-deployment/coolify_handoff.py b/04-deployment/coolify_handoff.py
+index 29ff16b..288e01c 100644
+--- a/04-deployment/coolify_handoff.py
++++ b/04-deployment/coolify_handoff.py
+@@ -104,9 +104,15 @@ def _write_manifest(m: dict) -> Path:
+     return dest
+ 
+ 
+-# v120: a build reaches Coolify only when ALL of its apps qualified. A PARTIALLY_QUALIFIED build is
+-# never handed off, not even its passed apps: the pipeline re-runs the whole build until it is QUALIFIED.
+-HANDOFF_STATES = (builds.QUALIFIED,)
++# v120 handed off only builds where ALL apps qualified, so one failing app kept every qualified app out of
++# Coolify. v121.3-live: each app that is QUALIFIED itself (every stage + the verification barrier, v121.2+
++# results only) is handed off and then proven live (coolify_live.py), whatever its neighbours did.
++HANDOFF_STATES = (builds.QUALIFIED, builds.PARTIALLY_QUALIFIED)
++
++
++def eligible(apps: list[dict]) -> list[dict]:
++    """Only apps whose own result is QUALIFIED under the v121.2+ barrier (a `state` of QUALIFIED)."""
++    return [a for a in apps or [] if a.get("qualified") and a.get("state") == "QUALIFIED"]
+ 
+ 
+ def hand_off(build_id: str, qualified_apps: list[dict]) -> dict:
+@@ -116,7 +122,7 @@ def hand_off(build_id: str, qualified_apps: list[dict]) -> dict:
+     if not rec or rec.get("state") not in HANDOFF_STATES:
+         raise RuntimeError(f"refusing Coolify hand-off: build {build_id} is not QUALIFIED")
+     # Only apps that passed every stage themselves; a partly qualified build sends just those.
+-    qualified_apps = [a for a in qualified_apps if a.get("qualified", True)]
++    qualified_apps = [a for a in qualified_apps if a.get("qualified", True) and a.get("state", "QUALIFIED") == "QUALIFIED"]
+     if not qualified_apps:
+         raise RuntimeError(f"refusing Coolify hand-off: build {build_id} has no qualified app")
+     manifest = {"schema": "APP_BUILDER_COOLIFY_HANDOFF.v1", "build_id": build_id, "owner": rec.get("owner"),
+@@ -222,6 +228,8 @@ def dispatch_pending() -> None:
+         c = rec.get("coolify")
+         try:
+             if not c:  # qualified but the first hand-off never got written (e.g. disk error)
++                if not eligible(rec.get("qualification") or []):
++                    continue   # nothing in it is QUALIFIED under the barrier (older records): nothing to hand off
+                 hand_off(rec["id"], rec.get("qualification") or [])
+             elif c.get("status") != DISPATCHED and now >= float(c.get("next_attempt_at", 0)):
+                 dispatch(rec["id"])
+diff --git a/04-deployment/coolify_live.py b/04-deployment/coolify_live.py
+new file mode 100644
+index 0000000..c650e42
+--- /dev/null
++++ b/04-deployment/coolify_live.py
+@@ -0,0 +1,261 @@
++#!/usr/bin/env python3
++"""
++coolify_live.py — after the hand-off, prove each app is really live in Coolify.
++
++A Coolify deploy call being ACCEPTED only means Coolify queued it. Per handed-off app this walks:
++
++  DISPATCHED  Coolify accepted the deploy / created the service (coolify_handoff)
++  DEPLOYING   waiting for Coolify to report the service running AND its containers to be running
++  RUNNING     Coolify says running, every container of the service is running, and the app's
++              address answers HTTP through Coolify's proxy (not a 5xx)
++  VERIFIED    the six-stage watcher, stage 6 = real Chromium + the app's journey, passed against
++              the LIVE Coolify address (not the test run's local container)
++  LIVE_FAILED stopped at the step named in `failed_at`, with the evidence: Coolify's service status,
++              container states, container logs, the HTTP answer, the watcher result and its evidence
++
++Each step is observed, never inferred: DISPATCHED is not RUNNING and RUNNING is not VERIFIED. The live check
++runs once per deployment (no blind retries); a failure is recorded with its evidence and left for a repair.
++Everything lands on the build record under coolify.apps.<app>.live and in
++state/coolify/live/<app>/<build>/live-<n>.json (never overwritten).
++"""
++from __future__ import annotations
++import json, os, re, subprocess, time
++from pathlib import Path
++from urllib.request import Request, build_opener, ProxyHandler, HTTPRedirectHandler
++from urllib.error import HTTPError, URLError
++
++import builds
++
++# ===================== CONFIG =====================
++DEPLOY_WAIT = int(os.environ.get("COOLIFY_LIVE_DEPLOY_WAIT", "1800"))   # most seconds DISPATCHED -> RUNNING
++REACH_WAIT = int(os.environ.get("COOLIFY_LIVE_REACH_WAIT", "600"))      # most seconds RUNNING -> answers HTTP
++CHECK_EVERY = int(os.environ.get("COOLIFY_LIVE_CHECK_EVERY", "30"))     # seconds between observations
++ROOT = builds.ROOT
++LIVE = ROOT / "state" / "coolify" / "live"
++# ===================================================
++FINAL = ("VERIFIED", "LIVE_FAILED")
++_HTTP = build_opener(ProxyHandler({}))
++
++
++def _sh(cmd, timeout=60) -> tuple[int, str]:
++    try:
++        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
++        return r.returncode, (r.stdout or "") + (r.stderr or "")
++    except (subprocess.TimeoutExpired, FileNotFoundError) as e:
++        return 124, str(e)
++
++
++def service_status(uuid: str) -> dict:
++    """What Coolify itself says about the service: its status and the address of each part."""
++    import coolify_provision as prov
++    try:
++        st, body = prov._api("GET", f"/services/{uuid}")
++    except Exception as e:
++        return {"http": None, "error": f"{type(e).__name__}: {e}"}
++    if st != 200 or not isinstance(body, dict):
++        return {"http": st, "error": str(body)[:500]}
++    parts = []
++    for a in (body.get("applications") or []):
++        if isinstance(a, dict):
++            parts.append({"name": a.get("name"), "status": a.get("status"), "fqdn": a.get("fqdn")})
++    return {"http": st, "status": body.get("status"), "name": body.get("name"), "uuid": body.get("uuid"),
++            "project_uuid": ((body.get("environment") or {}).get("project") or {}).get("uuid") if isinstance(body.get("environment"), dict) else None,
++            "environment_id": body.get("environment_id"), "parts": parts}
++
++
++def containers(uuid: str) -> list[dict]:
++    """Coolify names a service's containers <part>-<service uuid>: the real containers on this Docker."""
++    rc, out = _sh(["docker", "ps", "-a", "--filter", f"name={uuid}", "--format", "{{json .}}"])
++    rows = []
++    for line in out.splitlines():
++        try:
++            d = json.loads(line)
++        except ValueError:
++            continue
++        rows.append({"name": d.get("Names"), "id": d.get("ID"), "image": d.get("Image"), "state": d.get("State"),
++                     "status": d.get("Status")})
++    return rows
++
++
++def live_url(app: str, st: dict, svc: dict) -> str | None:
++    import coolify_handoff as h
++    url = st.get("url") or (h._managed().get(app) or {}).get("url")
++    if not url:
++        import coolify_provision as prov
++        skin = next((p for p in svc.get("parts") or [] if p.get("name") == prov.SKIN_SERVICE and p.get("fqdn")), None)
++        any_ = next((p for p in svc.get("parts") or [] if p.get("fqdn")), None)
++        url = (skin or any_ or {}).get("fqdn")
++    if url:
++        url = str(url).split(",")[0].strip()
++    return url or None
++
++
++def http_get(url: str, timeout: int = 15) -> dict:
++    try:
++        with _HTTP.open(Request(url, headers={"Accept": "text/html,*/*"}), timeout=timeout) as r:
++            return {"http_status": r.status, "final_url": r.geturl(), "content_type": r.headers.get("Content-Type", "")}
++    except HTTPError as e:
++        return {"http_status": e.code, "final_url": url, "content_type": e.headers.get("Content-Type", "") if e.headers else ""}
++    except (URLError, OSError, ValueError) as e:
++        return {"http_status": None, "error": f"{type(e).__name__}: {e}"}
++
++
++def _logs(rows: list[dict], path: Path) -> str | None:
++    text = []
++    for c in rows:
++        rc, out = _sh(["docker", "logs", "--tail", "200", c["name"]], timeout=30)
++        text.append(f"===== {c['name']} ({c.get('image')}) {c.get('status')} =====\n{out}")
++    try:
++        path.write_text("\n".join(text))
++        return str(path)
++    except OSError:
++        return None
++
++
++def _record(app: str, bid: str, live: dict) -> str | None:
++    import app_runner
++    d = LIVE / app_runner.safe_id(app) / re.sub(r"[^A-Za-z0-9_.-]", "-", bid)
++    d.mkdir(parents=True, exist_ok=True)
++    n = len(list(d.glob("live-*.json"))) + 1
++    p = d / f"live-{n}.json"
++    while p.exists():
++        n += 1; p = d / f"live-{n}.json"
++    try:
++        p.write_text(json.dumps(live, indent=2, default=str) + "\n")
++        return str(p)
++    except OSError:
++        return None
++
++
++def live_check(app: str, bid: str, url: str, live: dict) -> dict:
++    """The six stages against the LIVE Coolify address. The skin files are the snapshot that is live."""
++    import app_runner, system_watcher as w, resilience
++    aid = app_runner.safe_id(app)
++    snap = LIVE / aid / re.sub(r"[^A-Za-z0-9_.-]", "-", bid) / ".ui-capability"
++    try:
++        t0 = json.loads((app_runner.TARGETS / f"{aid}.json").read_text())
++    except (OSError, ValueError):
++        t0 = {}
++    t = {"app": aid, "ui_dir": str(snap if snap.is_dir() else t0.get("ui_dir", "")), "target_url": url, "proxy_url": url,
++         "profile": t0.get("profile")}
++    # The journey runs against the live instance. A fresh deployment has its own database, so an account
++    # the test run created does not exist there: the journey is authored against the live app the same
++    # way the test run authored it (journey_author), unless the app's recipe carries its own contract.
++    recipe = app_runner.load_recipe(app) or {}
++    authored = None
++    if isinstance(recipe.get("journey"), dict):
++        t["journey"] = recipe["journey"]
++    elif (t.get("profile") or "web") == "web":
++        try:
++            import journey_author
++            authored = journey_author.author(aid, url, recipe, log=lambda m: print(f"  [{aid} live]{m}", flush=True))
++            t["journey"] = authored["journey"] or {"error": authored["code"], "detail": authored["detail"]}
++        except Exception as e:
++            t["journey"] = {"error": "LIVE_JOURNEY_AUTHOR_EXCEPTION", "detail": f"{type(e).__name__}: {e}"}
++    ident = {"run_id": f"live-{aid}-{int(time.time() * 1000)}", "attempt": 1, "source": "coolify_live",
++             "correlation_id": resilience.new_correlation_id(),
++             "deployment_revision": resilience.deployment_revision(ROOT), "app_revision": app_runner._app_revision_of(app)}
++    r = w.check({**t, "_identity": ident})
++    if authored is not None:
++        r["journey_author"] = {k: authored.get(k) for k in ("account", "code", "detail")}
++    r["identity"] = ident
++    return r
++
++
++def step(bid: str, app: str, st: dict) -> dict:
++    """Advance one app's live state by one observation. Returns the updated live block."""
++    live = dict(st.get("live") or {})
++    now = time.time()
++    if live.get("state") in FINAL or now < float(live.get("next_at", 0)):
++        return live
++    uuid = st.get("uuid")
++    live.setdefault("state", "DISPATCHED")
++    live.setdefault("dispatched_at", st.get("at") or now)
++    live["service_uuid"] = uuid
++    live["deploy_detail"] = st.get("detail")
++    svc = service_status(uuid) if uuid else {"error": "no Coolify uuid"}
++    rows = containers(uuid) if uuid else []
++    live.update({"observed_at": now, "coolify_service": svc, "containers": rows})
++    base = LIVE / re.sub(r"[^a-z0-9-]+", "-", app.lower()).strip("-") / re.sub(r"[^A-Za-z0-9_.-]", "-", bid)
++    base.mkdir(parents=True, exist_ok=True)
++
++    def fail(where: str, why: str) -> dict:
++        live.update({"state": "LIVE_FAILED", "failed_at": where, "reason": why, "finished_at": now,
++                     "container_logs": _logs(rows, base / f"containers-{int(now)}.log") if rows else None})
++        live["record"] = _record(app, bid, live)
++        print(f"[{app} live] LIVE_FAILED at {where}: {why}", flush=True)
++        return live
++
++    running = str(svc.get("status") or "").startswith("running") and rows and all(c.get("state") == "running" for c in rows)
++    if live["state"] in ("DISPATCHED", "DEPLOYING"):
++        if running:
++            live.update({"state": "RUNNING", "running_at": now})
++        else:
++            live["state"] = "DEPLOYING"
++            if now - float(live["dispatched_at"]) > DEPLOY_WAIT:
++                return fail("DEPLOYING", f"not running after {DEPLOY_WAIT}s: Coolify status {svc.get('status')!r}, "
++                                         f"containers {[(c['name'], c['state'], c['status']) for c in rows]}")
++            live["next_at"] = now + CHECK_EVERY
++            return live
++    if live["state"] == "RUNNING":
++        if not running:
++            return fail("RUNNING", f"stopped running after it started: Coolify status {svc.get('status')!r}, "
++                                   f"containers {[(c['name'], c['state'], c['status']) for c in rows]}")
++        url = live_url(app, st, svc)
++        live["url"] = url
++        if not url:
++            return fail("REACHABLE", "Coolify gives the service no address")
++        h = http_get(url)
++        live["http"] = h
++        if h.get("http_status") is None or h["http_status"] >= 500:
++            if now - float(live.get("running_at", now)) > REACH_WAIT:
++                return fail("REACHABLE", f"{url} answers {h.get('http_status') or h.get('error')} "
++                                         f"{REACH_WAIT}s after Coolify reported it running")
++            live["next_at"] = now + CHECK_EVERY
++            return live
++        live["reachable_at"] = now
++        print(f"[{app} live] RUNNING and reachable at {url} (HTTP {h['http_status']}); running the six stages live", flush=True)
++        try:
++            r = live_check(app, bid, url, live)
++        except Exception as e:
++            return fail("LIVE_CHECK", f"the live check itself raised {type(e).__name__}: {e}")
++        clean = (r.get("stages") or {}).get("6 CLEAN") or {}
++        live["check"] = {"verdict": r.get("verdict"), "broken_at": r.get("broken_at"), "code": r.get("code"),
++                         "stages": {k: {x: v.get(x) for x in ("status", "code", "detail")} for k, v in (r.get("stages") or {}).items()},
++                         "evidence": clean.get("evidence"), "journey": clean.get("journey"),
++                         "journey_author": r.get("journey_author"), "identity": r.get("identity")}
++        if r.get("broken_at") is None and clean.get("status") == "OK":
++            live.update({"state": "VERIFIED", "verified_at": now, "finished_at": now})
++            live["record"] = _record(app, bid, live)
++            print(f"[{app} live] VERIFIED at {url}", flush=True)
++            return live
++        return fail(f"LIVE {r.get('broken_at') or '6 CLEAN'}", f"{r.get('code') or clean.get('code')}: "
++                                                                  f"{str(((r.get('stages') or {}).get(r.get('broken_at') or '6 CLEAN') or {}).get('detail') or '')[:400]}")
++    return live
++
++
++def verify_pending() -> None:
++    """Called from the pipeline loop: advance every accepted app of every handed-off build."""
++    for rec in builds.all_builds():
++        c = rec.get("coolify") or {}
++        apps = c.get("apps") or {}
++        changed = False
++        for app, st in apps.items():
++            if st.get("status") != "ACCEPTED" or (st.get("live") or {}).get("state") in FINAL:
++                continue
++            try:
++                new = step(rec["id"], app, st)
++            except Exception as e:
++                new = {**(st.get("live") or {}), "state": "LIVE_FAILED", "failed_at": "LIVE_OBSERVER",
++                       "reason": f"{type(e).__name__}: {e}", "finished_at": time.time()}
++            if new != st.get("live"):
++                st["live"] = new; changed = True
++        if changed:
++            cur = builds.get(rec["id"]) or {}
++            cc = cur.get("coolify") or {}
++            for app, st in apps.items():
++                if app in (cc.get("apps") or {}) and st.get("live"):
++                    cc["apps"][app]["live"] = st["live"]
++            states = [((cc.get("apps") or {}).get(a) or {}).get("live", {}).get("state") for a in (cc.get("apps") or {})]
++            cc["live_summary"] = {s: states.count(s) for s in set(states) if s}
++            builds.update(rec["id"], coolify=cc)
+diff --git a/04-deployment/pipeline.py b/04-deployment/pipeline.py
+index dd80a23..54249ec 100644
+--- a/04-deployment/pipeline.py
++++ b/04-deployment/pipeline.py
+@@ -126,9 +126,9 @@ def _record_qualification(bid,st,apps,why,results):
+     if st==builds.NOT_QUALIFIED:
+         builds.update(bid,state=st,error=why,**fields); return False
+     builds.update(bid,state=st,qualified_at=time.time(),error=(why or None),**fields)
+-    # v120: only a fully QUALIFIED build is handed to Coolify. A PARTIALLY_QUALIFIED build stays here until
+-    # every app in it passes (its passed apps are already live from their own last QUALIFIED build, if any).
+-    if st == builds.QUALIFIED:
++    # v121.3-live: every app that is QUALIFIED itself goes to Coolify, also from a PARTIALLY_QUALIFIED build;
++    # coolify_live then proves each one DEPLOYING -> RUNNING -> VERIFIED against the live address.
++    if st in (builds.QUALIFIED, builds.PARTIALLY_QUALIFIED):
+         try: coolify_handoff.hand_off(bid,[a for a in apps if a.get('qualified')])
+         except Exception as e: print(f'coolify hand-off {bid}: {e} (retried from the loop)',flush=True)
+     return st==builds.QUALIFIED
+@@ -392,12 +392,17 @@ def process(b):
+     step('VALIDATING',bundle=b.name)
+     stage=WORK/f'run-{int(time.time())}-{os.getpid()}'; stage.mkdir()
+     try:
+-        added=kept=[]
++        added=kept=[]; rerun=None
+         if b.name.endswith('.library.json'):
+             # v117: nothing new to add. Fetch whatever is on the app list and qualify the whole library;
+             # the ones that pass go to Coolify like any other build. Written on first start in a container.
+             step('LIBRARY_RUN',source='app list')
+             builds.update(bid,kind='library',package=ensure_package())
++            # v121.3.1: {"only": [apps]} re-checks just those apps (after an ATTa fix for their failure); every
++            # other app keeps its result from the latest library build. The whole catalogue is not re-run.
++            try: only=json.loads(b.read_text() or '{}').get('only')
++            except (OSError,ValueError): only=None
++            if only: rerun=_rerun_basis(bid,[str(x) for x in only])
+         elif b.name.endswith('.repo.json'):
+             url=json.loads(b.read_text()).get('url','')
+             step('ADDING_APP',kind='git',source=url)
+@@ -486,7 +491,7 @@ def process(b):
+         maintenance.on_build_progress(bid)
+         # Gate: nothing goes downstream until the browser check has passed, per app.
+         step('QUALIFYING')
+-        st,apps,why,results=qualify()
++        st,apps,why,results=qualify(*rerun) if rerun else qualify()
+         state(state=st)
+         _record_qualification(bid,st,apps,why,results)
+         return st
+@@ -496,6 +501,15 @@ def process(b):
+         shutil.rmtree(stage,ignore_errors=True)
+         CURRENT_BUILD=None
+ 
++def _rerun_basis(bid,only):
++    """(only, previous results) for a partial library run: the latest OTHER library build's results."""
++    prev=None
++    for r in builds.all_builds():
++        if r.get('id')==bid or r.get('kind')!='library' or not r.get('qualification_results'): continue
++        if prev is None or (r.get('updated') or 0)>(prev.get('updated') or 0): prev=r
++    builds.update(bid,rerun_of=(prev or {}).get('id'),rerun_apps=only)
++    return set(only),(prev or {}).get('qualification_results') or []
++
+ def _inbox_items():
+     done=('.processed.zip','.failed.zip','.processed.json','.failed.json')
+     zips=[p for p in INBOX.glob('*.zip') if not p.name.endswith(done)]
+@@ -521,6 +535,9 @@ def loop():
+                     except Exception as e: print(f'maintenance {LAST_BUILD}: {e}',flush=True)
+             finally: LOCK.unlink(missing_ok=True)
+         coolify_handoff.dispatch_pending()
++        try:
++            import coolify_live; coolify_live.verify_pending()
++        except Exception as e: print(f'coolify live: {e}',flush=True)
+         maintenance.sweep()
+         time.sleep(2)
+ 
+diff --git a/04-deployment/resilience/failures.py b/04-deployment/resilience/failures.py
+index 7b65f72..e4d0eb4 100644
+--- a/04-deployment/resilience/failures.py
++++ b/04-deployment/resilience/failures.py
+@@ -72,6 +72,7 @@ CODE_CLASS = [
+     ("NOT_CSS", "SKIN_ASSET", "the skin CSS is served with the wrong type"),
+     ("PORT_", "CAPABILITY_PORT", "the capability port script is missing, wrong or redirected: reinstall the overlay"),
+     ("NOT_JAVASCRIPT", "CAPABILITY_PORT", "the capability port script is served with the wrong type"),
++    ("BROWSER_NETWORK_CHANGED", "ATTA_ENVIRONMENT", "the host's network changed under the browser twice (Docker network churn from parallel apps): not an app fault; re-check when the host is quieter"),
+     ("BROWSER_HTTP", "APP_SERVER_ERROR", "the real browser got an error status: read the app log excerpt"),
+     ("REQUEST_FAILED", "BROWSER_REQUEST_FAILED", "requests the page makes fail (see request_failures: absolute URLs, CORS, missing assets)"),
+     ("PAGE_ERROR", "BROWSER_PAGE_ERROR", "the page throws JavaScript errors in the browser (see page_errors)"),
+diff --git a/04-deployment/resilience/states.py b/04-deployment/resilience/states.py
+index 3e36591..a4ef6d1 100644
+--- a/04-deployment/resilience/states.py
++++ b/04-deployment/resilience/states.py
+@@ -19,7 +19,8 @@ STATES = ("NOT_STARTED", "START_FAILED", "TIMEOUT", "INCONCLUSIVE", "FAILED", "Q
+ 
+ # The check could not decide: nothing here is evidence about the app itself.
+ INCONCLUSIVE_CODES = {"RUNNER_EXCEPTION", "WORKER_EXCEPTION", "WATCHER_EXCEPTION", "SMOKE_EXCEPTION",
+-                      "BROWSER_EXCEPTION", "PLAYWRIGHT_UNAVAILABLE", "RUNNER_NO_DOCKER", "IDENTITY_COLLISION"}
++                      "BROWSER_EXCEPTION", "PLAYWRIGHT_UNAVAILABLE", "RUNNER_NO_DOCKER", "IDENTITY_COLLISION",
++                      "BROWSER_NETWORK_CHANGED"}
+ TIMEOUT_CODES = {"TIMEOUT", "WORKER_TIMEOUT", "PROBE_TIMEOUT"}
+ # Runner rules that mean "waited as long as allowed and it never came up".
+ TIMEOUT_RULES = {"budget.spent", "app.still_starting", "app.stalled"}
+diff --git a/04-deployment/system_watcher.py b/04-deployment/system_watcher.py
+index df4f267..8b35d23 100644
+--- a/04-deployment/system_watcher.py
++++ b/04-deployment/system_watcher.py
+@@ -124,6 +124,13 @@ def _is_noise(url,text,origin):
+     if re.search(r'status of 40[13]\b',text or ''): return True
+     return False
+ 
++NET_SETTLE=int(os.environ.get('APP_BUILDER_NET_SETTLE','5'))   # seconds to let a host network change finish
++
++def _net_changed(console_errors,request_failures):
++    """Did the host's network change under this page load (Chromium net::ERR_NETWORK_CHANGED)?"""
++    return any('ERR_NETWORK_CHANGED' in str(f) for _,f in request_failures) or \
++           any('ERR_NETWORK_CHANGED' in str(t) for _,t in console_errors)
++
+ def _split_noise(origin,console_errors,request_failures):
+     """(real console errors, real failed requests, ignored noise). Strict mode: nothing is noise."""
+     if BROWSER_STRICT:
+@@ -450,6 +457,23 @@ def browser_check(url, app_url=None, expected=None, app=None, journey=None, meta
+             try: page.wait_for_load_state('networkidle',timeout=NETWORK_IDLE_GRACE*1000)
+             except Exception: pass  # live connections keep the network busy; that is not a failure
+             _TL.evidence=_capture(app,page,console_errors,request_failures,errors,metadata=metadata)
++            # v121.3-live: Chromium aborts loads with net::ERR_NETWORK_CHANGED when the HOST's network changes
++            # mid-load (Docker creating/removing networks for the other apps checked in parallel). Proven on the
++            # live fleet fleet-20260929T061331Z-9b37b3: memos, 19/19 of its own 127.0.0.1 loads. That says
++            # nothing about the app. The first capture is kept; the page is loaded again once the event is over;
++            # the same interruption again is INCONCLUSIVE (environment), never an app failure.
++            if _net_changed(console_errors,request_failures):
++                first=_TL.evidence
++                for x in (errors,console_errors,request_failures,css_ok,hook_ok): x.clear()
++                time.sleep(NET_SETTLE)
++                resp=page.goto(url,wait_until='load',timeout=BROWSER_TIMEOUT*1000)
++                try: page.wait_for_load_state('networkidle',timeout=NETWORK_IDLE_GRACE*1000)
++                except Exception: pass
++                _TL.evidence=_capture(app,page,console_errors,request_failures,errors,metadata={**(metadata or {}),'recheck':'net'})
++                if isinstance(_TL.evidence,dict): _TL.evidence['interrupted_load']=first
++                if _net_changed(console_errors,request_failures):
++                    return stage('FAIL','BROWSER_NETWORK_CHANGED','the page load was interrupted by a host network change twice: '
++                                 +json.dumps([u for u,_ in request_failures][:5]))
+             if not resp or resp.status>=500:return stage('FAIL','BROWSER_HTTP',str(resp.status if resp else 'NO_RESPONSE'))
+             if not page.url.startswith(expected_origin):return stage('FAIL','REDIRECT_OFF_PROXY',page.url)
+             bad_console,bad_requests,warnings=_split_noise(expected_origin,console_errors,request_failures)
+diff --git a/docs/history/CHANGES-2026-09-29-V121.3.1-LIVE-FLEET-FIXES.md b/docs/history/CHANGES-2026-09-29-V121.3.1-LIVE-FLEET-FIXES.md
+new file mode 100644
+index 0000000..86e9d39
+--- /dev/null
++++ b/docs/history/CHANGES-2026-09-29-V121.3.1-LIVE-FLEET-FIXES.md
+@@ -0,0 +1,11 @@
++# ATTa v121.3.1: fixes for ATTa failures found by the live fleet run
++
++Each change below comes from a real failure on the live server, in fleet run `fleet-20260929T061331Z-9b37b3`
++(29 apps in parallel inside the Coolify-managed ATTa, on EC2 `i-0f13b8644b215931d`).
++
++| # | Real failure (evidence) | ATTa component | Change |
++|---|---|---|---|
++| 1 | memos (and super-productivity) failed stage 6 with `CONSOLE_ERRORS`. All 19 errors and all 19 failed requests for memos are `net::ERR_NETWORK_CHANGED` on its own `127.0.0.1:8185` assets, at 06:15:24 while Docker was creating networks for about 20 apps at once. Evidence: `state/runner/evidence/memos/run-1790662411421-memos-e2b8ce1d-a1/browser.json`. Memos passed stage 6 on the earlier run. | `system_watcher.browser_check` (shared stage 6 under parallel load) | When the host's network changes under a page load, the watcher keeps that capture, waits `APP_BUILDER_NET_SETTLE` seconds and loads the page once more. A second interruption gives `BROWSER_NETWORK_CHANGED`, which counts as INCONCLUSIVE (environment), never as an app failure. |
++| 2 | A qualified app never reaches Coolify when another app in the same build fails. v120 handed off only fully QUALIFIED builds, and this run is PARTIALLY_QUALIFIED. | `coolify_handoff`, `pipeline._record_qualification` | Each app that is itself QUALIFIED under the v121.2+ barrier is handed off, including from a PARTIALLY_QUALIFIED build. Apps that did not qualify, and older records without a barrier state, never are. |
++| 3 | The handoff stopped at "Coolify accepted the deploy call" (ACCEPTED / DISPATCHED). Nothing checked that the service ran, that it was reachable, or that it passed stage 6 live. | new `coolify_live.py`, called from the pipeline loop | Each handed-off app goes DISPATCHED → DEPLOYING → RUNNING → VERIFIED, or LIVE_FAILED with evidence. The steps: Coolify's own service status, the service's real containers all running, the Coolify address answering HTTP, then the six-stage watcher with stage 6 in real Chromium against the live address. Every observation is recorded in `state/coolify/live/<app>/<build>/`. |
++| 4 | Re-checking the apps affected by an ATTa fix meant re-running all 29. | `pipeline.process` | `inbox/<id>.library.json` containing `{"only": [apps]}` re-checks just those apps; every other app keeps its result from the latest library build. |
+diff --git a/release.json b/release.json
+index 41e670c..ae1dfbb 100644
+--- a/release.json
++++ b/release.json
+@@ -1,5 +1,5 @@
+ {
+-  "version": "v121.3",
++  "version": "v121.3.1",
+   "entrypoint": "run",
+   "state_version": 2,
+   "features": [
+@@ -19,6 +19,7 @@
+     "v121_1_parallel_runs_preserve_per_app_isolation_and_current_revision_identity",
+     "v121_2_isolated_parallel_jobs_revision_barrier_rerun_per_run_evidence_handoff_states_fleet_report",
+     "v121_2_kit_registry_mirror_and_multi_domain_route",
+-    "v121_3_stop_record_one_bounded_fix_retest_failed_stage_no_blind_retries_failure_report"
++    "v121_3_stop_record_one_bounded_fix_retest_failed_stage_no_blind_retries_failure_report",
++    "v121_3_1_live_fleet_fixes_network_changed_reload_per_app_coolify_handoff_live_verification_partial_rerun"
+   ]
+ }
+diff --git a/tests/test_v117_coolify.py b/tests/test_v117_coolify.py
+index 0356ad3..7ecc5e3 100644
+--- a/tests/test_v117_coolify.py
++++ b/tests/test_v117_coolify.py
+@@ -392,7 +392,7 @@ class Packaging(unittest.TestCase):
+     def test_release_is_v117(self):
+         # v118 carries v117 forward: the version moved on, the v117 feature must still be listed.
+         rel = json.loads((self.ATTA / "release.json").read_text())
+-        self.assertEqual(rel["version"], "v121.3")
++        self.assertEqual(rel["version"], "v121.3.1")
+         self.assertTrue(any(f.startswith("v117_runs_under_coolify") for f in rel["features"]))
+ 
+     def test_single_app_list(self):
+diff --git a/tests/test_v120_stage2.py b/tests/test_v120_stage2.py
+index 8a7874b..e8c99e0 100644
+--- a/tests/test_v120_stage2.py
++++ b/tests/test_v120_stage2.py
+@@ -83,17 +83,24 @@ class SystemChoosesTheFoundation(unittest.TestCase):
+ 
+ 
+ class HandOffOnlyWhenQualified(unittest.TestCase):
+-    def test_partially_qualified_is_not_a_hand_off_state(self):
++    # v121.3-live (owner's instruction): every app QUALIFIED itself goes to Coolify, also from a
++    # PARTIALLY_QUALIFIED build; an app that did not qualify never does.
++    def test_partially_qualified_hands_off_only_its_qualified_apps(self):
+         builds = importlib.import_module("builds")
+         h = importlib.import_module("coolify_handoff")
+-        self.assertEqual(h.HANDOFF_STATES, (builds.QUALIFIED,))
+-
+-    def test_pipeline_calls_hand_off_only_for_a_qualified_build(self):
++        self.assertEqual(h.HANDOFF_STATES, (builds.QUALIFIED, builds.PARTIALLY_QUALIFIED))
++        apps = [{"app": "a", "qualified": True, "state": "QUALIFIED"},
++                {"app": "b", "qualified": False, "state": "FAILED"},
++                {"app": "c", "qualified": True, "state": "UNVERIFIED"},
++                {"app": "d", "qualified": True}]            # a pre-v121.2 record: no barrier state
++        self.assertEqual([a["app"] for a in h.eligible(apps)], ["a"])
++
++    def test_pipeline_hands_off_qualified_and_partially_qualified_builds(self):
+         src = (DEP / "pipeline.py").read_text()
+         i = src.index("def _record_qualification")
+         body = src[i:src.index("def requalify")]
+-        self.assertIn("if st == builds.QUALIFIED:", body)
+-        self.assertLess(body.index("if st == builds.QUALIFIED:"), body.index("coolify_handoff.hand_off"))
++        self.assertIn("if st in (builds.QUALIFIED, builds.PARTIALLY_QUALIFIED):", body)
++        self.assertLess(body.index("if st in (builds.QUALIFIED, builds.PARTIALLY_QUALIFIED):"), body.index("coolify_handoff.hand_off"))
+ 
+     def test_static_snapshot_is_gone_live_catalogue_is_the_only_source(self):
+         # v119 wrote state/qualified_catalogue.json as a second, weaker copy of the truth (no live check).
+@@ -150,7 +157,7 @@ class JourneyGateIsWired(unittest.TestCase):
+ 
+     def test_release_says_v120_and_carries_v118(self):
+         rel = json.loads((HERE / "release.json").read_text())
+-        self.assertEqual(rel["version"], "v121.3")
++        self.assertEqual(rel["version"], "v121.3.1")
+         self.assertTrue(any(f.startswith("v118_") for f in rel["features"]))
+         self.assertTrue(any(f.startswith("v120_") for f in rel["features"]))
+ 
