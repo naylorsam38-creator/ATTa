@@ -1,0 +1,15 @@
+{
+ "pages": 40,
+ "pageLoadErrors": 0,
+ "consoleErrors": 1,
+ "pageErrors": 1,
+ "httpErrors": 2,
+ "failedRequests": 598,
+ "clicks": 81,
+ "clickErrors": 57,
+ "forms": 32,
+ "auth": [
+  "signup:/admin/login/:/admin/",
+  "login:/admin/login/:no password field on page"
+ ]
+}

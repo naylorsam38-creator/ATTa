@@ -1,0 +1,4755 @@
+{
+ "base": "http://admin.archivebox.localhost:5797",
+ "started": "2026-10-17T15:09:55.514Z",
+ "pages": [
+  {
+   "url": "/",
+   "status": 200,
+   "finalUrl": "/admin/",
+   "title": "Admin Views | Admin | ArchiveBox",
+   "links": 88
+  },
+  {
+   "url": "/admin/",
+   "status": 200,
+   "finalUrl": "/admin/",
+   "title": "Admin Views | Admin | ArchiveBox",
+   "links": 88
+  },
+  {
+   "url": "/add/",
+   "status": 200,
+   "finalUrl": "/add/",
+   "title": "Archived Sites",
+   "links": 161
+  },
+  {
+   "url": "/public/",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 63
+  },
+  {
+   "url": "/api/v1/docs",
+   "status": 200,
+   "finalUrl": "/api/v1/docs",
+   "title": "ArchiveBox API",
+   "links": 62
+  },
+  {
+   "url": "/admin/crawls/crawl/",
+   "status": 200,
+   "finalUrl": "/admin/crawls/crawl/",
+   "title": "Select Crawl to change | Admin | ArchiveBox",
+   "links": 40
+  },
+  {
+   "url": "/admin/core/archiveresult/?o=-1",
+   "status": 200,
+   "finalUrl": "/admin/core/archiveresult/?o=-1",
+   "title": "Select Archive Result to change | Admin | ArchiveBox",
+   "links": 36
+  },
+  {
+   "url": "/admin/core/tag/",
+   "status": 200,
+   "finalUrl": "/admin/core/tag/",
+   "title": "Tags | Admin | ArchiveBox",
+   "links": 13
+  },
+  {
+   "url": "/docs/",
+   "status": 200,
+   "finalUrl": "/ArchiveBox/ArchiveBox/wiki",
+   "title": "Home · ArchiveBox/ArchiveBox Wiki · GitHub",
+   "links": 563
+  },
+  {
+   "url": "/admin/password_change/",
+   "status": 200,
+   "finalUrl": "/admin/password_change/",
+   "title": "Password change | Admin | ArchiveBox",
+   "links": 14
+  },
+  {
+   "url": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "status": 200,
+   "finalUrl": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "title": "Select Crawl to change | Admin | ArchiveBox",
+   "links": 40
+  },
+  {
+   "url": "/admin/crawls/crawlschedule/",
+   "status": 200,
+   "finalUrl": "/admin/crawls/crawlschedule/",
+   "title": "Select Scheduled Crawl to change | Admin | ArchiveBox",
+   "links": 19
+  },
+  {
+   "url": "/admin/core/snapshot/",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 63
+  },
+  {
+   "url": "/admin/core/archiveresult/",
+   "status": 200,
+   "finalUrl": "/admin/core/archiveresult/",
+   "title": "Select Archive Result to change | Admin | ArchiveBox",
+   "links": 36
+  },
+  {
+   "url": "/admin/personas/persona/",
+   "status": 200,
+   "finalUrl": "/admin/personas/persona/",
+   "title": "Select persona to change | Admin | ArchiveBox",
+   "links": 27
+  },
+  {
+   "url": "/admin/auth/user/",
+   "status": 200,
+   "finalUrl": "/admin/auth/user/",
+   "title": "Select user to change | Admin | ArchiveBox",
+   "links": 42
+  },
+  {
+   "url": "/admin/environment/config/",
+   "status": 200,
+   "finalUrl": "/admin/environment/config/",
+   "title": "Computed Configuration Values | Admin | ArchiveBox",
+   "links": 294
+  },
+  {
+   "url": "/admin/environment/binaries/",
+   "status": 200,
+   "finalUrl": "/admin/environment/binaries/",
+   "title": "Binaries | Admin | ArchiveBox",
+   "links": 14
+  },
+  {
+   "url": "/admin/environment/plugins/",
+   "status": 200,
+   "finalUrl": "/admin/environment/plugins/",
+   "title": "Installed plugins | Admin | ArchiveBox",
+   "links": 76
+  },
+  {
+   "url": "/admin/environment/workers/",
+   "status": 200,
+   "finalUrl": "/admin/environment/workers/",
+   "title": "Running worker processes | Admin | ArchiveBox",
+   "links": 26
+  },
+  {
+   "url": "/admin/environment/logs/",
+   "status": 200,
+   "finalUrl": "/admin/environment/logs/",
+   "title": "Debug Log files | Admin | ArchiveBox",
+   "links": 20
+  },
+  {
+   "url": "/admin/machine/machine/",
+   "status": 200,
+   "finalUrl": "/admin/machine/machine/",
+   "title": "Select machine to change | Admin | ArchiveBox",
+   "links": 53
+  },
+  {
+   "url": "/admin/machine/networkinterface/",
+   "status": 200,
+   "finalUrl": "/admin/machine/networkinterface/",
+   "title": "Select network interface to change | Admin | ArchiveBox",
+   "links": 41
+  },
+  {
+   "url": "/admin/machine/binary/",
+   "status": 200,
+   "finalUrl": "/admin/machine/binary/",
+   "title": "Select Binary to change | Admin | ArchiveBox",
+   "links": 24
+  },
+  {
+   "url": "/admin/machine/process/",
+   "status": 200,
+   "finalUrl": "/admin/machine/process/",
+   "title": "Select Process to change | Admin | ArchiveBox",
+   "links": 48
+  },
+  {
+   "url": "/admin/api/apitoken/",
+   "status": 200,
+   "finalUrl": "/admin/api/apitoken/",
+   "title": "Select API Key to change | Admin | ArchiveBox",
+   "links": 28
+  },
+  {
+   "url": "/admin/api/outboundwebhook/",
+   "status": 200,
+   "finalUrl": "/admin/api/outboundwebhook/",
+   "title": "Select API Outbound Webhook to change | Admin | ArchiveBox",
+   "links": 36
+  },
+  {
+   "url": "/admin/api/",
+   "status": 200,
+   "finalUrl": "/admin/api/",
+   "title": "Api administration | Admin | ArchiveBox",
+   "links": 20
+  },
+  {
+   "url": "/admin/api/apitoken/add/",
+   "status": 200,
+   "finalUrl": "/admin/api/apitoken/add/",
+   "title": "Add API Key | Admin | ArchiveBox",
+   "links": 63
+  },
+  {
+   "url": "/admin/api/outboundwebhook/add/",
+   "status": 200,
+   "finalUrl": "/admin/api/outboundwebhook/add/",
+   "title": "Add API Outbound Webhook | Admin | ArchiveBox",
+   "links": 18
+  },
+  {
+   "url": "/admin/auth/",
+   "status": 200,
+   "finalUrl": "/admin/auth/",
+   "title": "Authentication and Authorization administration | Admin | ArchiveBox",
+   "links": 17
+  },
+  {
+   "url": "/admin/auth/user/add/",
+   "status": 200,
+   "finalUrl": "/admin/auth/user/add/",
+   "title": "Add user | Admin | ArchiveBox",
+   "links": 15
+  },
+  {
+   "url": "/admin/core/",
+   "status": 200,
+   "finalUrl": "/admin/core/",
+   "title": "Core administration | Admin | ArchiveBox",
+   "links": 23
+  },
+  {
+   "url": "/admin/core/archiveresult/add/",
+   "status": 200,
+   "finalUrl": "/admin/core/archiveresult/add/",
+   "title": "Add Archive Result | Admin | ArchiveBox",
+   "links": 108
+  },
+  {
+   "url": "/admin/core/snapshot/add/",
+   "status": 200,
+   "finalUrl": "/add/",
+   "title": "Archived Sites",
+   "links": 161
+  },
+  {
+   "url": "/admin/core/tag/add/",
+   "status": 200,
+   "finalUrl": "/admin/core/tag/add/",
+   "title": "Add Tag | Admin | ArchiveBox",
+   "links": 18
+  },
+  {
+   "url": "/admin/crawls/",
+   "status": 200,
+   "finalUrl": "/admin/crawls/",
+   "title": "Crawls administration | Admin | ArchiveBox",
+   "links": 20
+  },
+  {
+   "url": "/admin/crawls/crawl/add/",
+   "status": 200,
+   "finalUrl": "/admin/crawls/crawl/add/",
+   "title": "Add Crawl | Admin | ArchiveBox",
+   "links": 64
+  },
+  {
+   "url": "/admin/crawls/crawlschedule/add/",
+   "status": 200,
+   "finalUrl": "/add/#schedule",
+   "title": "Archived Sites",
+   "links": 161
+  },
+  {
+   "url": "/admin/environment/",
+   "status": 200,
+   "finalUrl": "/admin/environment/",
+   "title": "Environment administration | Admin | ArchiveBox",
+   "links": 24
+  }
+ ],
+ "consoleErrors": [
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8:0"
+  }
+ ],
+ "pageErrors": [
+  {
+   "page": "/admin/core/tag/add/",
+   "text": "Invalid or unexpected token"
+  }
+ ],
+ "failedRequests": [
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/tag/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/tag/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/password_change/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/password_change/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/password_change/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/password_change/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/password_change/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/password_change/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/user/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/user/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/user/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/user/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/user/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/user/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/config/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/config/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/config/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/config/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/config/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/config/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/binaries/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/binaries/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/binaries/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/binaries/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/binaries/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/binaries/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/plugins/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/plugins/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/plugins/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/plugins/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/plugins/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/plugins/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/workers/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/workers/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/workers/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/workers/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/workers/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/workers/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/logs/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/logs/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/logs/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/logs/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/logs/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/logs/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/machine/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/machine/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/machine/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/machine/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/machine/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/machine/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/networkinterface/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/networkinterface/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/networkinterface/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/networkinterface/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/networkinterface/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/networkinterface/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/binary/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/binary/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/binary/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/binary/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/binary/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/binary/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/process/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/process/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/process/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/process/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/process/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/machine/process/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/apitoken/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/apitoken/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/apitoken/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/apitoken/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/apitoken/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/apitoken/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/outboundwebhook/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/outboundwebhook/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/outboundwebhook/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/outboundwebhook/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/outboundwebhook/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/outboundwebhook/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/apitoken/add/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/apitoken/add/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/apitoken/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/apitoken/add/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/apitoken/add/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/apitoken/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/outboundwebhook/add/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/outboundwebhook/add/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/outboundwebhook/add/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/outboundwebhook/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/outboundwebhook/add/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/api/outboundwebhook/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/user/add/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/user/add/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/user/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/user/add/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/user/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/auth/user/add/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/add/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/add/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/add/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/add/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/tag/add/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/tag/add/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/tag/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/tag/add/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/tag/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/tag/add/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/add/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/add/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/add/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/add/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/add/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/tag/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/tag/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/password_change/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/password_change/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/password_change/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/password_change/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/password_change/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/password_change/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  }
+ ],
+ "httpErrors": [
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  }
+ ],
+ "clicks": [
+  {
+   "page": "/",
+   "idx": 0,
+   "text": "Hosting Location: What machine are you hosting thi",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 1,
+   "text": "DNS mode: How will DNS point to this ArchiveBox se",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 2,
+   "text": "Ingress & TLS mode: How will HTTPS traffic reach t",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 3,
+   "text": "Retry access checks",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 4,
+   "text": "Review and save in Machine config →",
+   "after": "/admin/machine/machine/06ad38ad74ac732a8000a94251489f02/change/#BASE_URL",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 5,
+   "text": "ArchiveBox",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 6,
+   "text": "ADD ➕",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 7,
+   "text": "CRAWLS",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 8,
+   "text": "SNAPSHOTS",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 9,
+   "text": "LOG",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 10,
+   "text": "TAGS",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 11,
+   "text": "DOCS",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 12,
+   "text": "API",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 13,
+   "text": "ADMIN",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 14,
+   "text": "ACCOUNT",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 15,
+   "text": "Log out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/",
+   "idx": 16,
+   "text": "Details",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 17,
+   "text": "Home",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 18,
+   "text": "Crawls 0 Create and monitor URL collection jobs.",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 19,
+   "text": "Add",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 20,
+   "text": "Scheduled Crawls 0 Recurring crawl definitions and",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 21,
+   "text": "Snapshots 0 Archived pages and page-level metadata",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 22,
+   "text": "Archive Results 0 Extractor outputs generated per ",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 23,
+   "text": "Tags 0 Labels, saved groupings, and collection fil",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 24,
+   "text": "Personas & Configs 1 Browser profiles, cookies, an",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 0,
+   "text": "Hosting Location: What machine are you hosting thi",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 1,
+   "text": "DNS mode: How will DNS point to this ArchiveBox se",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 2,
+   "text": "Setup instructions",
+   "result": "external link not followed: https://github.com/ArchiveBox/ArchiveBox/wiki/Configuration#server_security_mode"
+  },
+  {
+   "page": "/admin/",
+   "idx": 3,
+   "text": "Ingress & TLS mode: How will HTTPS traffic reach t",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 4,
+   "text": "Retry access checks",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 5,
+   "text": "ArchiveBox",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 6,
+   "text": "ADD ➕",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 7,
+   "text": "CRAWLS",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 8,
+   "text": "SNAPSHOTS",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 9,
+   "text": "LOG",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 10,
+   "text": "TAGS",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 11,
+   "text": "DOCS",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 12,
+   "text": "API",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 13,
+   "text": "ADMIN",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 14,
+   "text": "ACCOUNT",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 15,
+   "text": "Log out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/admin/",
+   "idx": 16,
+   "text": "Details",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 17,
+   "text": "Home",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 18,
+   "text": "Crawls 0 Create and monitor URL collection jobs.",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 19,
+   "text": "Add",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 20,
+   "text": "Scheduled Crawls 0 Recurring crawl definitions and",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 21,
+   "text": "Snapshots 0 Archived pages and page-level metadata",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 22,
+   "text": "Archive Results 0 Extractor outputs generated per ",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 23,
+   "text": "Tags 0 Labels, saved groupings, and collection fil",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 24,
+   "text": "Personas & Configs 1 Browser profiles, cookies, an",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 0,
+   "text": "Hosting Location: What machine are you hosting thi",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 1,
+   "text": "DNS mode: How will DNS point to this ArchiveBox se",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 2,
+   "text": "Setup instructions",
+   "result": "external link not followed: https://github.com/ArchiveBox/ArchiveBox/wiki/Configuration#server_security_mode"
+  },
+  {
+   "page": "/add/",
+   "idx": 3,
+   "text": "Ingress & TLS mode: How will HTTPS traffic reach t",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 4,
+   "text": "Retry access checks",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 5,
+   "text": "ArchiveBox",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 6,
+   "text": "ADD ➕",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 7,
+   "text": "CRAWLS",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 8,
+   "text": "SNAPSHOTS",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 9,
+   "text": "LOG",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 10,
+   "text": "TAGS",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 11,
+   "text": "DOCS",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 12,
+   "text": "API",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 13,
+   "text": "ADMIN",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 14,
+   "text": "ACCOUNT",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 15,
+   "text": "Log out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/add/",
+   "idx": 16,
+   "text": "Get the extension",
+   "result": "external link not followed: https://github.com/ArchiveBox/archivebox-browser-extension"
+  },
+  {
+   "page": "/add/",
+   "idx": 17,
+   "text": "↥ Upload",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 18,
+   "text": "Create new profile / import from Chrome ->",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 19,
+   "text": "View plugin details →",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 20,
+   "text": "➕",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 21,
+   "text": "👤 Default",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 22,
+   "text": "✎",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 23,
+   "text": "📄 Text Only",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/add/",
+   "idx": 24,
+   "text": "✓ Select All",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/public/",
+   "idx": 0,
+   "text": "Hosting Location: What machine are you hosting thi",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 1,
+   "text": "DNS mode: How will DNS point to this ArchiveBox se",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 2,
+   "text": "Ingress & TLS mode: How will HTTPS traffic reach t",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 3,
+   "text": "Retry access checks",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 4,
+   "text": "Review and save in Machine config →",
+   "after": "/admin/machine/machine/06ad38ad74ac732a8000a94251489f02/change/#BASE_URL",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 5,
+   "text": "ArchiveBox",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  }
+ ],
+ "forms": [
+  {
+   "page": "/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/add/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/add/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/add/",
+   "idx": 1,
+   "filled": [
+    "url=http://test.invalid/page",
+    "id_tag_input=Test entry 755",
+    "persona=<select>",
+    "permissions=<select>",
+    "depth=<checked>",
+    "depth=<checked>",
+    "depth=<checked>",
+    "depth=<checked>",
+    "depth=<checked>",
+    "url_filters_same_domain_only=<checked>",
+    "url_filters_subpaths_only=<checked>",
+    "url_filters_only_new=<checked>",
+    "url_filters_allowlist=http://test.invalid/page",
+    "url_filters_denylist=http://test.invalid/page",
+    "max_urls=1",
+    "crawl_max_size=Test entry 427",
+    "crawl_timeout=Test entry 894",
+    "timeout=Test entry 778",
+    "snapshot_max_size=Test entry 392",
+    "delete_after=Test entry 896",
+    "crawl_max_concurrent_snapshots=1",
+    "notes=Test entry 994",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/public/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/snapshot/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/public/",
+   "idx": 1,
+   "filled": [
+    "search_mode=<select>",
+    "q=Test entry 498"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/public/",
+   "idx": 2,
+   "filled": [],
+   "submit": "requestSubmit()",
+   "after": "/admin/core/snapshot/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/crawls/crawl/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 1,
+   "filled": [
+    "q=Test entry 524"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 2,
+   "filled": [],
+   "submit": "requestSubmit()",
+   "after": "/admin/crawls/crawl/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 1,
+   "filled": [
+    "q=Test entry 120"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 2,
+   "filled": [],
+   "submit": "requestSubmit()",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/tag/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 1,
+   "filled": [
+    "name=Tester Alpha"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/password_change/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/password_change/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/password_change/",
+   "idx": 1,
+   "filled": [
+    "old_password=***",
+    "new_password1=***",
+    "new_password2=***"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "idx": 1,
+   "filled": [
+    "q=Test entry 486"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "idx": 2,
+   "filled": [],
+   "submit": "requestSubmit()",
+   "after": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/crawls/crawlschedule/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "idx": 1,
+   "filled": [
+    "q=Test entry 381"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/crawls/crawlschedule/",
+   "idx": 2,
+   "filled": [],
+   "submit": "requestSubmit()",
+   "after": "/admin/crawls/crawlschedule/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/snapshot/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 1,
+   "filled": [
+    "search_mode=<select>",
+    "q=Test entry 100"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 2,
+   "filled": [],
+   "submit": "requestSubmit()",
+   "after": "/admin/core/snapshot/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/archiveresult/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "idx": 1,
+   "filled": [
+    "q=Test entry 242"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/core/archiveresult/",
+   "idx": 2,
+   "filled": [],
+   "submit": "requestSubmit()",
+   "after": "/admin/core/archiveresult/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/personas/persona/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "idx": 1,
+   "filled": [
+    "q=Test entry 75"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/personas/persona/",
+   "idx": 2,
+   "filled": [
+    "action-toggle=<checked>",
+    "_selected_action=<checked>"
+   ],
+   "submit": "requestSubmit()",
+   "after": "/admin/personas/persona/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server "
+  }
+ ],
+ "auth": [
+  {
+   "kind": "signup",
+   "url": "/admin/login/",
+   "status": 200,
+   "filled": [
+    "username=testeralpha",
+    "password=***"
+   ],
+   "submit": "clicked \"Log in\"",
+   "afterUrl": "/admin/",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server on? ▸ ✅ Current browser URL matches this hosting choice. DNS mode: How will DNS point to this ArchiveBox server? ▸ ✅ Browser requests reache"
+  },
+  {
+   "kind": "login",
+   "url": "/admin/login/",
+   "status": 200,
+   "result": "no password field on page",
+   "text": "FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting this ArchiveBox server on? ▸ ✅ Current browser URL matches this hosting choice. DNS mode: How will DNS point to this ArchiveBox server? ▸ ✅ Browser requests reache"
+  }
+ ],
+ "notes": [
+  "click phase time budget reached",
+  "form phase time budget reached"
+ ],
+ "finished": "2026-10-17T15:28:37.224Z"
+}

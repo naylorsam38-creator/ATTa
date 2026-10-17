@@ -1,0 +1,14 @@
+{
+ "pages": 40,
+ "pageLoadErrors": 0,
+ "consoleErrors": 28,
+ "pageErrors": 0,
+ "httpErrors": 209,
+ "failedRequests": 17,
+ "clicks": 239,
+ "clickErrors": 6,
+ "forms": 43,
+ "auth": [
+  "login:/admin/login/:http://admin.archivebox.localhost:5797/admin/"
+ ]
+}

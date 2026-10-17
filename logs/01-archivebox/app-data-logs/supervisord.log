@@ -1,0 +1,48 @@
+2026-10-17 14:48:56,654 INFO Included extra file "/tmp/archivebox/workers/initial_startup.conf" during parsing
+2026-10-17 14:48:56,654 INFO Included extra file "/tmp/archivebox/workers/initial_startup.conf" during parsing
+2026-10-17 14:48:56,657 INFO RPC interface 'supervisor' initialized
+2026-10-17 14:48:56,657 INFO RPC interface 'supervisor' initialized
+2026-10-17 14:48:56,657 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-10-17 14:48:56,657 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-10-17 14:48:56,657 INFO supervisord started with pid 386
+2026-10-17 14:48:56,657 INFO supervisord started with pid 386
+2026-10-17 14:48:57,260 INFO spawned: 'worker_daphne' with pid 390
+2026-10-17 14:48:57,260 INFO spawned: 'worker_daphne' with pid 390
+2026-10-17 14:48:57,261 INFO success: worker_daphne entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 14:48:57,261 INFO success: worker_daphne entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 14:48:57,267 INFO spawned: 'worker_sonic' with pid 391
+2026-10-17 14:48:57,267 INFO spawned: 'worker_sonic' with pid 391
+2026-10-17 14:48:57,267 INFO success: worker_sonic entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 14:48:57,267 INFO success: worker_sonic entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 14:48:57,272 INFO spawned: 'worker_runner' with pid 392
+2026-10-17 14:48:57,272 INFO spawned: 'worker_runner' with pid 392
+2026-10-17 14:48:57,273 INFO success: worker_runner entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 14:48:57,273 INFO success: worker_runner entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 14:48:57,278 INFO spawned: 'worker_supervisord_parent_watchdog' with pid 397
+2026-10-17 14:48:57,278 INFO spawned: 'worker_supervisord_parent_watchdog' with pid 397
+2026-10-17 14:48:57,278 INFO success: worker_supervisord_parent_watchdog entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 14:48:57,278 INFO success: worker_supervisord_parent_watchdog entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:30:47,096 INFO spawned: 'worker_runner_add_7540' with pid 7551
+2026-10-17 15:30:47,096 INFO spawned: 'worker_runner_add_7540' with pid 7551
+2026-10-17 15:30:47,096 INFO success: worker_runner_add_7540 entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:30:47,096 INFO success: worker_runner_add_7540 entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:30:50,841 WARN exited: worker_runner (exit status 143; not expected)
+2026-10-17 15:30:50,841 WARN exited: worker_runner (exit status 143; not expected)
+2026-10-17 15:30:51,037 INFO spawned: 'worker_runner' with pid 7555
+2026-10-17 15:30:51,037 INFO spawned: 'worker_runner' with pid 7555
+2026-10-17 15:30:51,094 INFO success: worker_runner entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:30:51,094 INFO success: worker_runner entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:31:31,610 INFO exited: worker_runner_add_7540 (exit status 0; expected)
+2026-10-17 15:31:31,610 INFO exited: worker_runner_add_7540 (exit status 0; expected)
+2026-10-17 15:31:43,892 INFO spawned: 'worker_runner_add_8896' with pid 8909
+2026-10-17 15:31:43,892 INFO spawned: 'worker_runner_add_8896' with pid 8909
+2026-10-17 15:31:43,892 INFO success: worker_runner_add_8896 entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:31:43,892 INFO success: worker_runner_add_8896 entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:31:46,026 WARN exited: worker_runner (exit status 143; not expected)
+2026-10-17 15:31:46,026 WARN exited: worker_runner (exit status 143; not expected)
+2026-10-17 15:31:46,198 INFO spawned: 'worker_runner' with pid 8937
+2026-10-17 15:31:46,198 INFO spawned: 'worker_runner' with pid 8937
+2026-10-17 15:31:46,285 INFO success: worker_runner entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:31:46,285 INFO success: worker_runner entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:32:49,273 INFO exited: worker_runner_add_8896 (exit status 0; expected)
+2026-10-17 15:32:49,273 INFO exited: worker_runner_add_8896 (exit status 0; expected)

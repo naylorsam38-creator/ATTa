@@ -1,0 +1,164 @@
+[*] Stopping older ArchiveBox runner process (pid=392)...
+⚠️ Repairing: Resuming 1 Crawl(s) with pending URLs ready to archive (ArchiveBox may have been interrupted before it was able to archive the remaining URLs; pending URLs will continue).
+[Crawl#1723986b] [STARTED] archivebox@747a697d43b0 $ archivebox add https://example.com [20
+[STARTED] https://example.com -> /data/archive/users/system/crawls/20261017/example.com/06ad394a6d8671e28000f7db1723986b
+Currently Running                                                      Status          Size  Elapsed        Output                                                                                      
+install:/opt/node/bin/node                                             succeeded          -  0.0s/10s       /opt/node/bin/node 24.18.0                                                                  
+install:abxbus                                                         succeeded          -  0.0s/10s       /opt/archivebox/lib/pnpm/packages/abxbus/node_modules/abxbus/dist/cjs/index.js 2.5.74       
+install:browsers                                                       succeeded          -  0.0s/10s       /opt/archivebox/lib/pnpm/packages/chrome/node_modules/.bin/browsers 3.0.4                   
+install:/opt/archivebox/lib/playwright/bin/chromium                    succeeded          -  0.0s/10s       /opt/archivebox/lib/playwright/bin/chromium 153.0.8010                                      
+install:archivewebpage                                                 succeeded          -  0.0s/10s       /opt/archivebox/lib/chromewebstore/extensions/archivewebpage.extension.json 0.17.0          
+install:/opt/archivebox/lib/pnpm/packages/defuddle/node_modules/.bin…  succeeded          -  0.0s/10s       /opt/archivebox/lib/pnpm/packages/defuddle/node_modules/.bin/defuddle 0.14.0                
+install:/opt/archivebox/lib/uv/packages/forum-dl/venv/bin/forum-dl     succeeded          -  0.0s/10s       /opt/archivebox/lib/uv/packages/forum-dl/venv/bin/forum-dl 0.3.0                            
+install:/opt/archivebox/lib/uv/packages/gallery-dl/venv/bin/gallery-…  succeeded          -  0.0s/10s       /opt/archivebox/lib/uv/packages/gallery-dl/venv/bin/gallery-dl 1.32.14                      
+install:/usr/bin/git                                                   succeeded          -  0.0s/10s       /usr/bin/git 2.47.3                                                                         
+install:istilldontcareaboutcookies                                     succeeded          -  0.0s/10s       /opt/archivebox/lib/chromewebstore/extensions/istilldontcareaboutcookies.extension.json 1.1…
+install:/opt/archivebox/lib/pnpm/packages/liteparse/node_modules/.bi…  succeeded          -  0.0s/10s       /opt/archivebox/lib/pnpm/packages/liteparse/node_modules/.bin/lit 2.9.0                     
+install:/usr/bin/tesseract                                             succeeded          -  0.0s/10s       /usr/bin/tesseract 5.5.0                                                                    
+install:convert                                                        succeeded          -  0.0s/10s       /usr/bin/convert 7.1.1                                                                      
+install:postlight-parser                                               succeeded          -  0.0s/10s       /opt/archivebox/lib/npm/packages/mercury/node_modules/.bin/postlight-parser 2.2.3           
+install:papers-dl                                                      succeeded          -  0.0s/10s       /opt/archivebox/lib/uv/packages/papers-dl/venv/bin/papers-dl 0.0.25                         
+install:feedparser                                                     succeeded          -  0.0s/10s       /opt/archivebox/lib/uv/packages/parse_rss_urls-6.0.12/venv/lib/python3.13/site-packages/fee…
+install:pdftoppm                                                       succeeded          -  0.0s/10s       /usr/bin/pdftoppm 25.3.0                                                                    
+install:readability-extractor                                          succeeded          -  0.0s/10s       /opt/archivebox/lib/pnpm/packages/readability/node_modules/.bin/readability-extractor 0.0.6 
+install:sonic                                                          succeeded          -  0.0s/10s       /usr/local/bin/sonic 1.4.9                                                                  
+install:singlefile                                                     succeeded          -  0.0s/10s       /opt/archivebox/lib/chromewebstore/extensions/singlefile.extension.json 1.28.1              
+install:trafilatura                                                    succeeded          -  0.0s/10s       /opt/archivebox/lib/uv/packages/trafilatura-2.1.0/venv/bin/trafilatura 2.1.0                
+install:twocaptcha                                                     succeeded          -  0.0s/10s       /opt/archivebox/lib/chromewebstore/extensions/twocaptcha.extension.json 3.7.4               
+install:ublock                                                         succeeded          -  0.0s/10s       /opt/archivebox/lib/chromewebstore/extensions/ublock.extension.json 2026.901.1442           
+install:wget                                                           succeeded          -  0.0s/10s       /usr/bin/wget 1.25.0                                                                        
+install:yt-dlp                                                         succeeded          -  0.0s/10s       /opt/archivebox/lib/uv/packages/yt-dlp/venv/bin/yt-dlp 2026.8.19                            
+install:/opt/node/bin/node                                             succeeded          -  0.0s/10s       /opt/node/bin/node 24.18.0                                                                  
+install:ffmpeg                                                         succeeded          -  0.0s/10s       /usr/bin/ffmpeg 7.1.5                                                                       
+[STARTED] CrawlSetup archivewebpage on_CrawlSetup__80_archivewebpage_prepare
+on_CrawlSetup__80_archivewebpage_prepare                               succeeded          -  0.8s/600s      exit=0                                                                                      
+[STARTED] CrawlSetup istilldontcareaboutcookies on_CrawlSetup__80_istilldontcareaboutcookies_prepare
+on_CrawlSetup__80_istilldontcareaboutcookies_prepare                   succeeded          -  0.2s/600s      exit=0                                                                                      
+[STARTED] CrawlSetup singlefile on_CrawlSetup__80_singlefile_prepare
+on_CrawlSetup__80_singlefile_prepare                                   succeeded          -  0.1s/600s      exit=0                                                                                      
+[STARTED] CrawlSetup twocaptcha on_CrawlSetup__80_twocaptcha_prepare
+on_CrawlSetup__80_twocaptcha_prepare                                   succeeded          -  0.2s/600s      exit=0                                                                                      
+[STARTED] CrawlSetup ublock on_CrawlSetup__80_ublock_prepare
+on_CrawlSetup__80_ublock_prepare                                       succeeded          -  0.2s/600s      exit=0                                                                                      
+[STARTED] CrawlSetup chrome on_CrawlSetup__89_chrome_kill_zombies
+on_CrawlSetup__89_chrome_kill_zombies                                  succeeded          -  0.2s/600s      0 chrome zombies. cpu usage: 210%                                                           
+[STARTED] CrawlSetup chrome on_CrawlSetup__90_chrome_launch.daemon.bg
+[STARTED] CrawlSetup chrome_screencast on_CrawlSetup__90_chrome_screencast.daemon.bg
+[STARTED] CrawlSetup chrome on_CrawlSetup__91_chrome_wait
+on_CrawlSetup__90_chrome_screencast.daemon.bg                          succeeded          -  0.3s/600s      chrome screencast starting                                                                  
+on_CrawlSetup__91_chrome_wait                                          succeeded          -  0.2s/600s      chromium ready pid=7650 cdp=ws://127.0.0.1:46535                                            
+[STARTED] CrawlSetup twocaptcha on_CrawlSetup__95_twocaptcha_config
+on_CrawlSetup__95_twocaptcha_config                                    skipped            -  0.6s/600s      [*] TWOCAPTCHA_API_KEY not configured, skipping 2captcha setup                              
+[STARTED] CrawlSetup ublock on_CrawlSetup__95_ublock_config
+on_CrawlSetup__95_ublock_config                                        succeeded          -  1.9s/600s      exit=0                                                                                      
+[STARTED] Snapshot archivedotorg on_Snapshot__00_archivedotorg.finite.bg
+[STARTED] Snapshot chrome on_Snapshot__00_chrome_launch.daemon.bg
+[STARTED] Snapshot chrome on_Snapshot__01_chrome_tab.daemon.bg
+on_Snapshot__00_chrome_launch.daemon.bg                                skipped            -  0.3s/600s      CHROME_ISOLATION=crawl                                                                      
+on_Snapshot__00_archivedotorg.finite.bg                                noresults          -  0.6s/600s      URLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certifica…
+[STARTED] Snapshot chrome_screencast on_Snapshot__02_chrome_screencast.daemon.bg
+[STARTED] Snapshot ublock on_Snapshot__11_ublock_config
+on_Snapshot__11_ublock_config                                          skipped            -  0.2s/600s      CHROME_ISOLATION=crawl                                                                      
+[STARTED] Snapshot ublock on_Snapshot__12_ublock.daemon.bg
+[STARTED] Snapshot istilldontcareaboutcookies on_Snapshot__13_istilldontcareaboutcookies.daemon.bg
+[STARTED] Snapshot twocaptcha on_Snapshot__14_twocaptcha.daemon.bg
+on_Snapshot__14_twocaptcha.daemon.bg                                   skipped            -  0.6s/600s      TWOCAPTCHA_API_KEY=None                                                                     
+[STARTED] Snapshot modalcloser on_Snapshot__15_modalcloser.daemon.bg
+[STARTED] Snapshot archivewebpage on_Snapshot__16_archivewebpage_start
+on_Snapshot__16_archivewebpage_start                                   noresults       175B  0.8s/600s      recording started coll=eylzxbpihkq1yq7isd9leu tab=977865195                                 
+[STARTED] Snapshot consolelog on_Snapshot__21_consolelog.daemon.bg
+[STARTED] Snapshot dns on_Snapshot__22_dns.daemon.bg
+[STARTED] Snapshot sslcerts on_Snapshot__23_sslcerts.daemon.bg
+[STARTED] Snapshot responses on_Snapshot__24_responses.daemon.bg
+[STARTED] Snapshot redirects on_Snapshot__25_redirects.daemon.bg
+[STARTED] Snapshot staticfile on_Snapshot__26_staticfile.daemon.bg
+[STARTED] Snapshot headers on_Snapshot__27_headers.daemon.bg
+[STARTED] Snapshot chrome on_Snapshot__30_chrome_navigate
+on_Snapshot__26_staticfile.daemon.bg                                   failed             -  1.7s/600s      ERROR: Error: net::ERR_CERT_AUTHORITY_INVALID                                               
+on_Snapshot__30_chrome_navigate                                        failed          248B  0.6s/600s      ERROR: Error: net::ERR_CERT_AUTHORITY_INVALID at https://example.com                        
+[STARTED] Snapshot ytdlp on_Snapshot__31_ytdlp.finite.bg
+[STARTED] Snapshot gallerydl on_Snapshot__32_gallerydl.finite.bg
+[STARTED] Snapshot forumdl on_Snapshot__33_forumdl.finite.bg
+on_Snapshot__31_ytdlp.finite.bg                                        failed             -  2.5s/600s      ERROR: [generic] example: Unable to download webpage: [SSL: CERTIFICATE_VERIFY_FAILED] cert…
+on_Snapshot__32_gallerydl.finite.bg                                    noresults          -  1.4s/600s      No gallery found                                                                            
+[STARTED] Snapshot git on_Snapshot__34_git.finite.bg
+[STARTED] Snapshot wget on_Snapshot__35_wget.finite.bg
+[STARTED] Snapshot favicon on_Snapshot__37_favicon.finite.bg
+on_Snapshot__34_git.finite.bg                                          noresults          -  0.4s/600s      Not a git URL                                                                               
+[STARTED] Snapshot seo on_Snapshot__38_seo
+on_Snapshot__35_wget.finite.bg                                         failed           2KB  0.4s/600s      ERROR: wget failed (exit=5)                                                                 
+on_Snapshot__38_seo                                                    failed             -  0.2s/600s      ERROR: Error: Error: net::ERR_CERT_AUTHORITY_INVALID at https://example.com                 
+[STARTED] Snapshot accessibility on_Snapshot__39_accessibility
+on_Snapshot__33_forumdl.finite.bg                                      noresults          -  1.9s/600s      No forum found                                                                              
+on_Snapshot__37_favicon.finite.bg                                      noresults          -  0.6s/600s      No favicon found                                                                            
+on_Snapshot__39_accessibility                                          failed             -  0.4s/600s      ERROR: Error: Error: net::ERR_CERT_AUTHORITY_INVALID at https://example.com                 
+[STARTED] Snapshot infiniscroll on_Snapshot__45_infiniscroll
+on_Snapshot__45_infiniscroll                                           failed             -  0.3s/120s      ERROR: Error: Error: net::ERR_CERT_AUTHORITY_INVALID at https://example.com                 
+[STARTED] Snapshot singlefile on_Snapshot__50_singlefile
+on_Snapshot__27_headers.daemon.bg                                      failed             -  6.0s/600s      ERROR: Error: net::ERR_CERT_AUTHORITY_INVALID                                               
+on_Snapshot__50_singlefile                                             failed             -  0.5s/600s      ERROR: Error: net::ERR_CERT_AUTHORITY_INVALID at https://example.com                        
+[STARTED] Snapshot screenshot on_Snapshot__51_screenshot
+on_Snapshot__51_screenshot                                             failed             -  0.2s/600s      ERROR: Error: net::ERR_CERT_AUTHORITY_INVALID at https://example.com                        
+[STARTED] Snapshot pdf on_Snapshot__52_pdf
+on_Snapshot__52_pdf                                                    failed             -  0.2s/600s      ERROR: Error: Error: net::ERR_CERT_AUTHORITY_INVALID at https://example.com                 
+[STARTED] Snapshot dom on_Snapshot__53_dom
+on_Snapshot__53_dom                                                    failed             -  0.3s/600s      ERROR: Error: Error: net::ERR_CERT_AUTHORITY_INVALID at https://example.com                 
+[STARTED] Snapshot dropbox on_Snapshot__53_dropbox
+on_Snapshot__53_dropbox                                                noresults          -  0.3s/600s      Not a Dropbox share URL                                                                     
+[STARTED] Snapshot googledocs on_Snapshot__53_googledocs
+on_Snapshot__53_googledocs                                             noresults          -  0.2s/600s      Not a supported Google document URL                                                         
+[STARTED] Snapshot googledrive on_Snapshot__53_googledrive
+on_Snapshot__53_googledrive                                            noresults          -  0.2s/600s      Not a Google Drive folder URL                                                               
+[STARTED] Snapshot chrome_mhtml on_Snapshot__54_chrome_mhtml
+on_Snapshot__54_chrome_mhtml                                           failed             -  0.3s/600s      ERROR: Error: Error: net::ERR_CERT_AUTHORITY_INVALID at https://example.com                 
+[STARTED] Snapshot title on_Snapshot__54_title
+on_Snapshot__54_title                                                  failed             -  0.2s/600s      ERROR: Error: net::ERR_CERT_AUTHORITY_INVALID at https://example.com                        
+[STARTED] Snapshot readability on_Snapshot__56_readability
+on_Snapshot__56_readability                                            noresults          -  0.3s/600s      No HTML source found                                                                        
+[STARTED] Snapshot defuddle on_Snapshot__57_defuddle
+on_Snapshot__57_defuddle                                               noresults          -  0.3s/600s      No HTML source found                                                                        
+[STARTED] Snapshot mercury on_Snapshot__57_mercury
+on_Snapshot__57_mercury                                                failed             -  0.7s/600s      ERROR: postlight-parser failed (exit=1)                                                     
+[STARTED] Snapshot htmltotext on_Snapshot__58_htmltotext
+on_Snapshot__58_htmltotext                                             noresults          -  0.4s/600s      No HTML source found                                                                        
+[STARTED] Snapshot trafilatura on_Snapshot__59_trafilatura
+on_Snapshot__25_redirects.daemon.bg                                    succeeded       339B  12.2s/600s     redirects/redirects.jsonl                                                                   
+on_Snapshot__59_trafilatura                                            noresults          -  0.7s/600s      No HTML source found                                                                        
+[STARTED] Snapshot mobilesize on_Snapshot__60_mobilesize
+on_Snapshot__60_mobilesize                                             failed             -  0.2s/30s       ERROR: Error: Error: net::ERR_CERT_AUTHORITY_INVALID at https://example.com                 
+[STARTED] Snapshot archivewebpage on_Snapshot__65_archivewebpage_stop
+on_Snapshot__65_archivewebpage_stop                                    failed           3KB  0.7s/600s      [archivewebpage] collection urls=0 pages=2 size_total=0                                     
+[STARTED] Snapshot papersdl on_Snapshot__66_papersdl.finite.bg
+on_Snapshot__66_papersdl.finite.bg                                     noresults          -  1.1s/600s      No papers found                                                                             
+[STARTED] Snapshot liteparse on_Snapshot__68_liteparse
+on_Snapshot__68_liteparse                                              noresults          -  0.4s/600s      No document sources found                                                                   
+[STARTED] Snapshot parse_html_urls on_Snapshot__70_parse_html_urls
+on_Snapshot__70_parse_html_urls                                        noresults          -  0.4s/600s      0 URLs parsed                                                                               
+[STARTED] Snapshot parse_txt_urls on_Snapshot__71_parse_txt_urls
+on_Snapshot__71_parse_txt_urls                                         noresults          -  0.4s/600s      0 URLs parsed                                                                               
+[STARTED] Snapshot parse_rss_urls on_Snapshot__72_parse_rss_urls
+on_Snapshot__72_parse_rss_urls                                         noresults          -  0.8s/600s      0 URLs parsed                                                                               
+[STARTED] Snapshot parse_netscape_urls on_Snapshot__73_parse_netscape_urls
+on_Snapshot__73_parse_netscape_urls                                    noresults          -  0.4s/600s      0 URLs parsed                                                                               
+[STARTED] Snapshot parse_jsonl_urls on_Snapshot__74_parse_jsonl_urls
+on_Snapshot__74_parse_jsonl_urls                                       noresults          -  0.3s/600s      0 URLs parsed                                                                               
+[STARTED] Snapshot parse_dom_outlinks on_Snapshot__75_parse_dom_outlinks
+on_Snapshot__75_parse_dom_outlinks                                     failed             -  0.3s/600s      ERROR: Error: Error: net::ERR_CERT_AUTHORITY_INVALID at https://example.com                 
+[STARTED] Snapshot search_backend_sonic on_Snapshot__91_index_sonic
+on_Snapshot__91_index_sonic                                            succeeded          -  0.5s/600s      1kb text indexed                                                                            
+on_Snapshot__23_sslcerts.daemon.bg                                     succeeded       10KB  19.5s/600s     Egress Gateway SDS Issuing CA (produc...                                                    
+on_Snapshot__15_modalcloser.daemon.bg                                  succeeded          -  21.8s/1250s    1 modals closed                                                                             
+on_Snapshot__01_chrome_tab.daemon.bg                                   succeeded        7KB  24.7s/600s     target=D1ABDA46F22B9A4AEA65F809AFCB290B port=46535                                          
+on_Snapshot__02_chrome_screencast.daemon.bg                            succeeded          -  24.2s/600s     5 screencast frames (0 kept)                                                                
+on_Snapshot__22_dns.daemon.bg                                          succeeded       433B  20.0s/600s     104.20.23.154                                                                               
+on_Snapshot__13_istilldontcareaboutcookies.daemon.bg                   noresults          -  22.9s/600s     0 cookie consent popups hidden                                                              
+on_Snapshot__12_ublock.daemon.bg                                       noresults          -  23.4s/600s     0 ad requests blocked | 0 elements hidden                                                   
+on_Snapshot__21_consolelog.daemon.bg                                   succeeded       840B  20.4s/600s     1 errors | 0 warnings                                                                       
+on_Snapshot__24_responses.daemon.bg                                    succeeded        4KB  19.4s/600s     2 responses                                                                                 
+[STARTED] Snapshot hashes on_Snapshot__93_hashes
+on_Snapshot__93_hashes                                                 succeeded        5KB  0.4s/600s      0.0MB f53a2953f415                                                                          
+[2026-10-17 15:31:29] INFO     archivebox.services.runner Snapshot runner.py:625
+                               admission: concurrency limit=4,                  
+                               observed memory growth=421780480                 
+                               bytes, available=14517702656 bytes               
+on_CrawlSetup__90_chrome_launch.daemon.bg                              succeeded          -  34.4s/600s     chromium exited successfully                                                                

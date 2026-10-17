@@ -1,0 +1,41 @@
+page {"url":"/","status":200,"finalUrl":"/admin/core/snapshot/","title":"Select Snapshot to change | Admin | ArchiveBox","links":87}
+page {"url":"/admin/","status":200,"finalUrl":"/admin/","title":"Admin Views | Admin | ArchiveBox","links":98}
+page {"url":"/add/","status":200,"finalUrl":"/add/","title":"Archived Sites","links":160}
+page {"url":"/public/","status":200,"finalUrl":"/admin/core/snapshot/","title":"Select Snapshot to change | Admin | ArchiveBox","links":87}
+page {"url":"/api/v1/docs","status":200,"finalUrl":"/api/v1/docs","title":"ArchiveBox API","links":62}
+page {"url":"/admin/core/snapshot/","status":200,"finalUrl":"/admin/core/snapshot/","title":"Select Snapshot to change | Admin | ArchiveBox","links":87}
+page {"url":"/admin/crawls/crawl/","status":200,"finalUrl":"/admin/crawls/crawl/","title":"Select Crawl to change | Admin | ArchiveBox","links":68}
+page {"url":"/admin/core/archiveresult/?o=-1","status":200,"finalUrl":"/admin/core/archiveresult/?o=-1","title":"Select Archive Result to change | Admin | ArchiveBox","links":45}
+page {"url":"/admin/core/tag/","status":200,"finalUrl":"/admin/core/tag/","title":"Tags | Admin | ArchiveBox","links":22}
+page {"url":"/docs/","status":200,"finalUrl":"/ArchiveBox/ArchiveBox/wiki","title":"Home · ArchiveBox/ArchiveBox Wiki · GitHub","links":563}
+page {"url":"/admin/password_change/","status":200,"finalUrl":"/admin/password_change/","title":"Password change | Admin | ArchiveBox","links":32}
+page {"url":"/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/","status":200,"finalUrl":"/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/","title":"[...1723986b] https://example.com | Change Crawl | Admin | ArchiveBox","links":105}
+page {"url":"/admin/personas/persona/06ad38ad752374f38000448ac5b880db/change/","status":200,"finalUrl":"/admin/personas/persona/06ad38ad752374f38000448ac5b880db/change/","title":"Default | Change persona | Admin | ArchiveBox","links":209}
+page {"url":"/admin/core/snapshot/06ad394a828c7cf580009e3b50bf5e7a/change/","status":200,"finalUrl":"/admin/core/snapshot/06ad394a828c7cf580009e3b50bf5e7a/change/","title":"[06ad394a828c7cf580009e3b50bf5e7a] https://example.com | Change Snapshot | Admin | ArchiveBox","links":192}
+page {"url":"/admin/core/","status":200,"finalUrl":"/admin/core/","title":"Core administration | Admin | ArchiveBox","links":50}
+page {"url":"/admin/core/snapshot/add/","status":200,"finalUrl":"/add/","title":"Archived Sites","links":160}
+page {"url":"/admin/core/snapshot/","status":200,"finalUrl":"/admin/core/snapshot/","title":"Select Snapshot to change | Admin | ArchiveBox","links":109}
+page {"url":"/admin/core/snapshot/?o=1.-2","status":200,"finalUrl":"/admin/core/snapshot/?o=1.-2","title":"Select Snapshot to change | Admin | ArchiveBox","links":112}
+page {"url":"/admin/core/snapshot/?o=","status":200,"finalUrl":"/admin/core/snapshot/?o=","title":"Select Snapshot to change | Admin | ArchiveBox","links":109}
+page {"url":"/admin/core/snapshot/?o=2","status":200,"finalUrl":"/admin/core/snapshot/?o=2","title":"Select Snapshot to change | Admin | ArchiveBox","links":113}
+page {"url":"/admin/core/snapshot/?o=4.-2","status":200,"finalUrl":"/admin/core/snapshot/?o=4.-2","title":"Select Snapshot to change | Admin | ArchiveBox","links":118}
+page {"url":"/admin/core/snapshot/?o=5.-2","status":200,"finalUrl":"/admin/core/snapshot/?o=5.-2","title":"Select Snapshot to change | Admin | ArchiveBox","links":120}
+page {"url":"/admin/core/snapshot/?o=6.-2","status":200,"finalUrl":"/admin/core/snapshot/?o=6.-2","title":"Select Snapshot to change | Admin | ArchiveBox","links":121}
+page {"url":"/admin/core/snapshot/?o=7.-2","status":200,"finalUrl":"/admin/core/snapshot/?o=7.-2","title":"Select Snapshot to change | Admin | ArchiveBox","links":123}
+page {"url":"/admin/core/snapshot/?o=8.-2","status":200,"finalUrl":"/admin/core/snapshot/?o=8.-2","title":"Select Snapshot to change | Admin | ArchiveBox","links":126}
+page {"url":"/admin/core/snapshot/?_facets=True","status":200,"finalUrl":"/admin/core/snapshot/?_facets=True","title":"Select Snapshot to change | Admin | ArchiveBox","links":127}
+page {"url":"/admin/core/snapshot/?permissions=public","status":200,"finalUrl":"/admin/core/snapshot/?permissions=public","title":"Select Snapshot to change | Admin | ArchiveBox","links":130}
+page {"url":"/admin/core/snapshot/?permissions=unlisted","status":200,"finalUrl":"/admin/core/snapshot/?permissions=unlisted","title":"Select Snapshot to change | Admin | ArchiveBox","links":115}
+page {"url":"/admin/core/snapshot/?permissions=private","status":200,"finalUrl":"/admin/core/snapshot/?permissions=private","title":"Select Snapshot to change | Admin | ArchiveBox","links":117}
+page {"url":"/admin/core/snapshot/?snapshot_status=queued","status":200,"finalUrl":"/admin/core/snapshot/?snapshot_status=queued","title":"Select Snapshot to change | Admin | ArchiveBox","links":118}
+page {"url":"/admin/core/snapshot/?snapshot_status=started","status":200,"finalUrl":"/admin/core/snapshot/?snapshot_status=started","title":"Select Snapshot to change | Admin | ArchiveBox","links":135}
+page {"url":"/admin/core/snapshot/?snapshot_status=paused","status":200,"finalUrl":"/admin/core/snapshot/?snapshot_status=paused","title":"Select Snapshot to change | Admin | ArchiveBox","links":120}
+page {"url":"/admin/core/snapshot/?snapshot_status=sealed","status":200,"finalUrl":"/admin/core/snapshot/?snapshot_status=sealed","title":"Select Snapshot to change | Admin | ArchiveBox","links":121}
+page {"url":"/admin/core/snapshot/?snapshot_status=deleting","status":200,"finalUrl":"/admin/core/snapshot/?snapshot_status=deleting","title":"Select Snapshot to change | Admin | ArchiveBox","links":122}
+page {"url":"/admin/core/snapshot/?archiveresult_status=none","status":200,"finalUrl":"/admin/core/snapshot/?archiveresult_status=none","title":"Select Snapshot to change | Admin | ArchiveBox","links":124}
+page {"url":"/admin/core/snapshot/?archiveresult_status=has_results","status":200,"finalUrl":"/admin/core/snapshot/?archiveresult_status=has_results","title":"Select Snapshot to change | Admin | ArchiveBox","links":141}
+page {"url":"/admin/core/snapshot/?archiveresult_status=succeeded","status":200,"finalUrl":"/admin/core/snapshot/?archiveresult_status=succeeded","title":"Select Snapshot to change | Admin | ArchiveBox","links":127}
+page {"url":"/admin/core/snapshot/?archiveresult_status=failed","status":200,"finalUrl":"/admin/core/snapshot/?archiveresult_status=failed","title":"Select Snapshot to change | Admin | ArchiveBox","links":128}
+page {"url":"/admin/core/snapshot/?archiveresult_status=running","status":200,"finalUrl":"/admin/core/snapshot/?archiveresult_status=running","title":"Select Snapshot to change | Admin | ArchiveBox","links":129}
+page {"url":"/admin/core/snapshot/?archiveresult_status=pending","status":200,"finalUrl":"/admin/core/snapshot/?archiveresult_status=pending","title":"Select Snapshot to change | Admin | ArchiveBox","links":66}
+SUMMARY {"pages":40,"pageLoadErrors":0,"consoleErrors":28,"pageErrors":0,"httpErrors":209,"failedRequests":17,"clicks":239,"clickErrors":6,"forms":43,"auth":["login:/admin/login/:http://admin.archivebox.localhost:5797/admin/"]}

@@ -1,0 +1,89 @@
+PAGES: 40
+AUTH:
+   login /admin/login/    -> http://admin.archivebox.localhost:5797/admin/ | 
+CONSOLE ERRORS:
+   Failed to load resource: the server responded with a status of 404 (Not Found) @/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8:0
+   (x3) Failed to load resource: the server responded with a status of 404 (Not Found) @/Error%3A%20Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com?preview=1&titlebar=0:0
+   (x10) Failed to load resource: the server responded with a status of 404 (Not Found) @/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com:0
+   Progress fetch error: TypeError: Failed to fetch
+    at fetchProgress (http://admin.archivebox.localhost:5797/admin/core/snapshot/:3871:9) @/admin/core/snapshot/:3895
+   Failed to load resource: the server responded with a status of 404 (Not Found) @/api/v1/crawls/crawl/06ad394dfb3a70eb80000f34f36841e3/files/chrome_screencast/latest.jpg?v=1792251165&after=1792251117.052909:0
+   Progress fetch error: TypeError: Failed to fetch
+    at fetchProgress (http://admin.archivebox.localhost:5797/admin/environment/workers/:3835:9) @/admin/environment/workers/:3859
+   Progress fetch error: TypeError: Failed to fetch
+    at fetchProgress (http://admin.archivebox.localhost:5797/admin/crawls/crawl/:3873:9) @/admin/crawls/crawl/:3897
+   Progress fetch error: TypeError: Failed to fetch
+    at fetchProgress (http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1:3871:9) @/admin/core/archiveresult/?o=-1:3895
+   Progress fetch error: TypeError: Failed to fetch
+    at fetchProgress (http://admin.archivebox.localhost:5797/admin/core/tag/:4178:9) @/admin/core/tag/:4202
+   Progress fetch error: TypeError: Failed to fetch
+    at fetchProgress (http://admin.archivebox.localhost:5797/admin/:4287:9) @/admin/:4311
+   Progress fetch error: TypeError: Failed to fetch
+    at fetchProgress (http://admin.archivebox.localhost:5797/admin/password_change/:3828:9) @/admin/password_change/:3852
+   Progress fetch error: TypeError: Failed to fetch @/admin/core/snapshot/:3895
+   Progress fetch error: TypeError: Failed to fetch
+    at fetchProgress (http://admin.archivebox.localhost:5797/admin/core/:4287:9) @/admin/core/:4311
+   Failed to load resource: the server responded with a status of 403 (Forbidden) @/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fwiki%2Findex&source=header-repo&source_repo=ArchiveBox%2FArchiveBox:0
+   Progress fetch error: TypeError: Failed to fetch
+    at fetchProgress (http://admin.archivebox.localhost:5797/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/:3983:9) @/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/:4007
+   (x2) Failed to load resource: the server responded with a status of 404 (Not Found) @/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/:0
+PAGE ERRORS (uncaught JS):
+HTTP >=400:
+   (x28) 404 GET /_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8
+   (x3) 404 GET /Error%3A%20Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com?preview=1&titlebar=0
+   (x104) 404 GET /Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com
+   (x2) 404 GET /Error%3A%20Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/?preview=1&titlebar=0
+   (x70) 404 GET /Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/
+   404 GET /api/v1/crawls/crawl/06ad394dfb3a70eb80000f34f36841e3/files/chrome_screencast/latest.jpg?v=1792251165&after=1792251117.052909
+   403 GET /signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fwiki%2Findex&source=header-repo&source_repo=ArchiveBox%2FArchiveBox
+FAILED REQUESTS:
+   (x14) net::ERR_ABORTED GET http://admin.archivebox.localhost:5797/progress.json
+   (x2) net::ERR_ABORTED POST https://api.github.com/_private/browser/stats
+   net::ERR_ABORTED GET https://github.githubassets.com/assets/code-1_desktop-6d44c7cb53b4aebb.mp4
+CLICKS: 239 errors: 6
+   (x6) locator.click: Timeout 4000ms exceeded.
+FORMS:
+   / 0 skipped (danger: Log out)  -> /admin/core/snapshot/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   / 1  locator.click: Timeout 5000ms exceeded. ->  | 
+   / 2  locator.evaluate: Timeout 30000ms exceeded. ->  | 
+   /admin/ 0 skipped (danger: Log out)  -> /admin/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /add/ 0 skipped (danger: Log out)  -> /add/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /add/ 1 clicked "Create Crawl and Start Archiving ➕"  -> /add/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /public/ 0 skipped (danger: Log out)  -> /admin/core/snapshot/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /public/ 1  locator.click: Timeout 5000ms exceeded. ->  | 
+   /public/ 2  locator.evaluate: Timeout 30000ms exceeded. ->  | 
+   /admin/core/snapshot/ 0 skipped (danger: Log out)  -> /admin/core/snapshot/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/snapshot/ 1  locator.click: Timeout 5000ms exceeded. ->  | 
+   /admin/core/snapshot/ 2  locator.evaluate: Timeout 30000ms exceeded. ->  | 
+   /admin/crawls/crawl/ 0 skipped (danger: Log out)  -> /admin/crawls/crawl/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/crawls/crawl/ 1  locator.click: Timeout 5000ms exceeded. ->  | 
+   /admin/crawls/crawl/ 2 requestSubmit()  -> /admin/crawls/crawl/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/archiveresult/?o=-1 0 skipped (danger: Log out)  -> /admin/core/archiveresult/?o=-1 |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/archiveresult/?o=-1 1  locator.click: Timeout 5000ms exceeded. ->  | 
+   /admin/core/archiveresult/?o=-1 2 requestSubmit()  -> /admin/core/archiveresult/?o=-1 |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/tag/ 0 skipped (danger: Log out)  -> /admin/core/tag/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/tag/ 1 clicked "Create"  -> /admin/core/tag/?q=Tester+Alpha |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/password_change/ 0 skipped (danger: Log out)  -> /admin/password_change/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/password_change/ 1 clicked "Change my password"  -> /admin/password_change/done/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/ 0 skipped (danger: Log out)  -> /admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/ 1 clicked "▶ Resume"  -> /admin/crawls/crawl/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/ 2 clicked "Recrawl"  -> /admin/crawls/crawl/06ad396ebf8b74df80008c1b8df47648/change/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/ 3 requestSubmit()  -> /admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/ 4 requestSubmit()  -> /admin/core/snapshot/?crawl_id=06ad394a6d8671e28000f7db1723986b |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/personas/persona/06ad38ad752374f38000448ac5b880db/change/ 0 skipped (danger: Log out)  -> /admin/personas/persona/06ad38ad752374f38000448ac5b880db/change/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/personas/persona/06ad38ad752374f38000448ac5b880db/change/ 1 requestSubmit()  -> /admin/personas/persona/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/snapshot/06ad394a828c7cf580009e3b50bf5e7a/change/ 0 skipped (danger: Log out)  -> /admin/core/snapshot/06ad394a828c7cf580009e3b50bf5e7a/change/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/snapshot/06ad394a828c7cf580009e3b50bf5e7a/change/ 1 clicked "🔁 Retry Failed Extractors"  -> /admin/core/snapshot/06ad394a828c7cf580009e3b50bf5e7a/change/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/ 0 skipped (danger: Log out)  -> /admin/core/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/snapshot/add/ 0 skipped (danger: Log out)  -> /add/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/snapshot/add/ 1 clicked "Create Crawl and Start Archiving ➕"  -> /add/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/snapshot/ 0 skipped (danger: Log out)  -> /admin/core/snapshot/ |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/snapshot/ 1  locator.click: Timeout 5000ms exceeded. ->  | 
+   /admin/core/snapshot/ 2  locator.evaluate: Timeout 30000ms exceeded. ->  | 
+   /admin/core/snapshot/?o=1.-2 0 skipped (danger: Log out)  -> /admin/core/snapshot/?o=1.-2 |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/snapshot/?o=1.-2 1  locator.click: Timeout 5000ms exceeded. ->  | 
+   /admin/core/snapshot/?o=1.-2 2  locator.evaluate: Timeout 30000ms exceeded. ->  | 
+   /admin/core/snapshot/?o= 0 skipped (danger: Log out)  -> /admin/core/snapshot/?o= |  ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log 
+   /admin/core/snapshot/?o= 1  locator.click: Timeout 5000ms exceeded. ->  | 
+   /admin/core/snapshot/?o= 2  locator.evaluate: Timeout 30000ms exceeded. ->  | 
+NOTES: form phase time budget reached

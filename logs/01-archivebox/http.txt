@@ -1,0 +1,5 @@
+http://localhost:5797/ -> 302 http://localhost:5797/admin/login/?next=/
+http://admin.archivebox.localhost:5797/ -> 302 http://admin.archivebox.localhost:5797/admin/login/?next=/
+http://admin.archivebox.localhost:5797/admin/ -> 302 http://admin.archivebox.localhost:5797/admin/login/?next=/admin/
+http://localhost:5797/admin/ -> 302 http://localhost:5797/admin/login/?next=/admin/
+http://web.archivebox.localhost:5797/ -> 302 http://web.archivebox.localhost:5797/admin/login/?next=/

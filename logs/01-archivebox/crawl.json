@@ -1,0 +1,2 @@
+{"base":"http://admin.archivebox.localhost:5797","out":"logs/01-archivebox/playwright","startPaths":["/","/admin/","/add/","/public/","/api/v1/docs","/admin/core/snapshot/","/admin/crawls/crawl/"],
+ "pre":"tools/apps/archivebox_pre.js","signupPaths":[],"loginPaths":[],"maxPages":40,"clickPages":10,"maxClicks":25,"crawlMinutes":6,"clickMinutes":8,"formMinutes":5}

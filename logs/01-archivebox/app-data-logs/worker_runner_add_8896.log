@@ -1,0 +1,164 @@
+[*] Stopping older ArchiveBox runner process (pid=7555)...
+⚠️ Repairing: Resuming 1 Crawl(s) with pending URLs ready to archive (ArchiveBox may have been interrupted before it was able to archive the remaining URLs; pending URLs will continue).
+[Crawl#f36841e3] [STARTED] archivebox@747a697d43b0 $ archivebox add http://neverssl.com/ [2
+[STARTED] http://neverssl.com/ -> /data/archive/users/system/crawls/20261017/neverssl.com/06ad394dfb3a70eb80000f34f36841e3
+Currently Running                                                      Status          Size  Elapsed        Output                                                                                      
+install:node                                                           succeeded          -  0.0s/10s       /opt/node/bin/node 24.18.0                                                                  
+install:abxbus                                                         succeeded          -  0.0s/10s       /opt/archivebox/lib/pnpm/packages/abxbus/node_modules/abxbus/dist/cjs/index.js 2.5.74       
+install:browsers                                                       succeeded          -  0.0s/10s       /opt/archivebox/lib/pnpm/packages/chrome/node_modules/.bin/browsers 3.0.4                   
+install:/opt/archivebox/lib/playwright/bin/chromium                    succeeded          -  0.0s/10s       /opt/archivebox/lib/playwright/bin/chromium 153.0.8010                                      
+install:archivewebpage                                                 succeeded          -  0.0s/10s       /opt/archivebox/lib/chromewebstore/extensions/archivewebpage.extension.json 0.17.0          
+install:/opt/archivebox/lib/pnpm/packages/defuddle/node_modules/.bin…  succeeded          -  0.0s/10s       /opt/archivebox/lib/pnpm/packages/defuddle/node_modules/.bin/defuddle 0.14.0                
+install:/opt/archivebox/lib/uv/packages/forum-dl/venv/bin/forum-dl     succeeded          -  0.0s/10s       /opt/archivebox/lib/uv/packages/forum-dl/venv/bin/forum-dl 0.3.0                            
+install:/opt/archivebox/lib/uv/packages/gallery-dl/venv/bin/gallery-…  succeeded          -  0.0s/10s       /opt/archivebox/lib/uv/packages/gallery-dl/venv/bin/gallery-dl 1.32.14                      
+install:git                                                            succeeded          -  0.0s/10s       /usr/bin/git 2.47.3                                                                         
+install:istilldontcareaboutcookies                                     succeeded          -  0.0s/10s       /opt/archivebox/lib/chromewebstore/extensions/istilldontcareaboutcookies.extension.json 1.1…
+install:/opt/archivebox/lib/pnpm/packages/liteparse/node_modules/.bi…  succeeded          -  0.0s/10s       /opt/archivebox/lib/pnpm/packages/liteparse/node_modules/.bin/lit 2.9.0                     
+install:tesseract                                                      succeeded          -  0.0s/10s       /usr/bin/tesseract 5.5.0                                                                    
+install:convert                                                        succeeded          -  0.0s/10s       /usr/bin/convert 7.1.1                                                                      
+install:/opt/archivebox/lib/npm/packages/mercury/node_modules/.bin/p…  succeeded          -  0.0s/10s       /opt/archivebox/lib/npm/packages/mercury/node_modules/.bin/postlight-parser 2.2.3           
+install:/opt/archivebox/lib/uv/packages/papers-dl/venv/bin/papers-dl   succeeded          -  0.0s/10s       /opt/archivebox/lib/uv/packages/papers-dl/venv/bin/papers-dl 0.0.25                         
+install:feedparser                                                     succeeded          -  0.0s/10s       /opt/archivebox/lib/uv/packages/parse_rss_urls-6.0.12/venv/lib/python3.13/site-packages/fee…
+install:pdftoppm                                                       succeeded          -  0.0s/10s       /usr/bin/pdftoppm 25.3.0                                                                    
+install:/opt/archivebox/lib/pnpm/packages/readability/node_modules/.…  succeeded          -  0.0s/10s       /opt/archivebox/lib/pnpm/packages/readability/node_modules/.bin/readability-extractor 0.0.6 
+install:sonic                                                          succeeded          -  0.0s/10s       /usr/local/bin/sonic 1.4.9                                                                  
+install:singlefile                                                     succeeded          -  0.0s/10s       /opt/archivebox/lib/chromewebstore/extensions/singlefile.extension.json 1.28.1              
+install:/opt/archivebox/lib/uv/packages/trafilatura-2.1.0/venv/bin/t…  succeeded          -  0.0s/10s       /opt/archivebox/lib/uv/packages/trafilatura-2.1.0/venv/bin/trafilatura 2.1.0                
+install:twocaptcha                                                     succeeded          -  0.0s/10s       /opt/archivebox/lib/chromewebstore/extensions/twocaptcha.extension.json 3.7.4               
+install:ublock                                                         succeeded          -  0.0s/10s       /opt/archivebox/lib/chromewebstore/extensions/ublock.extension.json 2026.901.1442           
+install:wget                                                           succeeded          -  0.0s/10s       /usr/bin/wget 1.25.0                                                                        
+install:/opt/archivebox/lib/uv/packages/yt-dlp/venv/bin/yt-dlp         succeeded          -  0.0s/10s       /opt/archivebox/lib/uv/packages/yt-dlp/venv/bin/yt-dlp 2026.8.19                            
+install:node                                                           succeeded          -  0.0s/10s       /opt/node/bin/node 24.18.0                                                                  
+install:ffmpeg                                                         succeeded          -  0.0s/10s       /usr/bin/ffmpeg 7.1.5                                                                       
+[STARTED] CrawlSetup archivewebpage on_CrawlSetup__80_archivewebpage_prepare
+on_CrawlSetup__80_archivewebpage_prepare                               succeeded          -  0.4s/600s      exit=0                                                                                      
+[STARTED] CrawlSetup istilldontcareaboutcookies on_CrawlSetup__80_istilldontcareaboutcookies_prepare
+on_CrawlSetup__80_istilldontcareaboutcookies_prepare                   succeeded          -  0.2s/600s      exit=0                                                                                      
+[STARTED] CrawlSetup singlefile on_CrawlSetup__80_singlefile_prepare
+on_CrawlSetup__80_singlefile_prepare                                   succeeded          -  0.1s/600s      exit=0                                                                                      
+[STARTED] CrawlSetup twocaptcha on_CrawlSetup__80_twocaptcha_prepare
+on_CrawlSetup__80_twocaptcha_prepare                                   succeeded          -  0.1s/600s      exit=0                                                                                      
+[STARTED] CrawlSetup ublock on_CrawlSetup__80_ublock_prepare
+on_CrawlSetup__80_ublock_prepare                                       succeeded          -  0.2s/600s      exit=0                                                                                      
+[STARTED] CrawlSetup chrome on_CrawlSetup__89_chrome_kill_zombies
+on_CrawlSetup__89_chrome_kill_zombies                                  succeeded          -  0.2s/600s      0 chrome zombies. cpu usage: 117%                                                           
+[STARTED] CrawlSetup chrome on_CrawlSetup__90_chrome_launch.daemon.bg
+[STARTED] CrawlSetup chrome_screencast on_CrawlSetup__90_chrome_screencast.daemon.bg
+[STARTED] CrawlSetup chrome on_CrawlSetup__91_chrome_wait
+on_CrawlSetup__90_chrome_screencast.daemon.bg                          succeeded          -  0.3s/600s      chrome screencast starting                                                                  
+on_CrawlSetup__91_chrome_wait                                          succeeded          -  0.3s/600s      chromium ready pid=9018 cdp=ws://127.0.0.1:37651                                            
+[STARTED] CrawlSetup twocaptcha on_CrawlSetup__95_twocaptcha_config
+on_CrawlSetup__95_twocaptcha_config                                    skipped            -  0.1s/600s      [*] TWOCAPTCHA_API_KEY not configured, skipping 2captcha setup                              
+[STARTED] CrawlSetup ublock on_CrawlSetup__95_ublock_config
+on_CrawlSetup__95_ublock_config                                        succeeded          -  1.9s/600s      exit=0                                                                                      
+[STARTED] Snapshot archivedotorg on_Snapshot__00_archivedotorg.finite.bg
+[STARTED] Snapshot chrome on_Snapshot__00_chrome_launch.daemon.bg
+[STARTED] Snapshot chrome on_Snapshot__01_chrome_tab.daemon.bg
+on_Snapshot__00_chrome_launch.daemon.bg                                skipped            -  0.3s/600s      CHROME_ISOLATION=crawl                                                                      
+on_Snapshot__00_archivedotorg.finite.bg                                noresults          -  0.5s/600s      URLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certifica…
+[STARTED] Snapshot chrome_screencast on_Snapshot__02_chrome_screencast.daemon.bg
+[STARTED] Snapshot ublock on_Snapshot__11_ublock_config
+on_Snapshot__11_ublock_config                                          skipped            -  0.2s/600s      CHROME_ISOLATION=crawl                                                                      
+[STARTED] Snapshot ublock on_Snapshot__12_ublock.daemon.bg
+[STARTED] Snapshot istilldontcareaboutcookies on_Snapshot__13_istilldontcareaboutcookies.daemon.bg
+[STARTED] Snapshot twocaptcha on_Snapshot__14_twocaptcha.daemon.bg
+[STARTED] Snapshot modalcloser on_Snapshot__15_modalcloser.daemon.bg
+on_Snapshot__14_twocaptcha.daemon.bg                                   skipped            -  0.2s/600s      TWOCAPTCHA_API_KEY=None                                                                     
+[STARTED] Snapshot archivewebpage on_Snapshot__16_archivewebpage_start
+on_Snapshot__16_archivewebpage_start                                   noresults       174B  0.7s/600s      recording started coll=i3mcsscmuhbezo8mi0e5 tab=1969367968                                  
+[STARTED] Snapshot consolelog on_Snapshot__21_consolelog.daemon.bg
+[STARTED] Snapshot dns on_Snapshot__22_dns.daemon.bg
+[STARTED] Snapshot sslcerts on_Snapshot__23_sslcerts.daemon.bg
+[STARTED] Snapshot responses on_Snapshot__24_responses.daemon.bg
+on_Snapshot__23_sslcerts.daemon.bg                                     noresults          -  0.2s/600s      URL is not HTTPS                                                                            
+[STARTED] Snapshot redirects on_Snapshot__25_redirects.daemon.bg
+[STARTED] Snapshot staticfile on_Snapshot__26_staticfile.daemon.bg
+[STARTED] Snapshot headers on_Snapshot__27_headers.daemon.bg
+[STARTED] Snapshot chrome on_Snapshot__30_chrome_navigate
+on_Snapshot__30_chrome_navigate                                        failed          245B  0.6s/600s      ERROR: Error: net::ERR_BLOCKED_BY_CLIENT at http://neverssl.com/                            
+on_Snapshot__26_staticfile.daemon.bg                                   failed             -  1.4s/600s      ERROR: Error: net::ERR_BLOCKED_BY_CLIENT                                                    
+[STARTED] Snapshot ytdlp on_Snapshot__31_ytdlp.finite.bg
+[STARTED] Snapshot gallerydl on_Snapshot__32_gallerydl.finite.bg
+[STARTED] Snapshot forumdl on_Snapshot__33_forumdl.finite.bg
+[STARTED] Snapshot git on_Snapshot__34_git.finite.bg
+[STARTED] Snapshot wget on_Snapshot__35_wget.finite.bg
+[STARTED] Snapshot favicon on_Snapshot__37_favicon.finite.bg
+on_Snapshot__34_git.finite.bg                                          noresults          -  0.6s/600s      Not a git URL                                                                               
+[STARTED] Snapshot seo on_Snapshot__38_seo
+on_Snapshot__32_gallerydl.finite.bg                                    noresults          -  1.5s/600s      No gallery found                                                                            
+on_Snapshot__35_wget.finite.bg                                         succeeded        9KB  0.9s/600s      wget/neverssl.com/index.html                                                                
+on_Snapshot__38_seo                                                    failed             -  0.5s/600s      ERROR: Error: Error: net::ERR_BLOCKED_BY_CLIENT at http://neverssl.com/                     
+[STARTED] Snapshot accessibility on_Snapshot__39_accessibility
+on_Snapshot__39_accessibility                                          failed             -  0.2s/600s      ERROR: Error: Error: net::ERR_BLOCKED_BY_CLIENT at http://neverssl.com/                     
+[STARTED] Snapshot infiniscroll on_Snapshot__45_infiniscroll
+on_Snapshot__45_infiniscroll                                           failed             -  0.3s/120s      ERROR: Error: Error: net::ERR_BLOCKED_BY_CLIENT at http://neverssl.com/                     
+[STARTED] Snapshot singlefile on_Snapshot__50_singlefile
+on_Snapshot__50_singlefile                                             failed             -  0.6s/600s      ERROR: Error: net::ERR_BLOCKED_BY_CLIENT at http://neverssl.com/                            
+[STARTED] Snapshot screenshot on_Snapshot__51_screenshot
+on_Snapshot__51_screenshot                                             failed             -  0.2s/600s      ERROR: Error: net::ERR_BLOCKED_BY_CLIENT at http://neverssl.com/                            
+[STARTED] Snapshot pdf on_Snapshot__52_pdf
+on_Snapshot__52_pdf                                                    failed             -  0.3s/600s      ERROR: Error: Error: net::ERR_BLOCKED_BY_CLIENT at http://neverssl.com/                     
+[STARTED] Snapshot dom on_Snapshot__53_dom
+on_Snapshot__53_dom                                                    failed             -  0.2s/600s      ERROR: Error: Error: net::ERR_BLOCKED_BY_CLIENT at http://neverssl.com/                     
+[STARTED] Snapshot dropbox on_Snapshot__53_dropbox
+on_Snapshot__53_dropbox                                                noresults          -  0.2s/600s      Not a Dropbox share URL                                                                     
+[STARTED] Snapshot googledocs on_Snapshot__53_googledocs
+on_Snapshot__53_googledocs                                             noresults          -  0.3s/600s      Not a supported Google document URL                                                         
+[STARTED] Snapshot googledrive on_Snapshot__53_googledrive
+on_Snapshot__53_googledrive                                            noresults          -  0.2s/600s      Not a Google Drive folder URL                                                               
+on_Snapshot__27_headers.daemon.bg                                      failed             -  6.0s/600s      ERROR: Error: net::ERR_BLOCKED_BY_CLIENT                                                    
+[STARTED] Snapshot chrome_mhtml on_Snapshot__54_chrome_mhtml
+on_Snapshot__54_chrome_mhtml                                           failed             -  0.3s/600s      ERROR: Error: Error: net::ERR_BLOCKED_BY_CLIENT at http://neverssl.com/                     
+[STARTED] Snapshot title on_Snapshot__54_title
+on_Snapshot__54_title                                                  failed             -  0.2s/600s      ERROR: Error: net::ERR_BLOCKED_BY_CLIENT at http://neverssl.com/                            
+[STARTED] Snapshot readability on_Snapshot__56_readability
+on_Snapshot__33_forumdl.finite.bg                                      noresults          -  6.6s/600s      No forum found                                                                              
+on_Snapshot__56_readability                                            succeeded        2KB  1.2s/600s      readability/content.html                                                                    
+[STARTED] Snapshot defuddle on_Snapshot__57_defuddle
+on_Snapshot__31_ytdlp.finite.bg                                        failed             -  7.1s/600s      ERROR: [generic] neverssl: Unable to download webpage: HTTPConnectionPool(host='neverssl.co…
+on_Snapshot__57_defuddle                                               noresults          -  0.7s/600s      No content extracted                                                                        
+[STARTED] Snapshot mercury on_Snapshot__57_mercury
+on_Snapshot__57_mercury                                                succeeded       328B  0.7s/600s      mercury/content.html                                                                        
+[STARTED] Snapshot htmltotext on_Snapshot__58_htmltotext
+on_Snapshot__58_htmltotext                                             succeeded        1KB  0.3s/600s      htmltotext/htmltotext.txt                                                                   
+[STARTED] Snapshot trafilatura on_Snapshot__59_trafilatura
+on_Snapshot__59_trafilatura                                            succeeded        4KB  1.0s/600s      trafilatura/content.txt                                                                     
+[STARTED] Snapshot mobilesize on_Snapshot__60_mobilesize
+on_Snapshot__25_redirects.daemon.bg                                    succeeded       475B  11.8s/600s     redirects/redirects.jsonl                                                                   
+on_Snapshot__60_mobilesize                                             failed             -  0.3s/30s       ERROR: Error: Error: net::ERR_BLOCKED_BY_CLIENT at http://neverssl.com/                     
+[STARTED] Snapshot archivewebpage on_Snapshot__65_archivewebpage_stop
+on_Snapshot__65_archivewebpage_stop                                    succeeded        4KB  0.8s/600s      archivewebpage/archivewebpage.wacz                                                          
+[STARTED] Snapshot papersdl on_Snapshot__66_papersdl.finite.bg
+on_Snapshot__66_papersdl.finite.bg                                     noresults          -  0.3s/600s      No papers found                                                                             
+[STARTED] Snapshot liteparse on_Snapshot__68_liteparse
+on_Snapshot__68_liteparse                                              noresults          -  0.4s/600s      No document sources found                                                                   
+[STARTED] Snapshot parse_html_urls on_Snapshot__70_parse_html_urls
+on_Snapshot__70_parse_html_urls                                        noresults          -  0.4s/600s      0 URLs parsed                                                                               
+[STARTED] Snapshot parse_txt_urls on_Snapshot__71_parse_txt_urls
+on_Snapshot__37_favicon.finite.bg                                      succeeded       124B  11.3s/600s     favicon/favicon.ico                                                                         
+on_Snapshot__71_parse_txt_urls                                         succeeded       464B  14.7s/600s     4 URLs parsed                                                                               
+[STARTED] Snapshot parse_rss_urls on_Snapshot__72_parse_rss_urls
+on_Snapshot__72_parse_rss_urls                                         noresults          -  5.9s/600s      0 URLs parsed                                                                               
+[STARTED] Snapshot parse_netscape_urls on_Snapshot__73_parse_netscape_urls
+on_Snapshot__73_parse_netscape_urls                                    noresults          -  3.9s/600s      0 URLs parsed                                                                               
+[STARTED] Snapshot parse_jsonl_urls on_Snapshot__74_parse_jsonl_urls
+on_Snapshot__74_parse_jsonl_urls                                       noresults          -  4.7s/600s      0 URLs parsed                                                                               
+[STARTED] Snapshot parse_dom_outlinks on_Snapshot__75_parse_dom_outlinks
+on_Snapshot__75_parse_dom_outlinks                                     failed             -  0.2s/600s      ERROR: Error: Error: net::ERR_BLOCKED_BY_CLIENT at http://neverssl.com/                     
+[STARTED] Snapshot search_backend_sonic on_Snapshot__91_index_sonic
+on_Snapshot__91_index_sonic                                            succeeded          -  0.5s/600s      7kb text indexed                                                                            
+on_Snapshot__15_modalcloser.daemon.bg                                  noresults          -  46.8s/1250s    0 modals closed                                                                             
+on_Snapshot__22_dns.daemon.bg                                          succeeded       217B  45.4s/600s     34.223.124.45                                                                               
+on_Snapshot__01_chrome_tab.daemon.bg                                   succeeded        7KB  48.8s/600s     target=C94A2793F88BEBA6FEF7B7456651E7CA port=37651                                          
+on_Snapshot__13_istilldontcareaboutcookies.daemon.bg                   noresults          -  47.4s/600s     0 cookie consent popups hidden                                                              
+on_Snapshot__24_responses.daemon.bg                                    noresults          -  44.8s/600s     0 responses                                                                                 
+on_Snapshot__02_chrome_screencast.daemon.bg                            succeeded          -  48.4s/600s     4 screencast frames (0 kept)                                                                
+on_Snapshot__21_consolelog.daemon.bg                                   succeeded       837B  45.8s/600s     1 errors | 0 warnings                                                                       
+on_Snapshot__12_ublock.daemon.bg                                       noresults          -  47.8s/600s     0 ad requests blocked | 0 elements hidden                                                   
+[STARTED] Snapshot hashes on_Snapshot__93_hashes
+on_Snapshot__93_hashes                                                 succeeded        7KB  0.4s/600s      0.0MB 1dd326d8d1e2                                                                          
+[2026-10-17 15:32:46] INFO     archivebox.services.runner Snapshot runner.py:625
+                               admission: concurrency limit=4,                  
+                               observed memory growth=513712128                 
+                               bytes, available=14524665856 bytes               
+on_CrawlSetup__90_chrome_launch.daemon.bg                              succeeded          -  57.6s/600s     chromium exited successfully                                                                

@@ -1,0 +1,42 @@
+auth signup {"kind":"signup","url":"/admin/login/","status":200,"filled":["username=testeralpha","password=***"],"submit":"clicked \"Log in\"","afterUrl":"/admin/","text":"FIRST-TIME SERVER SETUP Setup access to your ArchiveBox Server: archivebox.localhost:5797 Hosting Location: What machine are you hosting thi
+page {"url":"/","status":200,"finalUrl":"/admin/","title":"Admin Views | Admin | ArchiveBox","links":88}
+page {"url":"/admin/","status":200,"finalUrl":"/admin/","title":"Admin Views | Admin | ArchiveBox","links":88}
+page {"url":"/add/","status":200,"finalUrl":"/add/","title":"Archived Sites","links":161}
+page {"url":"/public/","status":200,"finalUrl":"/admin/core/snapshot/","title":"Select Snapshot to change | Admin | ArchiveBox","links":63}
+page {"url":"/api/v1/docs","status":200,"finalUrl":"/api/v1/docs","title":"ArchiveBox API","links":62}
+page {"url":"/admin/crawls/crawl/","status":200,"finalUrl":"/admin/crawls/crawl/","title":"Select Crawl to change | Admin | ArchiveBox","links":40}
+page {"url":"/admin/core/archiveresult/?o=-1","status":200,"finalUrl":"/admin/core/archiveresult/?o=-1","title":"Select Archive Result to change | Admin | ArchiveBox","links":36}
+page {"url":"/admin/core/tag/","status":200,"finalUrl":"/admin/core/tag/","title":"Tags | Admin | ArchiveBox","links":13}
+page {"url":"/docs/","status":200,"finalUrl":"/ArchiveBox/ArchiveBox/wiki","title":"Home · ArchiveBox/ArchiveBox Wiki · GitHub","links":563}
+page {"url":"/admin/password_change/","status":200,"finalUrl":"/admin/password_change/","title":"Password change | Admin | ArchiveBox","links":14}
+page {"url":"/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1","status":200,"finalUrl":"/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1","title":"Select Crawl to change | Admin | ArchiveBox","links":40}
+page {"url":"/admin/crawls/crawlschedule/","status":200,"finalUrl":"/admin/crawls/crawlschedule/","title":"Select Scheduled Crawl to change | Admin | ArchiveBox","links":19}
+page {"url":"/admin/core/snapshot/","status":200,"finalUrl":"/admin/core/snapshot/","title":"Select Snapshot to change | Admin | ArchiveBox","links":63}
+page {"url":"/admin/core/archiveresult/","status":200,"finalUrl":"/admin/core/archiveresult/","title":"Select Archive Result to change | Admin | ArchiveBox","links":36}
+page {"url":"/admin/personas/persona/","status":200,"finalUrl":"/admin/personas/persona/","title":"Select persona to change | Admin | ArchiveBox","links":27}
+page {"url":"/admin/auth/user/","status":200,"finalUrl":"/admin/auth/user/","title":"Select user to change | Admin | ArchiveBox","links":42}
+page {"url":"/admin/environment/config/","status":200,"finalUrl":"/admin/environment/config/","title":"Computed Configuration Values | Admin | ArchiveBox","links":294}
+page {"url":"/admin/environment/binaries/","status":200,"finalUrl":"/admin/environment/binaries/","title":"Binaries | Admin | ArchiveBox","links":14}
+page {"url":"/admin/environment/plugins/","status":200,"finalUrl":"/admin/environment/plugins/","title":"Installed plugins | Admin | ArchiveBox","links":76}
+page {"url":"/admin/environment/workers/","status":200,"finalUrl":"/admin/environment/workers/","title":"Running worker processes | Admin | ArchiveBox","links":26}
+page {"url":"/admin/environment/logs/","status":200,"finalUrl":"/admin/environment/logs/","title":"Debug Log files | Admin | ArchiveBox","links":20}
+page {"url":"/admin/machine/machine/","status":200,"finalUrl":"/admin/machine/machine/","title":"Select machine to change | Admin | ArchiveBox","links":53}
+page {"url":"/admin/machine/networkinterface/","status":200,"finalUrl":"/admin/machine/networkinterface/","title":"Select network interface to change | Admin | ArchiveBox","links":41}
+page {"url":"/admin/machine/binary/","status":200,"finalUrl":"/admin/machine/binary/","title":"Select Binary to change | Admin | ArchiveBox","links":24}
+page {"url":"/admin/machine/process/","status":200,"finalUrl":"/admin/machine/process/","title":"Select Process to change | Admin | ArchiveBox","links":48}
+page {"url":"/admin/api/apitoken/","status":200,"finalUrl":"/admin/api/apitoken/","title":"Select API Key to change | Admin | ArchiveBox","links":28}
+page {"url":"/admin/api/outboundwebhook/","status":200,"finalUrl":"/admin/api/outboundwebhook/","title":"Select API Outbound Webhook to change | Admin | ArchiveBox","links":36}
+page {"url":"/admin/api/","status":200,"finalUrl":"/admin/api/","title":"Api administration | Admin | ArchiveBox","links":20}
+page {"url":"/admin/api/apitoken/add/","status":200,"finalUrl":"/admin/api/apitoken/add/","title":"Add API Key | Admin | ArchiveBox","links":63}
+page {"url":"/admin/api/outboundwebhook/add/","status":200,"finalUrl":"/admin/api/outboundwebhook/add/","title":"Add API Outbound Webhook | Admin | ArchiveBox","links":18}
+page {"url":"/admin/auth/","status":200,"finalUrl":"/admin/auth/","title":"Authentication and Authorization administration | Admin | ArchiveBox","links":17}
+page {"url":"/admin/auth/user/add/","status":200,"finalUrl":"/admin/auth/user/add/","title":"Add user | Admin | ArchiveBox","links":15}
+page {"url":"/admin/core/","status":200,"finalUrl":"/admin/core/","title":"Core administration | Admin | ArchiveBox","links":23}
+page {"url":"/admin/core/archiveresult/add/","status":200,"finalUrl":"/admin/core/archiveresult/add/","title":"Add Archive Result | Admin | ArchiveBox","links":108}
+page {"url":"/admin/core/snapshot/add/","status":200,"finalUrl":"/add/","title":"Archived Sites","links":161}
+page {"url":"/admin/core/tag/add/","status":200,"finalUrl":"/admin/core/tag/add/","title":"Add Tag | Admin | ArchiveBox","links":18}
+page {"url":"/admin/crawls/","status":200,"finalUrl":"/admin/crawls/","title":"Crawls administration | Admin | ArchiveBox","links":20}
+page {"url":"/admin/crawls/crawl/add/","status":200,"finalUrl":"/admin/crawls/crawl/add/","title":"Add Crawl | Admin | ArchiveBox","links":64}
+page {"url":"/admin/crawls/crawlschedule/add/","status":200,"finalUrl":"/add/#schedule","title":"Archived Sites","links":161}
+page {"url":"/admin/environment/","status":200,"finalUrl":"/admin/environment/","title":"Environment administration | Admin | ArchiveBox","links":24}
+SUMMARY {"pages":40,"pageLoadErrors":0,"consoleErrors":1,"pageErrors":1,"httpErrors":2,"failedRequests":598,"clicks":81,"clickErrors":57,"forms":32,"auth":["signup:/admin/login/:/admin/","login:/admin/login/:no password field on page"]}

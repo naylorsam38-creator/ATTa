@@ -1,0 +1,27 @@
+
+> /venv/bin/archivebox server 0.0.0.0:5797; TS=2026-10-17__14:48:52 VERSION=0.9.73 IN_DOCKER=True IS_TTY=False
+
+> /venv/lib/python3.13/site-packages/daphne/__main__.py --bind=0.0.0.0 --port=5797 archivebox.core.asgi:application; TS=2026-10-17__14:48:58 VERSION=0.9.73 IN_DOCKER=True IS_TTY=False
+
+> /venv/bin/archivebox run --daemon; TS=2026-10-17__14:48:58 VERSION=0.9.73 IN_DOCKER=True IS_TTY=False
+daphne.cli Starting server at tcp:port=5797:interface=0.0.0.0
+daphne.server HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+daphne.server Configuring endpoint tcp:port=5797:interface=0.0.0.0
+daphne.server Listening on TCP address 0.0.0.0:5797
+
+> /venv/bin/archivebox add https://example.com; TS=2026-10-17__15:30:46 VERSION=0.9.73 IN_DOCKER=True IS_TTY=False
+
+> /venv/bin/archivebox run --no-stdin --crawl-id 06ad394a6d8671e28000f7db1723986b; TS=2026-10-17__15:30:48 VERSION=0.9.73 IN_DOCKER=True IS_TTY=False
+abxbus ⌛️ ArchiveBox_06ad394a6d8671e28000f7db1723986b#f26a🟢(queue=0 active=4 history=35 handlers=39) Timeout waiting for event bus to be idle after 1.0s (history=35)
+
+> /venv/bin/archivebox run --daemon; TS=2026-10-17__15:30:52 VERSION=0.9.73 IN_DOCKER=True IS_TTY=False
+archivebox.services.runner Snapshot admission: concurrency limit=4, observed memory growth=421780480 bytes, available=14517702656 bytes
+
+> /venv/bin/archivebox add http://neverssl.com/; TS=2026-10-17__15:31:43 VERSION=0.9.73 IN_DOCKER=True IS_TTY=False
+
+> /venv/bin/archivebox run --no-stdin --crawl-id 06ad394dfb3a70eb80000f34f36841e3; TS=2026-10-17__15:31:45 VERSION=0.9.73 IN_DOCKER=True IS_TTY=False
+
+> /venv/bin/archivebox run --daemon; TS=2026-10-17__15:31:47 VERSION=0.9.73 IN_DOCKER=True IS_TTY=False
+archivebox.services.runner Snapshot admission: concurrency limit=4, observed memory growth=513712128 bytes, available=14524665856 bytes
+archivebox.services.runner Snapshot admission: concurrency limit=4, observed memory growth=251652096 bytes, available=14202847232 bytes
+archivebox.services.runner Snapshot admission: concurrency limit=4, observed memory growth=533703680 bytes, available=15095447552 bytes

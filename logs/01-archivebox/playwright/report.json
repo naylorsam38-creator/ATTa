@@ -1,0 +1,4395 @@
+{
+ "base": "http://admin.archivebox.localhost:5797",
+ "started": "2026-10-17T15:30:38.876Z",
+ "pages": [
+  {
+   "url": "/",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 87
+  },
+  {
+   "url": "/admin/",
+   "status": 200,
+   "finalUrl": "/admin/",
+   "title": "Admin Views | Admin | ArchiveBox",
+   "links": 98
+  },
+  {
+   "url": "/add/",
+   "status": 200,
+   "finalUrl": "/add/",
+   "title": "Archived Sites",
+   "links": 160
+  },
+  {
+   "url": "/public/",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 87
+  },
+  {
+   "url": "/api/v1/docs",
+   "status": 200,
+   "finalUrl": "/api/v1/docs",
+   "title": "ArchiveBox API",
+   "links": 62
+  },
+  {
+   "url": "/admin/core/snapshot/",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 87
+  },
+  {
+   "url": "/admin/crawls/crawl/",
+   "status": 200,
+   "finalUrl": "/admin/crawls/crawl/",
+   "title": "Select Crawl to change | Admin | ArchiveBox",
+   "links": 68
+  },
+  {
+   "url": "/admin/core/archiveresult/?o=-1",
+   "status": 200,
+   "finalUrl": "/admin/core/archiveresult/?o=-1",
+   "title": "Select Archive Result to change | Admin | ArchiveBox",
+   "links": 45
+  },
+  {
+   "url": "/admin/core/tag/",
+   "status": 200,
+   "finalUrl": "/admin/core/tag/",
+   "title": "Tags | Admin | ArchiveBox",
+   "links": 22
+  },
+  {
+   "url": "/docs/",
+   "status": 200,
+   "finalUrl": "/ArchiveBox/ArchiveBox/wiki",
+   "title": "Home · ArchiveBox/ArchiveBox Wiki · GitHub",
+   "links": 563
+  },
+  {
+   "url": "/admin/password_change/",
+   "status": 200,
+   "finalUrl": "/admin/password_change/",
+   "title": "Password change | Admin | ArchiveBox",
+   "links": 32
+  },
+  {
+   "url": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "status": 200,
+   "finalUrl": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "title": "[...1723986b] https://example.com | Change Crawl | Admin | ArchiveBox",
+   "links": 105
+  },
+  {
+   "url": "/admin/personas/persona/06ad38ad752374f38000448ac5b880db/change/",
+   "status": 200,
+   "finalUrl": "/admin/personas/persona/06ad38ad752374f38000448ac5b880db/change/",
+   "title": "Default | Change persona | Admin | ArchiveBox",
+   "links": 209
+  },
+  {
+   "url": "/admin/core/snapshot/06ad394a828c7cf580009e3b50bf5e7a/change/",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/06ad394a828c7cf580009e3b50bf5e7a/change/",
+   "title": "[06ad394a828c7cf580009e3b50bf5e7a] https://example.com | Change Snapshot | Admin | ArchiveBox",
+   "links": 192
+  },
+  {
+   "url": "/admin/core/",
+   "status": 200,
+   "finalUrl": "/admin/core/",
+   "title": "Core administration | Admin | ArchiveBox",
+   "links": 50
+  },
+  {
+   "url": "/admin/core/snapshot/add/",
+   "status": 200,
+   "finalUrl": "/add/",
+   "title": "Archived Sites",
+   "links": 160
+  },
+  {
+   "url": "/admin/core/snapshot/",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 109
+  },
+  {
+   "url": "/admin/core/snapshot/?o=1.-2",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?o=1.-2",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 112
+  },
+  {
+   "url": "/admin/core/snapshot/?o=",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?o=",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 109
+  },
+  {
+   "url": "/admin/core/snapshot/?o=2",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?o=2",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 113
+  },
+  {
+   "url": "/admin/core/snapshot/?o=4.-2",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?o=4.-2",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 118
+  },
+  {
+   "url": "/admin/core/snapshot/?o=5.-2",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?o=5.-2",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 120
+  },
+  {
+   "url": "/admin/core/snapshot/?o=6.-2",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?o=6.-2",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 121
+  },
+  {
+   "url": "/admin/core/snapshot/?o=7.-2",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?o=7.-2",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 123
+  },
+  {
+   "url": "/admin/core/snapshot/?o=8.-2",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?o=8.-2",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 126
+  },
+  {
+   "url": "/admin/core/snapshot/?_facets=True",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?_facets=True",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 127
+  },
+  {
+   "url": "/admin/core/snapshot/?permissions=public",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?permissions=public",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 130
+  },
+  {
+   "url": "/admin/core/snapshot/?permissions=unlisted",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?permissions=unlisted",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 115
+  },
+  {
+   "url": "/admin/core/snapshot/?permissions=private",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?permissions=private",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 117
+  },
+  {
+   "url": "/admin/core/snapshot/?snapshot_status=queued",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?snapshot_status=queued",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 118
+  },
+  {
+   "url": "/admin/core/snapshot/?snapshot_status=started",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?snapshot_status=started",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 135
+  },
+  {
+   "url": "/admin/core/snapshot/?snapshot_status=paused",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?snapshot_status=paused",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 120
+  },
+  {
+   "url": "/admin/core/snapshot/?snapshot_status=sealed",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?snapshot_status=sealed",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 121
+  },
+  {
+   "url": "/admin/core/snapshot/?snapshot_status=deleting",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?snapshot_status=deleting",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 122
+  },
+  {
+   "url": "/admin/core/snapshot/?archiveresult_status=none",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?archiveresult_status=none",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 124
+  },
+  {
+   "url": "/admin/core/snapshot/?archiveresult_status=has_results",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?archiveresult_status=has_results",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 141
+  },
+  {
+   "url": "/admin/core/snapshot/?archiveresult_status=succeeded",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?archiveresult_status=succeeded",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 127
+  },
+  {
+   "url": "/admin/core/snapshot/?archiveresult_status=failed",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?archiveresult_status=failed",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 128
+  },
+  {
+   "url": "/admin/core/snapshot/?archiveresult_status=running",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?archiveresult_status=running",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 129
+  },
+  {
+   "url": "/admin/core/snapshot/?archiveresult_status=pending",
+   "status": 200,
+   "finalUrl": "/admin/core/snapshot/?archiveresult_status=pending",
+   "title": "Select Snapshot to change | Admin | ArchiveBox",
+   "links": 66
+  }
+ ],
+ "consoleErrors": [
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8:0"
+  },
+  {
+   "page": "/admin/core/snapshot/?o=4.-2",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com?preview=1&titlebar=0:0"
+  },
+  {
+   "page": "/admin/core/snapshot/?o=5.-2",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com?preview=1&titlebar=0:0"
+  },
+  {
+   "page": "/admin/core/snapshot/?o=6.-2",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com?preview=1&titlebar=0:0"
+  },
+  {
+   "page": "/admin/core/snapshot/?o=7.-2",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com:0"
+  },
+  {
+   "page": "/admin/core/snapshot/?o=8.-2",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com:0"
+  },
+  {
+   "page": "/admin/core/snapshot/?_facets=True",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com:0"
+  },
+  {
+   "page": "/admin/core/snapshot/?permissions=public",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com:0"
+  },
+  {
+   "page": "/admin/core/snapshot/?snapshot_status=started",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com:0"
+  },
+  {
+   "page": "/admin/core/snapshot/?archiveresult_status=has_results",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com:0"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com:0"
+  },
+  {
+   "page": "/admin/core/snapshot/grid/",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com:0"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "text": "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://admin.archivebox.localhost:5797/admin/core/snapshot/:3871:9)",
+   "loc": "/admin/core/snapshot/:3895"
+  },
+  {
+   "page": "/admin/environment/plugins/",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/api/v1/crawls/crawl/06ad394dfb3a70eb80000f34f36841e3/files/chrome_screencast/latest.jpg?v=1792251165&after=1792251117.052909:0"
+  },
+  {
+   "page": "/admin/environment/workers/",
+   "text": "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://admin.archivebox.localhost:5797/admin/environment/workers/:3835:9)",
+   "loc": "/admin/environment/workers/:3859"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "text": "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://admin.archivebox.localhost:5797/admin/crawls/crawl/:3873:9)",
+   "loc": "/admin/crawls/crawl/:3897"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "text": "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1:3871:9)",
+   "loc": "/admin/core/archiveresult/?o=-1:3895"
+  },
+  {
+   "page": "/admin/core/tag/",
+   "text": "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://admin.archivebox.localhost:5797/admin/core/tag/:4178:9)",
+   "loc": "/admin/core/tag/:4202"
+  },
+  {
+   "page": "/admin/",
+   "text": "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://admin.archivebox.localhost:5797/admin/:4287:9)",
+   "loc": "/admin/:4311"
+  },
+  {
+   "page": "/admin/password_change/",
+   "text": "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://admin.archivebox.localhost:5797/admin/password_change/:3828:9)",
+   "loc": "/admin/password_change/:3852"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "text": "Progress fetch error: TypeError: Failed to fetch",
+   "loc": "/admin/core/snapshot/:3895"
+  },
+  {
+   "page": "/admin/core/",
+   "text": "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://admin.archivebox.localhost:5797/admin/core/:4287:9)",
+   "loc": "/admin/core/:4311"
+  },
+  {
+   "page": "/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fwiki%2Findex&source=header-repo&source_repo=ArchiveBox%2FArchiveBox",
+   "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+   "loc": "/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fwiki%2Findex&source=header-repo&source_repo=ArchiveBox%2FArchiveBox:0"
+  },
+  {
+   "page": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com:0"
+  },
+  {
+   "page": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "text": "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://admin.archivebox.localhost:5797/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/:3983:9)",
+   "loc": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/:4007"
+  },
+  {
+   "page": "/admin/core/snapshot/?crawl_id=06ad394a6d8671e28000f7db1723986b",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com:0"
+  },
+  {
+   "page": "/admin/core/snapshot/?o=1.-2",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/:0"
+  },
+  {
+   "page": "/admin/core/snapshot/?o=",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/:0"
+  }
+ ],
+ "pageErrors": [],
+ "failedRequests": [
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/environment/workers/",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/tag/",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/password_change/",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/core/",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://api.github.com/_private/browser/stats",
+   "method": "POST",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/",
+   "url": "https://github.githubassets.com/assets/code-1_desktop-6d44c7cb53b4aebb.mp4",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://api.github.com/_private/browser/stats",
+   "method": "POST",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "url": "http://admin.archivebox.localhost:5797/progress.json",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  }
+ ],
+ "httpErrors": [
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?o=4.-2",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com?preview=1&titlebar=0",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?o=5.-2",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com?preview=1&titlebar=0",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?o=6.-2",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com?preview=1&titlebar=0",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?o=7.-2",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?o=8.-2",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?_facets=True",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?permissions=public",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?snapshot_status=started",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?archiveresult_status=has_results",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/grid/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/?preview=1&titlebar=0",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/?preview=1&titlebar=0",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/environment/plugins/",
+   "url": "http://admin.archivebox.localhost:5797/api/v1/crawls/crawl/06ad394dfb3a70eb80000f34f36841e3/files/chrome_screencast/latest.jpg?v=1792251165&after=1792251117.052909",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/grid/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/grid/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fwiki%2Findex&source=header-repo&source_repo=ArchiveBox%2FArchiveBox",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/ArchiveBox/ArchiveBox/wiki",
+   "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?crawl_id=06ad394a6d8671e28000f7db1723986b",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?o=1.-2",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?o=1.-2",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?o=",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/?o=",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-4831903cc399.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_BLOCKED_BY_CLIENT%20at%20http%3A//neverssl.com/",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "url": "http://snap-9e3b50bf5e7a.archivebox.localhost:5797/Error%3A%20net%3A%3AERR_CERT_AUTHORITY_INVALID%20at%20https%3A//example.com",
+   "method": "GET",
+   "status": 404
+  }
+ ],
+ "clicks": [
+  {
+   "page": "/",
+   "idx": 0,
+   "text": "ArchiveBox",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 1,
+   "text": "ADD ➕",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 2,
+   "text": "CRAWLS",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 3,
+   "text": "SNAPSHOTS",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 4,
+   "text": "LOG",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 5,
+   "text": "TAGS",
+   "after": "/admin/core/tag/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 6,
+   "text": "DOCS",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 7,
+   "text": "API",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 8,
+   "text": "ADMIN",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 9,
+   "text": "ACCOUNT",
+   "after": "/admin/password_change/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 10,
+   "text": "Log out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/",
+   "idx": 11,
+   "text": "Details",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 12,
+   "text": "Switch to grid view",
+   "after": "/admin/core/snapshot/grid/",
+   "newErrors": 1
+  },
+  {
+   "page": "/",
+   "idx": 13,
+   "text": "Search",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 14,
+   "text": "Filters ▸",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 15,
+   "text": "2",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 16,
+   "text": "2",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 17,
+   "text": "👥",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 18,
+   "text": "2026-10-17 3:31 PM",
+   "after": "/admin/core/snapshot/06ad394e137273b780004831903cc399/change/",
+   "newErrors": 1
+  },
+  {
+   "page": "/",
+   "idx": 19,
+   "text": "N neverssl.com ▤",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/",
+   "idx": 20,
+   "text": "Open snapshot details",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/",
+   "idx": 21,
+   "text": "http://neverssl.com/",
+   "result": "external link not followed: http://neverssl.com/"
+  },
+  {
+   "page": "/",
+   "idx": 22,
+   "text": "HTML",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/",
+   "idx": 23,
+   "text": "Metadata",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/",
+   "idx": 24,
+   "text": "16 KB",
+   "result": "external link not followed: http://snap-4831903cc399.archivebox.localhost:5797/?files=1"
+  },
+  {
+   "page": "/admin/",
+   "idx": 0,
+   "text": "ArchiveBox",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 1,
+   "text": "ADD ➕",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 2,
+   "text": "CRAWLS",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 3,
+   "text": "SNAPSHOTS",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 4,
+   "text": "LOG",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 5,
+   "text": "TAGS",
+   "after": "/admin/core/tag/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 6,
+   "text": "DOCS",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 7,
+   "text": "API",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 8,
+   "text": "ADMIN",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 9,
+   "text": "ACCOUNT",
+   "after": "/admin/password_change/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 10,
+   "text": "Log out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/admin/",
+   "idx": 11,
+   "text": "Details",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 12,
+   "text": "Crawl #f36841e3 2026-10-17 started by system",
+   "after": "/admin/crawls/crawl/06ad394dfb3a70eb80000f34f36841e3/change/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 13,
+   "text": "Crawls 2 Create and monitor URL collection jobs.",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 14,
+   "text": "Add",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 15,
+   "text": "Scheduled Crawls 0 Recurring crawl definitions and",
+   "after": "/admin/crawls/crawlschedule/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 16,
+   "text": "Snapshots 2 Archived pages and page-level metadata",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 17,
+   "text": "Archive Results 101 Extractor outputs generated pe",
+   "after": "/admin/core/archiveresult/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 18,
+   "text": "Tags 0 Labels, saved groupings, and collection fil",
+   "after": "/admin/core/tag/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 19,
+   "text": "Personas & Configs 1 Browser profiles, cookies, an",
+   "after": "/admin/personas/persona/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 20,
+   "text": "Admin Users 2 Admin users, permissions, and access",
+   "after": "/admin/auth/user/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 21,
+   "text": "Admin Configuration Live settings and plugin confi",
+   "after": "/admin/environment/config/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 22,
+   "text": "Dependencies Runtime binaries and installed packag",
+   "after": "/admin/environment/binaries/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/",
+   "idx": 23,
+   "text": "Plugins Enabled extractors and integration plugins",
+   "after": "/admin/environment/plugins/",
+   "newErrors": 1
+  },
+  {
+   "page": "/admin/",
+   "idx": 24,
+   "text": "Workers Background worker and queue state.",
+   "after": "/admin/environment/workers/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 0,
+   "text": "ArchiveBox",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 1,
+   "text": "ADD ➕",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 2,
+   "text": "CRAWLS",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 3,
+   "text": "SNAPSHOTS",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 4,
+   "text": "LOG",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 5,
+   "text": "TAGS",
+   "after": "/admin/core/tag/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 6,
+   "text": "DOCS",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 7,
+   "text": "API",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 8,
+   "text": "ADMIN",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 9,
+   "text": "ACCOUNT",
+   "after": "/admin/password_change/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 10,
+   "text": "Log out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/add/",
+   "idx": 11,
+   "text": "Get the extension",
+   "result": "external link not followed: https://github.com/ArchiveBox/archivebox-browser-extension"
+  },
+  {
+   "page": "/add/",
+   "idx": 12,
+   "text": "↥ Upload",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 13,
+   "text": "Create new profile / import from Chrome ->",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 14,
+   "text": "View plugin details →",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 15,
+   "text": "➕",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 16,
+   "text": "👤 Default",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 17,
+   "text": "✎",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 18,
+   "text": "📄 Text Only",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 19,
+   "text": "✓ Select All",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 20,
+   "text": "✗ Clear All",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/add/",
+   "idx": 21,
+   "text": "Source",
+   "result": "external link not followed: https://github.com/ArchiveBox/abx-plugins/tree/main/abx_plugins/plugins/dom"
+  },
+  {
+   "page": "/add/",
+   "idx": 22,
+   "text": "Docs",
+   "result": "external link not followed: https://plugins.archivebox.io/#dom"
+  },
+  {
+   "page": "/add/",
+   "idx": 23,
+   "text": "Source",
+   "result": "external link not followed: https://github.com/ArchiveBox/abx-plugins/tree/main/abx_plugins/plugins/screensh"
+  },
+  {
+   "page": "/add/",
+   "idx": 24,
+   "text": "Docs",
+   "result": "external link not followed: https://plugins.archivebox.io/#screenshot"
+  },
+  {
+   "page": "/public/",
+   "idx": 0,
+   "text": "ArchiveBox",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 1,
+   "text": "ADD ➕",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 2,
+   "text": "CRAWLS",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 3,
+   "text": "SNAPSHOTS",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 4,
+   "text": "LOG",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 5,
+   "text": "TAGS",
+   "after": "/admin/core/tag/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 6,
+   "text": "DOCS",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 7,
+   "text": "API",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 8,
+   "text": "ADMIN",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 9,
+   "text": "ACCOUNT",
+   "after": "/admin/password_change/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 10,
+   "text": "Log out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/public/",
+   "idx": 11,
+   "text": "Details",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 12,
+   "text": "Switch to grid view",
+   "after": "/admin/core/snapshot/grid/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 13,
+   "text": "Search",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/public/",
+   "idx": 14,
+   "text": "Filters ◂",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 15,
+   "text": "2",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 16,
+   "text": "2",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 17,
+   "text": "👥",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 18,
+   "text": "2026-10-17 3:31 PM",
+   "after": "/admin/core/snapshot/06ad394e137273b780004831903cc399/change/",
+   "newErrors": 0
+  },
+  {
+   "page": "/public/",
+   "idx": 19,
+   "text": "N neverssl.com ▤",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/public/",
+   "idx": 20,
+   "text": "Open snapshot details",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/public/",
+   "idx": 21,
+   "text": "http://neverssl.com/",
+   "result": "external link not followed: http://neverssl.com/"
+  },
+  {
+   "page": "/public/",
+   "idx": 22,
+   "text": "HTML",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/public/",
+   "idx": 23,
+   "text": "Article text",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/public/",
+   "idx": 24,
+   "text": "Metadata",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 0,
+   "text": "/api/v1/openapi.json",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 1,
+   "text": "Setup API Keys",
+   "after": "/admin/api/",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 2,
+   "text": "Go to your Server Admin UI",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 3,
+   "text": "Go to your Snapshots list",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 4,
+   "text": "ArchiveBox Chat Forum",
+   "result": "external link not followed: https://zulip.archivebox.io"
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 5,
+   "text": "Github Issues",
+   "result": "external link not followed: https://github.com/ArchiveBox/ArchiveBox/issues"
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 6,
+   "text": "Github Wiki",
+   "result": "external link not followed: https://github.com/ArchiveBox/ArchiveBox/wiki"
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 7,
+   "text": "archivebox/api/",
+   "result": "external link not followed: https://github.com/ArchiveBox/ArchiveBox/blob/dev/archivebox/api"
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 8,
+   "text": "6f5d2f60",
+   "result": "external link not followed: https://github.com/ArchiveBox/ArchiveBox/commit/6f5d2f60a01a7ca1171d3b3ddac3310d"
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 9,
+   "text": "django-ninja",
+   "result": "external link not followed: https://django-ninja.dev/"
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 10,
+   "text": "Authorize",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 11,
+   "text": "Authentication",
+   "after": "/api/v1/docs#/",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 12,
+   "text": "Collapse operation",
+   "after": "/api/v1/docs#/",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 13,
+   "text": "POST /api/v1/auth/get_api_token Generate an API to",
+   "after": "/api/v1/docs#/Authentication/archivebox_api_v1_auth_get_api_token",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 14,
+   "text": "/api/v1/auth/get_api_token",
+   "after": "/api/v1/docs#/Authentication/archivebox_api_v1_auth_get_api_token",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 15,
+   "text": "Copy path to clipboard",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 16,
+   "text": "post ​/api​/v1​/auth​/get_api_token",
+   "after": "/api/v1/docs#/Authentication/archivebox_api_v1_auth_get_api_token",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 17,
+   "text": "POST /api/v1/auth/check_api_token Validate an API ",
+   "after": "/api/v1/docs#/Authentication/archivebox_api_v1_auth_check_api_token",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 18,
+   "text": "Copy path to clipboard",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 19,
+   "text": "post ​/api​/v1​/auth​/check_api_token",
+   "after": "/api/v1/docs#/Authentication/archivebox_api_v1_auth_check_api_token",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 20,
+   "text": "POST /api/v1/auth/browser_session Exchange an admi",
+   "after": "/api/v1/docs#/Authentication/archivebox_api_v1_auth_browser_session",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 21,
+   "text": "Copy path to clipboard",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 22,
+   "text": "authorization button unlocked",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 23,
+   "text": "post ​/api​/v1​/auth​/browser_session",
+   "after": "/api/v1/docs#/Authentication/archivebox_api_v1_auth_browser_session",
+   "newErrors": 0
+  },
+  {
+   "page": "/api/v1/docs",
+   "idx": 24,
+   "text": "Core Models",
+   "after": "/api/v1/docs#/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 0,
+   "text": "ArchiveBox",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 1,
+   "text": "ADD ➕",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 2,
+   "text": "CRAWLS",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 3,
+   "text": "SNAPSHOTS",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 4,
+   "text": "LOG",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "newErrors": 1
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 5,
+   "text": "TAGS",
+   "after": "/admin/core/tag/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 6,
+   "text": "DOCS",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 7,
+   "text": "API",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 8,
+   "text": "ADMIN",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 9,
+   "text": "ACCOUNT",
+   "after": "/admin/password_change/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 10,
+   "text": "Log out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 11,
+   "text": "Details",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 12,
+   "text": "2 recent",
+   "after": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 13,
+   "text": "Search",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 14,
+   "text": "Filters ▸",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 15,
+   "text": "2",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 16,
+   "text": "–",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 17,
+   "text": "👥",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 18,
+   "text": "👥 Public",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 19,
+   "text": "N neverssl.com ▤",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 20,
+   "text": "Open snapshot details",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 21,
+   "text": "http://neverssl.com/",
+   "result": "external link not followed: http://neverssl.com/"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 22,
+   "text": "HTML",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 23,
+   "text": "Article text",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 24,
+   "text": "Metadata",
+   "result": "external link not followed: http://web.archivebox.localhost:5797/web/20261017/neverssl.com/06ad394e137273b78"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 0,
+   "text": "ArchiveBox",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 1,
+   "text": "ADD ➕",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 2,
+   "text": "CRAWLS",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 3,
+   "text": "SNAPSHOTS",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 4,
+   "text": "LOG",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 5,
+   "text": "TAGS",
+   "after": "/admin/core/tag/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 6,
+   "text": "DOCS",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 7,
+   "text": "API",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 8,
+   "text": "ADMIN",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 9,
+   "text": "ACCOUNT",
+   "after": "/admin/password_change/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 10,
+   "text": "Log out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 11,
+   "text": "Details",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 12,
+   "text": "2 recent",
+   "after": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 13,
+   "text": "Crawls",
+   "after": "/admin/crawls/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 14,
+   "text": "Search",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 15,
+   "text": "Filters ◂",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 16,
+   "text": "2",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 17,
+   "text": "Resume",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 18,
+   "text": "ID",
+   "after": "/admin/crawls/crawl/?o=1.-3.-12",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 19,
+   "text": "👁",
+   "after": "/admin/crawls/crawl/?o=2.-3.-12",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 20,
+   "text": "Toggle sorting",
+   "after": "/admin/crawls/crawl/?o=3.-12",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 21,
+   "text": "Toggle sorting",
+   "after": "/admin/crawls/crawl/?o=3.-12",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 22,
+   "text": "CREATED AT",
+   "after": "/admin/crawls/crawl/?o=3.-12",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 23,
+   "text": "OWNER",
+   "after": "/admin/crawls/crawl/?o=4.-3.-12",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 24,
+   "text": "STATUS",
+   "after": "/admin/crawls/crawl/?o=6.-3.-12",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 0,
+   "text": "ArchiveBox",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 1,
+   "text": "ADD ➕",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 2,
+   "text": "CRAWLS",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 3,
+   "text": "SNAPSHOTS",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 4,
+   "text": "LOG",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 5,
+   "text": "TAGS",
+   "after": "/admin/core/tag/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 6,
+   "text": "DOCS",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 7,
+   "text": "API",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 8,
+   "text": "ADMIN",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 9,
+   "text": "ACCOUNT",
+   "after": "/admin/password_change/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 10,
+   "text": "Log out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 11,
+   "text": "Details",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 12,
+   "text": "2 recent",
+   "after": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 13,
+   "text": "Core",
+   "after": "/admin/core/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 14,
+   "text": "ADD ARCHIVE RESULT",
+   "after": "/admin/core/archiveresult/add/?_changelist_filters=o%3D-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 15,
+   "text": "Search",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 16,
+   "text": "Filters ▸",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 17,
+   "text": "50",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 18,
+   "text": "50",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 19,
+   "text": "106",
+   "after": "/admin/core/archiveresult/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 20,
+   "text": "DETAILS",
+   "after": "/admin/core/archiveresult/?o=1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 21,
+   "text": "DETAILS",
+   "after": "/admin/core/archiveresult/?o=1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 22,
+   "text": "CREATED AT",
+   "after": "/admin/core/archiveresult/?o=3.-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 23,
+   "text": "TAGS",
+   "after": "/admin/core/archiveresult/?o=5.-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 24,
+   "text": "STATUS",
+   "after": "/admin/core/archiveresult/?o=6.-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 0,
+   "text": "ArchiveBox",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 1,
+   "text": "ADD ➕",
+   "after": "/add/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 2,
+   "text": "CRAWLS",
+   "after": "/admin/crawls/crawl/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 3,
+   "text": "SNAPSHOTS",
+   "after": "/admin/core/snapshot/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 4,
+   "text": "LOG",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 5,
+   "text": "TAGS",
+   "after": "/admin/core/tag/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 6,
+   "text": "DOCS",
+   "after": "/admin/core/tag/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 7,
+   "text": "API",
+   "after": "/api/v1/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 8,
+   "text": "ADMIN",
+   "after": "/admin/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 9,
+   "text": "ACCOUNT",
+   "after": "/admin/password_change/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 10,
+   "text": "Log out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 11,
+   "text": "Details",
+   "after": "/admin/core/tag/",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 12,
+   "text": "2 recent",
+   "after": "/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+   "newErrors": 0
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 13,
+   "text": "Create",
+   "after": "/admin/core/tag/",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 0,
+   "text": "Skip to content",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/docs/",
+   "idx": 1,
+   "text": "Homepage",
+   "after": "/",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 2,
+   "text": "Platform",
+   "after": "/ArchiveBox/ArchiveBox/wiki",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 3,
+   "text": "Solutions",
+   "after": "/ArchiveBox/ArchiveBox/wiki",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 4,
+   "text": "Resources",
+   "after": "/ArchiveBox/ArchiveBox/wiki",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 5,
+   "text": "Open Source",
+   "after": "/ArchiveBox/ArchiveBox/wiki",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 6,
+   "text": "Enterprise",
+   "after": "/ArchiveBox/ArchiveBox/wiki",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 7,
+   "text": "Pricing",
+   "result": "external link not followed: https://github.com/pricing"
+  },
+  {
+   "page": "/docs/",
+   "idx": 8,
+   "text": "Search or jump to, type / to search",
+   "after": "/ArchiveBox/ArchiveBox/wiki",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 9,
+   "text": "Sign in",
+   "after": "/login?return_to=https%3A%2F%2Fgithub.com%2FArchiveBox%2FArchiveBox%2Fwiki",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 10,
+   "text": "Sign up",
+   "after": "/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fwiki%2Findex&source=header-repo&source_repo=ArchiveBox%2FArchiveBox",
+   "newErrors": 1
+  },
+  {
+   "page": "/docs/",
+   "idx": 11,
+   "text": "",
+   "after": "/ArchiveBox/ArchiveBox/wiki",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 12,
+   "text": "ArchiveBox",
+   "after": "/ArchiveBox",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 13,
+   "text": "ArchiveBox",
+   "after": "/ArchiveBox/ArchiveBox",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 14,
+   "text": "Code",
+   "after": "/ArchiveBox/ArchiveBox",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 15,
+   "text": "Issues 154 (154)",
+   "after": "/ArchiveBox/ArchiveBox/issues",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 16,
+   "text": "Pull requests 1 (1)",
+   "after": "/ArchiveBox/ArchiveBox/pulls",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 17,
+   "text": "Discussions",
+   "after": "/ArchiveBox/ArchiveBox/discussions",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 18,
+   "text": "Actions",
+   "after": "/ArchiveBox/ArchiveBox/actions",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 19,
+   "text": "Projects",
+   "after": "/ArchiveBox/ArchiveBox/projects",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 20,
+   "text": "Wiki",
+   "after": "/ArchiveBox/ArchiveBox/wiki",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 21,
+   "text": "Security and quality 2 (2)",
+   "after": "/ArchiveBox/ArchiveBox/security",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 22,
+   "text": "Insights",
+   "after": "/ArchiveBox/ArchiveBox/pulse",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 23,
+   "text": "74 revisions",
+   "after": "/ArchiveBox/ArchiveBox/wiki/Home/_history",
+   "newErrors": 0
+  },
+  {
+   "page": "/docs/",
+   "idx": 24,
+   "text": "Permalink: ArchiveBox Documentation",
+   "after": "/ArchiveBox/ArchiveBox/wiki#archivebox-documentation",
+   "newErrors": 0
+  }
+ ],
+ "forms": [
+  {
+   "page": "/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/snapshot/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/",
+   "idx": 1,
+   "filled": [
+    "search_mode=<select>",
+    "q=Test entry 204"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/",
+   "idx": 2,
+   "filled": [
+    "_selected_action=<checked>"
+   ],
+   "error": "locator.evaluate: Timeout 30000ms exceeded."
+  },
+  {
+   "page": "/admin/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/add/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/add/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Create a new Crawl A Crawl is a job that processes URLs "
+  },
+  {
+   "page": "/add/",
+   "idx": 1,
+   "filled": [
+    "url=http://test.invalid/page",
+    "id_tag_input=Test entry 709",
+    "persona=<select>",
+    "permissions=<select>",
+    "depth=<checked>",
+    "depth=<checked>",
+    "depth=<checked>",
+    "depth=<checked>",
+    "depth=<checked>",
+    "url_filters_same_domain_only=<checked>",
+    "url_filters_subpaths_only=<checked>",
+    "url_filters_only_new=<checked>",
+    "url_filters_allowlist=http://test.invalid/page",
+    "url_filters_denylist=http://test.invalid/page",
+    "max_urls=1",
+    "crawl_max_size=Test entry 314",
+    "crawl_timeout=Test entry 448",
+    "timeout=Test entry 398",
+    "snapshot_max_size=Test entry 148",
+    "delete_after=Test entry 474",
+    "crawl_max_concurrent_snapshots=1",
+    "notes=Test entry 795",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>"
+   ],
+   "submit": "clicked \"Create Crawl and Start Archiving ➕\"",
+   "after": "/add/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Create a new Crawl A Crawl is a job that processes URLs "
+  },
+  {
+   "page": "/public/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/snapshot/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/public/",
+   "idx": 1,
+   "filled": [
+    "search_mode=<select>",
+    "q=Test entry 792"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/public/",
+   "idx": 2,
+   "filled": [
+    "_selected_action=<checked>"
+   ],
+   "error": "locator.evaluate: Timeout 30000ms exceeded."
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/snapshot/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 1,
+   "filled": [
+    "search_mode=<select>",
+    "q=Test entry 796"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 2,
+   "filled": [
+    "_selected_action=<checked>"
+   ],
+   "error": "locator.evaluate: Timeout 30000ms exceeded."
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/crawls/crawl/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 1,
+   "filled": [
+    "q=Test entry 833"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/crawls/crawl/",
+   "idx": 2,
+   "filled": [
+    "action-toggle=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>"
+   ],
+   "submit": "requestSubmit()",
+   "after": "/admin/crawls/crawl/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 1,
+   "filled": [
+    "q=Test entry 125"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/core/archiveresult/?o=-1",
+   "idx": 2,
+   "filled": [
+    "action-toggle=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>",
+    "_selected_action=<checked>"
+   ],
+   "submit": "requestSubmit()",
+   "after": "/admin/core/archiveresult/?o=-1",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/tag/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/core/tag/",
+   "idx": 1,
+   "filled": [
+    "name=Tester Alpha"
+   ],
+   "submit": "clicked \"Create\"",
+   "after": "/admin/core/tag/?q=Tester+Alpha",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/password_change/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/password_change/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/password_change/",
+   "idx": 1,
+   "filled": [
+    "old_password=***",
+    "new_password1=***",
+    "new_password2=***"
+   ],
+   "submit": "clicked \"Change my password\"",
+   "after": "/admin/password_change/done/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "idx": 1,
+   "filled": [],
+   "submit": "clicked \"▶ Resume\"",
+   "after": "/admin/crawls/crawl/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "idx": 2,
+   "filled": [],
+   "submit": "clicked \"Recrawl\"",
+   "after": "/admin/crawls/crawl/06ad396ebf8b74df80008c1b8df47648/change/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "idx": 3,
+   "filled": [
+    "urls=http://test.invalid/page",
+    "url_filters_allowlist=http://test.invalid/page",
+    "url_filters_denylist=http://test.invalid/page",
+    "url_filters_same_domain_only=<checked>",
+    "url_filters_subpaths_only=<checked>",
+    "url_filters_only_new=<checked>",
+    "label=Test entry 523",
+    "status=<select>",
+    "retry_at_0=Test entry 984",
+    "retry_at_1=Test entry 874",
+    "schedule=<select>",
+    "created_by=<select>",
+    "max_depth=1",
+    "notes=Test entry 279",
+    "id_tags_editor_input=Test entry 319",
+    "KEY=Test entry 628",
+    "value (will be saved write-only)=***",
+    "KEY=Test entry 3",
+    "value=Test entry 501",
+    "KEY=Test entry 827",
+    "value=Test entry 561",
+    "KEY=Test entry 574",
+    "value=Test entry 36",
+    "KEY=Test entry 490",
+    "value (will be saved write-only)=***",
+    "KEY=Test entry 172",
+    "value=Test entry 165",
+    "KEY=Test entry 536",
+    "value=Test entry 866",
+    "KEY=Test entry 714",
+    "value=Test entry 480",
+    "KEY=Test entry 790",
+    "value=Test entry 937",
+    "KEY=Test entry 186",
+    "value=Test entry 937",
+    "KEY=Test entry 517",
+    "value=Test entry 609",
+    "KEY=Test entry 537",
+    "value=Test entry 61",
+    "KEY=Test entry 170",
+    "value=Test entry 807",
+    "KEY=Test entry 258",
+    "value=Test entry 891",
+    "KEY=Test entry 675",
+    "value=Test entry 917",
+    "KEY=Test entry 397",
+    "value=Test entry 628",
+    "KEY=Test entry 717",
+    "value=Test entry 267",
+    "KEY=Test entry 354",
+    "value=Test entry 21",
+    "KEY=Test entry 181",
+    "value=Test entry 663",
+    "KEY=Test entry 300",
+    "value=Test entry 365",
+    "KEY=Test entry 19",
+    "value=Test entry 472",
+    "KEY=Test entry 273",
+    "value=Test entry 47",
+    "KEY=Test entry 979",
+    "value=Test entry 601",
+    "KEY=Test entry 272",
+    "value=Test entry 836",
+    "KEY=Test entry 425",
+    "value=Test entry 909",
+    "KEY=Test entry 786",
+    "value=Test entry 624",
+    "KEY=Test entry 546",
+    "value=Test entry 699",
+    "KEY=Test entry 398",
+    "value=Test entry 485",
+    "KEY=Test entry 860",
+    "value=Test entry 245",
+    "KEY=Test entry 427",
+    "value=Test entry 780",
+    "KEY=Test entry 494",
+    "value=Test entry 211",
+    "KEY=Test entry 172",
+    "value=Test entry 443",
+    "KEY=Test entry 74",
+    "value=Test entry 830",
+    "KEY=Test entry 752",
+    "value=Test entry 543",
+    "KEY=Test entry 285",
+    "value=Test entry 601",
+    "KEY=Test entry 451",
+    "value=Test entry 236",
+    "KEY=Test entry 306",
+    "value=Test entry 295",
+    "KEY=Test entry 513",
+    "value=Test entry 580",
+    "KEY=Test entry 104",
+    "value=Test entry 44",
+    "KEY=Test entry 896",
+    "value=Test entry 404",
+    "KEY=Test entry 437",
+    "value=Test entry 753",
+    "KEY=Test entry 223",
+    "value=Test entry 116",
+    "KEY=Test entry 184",
+    "value=Test entry 550",
+    "KEY=Test entry 945",
+    "value=Test entry 195",
+    "KEY=Test entry 841",
+    "value=Test entry 272",
+    "KEY=Test entry 927",
+    "value=Test entry 505",
+    "KEY=Test entry 133",
+    "value=Test entry 296",
+    "KEY=Test entry 870",
+    "value=Test entry 373",
+    "KEY=Test entry 980",
+    "value=Test entry 426",
+    "KEY=Test entry 323",
+    "value=Test entry 888",
+    "KEY=Test entry 920",
+    "value=Test entry 668",
+    "KEY=Test entry 838",
+    "value=Test entry 992",
+    "KEY=Test entry 895",
+    "value=Test entry 678",
+    "KEY=Test entry 429",
+    "value=Test entry 352",
+    "KEY=Test entry 438",
+    "value=Test entry 975",
+    "KEY=Test entry 272",
+    "value=Test entry 910",
+    "KEY=Test entry 87",
+    "value=Test entry 725",
+    "KEY=Test entry 599",
+    "value=Test entry 478",
+    "KEY=Test entry 667",
+    "value=Test entry 745",
+    "KEY=Test entry 205",
+    "value=Test entry 482",
+    "KEY=Test entry 345",
+    "value=Test entry 975",
+    "KEY=Test entry 821",
+    "value=Test entry 460",
+    "KEY=Test entry 510",
+    "value=Test entry 959",
+    "KEY=Test entry 594",
+    "value=Test entry 466",
+    "KEY=Test entry 101",
+    "value=Test entry 69",
+    "KEY=Test entry 72",
+    "value=Test entry 538",
+    "KEY=Test entry 224",
+    "value=Test entry 961",
+    "KEY=Test entry 138",
+    "value=Test entry 406",
+    "KEY=Test entry 918",
+    "value=Test entry 233",
+    "KEY=Test entry 810",
+    "value=Test entry 589",
+    "KEY=Test entry 467",
+    "value=Test entry 16",
+    "KEY=Test entry 199",
+    "value=Test entry 904",
+    "KEY=Test entry 216",
+    "value=Test entry 656",
+    "KEY=Test entry 29",
+    "value=Test entry 589",
+    "KEY=Test entry 255",
+    "value=Test entry 805",
+    "KEY=Test entry 684",
+    "value=Test entry 378",
+    "KEY=Test entry 471",
+    "value=Test entry 408",
+    "KEY=Test entry 604",
+    "value=Test entry 507",
+    "KEY=Test entry 252",
+    "value=Test entry 630",
+    "KEY=Test entry 835",
+    "value=Test entry 69",
+    "KEY=Test entry 248",
+    "value=Test entry 936",
+    "KEY=Test entry 531",
+    "value=Test entry 278",
+    "KEY=Test entry 77",
+    "value=Test entry 355",
+    "KEY=Test entry 117",
+    "value=Test entry 932",
+    "KEY=Test entry 948",
+    "value=Test entry 332",
+    "KEY=Test entry 691",
+    "value=Test entry 471",
+    "KEY=Test entry 494",
+    "value=Test entry 280",
+    "KEY=Test entry 922",
+    "value=Test entry 965",
+    "KEY=Test entry 880",
+    "value=Test entry 318",
+    "KEY=Test entry 37",
+    "value=Test entry 452",
+    "KEY=Test entry 139",
+    "value=Test entry 428",
+    "KEY=Test entry 570",
+    "value=Test entry 458",
+    "KEY=Test entry 803",
+    "value=Test entry 15",
+    "KEY=Test entry 617",
+    "value=Test entry 122",
+    "KEY=Test entry 206",
+    "value=Test entry 736",
+    "KEY=Test entry 723",
+    "value=Test entry 390",
+    "KEY=Test entry 633",
+    "value=Test entry 611",
+    "KEY=Test entry 103",
+    "value=Test entry 143",
+    "KEY=Test entry 599",
+    "•••••• (saved — enter new value to replace, clear by deleting row)=***",
+    "KEY=Test entry 199",
+    "value=Test entry 718",
+    "KEY=Test entry 477",
+    "value=Test entry 988",
+    "KEY=Test entry 879",
+    "value=Test entry 656",
+    "KEY=Test entry 751",
+    "value=Test entry 192",
+    "KEY=Test entry 402",
+    "value=Test entry 938",
+    "KEY=Test entry 424",
+    "value=Test entry 370",
+    "KEY=Test entry 315",
+    "value=Test entry 14",
+    "KEY=Test entry 489",
+    "value=Test entry 205",
+    "KEY=Test entry 144",
+    "value=Test entry 295",
+    "KEY=Test entry 289",
+    "value=Test entry 54",
+    "KEY=Test entry 856",
+    "value=Test entry 5",
+    "KEY=Test entry 138",
+    "value=Test entry 650",
+    "KEY=Test entry 781",
+    "value=Test entry 165",
+    "KEY=Test entry 733",
+    "value=Test entry 181",
+    "KEY=Test entry 246",
+    "value=Test entry 648",
+    "KEY=Test entry 446",
+    "value=Test entry 905",
+    "KEY=Test entry 956",
+    "value=Test entry 814",
+    "KEY=Test entry 33",
+    "value=Test entry 657",
+    "KEY=Test entry 886",
+    "value=Test entry 776",
+    "KEY=Test entry 132",
+    "value=Test entry 326",
+    "KEY=Test entry 867",
+    "value=Test entry 496",
+    "KEY=Test entry 352",
+    "value=Test entry 45",
+    "KEY=Test entry 546",
+    "value=Test entry 928",
+    "KEY=Test entry 217",
+    "value (will be saved write-only)=***",
+    "KEY=Test entry 663",
+    "value=Test entry 955",
+    "KEY=Test entry 846",
+    "value=Test entry 55",
+    "KEY=Test entry 125",
+    "value=Test entry 705",
+    "KEY=Test entry 431",
+    "value=Test entry 960",
+    "KEY=Test entry 578",
+    "value=Test entry 915",
+    "KEY=Test entry 754",
+    "value=Test entry 60",
+    "KEY=Test entry 673",
+    "value=Test entry 736",
+    "KEY=Test entry 632",
+    "value=Test entry 367",
+    "KEY=Test entry 254",
+    "value=Test entry 195",
+    "KEY=Test entry 168",
+    "value=Test entry 893",
+    "KEY=Test entry 525",
+    "value=Test entry 393",
+    "KEY=Test entry 490",
+    "value=Test entry 680",
+    "KEY=Test entry 783",
+    "value=Test entry 708",
+    "KEY=Test entry 475",
+    "value=Test entry 467",
+    "KEY=Test entry 577",
+    "value=Test entry 641",
+    "KEY=Test entry 510",
+    "value=Test entry 490",
+    "KEY=Test entry 302",
+    "value=Test entry 746",
+    "KEY=Test entry 538",
+    "value=Test entry 974",
+    "KEY=Test entry 556",
+    "value=Test entry 15",
+    "KEY=Test entry 329",
+    "value=Test entry 712",
+    "KEY=Test entry 396",
+    "value=Test entry 824",
+    "KEY=Test entry 377",
+    "value=Test entry 385",
+    "KEY=Test entry 544",
+    "value=Test entry 223",
+    "KEY=Test entry 399",
+    "value=Test entry 31",
+    "KEY=Test entry 931",
+    "value=Test entry 190",
+    "KEY=Test entry 230",
+    "value=Test entry 495",
+    "KEY=Test entry 432",
+    "value=Test entry 77",
+    "KEY=Test entry 356",
+    "value=Test entry 222",
+    "KEY=Test entry 0",
+    "value=Test entry 853",
+    "KEY=Test entry 932",
+    "value=Test entry 882",
+    "KEY=Test entry 725",
+    "value=Test entry 631",
+    "KEY=Test entry 5",
+    "value=Test entry 998",
+    "KEY=Test entry 745",
+    "value=Test entry 976",
+    "KEY=Test entry 245",
+    "value=Test entry 287",
+    "KEY=Test entry 830",
+    "value=Test entry 141",
+    "KEY=Test entry 637",
+    "value=Test entry 274",
+    "KEY=Test entry 119",
+    "value=Test entry 783",
+    "KEY=Test entry 118",
+    "value=Test entry 454",
+    "KEY=Test entry 725",
+    "value=Test entry 891",
+    "KEY=Test entry 684",
+    "value=Test entry 258",
+    "KEY=Test entry 339",
+    "value=Test entry 783",
+    "KEY=Test entry 556",
+    "value=Test entry 316",
+    "KEY=Test entry 653",
+    "value=Test entry 55",
+    "KEY=Test entry 978",
+    "value=Test entry 825",
+    "KEY=Test entry 525",
+    "value=Test entry 645",
+    "KEY=Test entry 648",
+    "value=Test entry 272",
+    "KEY=Test entry 683",
+    "value=Test entry 543",
+    "KEY=Test entry 561",
+    "value=Test entry 443",
+    "KEY=Test entry 489",
+    "value=Test entry 913",
+    "KEY=Test entry 343",
+    "value=Test entry 851",
+    "KEY=Test entry 976",
+    "value=Test entry 86",
+    "KEY=Test entry 291",
+    "value (will be saved write-only)=***",
+    "KEY=Test entry 572",
+    "value=Test entry 324",
+    "KEY=Test entry 234",
+    "value=Test entry 755",
+    "KEY=Test entry 694",
+    "value=Test entry 625",
+    "KEY=Test entry 962",
+    "value=Test entry 634",
+    "KEY=Test entry 707",
+    "value=Test entry 529",
+    "KEY=Test entry 684",
+    "value=Test entry 651",
+    "KEY=Test entry 907",
+    "value=Test entry 568",
+    "KEY=Test entry 560",
+    "value=Test entry 957",
+    "KEY=Test entry 411",
+    "•••••• (saved — enter new value to replace, clear by deleting row)=***",
+    "KEY=Test entry 150",
+    "value=Test entry 96",
+    "KEY=Test entry 300",
+    "value=Test entry 921",
+    "KEY=Test entry 932",
+    "value=Test entry 984",
+    "KEY=Test entry 670",
+    "value=Test entry 152",
+    "KEY=Test entry 999",
+    "value=Test entry 744",
+    "KEY=Test entry 249",
+    "value=Test entry 584",
+    "KEY=Test entry 814",
+    "value=Test entry 862",
+    "KEY=Test entry 986",
+    "value=Test entry 743",
+    "KEY=Test entry 713",
+    "value=Test entry 885",
+    "KEY=Test entry 938",
+    "value=Test entry 397",
+    "KEY=Test entry 136",
+    "value=Test entry 692",
+    "KEY=Test entry 205",
+    "value=Test entry 813",
+    "KEY=Test entry 804",
+    "value=Test entry 715"
+   ],
+   "submit": "requestSubmit()",
+   "after": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/crawls/crawl/06ad394a6d8671e28000f7db1723986b/change/",
+   "idx": 4,
+   "filled": [
+    "_selected_action=<checked>",
+    "inline_tags_06ad394a828c7cf580009e3b50bf5e7a_input=Test entry 742"
+   ],
+   "submit": "requestSubmit()",
+   "after": "/admin/core/snapshot/?crawl_id=06ad394a6d8671e28000f7db1723986b",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/personas/persona/06ad38ad752374f38000448ac5b880db/change/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/personas/persona/06ad38ad752374f38000448ac5b880db/change/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/personas/persona/06ad38ad752374f38000448ac5b880db/change/",
+   "idx": 1,
+   "filled": [
+    "name=Tester Alpha",
+    "created_by=<select>",
+    "permissions=<select>",
+    "KEY=Test entry 494",
+    "value=Test entry 950",
+    "KEY=Test entry 75",
+    "value=Test entry 314"
+   ],
+   "submit": "requestSubmit()",
+   "after": "/admin/personas/persona/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/core/snapshot/06ad394a828c7cf580009e3b50bf5e7a/change/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/snapshot/06ad394a828c7cf580009e3b50bf5e7a/change/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/core/snapshot/06ad394a828c7cf580009e3b50bf5e7a/change/",
+   "idx": 1,
+   "filled": [
+    "url=http://test.invalid/page",
+    "title=Test entry 46",
+    "id_tags_editor_input=Test entry 917",
+    "permissions_config=<select>",
+    "status=<select>",
+    "retry_at_0=Test entry 32",
+    "retry_at_1=Test entry 923",
+    "bookmarked_at_0=Test entry 362",
+    "bookmarked_at_1=Test entry 799",
+    "crawl=Test entry 418",
+    "KEY=Test entry 53",
+    "value=Test entry 352",
+    "KEY=Test entry 263",
+    "value=Test entry 652"
+   ],
+   "submit": "clicked \"🔁 Retry Failed Extractors\"",
+   "after": "/admin/core/snapshot/06ad394a828c7cf580009e3b50bf5e7a/change/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/core/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/core/snapshot/add/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/add/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Create a new Crawl A Crawl is a job that processes URLs "
+  },
+  {
+   "page": "/admin/core/snapshot/add/",
+   "idx": 1,
+   "filled": [
+    "url=http://test.invalid/page",
+    "id_tag_input=Test entry 59",
+    "persona=<select>",
+    "permissions=<select>",
+    "depth=<checked>",
+    "depth=<checked>",
+    "depth=<checked>",
+    "depth=<checked>",
+    "depth=<checked>",
+    "url_filters_same_domain_only=<checked>",
+    "url_filters_subpaths_only=<checked>",
+    "url_filters_only_new=<checked>",
+    "url_filters_allowlist=http://test.invalid/page",
+    "url_filters_denylist=http://test.invalid/page",
+    "max_urls=1",
+    "crawl_max_size=Test entry 473",
+    "crawl_timeout=Test entry 129",
+    "timeout=Test entry 415",
+    "snapshot_max_size=Test entry 870",
+    "delete_after=Test entry 155",
+    "crawl_max_concurrent_snapshots=1",
+    "notes=Test entry 54",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "main_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "page_setup_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "media_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>",
+    "text_plugins=<checked>"
+   ],
+   "submit": "clicked \"Create Crawl and Start Archiving ➕\"",
+   "after": "/add/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Create a new Crawl A Crawl is a job that processes URLs "
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/snapshot/",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 1,
+   "filled": [
+    "search_mode=<select>",
+    "q=Test entry 883"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/core/snapshot/",
+   "idx": 2,
+   "filled": [
+    "_selected_action=<checked>"
+   ],
+   "error": "locator.evaluate: Timeout 30000ms exceeded."
+  },
+  {
+   "page": "/admin/core/snapshot/?o=1.-2",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/snapshot/?o=1.-2",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/core/snapshot/?o=1.-2",
+   "idx": 1,
+   "filled": [
+    "search_mode=<select>",
+    "q=Test entry 143"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/core/snapshot/?o=1.-2",
+   "idx": 2,
+   "filled": [
+    "_selected_action=<checked>"
+   ],
+   "error": "locator.evaluate: Timeout 30000ms exceeded."
+  },
+  {
+   "page": "/admin/core/snapshot/?o=",
+   "idx": 0,
+   "filled": [],
+   "submit": "skipped (danger: Log out)",
+   "after": "/admin/core/snapshot/?o=",
+   "text": " ArchiveBox ADD ➕ CRAWLS | SNAPSHOTS | LOG | TAGS DOCS | API | ADMIN USER TESTERALPHA ACCOUNT / Log out Idle pid 8937 CRAWLS 0 queued SNAPSHOTS 0 queued DOWNLOA"
+  },
+  {
+   "page": "/admin/core/snapshot/?o=",
+   "idx": 1,
+   "filled": [
+    "search_mode=<select>",
+    "q=Test entry 964"
+   ],
+   "error": "locator.click: Timeout 5000ms exceeded."
+  },
+  {
+   "page": "/admin/core/snapshot/?o=",
+   "idx": 2,
+   "filled": [
+    "_selected_action=<checked>"
+   ],
+   "error": "locator.evaluate: Timeout 30000ms exceeded."
+  }
+ ],
+ "auth": [
+  {
+   "kind": "login",
+   "url": "/admin/login/",
+   "afterUrl": "http://admin.archivebox.localhost:5797/admin/"
+  }
+ ],
+ "notes": [
+  "form phase time budget reached"
+ ],
+ "finished": "2026-10-17T15:43:26.108Z"
+}
