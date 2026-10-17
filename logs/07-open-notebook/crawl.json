@@ -1,0 +1,3 @@
+{"base":"http://localhost:8502","out":"logs/07-open-notebook/playwright","signupPaths":["/signup","/register"],"loginPaths":["/login"],
+ "startPaths":["/","/notebooks","/sources","/search","/podcasts","/models","/settings","/transformations","/advanced","/settings/api-keys"],
+ "maxPages":35,"clickPages":10,"maxClicks":25,"crawlMinutes":4,"clickMinutes":8,"formMinutes":4}

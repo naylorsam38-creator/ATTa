@@ -1,0 +1,51 @@
+2026-10-17T16:31:07.190913925Z 
+2026-10-17T16:31:07.190981739Z  .d8888b.                                             888 8888888b.  888888b.
+2026-10-17T16:31:07.190984795Z d88P  Y88b                                            888 888  'Y88b 888  '88b
+2026-10-17T16:31:07.190986378Z Y88b.                                                 888 888    888 888  .88P
+2026-10-17T16:31:07.190987659Z  'Y888b.   888  888 888d888 888d888  .d88b.   8888b.  888 888    888 8888888K.
+2026-10-17T16:31:07.190988910Z     'Y88b. 888  888 888P'   888P'   d8P  Y8b     '88b 888 888    888 888  'Y88b
+2026-10-17T16:31:07.190990427Z       '888 888  888 888     888     88888888 .d888888 888 888    888 888    888
+2026-10-17T16:31:07.190991727Z Y88b  d88P Y88b 888 888     888     Y8b.     888  888 888 888  .d88P 888   d88P
+2026-10-17T16:31:07.190992965Z  'Y8888P'   'Y88888 888     888      'Y8888  'Y888888 888 8888888P'  8888888P'
+2026-10-17T16:31:07.190994279Z 
+2026-10-17T16:31:07.191178679Z 
+2026-10-17T16:31:07.191319942Z [2m2026-10-17T16:31:07.191139Z[0m [32m INFO[0m [2msurreal::env[0m[2m:[0m Running 2.7.0 for linux on x86_64
+2026-10-17T16:31:07.192019784Z [2m2026-10-17T16:31:07.191942Z[0m [32m INFO[0m [2msurrealdb::core::kvs::ds[0m[2m:[0m Starting kvs store at rocksdb:///mydata/mydatabase.db
+2026-10-17T16:31:07.192570580Z [2m2026-10-17T16:31:07.192327Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Background thread count: 4
+2026-10-17T16:31:07.193363425Z [2m2026-10-17T16:31:07.193236Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Maximum background jobs count: 8
+2026-10-17T16:31:07.193376012Z [2m2026-10-17T16:31:07.193267Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Maximum number of open files: 1024
+2026-10-17T16:31:07.193378612Z [2m2026-10-17T16:31:07.193272Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Number of log files to keep: 10
+2026-10-17T16:31:07.196166221Z [2m2026-10-17T16:31:07.196011Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Maximum write buffers: 4
+2026-10-17T16:31:07.199047645Z [2m2026-10-17T16:31:07.198870Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Write buffer size: 67108864
+2026-10-17T16:31:07.199058682Z [2m2026-10-17T16:31:07.198892Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Target file size for compaction: 67108864
+2026-10-17T16:31:07.199098351Z [2m2026-10-17T16:31:07.198896Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Target file size compaction multiplier: 2
+2026-10-17T16:31:07.199100258Z [2m2026-10-17T16:31:07.198898Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Minimum write buffers to merge: 2
+2026-10-17T16:31:07.199101884Z [2m2026-10-17T16:31:07.198900Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Number of files to trigger compaction: 4
+2026-10-17T16:31:07.200601015Z [2m2026-10-17T16:31:07.200240Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Compaction readahead size: 8388608
+2026-10-17T16:31:07.200612436Z [2m2026-10-17T16:31:07.200259Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Maximum concurrent subcompactions: 4
+2026-10-17T16:31:07.200615073Z [2m2026-10-17T16:31:07.200268Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Use separate thread queues: true
+2026-10-17T16:31:07.200616843Z [2m2026-10-17T16:31:07.200270Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Enable separation of keys and values: true
+2026-10-17T16:31:07.200618417Z [2m2026-10-17T16:31:07.200273Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Minimum blob value size: 4096
+2026-10-17T16:31:07.200620131Z [2m2026-10-17T16:31:07.200274Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Target blob file size: 268435456
+2026-10-17T16:31:07.200621570Z [2m2026-10-17T16:31:07.200278Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Enable blob garbage collection: false
+2026-10-17T16:31:07.200623191Z [2m2026-10-17T16:31:07.200280Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Blob GC age cutoff: 0.25
+2026-10-17T16:31:07.200624676Z [2m2026-10-17T16:31:07.200284Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Blob GC force threshold: 1
+2026-10-17T16:31:07.200626307Z [2m2026-10-17T16:31:07.200286Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Blob compaction readahead size: 0
+2026-10-17T16:31:07.200627725Z [2m2026-10-17T16:31:07.200288Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Write-ahead-log file size limit: 0MB
+2026-10-17T16:31:07.200629223Z [2m2026-10-17T16:31:07.200290Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Allow concurrent memtable writes: true
+2026-10-17T16:31:07.200630677Z [2m2026-10-17T16:31:07.200291Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Avoid unnecessary blocking IO: true
+2026-10-17T16:31:07.200632215Z [2m2026-10-17T16:31:07.200293Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Allow adaptive write thread yielding: true
+2026-10-17T16:31:07.200633711Z [2m2026-10-17T16:31:07.200295Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Wait for disk sync acknowledgement: false
+2026-10-17T16:31:07.202056442Z [2m2026-10-17T16:31:07.201945Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Block cache size: 7363723264
+2026-10-17T16:31:07.202477160Z [2m2026-10-17T16:31:07.202180Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Enable memory-mapped reads: false
+2026-10-17T16:31:07.202483781Z [2m2026-10-17T16:31:07.202195Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Enable memory-mapped writes: false
+2026-10-17T16:31:07.202485826Z [2m2026-10-17T16:31:07.202199Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Setting delete compaction factory: 1000 / 50 (0.5)
+2026-10-17T16:31:07.202488859Z [2m2026-10-17T16:31:07.202204Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Setting compaction style: level
+2026-10-17T16:31:07.202490471Z [2m2026-10-17T16:31:07.202207Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Setting compression level
+2026-10-17T16:31:07.202492355Z [2m2026-10-17T16:31:07.202247Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Setting storage engine log level: warn
+2026-10-17T16:31:07.202493902Z [2m2026-10-17T16:31:07.202252Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Background write-ahead-log flushing: disabled
+2026-10-17T16:31:07.244342064Z [2m2026-10-17T16:31:07.244129Z[0m [32m INFO[0m [2msurrealdb::core::kvs::ds[0m[2m:[0m Started kvs store at rocksdb:///mydata/mydatabase.db
+2026-10-17T16:31:07.246380549Z [2m2026-10-17T16:31:07.246167Z[0m [32m INFO[0m [2msurreal::dbs[0m[2m:[0m Initialising credentials [3muser[0m[2m=[0mroot
+2026-10-17T16:31:07.249188830Z [2m2026-10-17T16:31:07.246404Z[0m [32m INFO[0m [2msurrealdb::core::kvs::ds[0m[2m:[0m Credentials were provided, and no root users were found. The root user 'root' will be created
+2026-10-17T16:31:07.284669252Z [2m2026-10-17T16:31:07.284055Z[0m [32m INFO[0m [2msurrealdb::net[0m[2m:[0m Listening for a system shutdown signal.
+2026-10-17T16:31:07.284685442Z [2m2026-10-17T16:31:07.284264Z[0m [32m INFO[0m [2msurrealdb::net[0m[2m:[0m Started web server on 0.0.0.0:8000

@@ -1,0 +1,23 @@
+PAGES: 11
+  PAGE-FAIL /models 404 
+AUTH:
+   signup /signup 404 no password field on page  ->  | 404 This page could not be found.
+   signup /register 404 no password field on page  ->  | 404 This page could not be found.
+   login /login 200 no password field on page  ->  | Open Notebook New COLLECT Sources PROCESS Notebooks Ask and Search CREATE Podcasts MANAGE Models Transformations Settings Advanced Quick actions Ctrl+
+CONSOLE ERRORS:
+   Failed to load resource: the server responded with a status of 404 (Not Found) @/signup:0
+   Failed to load resource: the server responded with a status of 404 (Not Found) @/register:0
+   Failed to load resource: the server responded with a status of 404 (Not Found) @/models:0
+PAGE ERRORS (uncaught JS):
+HTTP >=400:
+   404 GET /signup
+   404 GET /register
+   (x3) 404 GET /models
+FAILED REQUESTS:
+   (x26) net::ERR_ABORTED GET http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ
+   (x35) net::ERR_ABORTED GET http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su
+CLICKS: 211 errors: 14
+   (x14) locator.click: Timeout 4000ms exceeded.
+FORMS:
+   /settings 0 clicked "Save"  -> /settings | Theme Toggle language Settings Content Processing Configure how documents and URLs are processed Doc
+NOTES: 

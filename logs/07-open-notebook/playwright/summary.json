@@ -1,0 +1,16 @@
+{
+ "pages": 11,
+ "pageLoadErrors": 1,
+ "consoleErrors": 3,
+ "pageErrors": 0,
+ "httpErrors": 5,
+ "failedRequests": 61,
+ "clicks": 211,
+ "clickErrors": 14,
+ "forms": 1,
+ "auth": [
+  "signup:/signup:no password field on page",
+  "signup:/register:no password field on page",
+  "login:/login:no password field on page"
+ ]
+}

@@ -1,0 +1,12 @@
+page {"url":"/","status":200,"finalUrl":"/notebooks","title":"Open Notebook","links":8}
+page {"url":"/notebooks","status":200,"finalUrl":"/notebooks","title":"Open Notebook","links":8}
+page {"url":"/sources","status":200,"finalUrl":"/sources","title":"Open Notebook","links":8}
+page {"url":"/search","status":200,"finalUrl":"/search","title":"Open Notebook","links":8}
+page {"url":"/podcasts","status":200,"finalUrl":"/podcasts","title":"Open Notebook","links":8}
+page {"url":"/models","status":404,"finalUrl":"/models","title":"404: This page could not be found.","links":0}
+page {"url":"/settings","status":200,"finalUrl":"/settings","title":"Open Notebook","links":8}
+page {"url":"/transformations","status":200,"finalUrl":"/transformations","title":"Open Notebook","links":8}
+page {"url":"/advanced","status":200,"finalUrl":"/advanced","title":"Open Notebook","links":8}
+page {"url":"/settings/api-keys","status":200,"finalUrl":"/settings/models","title":"Open Notebook","links":9}
+page {"url":"/settings/models","status":200,"finalUrl":"/settings/models","title":"Open Notebook","links":9}
+SUMMARY {"pages":11,"pageLoadErrors":1,"consoleErrors":3,"pageErrors":0,"httpErrors":5,"failedRequests":61,"clicks":211,"clickErrors":14,"forms":1,"auth":["signup:/signup:no password field on page","signup:/register:no password field on page","login:/login:no password field on page"]}

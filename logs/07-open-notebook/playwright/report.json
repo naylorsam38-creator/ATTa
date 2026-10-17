@@ -1,0 +1,1997 @@
+{
+ "base": "http://localhost:8502",
+ "started": "2026-10-17T16:32:00.332Z",
+ "pages": [
+  {
+   "url": "/",
+   "status": 200,
+   "finalUrl": "/notebooks",
+   "title": "Open Notebook",
+   "links": 8
+  },
+  {
+   "url": "/notebooks",
+   "status": 200,
+   "finalUrl": "/notebooks",
+   "title": "Open Notebook",
+   "links": 8
+  },
+  {
+   "url": "/sources",
+   "status": 200,
+   "finalUrl": "/sources",
+   "title": "Open Notebook",
+   "links": 8
+  },
+  {
+   "url": "/search",
+   "status": 200,
+   "finalUrl": "/search",
+   "title": "Open Notebook",
+   "links": 8
+  },
+  {
+   "url": "/podcasts",
+   "status": 200,
+   "finalUrl": "/podcasts",
+   "title": "Open Notebook",
+   "links": 8
+  },
+  {
+   "url": "/models",
+   "status": 404,
+   "finalUrl": "/models",
+   "title": "404: This page could not be found.",
+   "links": 0
+  },
+  {
+   "url": "/settings",
+   "status": 200,
+   "finalUrl": "/settings",
+   "title": "Open Notebook",
+   "links": 8
+  },
+  {
+   "url": "/transformations",
+   "status": 200,
+   "finalUrl": "/transformations",
+   "title": "Open Notebook",
+   "links": 8
+  },
+  {
+   "url": "/advanced",
+   "status": 200,
+   "finalUrl": "/advanced",
+   "title": "Open Notebook",
+   "links": 8
+  },
+  {
+   "url": "/settings/api-keys",
+   "status": 200,
+   "finalUrl": "/settings/models",
+   "title": "Open Notebook",
+   "links": 9
+  },
+  {
+   "url": "/settings/models",
+   "status": 200,
+   "finalUrl": "/settings/models",
+   "title": "Open Notebook",
+   "links": 9
+  }
+ ],
+ "consoleErrors": [
+  {
+   "page": "/signup",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/signup:0"
+  },
+  {
+   "page": "/register",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/register:0"
+  },
+  {
+   "page": "/models",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/models:0"
+  }
+ ],
+ "pageErrors": [],
+ "failedRequests": [
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=7Uk9QonGmSbJTMtJ",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/notebooks",
+   "url": "http://localhost:8502/notebooks/notebook%3A1ykejj2k34li7sykzgr0?_rsc=K2LeT9GHTgTdj3Su",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  }
+ ],
+ "httpErrors": [
+  {
+   "page": "blank",
+   "url": "http://localhost:8502/signup",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/signup",
+   "url": "http://localhost:8502/register",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/podcasts",
+   "url": "http://localhost:8502/models",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/podcasts",
+   "url": "http://localhost:8502/models",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/podcasts",
+   "url": "http://localhost:8502/models",
+   "method": "GET",
+   "status": 404
+  }
+ ],
+ "clicks": [
+  {
+   "page": "/",
+   "idx": 0,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 1,
+   "text": "New",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 2,
+   "text": "",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 3,
+   "text": "",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 4,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 5,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 6,
+   "text": "",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 7,
+   "text": "",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 8,
+   "text": "",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 9,
+   "text": "",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 10,
+   "text": "",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 11,
+   "text": "",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 12,
+   "text": "",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 13,
+   "text": "",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 14,
+   "text": "",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 15,
+   "text": "",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 16,
+   "text": "",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 17,
+   "text": "",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 18,
+   "text": "Theme",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 19,
+   "text": "Toggle language",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 20,
+   "text": "Sign Out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/",
+   "idx": 21,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 22,
+   "text": "Tile view",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 23,
+   "text": "List view",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 24,
+   "text": "New Notebook",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 0,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 1,
+   "text": "New",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 2,
+   "text": "Sources",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 3,
+   "text": "Sources",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 4,
+   "text": "Notebooks",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 5,
+   "text": "Notebooks",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 6,
+   "text": "Ask and Search",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 7,
+   "text": "Ask and Search",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 8,
+   "text": "Podcasts",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 9,
+   "text": "Podcasts",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 10,
+   "text": "Models",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 11,
+   "text": "Models",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 12,
+   "text": "Transformations",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 13,
+   "text": "Transformations",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 14,
+   "text": "Settings",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 15,
+   "text": "Settings",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 16,
+   "text": "Advanced",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 17,
+   "text": "Advanced",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 18,
+   "text": "Theme Theme",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 19,
+   "text": "Language Toggle language",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 20,
+   "text": "Sign Out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/notebooks",
+   "idx": 21,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 22,
+   "text": "Tile view",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 23,
+   "text": "List view",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/notebooks",
+   "idx": 24,
+   "text": "New Notebook",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 0,
+   "text": "",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 1,
+   "text": "New",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 2,
+   "text": "",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 3,
+   "text": "",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 4,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 5,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 6,
+   "text": "",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 7,
+   "text": "",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 8,
+   "text": "",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 9,
+   "text": "",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 10,
+   "text": "",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 11,
+   "text": "",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 12,
+   "text": "",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 13,
+   "text": "",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 14,
+   "text": "",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 15,
+   "text": "",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 16,
+   "text": "",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 17,
+   "text": "",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 18,
+   "text": "Theme",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/sources",
+   "idx": 19,
+   "text": "Toggle language",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/sources",
+   "idx": 20,
+   "text": "Sign Out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/sources",
+   "idx": 21,
+   "text": "Type",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/search",
+   "idx": 0,
+   "text": "",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 1,
+   "text": "New",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 2,
+   "text": "Sources",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 3,
+   "text": "Sources",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 4,
+   "text": "Notebooks",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 5,
+   "text": "Notebooks",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 6,
+   "text": "Ask and Search",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 7,
+   "text": "Ask and Search",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 8,
+   "text": "Podcasts",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 9,
+   "text": "Podcasts",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 10,
+   "text": "Models",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 11,
+   "text": "Models",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 12,
+   "text": "Transformations",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 13,
+   "text": "Transformations",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 14,
+   "text": "Settings",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 15,
+   "text": "Settings",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 16,
+   "text": "Advanced",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 17,
+   "text": "Advanced",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 18,
+   "text": "Theme Theme",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 19,
+   "text": "Language Toggle language",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 20,
+   "text": "Sign Out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/search",
+   "idx": 21,
+   "text": "Ask (beta)",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 22,
+   "text": "Search",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/search",
+   "idx": 23,
+   "text": "Search",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/podcasts",
+   "idx": 0,
+   "text": "",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 1,
+   "text": "New",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 2,
+   "text": "",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 3,
+   "text": "",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 4,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 5,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 6,
+   "text": "",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 7,
+   "text": "",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 8,
+   "text": "",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 9,
+   "text": "",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 10,
+   "text": "",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 11,
+   "text": "",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 12,
+   "text": "",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 13,
+   "text": "",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 14,
+   "text": "",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 15,
+   "text": "",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 16,
+   "text": "",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 17,
+   "text": "",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 18,
+   "text": "Theme",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/podcasts",
+   "idx": 19,
+   "text": "Toggle language",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/podcasts",
+   "idx": 20,
+   "text": "Sign Out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/podcasts",
+   "idx": 21,
+   "text": "Episodes",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/podcasts",
+   "idx": 22,
+   "text": "Profiles",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/podcasts",
+   "idx": 23,
+   "text": "Generate Podcast",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/podcasts",
+   "idx": 24,
+   "text": "Refresh",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/settings",
+   "idx": 0,
+   "text": "",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 1,
+   "text": "New",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 2,
+   "text": "Sources",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 3,
+   "text": "Sources",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 4,
+   "text": "Notebooks",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 5,
+   "text": "Notebooks",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 6,
+   "text": "Ask and Search",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 7,
+   "text": "Ask and Search",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 8,
+   "text": "Podcasts",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 9,
+   "text": "Podcasts",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 10,
+   "text": "Models",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 11,
+   "text": "Models",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 12,
+   "text": "Transformations",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 13,
+   "text": "Transformations",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 14,
+   "text": "Settings",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 15,
+   "text": "Settings",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 16,
+   "text": "Advanced",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 17,
+   "text": "Advanced",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 18,
+   "text": "Theme Theme",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 19,
+   "text": "Language Toggle language",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 20,
+   "text": "Sign Out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/settings",
+   "idx": 21,
+   "text": "",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 22,
+   "text": "Auto (Recommended)",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 23,
+   "text": "Help me choose",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings",
+   "idx": 24,
+   "text": "",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/transformations",
+   "idx": 0,
+   "text": "",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 1,
+   "text": "New",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 2,
+   "text": "",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 3,
+   "text": "",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 4,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 5,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 6,
+   "text": "",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 7,
+   "text": "",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 8,
+   "text": "",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 9,
+   "text": "",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 10,
+   "text": "",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 11,
+   "text": "",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 12,
+   "text": "",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 13,
+   "text": "",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 14,
+   "text": "",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 15,
+   "text": "",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 16,
+   "text": "",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 17,
+   "text": "",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 18,
+   "text": "Theme",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/transformations",
+   "idx": 19,
+   "text": "Toggle language",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/transformations",
+   "idx": 20,
+   "text": "Sign Out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/transformations",
+   "idx": 21,
+   "text": "",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/transformations",
+   "idx": 22,
+   "text": "Transformations",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/transformations",
+   "idx": 23,
+   "text": "Playground",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/transformations",
+   "idx": 24,
+   "text": "Default Transformation Prompt This will be added t",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/advanced",
+   "idx": 0,
+   "text": "",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 1,
+   "text": "New",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 2,
+   "text": "Sources",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 3,
+   "text": "Sources",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 4,
+   "text": "Notebooks",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 5,
+   "text": "Notebooks",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 6,
+   "text": "Ask and Search",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 7,
+   "text": "Ask and Search",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 8,
+   "text": "Podcasts",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 9,
+   "text": "Podcasts",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 10,
+   "text": "Models",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 11,
+   "text": "Models",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 12,
+   "text": "Transformations",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 13,
+   "text": "Transformations",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 14,
+   "text": "Settings",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 15,
+   "text": "Settings",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 16,
+   "text": "Advanced",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 17,
+   "text": "Advanced",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 18,
+   "text": "Theme Theme",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 19,
+   "text": "Language Toggle language",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 20,
+   "text": "Sign Out",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/advanced",
+   "idx": 21,
+   "text": "Existing",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 22,
+   "text": "",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 23,
+   "text": "",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/advanced",
+   "idx": 24,
+   "text": "",
+   "after": "/advanced",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 0,
+   "text": "",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 1,
+   "text": "New",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 2,
+   "text": "",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 3,
+   "text": "",
+   "after": "/sources",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 4,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 5,
+   "text": "",
+   "after": "/notebooks",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 6,
+   "text": "",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 7,
+   "text": "",
+   "after": "/search",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 8,
+   "text": "",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 9,
+   "text": "",
+   "after": "/podcasts",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 10,
+   "text": "",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 11,
+   "text": "",
+   "after": "/settings/models",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 12,
+   "text": "",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 13,
+   "text": "",
+   "after": "/transformations",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/api-keys",
+   "idx": 14,
+   "text": "",
+   "after": "/settings",
+   "newErrors": 0
+  }
+ ],
+ "forms": [
+  {
+   "page": "/settings",
+   "idx": 0,
+   "filled": [
+    "default_content_processing_engine_url=<select>",
+    "default_embedding_option=<select>",
+    "auto_delete_files=<select>"
+   ],
+   "submit": "clicked \"Save\"",
+   "after": "/settings",
+   "text": "Theme Toggle language Settings Content Processing Configure how documents and URLs are processed Document Processing Engine Auto (Recommended) Auto (Recommended"
+  }
+ ],
+ "auth": [
+  {
+   "kind": "signup",
+   "url": "/signup",
+   "status": 404,
+   "result": "no password field on page",
+   "text": "404 This page could not be found."
+  },
+  {
+   "kind": "signup",
+   "url": "/register",
+   "status": 404,
+   "result": "no password field on page",
+   "text": "404 This page could not be found."
+  },
+  {
+   "kind": "login",
+   "url": "/login",
+   "status": 200,
+   "result": "no password field on page",
+   "text": "Open Notebook New COLLECT Sources PROCESS Notebooks Ask and Search CREATE Podcasts MANAGE Models Transformations Settings Advanced Quick actions Ctrl+ K Navigation, search, ask, theme Theme Theme Language Toggle language Sign Out Notebooks New Notebook No results Start by creating your first noteboo"
+  }
+ ],
+ "notes": [],
+ "finished": "2026-10-17T16:41:13.319Z"
+}

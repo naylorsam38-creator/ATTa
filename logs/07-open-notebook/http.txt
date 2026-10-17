@@ -1,0 +1,4 @@
+http://localhost:8502/ -> 307
+http://localhost:5055/health -> 200
+http://localhost:5055/api/notebooks -> 200
+http://localhost:5055/docs -> 200
