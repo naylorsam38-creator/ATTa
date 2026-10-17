@@ -1,0 +1,14 @@
+Launch container using docker command​
+Pre-requisites: Docker
+Alternatively to using docker compose, you may also launch docker using this command. This command, as shown, will launch the latest stable build of Actual.
+$ docker run --pull=always --restart=unless-stopped -d -p 5006:5006 -v YOUR/PATH/TO/DATA:/data --name my_actual_budget actualbudget/actual-server:latest
+--pull=always -- always pulls the latest image
+--restart=unless-stopped -- sets the restart policy of the container
+-d -- starts the container as background application
+-p 5006:5006 -- sets the port to access Actual. (HOST PORT:DOCKER PORT)
+-v YOUR/PATH/TO/DATA:/data -- tells the container where to store your budget data. This persists the data on your hard disk so it isn't lost if you remove the container. Change the current value to a folder on your host computer. The server will create server-files and user-files subfolders at this location.
+--name my_actual_budget -- gives your new docker container a name (change this to whatever you want)
+actualbudget/actual-server:latest -- defines which image you want to pull and launch.
+Update Docker container using docker command​
+$ docker stop my_actual_budget
+$ docker cont

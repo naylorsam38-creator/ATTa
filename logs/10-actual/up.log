@@ -1,0 +1,3 @@
+validating /tmp/claude-0/-home-user-ATTa/c994121a-09ca-5a78-86c9-8561209a3bdd/scratchpad/src/actual/packages/sync-server/docker-compose.yml: services.actual_server.environment must be a mapping
+Status: Downloaded newer image for actualbudget/actual-server:latest
+6518e35f672c73dfb24581e27fa0d5ee09eee22fed326d47ccac782ddb8ac9e6

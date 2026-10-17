@@ -1,0 +1,4 @@
+/ -> 000
+/health -> 000
+/info -> 000
+/account/needs-bootstrap -> 000
