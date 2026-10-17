@@ -1,0 +1,3 @@
+{"base":"http://localhost:5230","out":"logs/05-memos/playwright","pre":"tools/apps/memos_pre.js","signupPaths":[],"loginPaths":[],
+ "startPaths":["/","/explore","/archived","/attachments","/inbox","/setting","/u/testeralpha","/review"],
+ "maxPages":30,"clickPages":10,"maxClicks":25,"crawlMinutes":4,"clickMinutes":8,"formMinutes":4}

@@ -1,0 +1,1259 @@
+{
+ "base": "http://localhost:5230",
+ "started": "2026-10-17T16:15:00.564Z",
+ "pages": [
+  {
+   "url": "/",
+   "status": 200,
+   "finalUrl": "/",
+   "title": "Memos",
+   "links": 3
+  },
+  {
+   "url": "/explore",
+   "status": 200,
+   "finalUrl": "/explore",
+   "title": "Memos",
+   "links": 3
+  },
+  {
+   "url": "/archived",
+   "status": 200,
+   "finalUrl": "/archived",
+   "title": "Memos",
+   "links": 3
+  },
+  {
+   "url": "/attachments",
+   "status": 200,
+   "finalUrl": "/attachments",
+   "title": "Memos",
+   "links": 3
+  },
+  {
+   "url": "/inbox",
+   "status": 200,
+   "finalUrl": "/inbox",
+   "title": "Memos",
+   "links": 3
+  },
+  {
+   "url": "/setting",
+   "status": 200,
+   "finalUrl": "/setting",
+   "title": "Memos",
+   "links": 18
+  },
+  {
+   "url": "/u/testeralpha",
+   "status": 200,
+   "finalUrl": "/u/testeralpha",
+   "title": "Memos",
+   "links": 3
+  },
+  {
+   "url": "/review",
+   "status": 200,
+   "finalUrl": "/review",
+   "title": "Memos",
+   "links": 7
+  },
+  {
+   "url": "/calendar",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/map",
+   "status": 200,
+   "finalUrl": "/map",
+   "title": "Memos",
+   "links": 5
+  },
+  {
+   "url": "/about",
+   "status": 200,
+   "finalUrl": "/about",
+   "title": "Memos",
+   "links": 15
+  },
+  {
+   "url": "/calendar/2026/09",
+   "status": 200,
+   "finalUrl": "/calendar/2026/09",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/11",
+   "status": 200,
+   "finalUrl": "/calendar/2026/11",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/09/27",
+   "status": 200,
+   "finalUrl": "/calendar/2026/09/27",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/09/28",
+   "status": 200,
+   "finalUrl": "/calendar/2026/09/28",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/09/29",
+   "status": 200,
+   "finalUrl": "/calendar/2026/09/29",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/09/30",
+   "status": 200,
+   "finalUrl": "/calendar/2026/09/30",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/10/01",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10/01",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/10/02",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10/02",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/10/03",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10/03",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/10/04",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10/04",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/10/05",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10/05",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/10/06",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10/06",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/10/07",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10/07",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/10/08",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10/08",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/10/09",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10/09",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/10/10",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10/10",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/10/11",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10/11",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/10/12",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10/12",
+   "title": "Memos",
+   "links": 40
+  },
+  {
+   "url": "/calendar/2026/10/13",
+   "status": 200,
+   "finalUrl": "/calendar/2026/10/13",
+   "title": "Memos",
+   "links": 40
+  }
+ ],
+ "consoleErrors": [
+  {
+   "page": "/",
+   "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+   "loc": "/memos.api.v1.AuthService/RefreshToken:0"
+  }
+ ],
+ "pageErrors": [],
+ "failedRequests": [
+  {
+   "page": "/",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/archived",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/attachments",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/inbox",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/setting",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/u/testeralpha",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/review",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/map",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/about",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/09",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/11",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/09/27",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/09/28",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/09/29",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/09/30",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/01",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/02",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/03",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/04",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/05",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/06",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/07",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/08",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/09",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/10",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/11",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/12",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/13",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/map",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/attachments",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-01",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-02",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-03",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-04",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-05",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-06",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-07",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-08",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-09",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-10",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-11",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-12",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-13",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-14",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-15",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/?filter=displayTime%3A2026-10-16",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/map",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/attachments",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-01",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-02",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-03",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-04",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-05",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-06",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-07",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-08",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-09",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-10",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-11",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-12",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-13",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-14",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-15",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore?filter=displayTime%3A2026-10-16",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/map",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/attachments",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/archived?filter=displayTime%3A2026-10-01",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/archived?filter=displayTime%3A2026-10-02",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/archived?filter=displayTime%3A2026-10-03",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/explore",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/archived",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/attachments",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/inbox",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/setting",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/u/testeralpha",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/review",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/map",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/about",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/09",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/11",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/09/27",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/09/28",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/09/29",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/09/30",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/01",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/02",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/calendar/2026/10/03",
+   "url": "http://localhost:5230/api/v1/sse",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  }
+ ],
+ "httpErrors": [
+  {
+   "page": "/",
+   "url": "http://localhost:5230/memos.api.v1.AuthService/RefreshToken",
+   "method": "POST",
+   "status": 401
+  }
+ ],
+ "clicks": [
+  {
+   "page": "/",
+   "idx": 0,
+   "text": "Memos",
+   "after": "/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 1,
+   "text": "New memo",
+   "after": "/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 2,
+   "text": "Home",
+   "after": "/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 3,
+   "text": "Calendar",
+   "after": "/calendar/2026/10",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 4,
+   "text": "Map",
+   "after": "/map",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 5,
+   "text": "Attachments",
+   "after": "/attachments",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 6,
+   "text": "Search",
+   "after": "/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 7,
+   "text": "Previous month",
+   "after": "/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 8,
+   "text": "Next month",
+   "after": "/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 9,
+   "text": "1",
+   "after": "/?filter=displayTime%3A2026-10-01",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 10,
+   "text": "2",
+   "after": "/?filter=displayTime%3A2026-10-02",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 11,
+   "text": "3",
+   "after": "/?filter=displayTime%3A2026-10-03",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 12,
+   "text": "4",
+   "after": "/?filter=displayTime%3A2026-10-04",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 13,
+   "text": "5",
+   "after": "/?filter=displayTime%3A2026-10-05",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 14,
+   "text": "6",
+   "after": "/?filter=displayTime%3A2026-10-06",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 15,
+   "text": "7",
+   "after": "/?filter=displayTime%3A2026-10-07",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 16,
+   "text": "8",
+   "after": "/?filter=displayTime%3A2026-10-08",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 17,
+   "text": "9",
+   "after": "/?filter=displayTime%3A2026-10-09",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 18,
+   "text": "10",
+   "after": "/?filter=displayTime%3A2026-10-10",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 19,
+   "text": "11",
+   "after": "/?filter=displayTime%3A2026-10-11",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 20,
+   "text": "12",
+   "after": "/?filter=displayTime%3A2026-10-12",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 21,
+   "text": "13",
+   "after": "/?filter=displayTime%3A2026-10-13",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 22,
+   "text": "14",
+   "after": "/?filter=displayTime%3A2026-10-14",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 23,
+   "text": "15",
+   "after": "/?filter=displayTime%3A2026-10-15",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 24,
+   "text": "16",
+   "after": "/?filter=displayTime%3A2026-10-16",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 0,
+   "text": "Memos",
+   "after": "/explore",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 1,
+   "text": "New memo",
+   "after": "/explore",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 2,
+   "text": "Explore",
+   "after": "/explore",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 3,
+   "text": "Calendar",
+   "after": "/calendar/2026/10",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 4,
+   "text": "Map",
+   "after": "/map",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 5,
+   "text": "Attachments",
+   "after": "/attachments",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 6,
+   "text": "Search",
+   "after": "/explore",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 7,
+   "text": "Previous month",
+   "after": "/explore",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 8,
+   "text": "Next month",
+   "after": "/explore",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 9,
+   "text": "1",
+   "after": "/explore?filter=displayTime%3A2026-10-01",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 10,
+   "text": "2",
+   "after": "/explore?filter=displayTime%3A2026-10-02",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 11,
+   "text": "3",
+   "after": "/explore?filter=displayTime%3A2026-10-03",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 12,
+   "text": "4",
+   "after": "/explore?filter=displayTime%3A2026-10-04",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 13,
+   "text": "5",
+   "after": "/explore?filter=displayTime%3A2026-10-05",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 14,
+   "text": "6",
+   "after": "/explore?filter=displayTime%3A2026-10-06",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 15,
+   "text": "7",
+   "after": "/explore?filter=displayTime%3A2026-10-07",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 16,
+   "text": "8",
+   "after": "/explore?filter=displayTime%3A2026-10-08",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 17,
+   "text": "9",
+   "after": "/explore?filter=displayTime%3A2026-10-09",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 18,
+   "text": "10",
+   "after": "/explore?filter=displayTime%3A2026-10-10",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 19,
+   "text": "11",
+   "after": "/explore?filter=displayTime%3A2026-10-11",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 20,
+   "text": "12",
+   "after": "/explore?filter=displayTime%3A2026-10-12",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 21,
+   "text": "13",
+   "after": "/explore?filter=displayTime%3A2026-10-13",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 22,
+   "text": "14",
+   "after": "/explore?filter=displayTime%3A2026-10-14",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 23,
+   "text": "15",
+   "after": "/explore?filter=displayTime%3A2026-10-15",
+   "newErrors": 0
+  },
+  {
+   "page": "/explore",
+   "idx": 24,
+   "text": "16",
+   "after": "/explore?filter=displayTime%3A2026-10-16",
+   "newErrors": 0
+  },
+  {
+   "page": "/archived",
+   "idx": 0,
+   "text": "Memos",
+   "after": "/archived",
+   "newErrors": 0
+  },
+  {
+   "page": "/archived",
+   "idx": 1,
+   "text": "New memo",
+   "after": "/archived",
+   "newErrors": 0
+  },
+  {
+   "page": "/archived",
+   "idx": 2,
+   "text": "Home",
+   "after": "/",
+   "newErrors": 0
+  },
+  {
+   "page": "/archived",
+   "idx": 3,
+   "text": "Calendar",
+   "after": "/calendar/2026/10",
+   "newErrors": 0
+  },
+  {
+   "page": "/archived",
+   "idx": 4,
+   "text": "Map",
+   "after": "/map",
+   "newErrors": 0
+  },
+  {
+   "page": "/archived",
+   "idx": 5,
+   "text": "Attachments",
+   "after": "/attachments",
+   "newErrors": 0
+  },
+  {
+   "page": "/archived",
+   "idx": 6,
+   "text": "Search",
+   "after": "/archived",
+   "newErrors": 0
+  },
+  {
+   "page": "/archived",
+   "idx": 7,
+   "text": "Previous month",
+   "after": "/archived",
+   "newErrors": 0
+  },
+  {
+   "page": "/archived",
+   "idx": 8,
+   "text": "Next month",
+   "after": "/archived",
+   "newErrors": 0
+  },
+  {
+   "page": "/archived",
+   "idx": 9,
+   "text": "1",
+   "after": "/archived?filter=displayTime%3A2026-10-01",
+   "newErrors": 0
+  },
+  {
+   "page": "/archived",
+   "idx": 10,
+   "text": "2",
+   "after": "/archived?filter=displayTime%3A2026-10-02",
+   "newErrors": 0
+  },
+  {
+   "page": "/archived",
+   "idx": 11,
+   "text": "3",
+   "after": "/archived?filter=displayTime%3A2026-10-03",
+   "newErrors": 0
+  }
+ ],
+ "forms": [],
+ "auth": [
+  {
+   "kind": "signup(admin)",
+   "url": "/auth/signup",
+   "afterUrl": "http://localhost:5230/",
+   "result": "Memos Home Calendar Map Attachments October 2026 S M T W T F S 27 28 29 30 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 VIEWS Tasks testeralpha Any thoughts... P"
+  }
+ ],
+ "notes": [
+  "click phase time budget reached"
+ ],
+ "finished": "2026-10-17T16:29:18.235Z"
+}

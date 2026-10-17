@@ -1,0 +1,6 @@
+/ -> 200
+/auth -> 200
+/auth/signup -> 200
+/explore -> 200
+/api/v1/workspace/profile -> 404
+/healthz -> 200
