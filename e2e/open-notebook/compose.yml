@@ -1,0 +1,20 @@
+# open-notebook: repo's docker-compose.yml (surrealdb/surrealdb:v2 + lfnovo/open_notebook:v1-latest); only the UI host port changed (8502 -> 9107).
+services:
+  surrealdb:
+    image: surrealdb/surrealdb:v2
+    command: ["start", "--log", "info", "--user", "root", "--pass", "root", "rocksdb:/mydata/mydatabase.db"]
+    user: root
+    volumes: ["./surreal_data:/mydata"]
+    environment: [SURREAL_EXPERIMENTAL_GRAPHQL=true]
+  open_notebook:
+    image: lfnovo/open_notebook:v1-latest
+    ports: ["9107:8502", "5055:5055"]
+    environment:
+      - OPEN_NOTEBOOK_ENCRYPTION_KEY=e2e-secret-string
+      - SURREAL_URL=ws://surrealdb:8000/rpc
+      - SURREAL_USER=root
+      - SURREAL_PASSWORD=root
+      - SURREAL_NAMESPACE=open_notebook
+      - SURREAL_DATABASE=open_notebook
+    volumes: ["./notebook_data:/app/data"]
+    depends_on: [surrealdb]

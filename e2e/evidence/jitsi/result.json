@@ -1,0 +1,78 @@
+{
+  "app": "jitsi",
+  "direct": "http://127.0.0.1:9120",
+  "proxy": "http://127.0.0.1:9220",
+  "checks": {
+    "a": {
+      "status": "PASS",
+      "evidence": "e2e-jitsi-web-1 ghcr.io/jitsi/web:stable Up 17 seconds | e2e-jitsi-jvb-1 ghcr.io/jitsi/jvb:stable Up 18 seconds | e2e-jitsi-jicofo-1 ghcr.io/jitsi/jicofo:stable Up 17 seconds | e2e-jitsi-prosody-1 ghcr.io/jitsi/prosody:stable Up 18 seconds ; GET / -> 200",
+      "error": null,
+      "pointsTo": null
+    },
+    "b": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9120/ title \"Jitsi Meet\" (242 chars visible); screenshot b-direct-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "c": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9220/ title \"Jitsi Meet\" (direct title \"Jitsi Meet\"); screenshot c-proxy-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "d": {
+      "status": "PASS",
+      "evidence": "HTML via proxy (/ 200): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true window.__capabilityPort=0.2.0 button=true",
+      "error": null,
+      "pointsTo": null
+    },
+    "e": {
+      "status": "PASS",
+      "evidence": "no password field at / (now http://127.0.0.1:9220/); password field still shown: false; final http://127.0.0.1:9220/; screenshots e*-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "f": {
+      "status": "FAIL",
+      "evidence": "0 links clicked from http://127.0.0.1:9220/: ; screenshots f*.png",
+      "error": "no clickable same-origin links found after login",
+      "pointsTo": null
+    },
+    "g": {
+      "status": "N/A",
+      "evidence": "app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe",
+      "error": null,
+      "pointsTo": null
+    },
+    "h": {
+      "status": "PASS",
+      "evidence": "largest asset /images/welcome-background.png (730077B): direct 200 730077B 764681e1c455e5ac vs proxy 200 730077B 764681e1c455e5ac; 25 MB POST /: direct -> 405 in 6ms, proxy -> 405 in 12ms \"<html> <head><title>405 Not Allowed</title><script src=\"/_cp/port.js\" data-capa\"",
+      "error": null,
+      "pointsTo": null
+    },
+    "i": {
+      "status": "FAIL",
+      "evidence": "HTML / 200 ae=gzip: app sent gzip, proxy sent 200 gzip decodes=true hook=true length-ok=true || HTML / 200 ae=br: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || asset /_cp/port.js ae=gzip: app gzip, proxy none, decoded identical=false || asset /_cp/port.js ae=br: app none, proxy none, decoded identical=false",
+      "error": "2 compressed response(s) broken",
+      "pointsTo": null
+    },
+    "j": {
+      "status": "PASS",
+      "evidence": "attach: \"button-mover is in (trusted).\"; <a> \"\" display:block: dragged +120,+60 -> on screen moved 120,60, style.translate=\"120px 60px\" saved=true; after reload 1 element(s) still moved; screenshots j-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "k": {
+      "status": "PASS",
+      "evidence": "console errors: direct 0, proxy 0 (0 only seen through proxy); failed requests 0; 5xx 0; proxy log: \"PASS\"; full list console.txt",
+      "error": null,
+      "pointsTo": null
+    }
+  },
+  "directConsoleErrors": [],
+  "proxyConsoleErrors": [],
+  "failedRequests": [],
+  "badResponses": [],
+  "websockets": []
+}

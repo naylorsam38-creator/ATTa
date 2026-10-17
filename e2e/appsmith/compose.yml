@@ -1,0 +1,6 @@
+# Appsmith: official image appsmith/appsmith-ce:latest (Appsmith's documented docker-compose); only the port changed.
+services:
+  appsmith:
+    image: appsmith/appsmith-ce:latest
+    ports: ["9113:80"]
+    volumes: ["./stacks:/appsmith-stacks"]

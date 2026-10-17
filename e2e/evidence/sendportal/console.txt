@@ -1,0 +1,14 @@
+DIRECT session console errors (0):
+
+
+PROXY session console errors (1):
+Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+
+Failed requests:
+
+
+5xx / missing /_cp responses:
+500 http://127.0.0.1:9108/register
+
+Proxy process log:
+PASS

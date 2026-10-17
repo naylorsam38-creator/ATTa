@@ -1,0 +1,20 @@
+DIRECT session console errors (0):
+
+
+PROXY session console errors (4):
+Failed to load resource: the server responded with a status of 502 (Bad Gateway)
+Failed to load resource: the server responded with a status of 502 (Bad Gateway)
+Failed to load resource: the server responded with a status of 502 (Bad Gateway)
+Failed to load resource: the server responded with a status of 502 (Bad Gateway)
+
+Failed requests:
+
+
+5xx / missing /_cp responses:
+502 http://127.0.0.1:9206/
+502 http://127.0.0.1:9206/
+502 http://127.0.0.1:9206/
+502 http://127.0.0.1:9206/
+
+Proxy process log:
+PASS

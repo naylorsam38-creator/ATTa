@@ -1,0 +1,80 @@
+{
+  "app": "ntfy",
+  "direct": "http://127.0.0.1:9122",
+  "proxy": "http://127.0.0.1:9222",
+  "checks": {
+    "a": {
+      "status": "PASS",
+      "evidence": "e2e-ntfy-ntfy-1 binwiederhier/ntfy:latest Up 6 seconds ; GET / -> 200",
+      "error": null,
+      "pointsTo": null
+    },
+    "b": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9122/ title \"ntfy\" (428 chars visible); screenshot b-direct-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "c": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9222/ title \"ntfy\" (direct title \"ntfy\"); screenshot c-proxy-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "d": {
+      "status": "PASS",
+      "evidence": "HTML via proxy (/ 200): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true window.__capabilityPort=0.2.0 button=true",
+      "error": null,
+      "pointsTo": null
+    },
+    "e": {
+      "status": "PASS",
+      "evidence": "no password field at / (now http://127.0.0.1:9222/); password field still shown: false; final http://127.0.0.1:9222/; screenshots e*-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "f": {
+      "status": "FAIL",
+      "evidence": "0 links clicked from http://127.0.0.1:9222/: ; screenshots f*.png",
+      "error": "no clickable same-origin links found after login",
+      "pointsTo": null
+    },
+    "g": {
+      "status": "FAIL",
+      "evidence": "SSE /e2etest/sse through proxy: {\"status\":null,\"error\":\"AbortError: no data within 12001ms\"}; app's live-refresh WebSockets seen: 0",
+      "error": "server-sent events never reach the browser through the proxy (AbortError: no data within 12001ms)",
+      "pointsTo": "proxy: proxyRequest() buffers the whole upstream body (chunks[] until \"end\") before writing anything"
+    },
+    "h": {
+      "status": "FAIL",
+      "evidence": "largest asset /_cp/port.js (31628B): direct 404 51B 502c66a082bb1c3e vs proxy 200 31628B 939f343cf2274092; 25 MB POST /: direct -> 413 in 9ms, proxy -> 413 in 5ms \"{\"code\":41303,\"http\":413,\"error\":\"JSON body too large\"} \"",
+      "error": "downloaded bytes differ between direct and proxy",
+      "pointsTo": null
+    },
+    "i": {
+      "status": "FAIL",
+      "evidence": "HTML / 200 ae=gzip: app sent gzip, proxy sent 200 gzip decodes=true hook=true length-ok=true || HTML / 200 ae=br: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || asset /_cp/port.js ae=gzip: app none, proxy none, decoded identical=false || asset /_cp/port.js ae=br: app none, proxy none, decoded identical=false",
+      "error": "2 compressed response(s) broken",
+      "pointsTo": null
+    },
+    "j": {
+      "status": "FAIL",
+      "evidence": "attach: \"button-mover is in (trusted).\"; <button> \"\" display:flex: dragged +120,+60 -> on screen moved 120,60, style.translate=\"120px 60px\" saved=true || <a> \"documentation\" display:inline: dragged +120,+60 -> on screen moved 0,0, style.translate=\"120px 60px\" saved=true; after reload 2 element(s) still moved; screenshots j-*.png",
+      "error": "<a> \"documentation\" display:inline: dragged +120,+60 -> on screen moved 0,0, style.translate=\"120px 60px\" saved=true",
+      "pointsTo": "mover__100_adapter.js place_() (uses CSS translate) / applySaved()"
+    },
+    "k": {
+      "status": "PASS",
+      "evidence": "console errors: direct 0, proxy 0 (0 only seen through proxy); failed requests 1; 5xx 0; proxy log: \"PASS\"; full list console.txt",
+      "error": null,
+      "pointsTo": null
+    }
+  },
+  "directConsoleErrors": [],
+  "proxyConsoleErrors": [],
+  "failedRequests": [
+    "GET http://127.0.0.1:9222/e2etest/sse — net::ERR_ABORTED"
+  ],
+  "badResponses": [],
+  "websockets": []
+}

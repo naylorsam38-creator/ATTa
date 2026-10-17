@@ -1,0 +1,78 @@
+{
+  "app": "supabase",
+  "direct": "http://127.0.0.1:9112",
+  "proxy": "http://127.0.0.1:9212",
+  "checks": {
+    "a": {
+      "status": "PASS",
+      "evidence": "supabase-storage supabase/storage-api:v1.81.0 Up 55 seconds (healthy) | supabase-edge-functions supabase/edge-runtime:v1.77.4 Restarting (1) 17 seconds ago | realtime-dev.supabase-realtime supabase/realtime:v2.143.3 Up 55 seconds (healthy) | supabase-meta supabase/postgres-meta:v0.100.0 Up 56 seconds (healthy) | supabase-pooler supabase/supavisor:2.9.13 Restarting (1) 1 second ago | supabase-auth supabase/gotrue:v2.197.0 Up 55 seconds (healthy) | supabase-rest postgrest/postgrest:v14.18 Up 56 seconds (healthy) | supabase-envoy envoyproxy/envoy:v1.39.1 Up 56 seconds (healthy) | supabase-db supabase/postgres:17.6.1.136 Up About a minute (healthy) | supabase-studio supabase/studio:2026.10.12-sha-3699278 Up About a minute (healthy) | supabase-imgproxy darthsim/imgproxy:v3.31.4 Up About a minute (healthy) ; GET / -> 401",
+      "error": null,
+      "pointsTo": null
+    },
+    "b": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9112/project/default title \"Default Project | Default Organization | Supabase\" (621 chars visible); screenshot b-direct-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "c": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9212/project/default title \"Default Project | Default Organization | Supabase\" (direct title \"Default Project | Default Organization | Supabase\"); screenshot c-proxy-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "d": {
+      "status": "FAIL",
+      "evidence": "HTML via proxy (/ 401): hook tag MISSING; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true window.__capabilityPort=0.2.0 button=true",
+      "error": "see evidence",
+      "pointsTo": "port.js / proxy injectHook()"
+    },
+    "e": {
+      "status": "PASS",
+      "evidence": "no password field at / (now http://127.0.0.1:9212/project/default); password field still shown: false; final http://127.0.0.1:9212/project/default; screenshots e*-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "f": {
+      "status": "PASS",
+      "evidence": "6 links clicked from http://127.0.0.1:9212/project/default: ok \"Table Editor\" /project/default/editor -> http://127.0.0.1:9212/project/default/editor || ok \"SQL Editor\" /project/default/sql -> http://127.0.0.1:9212/project/default/sql/new || ok \"Database\" /project/default/database/schemas -> http://127.0.0.1:9212/project/default/database/schemas || ok \"Authentication\" /project/default/auth/users -> http://127.0.0.1:9212/project/default/auth/users || ok \"Storage\" /project/default/storage/files -> http://127.0.0.1:9212/project/default/storage/files || ok \"Edge Functions\" /project/default/functions -> http://127.0.0.1:9212/project/default/functions; screenshots f*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "g": {
+      "status": "N/A",
+      "evidence": "app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe",
+      "error": null,
+      "pointsTo": null
+    },
+    "h": {
+      "status": "PASS",
+      "evidence": "largest asset /_next/static/media/InterVariable_Italic-s.p.3hwd7k23_92gg.woff2 (51832B): direct 401 58B 379451ffbead2e4f vs proxy 401 58B 379451ffbead2e4f; 25 MB POST /: direct -> 401 in 5ms, proxy -> 401 in 5ms \"User authentication failed. Missing username and password.\"",
+      "error": null,
+      "pointsTo": null
+    },
+    "i": {
+      "status": "FAIL",
+      "evidence": "HTML /project/default 401 ae=gzip: app sent none, proxy sent 401 none decodes=true hook=false length-ok=true || HTML /project/default 401 ae=br: app sent none, proxy sent 401 none decodes=true hook=false length-ok=true || asset /_cp/port.js ae=gzip: app none, proxy none, decoded identical=false || asset /_cp/port.js ae=br: app none, proxy none, decoded identical=false (app never compressed; only pass-through tested)",
+      "error": "2 compressed response(s) broken",
+      "pointsTo": null
+    },
+    "j": {
+      "status": "PASS",
+      "evidence": "attach: \"button-mover is in (trusted).\"; <button> \"Connect\" display:flex: dragged +120,+60 -> on screen moved 120,60, style.translate=\"120px 60px\" saved=true; after reload 1 element(s) still moved; screenshots j-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "k": {
+      "status": "PASS",
+      "evidence": "console errors: direct 0, proxy 0 (0 only seen through proxy); failed requests 0; 5xx 0; proxy log: \"PASS\"; full list console.txt",
+      "error": null,
+      "pointsTo": null
+    }
+  },
+  "directConsoleErrors": [],
+  "proxyConsoleErrors": [],
+  "failedRequests": [],
+  "badResponses": [],
+  "websockets": []
+}

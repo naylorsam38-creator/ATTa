@@ -5,7 +5,7 @@
   "checks": {
     "a": {
       "status": "PASS",
-      "evidence": "e2e-mixpost-mixpost-1 inovector/mixpost:latest Up 16 minutes | e2e-mixpost-redis-1 redis:7 Up 16 minutes | e2e-mixpost-mysql-1 mysql:8.0 Up 16 minutes (healthy) ; GET / -> 302",
+      "evidence": "e2e-mixpost-mixpost-1 inovector/mixpost:latest Up 25 seconds | e2e-mixpost-redis-1 redis:7 Up 40 seconds | e2e-mixpost-mysql-1 mysql:8.0 Up 40 seconds (healthy) ; GET / -> 302",
       "error": null,
       "pointsTo": null
     },
@@ -47,7 +47,7 @@
     },
     "h": {
       "status": "PASS",
-      "evidence": "largest asset /vendor/mixpost-auth/assets/Inter-SemiBold-DtdDzxp6.ttf (315756B): direct 200 315756B e8cbc2b88bc42682 vs proxy 200 315756B e8cbc2b88bc42682; 25 MB POST /mixpost/login: direct -> 419 in 106ms, proxy -> 419 in 173ms \"<!DOCTYPE html> <html lang=\"en\" class=\"scroll-smooth overflow-x-hidden\"> <head> \"",
+      "evidence": "largest asset /vendor/mixpost-auth/assets/Inter-SemiBold-DtdDzxp6.ttf (315756B): direct 200 315756B e8cbc2b88bc42682 vs proxy 200 315756B e8cbc2b88bc42682; 25 MB POST /mixpost/login: direct -> 419 in 255ms, proxy -> 419 in 217ms \"<!DOCTYPE html> <html lang=\"en\" class=\"scroll-smooth overflow-x-hidden\"> <head> \"",
       "error": null,
       "pointsTo": null
     },

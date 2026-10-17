@@ -1,0 +1,88 @@
+{
+  "app": "appsmith",
+  "direct": "http://127.0.0.1:9113",
+  "proxy": "http://127.0.0.1:9213",
+  "checks": {
+    "a": {
+      "status": "PASS",
+      "evidence": "e2e-appsmith-appsmith-1 appsmith/appsmith-ce:latest Up About a minute (healthy) ; GET / -> 200",
+      "error": null,
+      "pointsTo": null
+    },
+    "b": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9113/setup/welcome title \"Appsmith\" (110 chars visible); screenshot b-direct-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "c": {
+      "status": "FAIL",
+      "evidence": "HTTP 502 final http://127.0.0.1:9213/ title \"\" (direct title \"Appsmith\"); screenshot c-proxy-home.png",
+      "error": "title differs from direct",
+      "pointsTo": null
+    },
+    "d": {
+      "status": "FAIL",
+      "evidence": "HTML via proxy (/ 200): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=false window.__capabilityPort=null button=false; CSP: frame-ancestors 'self'",
+      "error": "script tag not in the live DOM",
+      "pointsTo": "port.js / proxy injectHook()"
+    },
+    "e": {
+      "status": "PASS",
+      "evidence": "no signup form at /setup/welcome (now http://127.0.0.1:9213/setup/welcome); signup logged the user in; password field still shown: false; final http://127.0.0.1:9213/setup/welcome; screenshots e*-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "f": {
+      "status": "FAIL",
+      "evidence": "0 links clicked from http://127.0.0.1:9213/setup/welcome: ; screenshots f*.png",
+      "error": "no clickable same-origin links found after login",
+      "pointsTo": null
+    },
+    "g": {
+      "status": "N/A",
+      "evidence": "app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe",
+      "error": null,
+      "pointsTo": null
+    },
+    "h": {
+      "status": "FAIL",
+      "evidence": "no asset with content-length seen; 25 MB POST /user/login: direct -> 405 in 6ms, proxy -> 405 in 7ms \"405 Method Not Allowed\"",
+      "error": "downloaded bytes differ between direct and proxy",
+      "pointsTo": null
+    },
+    "i": {
+      "status": "PASS",
+      "evidence": "HTML /setup/welcome 200 ae=gzip: app sent gzip, proxy sent 200 gzip decodes=true hook=true length-ok=true || HTML /setup/welcome 200 ae=br: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true",
+      "error": null,
+      "pointsTo": null
+    },
+    "j": {
+      "status": "FAIL",
+      "evidence": null,
+      "error": "no port button on the page, so the mover cannot be attached",
+      "pointsTo": "see check d"
+    },
+    "k": {
+      "status": "FAIL",
+      "evidence": "console errors: direct 0, proxy 4 (4 only seen through proxy); failed requests 0; 5xx 4; proxy log: \"PASS\"; full list console.txt",
+      "error": "Failed to load resource: the server responded with a status of 502 (Bad Gateway) | Failed to load resource: the server responded with a status of 502 (Bad Gateway) | Failed to load resource: the server responded with a status of 502 (Bad Gateway) | 502 http://127.0.0.1:9213/ | 502 http://127.0.0.1:9213/setup/welcome",
+      "pointsTo": null
+    }
+  },
+  "directConsoleErrors": [],
+  "proxyConsoleErrors": [
+    "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+    "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+    "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+    "Failed to load resource: the server responded with a status of 502 (Bad Gateway)"
+  ],
+  "failedRequests": [],
+  "badResponses": [
+    "502 http://127.0.0.1:9213/",
+    "502 http://127.0.0.1:9213/setup/welcome",
+    "502 http://127.0.0.1:9213/setup/welcome",
+    "502 http://127.0.0.1:9213/setup/welcome"
+  ],
+  "websockets": []
+}

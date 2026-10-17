@@ -1,0 +1,1 @@
+# OpenCloud: official opencloud-compose (docker-compose.yml + external-proxy/opencloud.yml + e2e/opencloud/e2e.yml), run from /tmp/claude-0/run/opencloud. INITIAL_ADMIN_PASSWORD set; OC_URL = proxy address over http.

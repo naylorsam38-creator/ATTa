@@ -1,0 +1,8 @@
+# Actual: official image actualbudget/actual-server:latest (the repo's packages/sync-server docker-compose); only the port changed.
+services:
+  actual:
+    image: actualbudget/actual-server:latest
+    ports: ["9110:5006"]
+    volumes: ["./data:/data"]
+    environment:
+      - ACTUAL_HOSTNAME=0.0.0.0   # sandbox kernel has no IPv6; default "::" exits right after "Listening on :::5006"

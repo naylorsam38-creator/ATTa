@@ -1,0 +1,124 @@
+DIRECT session console errors (13):
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9118/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9118/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9118/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9118/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9118/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9118/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+
+PROXY session console errors (57):
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+MeilisearchApiError: The Authorization header is missing. It must use the bearer authorization method.
+    at $0.Wa (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:15573)
+    at async V0.multiSearch (http://127.0.0.1:9218/assets/index-BYShu7EU.js:50:30881)
+    at async Object.multiSearch (http://
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+Failed to load resource: the server responded with a status of 401 (Unauthorized)
+
+Failed requests:
+
+
+5xx / missing /_cp responses:
+
+
+Proxy process log:
+PASS

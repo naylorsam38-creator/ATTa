@@ -1,0 +1,88 @@
+{
+  "app": "opencut",
+  "direct": "http://127.0.0.1:9106",
+  "proxy": "http://127.0.0.1:9206",
+  "checks": {
+    "a": {
+      "status": "FAIL",
+      "evidence": " ; GET / -> connect ECONNREFUSED 127.0.0.1:9106",
+      "error": null,
+      "pointsTo": null
+    },
+    "b": {
+      "status": "FAIL",
+      "evidence": null,
+      "error": "check crashed: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:9106/",
+      "pointsTo": null
+    },
+    "c": {
+      "status": "FAIL",
+      "evidence": "HTTP 502 final http://127.0.0.1:9206/ title \"\" (direct title \"null\"); screenshot c-proxy-home.png",
+      "error": "title differs from direct",
+      "pointsTo": null
+    },
+    "d": {
+      "status": "FAIL",
+      "evidence": "HTML via proxy (/ 502): hook tag MISSING; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=false window.__capabilityPort=null button=false",
+      "error": "script tag not in the live DOM",
+      "pointsTo": "port.js / proxy injectHook()"
+    },
+    "e": {
+      "status": "PASS",
+      "evidence": "no password field at / (now http://127.0.0.1:9206/); password field still shown: false; final http://127.0.0.1:9206/; screenshots e*-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "f": {
+      "status": "FAIL",
+      "evidence": "0 links clicked from http://127.0.0.1:9206/: ; screenshots f*.png",
+      "error": "no clickable same-origin links found after login",
+      "pointsTo": null
+    },
+    "g": {
+      "status": "N/A",
+      "evidence": "app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe",
+      "error": null,
+      "pointsTo": null
+    },
+    "h": {
+      "status": "FAIL",
+      "evidence": "no asset with content-length seen; 25 MB POST /: direct -> connect ECONNREFUSED 127.0.0.1:9106 in 1ms, proxy -> 502 in 4ms \"Proxy error: connect ECONNREFUSED 127.0.0.1:9106 \"",
+      "error": "downloaded bytes differ between direct and proxy",
+      "pointsTo": null
+    },
+    "i": {
+      "status": "FAIL",
+      "evidence": "HTML / 502 ae=gzip: app sent none, proxy sent 502 none decodes=true hook=false length-ok=true || HTML / 502 ae=br: app sent none, proxy sent 502 none decodes=true hook=false length-ok=true (app never compressed; only pass-through tested)",
+      "error": "2 compressed response(s) broken",
+      "pointsTo": null
+    },
+    "j": {
+      "status": "FAIL",
+      "evidence": null,
+      "error": "no port button on the page, so the mover cannot be attached",
+      "pointsTo": "see check d"
+    },
+    "k": {
+      "status": "FAIL",
+      "evidence": "console errors: direct 0, proxy 4 (4 only seen through proxy); failed requests 0; 5xx 4; proxy log: \"PASS\"; full list console.txt",
+      "error": "Failed to load resource: the server responded with a status of 502 (Bad Gateway) | Failed to load resource: the server responded with a status of 502 (Bad Gateway) | Failed to load resource: the server responded with a status of 502 (Bad Gateway) | 502 http://127.0.0.1:9206/ | 502 http://127.0.0.1:9206/",
+      "pointsTo": null
+    }
+  },
+  "directConsoleErrors": [],
+  "proxyConsoleErrors": [
+    "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+    "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+    "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+    "Failed to load resource: the server responded with a status of 502 (Bad Gateway)"
+  ],
+  "failedRequests": [],
+  "badResponses": [
+    "502 http://127.0.0.1:9206/",
+    "502 http://127.0.0.1:9206/",
+    "502 http://127.0.0.1:9206/",
+    "502 http://127.0.0.1:9206/"
+  ],
+  "websockets": []
+}

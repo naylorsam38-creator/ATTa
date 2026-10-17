@@ -1,0 +1,17 @@
+# Payload: the blank template's own docker-compose.yml (node:20-alpine, pnpm install && pnpm dev, mongo:latest), run from /tmp/claude-0/run/payload
+# with workspace:* deps set to the published 4.0.0-beta.2 (main is the v4 beta) (what create-payload-app does). Port 3000 -> 9114.
+services:
+  payload:
+    image: node:20-alpine
+    ports: ["9114:3000"]
+    volumes: ["/tmp/claude-0/run/payload:/home/node/app", "node_modules:/home/node/app/node_modules", "/root/.ccr/ca-bundle.crt:/ccr-ca.crt:ro"]
+    working_dir: /home/node/app/
+    command: sh -c "corepack enable && corepack prepare pnpm@latest --activate && pnpm install && pnpm dev"
+    environment: [NODE_EXTRA_CA_CERTS=/ccr-ca.crt]
+    depends_on: [mongo]
+    env_file: [/tmp/claude-0/run/payload/.env]
+  mongo:
+    image: mongo:latest
+    command: ["--storageEngine=wiredTiger"]
+    volumes: ["data:/data/db"]
+volumes: {data: {}, node_modules: {}}

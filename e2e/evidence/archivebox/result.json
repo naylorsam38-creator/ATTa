@@ -5,7 +5,7 @@
   "checks": {
     "a": {
       "status": "PASS",
-      "evidence": "e2e-archivebox-archivebox-1 archivebox/archivebox:latest Up 15 minutes (healthy) ; GET / -> 302",
+      "evidence": "e2e-archivebox-archivebox-1 archivebox/archivebox:latest Up 32 seconds (healthy) ; GET / -> 302",
       "error": null,
       "pointsTo": null
     },
@@ -35,8 +35,8 @@
     },
     "f": {
       "status": "FAIL",
-      "evidence": "6 links clicked from http://127.0.0.1:9201/admin/: FAIL \"http://127.0.0.1:9201\" / -> http://127.0.0.1:9201/admin/core/snapshot/ (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") || FAIL \"ADD ➕\" /add/ -> http://127.0.0.1:9201/add/ (CLICK FAILED: \u001b[2m      - <div role=\"alert\" aria-live=\"polite\" id=\"archivebox-system-warning-banner\">…</div> intercepts pointer events\u001b[22m; opened by URL instead) (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") || FAIL \"CRAWLS\" /admin/crawls/crawl/ -> http://127.0.0.1:9201/admin/crawls/crawl/ (CLICK FAILED: \u001b[2m      - <div role=\"alert\" aria-live=\"polite\" id=\"archivebox-system-warning-banner\">…</div> intercepts pointer events\u001b[22m; opened by URL instead) (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") || FAIL \"LOG\" /admin/core/archiveresult/?o=-1 -> http://127.0.0.1:9201/admin/core/archiveresult/?o=-1 (CLICK FAILED: \u001b[2m      - <div role=\"alert\" aria-live=\"polite\" id=\"archivebox-system-warning-banner\">…</div> intercepts pointer events\u001b[22m; opened by URL instead) (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") errors: Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://127.0.0.1:9201/admin/crawls/crawl/:3893:9) || FAIL \"TAGS\" /admin/core/tag/ -> http://127.0.0.1:9201/admin/core/tag/ (CLICK FAILED: \u001b[2m      - <div role=\"alert\" aria-live=\"polite\" id=\"archivebox-system-warning-banner\">…</div> intercepts pointer events\u001b[22m; opened by URL instead) (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") errors: Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://127.0.0.1:9201/admin/core/archiveresult/?o=-1:3891:9) || FAIL \"DOCS\" /docs/: page.goto: net::ERR_CERT_AUTHORITY_INVALID at http://127.0.0.1:9201/docs/; screenshots f*.png",
-      "error": "7/6 navigations failed",
+      "evidence": "6 links clicked from http://127.0.0.1:9201/admin/: FAIL \"http://127.0.0.1:9201\" / -> http://127.0.0.1:9201/admin/core/snapshot/ (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") || FAIL \"ADD ➕\" /add/ -> http://127.0.0.1:9201/add/ (CLICK FAILED: \u001b[2m      - <div role=\"alert\" aria-live=\"polite\" id=\"archivebox-system-warning-banner\">…</div> intercepts pointer events\u001b[22m; opened by URL instead) (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") || FAIL \"CRAWLS\" /admin/crawls/crawl/ -> http://127.0.0.1:9201/admin/crawls/crawl/ (CLICK FAILED: \u001b[2m      - <div role=\"alert\" aria-live=\"polite\" id=\"archivebox-system-warning-banner\">…</div> intercepts pointer events\u001b[22m; opened by URL instead) (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") || FAIL \"LOG\" /admin/core/archiveresult/?o=-1 -> http://127.0.0.1:9201/admin/core/archiveresult/?o=-1 (CLICK FAILED: \u001b[2m      - <div role=\"alert\" aria-live=\"polite\" id=\"archivebox-system-warning-banner\">…</div> intercepts pointer events\u001b[22m; opened by URL instead) (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") || FAIL \"TAGS\" /admin/core/tag/ -> http://127.0.0.1:9201/admin/core/tag/ (CLICK FAILED: \u001b[2m      - <div role=\"alert\" aria-live=\"polite\" id=\"archivebox-system-warning-banner\">…</div> intercepts pointer events\u001b[22m; opened by URL instead) (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") || FAIL \"DOCS\" /docs/ -> https://github.com/ArchiveBox/ArchiveBox/wiki (LEFT PROXY) (port.js missing) (CLICK FAILED: \u001b[2m      - <div role=\"alert\" aria-live=\"polite\" id=\"archivebox-system-warning-banner\">…</div> intercepts pointer events\u001b[22m; opened by URL instead) errors: Failed to load resource: the server responded with a status of 404 (Not Found); screenshots f*.png",
+      "error": "6/6 navigations failed",
       "pointsTo": null
     },
     "g": {
@@ -47,7 +47,7 @@
     },
     "h": {
       "status": "PASS",
-      "evidence": "largest asset /static/admin/js/vendor/xregexp/xregexp.min.js (163184B): direct 200 163184B f854171b2c0e1b05 vs proxy 200 163184B f854171b2c0e1b05; 25 MB POST /admin/login/: direct -> 403 in 819ms, proxy -> 403 in 904ms \"<!DOCTYPE html> <html lang=\"en\"> <head> <meta http-equiv=\"content-type\" conten\"",
+      "evidence": "largest asset /static/admin/js/vendor/xregexp/xregexp.min.js (163184B): direct 200 163184B f854171b2c0e1b05 vs proxy 200 163184B f854171b2c0e1b05; 25 MB POST /admin/login/: direct -> 403 in 665ms, proxy -> 403 in 650ms \"<!DOCTYPE html> <html lang=\"en\"> <head> <meta http-equiv=\"content-type\" conten\"",
       "error": null,
       "pointsTo": null
     },
@@ -65,20 +65,17 @@
     },
     "k": {
       "status": "FAIL",
-      "evidence": "console errors: direct 0, proxy 2 (2 only seen through proxy); failed requests 3; 5xx 0; proxy log: \"PASS\"; full list console.txt",
-      "error": "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://127.0.0.1:9201/admin/crawls/crawl/:3893:9) | Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://127.0.0.1:9201/admin/core/archiveresult/?o=-1:3891:9)",
+      "evidence": "console errors: direct 0, proxy 1 (1 only seen through proxy); failed requests 1; 5xx 0; proxy log: \"PASS\"; full list console.txt",
+      "error": "Failed to load resource: the server responded with a status of 404 (Not Found)",
       "pointsTo": null
     }
   },
   "directConsoleErrors": [],
   "proxyConsoleErrors": [
-    "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://127.0.0.1:9201/admin/crawls/crawl/:3893:9)",
-    "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://127.0.0.1:9201/admin/core/archiveresult/?o=-1:3891:9)"
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
   ],
   "failedRequests": [
-    "GET http://127.0.0.1:9201/progress.json — net::ERR_ABORTED",
-    "GET http://127.0.0.1:9201/progress.json — net::ERR_ABORTED",
-    "GET https://github.com/ArchiveBox/ArchiveBox/wiki — net::ERR_CERT_AUTHORITY_INVALID"
+    "GET https://camo.githubusercontent.com/37d166331e5a3b56dad04cae9c5bfaaa7042f811daa8cab543454055d49ad2f8/68747470733a2f2f696d6775722e7a6572766963652e696f2f — net::ERR_BLOCKED_BY_ORB"
   ],
   "badResponses": [],
   "websockets": []

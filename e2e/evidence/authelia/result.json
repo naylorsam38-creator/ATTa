@@ -5,7 +5,7 @@
   "checks": {
     "a": {
       "status": "PASS",
-      "evidence": "authelia-authelia-1 authelia/authelia:latest Up 14 minutes (healthy) ; GET / -> 200",
+      "evidence": "e2e-authelia-authelia-1 authelia/authelia:latest Up 6 seconds (healthy) ; GET / -> 200",
       "error": null,
       "pointsTo": null
     },
@@ -23,7 +23,7 @@
     },
     "d": {
       "status": "PASS",
-      "evidence": "HTML via proxy (/ 200): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true window.__capabilityPort=0.2.0 button=true; CSP: default-src 'self'; base-uri 'self'; connect-src 'self'; frame-ancestors 'none'; frame-src 'none'; object-src 'none'; script-src 'self'; style-src 'self' 'nonce-ESUWOLCIPs37aBqNlP4ozcBCx6hhKL22'",
+      "evidence": "HTML via proxy (/ 200): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true window.__capabilityPort=0.2.0 button=true; CSP: default-src 'self'; base-uri 'self'; connect-src 'self'; frame-ancestors 'none'; frame-src 'none'; object-src 'none'; script-src 'self'; style-src 'self' 'nonce-iOqGV8zIGMCIZX0l5EeN7m8OlRRh1pY7'",
       "error": null,
       "pointsTo": null
     },
@@ -46,9 +46,9 @@
       "pointsTo": null
     },
     "h": {
-      "status": "PASS",
-      "evidence": "largest asset /static/js/index.CH9gMMud.js (77210B): direct 200 257145B d2a29a059597c8d9 vs proxy 200 257145B d2a29a059597c8d9; 25 MB POST /: direct -> write EPIPE in 4ms, proxy -> 502 in 4ms \"Proxy error: write EPIPE \"",
-      "error": null,
+      "status": "FAIL",
+      "evidence": "largest asset /static/js/index.CH9gMMud.js (77210B): direct 200 257145B d2a29a059597c8d9 vs proxy 200 257145B d2a29a059597c8d9; 25 MB POST /: direct -> 400 in 7ms, proxy -> 502 in 8ms \"Proxy error: write EPIPE \"",
+      "error": "upload answered differently through proxy (502)",
       "pointsTo": null
     },
     "i": {
@@ -66,34 +66,34 @@
     "k": {
       "status": "FAIL",
       "evidence": "console errors: direct 0, proxy 22 (22 only seen through proxy); failed requests 0; 5xx 0; proxy log: \"PASS\"; full list console.txt",
-      "error": "Refused to set the document's base URI to 'http://127.0.0.1:9102/' because it violates the following Content Security Policy directive: \"base-uri 'self'\".\n | Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-gIeQrSOnpf8ypWhAIljkWmEuj8pJjL2h'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to  | Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "error": "Refused to set the document's base URI to 'http://127.0.0.1:9102/' because it violates the following Content Security Policy directive: \"base-uri 'self'\".\n | Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-PYRFfiyDwrPNkr3ViqsE4QszFbAZiarr'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to  | Failed to load resource: the server responded with a status of 403 (Forbidden)",
       "pointsTo": null
     }
   },
   "directConsoleErrors": [],
   "proxyConsoleErrors": [
     "Refused to set the document's base URI to 'http://127.0.0.1:9102/' because it violates the following Content Security Policy directive: \"base-uri 'self'\".\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-gIeQrSOnpf8ypWhAIljkWmEuj8pJjL2h'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to ",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-PYRFfiyDwrPNkr3ViqsE4QszFbAZiarr'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to ",
     "Failed to load resource: the server responded with a status of 403 (Forbidden)",
     "AxiosError: Request failed with status code 403\n    at On (http://auth.e2e.localhost:9202/static/js/axios.vrpypmKw.js:3:11871)\n    at XMLHttpRequest._ (http://auth.e2e.localhost:9202/static/js/axios.vrpypmKw.js:3:18951)\n    at Q.request (http://auth.e2e.localhost:9202/static/js/axios.vrpypmKw.js:5:2",
     "Refused to set the document's base URI to 'http://127.0.0.1:9102/' because it violates the following Content Security Policy directive: \"base-uri 'self'\".\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-R5d6zZjMvR695lY6xEJZ9paUoQo8CCN2'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to ",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-DSN4RrtX1mMeMbo4FA71UU2jLVHVRICY'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to ",
     "Failed to load resource: the server responded with a status of 403 (Forbidden)",
     "AxiosError: Request failed with status code 403\n    at On (http://auth.e2e.localhost:9202/static/js/axios.vrpypmKw.js:3:11871)\n    at XMLHttpRequest._ (http://auth.e2e.localhost:9202/static/js/axios.vrpypmKw.js:3:18951)\n    at Q.request (http://auth.e2e.localhost:9202/static/js/axios.vrpypmKw.js:5:2",
     "Refused to set the document's base URI to 'http://127.0.0.1:9102/' because it violates the following Content Security Policy directive: \"base-uri 'self'\".\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-Jt4JlFTCk4ZeLOpTcMLkO4ZoHPC7bRRn'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to ",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-RMdbOVKlptztnto7P7IBuNt3dZTwoYyo'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to ",
     "Failed to load resource: the server responded with a status of 403 (Forbidden)",
     "AxiosError: Request failed with status code 403\n    at On (http://auth.e2e.localhost:9202/static/js/axios.vrpypmKw.js:3:11871)\n    at XMLHttpRequest._ (http://auth.e2e.localhost:9202/static/js/axios.vrpypmKw.js:3:18951)\n    at Q.request (http://auth.e2e.localhost:9202/static/js/axios.vrpypmKw.js:5:2",
     "Refused to set the document's base URI to 'http://127.0.0.1:9102/' because it violates the following Content Security Policy directive: \"base-uri 'self'\".\n",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-0fqJk3eS43VCtMVvVp1Yq4rVC532sJNn'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to ",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-Lu8I45mME1W4WkQvg8OatgR86MlNX14H'\". Either the 'unsafe-inline' keyword, a hash ('sha256-U6wSeOW2avPvSzZHV2gX7Iis6tBsMIZ4dEkjeHcpKZs='), or a nonce ('nonce-...') is required to ",
     "Failed to load resource: the server responded with a status of 403 (Forbidden)",
     "AxiosError: Request failed with status code 403\n    at On (http://auth.e2e.localhost:9202/static/js/axios.vrpypmKw.js:3:11871)\n    at XMLHttpRequest._ (http://auth.e2e.localhost:9202/static/js/axios.vrpypmKw.js:3:18951)\n    at Q.request (http://auth.e2e.localhost:9202/static/js/axios.vrpypmKw.js:5:2",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-0fqJk3eS43VCtMVvVp1Yq4rVC532sJNn'\". Either the 'unsafe-inline' keyword, a hash ('sha256-eiViVwsy86V7BX5KEdN6ArVYFAAhC85KOOxoj4qBKDE='), or a nonce ('nonce-...') is required to ",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-0fqJk3eS43VCtMVvVp1Yq4rVC532sJNn'\". Either the 'unsafe-inline' keyword, a hash ('sha256-RnPKpo3kmlxYrU1tfD8ecp2cmyiEkjMmX7Gcapmdxaw='), or a nonce ('nonce-...') is required to ",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-0fqJk3eS43VCtMVvVp1Yq4rVC532sJNn'\". Either the 'unsafe-inline' keyword, a hash ('sha256-DQqKKl2A7U3zsSWzqZEipFEzzcQUytbboRk/Tc+uToc='), or a nonce ('nonce-...') is required to ",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-0fqJk3eS43VCtMVvVp1Yq4rVC532sJNn'\". Either the 'unsafe-inline' keyword, a hash ('sha256-5VKfPBSBCI24fxCIR4srPYTw8oPeGtcOujI+MXZyOdQ='), or a nonce ('nonce-...') is required to ",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-0fqJk3eS43VCtMVvVp1Yq4rVC532sJNn'\". Either the 'unsafe-inline' keyword, a hash ('sha256-VxPOjCw5ObvPlb/s4Tfaydf32XZv8t+fKHM6amFuPzA='), or a nonce ('nonce-...') is required to ",
-    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-0fqJk3eS43VCtMVvVp1Yq4rVC532sJNn'\". Either the 'unsafe-inline' keyword, a hash ('sha256-RtONP2gdafT0L3Uw1Cifj6SnPRMblPOeT05wVuCAie4='), or a nonce ('nonce-...') is required to "
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-Lu8I45mME1W4WkQvg8OatgR86MlNX14H'\". Either the 'unsafe-inline' keyword, a hash ('sha256-eiViVwsy86V7BX5KEdN6ArVYFAAhC85KOOxoj4qBKDE='), or a nonce ('nonce-...') is required to ",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-Lu8I45mME1W4WkQvg8OatgR86MlNX14H'\". Either the 'unsafe-inline' keyword, a hash ('sha256-RnPKpo3kmlxYrU1tfD8ecp2cmyiEkjMmX7Gcapmdxaw='), or a nonce ('nonce-...') is required to ",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-Lu8I45mME1W4WkQvg8OatgR86MlNX14H'\". Either the 'unsafe-inline' keyword, a hash ('sha256-DQqKKl2A7U3zsSWzqZEipFEzzcQUytbboRk/Tc+uToc='), or a nonce ('nonce-...') is required to ",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-Lu8I45mME1W4WkQvg8OatgR86MlNX14H'\". Either the 'unsafe-inline' keyword, a hash ('sha256-5VKfPBSBCI24fxCIR4srPYTw8oPeGtcOujI+MXZyOdQ='), or a nonce ('nonce-...') is required to ",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-Lu8I45mME1W4WkQvg8OatgR86MlNX14H'\". Either the 'unsafe-inline' keyword, a hash ('sha256-VxPOjCw5ObvPlb/s4Tfaydf32XZv8t+fKHM6amFuPzA='), or a nonce ('nonce-...') is required to ",
+    "Refused to apply inline style because it violates the following Content Security Policy directive: \"style-src 'self' 'nonce-Lu8I45mME1W4WkQvg8OatgR86MlNX14H'\". Either the 'unsafe-inline' keyword, a hash ('sha256-RtONP2gdafT0L3Uw1Cifj6SnPRMblPOeT05wVuCAie4='), or a nonce ('nonce-...') is required to "
   ],
   "failedRequests": [],
   "badResponses": [],

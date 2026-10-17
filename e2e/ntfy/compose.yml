@@ -1,0 +1,7 @@
+# ntfy: official image binwiederhier/ntfy (docs' docker-compose: `serve`), base-url = proxy address, web app enabled by default.
+services:
+  ntfy:
+    image: binwiederhier/ntfy:latest
+    command: ["serve"]
+    ports: ["9122:80"]
+    environment: [NTFY_BASE_URL=http://127.0.0.1:9222, NTFY_LISTEN_HTTP=0.0.0.0:80]

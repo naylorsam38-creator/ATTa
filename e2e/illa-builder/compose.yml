@@ -1,0 +1,6 @@
+# Illa Builder: official all-in-one self-host image illasoft/illa-builder:latest (docs.illacloud.com self-hosted deployment); login root / password.
+services:
+  illa:
+    image: illasoft/illa-builder:latest
+    ports: ["9116:2022"]
+    volumes: ["./database:/opt/illa/database", "./drive:/opt/illa/drive"]

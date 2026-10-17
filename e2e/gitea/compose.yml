@@ -1,0 +1,12 @@
+# Gitea: official image gitea/gitea:latest (Gitea's documented Docker install), SQLite, install wizard skipped via env, ROOT_URL = proxy address.
+services:
+  gitea:
+    image: gitea/gitea:latest
+    ports: ["9111:3000"]
+    environment:
+      - GITEA__database__DB_TYPE=sqlite3
+      - GITEA__security__INSTALL_LOCK=true
+      - GITEA__server__ROOT_URL=http://127.0.0.1:9211/
+      - GITEA__server__HTTP_ADDR=0.0.0.0
+      - GITEA__service__DISABLE_REGISTRATION=false
+    volumes: ["./data:/data"]

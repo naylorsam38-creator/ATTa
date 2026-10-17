@@ -1,0 +1,7 @@
+# e2e: served over plain HTTP behind the ATTa proxy at http://127.0.0.1:9221; host port 9121
+services:
+  opencloud:
+    environment:
+      OC_URL: "http://127.0.0.1:9221"
+    ports: !override
+      - "9121:9200"

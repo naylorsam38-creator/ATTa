@@ -1,0 +1,80 @@
+{
+  "app": "gitea",
+  "direct": "http://127.0.0.1:9111",
+  "proxy": "http://127.0.0.1:9211",
+  "checks": {
+    "a": {
+      "status": "PASS",
+      "evidence": "e2e-gitea-gitea-1 gitea/gitea:latest Up 13 seconds ; GET / -> 200",
+      "error": null,
+      "pointsTo": null
+    },
+    "b": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9111/ title \"Gitea: Git with a cup of tea\" (631 chars visible); screenshot b-direct-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "c": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9211/ title \"Gitea: Git with a cup of tea\" (direct title \"Gitea: Git with a cup of tea\"); screenshot c-proxy-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "d": {
+      "status": "PASS",
+      "evidence": "HTML via proxy (/ 200): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true window.__capabilityPort=0.2.0 button=true",
+      "error": null,
+      "pointsTo": null
+    },
+    "e": {
+      "status": "PASS",
+      "evidence": "signup submitted, now at http://127.0.0.1:9211/; signup logged the user in; password field still shown: false; final http://127.0.0.1:9211/; screenshots e*-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "f": {
+      "status": "PASS",
+      "evidence": "6 links clicked from http://127.0.0.1:9211/: ok \"Issues\" /issues -> http://127.0.0.1:9211/issues || ok \"Pull Requests\" /pulls -> http://127.0.0.1:9211/pulls || ok \"Milestones\" /milestones -> http://127.0.0.1:9211/milestones || ok \"Explore\" /explore/repos -> http://127.0.0.1:9211/explore/repos || ok \"Notifications\" /notifications -> http://127.0.0.1:9211/notifications || ok \"Explore users\" /explore/users -> http://127.0.0.1:9211/explore/users; screenshots f*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "g": {
+      "status": "FAIL",
+      "evidence": "SSE /user/events through proxy: {\"status\":404,\"firstChunkMs\":8,\"sample\":\"Not found.\\n\"}; app's live-refresh WebSockets seen: 0",
+      "error": "server-sent events never reach the browser through the proxy (status 404)",
+      "pointsTo": "proxy: proxyRequest() buffers the whole upstream body (chunks[] until \"end\") before writing anything"
+    },
+    "h": {
+      "status": "FAIL",
+      "evidence": "largest asset /_cp/port.js (31628B): direct 404 11B 9ee3acf3139db375 vs proxy 200 31628B 939f343cf2274092; 25 MB POST /user/login: direct -> 200 in 4ms, proxy -> 200 in 8ms \"<!DOCTYPE html> <html lang=\"en-US\" data-theme=\"gitea-auto\"> <head> <meta http-e\"",
+      "error": "downloaded bytes differ between direct and proxy",
+      "pointsTo": null
+    },
+    "i": {
+      "status": "FAIL",
+      "evidence": "HTML / 200 ae=gzip: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || HTML / 200 ae=br: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || asset /_cp/port.js ae=gzip: app none, proxy none, decoded identical=false || asset /_cp/port.js ae=br: app none, proxy none, decoded identical=false (app never compressed; only pass-through tested)",
+      "error": "2 compressed response(s) broken",
+      "pointsTo": null
+    },
+    "j": {
+      "status": "FAIL",
+      "evidence": "attach: \"button-mover is in (trusted).\"; <a> \"\" display:flex: dragged +120,+60 -> on screen moved 120,60, style.translate=\"120px 60px\" saved=true || <a> \"Explore repositories\" display:inline: dragged +120,+60 -> on screen moved 0,0, style.translate=\"120px 60px\" saved=true; after reload 2 element(s) still moved; screenshots j-*.png",
+      "error": "<a> \"Explore repositories\" display:inline: dragged +120,+60 -> on screen moved 0,0, style.translate=\"120px 60px\" saved=true",
+      "pointsTo": "mover__100_adapter.js place_() (uses CSS translate) / applySaved()"
+    },
+    "k": {
+      "status": "FAIL",
+      "evidence": "console errors: direct 0, proxy 1 (1 only seen through proxy); failed requests 0; 5xx 0; proxy log: \"PASS\"; full list console.txt",
+      "error": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "pointsTo": null
+    }
+  },
+  "directConsoleErrors": [],
+  "proxyConsoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "failedRequests": [],
+  "badResponses": [],
+  "websockets": []
+}

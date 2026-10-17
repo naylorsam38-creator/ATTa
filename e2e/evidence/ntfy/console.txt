@@ -1,0 +1,14 @@
+DIRECT session console errors (0):
+
+
+PROXY session console errors (0):
+
+
+Failed requests:
+GET http://127.0.0.1:9222/e2etest/sse — net::ERR_ABORTED
+
+5xx / missing /_cp responses:
+
+
+Proxy process log:
+PASS

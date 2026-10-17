@@ -1,0 +1,18 @@
+# e2e: compose.override.yaml.example filled in; http on 9115; EXTERNAL_HOST = proxy address (docs: plain HTTP when CERTIFICATES unset)
+secrets:
+  zulip__postgres_password: {environment: "ZULIP__POSTGRES_PASSWORD"}
+  zulip__memcached_password: {environment: "ZULIP__MEMCACHED_PASSWORD"}
+  zulip__rabbitmq_password: {environment: "ZULIP__RABBITMQ_PASSWORD"}
+  zulip__redis_password: {environment: "ZULIP__REDIS_PASSWORD"}
+  zulip__secret_key: {environment: "ZULIP__SECRET_KEY"}
+  zulip__email_password: {environment: "ZULIP__EMAIL_PASSWORD"}
+services:
+  zulip:
+    ports: !override
+      - "9115:80"
+    environment:
+      SETTING_EXTERNAL_HOST: "127.0.0.1:9215"
+      SETTING_ZULIP_ADMINISTRATOR: "admin@e2e-test.org"
+      TRUST_GATEWAY_IP: "True"
+    ulimits: !override  # sandbox cannot raise nofile to 1000000
+      nofile: {soft: 20000, hard: 20000}

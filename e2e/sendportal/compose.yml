@@ -1,0 +1,10 @@
+# Sendportal: built from source (github.com/mettle/sendportal, cloned to /tmp/claude-0/src/sendportal) with e2e/sendportal/Dockerfile + MySQL 8.
+services:
+  sendportal:
+    build: {context: /tmp/claude-0/src/sendportal, dockerfile: /home/user/ATTa/e2e/sendportal/Dockerfile, additional_contexts: {ca: /root/.ccr, e2e: /home/user/ATTa/e2e/sendportal}}
+    ports: ["9108:8000"]
+    depends_on: {mysql: {condition: service_healthy}}
+  mysql:
+    image: mysql:8.0
+    environment: [MYSQL_DATABASE=sendportal, MYSQL_USER=sendportal, MYSQL_PASSWORD=sendportal-pass, MYSQL_ROOT_PASSWORD=root-pass]
+    healthcheck: {test: ["CMD", "mysqladmin", "ping", "-h", "localhost"], interval: 5s, retries: 30}

@@ -1,0 +1,7 @@
+# Meilisearch: official image getmeili/meilisearch:latest (docs' Docker install), development env so the built-in search preview UI is served at /.
+services:
+  meilisearch:
+    image: getmeili/meilisearch:latest
+    ports: ["9118:7700"]
+    environment: [MEILI_ENV=development, MEILI_MASTER_KEY=e2e-master-key-0123456789abcdef]
+    volumes: ["./meili_data:/meili_data"]

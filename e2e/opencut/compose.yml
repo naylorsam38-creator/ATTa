@@ -1,0 +1,5 @@
+# OpenCut: built from source (github.com/OpenCut-app/OpenCut, cloned to /tmp/claude-0/src/opencut) with e2e/opencut/Dockerfile.
+services:
+  opencut:
+    build: {context: /tmp/claude-0/src/opencut, dockerfile: /home/user/ATTa/e2e/opencut/Dockerfile, additional_contexts: {ca: /root/.ccr}}
+    ports: ["9106:5173"]

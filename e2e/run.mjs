@@ -27,6 +27,33 @@ const APPS = [
   { id: 'memos', direct: 'http://127.0.0.1:9105', proxy: 'http://127.0.0.1:9205',
     signup: { path: '/auth/signup', user: 'e2euser', pass: PASS },
     login: { path: '/auth', user: 'e2euser', pass: PASS }, live: { kind: 'sse', path: '/api/sse' } },
+  // 6-24: apps without a login form use login.path '/' (step e then only checks no password form blocks the app)
+  { id: 'opencut', direct: 'http://127.0.0.1:9106', proxy: 'http://127.0.0.1:9206', login: { path: '/' }, live: null },
+  { id: 'open-notebook', direct: 'http://127.0.0.1:9107', proxy: 'http://127.0.0.1:9207', login: { path: '/' }, live: null },
+  { id: 'sendportal', direct: 'http://127.0.0.1:9108', proxy: 'http://127.0.0.1:9208',
+    signup: { path: '/register', user: 'e2euser', email: 'e2e@example.com', pass: 'E2e-Pass-123!' },
+    login: { path: '/login', user: 'e2e@example.com', email: 'e2e@example.com', pass: 'E2e-Pass-123!' }, live: null },
+  { id: 'ghost', direct: 'http://127.0.0.1:9109', proxy: 'http://127.0.0.1:9209',
+    signup: { path: '/ghost/#/setup', user: 'e2euser', email: 'e2e@example.com', pass: 'E2e-Pass-123!x' },
+    login: { path: '/ghost/#/signin', user: 'e2e@example.com', email: 'e2e@example.com', pass: 'E2e-Pass-123!x' }, live: null },
+  { id: 'actual', direct: 'http://127.0.0.1:9110', proxy: 'http://127.0.0.1:9210',
+    signup: { path: '/bootstrap', user: 'e2euser', pass: PASS }, login: { path: '/login', user: 'e2euser', pass: PASS }, live: null },
+  { id: 'gitea', direct: 'http://127.0.0.1:9111', proxy: 'http://127.0.0.1:9211',
+    signup: { path: '/user/sign_up', user: 'e2euser', email: 'e2e@example.com', pass: PASS },
+    login: { path: '/user/login', user: 'e2euser', pass: PASS }, live: { kind: 'sse', path: '/user/events' } },
+  { id: 'supabase', direct: 'http://127.0.0.1:9112', proxy: 'http://127.0.0.1:9212', login: { path: '/' }, live: null,
+    basicAuth: { username: 'supabase', password: 'this_password_is_insecure_and_should_be_updated' } },
+  { id: 'appsmith', direct: 'http://127.0.0.1:9113', proxy: 'http://127.0.0.1:9213',
+    signup: { path: '/setup/welcome', user: 'e2euser', email: 'e2e@example.com', pass: 'E2e-Pass-123!' },
+    login: { path: '/user/login', user: 'e2e@example.com', email: 'e2e@example.com', pass: 'E2e-Pass-123!' }, live: null },
+  { id: 'illa-builder', direct: 'http://127.0.0.1:9116', proxy: 'http://127.0.0.1:9216',
+    login: { path: '/cloud/login', user: 'root', email: 'root', pass: 'password' }, live: null },
+  { id: 'meilisearch', direct: 'http://127.0.0.1:9118', proxy: 'http://127.0.0.1:9218', login: { path: '/', user: 'e2e', pass: 'e2e-master-key-0123456789abcdef' }, live: null },
+  { id: 'ntfy', direct: 'http://127.0.0.1:9122', proxy: 'http://127.0.0.1:9222', login: { path: '/' }, live: { kind: 'sse', path: '/e2etest/sse' } },
+  { id: 'jitsi', direct: 'http://127.0.0.1:9120', proxy: 'http://127.0.0.1:9220', login: { path: '/' }, live: null },
+  { id: 'indico', direct: 'http://127.0.0.1:9119', proxy: 'http://127.0.0.1:9219',
+    signup: { path: '/bootstrap', user: 'e2euser', email: 'e2e@e2e-test.org', pass: 'E2e-Pass-123!x' },
+    login: { path: '/login/', user: 'e2euser', pass: 'E2e-Pass-123!x' }, live: null },
 ];
 
 // ---------- small helpers ----------
@@ -147,7 +174,7 @@ async function runApp(browser, app) {
   });
 
   // Direct baseline browser session (own video)
-  const dctx = await browser.newContext({ recordVideo: { dir: path.join(dir, 'video-direct') }, viewport: { width: 1280, height: 800 } });
+  const dctx = await browser.newContext({ recordVideo: { dir: path.join(dir, 'video-direct') }, viewport: { width: 1280, height: 800 }, httpCredentials: app.basicAuth });
   const dpage = await dctx.newPage(); const directErrors = [];
   dpage.on('console', m => m.type() === 'error' && directErrors.push(m.text().slice(0, 300)));
   dpage.on('pageerror', e => directErrors.push('pageerror: ' + e.message.slice(0, 300)));
@@ -161,7 +188,7 @@ async function runApp(browser, app) {
   await dctx.close();
 
   // Proxy session (own video) — c..k run here
-  const ctx = await browser.newContext({ recordVideo: { dir: path.join(dir, 'video-proxy') }, viewport: { width: 1280, height: 800 } });
+  const ctx = await browser.newContext({ recordVideo: { dir: path.join(dir, 'video-proxy') }, viewport: { width: 1280, height: 800 }, httpCredentials: app.basicAuth });
   const page = await ctx.newPage(); const errs = []; const failed = []; const bad = []; const sockets = []; const assets = [];
   page.on('console', m => m.type() === 'error' && errs.push(m.text().slice(0, 300)));
   page.on('pageerror', e => errs.push('pageerror: ' + e.message.slice(0, 300)));

@@ -1,0 +1,19 @@
+DIRECT session console errors (1):
+Failed to load resource: the server responded with a status of 404 (NOT FOUND)
+
+PROXY session console errors (6):
+Failed to load resource: the server responded with a status of 404 (Not Found)
+Failed to load resource: the server responded with a status of 404 (Not Found)
+Failed to load resource: the server responded with a status of 404 (Not Found)
+Failed to load resource: the server responded with a status of 404 (Not Found)
+Failed to load resource: the server responded with a status of 404 (Not Found)
+Failed to load resource: the server responded with a status of 404 (Not Found)
+
+Failed requests:
+
+
+5xx / missing /_cp responses:
+
+
+Proxy process log:
+PASS

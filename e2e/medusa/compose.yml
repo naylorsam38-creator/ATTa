@@ -1,0 +1,21 @@
+# Medusa: medusa-starter-default (cloned to /tmp/claude-0/src/medusa-starter-default) + postgres + redis, per Medusa's Docker install docs.
+services:
+  medusa:
+    build: {context: /tmp/claude-0/src/medusa-starter-default, dockerfile: /home/user/ATTa/e2e/medusa/Dockerfile, additional_contexts: {ca: /root/.ccr}}
+    ports: ["9117:9000"]
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/medusa-store
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=supersecret
+      - COOKIE_SECRET=supersecret
+      - STORE_CORS=http://127.0.0.1:9217
+      - ADMIN_CORS=http://127.0.0.1:9217
+      - AUTH_CORS=http://127.0.0.1:9217
+      - MEDUSA_BACKEND_URL=http://127.0.0.1:9217
+    depends_on: {postgres: {condition: service_healthy}, redis: {condition: service_started}}
+  postgres:
+    image: postgres:15-alpine
+    environment: [POSTGRES_USER=postgres, POSTGRES_PASSWORD=postgres, POSTGRES_DB=medusa-store]
+    healthcheck: {test: ["CMD-SHELL", "pg_isready -U postgres"], interval: 5s, retries: 30}
+  redis:
+    image: redis:7-alpine

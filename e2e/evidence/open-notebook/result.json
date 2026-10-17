@@ -1,0 +1,78 @@
+{
+  "app": "open-notebook",
+  "direct": "http://127.0.0.1:9107",
+  "proxy": "http://127.0.0.1:9207",
+  "checks": {
+    "a": {
+      "status": "PASS",
+      "evidence": "e2e-open-notebook-open_notebook-1 lfnovo/open_notebook:v1-latest Up 5 minutes | e2e-open-notebook-surrealdb-1 surrealdb/surrealdb:v2 Up 5 minutes ; GET / -> 307",
+      "error": null,
+      "pointsTo": null
+    },
+    "b": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9107/notebooks title \"Open Notebook\" (391 chars visible); screenshot b-direct-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "c": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9207/notebooks title \"Open Notebook\" (direct title \"Open Notebook\"); screenshot c-proxy-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "d": {
+      "status": "PASS",
+      "evidence": "HTML via proxy (/ 307 -> /notebooks 200): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true window.__capabilityPort=0.2.0 button=true",
+      "error": null,
+      "pointsTo": null
+    },
+    "e": {
+      "status": "PASS",
+      "evidence": "no password field at / (now http://127.0.0.1:9207/notebooks); password field still shown: false; final http://127.0.0.1:9207/notebooks; screenshots e*-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "f": {
+      "status": "PASS",
+      "evidence": "6 links clicked from http://127.0.0.1:9207/notebooks: ok \"Sources\" /sources -> http://127.0.0.1:9207/sources || ok \"Ask and Search\" /search -> http://127.0.0.1:9207/search || ok \"Podcasts\" /podcasts -> http://127.0.0.1:9207/podcasts || ok \"Models\" /settings/models -> http://127.0.0.1:9207/settings/models || ok \"Transformations\" /transformations -> http://127.0.0.1:9207/transformations || ok \"Settings\" /settings -> http://127.0.0.1:9207/settings; screenshots f*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "g": {
+      "status": "N/A",
+      "evidence": "app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe",
+      "error": null,
+      "pointsTo": null
+    },
+    "h": {
+      "status": "PASS",
+      "evidence": "largest asset /_next/static/media/017d9bea37084d9b-s.p.41rroleoq1br7.woff2 (41236B): direct 200 41236B 4fd48b2c1ab27220 vs proxy 200 41236B 4fd48b2c1ab27220; 25 MB POST /: direct -> 307 in 44ms, proxy -> 307 in 60ms \"/notebooks\"",
+      "error": null,
+      "pointsTo": null
+    },
+    "i": {
+      "status": "FAIL",
+      "evidence": "HTML /notebooks 200 ae=gzip: app sent gzip, proxy sent 200 gzip decodes=true hook=true length-ok=true || HTML /notebooks 200 ae=br: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || asset /_cp/port.js ae=gzip: app gzip, proxy none, decoded identical=false || asset /_cp/port.js ae=br: app none, proxy none, decoded identical=false",
+      "error": "2 compressed response(s) broken",
+      "pointsTo": null
+    },
+    "j": {
+      "status": "FAIL",
+      "evidence": "attach: \"button-mover is in (trusted).\"; <button> \"\" display:flex: dragged +120,+60 -> on screen moved 120,60, style.translate=\"120px 60px\" saved=true || <a> \"Sources\" display:inline: dragged +120,+60 -> on screen moved 0,0, style.translate=\"\" saved=false; after reload 2 element(s) still moved; screenshots j-*.png",
+      "error": "<a> \"Sources\" display:inline: dragged +120,+60 -> on screen moved 0,0, style.translate=\"\" saved=false",
+      "pointsTo": "mover__100_adapter.js place_() (uses CSS translate) / applySaved()"
+    },
+    "k": {
+      "status": "PASS",
+      "evidence": "console errors: direct 0, proxy 0 (0 only seen through proxy); failed requests 0; 5xx 0; proxy log: \"PASS\"; full list console.txt",
+      "error": null,
+      "pointsTo": null
+    }
+  },
+  "directConsoleErrors": [],
+  "proxyConsoleErrors": [],
+  "failedRequests": [],
+  "badResponses": [],
+  "websockets": []
+}

@@ -1,0 +1,109 @@
+{
+  "app": "ghost",
+  "direct": "http://127.0.0.1:9109",
+  "proxy": "http://127.0.0.1:9209",
+  "checks": {
+    "a": {
+      "status": "PASS",
+      "evidence": "e2e-ghost-ghost-1 ghost:6 Up 20 seconds | e2e-ghost-mysql-1 mysql:8.0 Up 29 seconds (healthy) ; GET / -> 200",
+      "error": null,
+      "pointsTo": null
+    },
+    "b": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9109/ title \"Ghost\" (412 chars visible); screenshot b-direct-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "c": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9209/ title \"Ghost\" (direct title \"Ghost\"); screenshot c-proxy-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "d": {
+      "status": "PASS",
+      "evidence": "HTML via proxy (/ 200): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true window.__capabilityPort=0.2.0 button=true",
+      "error": null,
+      "pointsTo": null
+    },
+    "e": {
+      "status": "PASS",
+      "evidence": "signup submitted, now at http://127.0.0.1:9209/ghost/#/setup/onboarding?returnTo=/analytics; signup logged the user in; password field still shown: false; final http://127.0.0.1:9209/ghost/#/setup/onboarding?returnTo=/analytics; screenshots e*-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "f": {
+      "status": "PASS",
+      "evidence": "1 links clicked from http://127.0.0.1:9209/ghost/#/setup/onboarding?returnTo=/analytics: ok \"View site in new tab\" /?admin=1 -> http://127.0.0.1:9209/; screenshots f*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "g": {
+      "status": "N/A",
+      "evidence": "app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe",
+      "error": null,
+      "pointsTo": null
+    },
+    "h": {
+      "status": "PASS",
+      "evidence": "largest asset /ghost/assets/InterVariable-DiVDrmQJ.woff2 (352240B): direct 200 352240B 693b77d4f32ee9b8 vs proxy 200 352240B 693b77d4f32ee9b8; 25 MB POST /ghost/#/signin: direct -> 404 in 43ms, proxy -> 404 in 66ms \"<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <title>Error</tit\"",
+      "error": null,
+      "pointsTo": null
+    },
+    "i": {
+      "status": "FAIL",
+      "evidence": "HTML /ghost/ 200 ae=gzip: app sent gzip, proxy sent 200 gzip decodes=true hook=true length-ok=true || HTML /ghost/ 200 ae=br: app sent br, proxy sent 200 br decodes=true hook=true length-ok=true || asset /_cp/port.js ae=gzip: app none, proxy none, decoded identical=false || asset /_cp/port.js ae=br: app none, proxy none, decoded identical=false",
+      "error": "2 compressed response(s) broken",
+      "pointsTo": null
+    },
+    "j": {
+      "status": "PASS",
+      "evidence": "attach: \"button-mover is in (trusted).\"; <button> \"Search site\nCtrl+K\" display:flex: dragged +120,+60 -> on screen moved 120,60, style.translate=\"120px 60px\" saved=true; after reload 1 element(s) still moved; screenshots j-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "k": {
+      "status": "FAIL",
+      "evidence": "console errors: direct 0, proxy 27 (27 only seen through proxy); failed requests 2; 5xx 0; proxy log: \"PASS\"; full list console.txt",
+      "error": "Failed to load resource: the server responded with a status of 403 (Forbidden) | We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882 | We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+      "pointsTo": null
+    }
+  },
+  "directConsoleErrors": [],
+  "proxyConsoleErrors": [
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882",
+    "We: You are not authorised to make this request.\n    at http://127.0.0.1:9209/ghost/assets/hooks-By7oZzkM.js:2:2882"
+  ],
+  "failedRequests": [
+    "GET http://127.0.0.1:9209/members/api/member/ — net::ERR_ABORTED",
+    "GET http://127.0.0.1:9209/members/api/member/ — net::ERR_ABORTED"
+  ],
+  "badResponses": [],
+  "websockets": []
+}

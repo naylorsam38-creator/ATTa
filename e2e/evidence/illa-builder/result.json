@@ -1,0 +1,81 @@
+{
+  "app": "illa-builder",
+  "direct": "http://127.0.0.1:9116",
+  "proxy": "http://127.0.0.1:9216",
+  "checks": {
+    "a": {
+      "status": "PASS",
+      "evidence": "e2e-illa-builder-illa-1 illasoft/illa-builder:latest Up 5 minutes ; GET / -> 301",
+      "error": null,
+      "pointsTo": null
+    },
+    "b": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9116/cloud/login title \"ILLA Cloud\" (153 chars visible); screenshot b-direct-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "c": {
+      "status": "FAIL",
+      "evidence": "HTTP 200 final http://127.0.0.1:9116/cloud/login title \"ILLA Cloud\" (direct title \"ILLA Cloud\"); screenshot c-proxy-home.png",
+      "error": "browser left the proxy: ended on http://127.0.0.1:9116/cloud/login",
+      "pointsTo": "proxy: proxyRequest() forwards Location headers untouched and sets Host to the target"
+    },
+    "d": {
+      "status": "FAIL",
+      "evidence": "HTML via proxy (/ 301 -> -> leaves proxy: http://127.0.0.1:9116/cloud): hook tag MISSING; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=false window.__capabilityPort=null button=false",
+      "error": "script tag not in the live DOM",
+      "pointsTo": "port.js / proxy injectHook()"
+    },
+    "e": {
+      "status": "PASS",
+      "evidence": "login submitted, now at http://127.0.0.1:9216/cloud/workspace/0/apps; password field still shown: false; final http://127.0.0.1:9216/cloud/workspace/0/apps; screenshots e*-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "f": {
+      "status": "PASS",
+      "evidence": "3 links clicked from http://127.0.0.1:9216/cloud/workspace/0/apps: ok \"Resources\" /cloud/workspace/0/resources -> http://127.0.0.1:9216/cloud/workspace/0/resources || ok \"Tutorial\" /build/0/guide?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJ1dWlkIjoiMTU4NTA0ZDYtYTQ3ZC00M2EwLTg3OWUtNzlhNTc5ODFjZWNjIiwicm5kIjoiMDAyNjMxIiwiaXNzIjoiSUxMQSIsImV4cCI6MTc5Mjg1OTAzOH0.VoYnPZmHSkEf_SF0-qaakBjVvEStk0lvrZ_jVixVjkM -> http://127.0.0.1:9216/build/0/guide errors: Failed to load resource: the server responded with a status of 400 (Bad Request) / pageerror: Object || ok \"Settings\" /cloud/setting -> http://127.0.0.1:9216/cloud/setting/account; screenshots f*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "g": {
+      "status": "N/A",
+      "evidence": "app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe",
+      "error": null,
+      "pointsTo": null
+    },
+    "h": {
+      "status": "PASS",
+      "evidence": "largest asset /build/assets/index-1e202ac7.js (10999386B): direct 200 10999386B bb5b8a236965af2d vs proxy 200 10999386B bb5b8a236965af2d; 25 MB POST /cloud/login: direct -> 413 in 10ms, proxy -> 413 in 13ms \"<html> <head><title>413 Request Entity Too Large</title><script src=\"/_cp/port.\"",
+      "error": null,
+      "pointsTo": null
+    },
+    "i": {
+      "status": "PASS",
+      "evidence": "HTML /cloud/workspace/0/apps 200 ae=gzip: app sent gzip, proxy sent 200 gzip decodes=true hook=true length-ok=true || HTML /cloud/workspace/0/apps 200 ae=br: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || asset /build/assets/index-1e202ac7.js ae=gzip: app none, proxy none, decoded identical=true || asset /build/assets/index-1e202ac7.js ae=br: app none, proxy none, decoded identical=true",
+      "error": null,
+      "pointsTo": null
+    },
+    "j": {
+      "status": "PASS",
+      "evidence": "attach: \"button-mover is in (trusted).\"; <a> \"Apps\" display:flex: dragged +120,+60 -> on screen moved 120,60, style.translate=\"120px 60px\" saved=true; after reload 1 element(s) still moved; screenshots j-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "k": {
+      "status": "FAIL",
+      "evidence": "console errors: direct 0, proxy 2 (2 only seen through proxy); failed requests 0; 5xx 0; proxy log: \"PASS\"; full list console.txt",
+      "error": "Failed to load resource: the server responded with a status of 400 (Bad Request) | pageerror: Object",
+      "pointsTo": null
+    }
+  },
+  "directConsoleErrors": [],
+  "proxyConsoleErrors": [
+    "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+    "pageerror: Object"
+  ],
+  "failedRequests": [],
+  "badResponses": [],
+  "websockets": []
+}
