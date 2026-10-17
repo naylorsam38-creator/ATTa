@@ -1,0 +1,6 @@
+# memos: repo's scripts/compose.yaml (official image neosmemo/memos:stable); only port and data dir changed.
+services:
+  memos:
+    image: neosmemo/memos:stable
+    ports: ["9105:5230"]
+    volumes: ["./data:/var/opt/memos"]

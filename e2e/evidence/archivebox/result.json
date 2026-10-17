@@ -1,0 +1,85 @@
+{
+  "app": "archivebox",
+  "direct": "http://127.0.0.1:9101",
+  "proxy": "http://127.0.0.1:9201",
+  "checks": {
+    "a": {
+      "status": "PASS",
+      "evidence": "e2e-archivebox-archivebox-1 archivebox/archivebox:latest Up 15 minutes (healthy) ; GET / -> 302",
+      "error": null,
+      "pointsTo": null
+    },
+    "b": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9101/public/ title \"Archived Sites\" (522 chars visible); screenshot b-direct-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "c": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9201/public/ title \"Archived Sites\" (direct title \"Archived Sites\"); screenshot c-proxy-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "d": {
+      "status": "PASS",
+      "evidence": "HTML via proxy (/ 302 -> /public 301 -> /public/ 200): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true window.__capabilityPort=0.2.0 button=true",
+      "error": null,
+      "pointsTo": null
+    },
+    "e": {
+      "status": "PASS",
+      "evidence": "login submitted, now at http://127.0.0.1:9201/admin/; password field still shown: false; final http://127.0.0.1:9201/admin/; screenshots e*-*.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "f": {
+      "status": "FAIL",
+      "evidence": "6 links clicked from http://127.0.0.1:9201/admin/: FAIL \"http://127.0.0.1:9201\" / -> http://127.0.0.1:9201/admin/core/snapshot/ (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") || FAIL \"ADD ➕\" /add/ -> http://127.0.0.1:9201/add/ (CLICK FAILED: \u001b[2m      - <div role=\"alert\" aria-live=\"polite\" id=\"archivebox-system-warning-banner\">…</div> intercepts pointer events\u001b[22m; opened by URL instead) (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") || FAIL \"CRAWLS\" /admin/crawls/crawl/ -> http://127.0.0.1:9201/admin/crawls/crawl/ (CLICK FAILED: \u001b[2m      - <div role=\"alert\" aria-live=\"polite\" id=\"archivebox-system-warning-banner\">…</div> intercepts pointer events\u001b[22m; opened by URL instead) (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") || FAIL \"LOG\" /admin/core/archiveresult/?o=-1 -> http://127.0.0.1:9201/admin/core/archiveresult/?o=-1 (CLICK FAILED: \u001b[2m      - <div role=\"alert\" aria-live=\"polite\" id=\"archivebox-system-warning-banner\">…</div> intercepts pointer events\u001b[22m; opened by URL instead) (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") errors: Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://127.0.0.1:9201/admin/crawls/crawl/:3893:9) || FAIL \"TAGS\" /admin/core/tag/ -> http://127.0.0.1:9201/admin/core/tag/ (CLICK FAILED: \u001b[2m      - <div role=\"alert\" aria-live=\"polite\" id=\"archivebox-system-warning-banner\">…</div> intercepts pointer events\u001b[22m; opened by URL instead) (PAGE SAYS: \"⚠ BASE_URL MISMATCH EDITING DISABLED FROM UNRECOGNIZED URL. VISIT http://127.0.0.1:9201 TO MAKE CHANGES.\") errors: Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://127.0.0.1:9201/admin/core/archiveresult/?o=-1:3891:9) || FAIL \"DOCS\" /docs/: page.goto: net::ERR_CERT_AUTHORITY_INVALID at http://127.0.0.1:9201/docs/; screenshots f*.png",
+      "error": "7/6 navigations failed",
+      "pointsTo": null
+    },
+    "g": {
+      "status": "N/A",
+      "evidence": "app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe",
+      "error": null,
+      "pointsTo": null
+    },
+    "h": {
+      "status": "PASS",
+      "evidence": "largest asset /static/admin/js/vendor/xregexp/xregexp.min.js (163184B): direct 200 163184B f854171b2c0e1b05 vs proxy 200 163184B f854171b2c0e1b05; 25 MB POST /admin/login/: direct -> 403 in 819ms, proxy -> 403 in 904ms \"<!DOCTYPE html> <html lang=\"en\"> <head> <meta http-equiv=\"content-type\" conten\"",
+      "error": null,
+      "pointsTo": null
+    },
+    "i": {
+      "status": "PASS",
+      "evidence": "HTML /admin/ 200 ae=gzip: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || HTML /admin/ 200 ae=br: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || asset /static/admin/js/vendor/xregexp/xregexp.min.js ae=gzip: app none, proxy none, decoded identical=true || asset /static/admin/js/vendor/xregexp/xregexp.min.js ae=br: app none, proxy none, decoded identical=true (app never compressed; only pass-through tested)",
+      "error": null,
+      "pointsTo": null
+    },
+    "j": {
+      "status": "FAIL",
+      "evidence": "attach: \"button-mover is in (trusted).\"; <a> \"Crawls\n0\nCreate and monitor UR\" display:flex: dragged +120,+60 -> on screen moved 120,60, style.translate=\"120px 60px\" saved=true || <a> \"ArchiveBox\" display:inline: dragged +120,+60 -> on screen moved 0,0, style.translate=\"120px 60px\" saved=true; after reload 2 element(s) still moved; screenshots j-*.png",
+      "error": "<a> \"ArchiveBox\" display:inline: dragged +120,+60 -> on screen moved 0,0, style.translate=\"120px 60px\" saved=true",
+      "pointsTo": "mover__100_adapter.js place_() (uses CSS translate) / applySaved()"
+    },
+    "k": {
+      "status": "FAIL",
+      "evidence": "console errors: direct 0, proxy 2 (2 only seen through proxy); failed requests 3; 5xx 0; proxy log: \"PASS\"; full list console.txt",
+      "error": "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://127.0.0.1:9201/admin/crawls/crawl/:3893:9) | Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://127.0.0.1:9201/admin/core/archiveresult/?o=-1:3891:9)",
+      "pointsTo": null
+    }
+  },
+  "directConsoleErrors": [],
+  "proxyConsoleErrors": [
+    "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://127.0.0.1:9201/admin/crawls/crawl/:3893:9)",
+    "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://127.0.0.1:9201/admin/core/archiveresult/?o=-1:3891:9)"
+  ],
+  "failedRequests": [
+    "GET http://127.0.0.1:9201/progress.json — net::ERR_ABORTED",
+    "GET http://127.0.0.1:9201/progress.json — net::ERR_ABORTED",
+    "GET https://github.com/ArchiveBox/ArchiveBox/wiki — net::ERR_CERT_AUTHORITY_INVALID"
+  ],
+  "badResponses": [],
+  "websockets": []
+}

@@ -1,0 +1,371 @@
+
+$ docker compose up -d --build
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.77kB done
+#1 DONE 0.0s
+
+#2 [proxy internal] load build definition from Dockerfile.verify
+#2 transferring dockerfile: 1.26kB done
+#2 DONE 0.0s
+
+#3 [ntfy internal] load build definition from Dockerfile.verify
+#3 transferring dockerfile: 2.73kB done
+#3 DONE 0.0s
+
+#4 [ntfy context sandboxca] load .dockerignore
+#4 transferring sandboxca: 2B done
+#4 DONE 0.0s
+
+#5 [ntfy internal] load metadata for docker.io/library/node:22-alpine
+#5 ...
+
+#6 [ntfy internal] load metadata for docker.io/library/alpine:3.22
+#6 DONE 1.6s
+
+#7 [ntfy internal] load metadata for docker.io/library/golang:1.25-alpine
+#7 DONE 1.7s
+
+#5 [ntfy internal] load metadata for docker.io/library/node:22-alpine
+#5 DONE 2.1s
+
+#8 [proxy internal] load .dockerignore
+#8 transferring context: 2B done
+#8 DONE 0.0s
+
+#9 [ntfy internal] load .dockerignore
+#9 transferring context: 72B done
+#9 DONE 0.0s
+
+#10 [proxy internal] load build context
+#10 transferring context: 69.98kB done
+#10 DONE 0.0s
+
+#11 [ntfy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#11 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85 0.0s done
+#11 ...
+
+#12 [ntfy context sandboxca] load from client
+#12 transferring sandboxca: 228.61kB 0.0s done
+#12 DONE 0.1s
+
+#11 [ntfy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#11 ...
+
+#13 [ntfy internal] load build context
+#13 transferring context: 22.21MB 0.2s done
+#13 DONE 0.2s
+
+#11 [ntfy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#11 sha256:ec179e2ee07230312183920d42bf49c2ef18644e3d7186ffa92b02dd2e26a835 0B / 1.26MB 0.2s
+#11 sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5 0B / 3.85MB 0.2s
+#11 sha256:65213f1a3de84db18197276d9be6a34fad98eec70604aeaa6821556d932c2676 0B / 444B 0.2s
+#11 sha256:ec179e2ee07230312183920d42bf49c2ef18644e3d7186ffa92b02dd2e26a835 1.26MB / 1.26MB 0.5s done
+#11 ...
+
+#14 [ntfy stage-2 1/5] FROM docker.io/library/alpine:3.22@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8
+#14 resolve docker.io/library/alpine:3.22@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8 0.0s done
+#14 sha256:53f8f5e03afd86ade91b7aa57a749f5a3d1419c113be5d8c10e7ee61bb5ab887 3.79MB / 3.79MB 0.5s done
+#14 extracting sha256:53f8f5e03afd86ade91b7aa57a749f5a3d1419c113be5d8c10e7ee61bb5ab887 0.1s done
+#14 DONE 0.7s
+
+#11 [ntfy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#11 sha256:ec179e2ee07230312183920d42bf49c2ef18644e3d7186ffa92b02dd2e26a835 1.26MB / 1.26MB 0.5s done
+#11 sha256:65213f1a3de84db18197276d9be6a34fad98eec70604aeaa6821556d932c2676 444B / 444B 0.5s done
+#11 sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 0B / 55.68MB 0.2s
+#11 ...
+
+#15 [ntfy stage-2 2/5] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#15 DONE 0.1s
+
+#11 [ntfy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#11 sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5 3.85MB / 3.85MB 0.8s done
+#11 ...
+
+#16 [ntfy stage-2 3/5] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#16 DONE 0.1s
+
+#11 [ntfy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#11 sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5 3.85MB / 3.85MB 0.8s done
+#11 extracting sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5
+#11 extracting sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5 0.1s done
+#11 sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 37.75MB / 55.68MB 0.8s
+#11 sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 55.68MB / 55.68MB 0.9s done
+#11 extracting sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06
+#11 ...
+
+#17 [ntfy stage-2 4/5] RUN apk add --no-cache ca-certificates tzdata && adduser -D -H -u 1000 ntfy && mkdir -p /var/cache/ntfy && chown ntfy /var/cache/ntfy
+#17 0.074 fetch https://dl-cdn.alpinelinux.org/alpine/v3.22/main/x86_64/APKINDEX.tar.gz
+#17 0.444 fetch https://dl-cdn.alpinelinux.org/alpine/v3.22/community/x86_64/APKINDEX.tar.gz
+#17 0.798 (1/2) Installing ca-certificates (20260909-r0)
+#17 0.858 (2/2) Installing tzdata (2026d-r0)
+#17 0.929 Executing busybox-1.37.0-r20.trigger
+#17 0.941 Executing ca-certificates-20260909-r0.trigger
+#17 0.974 OK: 8 MiB in 18 packages
+#17 DONE 1.3s
+
+#18 [ntfy build  1/11] FROM docker.io/library/golang:1.25-alpine@sha256:1ae0735f00daffa3aaf1363a5184c0d2dc55c78e3db4ec70241cdac97bf84b59
+#18 resolve docker.io/library/golang:1.25-alpine@sha256:1ae0735f00daffa3aaf1363a5184c0d2dc55c78e3db4ec70241cdac97bf84b59 0.0s done
+#18 sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 32B / 32B 0.3s done
+#18 sha256:2129e38f8eb91140cd022167d69ad764919cb78de3d2c70efd48c5e6b1b48f98 60.29MB / 60.29MB 1.6s done
+#18 sha256:91ca672d117ca07bb7383d7da745a895eff9a448fbb9c5afa4ebd76b1215c6f0 127B / 127B 0.5s done
+#18 sha256:55afa1ecc21d2bb5e5045f32dafee56272ffd89860bac26f6c32123439af26a4 3.85MB / 3.85MB 0.6s done
+#18 sha256:fbbf4aee6bbb3850b92fe52557e4774388d45230d056794e085784549c4cb310 245.06kB / 245.06kB 0.5s done
+#18 extracting sha256:55afa1ecc21d2bb5e5045f32dafee56272ffd89860bac26f6c32123439af26a4 0.1s done
+#18 extracting sha256:fbbf4aee6bbb3850b92fe52557e4774388d45230d056794e085784549c4cb310 0.0s done
+#18 extracting sha256:2129e38f8eb91140cd022167d69ad764919cb78de3d2c70efd48c5e6b1b48f98
+#18 ...
+
+#11 [ntfy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#11 extracting sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 1.2s done
+#11 extracting sha256:ec179e2ee07230312183920d42bf49c2ef18644e3d7186ffa92b02dd2e26a835 0.0s done
+#11 extracting sha256:65213f1a3de84db18197276d9be6a34fad98eec70604aeaa6821556d932c2676 done
+#11 DONE 2.7s
+
+#19 [ntfy stage-0 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#19 DONE 0.2s
+
+#20 [ntfy stage-0 3/6] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#20 DONE 0.1s
+
+#21 [proxy stage-0 4/6] WORKDIR /cp
+#21 DONE 0.0s
+
+#22 [ntfy web 4/8] WORKDIR /src/web
+#22 DONE 0.0s
+
+#23 [proxy stage-0 5/6] COPY --chown=node:node ui-bridge ./ui-bridge
+#23 DONE 0.0s
+
+#24 [ntfy web 5/8] COPY web/package.json web/package-lock.json ./
+#24 DONE 0.0s
+
+#25 [proxy stage-0 6/6] COPY --chown=node:node capability-port ./capability-port
+#25 DONE 0.0s
+
+#26 [proxy] exporting to image
+#26 exporting layers
+#26 exporting layers 0.2s done
+#26 exporting manifest sha256:218ab555f9c29d60c8349f5a54e4e08aa17692c82dd22f49be251beee6db8559 done
+#26 exporting config sha256:954cea89a3561dd832fea2d3036da63e6f97e83d8a4e841107cc7a0ddec43070 done
+#26 exporting attestation manifest sha256:2f2d8b3c8a1a13acf4b676cee71869ab9cadaf7469a822c82698fa48f6334664 0.0s done
+#26 exporting manifest list sha256:d8306c1d7ff02004ba56234ffe5a287d2c6a5ad817aea8fabee85cdf182ac0fa done
+#26 naming to docker.io/library/atta-009ntfy-proxy:latest done
+#26 unpacking to docker.io/library/atta-009ntfy-proxy:latest 0.0s done
+#26 DONE 0.3s
+
+#27 [proxy] resolving provenance for metadata file
+#27 DONE 0.0s
+
+#28 [ntfy web 6/8] RUN npm ci --no-audit --no-fund
+#28 ...
+
+#18 [ntfy build  1/11] FROM docker.io/library/golang:1.25-alpine@sha256:1ae0735f00daffa3aaf1363a5184c0d2dc55c78e3db4ec70241cdac97bf84b59
+#18 extracting sha256:2129e38f8eb91140cd022167d69ad764919cb78de3d2c70efd48c5e6b1b48f98 2.3s done
+#18 DONE 4.6s
+
+#18 [ntfy build  1/11] FROM docker.io/library/golang:1.25-alpine@sha256:1ae0735f00daffa3aaf1363a5184c0d2dc55c78e3db4ec70241cdac97bf84b59
+#18 extracting sha256:91ca672d117ca07bb7383d7da745a895eff9a448fbb9c5afa4ebd76b1215c6f0 done
+#18 extracting sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 done
+#18 DONE 4.6s
+
+#29 [ntfy build  2/11] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#29 DONE 0.3s
+
+#28 [ntfy web 6/8] RUN npm ci --no-audit --no-fund
+#28 ...
+
+#30 [ntfy build  3/11] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#30 DONE 0.1s
+
+#31 [ntfy build  4/11] RUN apk add --no-cache gcc musl-dev git
+#31 0.830 ( 1/25) Installing libgcc (15.2.0-r5)
+#31 0.868 ( 2/25) Installing jansson (2.15.0-r0)
+#31 0.905 ( 3/25) Installing libstdc++ (15.2.0-r5)
+#31 0.964 ( 4/25) Installing zstd-libs (1.5.7-r2)
+#31 1.010 ( 5/25) Installing binutils (2.45.1-r1)
+#31 1.098 ( 6/25) Installing libgcc-static (15.2.0-r5)
+#31 1.166 ( 7/25) Installing libgomp (15.2.0-r5)
+#31 1.206 ( 8/25) Installing libatomic (15.2.0-r5)
+#31 1.243 ( 9/25) Installing gmp (6.3.0-r4)
+#31 1.286 (10/25) Installing isl26 (0.26-r2)
+#31 1.346 (11/25) Installing mpfr4 (4.2.2-r0)
+#31 1.399 (12/25) Installing mpc1 (1.3.1-r1)
+#31 1.437 (13/25) Installing gcc (15.2.0-r5)
+#31 2.365 (14/25) Installing brotli-libs (1.2.0-r1)
+#31 2.420 (15/25) Installing c-ares (1.34.8-r0)
+#31 2.460 (16/25) Installing libunistring (1.4.2-r0)
+#31 2.505 (17/25) Installing libidn2 (2.3.8-r0)
+#31 2.543 (18/25) Installing nghttp2-libs (1.69.0-r0)
+#31 2.580 (19/25) Installing libpsl (0.21.5-r3)
+#31 2.619 (20/25) Installing libcurl (8.22.0-r0)
+#31 2.663 (21/25) Installing libexpat (2.8.4-r0)
+#31 2.701 (22/25) Installing pcre2 (10.48-r0)
+#31 2.745 (23/25) Installing git (2.54.0-r0)
+#31 2.837 (24/25) Installing git-init-template (2.54.0-r0)
+#31 2.874 (25/25) Installing musl-dev (1.2.6-r2)
+#31 2.970 Executing busybox-1.37.0-r31.trigger
+#31 2.987 OK: 209.8 MiB in 42 packages
+#31 DONE 3.6s
+
+#28 [ntfy web 6/8] RUN npm ci --no-audit --no-fund
+#28 2.542 npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+#28 3.195 npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+#28 3.932 npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+#28 4.213 npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+#28 4.250 npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+#28 ...
+
+#32 [ntfy build  5/11] WORKDIR /src
+#32 DONE 0.1s
+
+#33 [ntfy build  6/11] COPY go.mod go.sum ./
+#33 DONE 0.0s
+
+#28 [ntfy web 6/8] RUN npm ci --no-audit --no-fund
+#28 5.628 npm warn deprecated glob@11.1.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+#28 6.696 npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+#28 11.37 
+#28 11.37 added 623 packages in 11s
+#28 11.37 npm notice
+#28 11.37 npm notice New major version of npm available! 10.9.8 -> 12.1.0
+#28 11.37 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.1.0
+#28 11.37 npm notice To update run: npm install -g npm@12.1.0
+#28 11.37 npm notice
+#28 DONE 12.3s
+
+#34 [ntfy build  7/11] RUN go mod download
+#34 ...
+
+#35 [ntfy web 7/8] COPY web/ ./
+#35 DONE 0.4s
+
+#34 [ntfy build  7/11] RUN go mod download
+#34 ...
+
+#36 [ntfy web 8/8] RUN npm run build && mv build/index.html build/app.html && rm -f build/config.js
+#36 0.191 
+#36 0.191 > ntfy@1.0.0 build
+#36 0.191 > vite build
+#36 0.191 
+#36 0.564 (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+#36 0.564   - ESM syntax in a file loaded as CommonJS (vite.config.js:2:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+#36 0.564 Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+#36 0.604 vite v8.2.1 building client environment for production...
+#36 0.629 transforming...
+#36 1.280 ✓ 1241 modules transformed.
+#36 2.096 rendering chunks...
+#36 3.072 computing gzip size...
+#36 3.107 build/static/media/ntfy-filled-BeHxCuOR.svg               4.38 kB │ gzip:   1.53 kB
+#36 3.107 build/index.html                                          5.12 kB │ gzip:   1.93 kB
+#36 3.107 build/static/media/pop-swoosh-D4htuWC0.mp3                9.59 kB
+#36 3.107 build/static/media/pop-jCTZXXxe.mp3                       9.80 kB
+#36 3.107 build/static/media/juntos-4OTx6nUx.mp3                   18.83 kB
+#36 3.107 build/static/media/dadum-DPV6bbiV.mp3                    18.88 kB
+#36 3.107 build/static/media/ding-C-VaFit1.mp3                     25.26 kB
+#36 3.107 build/static/media/pristine-WI8-PGnL.mp3                 31.73 kB
+#36 3.107 build/static/media/rolldown-runtime-B0Z9INg1.js           0.90 kB │ gzip:   0.51 kB
+#36 3.107 build/static/media/workbox-window.prod.es5-Bd17z0YL.js    5.71 kB │ gzip:   2.25 kB │ map:    13.15 kB
+#36 3.107 build/static/media/MarkdownContent-DXvFWOU8.js          107.54 kB │ gzip:  33.19 kB │ map:   425.06 kB
+#36 3.107 build/static/media/utils-BOCdwNwW.js                    176.55 kB │ gzip:  65.22 kB │ map:   454.64 kB
+#36 3.107 build/static/media/EmojiPicker-d53c0Oyi.js              227.76 kB │ gzip:  33.11 kB │ map:   513.68 kB
+#36 3.107 build/static/media/index-Cx1kKwl6.js                    848.87 kB │ gzip: 251.56 kB │ map: 3,850.59 kB
+#36 3.107 
+#36 3.108 ✓ built in 2.50s
+#36 3.630 
+#36 3.630 PWA v1.3.0
+#36 3.630 Building public/sw.js service worker ("es" format)...
+#36 3.632 [plugin builtin:vite-reporter] 
+#36 3.632 (!) Some chunks are larger than 500 kB after minification. Consider:
+#36 3.632 - Using dynamic import() to code-split the application
+#36 3.632 - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+#36 3.632 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+#36 3.641 vite v8.2.1 building client environment for production...
+#36 3.645 
+#36 3.645  WARN  inlineDynamicImports option is deprecated, please use codeSplitting: false instead.
+#36 3.645 
+#36 3.651 transforming...
+#36 3.673 ✓ 129 modules transformed.
+#36 3.686 rendering chunks...
+#36 3.724 computing gzip size...
+#36 3.728 build/sw.mjs  231.26 kB │ gzip: 75.56 kB │ map: 724.08 kB
+#36 3.728 
+#36 3.729 ✓ built in 87ms
+#36 3.877 
+#36 3.877 PWA v1.3.0
+#36 3.877 mode      injectManifest
+#36 3.877 format:   es
+#36 3.877 precache  68 entries (2570.34 KiB)
+#36 3.877 files generated
+#36 3.877   build/sw.js
+#36 3.877   build/sw.js.map
+#36 ...
+
+#34 [ntfy build  7/11] RUN go mod download
+#34 DONE 11.8s
+
+#36 [ntfy web 8/8] RUN npm run build && mv build/index.html build/app.html && rm -f build/config.js
+#36 DONE 4.7s
+
+#37 [ntfy build  8/11] COPY . .
+#37 DONE 0.2s
+
+#38 [ntfy build  9/11] RUN rm -rf server/site && mkdir -p server/docs && touch server/docs/index.html
+#38 DONE 0.1s
+
+#39 [ntfy build 10/11] COPY --from=web /src/web/build ./server/site
+#39 DONE 0.0s
+
+#40 [ntfy build 11/11] RUN CGO_ENABLED=1 go build -o /out/ntfy .
+#40 DONE 82.9s
+
+#41 [ntfy stage-2 5/5] COPY --from=build /out/ntfy /usr/bin/ntfy
+#41 DONE 0.1s
+
+#42 [ntfy] exporting to image
+#42 exporting layers
+#42 exporting layers 2.1s done
+#42 exporting manifest sha256:94c7ec96e99933c4182cb386864a2006ff23f296d211240532ada891047f6bb2 done
+#42 exporting config sha256:b34d743de4563fc129f94563847161cdd98bc0eabdb2350f8ab5d0c713a75858 done
+#42 exporting attestation manifest sha256:05c302c1c3c1e216e9eae33ae64f2640b5c72f415d17b2bac969afa10245cd07 done
+#42 exporting manifest list sha256:6eb91a6e4fbd4d3c7583de7593c725462f99383b3825d26084b8717fb5b82b87 done
+#42 naming to docker.io/library/atta-009ntfy-ntfy:latest done
+#42 unpacking to docker.io/library/atta-009ntfy-ntfy:latest
+#42 unpacking to docker.io/library/atta-009ntfy-ntfy:latest 0.5s done
+#42 DONE 2.7s
+
+#43 [ntfy] resolving provenance for metadata file
+#43 DONE 0.0s
+ Image atta-009ntfy-ntfy Building 
+ Image atta-009ntfy-proxy Building 
+ Image atta-009ntfy-ntfy Built 
+ Image atta-009ntfy-proxy Built 
+ Network atta-009ntfy_default Creating 
+ Network atta-009ntfy_default Created 
+ Volume atta-009ntfy_ntfy-cache Creating 
+ Volume atta-009ntfy_ntfy-cache Created 
+ Container atta-009ntfy-ntfy-1 Creating 
+ Container atta-009ntfy-ntfy-1 Created 
+ Container atta-009ntfy-proxy-1 Creating 
+ Container atta-009ntfy-proxy-1 Created 
+ Container atta-009ntfy-ntfy-1 Starting 
+ Container atta-009ntfy-ntfy-1 Started 
+ Container atta-009ntfy-proxy-1 Starting 
+ Container atta-009ntfy-proxy-1 Started 
+
+$ docker compose down -v --remove-orphans --rmi all
+ Container atta-009ntfy-proxy-1 Stopping 
+ Container atta-009ntfy-proxy-1 Stopped 
+ Container atta-009ntfy-proxy-1 Removing 
+ Container atta-009ntfy-proxy-1 Removed 
+ Container atta-009ntfy-ntfy-1 Stopping 
+ Container atta-009ntfy-ntfy-1 Stopped 
+ Container atta-009ntfy-ntfy-1 Removing 
+ Container atta-009ntfy-ntfy-1 Removed 
+ Image atta-009ntfy-ntfy:latest Removing 
+ Image atta-009ntfy-proxy:latest Removing 
+ Network atta-009ntfy_default Removing 
+ Volume atta-009ntfy_ntfy-cache Removing 
+ Volume atta-009ntfy_ntfy-cache Removed 
+ Image atta-009ntfy-ntfy:latest Removed 
+ Image atta-009ntfy-proxy:latest Removed 
+ Network atta-009ntfy_default Removed 

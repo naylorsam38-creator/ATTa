@@ -1,0 +1,222 @@
+
+$ docker compose up -d --build
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.83kB done
+#1 DONE 0.0s
+
+#2 [proxy internal] load build definition from Dockerfile.verify
+#2 transferring dockerfile: 1.26kB done
+#2 DONE 0.0s
+
+#3 [gitea internal] load build definition from Dockerfile.verify
+#3 transferring dockerfile: 4.13kB done
+#3 DONE 0.0s
+
+#4 [proxy context sandboxca] load .dockerignore
+#4 transferring sandboxca: 2B done
+#4 DONE 0.0s
+
+#5 [proxy internal] load metadata for docker.io/library/node:22-alpine
+#5 DONE 1.8s
+
+#6 [gitea] resolve image config for docker-image://docker.io/docker/dockerfile:1
+#6 DONE 1.9s
+
+#7 [proxy internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [proxy internal] load build context
+#8 transferring context: 70.05kB done
+#8 DONE 0.0s
+
+#9 [proxy context sandboxca] load from client
+#9 transferring sandboxca: 228.61kB done
+#9 DONE 0.0s
+
+#10 [gitea] docker-image://docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
+#10 resolve docker.io/docker/dockerfile:1@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32 0.0s done
+#10 sha256:9f624ef51ad55db0ea52d755cc777566386156106fbb4f465eecb22c67ac55ed 0B / 14.14MB 0.2s
+#10 sha256:9f624ef51ad55db0ea52d755cc777566386156106fbb4f465eecb22c67ac55ed 14.14MB / 14.14MB 0.6s done
+#10 extracting sha256:9f624ef51ad55db0ea52d755cc777566386156106fbb4f465eecb22c67ac55ed 0.2s done
+#10 DONE 1.2s
+
+#11 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#11 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85 0.0s done
+#11 sha256:65213f1a3de84db18197276d9be6a34fad98eec70604aeaa6821556d932c2676 444B / 444B 0.4s done
+#11 sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 31.46MB / 55.68MB 1.1s
+#11 sha256:ec179e2ee07230312183920d42bf49c2ef18644e3d7186ffa92b02dd2e26a835 1.26MB / 1.26MB 0.8s done
+#11 sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5 3.85MB / 3.85MB 0.8s done
+#11 extracting sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5 0.1s done
+#11 ...
+
+#4 [gitea context sandboxca] load .dockerignore
+#4 transferring sandboxca: 2B done
+#4 DONE 0.0s
+
+#11 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#11 sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 55.68MB / 55.68MB 1.2s done
+#11 extracting sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06
+#11 extracting sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 1.1s done
+#11 DONE 2.4s
+
+#12 [gitea internal] load metadata for docker.io/library/alpine:3.24
+#12 ...
+
+#11 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#11 extracting sha256:ec179e2ee07230312183920d42bf49c2ef18644e3d7186ffa92b02dd2e26a835 0.0s done
+#11 extracting sha256:65213f1a3de84db18197276d9be6a34fad98eec70604aeaa6821556d932c2676 done
+#11 DONE 2.4s
+
+#13 [proxy stage-0 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#13 DONE 0.3s
+
+#14 [gitea internal] load metadata for docker.io/library/golang:1.27-alpine3.24
+#14 ...
+
+#15 [proxy stage-0 3/6] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#15 DONE 0.1s
+
+#16 [proxy stage-0 4/6] WORKDIR /cp
+#16 DONE 0.0s
+
+#17 [proxy stage-0 5/6] COPY --chown=node:node ui-bridge ./ui-bridge
+#17 DONE 0.0s
+
+#18 [proxy stage-0 6/6] COPY --chown=node:node capability-port ./capability-port
+#18 DONE 0.0s
+
+#19 [proxy] exporting to image
+#19 exporting layers 0.1s done
+#19 exporting manifest sha256:fafa3b68330142b86bb726111ab160b569394807a113ffc218c1bafb0ce584f2
+#19 exporting manifest sha256:fafa3b68330142b86bb726111ab160b569394807a113ffc218c1bafb0ce584f2 done
+#19 exporting config sha256:8f8c98ff1dfb563f26655d6a8d110027da21a788c053ee148f8f0d897e1db0e5 done
+#19 exporting attestation manifest sha256:4cfcb99863d63e0ace250015d6fc70e7324f157370b0e29e253df7b86ea5c75c done
+#19 exporting manifest list sha256:ccf7660fdc04a1eff9cc6cbdfa807a70084bead0e60b7029b08c99b325389f9d done
+#19 naming to docker.io/library/atta-011giteamain2-proxy:latest done
+#19 unpacking to docker.io/library/atta-011giteamain2-proxy:latest 0.0s done
+#19 DONE 0.1s
+
+#20 [proxy] resolving provenance for metadata file
+#20 DONE 0.0s
+
+#12 [gitea internal] load metadata for docker.io/library/alpine:3.24
+#12 DONE 1.7s
+
+#14 [gitea internal] load metadata for docker.io/library/golang:1.27-alpine3.24
+#14 DONE 2.2s
+
+#21 [gitea internal] load .dockerignore
+#21 transferring context: 1.11kB done
+#21 DONE 0.0s
+
+#9 [gitea context sandboxca] load from client
+#9 CACHED
+
+#22 [gitea gitea-rootless  1/10] FROM docker.io/library/alpine:3.24@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6
+#22 resolve docker.io/library/alpine:3.24@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6 0.0s done
+#22 DONE 0.0s
+
+#23 [gitea gitea-rootless  2/10] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#23 DONE 0.0s
+
+#24 [gitea frontend-build 1/9] FROM docker.io/library/golang:1.27-alpine3.24@sha256:8a5910f31396cd4d89662f56c68b3ae31d374308270a1c3bd96672ee5ed43414
+#24 resolve docker.io/library/golang:1.27-alpine3.24@sha256:8a5910f31396cd4d89662f56c68b3ae31d374308270a1c3bd96672ee5ed43414 0.0s done
+#24 ...
+
+#25 [gitea gitea-rootless  3/10] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#25 DONE 0.1s
+
+#24 [gitea frontend-build 1/9] FROM docker.io/library/golang:1.27-alpine3.24@sha256:8a5910f31396cd4d89662f56c68b3ae31d374308270a1c3bd96672ee5ed43414
+#24 sha256:ef1dbfdbb5d59bdeac07b1398a9f0808b453513bf6a76eb3ffd509a284483095 0B / 71.08MB 0.2s
+#24 sha256:aa6e7f3ded592e443fd9ff13e0934fc149b642f26b962019d38fc8879f8764d1 0B / 247.53kB 0.2s
+#24 sha256:1e707d1be9b7cfef08708f1d35029e5e65c69766a1e39e2c027d0acd54b8e7b5 0B / 126B 0.2s
+#24 sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 32B / 32B 0.3s
+#24 sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 32B / 32B 0.3s done
+#24 sha256:1e707d1be9b7cfef08708f1d35029e5e65c69766a1e39e2c027d0acd54b8e7b5 126B / 126B 0.6s done
+#24 ...
+
+#26 [gitea internal] load build context
+#26 transferring context: 34.58MB 0.8s done
+#26 DONE 0.8s
+
+#24 [gitea frontend-build 1/9] FROM docker.io/library/golang:1.27-alpine3.24@sha256:8a5910f31396cd4d89662f56c68b3ae31d374308270a1c3bd96672ee5ed43414
+#24 sha256:aa6e7f3ded592e443fd9ff13e0934fc149b642f26b962019d38fc8879f8764d1 247.53kB / 247.53kB 0.8s done
+#24 extracting sha256:aa6e7f3ded592e443fd9ff13e0934fc149b642f26b962019d38fc8879f8764d1
+#24 extracting sha256:aa6e7f3ded592e443fd9ff13e0934fc149b642f26b962019d38fc8879f8764d1 0.0s done
+#24 DONE 1.0s
+
+#27 [gitea build-env  7/12] RUN go mod download
+#27 CACHED
+
+#28 [gitea build-env  8/12] COPY --exclude=.git/ . .
+#28 CACHED
+
+#29 [gitea build-env  6/12] COPY go.mod go.sum ./
+#29 CACHED
+
+#30 [gitea frontend-build 7/9] RUN --mount=type=cache,target=/root/.local/share/pnpm/store pnpm install --frozen-lockfile
+#30 CACHED
+
+#31 [gitea build-env  4/12] RUN apk --no-cache add     build-base     git
+#31 CACHED
+
+#32 [gitea frontend-build 6/9] COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+#32 CACHED
+
+#33 [gitea frontend-build 8/9] COPY --exclude=.git/ . .
+#33 CACHED
+
+#34 [gitea build-env  5/12] WORKDIR /go/src/gitea.dev
+#34 CACHED
+
+#35 [gitea build-env  9/12] COPY --from=frontend-build /src/public/assets public/assets
+#35 CACHED
+
+#36 [gitea frontend-build 4/9] RUN apk --no-cache add build-base git nodejs pnpm
+#36 CACHED
+
+#37 [gitea frontend-build 5/9] WORKDIR /src
+#37 CACHED
+
+#38 [gitea frontend-build 9/9] RUN make frontend
+#38 CACHED
+
+#39 [gitea frontend-build 3/9] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#39 CACHED
+
+#40 [gitea build-env 10/12] RUN --mount=type=cache,target="/root/.cache/go-build"     --mount=type=bind,source=".git/",target=".git/"     make backend
+#40 ERROR: failed to calculate checksum of ref kijvrnaw8hu0mnq5sliojxiii::lay164zdc58zkkkzcm6mnsvr7: "/.git": not found
+
+#41 [gitea frontend-build 2/9] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#41 CANCELED
+
+#42 [gitea gitea-rootless  4/10] RUN apk --no-cache add     bash     ca-certificates     dumb-init     gettext     git     curl     gnupg     openssh-keygen
+#42 CANCELED
+------
+ > [gitea build-env 10/12] RUN --mount=type=cache,target="/root/.cache/go-build"     --mount=type=bind,source=".git/",target=".git/"     make backend:
+------
+ Image atta-011giteamain2-proxy Building 
+ Image atta-011giteamain2-gitea Building 
+Dockerfile.verify:38
+
+--------------------
+
+  37 |     # Build gitea, .git mount is required for version data
+
+  38 | >>> RUN --mount=type=cache,target="/root/.cache/go-build" \
+
+  39 | >>>     --mount=type=bind,source=".git/",target=".git/" \
+
+  40 | >>>     make backend
+
+  41 |     
+
+--------------------
+
+target gitea: failed to solve: failed to compute cache key: failed to calculate checksum of ref kijvrnaw8hu0mnq5sliojxiii::lay164zdc58zkkkzcm6mnsvr7: "/.git": not found
+
+
+$ docker compose down -v --remove-orphans --rmi all
+ Image atta-011giteamain2-proxy:latest Removing 
+ Image atta-011giteamain2-proxy:latest Removed 

@@ -1,0 +1,28 @@
+# Mixpost: the repo is a Laravel package with no Docker files; official standalone image inovector/mixpost:latest + MySQL + Redis (per Mixpost docs).
+services:
+  mixpost:
+    image: inovector/mixpost:latest
+    ports: ["9103:80"]
+    environment:
+      - APP_NAME=Mixpost
+      - APP_KEY=base64:Y2Fwcy1lMmUtdGVzdC1rZXktMzItYnl0ZXMtbG9uZyE=
+      - APP_DEBUG=false
+      - APP_DOMAIN=127.0.0.1
+      - APP_URL=http://127.0.0.1:9203
+      - DB_HOST=mysql
+      - DB_DATABASE=mixpost
+      - DB_USERNAME=mixpost
+      - DB_PASSWORD=mixpost-pass
+      - REDIS_HOST=redis
+    volumes: ["storage:/var/www/html/storage/app", "logs:/var/www/html/storage/logs"]
+    depends_on:
+      mysql: {condition: service_healthy}
+      redis: {condition: service_started}
+  mysql:
+    image: mysql:8.0
+    environment: [MYSQL_DATABASE=mixpost, MYSQL_USER=mixpost, MYSQL_PASSWORD=mixpost-pass, MYSQL_ROOT_PASSWORD=root-pass]
+    volumes: ["mysql:/var/lib/mysql"]
+    healthcheck: {test: ["CMD", "mysqladmin", "ping", "-h", "localhost"], interval: 5s, retries: 30}
+  redis:
+    image: redis:7
+volumes: {storage: {}, logs: {}, mysql: {}}

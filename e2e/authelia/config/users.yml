@@ -1,0 +1,5 @@
+users:
+  atta:
+    displayname: 'E2E Test'
+    password: '$argon2id$v=19$m=65536,t=3,p=4$EiXj7qSd6T2MzmhZ8gLiAw$pkQVI6LXNt5oS4bmAYbvyYJyz6U3IXoRZFteYBcCQj0'
+    email: atta@example.com

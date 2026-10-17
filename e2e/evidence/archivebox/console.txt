@@ -1,0 +1,19 @@
+DIRECT session console errors (0):
+
+
+PROXY session console errors (2):
+Progress fetch error: TypeError: Failed to fetch
+    at fetchProgress (http://127.0.0.1:9201/admin/crawls/crawl/:3893:9)
+Progress fetch error: TypeError: Failed to fetch
+    at fetchProgress (http://127.0.0.1:9201/admin/core/archiveresult/?o=-1:3891:9)
+
+Failed requests:
+GET http://127.0.0.1:9201/progress.json — net::ERR_ABORTED
+GET http://127.0.0.1:9201/progress.json — net::ERR_ABORTED
+GET https://github.com/ArchiveBox/ArchiveBox/wiki — net::ERR_CERT_AUTHORITY_INVALID
+
+5xx / missing /_cp responses:
+
+
+Proxy process log:
+PASS

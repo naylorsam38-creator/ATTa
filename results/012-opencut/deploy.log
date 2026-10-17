@@ -1,0 +1,394 @@
+
+$ docker compose up -d --build
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.79kB done
+#1 DONE 0.0s
+
+#2 [proxy internal] load build definition from Dockerfile.verify
+#2 transferring dockerfile: 1.26kB done
+#2 DONE 0.0s
+
+#3 [web internal] load build definition from Dockerfile.verify
+#3 transferring dockerfile: 1.13kB done
+#3 DONE 0.0s
+
+#4 [web context sandboxca] load .dockerignore
+#4 transferring sandboxca: 2B done
+#4 DONE 0.0s
+
+#5 [web internal] load metadata for docker.io/oven/bun:1
+#5 DONE 1.7s
+
+#6 [proxy internal] load metadata for docker.io/library/node:22-alpine
+#6 DONE 1.9s
+
+#7 [web context sandboxca] load from client
+#7 transferring sandboxca: 228.61kB 0.0s done
+#7 DONE 0.0s
+
+#8 [web internal] load build context
+#8 transferring context: 428.00kB 0.0s done
+#8 DONE 0.0s
+
+#9 [web stage-0 1/8] FROM docker.io/oven/bun:1@sha256:9114c058aeae42162ee16dd5084b95fe9473970bb6bcb5b232ab1630f0546895
+#9 resolve docker.io/oven/bun:1@sha256:9114c058aeae42162ee16dd5084b95fe9473970bb6bcb5b232ab1630f0546895 0.0s done
+#9 ...
+
+#7 [proxy context sandboxca] load from client
+#7 transferring sandboxca: 228.61kB 0.0s done
+#7 DONE 0.0s
+
+#10 [proxy internal] load .dockerignore
+#10 transferring context: 2B done
+#10 DONE 0.0s
+
+#11 [proxy internal] load build context
+#11 transferring context: 70.00kB done
+#11 DONE 0.0s
+
+#9 [web stage-0 1/8] FROM docker.io/oven/bun:1@sha256:9114c058aeae42162ee16dd5084b95fe9473970bb6bcb5b232ab1630f0546895
+#9 sha256:1b4f41477e9a25fc12a8bc441d03b5ebb9a3bc14d066bd5fa789c596bbea8622 0B / 138B 0.2s
+#9 sha256:995f23d6717fb18d9e3ee7901ce64cf02d5386f0358688dcb35682d362a9fa11 0B / 3.40kB 0.2s
+#9 sha256:c1bdc9ba2b9ee10de067d50e69caa7454dcd7e80a7f363bc3f26c85ab44175f0 0B / 185B 0.2s
+#9 sha256:1ba340e2e4f41ebc3af50c87bbd556db48c0d67b69a845466ea0500df4ff8b59 0B / 37.46MB 0.2s
+#9 sha256:1b4f41477e9a25fc12a8bc441d03b5ebb9a3bc14d066bd5fa789c596bbea8622 138B / 138B 0.3s done
+#9 sha256:995f23d6717fb18d9e3ee7901ce64cf02d5386f0358688dcb35682d362a9fa11 3.40kB / 3.40kB 0.4s done
+#9 sha256:dd000cfe5146b0540e51ab7091b532f4575a75f0b7d02da7e3b5f0c2b4f69931 0B / 296B 0.2s
+#9 sha256:ccb86fd70cf1a92d9dddfaaebf11f09cebaec4c7fa60a748c8313b0828b9e41c 0B / 5.91MB 0.2s
+#9 sha256:c1bdc9ba2b9ee10de067d50e69caa7454dcd7e80a7f363bc3f26c85ab44175f0 185B / 185B 0.6s done
+#9 sha256:dd000cfe5146b0540e51ab7091b532f4575a75f0b7d02da7e3b5f0c2b4f69931 296B / 296B 0.4s done
+#9 sha256:1ba340e2e4f41ebc3af50c87bbd556db48c0d67b69a845466ea0500df4ff8b59 15.73MB / 37.46MB 0.8s
+#9 sha256:27ee9a8250487842a26b1ffa1215982ba9ae27010bce1997d52f9f8628578d17 0B / 49.34MB 0.2s
+#9 sha256:1ba340e2e4f41ebc3af50c87bbd556db48c0d67b69a845466ea0500df4ff8b59 37.46MB / 37.46MB 0.9s done
+#9 sha256:ccb86fd70cf1a92d9dddfaaebf11f09cebaec4c7fa60a748c8313b0828b9e41c 5.91MB / 5.91MB 0.7s done
+#9 sha256:27ee9a8250487842a26b1ffa1215982ba9ae27010bce1997d52f9f8628578d17 8.39MB / 49.34MB 0.8s
+#9 sha256:27ee9a8250487842a26b1ffa1215982ba9ae27010bce1997d52f9f8628578d17 17.83MB / 49.34MB 0.9s
+#9 sha256:27ee9a8250487842a26b1ffa1215982ba9ae27010bce1997d52f9f8628578d17 49.34MB / 49.34MB 1.2s done
+#9 extracting sha256:27ee9a8250487842a26b1ffa1215982ba9ae27010bce1997d52f9f8628578d17
+#9 extracting sha256:27ee9a8250487842a26b1ffa1215982ba9ae27010bce1997d52f9f8628578d17 1.1s done
+#9 DONE 3.0s
+
+#12 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#12 resolve docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85 0.0s done
+#12 sha256:65213f1a3de84db18197276d9be6a34fad98eec70604aeaa6821556d932c2676 444B / 444B 0.3s done
+#12 sha256:ec179e2ee07230312183920d42bf49c2ef18644e3d7186ffa92b02dd2e26a835 1.26MB / 1.26MB 0.5s done
+#12 sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 55.68MB / 55.68MB 0.9s done
+#12 extracting sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06
+#12 extracting sha256:1a3a899a8294dd12f21fb3f36579c74b05013aacbcf71d6db947dda5e1c59d06 1.2s done
+#12 extracting sha256:ec179e2ee07230312183920d42bf49c2ef18644e3d7186ffa92b02dd2e26a835 0.0s done
+#12 extracting sha256:65213f1a3de84db18197276d9be6a34fad98eec70604aeaa6821556d932c2676 done
+#12 DONE 3.0s
+
+#9 [web stage-0 1/8] FROM docker.io/oven/bun:1@sha256:9114c058aeae42162ee16dd5084b95fe9473970bb6bcb5b232ab1630f0546895
+#9 extracting sha256:ccb86fd70cf1a92d9dddfaaebf11f09cebaec4c7fa60a748c8313b0828b9e41c 0.1s done
+#9 extracting sha256:dd000cfe5146b0540e51ab7091b532f4575a75f0b7d02da7e3b5f0c2b4f69931 done
+#9 extracting sha256:1ba340e2e4f41ebc3af50c87bbd556db48c0d67b69a845466ea0500df4ff8b59
+#9 ...
+
+#13 [proxy stage-0 2/6] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#13 DONE 0.4s
+
+#9 [web stage-0 1/8] FROM docker.io/oven/bun:1@sha256:9114c058aeae42162ee16dd5084b95fe9473970bb6bcb5b232ab1630f0546895
+#9 extracting sha256:1ba340e2e4f41ebc3af50c87bbd556db48c0d67b69a845466ea0500df4ff8b59 0.6s done
+#9 DONE 3.7s
+
+#14 [proxy stage-0 3/6] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#14 DONE 0.2s
+
+#9 [web stage-0 1/8] FROM docker.io/oven/bun:1@sha256:9114c058aeae42162ee16dd5084b95fe9473970bb6bcb5b232ab1630f0546895
+#9 extracting sha256:c1bdc9ba2b9ee10de067d50e69caa7454dcd7e80a7f363bc3f26c85ab44175f0 done
+#9 extracting sha256:995f23d6717fb18d9e3ee7901ce64cf02d5386f0358688dcb35682d362a9fa11 0.1s done
+#9 extracting sha256:1b4f41477e9a25fc12a8bc441d03b5ebb9a3bc14d066bd5fa789c596bbea8622 0.0s done
+#9 DONE 3.8s
+
+#15 [proxy stage-0 4/6] WORKDIR /cp
+#15 DONE 0.0s
+
+#16 [web stage-0 2/8] COPY --from=sandboxca ca-bundle.crt /etc/ssl/certs/ca-certificates.crt
+#16 DONE 0.0s
+
+#17 [proxy stage-0 5/6] COPY --chown=node:node ui-bridge ./ui-bridge
+#17 DONE 0.0s
+
+#18 [web stage-0 3/8] RUN for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.sources /etc/apk/repositories; do [ -f "$f" ] && sed -i 's#http://#https://#g' "$f"; done; true
+#18 DONE 0.1s
+
+#19 [proxy stage-0 6/6] COPY --chown=node:node capability-port ./capability-port
+#19 DONE 0.0s
+
+#20 [web stage-0 4/8] WORKDIR /src/apps/web
+#20 DONE 0.0s
+
+#21 [web stage-0 5/8] COPY apps/web/package.json ./
+#21 DONE 0.0s
+
+#22 [proxy] exporting to image
+#22 exporting layers 0.1s done
+#22 exporting manifest sha256:1243ec62f610fa59d6637205bc44f6a2bbdf65c9976c70af3451607adf376b04 done
+#22 exporting config sha256:cb00402959017356453e0fefdb1e2d318530ad5b49755ae71e229e9878b89117 done
+#22 exporting attestation manifest sha256:56dd1a04385b0b707f0bad75ea74e1c8ae8ca95b305a9a8401366ae08a749983 done
+#22 exporting manifest list sha256:ee43bed29808be155cb8caadb5f39111a7f52aaea53d403a4deee235699f1b57 done
+#22 naming to docker.io/library/atta-012opencut-proxy:latest done
+#22 unpacking to docker.io/library/atta-012opencut-proxy:latest
+#22 ...
+
+#12 [proxy stage-0 1/6] FROM docker.io/library/node:22-alpine@sha256:b6f26b36c8ff49624cfdac716b8ea1138d606df02586a77d364bb5536a634f85
+#12 sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5 0B / 3.85MB 0.5s
+#12 ...
+
+#22 [proxy] exporting to image
+#22 unpacking to docker.io/library/atta-012opencut-proxy:latest 0.7s done
+#22 DONE 0.8s
+
+#23 [web stage-0 6/8] RUN bun install
+#23 0.073 bun install v1.4.2 (744846f84)
+#23 0.074 Resolving dependencies
+#23 ...
+
+#24 [proxy] resolving provenance for metadata file
+#24 DONE 0.0s
+
+#23 [web stage-0 6/8] RUN bun install
+#23 4.214 Resolved, downloaded and extracted [2784]
+#23 5.093 Saved lockfile
+#23 5.093 
+#23 5.093 + @tailwindcss/typography@0.5.20
+#23 5.093 + @tanstack/devtools-vite@0.8.5
+#23 5.093 + @testing-library/dom@10.4.2
+#23 5.093 + @testing-library/react@16.3.3
+#23 5.093 + @types/node@22.20.4 (v26.6.2 available)
+#23 5.093 + @types/react@19.3.0
+#23 5.093 + @types/react-dom@19.3.0
+#23 5.093 + @vitejs/plugin-react@6.1.1
+#23 5.093 + jsdom@28.1.0 (v30.1.1 available)
+#23 5.093 + typescript@6.0.3 (v7.0.2 available)
+#23 5.093 + vite@8.3.0
+#23 5.093 + vitest@4.1.11 (v5.0.1 available)
+#23 5.093 + wrangler@4.136.3
+#23 5.093 + @base-ui/react@1.8.0
+#23 5.093 + @cloudflare/vite-plugin@1.57.3
+#23 5.093 + @fontsource-variable/inter@5.3.0
+#23 5.093 + @hookform/resolvers@5.9.1
+#23 5.093 + @hugeicons/core-free-icons@4.3.5
+#23 5.093 + @hugeicons/react@1.1.10
+#23 5.093 + @tailwindcss/vite@4.3.3
+#23 5.093 + @tanstack/react-devtools@0.10.12
+#23 5.093 + @tanstack/react-router@1.170.38
+#23 5.093 + @tanstack/react-router-devtools@1.167.2
+#23 5.093 + @tanstack/react-router-ssr-query@1.167.3
+#23 5.093 + @tanstack/react-start@1.168.57
+#23 5.093 + @tanstack/router-plugin@1.168.40
+#23 5.093 + class-variance-authority@0.7.1
+#23 5.093 + clsx@2.1.1
+#23 5.093 + cmdk@1.1.1
+#23 5.093 + date-fns@4.4.0
+#23 5.093 + embla-carousel-react@8.6.0
+#23 5.093 + input-otp@1.5.0
+#23 5.093 + lucide-react@1.47.0
+#23 5.093 + next-themes@0.4.6
+#23 5.093 + radix-ui@1.6.7
+#23 5.093 + react@19.3.0
+#23 5.093 + react-day-picker@10.0.1
+#23 5.093 + react-dom@19.3.0
+#23 5.093 + react-hook-form@7.88.0
+#23 5.093 + react-resizable-panels@4.13.2
+#23 5.093 + recharts@3.8.0 (v3.10.1 available)
+#23 5.093 + shadcn@4.21.0
+#23 5.093 + sonner@2.0.8
+#23 5.093 + tailwind-merge@3.7.0
+#23 5.093 + tailwindcss@4.3.3
+#23 5.093 + tw-animate-css@1.4.0
+#23 5.093 + vaul@1.1.2
+#23 5.093 + zod@4.6.5
+#23 5.093 
+#23 5.093 666 packages installed [5.02s]
+#23 DONE 6.9s
+
+#25 [web stage-0 7/8] COPY apps/web/ ./
+#25 DONE 0.6s
+
+#26 [web stage-0 8/8] RUN bun run build
+#26 0.065 $ vite build
+#26 1.467 [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mProxy environment variables detected. We'll use your proxy for fetch requests.[0m
+#26 1.467 
+#26 1.467 
+#26 2.282 vite v8.3.0 building client environment for production...
+#26 2.339 transforming...
+#26 2.495 
+#26 2.495 [@tanstack/devtools-vite] Removed devtools code from: /src/routes/__root.tsx
+#26 2.495 
+#26 2.853 ✓ 287 modules transformed.
+#26 2.935 rendering chunks...
+#26 3.107 computing gzip size...
+#26 3.111 dist/client/.assetsignore                                           0.02 kB
+#26 3.111 dist/client/assets/inter-vietnamese-wght-normal-CBcvBZtf.woff2     10.25 kB
+#26 3.111 dist/client/assets/inter-greek-ext-wght-normal-DlzME5K_.woff2      11.23 kB
+#26 3.111 dist/client/assets/inter-cyrillic-wght-normal-DqGufNeO.woff2       18.74 kB
+#26 3.111 dist/client/assets/inter-greek-wght-normal-CkhJZR-_.woff2          18.99 kB
+#26 3.111 dist/client/assets/inter-cyrillic-ext-wght-normal-BOeWTOD4.woff2   25.96 kB
+#26 3.111 dist/client/assets/inter-latin-wght-normal-Dx4kXJAl.woff2          48.25 kB
+#26 3.111 dist/client/assets/inter-latin-ext-wght-normal-DO1Apj_S.woff2      85.06 kB
+#26 3.111 dist/client/assets/styles-CqbARI8p.css                            144.25 kB │ gzip:  21.62 kB
+#26 3.111 dist/client/assets/routes-D8x3oIsb.js                               0.16 kB │ gzip:   0.14 kB
+#26 3.111 dist/client/assets/editor-CeA6-cJ3.js                               0.20 kB │ gzip:   0.16 kB
+#26 3.111 dist/client/assets/index-D2dpSicE.js                              341.05 kB │ gzip: 109.40 kB
+#26 3.111 
+#26 3.120 ✓ built in 837ms
+#26 3.123 vite v8.3.0 building ssr environment for production...
+#26 3.135 transforming...
+#26 3.304 
+#26 3.304 [@tanstack/devtools-vite] Removed devtools code from: /src/routes/__root.tsx
+#26 3.304 
+#26 3.542 ✓ 363 modules transformed.
+#26 3.576 rendering chunks...
+#26 3.639 computing gzip size...
+#26 3.647 dist/server/wrangler.json                                           1.28 kB │ gzip:   0.66 kB
+#26 3.647 dist/server/.vite/manifest.json                                     4.73 kB │ gzip:   0.79 kB
+#26 3.647 dist/server/assets/inter-vietnamese-wght-normal-CBcvBZtf.woff2     10.25 kB
+#26 3.647 dist/server/assets/inter-greek-ext-wght-normal-DlzME5K_.woff2      11.23 kB
+#26 3.647 dist/server/assets/inter-cyrillic-wght-normal-DqGufNeO.woff2       18.74 kB
+#26 3.647 dist/server/assets/inter-greek-wght-normal-CkhJZR-_.woff2          18.99 kB
+#26 3.647 dist/server/assets/inter-cyrillic-ext-wght-normal-BOeWTOD4.woff2   25.96 kB
+#26 3.647 dist/server/assets/inter-latin-wght-normal-Dx4kXJAl.woff2          48.25 kB
+#26 3.647 dist/server/assets/inter-latin-ext-wght-normal-DO1Apj_S.woff2      85.06 kB
+#26 3.647 dist/server/assets/styles-CqbARI8p.css                            144.25 kB │ gzip:  21.62 kB
+#26 3.647 dist/server/assets/start-5Z2QO8AU.js                                0.14 kB │ gzip:   0.13 kB
+#26 3.647 dist/server/assets/empty-plugin-adapters-D9UWiqvJ.js                0.22 kB │ gzip:   0.16 kB
+#26 3.647 dist/server/assets/routes-xNZ5Klrc.js                               0.38 kB │ gzip:   0.24 kB
+#26 3.647 dist/server/assets/editor-D9_yqNim.js                               0.47 kB │ gzip:   0.26 kB
+#26 3.647 dist/server/assets/_tanstack-start-manifest_v-CMV4SrIK.js           0.62 kB │ gzip:   0.31 kB
+#26 3.647 dist/server/assets/jsx-runtime-CIs12cAR.js                          2.51 kB │ gzip:   1.08 kB
+#26 3.647 dist/server/assets/router-CLKlf0Tn.js                              42.54 kB │ gzip:  11.44 kB
+#26 3.647 dist/server/assets/useSelector-BtRZF0BI.js                        148.86 kB │ gzip:  38.13 kB
+#26 3.647 dist/server/index.js                                              742.60 kB │ gzip: 154.80 kB
+#26 3.647 
+#26 3.655 ✓ built in 531ms
+#26 DONE 6.1s
+
+#27 [web] exporting to image
+#27 exporting layers
+#27 exporting layers 23.5s done
+#27 exporting manifest sha256:1ca45fd24a17bcd0ee595b03165a85369c8103ab903021c87e866716bb08e9d4 done
+#27 exporting config sha256:088fd065f73e3dc6fc62f36904a417701e2a6b871d482c912a2f11e587b25817 done
+#27 exporting attestation manifest sha256:cee369f9937a842d04f909ac4e0b2a43f95b2b46ca2ad5784a971500620268b1 done
+#27 exporting manifest list sha256:7040bedb5761ea590baa3a3f532aebc8442f586ea5e5c27abd5fc48b528062b1 done
+#27 naming to docker.io/library/atta-012opencut-web:latest done
+#27 unpacking to docker.io/library/atta-012opencut-web:latest
+#27 unpacking to docker.io/library/atta-012opencut-web:latest 12.5s done
+#27 DONE 36.0s
+
+#28 [web] resolving provenance for metadata file
+#28 DONE 0.0s
+ Image atta-012opencut-proxy Building 
+ Image atta-012opencut-web Building 
+ Image atta-012opencut-web Built 
+ Image atta-012opencut-proxy Built 
+ Network atta-012opencut_default Creating 
+ Network atta-012opencut_default Created 
+ Container atta-012opencut-web-1 Creating 
+ Container atta-012opencut-web-1 Created 
+ Container atta-012opencut-proxy-1 Creating 
+ Container atta-012opencut-proxy-1 Created 
+ Container atta-012opencut-web-1 Starting 
+ Container atta-012opencut-web-1 Started 
+ Container atta-012opencut-proxy-1 Starting 
+ Container atta-012opencut-proxy-1 Started 
+
+$ docker compose logs --tail 80
+web-1  | error when starting preview server:
+proxy-1  | PASS
+web-1    | Error: Failed to listen at ::
+web-1    |     at listen (unknown)
+web-1    |     at <anonymous> (node:net:2115:30)
+web-1    |     at listenInCluster (node:net:2192:24)
+web-1    |     at listen (node:net:2066:20)
+web-1    |     at <anonymous> (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49010:9)
+web-1    |     at new Promise (native:1:11)
+web-1    |     at checkAvailablePort (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49006:45)
+web-1    |     at <anonymous> (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49020:9)
+web-1    |     at getPorts (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49059:29)
+web-1    |     at getInputInspectorPort (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:79872:77)
+web-1    |     at async getPreviewMiniflareOptions (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:89501:35)
+web-1    |     at async configurePreviewServer (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:90133:64)
+web-1    |     at async preview (/src/apps/web/node_modules/vite/dist/node/chunks/node.js:35065:102)
+web-1    |     at async <anonymous> (/src/apps/web/node_modules/vite/dist/node/cli.js:811:24)
+web-1    | error when starting preview server:
+web-1    | Error: Failed to listen at ::
+web-1    |     at listen (unknown)
+web-1    |     at <anonymous> (node:net:2115:30)
+web-1    |     at listenInCluster (node:net:2192:24)
+web-1    |     at listen (node:net:2066:20)
+web-1    |     at <anonymous> (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49010:9)
+web-1    |     at new Promise (native:1:11)
+web-1    |     at checkAvailablePort (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49006:45)
+web-1    |     at <anonymous> (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49020:9)
+web-1    |     at getPorts (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49059:29)
+web-1    |     at getInputInspectorPort (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:79872:77)
+web-1    |     at async getPreviewMiniflareOptions (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:89501:35)
+web-1    |     at async configurePreviewServer (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:90133:64)
+web-1    |     at async preview (/src/apps/web/node_modules/vite/dist/node/chunks/node.js:35065:102)
+web-1    |     at async <anonymous> (/src/apps/web/node_modules/vite/dist/node/cli.js:811:24)
+web-1    | error when starting preview server:
+web-1    | Error: Failed to listen at ::
+web-1    |     at listen (unknown)
+web-1    |     at <anonymous> (node:net:2115:30)
+web-1    |     at listenInCluster (node:net:2192:24)
+web-1    |     at listen (node:net:2066:20)
+web-1    |     at <anonymous> (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49010:9)
+web-1    |     at new Promise (native:1:11)
+web-1    |     at checkAvailablePort (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49006:45)
+web-1    |     at <anonymous> (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49020:9)
+web-1    |     at getPorts (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49059:29)
+web-1    |     at getInputInspectorPort (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:79872:77)
+web-1    |     at async getPreviewMiniflareOptions (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:89501:35)
+web-1    |     at async configurePreviewServer (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:90133:64)
+web-1    |     at async preview (/src/apps/web/node_modules/vite/dist/node/chunks/node.js:35065:102)
+web-1    |     at async <anonymous> (/src/apps/web/node_modules/vite/dist/node/cli.js:811:24)
+web-1    | error when starting preview server:
+web-1    | Error: Failed to listen at ::
+web-1    |     at listen (unknown)
+web-1    |     at <anonymous> (node:net:2115:30)
+web-1    |     at listenInCluster (node:net:2192:24)
+web-1    |     at listen (node:net:2066:20)
+web-1    |     at <anonymous> (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49010:9)
+web-1    |     at new Promise (native:1:11)
+web-1    |     at checkAvailablePort (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49006:45)
+web-1    |     at <anonymous> (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49020:9)
+web-1    |     at getPorts (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49059:29)
+web-1    |     at getInputInspectorPort (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:79872:77)
+web-1    |     at async getPreviewMiniflareOptions (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:89501:35)
+web-1    |     at async configurePreviewServer (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:90133:64)
+web-1    |     at async preview (/src/apps/web/node_modules/vite/dist/node/chunks/node.js:35065:102)
+web-1    |     at async <anonymous> (/src/apps/web/node_modules/vite/dist/node/cli.js:811:24)
+web-1    | error when starting preview server:
+web-1    | Error: Failed to listen at ::
+web-1    |     at listen (unknown)
+web-1    |     at <anonymous> (node:net:2115:30)
+web-1    |     at listenInCluster (node:net:2192:24)
+web-1    |     at listen (node:net:2066:20)
+web-1    |     at <anonymous> (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49010:9)
+web-1    |     at new Promise (native:1:11)
+web-1    |     at checkAvailablePort (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49006:45)
+web-1    |     at <anonymous> (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49020:9)
+web-1    |     at getPorts (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:49059:29)
+web-1    |     at getInputInspectorPort (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:79872:77)
+web-1    |     at async getPreviewMiniflareOptions (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:89501:35)
+web-1    |     at async configurePreviewServer (/src/apps/web/node_modules/@cloudflare/vite-plugin/dist/index.mjs:90133:64)
+web-1    |     at async preview (/src/apps/web/node_modules/vite/dist/node/chunks/node.js:35065:102)
+web-1    |     at async <anonymous> (/src/apps/web/node_modules/vite/dist/node/cli.js:811:24)
+
+$ docker compose down -v --remove-orphans --rmi all
+ Container atta-012opencut-proxy-1 Stopping 
+ Container atta-012opencut-proxy-1 Stopped 
+ Container atta-012opencut-proxy-1 Removing 
+ Container atta-012opencut-proxy-1 Removed 
+ Container atta-012opencut-web-1 Stopping 
+ Container atta-012opencut-web-1 Stopped 
+ Container atta-012opencut-web-1 Removing 
+ Container atta-012opencut-web-1 Removed 
+ Image atta-012opencut-web:latest Removing 
+ Image atta-012opencut-proxy:latest Removing 
+ Network atta-012opencut_default Removing 
+ Network atta-012opencut_default Removed 
+ Image atta-012opencut-web:latest Removed 
+ Image atta-012opencut-proxy:latest Removed 

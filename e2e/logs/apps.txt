@@ -1,0 +1,31 @@
+== archivebox
+  archivebox a: PASS — e2e-archivebox-archivebox-1 archivebox/archivebox:latest Up 15 minutes (healthy) ; GET / -> 302
+  archivebox b: PASS — HTTP 200 final http://127.0.0.1:9101/public/ title "Archived Sites" (522 chars visible); screenshot b-direct-home.png
+  archivebox c: PASS — HTTP 200 final http://127.0.0.1:9201/public/ title "Archived Sites" (direct title "Archived Sites"); screenshot c-proxy-home.png
+  archivebox d: PASS — HTML via proxy (/ 302 -> /public 301 -> /public/ 200): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true w
+  archivebox e: PASS — login submitted, now at http://127.0.0.1:9201/admin/; password field still shown: false; final http://127.0.0.1:9201/admin/; screenshots e*-*.png
+  archivebox f: FAIL — 7/6 navigations failed
+  archivebox g: N/A — app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe
+  archivebox h: PASS — largest asset /static/admin/js/vendor/xregexp/xregexp.min.js (163184B): direct 200 163184B f854171b2c0e1b05 vs proxy 200 163184B f854171b2c0e1b05; 25 MB POST /a
+  archivebox i: PASS — HTML /admin/ 200 ae=gzip: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || HTML /admin/ 200 ae=br: app sent none, proxy sent 200 none
+  archivebox j: FAIL — <a> "ArchiveBox" display:inline: dragged +120,+60 -> on screen moved 0,0, style.translate="120px 60px" saved=true
+  archivebox k: FAIL — Progress fetch error: TypeError: Failed to fetch
+    at fetchProgress (http://127.0.0.1:9201/admin/crawls/crawl/:3893:9) | Progress fetch error: TypeError: Fail
+== authelia
+  authelia a: PASS — authelia-authelia-1 authelia/authelia:latest Up 14 minutes (healthy) ; GET / -> 200
+  authelia b: PASS — HTTP 200 final http://auth.e2e.localhost:9102/ title "Login - Authelia" (93 chars visible); screenshot b-direct-home.png
+  authelia c: FAIL — title differs from direct
+  authelia d: PASS — HTML via proxy (/ 200): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true window.__capabilityPort=0.2.0 bu
+  authelia e: PASS — no password field at / (now http://auth.e2e.localhost:9202/); password field still shown: false; final http://auth.e2e.localhost:9202/; screenshots e*-*.png
+  authelia f: FAIL — no clickable same-origin links found after login
+  authelia g: N/A — app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe
+  authelia h: PASS — largest asset /static/js/index.CH9gMMud.js (77210B): direct 200 257145B d2a29a059597c8d9 vs proxy 200 257145B d2a29a059597c8d9; 25 MB POST /: direct -> write EP
+  authelia i: PASS — HTML / 200 ae=gzip: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || HTML / 200 ae=br: app sent none, proxy sent 200 none decodes=tru
+  authelia j: FAIL — nothing to move on this screen
+  authelia k: FAIL — Refused to set the document's base URI to 'http://127.0.0.1:9102/' because it violates the following Content Security Policy directive: "base-uri 'self'".
+ | Re
+== mixpost
+  mixpost a: PASS — e2e-mixpost-mixpost-1 inovector/mixpost:latest Up 16 minutes | e2e-mixpost-redis-1 redis:7 Up 16 minutes | e2e-mixpost-mysql-1 mysql:8.0 Up 16 minutes (healthy)
+  mixpost b: PASS — HTTP 200 final http://127.0.0.1:9103/mixpost/login title "Mixpost Auth - Mixpost" (33 chars visible); screenshot b-direct-home.png
+  mixpost c: FAIL — browser left the proxy: ended on http://127.0.0.1:9103/mixpost/login
+  mixpost d: FAIL — script tag not in the live DOM

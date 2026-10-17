@@ -1,0 +1,113 @@
+{
+  "app": "alexandrie",
+  "direct": "http://127.0.0.1:9104",
+  "proxy": "http://127.0.0.1:9204",
+  "checks": {
+    "a": {
+      "status": "PASS",
+      "evidence": "alexandrie-frontend ghcr.io/smaug6739/alexandrie-frontend:latest Up 14 minutes | alexandrie-backend ghcr.io/smaug6739/alexandrie-backend:latest Up 14 minutes | alexandrie-mysql mysql:8.0 Up 14 minutes (healthy) | alexandrie-rustfs rustfs/rustfs:latest Up 14 minutes (healthy) ; GET / -> 200",
+      "error": null,
+      "pointsTo": null
+    },
+    "b": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9104/ title \"Alexandrie\" (5532 chars visible); screenshot b-direct-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "c": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9204/ title \"Alexandrie\" (direct title \"Alexandrie\"); screenshot c-proxy-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "d": {
+      "status": "PASS",
+      "evidence": "HTML via proxy: hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true window.__capabilityPort=0.2.0 button=true",
+      "error": null,
+      "pointsTo": null
+    },
+    "e": {
+      "status": "FAIL",
+      "evidence": null,
+      "error": "check crashed: page.waitForTimeout: Target page, context or browser has been closed",
+      "pointsTo": null
+    },
+    "f": {
+      "status": "FAIL",
+      "evidence": null,
+      "error": "check crashed: page.evaluate: Target page, context or browser has been closed",
+      "pointsTo": null
+    },
+    "g": {
+      "status": "N/A",
+      "evidence": "app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe",
+      "error": null,
+      "pointsTo": null
+    },
+    "h": {
+      "status": "PASS",
+      "evidence": "largest asset /screenshots/mock/1.png (1655572B): direct 200 1655572B 2de2b21690373810 vs proxy 200 1655572B 2de2b21690373810; 25 MB POST /login: direct -> 200 in 95ms, proxy -> 200 in 57ms \"<!DOCTYPE html><html lang=\"en-US\"><head><meta charset=\"utf-8\"><meta name=\"viewp\"",
+      "error": null,
+      "pointsTo": null
+    },
+    "i": {
+      "status": "PASS",
+      "evidence": "HTML /login ae=gzip: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || HTML /login ae=br: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || asset /_nuxt/Cof5ebq4.js ae=gzip: app gzip, proxy gzip, decoded identical=true || asset /_nuxt/Cof5ebq4.js ae=br: app br, proxy br, decoded identical=true",
+      "error": null,
+      "pointsTo": null
+    },
+    "j": {
+      "status": "FAIL",
+      "evidence": null,
+      "error": "check crashed: page.goto: Target page, context or browser has been closed",
+      "pointsTo": null
+    },
+    "k": {
+      "status": "FAIL",
+      "evidence": "console errors: direct 9, proxy 12 (1 only seen through proxy); failed requests 11; 5xx 0; proxy log: \"PASS\"; full list console.txt",
+      "error": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "pointsTo": null
+    }
+  },
+  "directConsoleErrors": [
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID"
+  ],
+  "proxyConsoleErrors": [
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "failedRequests": [
+    "GET https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap — net::ERR_CERT_AUTHORITY_INVALID",
+    "GET https://i.pravatar.cc/40?img=1 — net::ERR_CERT_AUTHORITY_INVALID",
+    "GET https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap — net::ERR_CERT_AUTHORITY_INVALID",
+    "GET https://i.pravatar.cc/40?img=2 — net::ERR_CERT_AUTHORITY_INVALID",
+    "GET https://i.pravatar.cc/40?img=3 — net::ERR_CERT_AUTHORITY_INVALID",
+    "GET https://api.github.com/repos/Smaug6739/Alexandrie — net::ERR_CERT_AUTHORITY_INVALID",
+    "GET https://api.github.com/repos/Smaug6739/Alexandrie/contributors?per_page=100&anon=0 — net::ERR_CERT_AUTHORITY_INVALID",
+    "GET https://api.github.com/repos/Smaug6739/Alexandrie/releases/latest — net::ERR_CERT_AUTHORITY_INVALID",
+    "GET https://api.github.com/repos/Smaug6739/Alexandrie/contributors?per_page=50 — net::ERR_CERT_AUTHORITY_INVALID",
+    "GET https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap — net::ERR_CERT_AUTHORITY_INVALID",
+    "GET https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap — net::ERR_CERT_AUTHORITY_INVALID"
+  ],
+  "badResponses": [],
+  "websockets": []
+}

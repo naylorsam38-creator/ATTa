@@ -1,0 +1,13 @@
+# ArchiveBox: repo's docker-compose.yml (official image archivebox/archivebox:latest); only the port and admin login are set.
+services:
+  archivebox:
+    image: archivebox/archivebox:latest
+    ports: ["9101:5797"]
+    volumes: ["./data:/data"]
+    environment:
+      - BASE_URL=http://127.0.0.1:9201
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=e2e-pass-123
+      - PUBLIC_ADD_VIEW=False
+      - ARCHIVEDOTORG_ENABLED=False
+    shm_size: 1gb

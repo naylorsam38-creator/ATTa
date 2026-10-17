@@ -1,0 +1,10 @@
+# Authelia: official image authelia/authelia:latest (the repo's Dockerfile packages a prebuilt binary).
+services:
+  authelia:
+    image: authelia/authelia:latest
+    ports: ["9102:9091"]
+    volumes: ["./config:/config"]
+    environment:
+      - AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET=e2e-jwt-secret-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      - AUTHELIA_SESSION_SECRET=e2e-session-secret-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      - AUTHELIA_STORAGE_ENCRYPTION_KEY=e2e-storage-key-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

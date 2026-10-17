@@ -1,0 +1,68 @@
+{
+  "websocket": {
+    "direct": "OK message \"hello-from-ws\"",
+    "proxy": "error: Received network error or non-101 status code.",
+    "rawUpgradeViaProxy": "HTTP 404 (101 expected)"
+  },
+  "download_direct": {
+    "status": 200,
+    "bytes": 52428800,
+    "sha": "4fcde0c78d5ca6be",
+    "ttfbMs": 3,
+    "totalMs": 497
+  },
+  "upload_direct": {
+    "status": 200,
+    "bytes": 52428800,
+    "sha": "4fcde0c78d5ca6be",
+    "totalMs": 363
+  },
+  "download_proxy": {
+    "status": 200,
+    "bytes": 52428800,
+    "sha": "4fcde0c78d5ca6be",
+    "ttfbMs": 651,
+    "totalMs": 1152
+  },
+  "upload_proxy": {
+    "status": 200,
+    "bytes": 52428800,
+    "sha": "4fcde0c78d5ca6be",
+    "totalMs": 237
+  },
+  "bigSha": "4fcde0c78d5ca6be",
+  "stream_direct": {
+    "status": 200,
+    "firstByteMs": 502,
+    "totalMs": 10514,
+    "events": 21
+  },
+  "stream_proxy": {
+    "status": 200,
+    "firstByteMs": 10528,
+    "totalMs": 10528,
+    "events": 21
+  },
+  "headersAppSees": {
+    "host": "127.0.0.1:9310",
+    "origin": "http://127.0.0.1:9311",
+    "xff": null,
+    "xfh": null,
+    "xfp": null
+  },
+  "redirectLocationViaProxy": "http://127.0.0.1:9310/landed",
+  "gzipHtml": {
+    "status": 200,
+    "enc": "gzip",
+    "hook": true
+  },
+  "zstdHtml": {
+    "status": 502,
+    "body": "FAIL: Unsupported Content-Encoding: zstd"
+  },
+  "noHeadHtml": {
+    "status": 200,
+    "hookInjected": false
+  },
+  "proxyStdout": "PASS"
+}
