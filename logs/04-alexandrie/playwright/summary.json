@@ -1,0 +1,15 @@
+{
+ "pages": 23,
+ "pageLoadErrors": 0,
+ "consoleErrors": 10,
+ "pageErrors": 2,
+ "httpErrors": 19,
+ "failedRequests": 21,
+ "clicks": 236,
+ "clickErrors": 23,
+ "forms": 2,
+ "auth": [
+  "signup:/signup:Home Login Account creation Username * Email Email is only used for account recovery. It will not be shared publicly. Password * Confirm Password * Already have an account? Login Sign up Username alre",
+  "login:/login:Alexandrie TE testeralpha tester.alpha@example.test All workspaces Home Manage categories Teams CDN Settings No content available Create a new document or category to get started Create New Dashboard "
+ ]
+}

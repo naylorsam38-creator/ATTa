@@ -1,0 +1,6 @@
+ Container alexandrie-rustfs Healthy 
+ Container alexandrie-mysql Healthy 
+ Container alexandrie-backend Starting 
+ Container alexandrie-backend Started 
+ Container alexandrie-frontend Starting 
+ Container alexandrie-frontend Started 

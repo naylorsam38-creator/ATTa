@@ -1,0 +1,31 @@
+PAGES: 23
+AUTH:
+   signup /signup  Home Login Account creation Username * Email Email is only used for account recovery. It will not be shared publicly. Password * Confirm Password * Already have an account? Login Sign up Username alre  -> http://localhost:8200/signup | 
+   login /login  Alexandrie TE testeralpha tester.alpha@example.test All workspaces Home Manage categories Teams CDN Settings No content available Create a new document or category to get started Create New Dashboard   -> http://localhost:8200/dashboard/home | 
+CONSOLE ERRORS:
+   Failed to load resource: the server responded with a status of 400 (Bad Request) @/api/users:0
+   (x2) Failed to load resource: the server responded with a status of 404 (Not Found) @/api/auth/oidc/providers:0
+   Failed to load resource: the server responded with a status of 403 (Forbidden) @/?embed=1&ui=min&spin=1&proto=json:0
+   Hydration completed but contains mismatches. @/_nuxt/DiwvtjLI.js:0
+   (x2) [API ERROR] FetchError: [PUT] "http://localhost:8201/api/user/settings": <no response> Failed to fetch
+    at async _e (http://localhost:8200/_nuxt/DBvNOo4-.js:1:6471)
+    at async W (http://localhost:8200/_nuxt/DBvNOo4- @/_nuxt/DBvNOo4-.js:0
+   (x2) Failed to load resource: net::ERR_CONNECTION_REFUSED @/alexandrie/766692675570237441/766693986629976073.png:0
+   Failed to load resource: the server responded with a status of 403 (rate limit exceeded) @/repos/Smaug6739/Alexandrie:0
+PAGE ERRORS (uncaught JS):
+   (x2) Failed to execute 'writeText' on 'Clipboard': Write permission denied.
+HTTP >=400:
+   400 POST /api/users
+   (x2) 404 GET /api/auth/oidc/providers
+   (x14) 403 GET /?embed=1&ui=min&spin=1&proto=json
+   403 GET /repos/Smaug6739/Alexandrie
+   403 GET /repos/Smaug6739/Alexandrie/releases/latest
+FAILED REQUESTS:
+   (x3) net::ERR_ABORTED PUT http://localhost:8201/api/user/settings
+   (x18) net::ERR_CONNECTION_REFUSED GET http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png
+CLICKS: 236 errors: 23
+   (x23) locator.click: Timeout 4000ms exceeded.
+FORMS:
+   /dashboard/settings 0 clicked "Update"  -> /dashboard/settings | Alexandrie TE testeralpha tester.alpha@example.test All workspaces Home Manage categories Teams CDN 
+   /dashboard/settings?p=profile 0 clicked "Update"  -> /dashboard/settings?p=profile | Alexandrie TE testeralpha tester.alpha@example.test All workspaces Home Manage categories Teams CDN 
+NOTES: 

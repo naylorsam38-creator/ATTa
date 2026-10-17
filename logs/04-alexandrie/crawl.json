@@ -1,0 +1,3 @@
+{"base":"http://localhost:8200","out":"logs/04-alexandrie/playwright","pre":"tools/apps/alexandrie_pre.js","signupPaths":[],"loginPaths":[],
+ "startPaths":["/dashboard","/","/dashboard/settings","/dashboard/docs","/dashboard/categories","/dashboard/cdn"],
+ "maxPages":35,"clickPages":10,"maxClicks":25,"crawlMinutes":5,"clickMinutes":8,"formMinutes":4}

@@ -1,0 +1,6 @@
+2026-10-17T16:02:21.138755453Z Building application with current environment variables...
+2026-10-17T16:02:21.138889790Z API: http://localhost:8201
+2026-10-17T16:02:21.138900952Z CDN: http://localhost:9005
+2026-10-17T16:02:21.138902921Z URL: http://localhost:8200
+2026-10-17T16:02:21.138904511Z Starting Nitro server...
+2026-10-17T16:02:21.424848453Z Listening on http://0.0.0.0:8200

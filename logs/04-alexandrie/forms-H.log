@@ -1,0 +1,25 @@
+API 400 POST http://localhost:8201/api/users {"message":"Username already exists","status":"error","timestamp":1792253263585}
+API 200 POST http://localhost:8201/api/auth {"result":{"id":"766692675570237441","username":"testeralpha","firstname":"","lastname":"","role":1,"type":0,"avatar":"","email":"tester.alpha@example.test","totp_enabled":false,"totp_forced":false,"created_timestamp":1792252978317,"updated_timestamp
+API 200 PUT http://localhost:8201/api/user/settings {"result":{"user_id":"766692675570237441","general":{"advancedView":false,"compactMode":false,"darkMode":false,"datatableItemsCount":10,"displayFeatureTags":true,"displayTabs":false,"displayUncategorizedResources":true,"docSize":1,"hideTOC":false,"lo
+API 200 PUT http://localhost:8201/api/user/settings {"result":{"user_id":"766692675570237441","general":{"advancedView":false,"compactMode":false,"darkMode":false,"datatableItemsCount":10,"displayFeatureTags":true,"displayTabs":false,"displayUncategorizedResources":true,"docSize":1,"hideTOC":false,"lo
+API 200 POST http://localhost:8201/api/nodes {"result":{"id":"766693934712881160","user_id":"766692675570237441","parent_id":null,"name":"Test Doc Alpha","description":"Made-up test document","tags":null,"role":3,"color":null,"icon":null,"thumbnail":"","theme":null,"accessibility":1,"access":0,
+DOC AFTER SAVE http://localhost:8200/dashboard/docs/edit/766693934712881160 | Alexandrie TE testeralpha tester.alpha@example.test All workspaces Home Manage categories Teams CDN Settings Test Doc Alpha Test Doc Alpha Markdown editor Press / to navigate Category 1 #
+API 200 PUT http://localhost:8201/api/user/settings {"result":{"user_id":"766692675570237441","general":{"advancedView":false,"compactMode":false,"darkMode":false,"datatableItemsCount":10,"displayFeatureTags":true,"displayTabs":false,"displayUncategorizedResources":true,"docSize":1,"hideTOC":false,"lo
+DOCS LIST Alexandrie TE testeralpha tester.alpha@example.test All workspaces Home Manage categories Teams CDN Settings Test Doc Alpha Test Doc Alpha All workspaces Press / to navigate 2 Test Doc Alpha Made-up test document 17 Oct 2026 Test Doc Alpha Made-up test document 17 Oct 2026
+API 200 PUT http://localhost:8201/api/user/settings {"result":{"user_id":"766692675570237441","general":{"advancedView":false,"compactMode":false,"darkMode":false,"datatableItemsCount":10,"displayFeatureTags":true,"displayTabs":false,"displayUncategorizedResources":true,"docSize":1,"hideTOC":false,"lo
+file inputs 1
+API 200 POST http://localhost:8201/api/resources {"result":{"id":"766693986629976073","user_id":"766692675570237441","parent_id":null,"name":"test-image.png","description":null,"tags":null,"role":4,"color":null,"icon":null,"thumbnail":null,"theme":null,"accessibility":1,"access":0,"display":null,"o
+API 200 PUT http://localhost:8201/api/user/settings {"result":{"user_id":"766692675570237441","general":{"advancedView":false,"compactMode":false,"darkMode":false,"datatableItemsCount":10,"displayFeatureTags":true,"displayTabs":false,"displayUncategorizedResources":true,"docSize":1,"hideTOC":false,"lo
+CDN LINKS 
+CDN AFTER Alexandrie TE testeralpha tester.alpha@example.test All workspaces Home Manage categories Teams CDN Settings test-image.png Test Doc Alpha Test Doc Alpha File manager Press / to navigate Storage used 319 B / 1 GB 0.0% Drag and drop your files here or click here to select Maximum 10 files Upload NAME
+IMGS http://localhost:8200/Logo/Alexandrie-logo-light.png natural=500
+ERRORS [
+ "CONSOLE http://localhost:8200/signup | Failed to load resource: the server responded with a status of 400 (Bad Request)",
+ "HTTP 400 POST http://localhost:8201/api/users",
+ "HTTP 404 GET http://localhost:8201/api/auth/oidc/providers",
+ "CONSOLE http://localhost:8200/login | Failed to load resource: the server responded with a status of 404 (Not Found)"
+]
+FAILED http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png net::ERR_CONNECTION_REFUSED
+URL http://localhost:8200/dashboard/cdn/766693986629976073/preview
+http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png natural=0
+http://localhost:8200/Logo/Alexandrie-logo-light.png natural=500

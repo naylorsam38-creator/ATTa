@@ -1,0 +1,23 @@
+2026-10-17T16:02:20.958582562Z [36mapp |[0m Initializing Alexandrie backend...
+2026-10-17T16:02:20.958823828Z [32mserver |[0m Embedded configuration loaded successfully
+2026-10-17T16:02:21.033221854Z [32ms3 |[0m Successfully created alexandrie
+2026-10-17T16:02:21.052636821Z [32ms3 |[0m Successfully set public bucket policy for alexandrie
+2026-10-17T16:02:21.076261764Z [32ms3 |[0m Successfully created private backup bucket: alexandrie-backups
+2026-10-17T16:02:21.082414253Z [32ms3 |[0m Successfully set lifecycle policy for backups (auto-delete after 24h)
+2026-10-17T16:02:22.661401152Z [32mrepository manager |[0m Initialized successfully
+2026-10-17T16:02:22.662246363Z [36mOIDC |[0m No providers configured
+2026-10-17T16:02:22.662259861Z [32mservice manager |[0m Initialized successfully
+2026-10-17T16:02:22.663333964Z [36mapp |[0m Starting server on port: 8201
+2026-10-17T16:02:22.664116717Z [32msession |[0m Old sessions deleted successfully.
+2026-10-17T16:05:27.654273709Z 2026/10/17 16:05:27 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+2026-10-17T16:05:27.654299072Z 2026/10/17 16:05:27 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+2026-10-17T16:05:48.736798713Z 2026/10/17 16:05:48 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+2026-10-17T16:05:48.736827478Z 2026/10/17 16:05:48 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+2026-10-17T16:06:28.178944893Z 2026/10/17 16:06:28 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+2026-10-17T16:06:28.178964854Z 2026/10/17 16:06:28 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+2026-10-17T16:07:08.717088358Z 2026/10/17 16:07:08 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+2026-10-17T16:07:08.717168222Z 2026/10/17 16:07:08 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+2026-10-17T16:07:51.011224748Z 2026/10/17 16:07:51 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+2026-10-17T16:07:51.011255452Z 2026/10/17 16:07:51 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+2026-10-17T16:08:49.214220017Z 2026/10/17 16:08:49 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+2026-10-17T16:08:49.214543750Z 2026/10/17 16:08:49 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute

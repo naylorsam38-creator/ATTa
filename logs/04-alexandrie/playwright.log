@@ -1,0 +1,24 @@
+page {"url":"/dashboard","status":200,"finalUrl":"/dashboard/home","title":"Alexandrie","links":18}
+page {"url":"/","status":200,"finalUrl":"/","title":"Alexandrie","links":70}
+page {"url":"/dashboard/settings","status":200,"finalUrl":"/dashboard/settings","title":"Alexandrie","links":15}
+page {"url":"/dashboard/docs","status":200,"finalUrl":"/dashboard/docs","title":"Alexandrie","links":16}
+page {"url":"/dashboard/categories","status":200,"finalUrl":"/dashboard/categories","title":"Alexandrie","links":16}
+page {"url":"/dashboard/cdn","status":200,"finalUrl":"/dashboard/cdn","title":"Alexandrie","links":15}
+page {"url":"/dashboard/home","status":200,"finalUrl":"/dashboard/home","title":"Alexandrie","links":18}
+page {"url":"/dashboard/import","status":200,"finalUrl":"/dashboard/import","title":"Alexandrie","links":19}
+page {"url":"/dashboard/cdn/diagram","status":200,"finalUrl":"/dashboard/cdn/diagram","title":"Alexandrie","links":15}
+page {"url":"/dashboard/admin","status":200,"finalUrl":"/dashboard/home","title":"Alexandrie","links":18}
+page {"url":"/dashboard/settings?p=profile","status":200,"finalUrl":"/dashboard/settings?p=profile","title":"Alexandrie","links":15}
+page {"url":"/dashboard/docs/new","status":200,"finalUrl":"/dashboard/docs/new","title":"Alexandrie","links":15}
+page {"url":"/dashboard/teams","status":200,"finalUrl":"/dashboard/teams","title":"Alexandrie","links":16}
+page {"url":"/reference/documentation","status":200,"finalUrl":"/reference/documentation","title":"Alexandrie","links":27}
+page {"url":"/about","status":200,"finalUrl":"/about","title":"Alexandrie","links":22}
+page {"url":"/reference/privacy","status":200,"finalUrl":"/reference/privacy","title":"Alexandrie","links":31}
+page {"url":"/dashboard/settings?p=backup","status":200,"finalUrl":"/dashboard/settings?p=backup","title":"Alexandrie","links":15}
+page {"url":"/dashboard/import/backup","status":200,"finalUrl":"/dashboard/import/backup","title":"Alexandrie","links":16}
+page {"url":"/dashboard/import/files","status":200,"finalUrl":"/dashboard/import/files","title":"Alexandrie","links":15}
+page {"url":"/dashboard/import/folder","status":200,"finalUrl":"/dashboard/import/folder","title":"Alexandrie","links":15}
+page {"url":"/dashboard/join-workspace","status":200,"finalUrl":"/dashboard/home","title":"Alexandrie","links":18}
+page {"url":"/login","status":200,"finalUrl":"/dashboard/home","title":"Alexandrie","links":18}
+page {"url":"/signup","status":200,"finalUrl":"/dashboard/home","title":"Alexandrie","links":18}
+SUMMARY {"pages":23,"pageLoadErrors":0,"consoleErrors":10,"pageErrors":2,"httpErrors":19,"failedRequests":21,"clicks":236,"clickErrors":23,"forms":2,"auth":["signup:/signup:Home Login Account creation Username * Email Email is only used for account recovery. It will not be shared publicly. Password * Confirm Password * Already have an account? Login Sign up Username alre","login:/login:Alexandrie TE testeralpha tester.alpha@example.test All workspaces Home Manage categories Teams CDN Settings No content available Create a new document or category to get started Create New Dashboard "]}

@@ -1,0 +1,9 @@
+http://localhost:8200/ -> 200
+http://localhost:8200/signup -> 200
+http://localhost:8200/login -> 200
+http://localhost:8201/ -> 404
+http://localhost:8201/api/v1/ -> 404
+http://localhost:9000/ -> 403
+http://localhost:9005/ -> 000
+http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png -> 000  0
+http://localhost:9000/alexandrie/766692675570237441/766693986629976073.png -> 200 image/png 97

@@ -1,0 +1,2126 @@
+{
+ "base": "http://localhost:8200",
+ "started": "2026-10-17T16:05:37.366Z",
+ "pages": [
+  {
+   "url": "/dashboard",
+   "status": 200,
+   "finalUrl": "/dashboard/home",
+   "title": "Alexandrie",
+   "links": 18
+  },
+  {
+   "url": "/",
+   "status": 200,
+   "finalUrl": "/",
+   "title": "Alexandrie",
+   "links": 70
+  },
+  {
+   "url": "/dashboard/settings",
+   "status": 200,
+   "finalUrl": "/dashboard/settings",
+   "title": "Alexandrie",
+   "links": 15
+  },
+  {
+   "url": "/dashboard/docs",
+   "status": 200,
+   "finalUrl": "/dashboard/docs",
+   "title": "Alexandrie",
+   "links": 16
+  },
+  {
+   "url": "/dashboard/categories",
+   "status": 200,
+   "finalUrl": "/dashboard/categories",
+   "title": "Alexandrie",
+   "links": 16
+  },
+  {
+   "url": "/dashboard/cdn",
+   "status": 200,
+   "finalUrl": "/dashboard/cdn",
+   "title": "Alexandrie",
+   "links": 15
+  },
+  {
+   "url": "/dashboard/home",
+   "status": 200,
+   "finalUrl": "/dashboard/home",
+   "title": "Alexandrie",
+   "links": 18
+  },
+  {
+   "url": "/dashboard/import",
+   "status": 200,
+   "finalUrl": "/dashboard/import",
+   "title": "Alexandrie",
+   "links": 19
+  },
+  {
+   "url": "/dashboard/cdn/diagram",
+   "status": 200,
+   "finalUrl": "/dashboard/cdn/diagram",
+   "title": "Alexandrie",
+   "links": 15
+  },
+  {
+   "url": "/dashboard/admin",
+   "status": 200,
+   "finalUrl": "/dashboard/home",
+   "title": "Alexandrie",
+   "links": 18
+  },
+  {
+   "url": "/dashboard/settings?p=profile",
+   "status": 200,
+   "finalUrl": "/dashboard/settings?p=profile",
+   "title": "Alexandrie",
+   "links": 15
+  },
+  {
+   "url": "/dashboard/docs/new",
+   "status": 200,
+   "finalUrl": "/dashboard/docs/new",
+   "title": "Alexandrie",
+   "links": 15
+  },
+  {
+   "url": "/dashboard/teams",
+   "status": 200,
+   "finalUrl": "/dashboard/teams",
+   "title": "Alexandrie",
+   "links": 16
+  },
+  {
+   "url": "/reference/documentation",
+   "status": 200,
+   "finalUrl": "/reference/documentation",
+   "title": "Alexandrie",
+   "links": 27
+  },
+  {
+   "url": "/about",
+   "status": 200,
+   "finalUrl": "/about",
+   "title": "Alexandrie",
+   "links": 22
+  },
+  {
+   "url": "/reference/privacy",
+   "status": 200,
+   "finalUrl": "/reference/privacy",
+   "title": "Alexandrie",
+   "links": 31
+  },
+  {
+   "url": "/dashboard/settings?p=backup",
+   "status": 200,
+   "finalUrl": "/dashboard/settings?p=backup",
+   "title": "Alexandrie",
+   "links": 15
+  },
+  {
+   "url": "/dashboard/import/backup",
+   "status": 200,
+   "finalUrl": "/dashboard/import/backup",
+   "title": "Alexandrie",
+   "links": 16
+  },
+  {
+   "url": "/dashboard/import/files",
+   "status": 200,
+   "finalUrl": "/dashboard/import/files",
+   "title": "Alexandrie",
+   "links": 15
+  },
+  {
+   "url": "/dashboard/import/folder",
+   "status": 200,
+   "finalUrl": "/dashboard/import/folder",
+   "title": "Alexandrie",
+   "links": 15
+  },
+  {
+   "url": "/dashboard/join-workspace",
+   "status": 200,
+   "finalUrl": "/dashboard/home",
+   "title": "Alexandrie",
+   "links": 18
+  },
+  {
+   "url": "/login",
+   "status": 200,
+   "finalUrl": "/dashboard/home",
+   "title": "Alexandrie",
+   "links": 18
+  },
+  {
+   "url": "/signup",
+   "status": 200,
+   "finalUrl": "/dashboard/home",
+   "title": "Alexandrie",
+   "links": 18
+  }
+ ],
+ "consoleErrors": [
+  {
+   "page": "/signup",
+   "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+   "loc": "/api/users:0"
+  },
+  {
+   "page": "/login",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/api/auth/oidc/providers:0"
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+   "loc": "/?embed=1&ui=min&spin=1&proto=json:0"
+  },
+  {
+   "page": "/dashboard/home",
+   "text": "Hydration completed but contains mismatches.",
+   "loc": "/_nuxt/DiwvtjLI.js:0"
+  },
+  {
+   "page": "/dashboard/cdn",
+   "text": "[API ERROR] FetchError: [PUT] \"http://localhost:8201/api/user/settings\": <no response> Failed to fetch\n    at async _e (http://localhost:8200/_nuxt/DBvNOo4-.js:1:6471)\n    at async W (http://localhost:8200/_nuxt/DBvNOo4-.js:1:7302)\n    at async c (http://localhost:8200/_nuxt/DBvNOo4-.js:39:2122)",
+   "loc": "/_nuxt/DBvNOo4-.js:0"
+  },
+  {
+   "page": "/dashboard/settings",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "loc": "/api/auth/oidc/providers:0"
+  },
+  {
+   "page": "/dashboard/docs/new",
+   "text": "[API ERROR] FetchError: [PUT] \"http://localhost:8201/api/user/settings\": <no response> Failed to fetch\n    at async _e (http://localhost:8200/_nuxt/DBvNOo4-.js:1:6471)\n    at async W (http://localhost:8200/_nuxt/DBvNOo4-.js:1:7302)\n    at async c (http://localhost:8200/_nuxt/DBvNOo4-.js:39:2122)",
+   "loc": "/_nuxt/DBvNOo4-.js:0"
+  },
+  {
+   "page": "/dashboard/cdn",
+   "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+   "loc": "/alexandrie/766692675570237441/766693986629976073.png:0"
+  },
+  {
+   "page": "/dashboard/cdn/766693986629976073/preview",
+   "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+   "loc": "/alexandrie/766692675570237441/766693986629976073.png:0"
+  },
+  {
+   "page": "/",
+   "text": "Failed to load resource: the server responded with a status of 403 (rate limit exceeded)",
+   "loc": "/repos/Smaug6739/Alexandrie:0"
+  }
+ ],
+ "pageErrors": [
+  {
+   "page": "/",
+   "text": "Failed to execute 'writeText' on 'Clipboard': Write permission denied."
+  },
+  {
+   "page": "/",
+   "text": "Failed to execute 'writeText' on 'Clipboard': Write permission denied."
+  }
+ ],
+ "failedRequests": [
+  {
+   "page": "/dashboard/cdn",
+   "url": "http://localhost:8201/api/user/settings",
+   "method": "PUT",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/dashboard/docs/new",
+   "url": "http://localhost:8201/api/user/settings",
+   "method": "PUT",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/dashboard/cdn",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn/766693986629976073/preview",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn/766693986629976073/preview",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn/766693986629976073/preview",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn/766693986629976073/preview",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/docs/new",
+   "url": "http://localhost:8201/api/user/settings",
+   "method": "PUT",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/dashboard/cdn",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn/766693986629976073/preview",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn/766693986629976073/preview",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn/766693986629976073/preview",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  },
+  {
+   "page": "/dashboard/cdn/766693986629976073/preview",
+   "url": "http://localhost:9005/alexandrie/766692675570237441/766693986629976073.png",
+   "method": "GET",
+   "err": "net::ERR_CONNECTION_REFUSED"
+  }
+ ],
+ "httpErrors": [
+  {
+   "page": "/signup",
+   "url": "http://localhost:8201/api/users",
+   "method": "POST",
+   "status": 400
+  },
+  {
+   "page": "/login",
+   "url": "http://localhost:8201/api/auth/oidc/providers",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/dashboard/settings",
+   "url": "http://localhost:8201/api/auth/oidc/providers",
+   "method": "GET",
+   "status": 404
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/",
+   "url": "https://api.github.com/repos/Smaug6739/Alexandrie",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/",
+   "url": "https://api.github.com/repos/Smaug6739/Alexandrie/releases/latest",
+   "method": "GET",
+   "status": 403
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+   "method": "GET",
+   "status": 403
+  }
+ ],
+ "clicks": [
+  {
+   "page": "/dashboard",
+   "idx": 0,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 1,
+   "text": "",
+   "after": "/dashboard/categories",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 2,
+   "text": "",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 3,
+   "text": "",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 4,
+   "text": "",
+   "after": "/dashboard/import",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 5,
+   "text": "",
+   "after": "/dashboard/cdn/diagram",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 6,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 7,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 8,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 9,
+   "text": "testeralpha tester.alpha@example.test",
+   "after": "/dashboard/settings?p=profile",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 10,
+   "text": "",
+   "after": "/dashboard/docs/new",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 11,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 12,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 13,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 14,
+   "text": "Home",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 15,
+   "text": "Manage categories",
+   "after": "/dashboard/categories",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 16,
+   "text": "Teams",
+   "after": "/dashboard/teams",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 17,
+   "text": "CDN",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 18,
+   "text": "Settings",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 19,
+   "text": "Create New",
+   "after": "/dashboard/docs/new",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 20,
+   "text": "Go back",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard",
+   "idx": 21,
+   "text": "Go forward",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard",
+   "idx": 22,
+   "text": "Press / to navigate",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 23,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard",
+   "idx": 24,
+   "text": "+ New document",
+   "after": "/dashboard/docs/new",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 0,
+   "text": "Get Started",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 1,
+   "text": "GitHub",
+   "result": "external link not followed: https://github.com/Smaug6739/Alexandrie"
+  },
+  {
+   "page": "/",
+   "idx": 2,
+   "text": "Star on GitHub Show your support and help other de",
+   "result": "external link not followed: https://github.com/Smaug6739/Alexandrie"
+  },
+  {
+   "page": "/",
+   "idx": 3,
+   "text": "Support financially Help cover hosting, backup inf",
+   "result": "external link not followed: https://github.com/sponsors/Smaug6739"
+  },
+  {
+   "page": "/",
+   "idx": 4,
+   "text": "01 Capture Ideas Instantly Quick notes & drafts",
+   "after": "/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 5,
+   "text": "02 Organize Your Knowledge Structure & categorize",
+   "after": "/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 6,
+   "text": "03 Collaborate Seamlessly Team workflows",
+   "after": "/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 7,
+   "text": "04 Publish & Share Go live instantly",
+   "after": "/",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 8,
+   "text": "Download the docker-compose.yml file",
+   "result": "external link not followed: https://github.com/Smaug6739/Alexandrie/blob/main/docker-compose.yml"
+  },
+  {
+   "page": "/",
+   "idx": 9,
+   "text": "Download the .env.example file",
+   "result": "external link not followed: https://github.com/Smaug6739/Alexandrie/blob/main/.env.example"
+  },
+  {
+   "page": "/",
+   "idx": 10,
+   "text": "",
+   "after": "/",
+   "newErrors": 1
+  },
+  {
+   "page": "/",
+   "idx": 11,
+   "text": "",
+   "after": "/",
+   "newErrors": 1
+  },
+  {
+   "page": "/",
+   "idx": 12,
+   "text": "Star on GitHub",
+   "result": "external link not followed: https://github.com/Smaug6739/Alexandrie"
+  },
+  {
+   "page": "/",
+   "idx": 13,
+   "text": "Try the app",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 14,
+   "text": "Contribute",
+   "result": "external link not followed: https://github.com/Smaug6739/Alexandrie/contribute"
+  },
+  {
+   "page": "/",
+   "idx": 15,
+   "text": "Smaug6739 2378 commits",
+   "result": "external link not followed: https://github.com/Smaug6739"
+  },
+  {
+   "page": "/",
+   "idx": 16,
+   "text": "dependabot[bot] 326 commits",
+   "result": "external link not followed: https://github.com/apps/dependabot"
+  },
+  {
+   "page": "/",
+   "idx": 17,
+   "text": "louloudev59 31 commits",
+   "result": "external link not followed: https://github.com/louloudev59"
+  },
+  {
+   "page": "/",
+   "idx": 18,
+   "text": "Axel-cmd 12 commits",
+   "result": "external link not followed: https://github.com/Axel-cmd"
+  },
+  {
+   "page": "/",
+   "idx": 19,
+   "text": "dedmen 10 commits",
+   "result": "external link not followed: https://github.com/dedmen"
+  },
+  {
+   "page": "/",
+   "idx": 20,
+   "text": "dchaudhari7177 10 commits",
+   "result": "external link not followed: https://github.com/dchaudhari7177"
+  },
+  {
+   "page": "/",
+   "idx": 21,
+   "text": "sairampolisetty 8 commits",
+   "result": "external link not followed: https://github.com/sairampolisetty"
+  },
+  {
+   "page": "/",
+   "idx": 22,
+   "text": "SamuelBagattin 5 commits",
+   "result": "external link not followed: https://github.com/SamuelBagattin"
+  },
+  {
+   "page": "/",
+   "idx": 23,
+   "text": "denisolvr 3 commits",
+   "result": "external link not followed: https://github.com/denisolvr"
+  },
+  {
+   "page": "/",
+   "idx": 24,
+   "text": "belkhoujaons 3 commits",
+   "result": "external link not followed: https://github.com/belkhoujaons"
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 0,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 1,
+   "text": "",
+   "after": "/dashboard/categories",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 2,
+   "text": "",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 3,
+   "text": "",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 4,
+   "text": "",
+   "after": "/dashboard/import",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 5,
+   "text": "",
+   "after": "/dashboard/cdn/diagram",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 6,
+   "text": "",
+   "after": "/dashboard/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 7,
+   "text": "Other",
+   "after": "/dashboard/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 8,
+   "text": "Teams",
+   "after": "/dashboard/teams",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 9,
+   "text": "CDN",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 10,
+   "text": "Settings",
+   "after": "/dashboard/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 11,
+   "text": "Teams",
+   "after": "/dashboard/docs/766693757356736518",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 12,
+   "text": "Go back",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 13,
+   "text": "Go forward",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 14,
+   "text": "Press / to navigate",
+   "after": "/dashboard/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 15,
+   "text": "",
+   "after": "/dashboard/docs/new",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 16,
+   "text": "My profile",
+   "after": "/dashboard/settings?p=profile",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 17,
+   "text": "Appearance",
+   "after": "/dashboard/settings?p=apparence",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 18,
+   "text": "Security",
+   "after": "/dashboard/settings?p=security",
+   "newErrors": 1
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 19,
+   "text": "Documents",
+   "after": "/dashboard/settings?p=documents",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 20,
+   "text": "Editor",
+   "after": "/dashboard/settings?p=editor",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 21,
+   "text": "Style injection",
+   "after": "/dashboard/settings?p=styles",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 22,
+   "text": "Style injection",
+   "after": "/dashboard/settings?p=styles",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 23,
+   "text": "Other",
+   "after": "/dashboard/settings?p=other",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/settings",
+   "idx": 24,
+   "text": "Snippets",
+   "after": "/dashboard/settings?p=snippets",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 0,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 1,
+   "text": "testeralpha tester.alpha@example.test",
+   "after": "/dashboard/settings?p=profile",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 2,
+   "text": "",
+   "after": "/dashboard/docs/new",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 3,
+   "text": "",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 4,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 5,
+   "text": "",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 6,
+   "text": "",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 7,
+   "text": "Other",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 8,
+   "text": "Teams",
+   "after": "/dashboard/teams",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 9,
+   "text": "CDN",
+   "after": "/dashboard/cdn",
+   "newErrors": 1
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 10,
+   "text": "Settings",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 11,
+   "text": "Teams",
+   "after": "/dashboard/cdn/766693986629976073/preview",
+   "newErrors": 1
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 12,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693757356736518",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 13,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693934712881160",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 14,
+   "text": "Go back",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 15,
+   "text": "Go forward",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 16,
+   "text": "",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 17,
+   "text": "Press / to navigate",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 18,
+   "text": "",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 19,
+   "text": "",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 20,
+   "text": "",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 21,
+   "text": "Kanban",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/docs",
+   "idx": 22,
+   "text": "",
+   "after": "/dashboard/docs",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 0,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 1,
+   "text": "testeralpha tester.alpha@example.test",
+   "after": "/dashboard/settings?p=profile",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 2,
+   "text": "",
+   "after": "/dashboard/docs/new",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 3,
+   "text": "",
+   "after": "/dashboard/categories",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 4,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 5,
+   "text": "",
+   "after": "/dashboard/categories",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 6,
+   "text": "",
+   "after": "/dashboard/categories",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 7,
+   "text": "Other",
+   "after": "/dashboard/categories",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 8,
+   "text": "Teams",
+   "after": "/dashboard/teams",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 9,
+   "text": "CDN",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 10,
+   "text": "Settings",
+   "after": "/dashboard/categories",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 11,
+   "text": "Teams",
+   "after": "/dashboard/cdn/766693986629976073/preview",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 12,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693757356736518",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 13,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693934712881160",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 14,
+   "text": "Go back",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 15,
+   "text": "Go forward",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 16,
+   "text": "+ Workspace",
+   "after": "/dashboard/categories",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 17,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693934712881160",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 18,
+   "text": "Import",
+   "after": "/dashboard/import",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 19,
+   "text": "Import",
+   "after": "/dashboard/import",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 20,
+   "text": "Press / to navigate",
+   "after": "/dashboard/categories",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/categories",
+   "idx": 21,
+   "text": "Manage categories",
+   "after": "/dashboard/categories",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 0,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 1,
+   "text": "testeralpha tester.alpha@example.test",
+   "after": "/dashboard/settings?p=profile",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 2,
+   "text": "",
+   "after": "/dashboard/docs/new",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 3,
+   "text": "",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 4,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 5,
+   "text": "",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 6,
+   "text": "",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 7,
+   "text": "Other",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 8,
+   "text": "Teams",
+   "after": "/dashboard/teams",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 9,
+   "text": "CDN",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 10,
+   "text": "Settings",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 11,
+   "text": "Teams",
+   "after": "/dashboard/cdn/766693986629976073/preview",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 12,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693757356736518",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 13,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693934712881160",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 14,
+   "text": "Go back",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 15,
+   "text": "Go forward",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 16,
+   "text": "Press / to navigate",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 17,
+   "text": "",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 18,
+   "text": "Go back",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 19,
+   "text": "",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 20,
+   "text": "Upload",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 21,
+   "text": "",
+   "after": "/dashboard/cdn/766693986629976073/preview",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 22,
+   "text": "",
+   "after": "/dashboard/cdn/766693986629976073",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 23,
+   "text": "<",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/cdn",
+   "idx": 24,
+   "text": "1",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 0,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 1,
+   "text": "testeralpha tester.alpha@example.test",
+   "after": "/dashboard/settings?p=profile",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 2,
+   "text": "",
+   "after": "/dashboard/docs/new",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 3,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 4,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 5,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 6,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 7,
+   "text": "Other",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 8,
+   "text": "Teams",
+   "after": "/dashboard/teams",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 9,
+   "text": "CDN",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 10,
+   "text": "Settings",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 11,
+   "text": "Teams",
+   "after": "/dashboard/cdn/766693986629976073/preview",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 12,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693757356736518",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 13,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693934712881160",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 14,
+   "text": "Go back",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 15,
+   "text": "Go forward",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 16,
+   "text": "Press / to navigate",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 17,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 18,
+   "text": "Go back",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 19,
+   "text": "Join workspace",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 20,
+   "text": "+ New document",
+   "after": "/dashboard/docs/new",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 21,
+   "text": "Give feedback",
+   "result": "external link not followed: https://github.com/Smaug6739/Alexandrie/discussions"
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 22,
+   "text": "I understand, thank you!",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 23,
+   "text": "Support financially Help cover hosting, backup inf",
+   "result": "external link not followed: https://github.com/sponsors/Smaug6739"
+  },
+  {
+   "page": "/dashboard/home",
+   "idx": 24,
+   "text": "3 m ago Test Doc Alpha Made-up test document",
+   "after": "/dashboard/docs/766693757356736518",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 0,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 1,
+   "text": "testeralpha tester.alpha@example.test",
+   "after": "/dashboard/settings?p=profile",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 2,
+   "text": "",
+   "after": "/dashboard/docs/new",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 3,
+   "text": "",
+   "after": "/dashboard/import",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 4,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 5,
+   "text": "",
+   "after": "/dashboard/import",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 6,
+   "text": "",
+   "after": "/dashboard/import",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 7,
+   "text": "Other",
+   "after": "/dashboard/import",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 8,
+   "text": "Teams",
+   "after": "/dashboard/teams",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 9,
+   "text": "CDN",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 10,
+   "text": "Settings",
+   "after": "/dashboard/import",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 11,
+   "text": "Teams",
+   "after": "/dashboard/cdn/766693986629976073/preview",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 12,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693757356736518",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 13,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693934712881160",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 14,
+   "text": "Go back",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 15,
+   "text": "Go forward",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 16,
+   "text": "Press / to navigate",
+   "after": "/dashboard/import",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 17,
+   "text": "",
+   "after": "/dashboard/import",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 18,
+   "text": "Go back",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 19,
+   "text": "Import from backup Restore a complete Alexandrie b",
+   "after": "/dashboard/import/backup",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 20,
+   "text": "Import from files Import documents from markdown f",
+   "after": "/dashboard/import/files",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/import",
+   "idx": 21,
+   "text": "Import folder Import entire folder (including subf",
+   "after": "/dashboard/import/folder",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 0,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 1,
+   "text": "testeralpha tester.alpha@example.test",
+   "after": "/dashboard/settings?p=profile",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 2,
+   "text": "",
+   "after": "/dashboard/docs/new",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 3,
+   "text": "",
+   "after": "/dashboard/cdn/diagram",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 4,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 5,
+   "text": "",
+   "after": "/dashboard/cdn/diagram",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 6,
+   "text": "",
+   "after": "/dashboard/cdn/diagram",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 7,
+   "text": "Other",
+   "after": "/dashboard/cdn/diagram",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 8,
+   "text": "Teams",
+   "after": "/dashboard/teams",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 9,
+   "text": "CDN",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 10,
+   "text": "Settings",
+   "after": "/dashboard/cdn/diagram",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 11,
+   "text": "Teams",
+   "after": "/dashboard/cdn/766693986629976073/preview",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 12,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693757356736518",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 13,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693934712881160",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 14,
+   "text": "Go back",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 15,
+   "text": "Go forward",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 16,
+   "text": "",
+   "after": "/dashboard/cdn/diagram",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 17,
+   "text": "Press / to navigate",
+   "after": "/dashboard/cdn/diagram",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/cdn/diagram",
+   "idx": 18,
+   "text": "",
+   "after": "/dashboard/cdn/diagram",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 0,
+   "text": "Alexandrie",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 1,
+   "text": "testeralpha tester.alpha@example.test",
+   "after": "/dashboard/settings?p=profile",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 2,
+   "text": "",
+   "after": "/dashboard/docs/new",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 3,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 4,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 5,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 6,
+   "text": "Home",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 7,
+   "text": "Manage categories",
+   "after": "/dashboard/categories",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 8,
+   "text": "Teams",
+   "after": "/dashboard/teams",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 9,
+   "text": "CDN",
+   "after": "/dashboard/cdn",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 10,
+   "text": "Settings",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 11,
+   "text": "test-image.png",
+   "after": "/dashboard/cdn/766693986629976073/preview",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 12,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693757356736518",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 13,
+   "text": "Test Doc Alpha",
+   "after": "/dashboard/docs/766693934712881160",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 14,
+   "text": "Go back",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 15,
+   "text": "Go forward",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 16,
+   "text": "Press / to navigate",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 17,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 18,
+   "text": "+ New document",
+   "after": "/dashboard/docs/new",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 19,
+   "text": "Join workspace",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 20,
+   "text": "",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 21,
+   "text": "I understand, thank you!",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 22,
+   "text": "I understand, thank you!",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 23,
+   "text": "Support financially Help cover hosting, backup inf",
+   "result": "external link not followed: https://github.com/sponsors/Smaug6739"
+  },
+  {
+   "page": "/dashboard/admin",
+   "idx": 24,
+   "text": "I understand, thank you!",
+   "after": "/dashboard/home",
+   "newErrors": 0
+  }
+ ],
+ "forms": [
+  {
+   "page": "/dashboard/settings",
+   "idx": 0,
+   "filled": [
+    "firstname=Tester",
+    "lastname=Alpha",
+    "email=tester.alpha@example.test"
+   ],
+   "submit": "clicked \"Update\"",
+   "after": "/dashboard/settings",
+   "text": "Alexandrie TE testeralpha tester.alpha@example.test All workspaces Home Manage categories Teams CDN Settings test-image.png Test Doc Alpha Test Doc Alpha Press "
+  },
+  {
+   "page": "/dashboard/settings?p=profile",
+   "idx": 0,
+   "filled": [
+    "firstname=Tester",
+    "lastname=Alpha",
+    "email=tester.alpha@example.test"
+   ],
+   "submit": "clicked \"Update\"",
+   "after": "/dashboard/settings?p=profile",
+   "text": "Alexandrie TE testeralpha tester.alpha@example.test All workspaces Home Manage categories Teams CDN Settings test-image.png Test Doc Alpha Test Doc Alpha Press "
+  }
+ ],
+ "auth": [
+  {
+   "kind": "signup",
+   "url": "/signup",
+   "afterUrl": "http://localhost:8200/signup",
+   "result": "Home Login Account creation Username * Email Email is only used for account recovery. It will not be shared publicly. Password * Confirm Password * Already have an account? Login Sign up Username alre"
+  },
+  {
+   "kind": "login",
+   "url": "/login",
+   "afterUrl": "http://localhost:8200/dashboard/home",
+   "result": "Alexandrie TE testeralpha tester.alpha@example.test All workspaces Home Manage categories Teams CDN Settings No content available Create a new document or category to get started Create New Dashboard "
+  }
+ ],
+ "notes": [],
+ "finished": "2026-10-17T16:13:21.869Z"
+}

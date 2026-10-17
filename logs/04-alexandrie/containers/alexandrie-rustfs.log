@@ -1,0 +1,3 @@
+2026-10-17T16:02:10.028597622Z Initializing data directories: /data
+2026-10-17T16:02:10.028616590Z Initializing log directory: /logs
+2026-10-17T16:02:10.028688676Z Starting: /usr/bin/rustfs  /data

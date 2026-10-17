@@ -1,0 +1,5 @@
+NAMES                 IMAGE                                          STATUS
+alexandrie-frontend   ghcr.io/smaug6739/alexandrie-frontend:latest   Up 11 minutes
+alexandrie-backend    ghcr.io/smaug6739/alexandrie-backend:latest    Up 11 minutes
+alexandrie-mysql      mysql:8.0                                      Up 11 minutes (healthy)
+alexandrie-rustfs     rustfs/rustfs:latest                           Up 11 minutes (healthy)
