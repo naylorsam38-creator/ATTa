@@ -1,0 +1,5 @@
+[
+ "HTTP 401 POST https://authelia.example.com/api/firstfactor",
+ "CONSOLE https://authelia.example.com/?rd=https%3A%2F%2Ftraefik.example.com%2F&rm=GET | Failed to load resource: the server responded with a status of 401 ()",
+ "CONSOLE https://authelia.example.com/?rd=https%3A%2F%2Ftraefik.example.com%2F&rm=GET | AxiosError: Request failed with status code 401\n    at On (https://authelia.example.com/static/js/axios.vrpypmKw.js:3:11871)\n    at XMLHttpRequest._ (https://authelia.example.com/static/js/axios.vrpypmKw.js:3:18951)\n    at Q.request (https://authelia"
+]

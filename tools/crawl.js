@@ -130,8 +130,8 @@ async function tryAuth(page, kind, paths) {
 }
 
 (async () => {
-  const browser = await chromium.launch({ executablePath: undefined, args: ['--no-proxy-server'] });
-  const ctx = await browser.newContext({ ignoreHTTPSErrors: !!cfg.ignoreHTTPSErrors, viewport: { width: 1366, height: 900 } });
+  const browser = await require('./browser.js').launch();
+  const ctx = await browser.newContext({ locale: 'en-US', ignoreHTTPSErrors: !!cfg.ignoreHTTPSErrors, viewport: { width: 1366, height: 900 } });
   const page = await ctx.newPage();
   const origin = new URL(cfg.base).origin;
   const hook = (p) => {

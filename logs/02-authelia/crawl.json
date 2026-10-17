@@ -1,0 +1,3 @@
+{"base":"https://authelia.example.com","out":"logs/02-authelia/playwright","ignoreHTTPSErrors":true,"pre":"tools/apps/authelia_pre.js",
+ "startPaths":["/","/settings","/settings/two-factor-authentication","/settings/security","/reset-password/step1","/consent","/logout"],
+ "signupPaths":[],"loginPaths":[],"maxPages":30,"clickPages":8,"maxClicks":20,"crawlMinutes":4,"clickMinutes":6,"formMinutes":3,"skipPasswordForms":false}

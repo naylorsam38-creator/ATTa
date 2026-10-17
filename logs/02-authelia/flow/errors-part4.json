@@ -1,0 +1,13 @@
+[
+ "HTTP 403 GET https://authelia.example.com/api/configuration",
+ "CONSOLE https://authelia.example.com/settings/two-factor-authentication | Failed to load resource: the server responded with a status of 403 ()",
+ "CONSOLE https://authelia.example.com/settings/two-factor-authentication | AxiosError: Request failed with status code 403\n    at On (https://authelia.example.com/static/js/axios.vrpypmKw.js:3:11871)\n    at XMLHttpRequest._ (https://authelia.example.com/static/js/axios.vrpypmKw.js:3:18951)\n    at Q.request (https://authelia",
+ "HTTP 403 POST https://authelia.example.com/api/user/info",
+ "CONSOLE https://authelia.example.com/settings/two-factor-authentication | Failed to load resource: the server responded with a status of 403 ()",
+ "CONSOLE https://authelia.example.com/settings/two-factor-authentication | AxiosError: Request failed with status code 403\n    at On (https://authelia.example.com/static/js/axios.vrpypmKw.js:3:11871)\n    at XMLHttpRequest._ (https://authelia.example.com/static/js/axios.vrpypmKw.js:3:18951)\n    at Q.request (https://authelia",
+ "HTTP 401 POST https://authelia.example.com/api/firstfactor",
+ "CONSOLE https://authelia.example.com/ | Failed to load resource: the server responded with a status of 401 ()",
+ "CONSOLE https://authelia.example.com/ | AxiosError: Request failed with status code 401\n    at On (https://authelia.example.com/static/js/axios.vrpypmKw.js:3:11871)\n    at XMLHttpRequest._ (https://authelia.example.com/static/js/axios.vrpypmKw.js:3:18951)\n    at Q.request (https://authelia",
+ "HTTP 404 GET https://authelia.example.com/api/secondfactor/totp",
+ "CONSOLE https://authelia.example.com/settings/two-factor-authentication | Failed to load resource: the server responded with a status of 404 ()"
+]

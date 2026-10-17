@@ -1,0 +1,17 @@
+SETTINGS URL https://authelia.example.com/settings/two-factor-authentication
+NOTIF TAIL r credentials may have been compromised and you should: 1. Revoke this code using the provided links below 2. Reset your password or other login credentials 3. Contact an Administrator To revoke the code, click the link below: https://authelia.example.com/revoke/one-time-code?id=JnQgCkHSTNCi6p5RnKoLIQ ---------------------------------------- This notification was intended for Tester Alpha. This one-time code was generated due to an action from 172.18.0.1. If you do not believe that your actions could have triggered this event or if you are concerned about your account's safety, please follow the explicit directions in this notification. Powered by Authelia https://www.authelia.com 
+one-time code B9T3M6GU
+AFTER VERIFY Settings One-Time Password ADD The One-Time Password has not been registered if you'd like to register it click add WebAuthn Credentials ADD No WebAuthn Credentials have been registered if you'd like to register one click add Register One-Time Password This dialog handles registration of a One-Time Password 1 Start 2 Register 3 Confirm To begin select next PREVIOUS CANCEL NEXT
+INPUTS BUTTON#settings-menu button | BUTTON#one-time-password-add ADD | BUTTON#webauthn-credential-add ADD | BUTTON#one-time-password-advanced button | INPUT# checkbox | BUTTON#one-time-password-algorithm-SHA1 button | INPUT# radio | BUTTON#one-time-password-length-6 button | INPUT# radio | BUTTON#one-time-password-period-30 button | INPUT# radio | BUTTON#dialog-previous PREVIOUS | BUTTON#dialog-cancel CANCEL | BUTTON#dialog-next NEXT
+SECRET found: true
+TOTP 067983
+otp inputs 7
+AFTER OTP REGISTER 
+SECURE URL https://authelia.example.com/2fa/one-time-password?rd=https%3A%2F%2Fsecure.example.com%2F&rm=GET | English T Hi Tester Alpha LOGOUT | SWITCH USER | METHODS One-Time Password Enter One-Time Password Enter One-Time Password Manage devices Powered by Authelia
+2fa inputs 7
+AFTER 2FA https://authelia.example.com/2fa/one-time-password?rd=https%3A%2F%2Fsecure.example.com%2F&rm=GET | English T Hi Tester Alpha LOGOUT | SWITCH USER | METHODS One-Time Password Enter One-Time Password Enter One-Time Password Manage devices Powered by Authelia The One-Time Password might be wrong
+RESET PAGE https://authelia.example.com/reset-password/step1 Reset password Username RESET CANCEL
+AFTER RESET REQ English Sign in Username * Password * Remember me SIGN IN Reset password? Powered by Authelia An email has been sent to your address to complete the process
+reset link found: true
+STEP2 Enter new password New password Repeat new password RESET CANCEL
+AFTER RESET https://authelia.example.com/ English Sign in Username * Password * Remember me SIGN IN Reset password? Powered by Authelia Password has been reset

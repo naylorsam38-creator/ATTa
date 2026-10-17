@@ -1,0 +1,180 @@
+{
+ "base": "https://authelia.example.com",
+ "started": "2026-10-17T15:56:41.140Z",
+ "pages": [
+  {
+   "url": "/",
+   "status": 200,
+   "finalUrl": "/2fa/one-time-password",
+   "title": "Login - Authelia",
+   "links": 1
+  },
+  {
+   "url": "/settings",
+   "status": 200,
+   "finalUrl": "/settings",
+   "title": "Settings - Authelia",
+   "links": 0
+  },
+  {
+   "url": "/settings/two-factor-authentication",
+   "status": 200,
+   "finalUrl": "/settings/two-factor-authentication",
+   "title": "Settings - Authelia",
+   "links": 0
+  },
+  {
+   "url": "/settings/security",
+   "status": 200,
+   "finalUrl": "/settings/security",
+   "title": "Settings - Authelia",
+   "links": 0
+  },
+  {
+   "url": "/reset-password/step1",
+   "status": 200,
+   "finalUrl": "/reset-password/step1",
+   "title": "Login - Authelia",
+   "links": 0
+  },
+  {
+   "url": "/consent",
+   "status": 200,
+   "finalUrl": "/consent",
+   "title": "",
+   "links": 0
+  }
+ ],
+ "consoleErrors": [],
+ "pageErrors": [],
+ "failedRequests": [],
+ "httpErrors": [],
+ "clicks": [
+  {
+   "page": "/",
+   "idx": 0,
+   "text": "English",
+   "after": "/2fa/one-time-password",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 1,
+   "text": "T",
+   "after": "/2fa/one-time-password",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 2,
+   "text": "LOGOUT",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/",
+   "idx": 3,
+   "text": "METHODS",
+   "after": "/2fa/one-time-password",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 4,
+   "text": "Manage devices",
+   "after": "/settings/two-factor-authentication",
+   "newErrors": 0
+  },
+  {
+   "page": "/",
+   "idx": 5,
+   "text": "Powered by Authelia",
+   "result": "external link not followed: https://www.authelia.com"
+  },
+  {
+   "page": "/settings",
+   "idx": 0,
+   "text": "open drawer",
+   "after": "/settings",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/two-factor-authentication",
+   "idx": 0,
+   "text": "open drawer",
+   "after": "/settings/two-factor-authentication",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/two-factor-authentication",
+   "idx": 1,
+   "text": "ADD",
+   "error": "locator.click: Timeout 4000ms exceeded."
+  },
+  {
+   "page": "/settings/two-factor-authentication",
+   "idx": 2,
+   "text": "Display extended information for this One-Time Pas",
+   "after": "/settings/two-factor-authentication",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/two-factor-authentication",
+   "idx": 3,
+   "text": "Remove this One-Time Password",
+   "result": "skipped (destructive/logout)"
+  },
+  {
+   "page": "/settings/two-factor-authentication",
+   "idx": 4,
+   "text": "ADD",
+   "after": "/settings/two-factor-authentication",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/two-factor-authentication",
+   "idx": 5,
+   "text": "",
+   "after": "/settings/two-factor-authentication",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/security",
+   "idx": 0,
+   "text": "open drawer",
+   "after": "/settings/security",
+   "newErrors": 0
+  },
+  {
+   "page": "/settings/security",
+   "idx": 1,
+   "text": "CHANGE PASSWORD",
+   "after": "/settings/security",
+   "newErrors": 0
+  },
+  {
+   "page": "/reset-password/step1",
+   "idx": 0,
+   "text": "RESET",
+   "after": "/reset-password/step1",
+   "newErrors": 0
+  },
+  {
+   "page": "/reset-password/step1",
+   "idx": 1,
+   "text": "CANCEL",
+   "after": "/2fa/one-time-password",
+   "newErrors": 0
+  }
+ ],
+ "forms": [],
+ "auth": [
+  {
+   "kind": "login",
+   "url": "/",
+   "afterUrl": "https://authelia.example.com/2fa/one-time-password",
+   "result": "English T Hi Tester Alpha LOGOUT | METHODS One-Time Password Enter One-Time Password Enter One-Time Password Manage devi"
+  }
+ ],
+ "notes": [],
+ "finished": "2026-10-17T15:57:21.713Z"
+}

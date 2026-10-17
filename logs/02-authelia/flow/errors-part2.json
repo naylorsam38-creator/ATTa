@@ -1,0 +1,4 @@
+[
+ "HTTP 404 GET https://authelia.example.com/api/secondfactor/totp",
+ "CONSOLE https://authelia.example.com/settings/two-factor-authentication?rd=https%3A%2F%2Fsecure.example.com%2F&rm=GET | Failed to load resource: the server responded with a status of 404 ()"
+]

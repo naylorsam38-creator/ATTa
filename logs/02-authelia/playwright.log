@@ -1,0 +1,7 @@
+page {"url":"/","status":200,"finalUrl":"/2fa/one-time-password","title":"Login - Authelia","links":1}
+page {"url":"/settings","status":200,"finalUrl":"/settings","title":"Settings - Authelia","links":0}
+page {"url":"/settings/two-factor-authentication","status":200,"finalUrl":"/settings/two-factor-authentication","title":"Settings - Authelia","links":0}
+page {"url":"/settings/security","status":200,"finalUrl":"/settings/security","title":"Settings - Authelia","links":0}
+page {"url":"/reset-password/step1","status":200,"finalUrl":"/reset-password/step1","title":"Login - Authelia","links":0}
+page {"url":"/consent","status":200,"finalUrl":"/consent","title":"","links":0}
+SUMMARY {"pages":6,"pageLoadErrors":0,"consoleErrors":0,"pageErrors":0,"httpErrors":0,"failedRequests":0,"clicks":17,"clickErrors":1,"forms":0,"auth":["login:/:English T Hi Tester Alpha LOGOUT | METHODS One-Time Password Enter One-Time Password Enter One-Time Password Manage devi"]}

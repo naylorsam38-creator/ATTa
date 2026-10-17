@@ -1,0 +1,7 @@
+NAMES              IMAGE               STATUS
+traefik            traefik:v3.6.13     Up 2 minutes
+authelia           authelia/authelia   Up 2 minutes
+public             traefik/whoami      Up 2 minutes
+secure             traefik/whoami      Up 2 minutes
+nice_kepler        authelia/authelia   Exited (0) 8 minutes ago
+wizardly_galileo   authelia/authelia   Exited (0) 8 minutes ago

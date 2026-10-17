@@ -1,0 +1,11 @@
+PAGES: 6
+AUTH:
+   login /  English T Hi Tester Alpha LOGOUT | METHODS One-Time Password Enter One-Time Password Enter One-Time Password Manage devi  -> https://authelia.example.com/2fa/one-time-password | 
+CONSOLE ERRORS:
+PAGE ERRORS (uncaught JS):
+HTTP >=400:
+FAILED REQUESTS:
+CLICKS: 17 errors: 1
+   locator.click: Timeout 4000ms exceeded.
+FORMS:
+NOTES: 

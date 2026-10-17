@@ -1,0 +1,14 @@
+{
+ "pages": 6,
+ "pageLoadErrors": 0,
+ "consoleErrors": 0,
+ "pageErrors": 0,
+ "httpErrors": 0,
+ "failedRequests": 0,
+ "clicks": 17,
+ "clickErrors": 1,
+ "forms": 0,
+ "auth": [
+  "login:/:English T Hi Tester Alpha LOGOUT | METHODS One-Time Password Enter One-Time Password Enter One-Time Password Manage devi"
+ ]
+}

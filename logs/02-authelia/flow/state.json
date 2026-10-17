@@ -1,0 +1,35 @@
+{
+  "cookies": [
+    {
+      "name": "language",
+      "value": "en-US%40posix",
+      "domain": "authelia.example.com",
+      "path": "/",
+      "expires": 1823788235,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "authelia_session",
+      "value": "SEN2o4o!FuledPNgUqIRCjOS9L5gc45W",
+      "domain": ".example.com",
+      "path": "/",
+      "expires": 1792255834.905979,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://authelia.example.com",
+      "localStorage": [
+        {
+          "name": "privacy-policy.accepted",
+          "value": "false"
+        }
+      ]
+    }
+  ]
+}
