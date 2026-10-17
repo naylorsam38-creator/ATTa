@@ -1,0 +1,31 @@
+## tree (depth 2)
+.
+./.env.example
+./.moon
+./.moon/toolchains.yml
+./.moon/workspace.yml
+./.prototools
+./.tokeignore
+./.vscode
+./.vscode/settings.json
+./Cargo.lock
+./Cargo.toml
+./LICENSE
+./README.md
+./apps
+./apps/api
+./apps/desktop
+./apps/web
+./brand
+./brand/marks
+./bunfig.toml
+./changelog
+./changelog/0.1.0.md
+./changelog/0.2.0.md
+./changelog/0.3.0.md
+./crates
+./crates/media
+./moon.yml
+
+## grep -ri docker
+./Cargo.lock
