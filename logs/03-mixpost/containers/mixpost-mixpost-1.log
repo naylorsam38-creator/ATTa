@@ -1,0 +1,53 @@
+2026-10-17T15:59:17.864542066Z .env file created successfully.
+2026-10-17T15:59:18.113155169Z 
+2026-10-17T15:59:18.113171510Z    INFO  Caching framework bootstrap, configuration, and metadata.  
+2026-10-17T15:59:18.113173937Z 
+2026-10-17T15:59:18.131882916Z   config ........................................................ 14.94ms DONE
+2026-10-17T15:59:18.133554291Z   events ......................................................... 0.98ms DONE
+2026-10-17T15:59:18.154709482Z   routes ........................................................ 19.13ms DONE
+2026-10-17T15:59:18.178120469Z   views ......................................................... 21.22ms DONE
+2026-10-17T15:59:18.178238218Z 
+2026-10-17T15:59:18.201992652Z wait-for-it.sh: waiting 30 seconds for mysql:3306
+2026-10-17T15:59:22.225053676Z wait-for-it.sh: mysql:3306 is available after 4 seconds
+2026-10-17T15:59:22.461332474Z `migrations` table does not exist.
+2026-10-17T15:59:22.735888466Z 
+2026-10-17T15:59:22.735907836Z    INFO  Preparing database.  
+2026-10-17T15:59:22.735909889Z 
+2026-10-17T15:59:22.762420007Z   Creating migration table ...................................... 24.35ms DONE
+2026-10-17T15:59:22.762493692Z 
+2026-10-17T15:59:22.785312522Z    INFO  Running migrations.  
+2026-10-17T15:59:22.785331638Z 
+2026-10-17T15:59:22.823158855Z   2014_10_12_000000_create_users_table .......................... 36.98ms DONE
+2026-10-17T15:59:22.834101797Z   2014_10_12_100000_create_password_reset_tokens_table ........... 8.72ms DONE
+2026-10-17T15:59:22.860298341Z   2019_08_19_000000_create_failed_jobs_table .................... 23.48ms DONE
+2026-10-17T15:59:22.894543137Z   2019_12_14_000001_create_personal_access_tokens_table ......... 31.19ms DONE
+2026-10-17T15:59:22.905545848Z   2025_01_19_172922_create_mixpost_lite_v2_tables ................ 7.79ms DONE
+2026-10-17T15:59:22.920371549Z   2026_03_16_102848_create_job_batches_table .................... 11.90ms DONE
+2026-10-17T15:59:23.299278376Z   2026_03_16_102849_create_mixpost_tables ...................... 375.81ms DONE
+2026-10-17T15:59:23.300866890Z 
+2026-10-17T15:59:23.601218649Z Cache settings has been cleared!
+2026-10-17T15:59:23.817828048Z Cache services has been cleared!
+2026-10-17T15:59:24.149337647Z User admin@example.com created successfully!
+2026-10-17T15:59:24.149361673Z 
+2026-10-17T15:59:24.149363719Z                 - Email: admin@example.com
+2026-10-17T15:59:24.149365413Z                 - Password: changeme
+2026-10-17T15:59:24.149366742Z             
+2026-10-17T15:59:24.165918600Z  * Starting periodic command scheduler cron
+2026-10-17T15:59:24.168991836Z    ...done.
+2026-10-17T15:59:24.169475309Z 
+2026-10-17T15:59:24.169534978Z       __  ___ _                            __ 
+2026-10-17T15:59:24.169537213Z     /  |/  /(_)_  __ ____   ____   _____ / /_
+2026-10-17T15:59:24.169538692Z     / /|_/ // /| |/_// __ \ / __ \ / ___// __/
+2026-10-17T15:59:24.169540240Z   / /  / // /_>  < / /_/ // /_/ /(__  )/ /_  
+2026-10-17T15:59:24.169542045Z   /_/  /_//_//_/|_|/ .___/ \____//____/ \__/  
+2026-10-17T15:59:24.169543480Z                   /_/                         
+2026-10-17T15:59:24.169552660Z   
+2026-10-17T15:59:24.169553948Z ------- Mixpost has started! -------
+2026-10-17T15:59:24.327543240Z 2026-10-17 15:59:24,327 INFO Set uid to user 0 succeeded
+2026-10-17T15:59:24.329037714Z 2026-10-17 15:59:24,328 INFO supervisord started with pid 58
+2026-10-17T15:59:25.331959169Z 2026-10-17 15:59:25,331 INFO spawned: 'horizon_00' with pid 60
+2026-10-17T15:59:25.333375378Z 2026-10-17 15:59:25,333 INFO spawned: 'nginx' with pid 61
+2026-10-17T15:59:25.335288746Z 2026-10-17 15:59:25,334 INFO spawned: 'php-fpm' with pid 62
+2026-10-17T15:59:26.528729244Z 2026-10-17 15:59:26,528 INFO success: horizon_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2026-10-17T15:59:26.528773316Z 2026-10-17 15:59:26,528 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2026-10-17T15:59:26.528776748Z 2026-10-17 15:59:26,528 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

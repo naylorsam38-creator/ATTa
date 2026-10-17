@@ -1,0 +1,4 @@
+NAMES               IMAGE                      STATUS
+mixpost-mixpost-1   inovector/mixpost:latest   Up About a minute
+mixpost-redis-1     redis:latest               Up About a minute (healthy)
+mixpost-mysql-1     mysql/mysql-server:8.0     Up About a minute (healthy)

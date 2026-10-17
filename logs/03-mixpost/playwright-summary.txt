@@ -1,0 +1,29 @@
+PAGES: 5
+  PAGE-FAIL /mixpost/forgot-password 500 
+  PAGE-FAIL /mixpost/register 500 
+  PAGE-FAIL /  page.goto: net::ERR_SSL_PROTOCOL_ERROR at http://localhost:9000/
+  PAGE-FAIL /mixpost  page.goto: net::ERR_SSL_PROTOCOL_ERROR at http://localhost:9000/mixpost
+AUTH:
+   signup /mixpost/register 500 no password field on page  ->  | 
+   login /mixpost/login 200   -> / | 
+CONSOLE ERRORS:
+   Failed to load resource: the server responded with a status of 500 (Internal Server Error) @/mixpost/register:0
+   Failed to load resource: the server responded with a status of 500 (Internal Server Error) @/mixpost/forgot-password:0
+PAGE ERRORS (uncaught JS):
+HTTP >=400:
+   (x4) 500 GET /mixpost/register
+   (x3) 500 GET /mixpost/forgot-password
+FAILED REQUESTS:
+   net::ERR_SSL_PROTOCOL_ERROR POST https://localhost:9000/mixpost/login
+   (x2) net::ERR_SSL_PROTOCOL_ERROR GET https://localhost:9000/mixpost
+   net::ERR_SSL_PROTOCOL_ERROR GET https://localhost:9000/mixpost/login
+   net::ERR_ABORTED GET http://localhost:9000/vendor/mixpost-auth/assets/Inter-Medium-DmUT3eZm.ttf
+CLICKS: 3 errors: 3
+   load: page.goto: Navigation to "http://localhost:9000/mixpost/login" is interrupted by another navigation to "chrome-err
+   load: page.goto: Navigation to "http://localhost:9000/mixpost/forgot-password" is interrupted by another navigation to "
+   load: page.goto: Navigation to "http://localhost:9000/mixpost/register" is interrupted by another navigation to "http://
+FORMS:
+   /mixpost/login undefined  page.goto: Navigation to "http://localhost:9000/mixpost/login" is interrupted by another navigation to "http://localhost:9000/mixpost/register" ->  | 
+   /mixpost/forgot-password undefined  page.goto: Navigation to "http://localhost:9000/mixpost/forgot-password" is interrupted by another navigation to "http://localhost:9000/mixpost/login" ->  | 
+   /mixpost/register undefined  page.goto: Navigation to "http://localhost:9000/mixpost/register" is interrupted by another navigation to "http://localhost:9000/mixpost/forgot-password" ->  | 
+NOTES: 

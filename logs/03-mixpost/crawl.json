@@ -1,0 +1,3 @@
+{"base":"http://localhost:9000","out":"logs/03-mixpost/playwright","startPaths":["/mixpost/login","/mixpost/forgot-password","/mixpost/register","/","/mixpost"],
+ "signupPaths":["/mixpost/register"],"loginPaths":["/mixpost/login"],"user":{"email":"admin@example.com","password":"changeme"},
+ "maxPages":20,"clickPages":5,"maxClicks":15,"crawlMinutes":3,"clickMinutes":4,"formMinutes":3}

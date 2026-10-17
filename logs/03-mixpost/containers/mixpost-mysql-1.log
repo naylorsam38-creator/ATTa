@@ -1,0 +1,43 @@
+2026-10-17T15:59:12.274367944Z [Entrypoint] MySQL Docker Image 8.0.32-1.2.11-server
+2026-10-17T15:59:12.349946947Z [Entrypoint] No password option specified for new database.
+2026-10-17T15:59:12.349971302Z [Entrypoint]   A random onetime password will be generated.
+2026-10-17T15:59:12.350071717Z [Entrypoint] Initializing database
+2026-10-17T15:59:12.372603135Z 2026-10-17T15:59:12.362032Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2026-10-17T15:59:12.372622129Z 2026-10-17T15:59:12.362324Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.32) initializing of server in progress as process 17
+2026-10-17T15:59:12.377884362Z 2026-10-17T15:59:12.377638Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2026-10-17T15:59:12.940683742Z 2026-10-17T15:59:12.940348Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2026-10-17T15:59:14.002723439Z 2026-10-17T15:59:14.002480Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2026-10-17T15:59:15.987206531Z [Entrypoint] Database initialized
+2026-10-17T15:59:16.269092218Z 2026-10-17T15:59:16.255181Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2026-10-17T15:59:16.269315102Z 2026-10-17T15:59:16.257064Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.32) starting as process 60
+2026-10-17T15:59:16.275499319Z 2026-10-17T15:59:16.275295Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2026-10-17T15:59:16.404212094Z 2026-10-17T15:59:16.404004Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2026-10-17T15:59:16.577531446Z 2026-10-17T15:59:16.577329Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2026-10-17T15:59:16.577553818Z 2026-10-17T15:59:16.577365Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2026-10-17T15:59:16.597707213Z 2026-10-17T15:59:16.597418Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+2026-10-17T15:59:16.597727088Z 2026-10-17T15:59:16.597467Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.32'  socket: '/var/lib/mysql/mysql.sock'  port: 0  MySQL Community Server - GPL.
+2026-10-17T15:59:17.232800951Z Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+2026-10-17T15:59:17.232823337Z Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
+2026-10-17T15:59:18.427498663Z Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
+2026-10-17T15:59:18.427516573Z Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+2026-10-17T15:59:18.427518650Z Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+2026-10-17T15:59:18.456282671Z [Entrypoint] GENERATED ROOT PASSWORD: F_=64xiB.4c*5cgul6@CL07bjC&J3.;B
+2026-10-17T15:59:18.499537240Z 
+2026-10-17T15:59:18.499556041Z [Entrypoint] ignoring /docker-entrypoint-initdb.d/*
+2026-10-17T15:59:18.499558614Z 
+2026-10-17T15:59:18.504738062Z 2026-10-17T15:59:18.504626Z 14 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.32).
+2026-10-17T15:59:20.113785910Z 2026-10-17T15:59:20.113383Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.32)  MySQL Community Server - GPL.
+2026-10-17T15:59:20.509640079Z [Entrypoint] Server shut down
+2026-10-17T15:59:20.509662259Z [Entrypoint] Setting root user as expired. Password will need to be changed before database can be used.
+2026-10-17T15:59:20.516317094Z 
+2026-10-17T15:59:20.516329522Z [Entrypoint] MySQL init process done. Ready for start up.
+2026-10-17T15:59:20.516331739Z 
+2026-10-17T15:59:20.522374347Z [Entrypoint] Starting MySQL 8.0.32-1.2.11-server
+2026-10-17T15:59:20.788552667Z 2026-10-17T15:59:20.783163Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2026-10-17T15:59:20.788573809Z 2026-10-17T15:59:20.784853Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.32) starting as process 1
+2026-10-17T15:59:20.792656562Z 2026-10-17T15:59:20.792375Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2026-10-17T15:59:21.083805770Z 2026-10-17T15:59:21.083440Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2026-10-17T15:59:21.430571799Z 2026-10-17T15:59:21.430347Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2026-10-17T15:59:21.430594329Z 2026-10-17T15:59:21.430386Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2026-10-17T15:59:21.459168915Z 2026-10-17T15:59:21.458874Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '0.0.0.0' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2026-10-17T15:59:21.459191893Z 2026-10-17T15:59:21.459005Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.32'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Server - GPL.

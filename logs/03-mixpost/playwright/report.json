@@ -1,0 +1,176 @@
+{
+ "base": "http://localhost:9000",
+ "started": "2026-10-17T16:00:28.181Z",
+ "pages": [
+  {
+   "url": "/mixpost/login",
+   "status": 200,
+   "finalUrl": "/mixpost/login",
+   "title": "Mixpost Auth - Mixpost",
+   "links": 1
+  },
+  {
+   "url": "/mixpost/forgot-password",
+   "status": 500,
+   "finalUrl": "/mixpost/forgot-password",
+   "title": "",
+   "links": 0
+  },
+  {
+   "url": "/mixpost/register",
+   "status": 500,
+   "finalUrl": "/mixpost/register",
+   "title": "",
+   "links": 0
+  },
+  {
+   "url": "/",
+   "error": "page.goto: net::ERR_SSL_PROTOCOL_ERROR at http://localhost:9000/"
+  },
+  {
+   "url": "/mixpost",
+   "error": "page.goto: net::ERR_SSL_PROTOCOL_ERROR at http://localhost:9000/mixpost"
+  }
+ ],
+ "consoleErrors": [
+  {
+   "page": "/mixpost/register",
+   "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+   "loc": "/mixpost/register:0"
+  },
+  {
+   "page": "/mixpost/forgot-password",
+   "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+   "loc": "/mixpost/forgot-password:0"
+  }
+ ],
+ "pageErrors": [],
+ "failedRequests": [
+  {
+   "page": "/mixpost/login",
+   "url": "https://localhost:9000/mixpost/login",
+   "method": "POST",
+   "err": "net::ERR_SSL_PROTOCOL_ERROR"
+  },
+  {
+   "page": "/mixpost/register",
+   "url": "https://localhost:9000/mixpost",
+   "method": "GET",
+   "err": "net::ERR_SSL_PROTOCOL_ERROR"
+  },
+  {
+   "page": "/mixpost/register",
+   "url": "https://localhost:9000/mixpost/login",
+   "method": "GET",
+   "err": "net::ERR_SSL_PROTOCOL_ERROR"
+  },
+  {
+   "page": "/mixpost/login",
+   "url": "http://localhost:9000/vendor/mixpost-auth/assets/Inter-Medium-DmUT3eZm.ttf",
+   "method": "GET",
+   "err": "net::ERR_ABORTED"
+  },
+  {
+   "page": "/mixpost/register",
+   "url": "https://localhost:9000/mixpost",
+   "method": "GET",
+   "err": "net::ERR_SSL_PROTOCOL_ERROR"
+  }
+ ],
+ "httpErrors": [
+  {
+   "page": "blank",
+   "url": "http://localhost:9000/mixpost/register",
+   "method": "GET",
+   "status": 500
+  },
+  {
+   "page": "/mixpost/login",
+   "url": "http://localhost:9000/mixpost/forgot-password",
+   "method": "GET",
+   "status": 500
+  },
+  {
+   "page": "/mixpost/forgot-password",
+   "url": "http://localhost:9000/mixpost/register",
+   "method": "GET",
+   "status": 500
+  },
+  {
+   "page": "/mixpost/login",
+   "url": "http://localhost:9000/mixpost/forgot-password",
+   "method": "GET",
+   "status": 500
+  },
+  {
+   "page": "/mixpost/forgot-password",
+   "url": "http://localhost:9000/mixpost/register",
+   "method": "GET",
+   "status": 500
+  },
+  {
+   "page": "/mixpost/login",
+   "url": "http://localhost:9000/mixpost/forgot-password",
+   "method": "GET",
+   "status": 500
+  },
+  {
+   "page": "/mixpost/forgot-password",
+   "url": "http://localhost:9000/mixpost/register",
+   "method": "GET",
+   "status": 500
+  }
+ ],
+ "clicks": [
+  {
+   "page": "/mixpost/login",
+   "error": "load: page.goto: Navigation to \"http://localhost:9000/mixpost/login\" is interrupted by another navigation to \"chrome-error://chromewebdata/\""
+  },
+  {
+   "page": "/mixpost/forgot-password",
+   "error": "load: page.goto: Navigation to \"http://localhost:9000/mixpost/forgot-password\" is interrupted by another navigation to \"http://localhost:9000/mixpost/login\""
+  },
+  {
+   "page": "/mixpost/register",
+   "error": "load: page.goto: Navigation to \"http://localhost:9000/mixpost/register\" is interrupted by another navigation to \"http://localhost:9000/mixpost/forgot-password\""
+  }
+ ],
+ "forms": [
+  {
+   "page": "/mixpost/login",
+   "error": "page.goto: Navigation to \"http://localhost:9000/mixpost/login\" is interrupted by another navigation to \"http://localhost:9000/mixpost/register\""
+  },
+  {
+   "page": "/mixpost/forgot-password",
+   "error": "page.goto: Navigation to \"http://localhost:9000/mixpost/forgot-password\" is interrupted by another navigation to \"http://localhost:9000/mixpost/login\""
+  },
+  {
+   "page": "/mixpost/register",
+   "error": "page.goto: Navigation to \"http://localhost:9000/mixpost/register\" is interrupted by another navigation to \"http://localhost:9000/mixpost/forgot-password\""
+  }
+ ],
+ "auth": [
+  {
+   "kind": "signup",
+   "url": "/mixpost/register",
+   "status": 500,
+   "result": "no password field on page",
+   "text": ""
+  },
+  {
+   "kind": "login",
+   "url": "/mixpost/login",
+   "status": 200,
+   "filled": [
+    "email=admin@example.com",
+    "password=***",
+    "remember=<checked>"
+   ],
+   "submit": "clicked \"LOG IN\"",
+   "afterUrl": "/",
+   "text": ""
+  }
+ ],
+ "notes": [],
+ "finished": "2026-10-17T16:00:33.447Z"
+}

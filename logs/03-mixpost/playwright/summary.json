@@ -1,0 +1,15 @@
+{
+ "pages": 5,
+ "pageLoadErrors": 4,
+ "consoleErrors": 2,
+ "pageErrors": 0,
+ "httpErrors": 7,
+ "failedRequests": 5,
+ "clicks": 3,
+ "clickErrors": 3,
+ "forms": 3,
+ "auth": [
+  "signup:/mixpost/register:no password field on page",
+  "login:/mixpost/login:/"
+ ]
+}

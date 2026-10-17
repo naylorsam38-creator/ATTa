@@ -1,0 +1,7 @@
+auth login {"kind":"login","url":"/mixpost/login","status":200,"filled":["email=admin@example.com","password=***","remember=<checked>"],"submit":"clicked \"LOG IN\"","afterUrl":"/","text":""}
+page {"url":"/mixpost/login","status":200,"finalUrl":"/mixpost/login","title":"Mixpost Auth - Mixpost","links":1}
+page {"url":"/mixpost/forgot-password","status":500,"finalUrl":"/mixpost/forgot-password","title":"","links":0}
+page {"url":"/mixpost/register","status":500,"finalUrl":"/mixpost/register","title":"","links":0}
+page {"url":"/","error":"page.goto: net::ERR_SSL_PROTOCOL_ERROR at http://localhost:9000/"}
+page {"url":"/mixpost","error":"page.goto: net::ERR_SSL_PROTOCOL_ERROR at http://localhost:9000/mixpost"}
+SUMMARY {"pages":5,"pageLoadErrors":4,"consoleErrors":2,"pageErrors":0,"httpErrors":7,"failedRequests":5,"clicks":3,"clickErrors":3,"forms":3,"auth":["signup:/mixpost/register:no password field on page","login:/mixpost/login:/"]}

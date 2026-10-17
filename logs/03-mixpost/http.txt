@@ -1,0 +1,6 @@
+/ -> 302 https://localhost:9000/mixpost
+/mixpost -> 302 https://localhost:9000/mixpost/login
+/mixpost/login -> 200 
+/mixpost/this-does-not-exist -> 500
+/nope -> 404
+/favicon.ico -> 200
