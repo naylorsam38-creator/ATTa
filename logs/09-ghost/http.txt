@@ -1,0 +1,5 @@
+/ -> 000
+/ghost/ -> 000
+/ghost/api/admin/site/ -> 000
+/ghost/#/setup -> 000
+/rss/ -> 000

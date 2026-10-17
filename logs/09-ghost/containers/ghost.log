@@ -1,0 +1,39 @@
+2026-10-17T16:43:35.539913954Z [2026-10-17 16:43:35] [31mERROR[39m (Code: -97)
+2026-10-17T16:43:35.539944659Z [31m
+2026-10-17T16:43:35.539947381Z [31m(Code: -97)[39m
+2026-10-17T16:43:35.539949039Z 
+2026-10-17T16:43:35.539950247Z [37m"There was an error starting your server."[39m
+2026-10-17T16:43:35.539951702Z [33m"Please use the error code above to search for a solution."[39m
+2026-10-17T16:43:35.539953052Z 
+2026-10-17T16:43:35.539954350Z [1m[37mError ID:[39m[22m
+2026-10-17T16:43:35.539955894Z     [90m702f374c-8a33-47a2-ae18-55c2ff136ad8[39m
+2026-10-17T16:43:35.539957320Z 
+2026-10-17T16:43:35.539958488Z [90m----------------------------------------[39m
+2026-10-17T16:43:35.539959951Z 
+2026-10-17T16:43:35.539961023Z [90mInternalServerError: (Code: -97)
+2026-10-17T16:43:35.539962341Z     at Server.<anonymous> (/home/ghost/core/server/ghost-server.js:91:34)
+2026-10-17T16:43:35.539963702Z     at Server.emit (node:events:519:28)
+2026-10-17T16:43:35.539964931Z     at emitErrorNT (node:net:1977:8)
+2026-10-17T16:43:35.539966134Z     at process.processTicksAndRejections (node:internal/process/task_queues:89:21)[39m
+2026-10-17T16:43:35.539967817Z [39m
+2026-10-17T16:43:35.543079484Z [2026-10-17 16:43:35] [35mWARN[39m Ghost is shutting down
+2026-10-17T16:43:35.543092342Z [2026-10-17 16:43:35] [35mWARN[39m Ghost has shut down
+2026-10-17T16:43:35.543094365Z [2026-10-17 16:43:35] [35mWARN[39m Your site is now offline
+2026-10-17T16:43:35.543096129Z [2026-10-17 16:43:35] [35mWARN[39m Ghost was running for a few seconds
+2026-10-17T16:43:35.543142473Z InternalServerError: (Code: -97)
+2026-10-17T16:43:35.543156007Z     at Server.<anonymous> (/home/ghost/core/server/ghost-server.js:91:34)
+2026-10-17T16:43:35.543158817Z     at Server.emit (node:events:519:28)
+2026-10-17T16:43:35.543160357Z     at emitErrorNT (node:net:1977:8)
+2026-10-17T16:43:35.543161771Z     at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+2026-10-17T16:43:35.543163591Z   statusCode: 500,
+2026-10-17T16:43:35.543164809Z   errorType: 'InternalServerError',
+2026-10-17T16:43:35.543166024Z   level: 'critical',
+2026-10-17T16:43:35.543167199Z   id: '702f374c-8a33-47a2-ae18-55c2ff136ad8',
+2026-10-17T16:43:35.543168534Z   context: 'There was an error starting your server.',
+2026-10-17T16:43:35.543169762Z   help: 'Please use the error code above to search for a solution.',
+2026-10-17T16:43:35.543171037Z   errorDetails: undefined,
+2026-10-17T16:43:35.543172232Z   code: null,
+2026-10-17T16:43:35.543173485Z   property: null,
+2026-10-17T16:43:35.543186352Z   redirect: null,
+2026-10-17T16:43:35.543187777Z   hideStack: false
+2026-10-17T16:43:35.543189037Z }

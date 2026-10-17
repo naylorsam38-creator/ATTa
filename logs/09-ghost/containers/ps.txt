@@ -1,0 +1,4 @@
+NAMES            IMAGE                            STATUS
+ghost-official   ghost:6-alpine                   Exited (2) About a minute ago
+ghost            ghcr.io/tryghost/ghost:nightly   Exited (2) 6 minutes ago
+mysql            mysql:8.0                        Up 6 minutes

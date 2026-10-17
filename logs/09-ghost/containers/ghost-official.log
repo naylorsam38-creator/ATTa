@@ -1,0 +1,39 @@
+2026-10-17T16:48:41.861980433Z [2026-10-17 16:48:41] [31mERROR[39m (Code: -97)
+2026-10-17T16:48:41.862010535Z [31m
+2026-10-17T16:48:41.862013045Z [31m(Code: -97)[39m
+2026-10-17T16:48:41.862014908Z 
+2026-10-17T16:48:41.862016158Z [37m"There was an error starting your server."[39m
+2026-10-17T16:48:41.862017616Z [33m"Please use the error code above to search for a solution."[39m
+2026-10-17T16:48:41.862019281Z 
+2026-10-17T16:48:41.862021115Z [1m[37mError ID:[39m[22m
+2026-10-17T16:48:41.862023346Z     [90m378bdd52-b7e0-4abb-a6ef-f96003a60a81[39m
+2026-10-17T16:48:41.862025608Z 
+2026-10-17T16:48:41.862041237Z [90m----------------------------------------[39m
+2026-10-17T16:48:41.862043301Z 
+2026-10-17T16:48:41.862044885Z [90mInternalServerError: (Code: -97)
+2026-10-17T16:48:41.862046548Z     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+2026-10-17T16:48:41.862048611Z     at Server.emit (node:events:519:28)
+2026-10-17T16:48:41.862050291Z     at emitErrorNT (node:net:1977:8)
+2026-10-17T16:48:41.862052186Z     at process.processTicksAndRejections (node:internal/process/task_queues:89:21)[39m
+2026-10-17T16:48:41.862054148Z [39m
+2026-10-17T16:48:41.863168838Z InternalServerError: (Code: -97)
+2026-10-17T16:48:41.863182345Z     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+2026-10-17T16:48:41.863185409Z     at Server.emit (node:events:519:28)
+2026-10-17T16:48:41.863187013Z     at emitErrorNT (node:net:1977:8)
+2026-10-17T16:48:41.863188361Z     at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+2026-10-17T16:48:41.863189872Z   statusCode: 500,
+2026-10-17T16:48:41.863191221Z   errorType: 'InternalServerError',
+2026-10-17T16:48:41.863192461Z   level: 'critical',
+2026-10-17T16:48:41.863193786Z   id: '378bdd52-b7e0-4abb-a6ef-f96003a60a81',
+2026-10-17T16:48:41.863194993Z   context: 'There was an error starting your server.',
+2026-10-17T16:48:41.863196221Z   help: 'Please use the error code above to search for a solution.',
+2026-10-17T16:48:41.863197544Z   errorDetails: undefined,
+2026-10-17T16:48:41.863198887Z   code: null,
+2026-10-17T16:48:41.863200104Z   property: null,
+2026-10-17T16:48:41.863201564Z   redirect: null,
+2026-10-17T16:48:41.863202736Z   hideStack: false
+2026-10-17T16:48:41.863204053Z }
+2026-10-17T16:48:41.863757113Z [2026-10-17 16:48:41] [35mWARN[39m Ghost is shutting down
+2026-10-17T16:48:41.864424969Z [2026-10-17 16:48:41] [35mWARN[39m Ghost has shut down
+2026-10-17T16:48:41.864637703Z [2026-10-17 16:48:41] [35mWARN[39m Your site is now offline
+2026-10-17T16:48:41.865913657Z [2026-10-17 16:48:41] [35mWARN[39m Ghost was running for a few seconds
