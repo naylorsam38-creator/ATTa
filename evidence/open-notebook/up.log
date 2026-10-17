@@ -1,0 +1,20 @@
+ Image surrealdb/surrealdb:v2 Pulling 
+ Image lfnovo/open_notebook:v1-latest Pulling 
+ Image surrealdb/surrealdb:v2 Pulled 
+ Image lfnovo/open_notebook:v1-latest Pulled 
+ Network t-open-notebook_default Creating 
+ Network t-open-notebook_default Creating 
+ Network t-open-notebook_default Created 
+ Network t-open-notebook_default Created 
+ Container t-open-notebook-surrealdb-1 Creating 
+ Container t-open-notebook-surrealdb-1 Created 
+ Container t-open-notebook-open_notebook-1 Creating 
+ Container t-open-notebook-open_notebook-1 Created 
+ Container t-open-notebook-surrealdb-1 Starting 
+ Container t-open-notebook-surrealdb-1 Started 
+ Container t-open-notebook-open_notebook-1 Starting 
+ Container t-open-notebook-open_notebook-1 Started 
+
+real	0m2.693s
+user	0m0.081s
+sys	0m0.058s

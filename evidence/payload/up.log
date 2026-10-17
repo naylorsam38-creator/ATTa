@@ -1,0 +1,25 @@
+time="2026-10-17T16:27:39Z" level=warning msg="/home/user/apps-test/payload/templates/blank/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Volume t-payload_data Creating 
+ Volume t-payload_node_modules Creating 
+ Volume t-payload_node_modules Creating 
+ Volume t-payload_data Creating 
+ Network t-payload_default Creating 
+ Network t-payload_default Creating 
+ Volume t-payload_node_modules Created 
+ Volume t-payload_node_modules Created 
+ Volume t-payload_data Created 
+ Volume t-payload_data Created 
+ Network t-payload_default Created 
+ Network t-payload_default Created 
+ Container t-payload-mongo-1 Creating 
+ Container t-payload-mongo-1 Created 
+ Container t-payload-payload-1 Creating 
+ Container t-payload-payload-1 Created 
+ Container t-payload-mongo-1 Starting 
+ Container t-payload-mongo-1 Started 
+ Container t-payload-payload-1 Starting 
+ Container t-payload-payload-1 Started 
+
+real	0m1.862s
+user	0m0.074s
+sys	0m0.074s

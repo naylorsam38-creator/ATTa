@@ -1,0 +1,5 @@
+NAME                  IMAGE                       COMMAND                  SERVICE     CREATED          STATUS          PORTS
+t-zulip-database-1    zulip/zulip-postgresql:14   "docker-entrypoint.s…"   database    18 seconds ago   Up 16 seconds   5432/tcp
+t-zulip-memcached-1   memcached:alpine            "docker-entrypoint.s…"   memcached   18 seconds ago   Up 16 seconds   11211/tcp
+t-zulip-rabbitmq-1    rabbitmq:4.2                "docker-entrypoint.s…"   rabbitmq    18 seconds ago   Up 17 seconds   4369/tcp, 5671-5672/tcp, 15691-15692/tcp, 25672/tcp
+t-zulip-redis-1       redis:alpine                "docker-entrypoint.s…"   redis       18 seconds ago   Up 16 seconds   6379/tcp

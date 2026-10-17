@@ -1,0 +1,3 @@
+commit=31626de2a6cdd3e1fe93216e4ac80f511297f1e7
+date=2026-10-17T10:58:33+00:00
+subject=enhance(repo): prefill new issue and pull request sidebars from query parameters (#39804)

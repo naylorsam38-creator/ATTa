@@ -1,0 +1,77 @@
+alexandrie-frontend  | Building application with current environment variables...
+alexandrie-frontend  | API: http://localhost:8201
+alexandrie-frontend  | CDN: http://localhost:9005
+alexandrie-frontend  | URL: http://localhost:8200
+alexandrie-frontend  | Starting Nitro server...
+alexandrie-frontend  | Listening on http://0.0.0.0:8200
+alexandrie-rustfs    | Initializing data directories: /data
+alexandrie-rustfs    | Initializing log directory: /logs
+alexandrie-rustfs    | Starting: /usr/bin/rustfs  /data
+alexandrie-backend   | [36mapp |[0m Initializing Alexandrie backend...
+alexandrie-backend   | [32mserver |[0m Embedded configuration loaded successfully
+alexandrie-backend   | [32ms3 |[0m Successfully created alexandrie
+alexandrie-backend   | [32ms3 |[0m Successfully set public bucket policy for alexandrie
+alexandrie-backend   | [32ms3 |[0m Successfully created private backup bucket: alexandrie-backups
+alexandrie-backend   | [32ms3 |[0m Successfully set lifecycle policy for backups (auto-delete after 24h)
+alexandrie-backend   | [32mrepository manager |[0m Initialized successfully
+alexandrie-backend   | [36mOIDC |[0m No providers configured
+alexandrie-backend   | [32mservice manager |[0m Initialized successfully
+alexandrie-backend   | [36mapp |[0m Starting server on port: 8201
+alexandrie-backend   | [32msession |[0m Old sessions deleted successfully.
+alexandrie-backend   | 2026/10/17 15:30:04 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+alexandrie-backend   | 2026/10/17 15:30:04 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+alexandrie-backend   | 2026/10/17 15:32:41 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+alexandrie-backend   | 2026/10/17 15:32:41 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+alexandrie-backend   | 2026/10/17 15:33:01 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+alexandrie-backend   | 2026/10/17 15:33:01 net/http: invalid Cookie.Domain ".localhost:8200"; dropping domain attribute
+alexandrie-mysql     | 2026-10-17 15:29:15+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.46-1.el9 started.
+alexandrie-mysql     | 2026-10-17 15:29:15+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+alexandrie-mysql     | 2026-10-17 15:29:15+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.46-1.el9 started.
+alexandrie-mysql     | 2026-10-17 15:29:15+00:00 [Note] [Entrypoint]: Initializing database files
+alexandrie-mysql     | 2026-10-17T15:29:15.469575Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+alexandrie-mysql     | 2026-10-17T15:29:15.469692Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.46) initializing of server in progress as process 79
+alexandrie-mysql     | 2026-10-17T15:29:15.476929Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+alexandrie-mysql     | 2026-10-17T15:29:15.772692Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+alexandrie-mysql     | 2026-10-17T15:29:16.684745Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+alexandrie-mysql     | 2026-10-17 15:29:18+00:00 [Note] [Entrypoint]: Database files initialized
+alexandrie-mysql     | 2026-10-17 15:29:18+00:00 [Note] [Entrypoint]: Starting temporary server
+alexandrie-mysql     | 2026-10-17T15:29:19.058486Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+alexandrie-mysql     | 2026-10-17T15:29:19.061031Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.46) starting as process 123
+alexandrie-mysql     | 2026-10-17T15:29:19.077517Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+alexandrie-mysql     | 2026-10-17T15:29:19.240501Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+alexandrie-mysql     | 2026-10-17T15:29:19.469379Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+alexandrie-mysql     | 2026-10-17T15:29:19.469451Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+alexandrie-mysql     | 2026-10-17T15:29:19.472157Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+alexandrie-mysql     | 2026-10-17T15:29:19.495461Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+alexandrie-mysql     | 2026-10-17T15:29:19.495593Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.46'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
+alexandrie-mysql     | 2026-10-17 15:29:19+00:00 [Note] [Entrypoint]: Temporary server started.
+alexandrie-mysql     | '/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
+alexandrie-mysql     | 2026-10-17T15:29:20.128744Z 9 [Warning] [MY-013360] [Server] Plugin mysql_native_password reported: ''mysql_native_password' is deprecated and will be removed in a future release. Please use caching_sha2_password instead'
+alexandrie-mysql     | Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+alexandrie-mysql     | Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
+alexandrie-mysql     | Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
+alexandrie-mysql     | Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
+alexandrie-mysql     | Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+alexandrie-mysql     | Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+alexandrie-mysql     | 2026-10-17 15:29:21+00:00 [Note] [Entrypoint]: Creating database alexandrie
+alexandrie-mysql     | 2026-10-17 15:29:21+00:00 [Note] [Entrypoint]: Creating user alexandrie
+alexandrie-mysql     | 2026-10-17 15:29:21+00:00 [Note] [Entrypoint]: Giving user alexandrie access to schema alexandrie
+alexandrie-mysql     | 
+alexandrie-mysql     | 2026-10-17 15:29:21+00:00 [Note] [Entrypoint]: Stopping temporary server
+alexandrie-mysql     | 2026-10-17T15:29:21.741229Z 14 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.46).
+alexandrie-mysql     | 2026-10-17T15:29:22.989807Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.46)  MySQL Community Server - GPL.
+alexandrie-mysql     | 2026-10-17 15:29:23+00:00 [Note] [Entrypoint]: Temporary server stopped
+alexandrie-mysql     | 
+alexandrie-mysql     | 2026-10-17 15:29:23+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
+alexandrie-mysql     | 
+alexandrie-mysql     | 2026-10-17T15:29:24.017905Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+alexandrie-mysql     | 2026-10-17T15:29:24.019604Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.46) starting as process 1
+alexandrie-mysql     | 2026-10-17T15:29:24.025624Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+alexandrie-mysql     | 2026-10-17T15:29:24.168105Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+alexandrie-mysql     | 2026-10-17T15:29:24.296411Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+alexandrie-mysql     | 2026-10-17T15:29:24.296457Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+alexandrie-mysql     | 2026-10-17T15:29:24.298189Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+alexandrie-mysql     | 2026-10-17T15:29:24.313920Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '0.0.0.0' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+alexandrie-mysql     | 2026-10-17T15:29:24.314097Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.46'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+alexandrie-mysql     | 2026-10-17T15:33:26.450293Z 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.46).
+alexandrie-mysql     | 2026-10-17T15:33:27.824694Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.46)  MySQL Community Server - GPL.

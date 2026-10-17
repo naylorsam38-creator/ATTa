@@ -1,0 +1,3 @@
+{"healthy":true,"role":"active"}
+ 200 /v1/health
+200 /

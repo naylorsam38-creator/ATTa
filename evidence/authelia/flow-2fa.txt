@@ -1,0 +1,24 @@
+OK login url=https://authelia.example.com/2fa/one-time-password?rd=https%3A%2F%2Fsecure.example.com%2F&rm=GET
+404 GET https://authelia.example.com/api/secondfactor/totp
+console: Failed to load resource: the server responded with a status of 404 ()
+OK click-register url=https://authelia.example.com/settings/two-factor-authentication?rd=https%3A%2F%2Fsecure.example.com%2F&rm=GET
+dialog: Settings One-Time Password ADD The One-Time Password has not been registered if you'd like to register it click add WebAuthn Credentials ADD No WebAuthn Credentials have been registered if you'd like to register one click add Identity Verification In order to perform this action policy enforcement r
+OK click-add-otp url=https://authelia.example.com/settings/two-factor-authentication?rd=https%3A%2F%2Fsecure.example.com%2F&rm=GET
+code=4AUBLV2A
+after code: Settings One-Time Password ADD The One-Time Password has not been registered if you'd like to register it click add WebAuthn Credentials ADD No WebAuthn Credentials have been registered if you'd like to register one click add Register One-Time Password This dialog handles registration of a One-Time 
+OK identity-code url=https://authelia.example.com/settings/two-factor-authentication?rd=https%3A%2F%2Fsecure.example.com%2F&rm=GET
+secret found=true
+OK totp-setup url=https://authelia.example.com/settings/two-factor-authentication?rd=https%3A%2F%2Fsecure.example.com%2F&rm=GET
+secure body: English T Hi Testy McTestface LOGOUT | SWITCH USER | METHODS One-Time Password Enter One-Time Password Enter One-Time Password Manage devices Powered by Authelia
+OK access-secure url=https://authelia.example.com/2fa/one-time-password?rd=https%3A%2F%2Fsecure.example.com%2F&rm=GET
+protected body: English T Hi Testy McTestface LOGOUT | SWITCH USER | METHODS One-Time Password Enter One-Time Password Enter One-Time P
+OK enter-otp url=https://authelia.example.com/2fa/one-time-password?rd=https%3A%2F%2Fsecure.example.com%2F&rm=GET
+page: English T Hi Testy McTestface LOGOUT | SWITCH USER | METHODS One-Time Password Enter One-Time Password Enter One-Time Password Manage devices Powered by Authelia
+403 POST https://authelia.example.com/api/secondfactor/totp
+console: Failed to load resource: the server responded with a status of 403 ()
+console: AxiosError: Request failed with status code 403
+    at On (https://authelia.example.com/static/js/axios.vrpypmKw.js:3:11871)
+    at XMLHttpRequest._ (https://authelia.example.com/static/js/axios.vrpypmKw.js:3:18951)
+    at Q.request (https://authelia.example.com/static/js/axios.vrpypmKw.js:5:2173)
+    at async s (https://authelia.example.com/static/js/services.Client.BE2UTmTS.js:1:463)
+    at async https://authelia.example.com/static/js/portal.OneTimePasswordMethod.Bnv-Kgbn.js:1:1693

@@ -1,0 +1,473 @@
+open_notebook-1  | [entrypoint] Starting Open Notebook.
+open_notebook-1  | 2026-10-17 15:44:31,699 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+open_notebook-1  | 2026-10-17 15:44:31,699 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+open_notebook-1  | 2026-10-17 15:44:31,700 INFO supervisord started with pid 1
+open_notebook-1  | 2026-10-17 15:44:31,700 INFO supervisord started with pid 1
+open_notebook-1  | 2026-10-17 15:44:32,703 INFO spawned: 'api' with pid 16
+open_notebook-1  | 2026-10-17 15:44:32,703 INFO spawned: 'api' with pid 16
+open_notebook-1  | 2026-10-17 15:44:32,705 INFO spawned: 'worker' with pid 17
+open_notebook-1  | 2026-10-17 15:44:32,705 INFO spawned: 'worker' with pid 17
+open_notebook-1  | 2026-10-17 15:44:32,707 INFO spawned: 'frontend' with pid 18
+open_notebook-1  | 2026-10-17 15:44:32,707 INFO spawned: 'frontend' with pid 18
+open_notebook-1  | Waiting for API to be ready at http://localhost:5055/health...
+open_notebook-1  | Attempt 1/60: API not ready yet, waiting 5s...
+open_notebook-1  | 2026-10-17 15:44:33.663 | DEBUG    | open_notebook.utils.chunking:<module>:121 - Chunking configuration: CHUNK_SIZE=400, CHUNK_OVERLAP=60, MIN_CHUNK_SIZE=5
+open_notebook-1  | 2026-10-17 15:44:33.809 | DEBUG    | surreal_commands.core.registry:__new__:24 - Creating CommandRegistry singleton instance
+open_notebook-1  | 2026-10-17 15:44:33.809 | DEBUG    | surreal_commands.core.registry:__init__:31 - Initializing CommandRegistry
+open_notebook-1  | 2026-10-17 15:44:33.979 | INFO     | surreal_commands.core.worker:configure_logging:85 - Debug mode disabled - showing only INFO level and above
+open_notebook-1  | 2026-10-17 15:44:33.979 | INFO     | surreal_commands.core.worker:run_worker:187 - Starting Surreal Commands worker
+open_notebook-1  | ╭──────────────────────────────────────────────────────────────────────────────╮
+open_notebook-1  | │ Surreal Commands Worker                                                      │
+open_notebook-1  | ╰──────────────────────────────────────────────────────────────────────────────╯
+open_notebook-1  | Importing command modules: commands
+open_notebook-1  | 2026-10-17 15:44:34.545 | DEBUG    | surreal_commands.core.registry:__new__:24 - Creating CommandRegistry singleton instance
+open_notebook-1  | 2026-10-17 15:44:34.545 | DEBUG    | surreal_commands.core.registry:__init__:31 - Initializing CommandRegistry
+open_notebook-1  | 2026-10-17 15:44:34.686 | INFO     | podcast_creator.graph:<module>:21 - Creating podcast generation graph
+open_notebook-1  |   ✅ Imported: commands
+open_notebook-1  | Successfully imported 1/1 modules
+surrealdb-1      | 
+surrealdb-1      |  .d8888b.                                             888 8888888b.  888888b.
+surrealdb-1      | d88P  Y88b                                            888 888  'Y88b 888  '88b
+surrealdb-1      | Y88b.                                                 888 888    888 888  .88P
+surrealdb-1      |  'Y888b.   888  888 888d888 888d888  .d88b.   8888b.  888 888    888 8888888K.
+surrealdb-1      |     'Y88b. 888  888 888P'   888P'   d8P  Y8b     '88b 888 888    888 888  'Y88b
+surrealdb-1      |       '888 888  888 888     888     88888888 .d888888 888 888    888 888    888
+surrealdb-1      | Y88b  d88P Y88b 888 888     888     Y8b.     888  888 888 888  .d88P 888   d88P
+surrealdb-1      |  'Y8888P'   'Y88888 888     888      'Y8888  'Y888888 888 8888888P'  8888888P'
+surrealdb-1      | 
+surrealdb-1      | 
+surrealdb-1      | [2m2026-10-17T15:44:31.051095Z[0m [32m INFO[0m [2msurreal::env[0m[2m:[0m Running 2.7.0 for linux on x86_64
+surrealdb-1      | [2m2026-10-17T15:44:31.051933Z[0m [32m INFO[0m [2msurrealdb::core::kvs::ds[0m[2m:[0m Starting kvs store at rocksdb:///mydata/mydatabase.db
+surrealdb-1      | [2m2026-10-17T15:44:31.052364Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Background thread count: 4
+surrealdb-1      | [2m2026-10-17T15:44:31.053476Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Maximum background jobs count: 8
+surrealdb-1      | [2m2026-10-17T15:44:31.053521Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Maximum number of open files: 1024
+surrealdb-1      | [2m2026-10-17T15:44:31.053527Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Number of log files to keep: 10
+surrealdb-1      | [2m2026-10-17T15:44:31.057290Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Maximum write buffers: 4
+surrealdb-1      | [2m2026-10-17T15:44:31.059073Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Write buffer size: 67108864
+surrealdb-1      | [2m2026-10-17T15:44:31.059160Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Target file size for compaction: 67108864
+surrealdb-1      | [2m2026-10-17T15:44:31.059166Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Target file size compaction multiplier: 2
+surrealdb-1      | [2m2026-10-17T15:44:31.059169Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Minimum write buffers to merge: 2
+surrealdb-1      | [2m2026-10-17T15:44:31.059172Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Number of files to trigger compaction: 4
+surrealdb-1      | [2m2026-10-17T15:44:31.061257Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Compaction readahead size: 8388608
+surrealdb-1      | [2m2026-10-17T15:44:31.061271Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Maximum concurrent subcompactions: 4
+surrealdb-1      | [2m2026-10-17T15:44:31.061283Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Use separate thread queues: true
+surrealdb-1      | [2m2026-10-17T15:44:31.061287Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Enable separation of keys and values: true
+surrealdb-1      | [2m2026-10-17T15:44:31.061290Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Minimum blob value size: 4096
+surrealdb-1      | [2m2026-10-17T15:44:31.061293Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Target blob file size: 268435456
+surrealdb-1      | [2m2026-10-17T15:44:31.061297Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Enable blob garbage collection: false
+surrealdb-1      | [2m2026-10-17T15:44:31.061300Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Blob GC age cutoff: 0.25
+surrealdb-1      | [2m2026-10-17T15:44:31.061305Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Blob GC force threshold: 1
+surrealdb-1      | [2m2026-10-17T15:44:31.061307Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Blob compaction readahead size: 0
+surrealdb-1      | [2m2026-10-17T15:44:31.061310Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Write-ahead-log file size limit: 0MB
+surrealdb-1      | [2m2026-10-17T15:44:31.061312Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Allow concurrent memtable writes: true
+surrealdb-1      | [2m2026-10-17T15:44:31.061315Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Avoid unnecessary blocking IO: true
+surrealdb-1      | [2m2026-10-17T15:44:31.061317Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Allow adaptive write thread yielding: true
+surrealdb-1      | [2m2026-10-17T15:44:31.061320Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Wait for disk sync acknowledgement: false
+surrealdb-1      | [2m2026-10-17T15:44:31.063384Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Block cache size: 7363723264
+surrealdb-1      | [2m2026-10-17T15:44:31.063464Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Enable memory-mapped reads: false
+surrealdb-1      | [2m2026-10-17T15:44:31.063468Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Enable memory-mapped writes: false
+surrealdb-1      | [2m2026-10-17T15:44:31.063472Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Setting delete compaction factory: 1000 / 50 (0.5)
+surrealdb-1      | [2m2026-10-17T15:44:31.063478Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Setting compaction style: level
+surrealdb-1      | [2m2026-10-17T15:44:31.063480Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Setting compression level
+surrealdb-1      | [2m2026-10-17T15:44:31.063489Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Setting storage engine log level: warn
+surrealdb-1      | [2m2026-10-17T15:44:31.063493Z[0m [32m INFO[0m [2msurrealdb::core::kvs::rocksdb[0m[2m:[0m Background write-ahead-log flushing: disabled
+surrealdb-1      | [2m2026-10-17T15:44:31.109383Z[0m [32m INFO[0m [2msurrealdb::core::kvs::ds[0m[2m:[0m Started kvs store at rocksdb:///mydata/mydatabase.db
+surrealdb-1      | [2m2026-10-17T15:44:31.112392Z[0m [32m INFO[0m [2msurreal::dbs[0m[2m:[0m Initialising credentials [3muser[0m[2m=[0mroot
+surrealdb-1      | [2m2026-10-17T15:44:31.112700Z[0m [32m INFO[0m [2msurrealdb::core::kvs::ds[0m[2m:[0m Credentials were provided, and no root users were found. The root user 'root' will be created
+surrealdb-1      | [2m2026-10-17T15:44:31.167036Z[0m [32m INFO[0m [2msurrealdb::net[0m[2m:[0m Started web server on 0.0.0.0:8000
+surrealdb-1      | [2m2026-10-17T15:44:31.167375Z[0m [32m INFO[0m [2msurrealdb::net[0m[2m:[0m Listening for a system shutdown signal.
+surrealdb-1      | [2m2026-10-17T15:47:31.358366Z[0m [32m INFO[0m [2msurrealdb::net[0m[2m:[0m Listening for a system shutdown signal.
+surrealdb-1      | [2m2026-10-17T15:47:31.358312Z[0m [33m WARN[0m [2msurrealdb::net[0m[2m:[0m SIGTERM received. Waiting for a graceful shutdown. A second signal will force an immediate shutdown.
+surrealdb-1      | [2m2026-10-17T15:47:31.358567Z[0m [32m INFO[0m [2msurrealdb::net[0m[2m:[0m Web server stopped. Bye!
+surrealdb-1      | Goodbye!
+open_notebook-1  | Using 8 registered commands
+open_notebook-1  | Worker configured to handle up to 5 concurrent tasks
+open_notebook-1  | [15:44:35] Checking for existing commands...                       worker.py:109
+open_notebook-1  |            No existing commands found                              worker.py:139
+open_notebook-1  |            Starting LIVE query listener for new commands...        worker.py:142
+open_notebook-1  | 2026-10-17 15:44:35.384 | DEBUG    | surreal_commands.decorators:decorator:76 - Retry config parsed for command open_notebook.embed_note: enabled=True max_attempts=5 wait_strategy=<RetryStrategy.EXPONENTIAL_JITTER: 'exponential_jitter'> wait_time=1.0 wait_min=1.0 wait_max=60.0 wait_multiplier=2.0 retry_on=None stop_on=[<class 'ValueError'>, <class 'open_notebook.exceptions.ConfigurationError'>, <class 'open_notebook.exceptions.ContextLengthExceededError'>] retry_log_level=<RetryLogLevel.WARNING: 'warning'>
+open_notebook-1  | 2026-10-17 15:44:35.384 | DEBUG    | surreal_commands.core.registry:register:78 - Registered command open_notebook.embed_note
+open_notebook-1  | 2026-10-17 15:44:35.384 | DEBUG    | surreal_commands.decorators:decorator:76 - Retry config parsed for command open_notebook.embed_insight: enabled=True max_attempts=5 wait_strategy=<RetryStrategy.EXPONENTIAL_JITTER: 'exponential_jitter'> wait_time=1.0 wait_min=1.0 wait_max=60.0 wait_multiplier=2.0 retry_on=None stop_on=[<class 'ValueError'>, <class 'open_notebook.exceptions.ConfigurationError'>, <class 'open_notebook.exceptions.ContextLengthExceededError'>] retry_log_level=<RetryLogLevel.WARNING: 'warning'>
+open_notebook-1  | 2026-10-17 15:44:35.384 | DEBUG    | surreal_commands.core.registry:register:78 - Registered command open_notebook.embed_insight
+open_notebook-1  | 2026-10-17 15:44:35.384 | DEBUG    | surreal_commands.decorators:decorator:76 - Retry config parsed for command open_notebook.embed_source: enabled=True max_attempts=5 wait_strategy=<RetryStrategy.EXPONENTIAL_JITTER: 'exponential_jitter'> wait_time=1.0 wait_min=1.0 wait_max=60.0 wait_multiplier=2.0 retry_on=None stop_on=[<class 'ValueError'>, <class 'open_notebook.exceptions.ConfigurationError'>, <class 'open_notebook.exceptions.ContextLengthExceededError'>] retry_log_level=<RetryLogLevel.WARNING: 'warning'>
+open_notebook-1  | 2026-10-17 15:44:35.384 | DEBUG    | surreal_commands.core.registry:register:78 - Registered command open_notebook.embed_source
+open_notebook-1  | 2026-10-17 15:44:35.384 | DEBUG    | surreal_commands.decorators:decorator:76 - Retry config parsed for command open_notebook.create_insight: enabled=True max_attempts=5 wait_strategy=<RetryStrategy.EXPONENTIAL_JITTER: 'exponential_jitter'> wait_time=1.0 wait_min=1.0 wait_max=60.0 wait_multiplier=2.0 retry_on=None stop_on=[<class 'ValueError'>, <class 'open_notebook.exceptions.ConfigurationError'>, <class 'open_notebook.exceptions.ContextLengthExceededError'>] retry_log_level=<RetryLogLevel.WARNING: 'warning'>
+open_notebook-1  | 2026-10-17 15:44:35.384 | DEBUG    | surreal_commands.core.registry:register:78 - Registered command open_notebook.create_insight
+open_notebook-1  | 2026-10-17 15:44:35.385 | DEBUG    | surreal_commands.core.registry:register:78 - Registered command open_notebook.rebuild_embeddings
+open_notebook-1  | 2026-10-17 15:44:35.399 | DEBUG    | podcast_creator.config:get_template_prompter:249 - Using template from current directory: /app/prompts/podcast/outline.jinja
+open_notebook-1  | 2026-10-17 15:44:35.406 | DEBUG    | podcast_creator.config:get_template_prompter:249 - Using template from current directory: /app/prompts/podcast/transcript.jinja
+open_notebook-1  | 2026-10-17 15:44:35.419 | INFO     | podcast_creator.graph:<module>:21 - Creating podcast generation graph
+open_notebook-1  | 2026-10-17 15:44:35.433 | DEBUG    | surreal_commands.decorators:decorator:76 - Retry config parsed for command open_notebook.generate_podcast: enabled=True max_attempts=1 wait_strategy=<RetryStrategy.EXPONENTIAL: 'exponential'> wait_time=1.0 wait_min=1.0 wait_max=60.0 wait_multiplier=2.0 retry_on=None stop_on=None retry_log_level=<RetryLogLevel.INFO: 'info'>
+open_notebook-1  | 2026-10-17 15:44:35.433 | DEBUG    | surreal_commands.core.registry:register:78 - Registered command open_notebook.generate_podcast
+open_notebook-1  | 2026-10-17 15:44:35.450 | DEBUG    | surreal_commands.decorators:decorator:76 - Retry config parsed for command open_notebook.process_source: enabled=True max_attempts=15 wait_strategy=<RetryStrategy.EXPONENTIAL_JITTER: 'exponential_jitter'> wait_time=1.0 wait_min=1.0 wait_max=120.0 wait_multiplier=2.0 retry_on=None stop_on=[<class 'ValueError'>, <class 'open_notebook.exceptions.ConfigurationError'>, <class 'open_notebook.exceptions.ContextLengthExceededError'>, <class 'open_notebook.exceptions.IncompleteGenerationError'>, <class 'open_notebook.exceptions.NotFoundError'>] retry_log_level=<RetryLogLevel.DEBUG: 'debug'>
+open_notebook-1  | 2026-10-17 15:44:35.450 | DEBUG    | surreal_commands.core.registry:register:78 - Registered command open_notebook.process_source
+open_notebook-1  | 2026-10-17 15:44:35.452 | DEBUG    | surreal_commands.decorators:decorator:76 - Retry config parsed for command open_notebook.run_transformation: enabled=True max_attempts=5 wait_strategy=<RetryStrategy.EXPONENTIAL_JITTER: 'exponential_jitter'> wait_time=1.0 wait_min=1.0 wait_max=60.0 wait_multiplier=2.0 retry_on=None stop_on=[<class 'ValueError'>, <class 'open_notebook.exceptions.ConfigurationError'>, <class 'open_notebook.exceptions.ContextLengthExceededError'>, <class 'open_notebook.exceptions.IncompleteGenerationError'>, <class 'open_notebook.exceptions.InvalidInputError'>, <class 'open_notebook.exceptions.NotFoundError'>] retry_log_level=<RetryLogLevel.WARNING: 'warning'>
+open_notebook-1  | 2026-10-17 15:44:35.452 | DEBUG    | surreal_commands.core.registry:register:78 - Registered command open_notebook.run_transformation
+open_notebook-1  | 2026-10-17 15:44:35.494 | INFO     | api.main:<module>:124 - Commands imported in API process
+open_notebook-1  | 2026-10-17 15:44:35.495 | WARNING  | api.main:<module>:226 - CORS_ORIGINS is not set — API accepts cross-origin requests from any origin (default: '*'). For production deployments, set CORS_ORIGINS to your frontend origin(s), e.g. CORS_ORIGINS=https://notebook.example.com
+open_notebook-1  | 2026-10-17 15:44:35.495 | INFO     | api.main:<module>:253 - Max request body size: 100MB (set OPEN_NOTEBOOK_MAX_UPLOAD_SIZE_MB to change)
+open_notebook-1  | INFO:     Started server process [28]
+open_notebook-1  | INFO:     Waiting for application startup.
+open_notebook-1  | 2026-10-17 15:44:35.585 | INFO     | api.main:lifespan:190 - Starting API initialization...
+open_notebook-1  | 2026-10-17 15:44:35.713 | INFO     | api.main:_run_database_migrations:170 - Current database version: 0
+open_notebook-1  | 2026-10-17 15:44:35,713 INFO success: api entered RUNNING state, process has stayed up for > than 3 seconds (startsecs)
+open_notebook-1  | 2026-10-17 15:44:35,713 INFO success: api entered RUNNING state, process has stayed up for > than 3 seconds (startsecs)
+open_notebook-1  | 2026-10-17 15:44:35,713 INFO success: worker entered RUNNING state, process has stayed up for > than 3 seconds (startsecs)
+open_notebook-1  | 2026-10-17 15:44:35,713 INFO success: worker entered RUNNING state, process has stayed up for > than 3 seconds (startsecs)
+open_notebook-1  | 2026-10-17 15:44:35.750 | WARNING  | api.main:_run_database_migrations:173 - Database migrations are pending. Running migrations...
+open_notebook-1  | 2026-10-17 15:44:35.793 | INFO     | open_notebook.database.async_migrate:run_migration_up:228 - Current version before migration: 0
+open_notebook-1  | 2026-10-17 15:44:35.873 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 1
+open_notebook-1  | 2026-10-17 15:44:36.033 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 2
+open_notebook-1  | 2026-10-17 15:44:36.148 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 3
+open_notebook-1  | 2026-10-17 15:44:36.258 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 4
+open_notebook-1  | 2026-10-17 15:44:36.372 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 5
+open_notebook-1  | 2026-10-17 15:44:36.520 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 6
+open_notebook-1  | 2026-10-17 15:44:36.625 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 7
+open_notebook-1  | 2026-10-17 15:44:36.766 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 8
+open_notebook-1  | 2026-10-17 15:44:36.896 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 9
+open_notebook-1  | 2026-10-17 15:44:37.042 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 10
+open_notebook-1  | 2026-10-17 15:44:37.163 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 11
+open_notebook-1  | 2026-10-17 15:44:37.283 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 12
+open_notebook-1  | 2026-10-17 15:44:37.426 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 13
+open_notebook-1  | 2026-10-17 15:44:37.556 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 14
+open_notebook-1  | 2026-10-17 15:44:37.697 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 15
+open_notebook-1  | Attempt 2/60: API not ready yet, waiting 5s...
+open_notebook-1  | 2026-10-17 15:44:37.807 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 16
+open_notebook-1  | 2026-10-17 15:44:37.925 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 17
+open_notebook-1  | 2026-10-17 15:44:38.068 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 18
+open_notebook-1  | 2026-10-17 15:44:38.202 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 19
+open_notebook-1  | 2026-10-17 15:44:38.332 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 20
+open_notebook-1  | 2026-10-17 15:44:38.450 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 21
+open_notebook-1  | 2026-10-17 15:44:38.563 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 22
+open_notebook-1  | 2026-10-17 15:44:38.687 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 23
+open_notebook-1  | 2026-10-17 15:44:38.797 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 24
+open_notebook-1  | 2026-10-17 15:44:38.915 | INFO     | open_notebook.database.async_migrate:run_all:71 - Running migration 25
+open_notebook-1  | 2026-10-17 15:44:39.089 | INFO     | open_notebook.database.async_migrate:run_migration_up:234 - Migration successful. New version: 25
+open_notebook-1  | 2026-10-17 15:44:39.128 | SUCCESS  | api.main:_run_database_migrations:176 - Migrations completed successfully. Database is now at version 25
+open_notebook-1  | 2026-10-17 15:44:39.128 | SUCCESS  | api.main:lifespan:210 - API initialization completed successfully
+open_notebook-1  | INFO:     Application startup complete.
+open_notebook-1  | INFO:     Uvicorn running on http://0.0.0.0:5055 (Press CTRL+C to quit)
+open_notebook-1  | INFO:     127.0.0.1:32940 - "GET /health HTTP/1.1" 200 OK
+open_notebook-1  | 2026-10-17 15:44:42,759 INFO success: frontend entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+open_notebook-1  | 2026-10-17 15:44:42,759 INFO success: frontend entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+open_notebook-1  | API is ready! Starting frontend...
+open_notebook-1  | ▲ Next.js 16.3.8
+open_notebook-1  | - Local:         http://localhost:8502
+open_notebook-1  | - Network:       http://0.0.0.0:8502
+open_notebook-1  | ✓ Ready in 0ms
+open_notebook-1  | ✓ Running next.config took 1.1ms
+open_notebook-1  | INFO:     172.18.0.1:46184 - "GET /health HTTP/1.1" 200 OK
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | 2026-10-17 15:45:29.084 | INFO     | api.routers.config:get_latest_version_cached:65 - Checking for latest version from GitHub...
+open_notebook-1  | 2026-10-17 15:45:29.125 | INFO     | api.routers.config:get_latest_version_cached:65 - Checking for latest version from GitHub...
+open_notebook-1  | 2026-10-17 15:45:29.144 | WARNING  | api.routers.config:get_latest_version_cached:90 - Version check failed: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1010)
+open_notebook-1  | 2026-10-17 15:45:29.145 | WARNING  | api.routers.config:get_latest_version_cached:90 - Version check failed: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1010)
+open_notebook-1  | INFO:     172.18.0.1:50604 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "OPTIONS /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50604 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50604 - "OPTIONS /api/credentials/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "OPTIONS /api/credentials/env-status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50642 - "OPTIONS /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50636 - "OPTIONS /api/recently-viewed?limit=12 HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50604 - "OPTIONS /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50662 - "OPTIONS /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50656 - "OPTIONS /api/notebooks?archived=true&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50636 - "OPTIONS /api/episode-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50642 - "OPTIONS /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50604 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50636 - "GET /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50662 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50642 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50604 - "GET /api/notebooks?archived=true&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50656 - "GET /api/recently-viewed?limit=12 HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50662 - "GET /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50636 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/credentials/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | 2026-10-17 15:45:35.083 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 6s)
+open_notebook-1  | 2026-10-17 15:45:35.087 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 6s)
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50678 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50678 - "OPTIONS /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "OPTIONS /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50692 - "OPTIONS /api/sources?limit=30&offset=0&sort_by=updated&sort_order=desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50698 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50710 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50710 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50692 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/sources?limit=30&offset=0&sort_by=updated&sort_order=desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50678 - "GET /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50698 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50684 - "GET /api/credentials/status HTTP/1.1" 200 OK
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | 2026-10-17 15:45:38.322 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 9s)
+open_notebook-1  | 2026-10-17 15:45:38.327 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 9s)
+open_notebook-1  | INFO:     172.18.0.1:50698 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50678 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50678 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50692 - "OPTIONS /api/models/defaults HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50710 - "OPTIONS /api/models HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50710 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50692 - "GET /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:53530 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50692 - "GET /api/models/defaults HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50678 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:53530 - "GET /api/models HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50710 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50698 - "GET /api/credentials/status HTTP/1.1" 200 OK
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | 2026-10-17 15:45:42.002 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 13s)
+open_notebook-1  | 2026-10-17 15:45:42.007 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 13s)
+open_notebook-1  | INFO:     172.18.0.1:50698 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50710 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50710 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:53530 - "OPTIONS /api/podcasts/episodes HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50698 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50678 - "OPTIONS /api/speaker-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50692 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50692 - "GET /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50692 - "GET /api/podcasts/episodes HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50710 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50678 - "GET /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50698 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50692 - "GET /api/speaker-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:53530 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/credentials/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:53530 - "OPTIONS /api/languages HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50692 - "GET /api/languages HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/models HTTP/1.1" 200 OK
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | 2026-10-17 15:45:45.653 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 17s)
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | 2026-10-17 15:45:45.658 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 17s)
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50692 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50692 - "OPTIONS /api/credentials HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:53530 - "OPTIONS /api/providers HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50678 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50710 - "GET /api/models HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:53530 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/models/defaults HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50710 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:53530 - "GET /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:53530 - "GET /api/providers HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50692 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50678 - "GET /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50710 - "GET /api/credentials HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50698 - "GET /api/credentials/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50698 - "OPTIONS /api/models/auto-assign HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "POST /api/models/auto-assign HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:50620 - "GET /api/models/defaults HTTP/1.1" 200 OK
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | 2026-10-17 15:45:55.147 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 26s)
+open_notebook-1  | 2026-10-17 15:45:55.150 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 26s)
+open_notebook-1  | INFO:     172.18.0.1:35762 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35774 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35774 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35762 - "OPTIONS /api/transformations/default-prompt HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35774 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35786 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35774 - "GET /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35800 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35762 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35774 - "GET /api/transformations/default-prompt HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35796 - "GET /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35786 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35796 - "GET /api/models HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35778 - "GET /api/credentials/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35778 - "GET /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | 2026-10-17 15:46:00.078 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 31s)
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | 2026-10-17 15:46:00.084 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 31s)
+open_notebook-1  | INFO:     172.18.0.1:35778 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35796 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35778 - "OPTIONS /api/capabilities HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35796 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35774 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35762 - "GET /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35762 - "GET /api/capabilities HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35762 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35800 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35778 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35796 - "GET /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35774 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35786 - "GET /api/credentials/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35786 - "OPTIONS /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35786 - "PUT /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35786 - "GET /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:35786 - "GET /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | 2026-10-17 15:46:14.853 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 46s)
+open_notebook-1  | 2026-10-17 15:46:14.855 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 46s)
+open_notebook-1  | INFO:     172.18.0.1:46736 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:46748 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:46748 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:46736 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:46752 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:46736 - "GET /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:46766 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:46784 - "GET /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:46782 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:46752 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:46748 - "GET /api/credentials/status HTTP/1.1" 200 OK
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | 2026-10-17 15:46:33.391 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 64s)
+open_notebook-1  | 2026-10-17 15:46:33.392 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 64s)
+open_notebook-1  | INFO:     172.18.0.1:45896 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45882 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45882 - "OPTIONS /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45896 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45896 - "OPTIONS /api/credentials/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45882 - "OPTIONS /api/credentials/env-status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45910 - "OPTIONS /api/recently-viewed?limit=12 HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45926 - "OPTIONS /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45932 - "OPTIONS /api/notebooks?archived=true&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45938 - "OPTIONS /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45882 - "OPTIONS /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45896 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45910 - "OPTIONS /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45926 - "OPTIONS /api/episode-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45896 - "GET /api/notebooks?archived=true&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45896 - "GET /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45910 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45926 - "GET /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45882 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45896 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45938 - "GET /api/recently-viewed?limit=12 HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45932 - "GET /api/credentials/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45932 - "OPTIONS /api/notebooks HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45938 - "POST /api/notebooks HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45932 - "GET /api/notebooks?archived=true&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45938 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:45896 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | 2026-10-17 15:46:57.244 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 88s)
+open_notebook-1  | [runtime-config] Auto-detected API URL: http://localhost:5055 (proto=http, host=localhost:8502)
+open_notebook-1  | 2026-10-17 15:46:57.249 | DEBUG    | api.routers.config:get_latest_version_cached:56 - Using cached version check result (age: 88s)
+open_notebook-1  | INFO:     172.18.0.1:37238 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37252 - "GET /api/config HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37252 - "OPTIONS /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37238 - "GET /api/auth/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37238 - "OPTIONS /api/credentials/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37252 - "OPTIONS /api/credentials/env-status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37254 - "OPTIONS /api/recently-viewed?limit=12 HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37268 - "OPTIONS /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37258 - "OPTIONS /api/notebooks?archived=true&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37252 - "OPTIONS /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37238 - "OPTIONS /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37258 - "OPTIONS /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37252 - "OPTIONS /api/episode-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37268 - "GET /api/credentials/env-status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37238 - "GET /api/transformations HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37258 - "GET /api/notebooks?archived=false&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37254 - "GET /api/notebooks?archived=true&order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37268 - "GET /api/notebooks?order_by=updated+desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37254 - "GET /api/settings HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37252 - "GET /api/recently-viewed?limit=12 HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37258 - "GET /api/episode-profiles HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37282 - "GET /api/credentials/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37282 - "OPTIONS /api/notebooks/notebook%3Am4v9zi9k3azwcyzxqh2d HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37258 - "OPTIONS /api/sources?notebook_id=notebook:m4v9zi9k3azwcyzxqh2d&limit=30&offset=0&sort_by=updated&sort_order=desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37252 - "OPTIONS /api/notes?notebook_id=notebook:m4v9zi9k3azwcyzxqh2d HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37254 - "GET /api/notebooks/notebook%3Am4v9zi9k3azwcyzxqh2d HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37258 - "GET /api/notes?notebook_id=notebook:m4v9zi9k3azwcyzxqh2d HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37258 - "OPTIONS /api/chat/context HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37252 - "OPTIONS /api/chat/sessions?notebook_id=notebook:m4v9zi9k3azwcyzxqh2d HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37254 - "OPTIONS /api/sources?notebook_id=notebook:m4v9zi9k3azwcyzxqh2d HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37282 - "GET /api/sources?notebook_id=notebook:m4v9zi9k3azwcyzxqh2d&limit=30&offset=0&sort_by=updated&sort_order=desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37282 - "OPTIONS /api/models HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37268 - "OPTIONS /api/models/defaults HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37238 - "POST /api/chat/context HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37268 - "GET /api/models/defaults HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37282 - "GET /api/models HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37254 - "POST /api/chat/context HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37258 - "GET /api/chat/sessions?notebook_id=notebook:m4v9zi9k3azwcyzxqh2d HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37252 - "GET /api/sources?notebook_id=notebook:m4v9zi9k3azwcyzxqh2d HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37290 - "OPTIONS /api/sources HTTP/1.1" 200 OK
+open_notebook-1  | 2026-10-17 15:47:06.198 | INFO     | api.routers.sources:_create_source_async_path:486 - Using async processing path
+open_notebook-1  | 2026-10-17 15:47:06.355 | DEBUG    | surreal_commands.core.service:submit_command_sync:166 - Submitted command to queue: command:zu70gq3mtqxp8e7e8smd
+open_notebook-1  | 2026-10-17 15:47:06.356 | INFO     | api.command_service:submit_command_job:37 - Submitted command job: command:zu70gq3mtqxp8e7e8smd for open_notebook.process_source
+open_notebook-1  | 2026-10-17 15:47:06.356 | INFO     | api.routers.sources:_create_source_async_path:528 - Submitted async processing command: command:zu70gq3mtqxp8e7e8smd
+open_notebook-1  | 2026-10-17 15:47:06.357 | DEBUG    | open_notebook.domain.base:save:177 - Updating record with id source:ekfs5bjbfz17jiztmy7r
+open_notebook-1  | ─ ⏱ Started command: open_notebook.process_source command:zu70gq3mtqxp8e7e8smd ─
+open_notebook-1  | [15:47:06] Arguments:                                              worker.py:153
+open_notebook-1  |            {                                                       worker.py:154
+open_notebook-1  |              "content_state": {                                                 
+open_notebook-1  |                "content": "Fictional source text for testing                    
+open_notebook-1  |            purposes. Lorem ipsum."                                              
+open_notebook-1  |              },                                                                 
+open_notebook-1  |              "embed": true,                                                     
+open_notebook-1  |              "notebook_ids": [                                                  
+open_notebook-1  |                "notebook:m4v9zi9k3azwcyzxqh2d"                                  
+open_notebook-1  |              ],                                                                 
+open_notebook-1  |              "source_id": "source:ekfs5bjbfz17jiztmy7r",                        
+open_notebook-1  |              "transformations": [                                               
+open_notebook-1  |                "transformation:udk1tdu6880bmxrob0mm"                            
+open_notebook-1  |              ]                                                                  
+open_notebook-1  |            }                                                                    
+open_notebook-1  | 
+open_notebook-1  | INFO:     172.18.0.1:37300 - "POST /api/sources HTTP/1.1" 200 OK
+open_notebook-1  | 2026-10-17 15:47:06.438 | INFO     | commands.source_commands:process_source_command:73 - Starting source processing for source: source:ekfs5bjbfz17jiztmy7r
+open_notebook-1  | 2026-10-17 15:47:06.438 | INFO     | commands.source_commands:process_source_command:74 - Notebook IDs: ['notebook:m4v9zi9k3azwcyzxqh2d']
+open_notebook-1  | 2026-10-17 15:47:06.438 | INFO     | commands.source_commands:process_source_command:75 - Transformations: ['transformation:udk1tdu6880bmxrob0mm']
+open_notebook-1  | 2026-10-17 15:47:06.438 | INFO     | commands.source_commands:process_source_command:76 - Embed: True
+open_notebook-1  | 2026-10-17 15:47:06.438 | INFO     | commands.source_commands:process_source_command:81 - Loading transformation: transformation:udk1tdu6880bmxrob0mm
+open_notebook-1  | 2026-10-17 15:47:06.485 | INFO     | commands.source_commands:process_source_command:91 - Loaded 1 transformations
+open_notebook-1  | INFO:     172.18.0.1:37300 - "GET /api/sources?notebook_id=notebook:m4v9zi9k3azwcyzxqh2d HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37290 - "GET /api/sources?notebook_id=notebook:m4v9zi9k3azwcyzxqh2d&limit=30&offset=0&sort_by=updated&sort_order=desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:37290 - "OPTIONS /api/sources/source%3Aekfs5bjbfz17jiztmy7r/status HTTP/1.1" 200 OK
+open_notebook-1  | 2026-10-17 15:47:06.587 | INFO     | commands.source_commands:process_source_command:117 - Updated source source:ekfs5bjbfz17jiztmy7r with command reference
+open_notebook-1  | 2026-10-17 15:47:06.587 | INFO     | commands.source_commands:process_source_command:120 - Processing source with 1 notebooks
+open_notebook-1  | INFO:     172.18.0.1:37300 - "POST /api/chat/context HTTP/1.1" 200 OK
+open_notebook-1  | 2026-10-17 15:47:06.706 | INFO     | open_notebook.graphs.source:content_process:224 - Extracting content via content-core (url_engine=firecrawl, document_engine=simple, docling_ocr=True, docling_formulas=False, docling_vision=False)
+open_notebook-1  | INFO:     172.18.0.1:41032 - "GET /api/sources/source%3Aekfs5bjbfz17jiztmy7r/status HTTP/1.1" 200 OK
+open_notebook-1  | 2026-10-17 15:47:06.792 | INFO     | open_notebook.domain.notebook:vectorize:556 - Submitting embed_source job for source source:ekfs5bjbfz17jiztmy7r
+open_notebook-1  | 2026-10-17 15:47:06.831 | INFO     | open_notebook.domain.notebook:vectorize:570 - Embed source job submitted for source source:ekfs5bjbfz17jiztmy7r: command_id=command:qi7cfuls6seibry22l74
+open_notebook-1  | ── ⏱ Started command: open_notebook.embed_source command:qi7cfuls6seibry22l74 ──
+open_notebook-1  |            Arguments:                                              worker.py:153
+open_notebook-1  |            {                                                       worker.py:154
+open_notebook-1  |              "source_id": "source:ekfs5bjbfz17jiztmy7r"                         
+open_notebook-1  |            }                                                                    
+open_notebook-1  | 
+open_notebook-1  | INFO:     172.18.0.1:41024 - "POST /api/chat/context HTTP/1.1" 200 OK
+open_notebook-1  | 2026-10-17 15:47:07.211 | WARNING  | open_notebook.ai.models:get_default_model:358 - No default model configured for type 'transformation'. Please go to Manage → Models and set a default model.
+open_notebook-1  | 2026-10-17 15:47:07.211 | ERROR    | open_notebook.ai.provision:provision_langchain_model:39 - Model provisioning failed: No model found. Selection reason: default for type=transformation. model_id=None, default_type=transformation. Please check Manage → Models and ensure a default model is configured for 'transformation'.
+open_notebook-1  | 2026-10-17 15:47:07.214 | ERROR    | surreal_commands.core.service:execute_command:287 - Error executing command open_notebook.process_source (command:zu70gq3mtqxp8e7e8smd): No model configured for default for type=transformation. Please go to Manage → Models and configure a default model for 'transformation'.
+open_notebook-1  | 2026-10-17 15:47:07.216 | INFO     | commands.embedding_commands:_embed_record:80 - Starting embedding for source: source:ekfs5bjbfz17jiztmy7r
+open_notebook-1  | 2026-10-17 15:47:07.300 | INFO     | commands.embedding_commands:embed:363 - Created 1 chunks for source source:ekfs5bjbfz17jiztmy7r (sizes: min=56, max=56, avg=56 chars)
+open_notebook-1  | 2026-10-17 15:47:07.337 | ERROR    | commands.embedding_commands:_embed_record:96 - Failed to embed source source:ekfs5bjbfz17jiztmy7r (command: command:qi7cfuls6seibry22l74): No embedding model configured. Please configure one in the Models section.
+open_notebook-1  | INFO:     172.18.0.1:41024 - "GET /api/sources/source%3Aekfs5bjbfz17jiztmy7r/status HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:41024 - "GET /api/sources?notebook_id=notebook:m4v9zi9k3azwcyzxqh2d&limit=30&offset=0&sort_by=updated&sort_order=desc HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:41024 - "POST /api/chat/context HTTP/1.1" 200 OK
+open_notebook-1  | INFO:     172.18.0.1:41032 - "POST /api/chat/context HTTP/1.1" 200 OK
+open_notebook-1  | 2026-10-17 15:47:29,836 WARN received SIGTERM indicating exit request
+open_notebook-1  | 2026-10-17 15:47:29,836 WARN received SIGTERM indicating exit request
+open_notebook-1  | 2026-10-17 15:47:29,837 INFO waiting for api, worker, frontend to die
+open_notebook-1  | 2026-10-17 15:47:29,837 INFO waiting for api, worker, frontend to die
+open_notebook-1  | 2026-10-17 15:47:29,847 WARN stopped: frontend (exit status 143)
+open_notebook-1  | 2026-10-17 15:47:29,847 WARN stopped: frontend (exit status 143)
+open_notebook-1  | 2026-10-17 15:47:30,848 WARN stopped: worker (terminated by SIGTERM)
+open_notebook-1  | 2026-10-17 15:47:30,848 WARN stopped: worker (terminated by SIGTERM)
+open_notebook-1  | INFO:     Shutting down
+open_notebook-1  | INFO:     Waiting for application shutdown.
+open_notebook-1  | 2026-10-17 15:47:31.039 | INFO     | api.main:lifespan:216 - API shutdown complete
+open_notebook-1  | INFO:     Application shutdown complete.
+open_notebook-1  | INFO:     Finished server process [28]
+open_notebook-1  | 2026-10-17 15:47:31,055 WARN stopped: api (exit status 143)
+open_notebook-1  | 2026-10-17 15:47:31,055 WARN stopped: api (exit status 143)

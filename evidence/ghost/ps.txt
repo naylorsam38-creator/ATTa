@@ -1,0 +1,4 @@
+NAME              IMAGE                                                                                         COMMAND                  SERVICE   CREATED              STATUS                          PORTS
+t-ghost-caddy-1   caddy:2.10.2-alpine@sha256:953131cfea8e12bfe1c631a36308e9660e4389f0c3dfb3be957044d3ac92d446   "caddy run --config …"   caddy     About a minute ago   Up About a minute               0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 443/udp, 2019/tcp
+t-ghost-db-1      mysql:8.0.44@sha256:f37951fc3753a6a22d6c7bf6978c5e5fefcf6f31814d98c582524f98eae52b21          "docker-entrypoint.s…"   db        About a minute ago   Up About a minute (healthy)     3306/tcp, 33060/tcp
+t-ghost-ghost-1   ghost:6-alpine                                                                                "docker-entrypoint.s…"   ghost     About a minute ago   Restarting (2) 23 seconds ago   

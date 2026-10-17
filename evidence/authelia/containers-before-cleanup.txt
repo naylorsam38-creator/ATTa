@@ -1,0 +1,6 @@
+traefik traefik:v3.6.13 Up 13 seconds
+authelia authelia/authelia Up 13 seconds
+secure traefik/whoami Up 13 seconds
+public traefik/whoami Up 13 seconds
+eager_carver authelia/authelia Exited (0) About a minute ago
+inspiring_jackson authelia/authelia Exited (0) About a minute ago

@@ -1,0 +1,28 @@
+auth page: http://localhost:5230/auth
+401 POST http://localhost:5230/memos.api.v1.AuthService/RefreshToken
+console[http://localhost:5230/auth]: Failed to load resource: the server responded with a status of 401 (Unauthorized)
+after sign in: http://localhost:5230/
+FAILED http://localhost:5230/memos.api.v1.UserService/ListUserSettings net::ERR_ABORTED
+console[http://localhost:5230/]: Failed to initialize auth: ConnectError: [unknown] Failed to fetch
+visited / -> http://localhost:5230/
+FAILED http://localhost:5230/api/v1/sse net::ERR_ABORTED
+visited /explore -> http://localhost:5230/explore
+FAILED http://localhost:5230/api/v1/sse net::ERR_ABORTED
+visited /views -> http://localhost:5230/views
+FAILED http://localhost:5230/api/v1/sse net::ERR_ABORTED
+visited /calendar -> http://localhost:5230/calendar/2026/10
+FAILED http://localhost:5230/api/v1/sse net::ERR_ABORTED
+visited /map -> http://localhost:5230/map
+FAILED http://localhost:5230/api/v1/sse net::ERR_ABORTED
+visited /attachments -> http://localhost:5230/attachments
+FAILED http://localhost:5230/api/v1/sse net::ERR_ABORTED
+visited /inbox -> http://localhost:5230/inbox
+FAILED http://localhost:5230/api/v1/sse net::ERR_ABORTED
+visited /archived -> http://localhost:5230/archived
+FAILED http://localhost:5230/api/v1/sse net::ERR_ABORTED
+visited /setting -> http://localhost:5230/setting
+FAILED http://localhost:5230/api/v1/sse net::ERR_ABORTED
+visited /u/testuser -> http://localhost:5230/u/testuser
+FAILED http://localhost:5230/api/v1/sse net::ERR_ABORTED
+FAILED http://localhost:5230/memos.api.v1.MemoService/ListMemos net::ERR_ABORTED
+memo visible: 1

@@ -1,0 +1,11 @@
+realtime-dev.supabase-realtime	Up 9 minutes (healthy)
+supabase-auth	Up 9 minutes (healthy)
+supabase-db	Up 9 minutes (healthy)
+supabase-edge-functions	Restarting (1) 5 seconds ago
+supabase-envoy	Up 9 minutes (healthy)
+supabase-imgproxy	Up 9 minutes (healthy)
+supabase-meta	Up 9 minutes (healthy)
+supabase-pooler	Restarting (1) 16 seconds ago
+supabase-rest	Up 9 minutes (healthy)
+supabase-storage	Up 9 minutes (healthy)
+supabase-studio	Up 9 minutes (healthy)

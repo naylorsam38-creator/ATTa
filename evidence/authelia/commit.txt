@@ -1,0 +1,3 @@
+commit=e8f58adc603d64994a27f5ef65c370778fe04f16
+date=2026-10-17T12:16:33+00:00
+subject=build(deps): update module github.com/knadh/koanf/v2 to v2.4.0 (#13509)

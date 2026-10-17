@@ -1,0 +1,3 @@
+{"status":"available"} 200 /health
+200 / (mini-dashboard)
+{"commitSha":"d6c0f4b4c57ad331133f45a4f17c855e5bba2611","commitDate":"unknown","pkgVersion":"1.37.0"} 200 /version

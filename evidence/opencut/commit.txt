@@ -1,0 +1,3 @@
+commit=e668010778568641babef2cc40be4703ae6916d6
+date=2026-09-24T10:58:46+02:00
+subject=ci(media): add the workflow that builds FFmpeg for every platform

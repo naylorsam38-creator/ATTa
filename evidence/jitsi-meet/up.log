@@ -1,0 +1,24 @@
+ Network t-jitsi_meet.jitsi Creating 
+ Network t-jitsi_meet.jitsi Creating 
+ Network t-jitsi_meet.jitsi Created 
+ Network t-jitsi_meet.jitsi Created 
+ Container t-jitsi-prosody-1 Creating 
+ Container t-jitsi-prosody-1 Created 
+ Container t-jitsi-jicofo-1 Creating 
+ Container t-jitsi-jvb-1 Creating 
+ Container t-jitsi-jvb-1 Created 
+ Container t-jitsi-web-1 Creating 
+ Container t-jitsi-jicofo-1 Created 
+ Container t-jitsi-web-1 Created 
+ Container t-jitsi-prosody-1 Starting 
+ Container t-jitsi-prosody-1 Started 
+ Container t-jitsi-jvb-1 Starting 
+ Container t-jitsi-jicofo-1 Starting 
+ Container t-jitsi-jvb-1 Started 
+ Container t-jitsi-web-1 Starting 
+ Container t-jitsi-jicofo-1 Started 
+ Container t-jitsi-web-1 Started 
+
+real	0m2.399s
+user	0m0.140s
+sys	0m0.052s

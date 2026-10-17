@@ -1,0 +1,36 @@
+ Volume t-mixpost_mysql Creating 
+ Volume t-mixpost_mysql Creating 
+ Volume t-mixpost_logs Creating 
+ Volume t-mixpost_logs Creating 
+ Volume t-mixpost_storage Creating 
+ Network t-mixpost_default Creating 
+ Volume t-mixpost_storage Creating 
+ Network t-mixpost_default Creating 
+ Volume t-mixpost_redis Creating 
+ Volume t-mixpost_redis Creating 
+ Volume t-mixpost_storage Created 
+ Volume t-mixpost_storage Created 
+ Volume t-mixpost_redis Created 
+ Volume t-mixpost_redis Created 
+ Volume t-mixpost_mysql Created 
+ Volume t-mixpost_mysql Created 
+ Volume t-mixpost_logs Created 
+ Volume t-mixpost_logs Created 
+ Network t-mixpost_default Created 
+ Network t-mixpost_default Created 
+ Container t-mixpost-redis-1 Creating 
+ Container t-mixpost-mysql-1 Creating 
+ Container t-mixpost-mysql-1 Created 
+ Container t-mixpost-redis-1 Created 
+ Container t-mixpost-mixpost-1 Creating 
+ Container t-mixpost-mixpost-1 Created 
+ Container t-mixpost-mysql-1 Starting 
+ Container t-mixpost-redis-1 Starting 
+ Container t-mixpost-mysql-1 Started 
+ Container t-mixpost-redis-1 Started 
+ Container t-mixpost-mixpost-1 Starting 
+ Container t-mixpost-mixpost-1 Started 
+
+real	0m1.677s
+user	0m0.094s
+sys	0m0.074s

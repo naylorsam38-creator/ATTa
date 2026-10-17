@@ -1,0 +1,30 @@
+ Network t-ghost_ghost_network Creating 
+ Network t-ghost_ghost_network Creating 
+ Volume t-ghost_caddy_data Creating 
+ Volume t-ghost_caddy_data Creating 
+ Volume t-ghost_caddy_config Creating 
+ Volume t-ghost_caddy_config Creating 
+ Volume t-ghost_caddy_data Created 
+ Volume t-ghost_caddy_data Created 
+ Volume t-ghost_caddy_config Created 
+ Volume t-ghost_caddy_config Created 
+ Network t-ghost_ghost_network Created 
+ Network t-ghost_ghost_network Created 
+ Container t-ghost-db-1 Creating 
+ Container t-ghost-db-1 Created 
+ Container t-ghost-ghost-1 Creating 
+ Container t-ghost-ghost-1 Created 
+ Container t-ghost-caddy-1 Creating 
+ Container t-ghost-caddy-1 Created 
+ Container t-ghost-db-1 Starting 
+ Container t-ghost-db-1 Started 
+ Container t-ghost-db-1 Waiting 
+ Container t-ghost-db-1 Healthy 
+ Container t-ghost-ghost-1 Starting 
+ Container t-ghost-ghost-1 Started 
+ Container t-ghost-caddy-1 Starting 
+ Container t-ghost-caddy-1 Started 
+
+real	0m11.807s
+user	0m0.153s
+sys	0m0.048s

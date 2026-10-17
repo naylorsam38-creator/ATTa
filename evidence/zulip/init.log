@@ -1,0 +1,43 @@
+ Network t-zulip_default Creating 
+ Volume t-zulip_postgresql-14 Creating 
+ Volume t-zulip_postgresql-14 Creating 
+ Network t-zulip_default Creating 
+ Volume t-zulip_rabbitmq Creating 
+ Volume t-zulip_rabbitmq Creating 
+ Volume t-zulip_redis Creating 
+ Volume t-zulip_redis Creating 
+ Volume t-zulip_zulip Creating 
+ Volume t-zulip_zulip Creating 
+ Volume t-zulip_postgresql-14 Created 
+ Volume t-zulip_postgresql-14 Created 
+ Volume t-zulip_redis Created 
+ Volume t-zulip_redis Created 
+ Volume t-zulip_rabbitmq Created 
+ Volume t-zulip_rabbitmq Created 
+ Volume t-zulip_zulip Created 
+ Volume t-zulip_zulip Created 
+ Network t-zulip_default Created 
+ Network t-zulip_default Created 
+ Container t-zulip-redis-1 Creating 
+ Container t-zulip-database-1 Creating 
+ Container t-zulip-rabbitmq-1 Creating 
+ Container t-zulip-memcached-1 Creating 
+ Container t-zulip-rabbitmq-1 Created 
+ Container t-zulip-redis-1 Created 
+ Container t-zulip-memcached-1 Created 
+ Container t-zulip-database-1 Created 
+ Container t-zulip-rabbitmq-1 Starting 
+ Container t-zulip-database-1 Starting 
+ Container t-zulip-redis-1 Starting 
+ Container t-zulip-memcached-1 Starting 
+ Container t-zulip-rabbitmq-1 Started 
+ Container t-zulip-database-1 Started 
+ Container t-zulip-redis-1 Started 
+ Container t-zulip-memcached-1 Started 
+ Container t-zulip-zulip-run-9783dcf66b17 Creating 
+ Container t-zulip-zulip-run-9783dcf66b17 Created 
+Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: error setting rlimits for ready process: error setting rlimit type 7: operation not permitted
+
+real	0m2.427s
+user	0m0.133s
+sys	0m0.050s

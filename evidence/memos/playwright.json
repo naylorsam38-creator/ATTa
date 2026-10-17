@@ -1,0 +1,972 @@
+{
+  "startUrl": "http://localhost:5230/",
+  "origin": "http://localhost:5230",
+  "pages": [
+    {
+      "url": "http://localhost:5230/",
+      "finalUrl": "http://localhost:5230/auth/signup",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/",
+      "finalUrl": "http://localhost:5230/",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/views",
+      "finalUrl": "http://localhost:5230/views",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar",
+      "finalUrl": "http://localhost:5230/calendar/2026/10",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/map",
+      "finalUrl": "http://localhost:5230/map",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/attachments",
+      "finalUrl": "http://localhost:5230/attachments",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09",
+      "finalUrl": "http://localhost:5230/calendar/2026/09",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/11",
+      "finalUrl": "http://localhost:5230/calendar/2026/11",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/27",
+      "finalUrl": "http://localhost:5230/calendar/2026/09/27",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/28",
+      "finalUrl": "http://localhost:5230/calendar/2026/09/28",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/29",
+      "finalUrl": "http://localhost:5230/calendar/2026/09/29",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/30",
+      "finalUrl": "http://localhost:5230/calendar/2026/09/30",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/01",
+      "finalUrl": "http://localhost:5230/calendar/2026/10/01",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/02",
+      "finalUrl": "http://localhost:5230/calendar/2026/10/02",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/03",
+      "finalUrl": "http://localhost:5230/calendar/2026/10/03",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/04",
+      "finalUrl": "http://localhost:5230/calendar/2026/10/04",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/05",
+      "finalUrl": "http://localhost:5230/calendar/2026/10/05",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/06",
+      "finalUrl": "http://localhost:5230/calendar/2026/10/06",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/07",
+      "finalUrl": "http://localhost:5230/calendar/2026/10/07",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/08",
+      "finalUrl": "http://localhost:5230/calendar/2026/10/08",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/09",
+      "finalUrl": "http://localhost:5230/calendar/2026/10/09",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/10",
+      "finalUrl": "http://localhost:5230/calendar/2026/10/10",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/11",
+      "finalUrl": "http://localhost:5230/calendar/2026/10/11",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/12",
+      "finalUrl": "http://localhost:5230/calendar/2026/10/12",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/13",
+      "finalUrl": "http://localhost:5230/calendar/2026/10/13",
+      "status": 200,
+      "title": "Memos",
+      "error": null
+    }
+  ],
+  "consoleErrors": [
+    {
+      "url": "http://localhost:5230/",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "url": "http://localhost:5230/",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/views",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/views",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/views",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/map",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/map",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/map",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/attachments",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/attachments",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/attachments",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/11",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/11",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/11",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/27",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/27",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/27",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/28",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/28",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/29",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/29",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/29",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/30",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/30",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/09/30",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/01",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/01",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/01",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/02",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/02",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/02",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/03",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/03",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/03",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/04",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/04",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/04",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/05",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/05",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/05",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/06",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/06",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/06",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/07",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/07",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/07",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/08",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/08",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/08",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/09",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/09",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/10",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/10",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/10",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/11",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/11",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/11",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/12",
+      "text": "Failed to initialize auth: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getCurrentUser (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async http://localhost:5230/assets/AuthContext-CJFdcArH.js:1:9209\n    at async Promise.all (index 1)\n    at as"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/12",
+      "text": "Failed to initialize instance profile: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.getInstanceProfile (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 0)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj.js:27:"
+    },
+    {
+      "url": "http://localhost:5230/calendar/2026/10/12",
+      "text": "Failed to initialize instance settings: ConnectError: [unknown] Failed to fetch\n    at e.from (http://localhost:5230/assets/connect-DMat5fhN.js:4:53065)\n    at http://localhost:5230/assets/connect-DMat5fhN.js:4:66152\n    at async Object.unary (http://localhost:5230/assets/connect-DMat5fhN.js:4:67507)\n    at async Object.batchGetInstanceSettings (http://localhost:5230/assets/connect-DMat5fhN.js:4:58896)\n    at async Promise.all (index 1)\n    at async D (http://localhost:5230/assets/index-P0PJ_Ipj"
+    }
+  ],
+  "pageErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://localhost:5230/api/v1/sse",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:5230/memos.api.v1.InstanceService/GetInstanceSetting",
+      "method": "POST",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:5230/memos.api.v1.InstanceService/GetInstanceProfile",
+      "method": "POST",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:5230/memos.api.v1.AuthService/GetCurrentUser",
+      "method": "POST",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:5230/memos.api.v1.InstanceService/BatchGetInstanceSettings",
+      "method": "POST",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "badResponses": [
+    {
+      "url": "http://localhost:5230/memos.api.v1.AuthService/RefreshToken",
+      "status": 401,
+      "method": "POST"
+    }
+  ],
+  "clicks": [
+    {
+      "page": "http://localhost:5230/auth/signup",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/auth/signup",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/auth/signup",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/auth/signup",
+      "text": "Search",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/auth/signup",
+      "text": "Previous month",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/auth/signup",
+      "text": "Next month",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/auth/signup",
+      "text": "View options",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/auth/signup",
+      "text": "Create",
+      "afterUrl": "http://localhost:5230/views"
+    },
+    {
+      "page": "http://localhost:5230/",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/",
+      "text": "Search",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/",
+      "text": "Previous month",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/",
+      "text": "Next month",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/",
+      "text": "View options",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/",
+      "text": "Create",
+      "afterUrl": "http://localhost:5230/views"
+    },
+    {
+      "page": "http://localhost:5230/views",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/views"
+    },
+    {
+      "page": "http://localhost:5230/views",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/views"
+    },
+    {
+      "page": "http://localhost:5230/views",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/map",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/map"
+    },
+    {
+      "page": "http://localhost:5230/map",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/map"
+    },
+    {
+      "page": "http://localhost:5230/map",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/attachments",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/attachments"
+    },
+    {
+      "page": "http://localhost:5230/attachments",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/attachments"
+    },
+    {
+      "page": "http://localhost:5230/attachments",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/09"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/09"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/11",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/11"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/11",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/11"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/11",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09/27",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/09/27"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09/27",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/09/27"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09/27",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09/28",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/09/28"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09/28",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/09/28"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09/28",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09/29",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/09/29"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09/29",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/09/29"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09/29",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09/30",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/09/30"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09/30",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/09/30"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/09/30",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/01",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/01"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/01",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/01"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/01",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/02",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/02"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/02",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/02"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/02",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/03",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/03"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/03",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/03"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/03",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/04",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/04"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/04",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/04"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/04",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/05",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/05"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/05",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/05"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/05",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/06",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/06"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/06",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/06"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/06",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/07",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/07"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/07",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/07"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/07",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/08",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/08"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/08",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/08"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/08",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/09",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/09"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/09",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/09"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/09",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/10",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/10"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/10",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/10"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/10",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/11",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/11"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/11",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/11"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/11",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/12",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/12"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/12",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/12"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/12",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/13",
+      "text": "Memos",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/13"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/13",
+      "text": "New memo",
+      "afterUrl": "http://localhost:5230/calendar/2026/10/13"
+    },
+    {
+      "page": "http://localhost:5230/calendar/2026/10/13",
+      "text": "Home",
+      "afterUrl": "http://localhost:5230/"
+    }
+  ],
+  "skipped": [],
+  "forms": [
+    {
+      "page": "http://localhost:5230/auth/signup",
+      "submitLabel": "Create admin account",
+      "filled": 2,
+      "afterUrl": "http://localhost:5230/",
+      "validation": []
+    }
+  ],
+  "notes": [],
+  "unvisitedQueue": [
+    "http://localhost:5230/calendar/2026/10/14",
+    "http://localhost:5230/calendar/2026/10/15",
+    "http://localhost:5230/calendar/2026/10/16",
+    "http://localhost:5230/calendar/2026/10/17",
+    "http://localhost:5230/calendar/2026/10/18",
+    "http://localhost:5230/calendar/2026/10/19",
+    "http://localhost:5230/calendar/2026/10/20",
+    "http://localhost:5230/calendar/2026/10/21",
+    "http://localhost:5230/calendar/2026/10/22",
+    "http://localhost:5230/calendar/2026/10/23",
+    "http://localhost:5230/calendar/2026/10/24",
+    "http://localhost:5230/calendar/2026/10/25",
+    "http://localhost:5230/calendar/2026/10/26",
+    "http://localhost:5230/calendar/2026/10/27",
+    "http://localhost:5230/calendar/2026/10/28",
+    "http://localhost:5230/calendar/2026/10/29",
+    "http://localhost:5230/calendar/2026/10/30",
+    "http://localhost:5230/calendar/2026/10/31",
+    "http://localhost:5230/calendar/2026/08",
+    "http://localhost:5230/calendar/2026/08/30",
+    "http://localhost:5230/calendar/2026/08/31",
+    "http://localhost:5230/calendar/2026/09/01",
+    "http://localhost:5230/calendar/2026/09/02",
+    "http://localhost:5230/calendar/2026/09/03",
+    "http://localhost:5230/calendar/2026/09/04",
+    "http://localhost:5230/calendar/2026/09/05",
+    "http://localhost:5230/calendar/2026/09/06",
+    "http://localhost:5230/calendar/2026/09/07",
+    "http://localhost:5230/calendar/2026/09/08",
+    "http://localhost:5230/calendar/2026/09/09",
+    "http://localhost:5230/calendar/2026/09/10",
+    "http://localhost:5230/calendar/2026/09/11",
+    "http://localhost:5230/calendar/2026/09/12",
+    "http://localhost:5230/calendar/2026/09/13",
+    "http://localhost:5230/calendar/2026/09/14",
+    "http://localhost:5230/calendar/2026/09/15",
+    "http://localhost:5230/calendar/2026/09/16",
+    "http://localhost:5230/calendar/2026/09/17",
+    "http://localhost:5230/calendar/2026/09/18",
+    "http://localhost:5230/calendar/2026/09/19",
+    "http://localhost:5230/calendar/2026/09/20",
+    "http://localhost:5230/calendar/2026/09/21",
+    "http://localhost:5230/calendar/2026/09/22",
+    "http://localhost:5230/calendar/2026/09/23",
+    "http://localhost:5230/calendar/2026/09/24",
+    "http://localhost:5230/calendar/2026/09/25",
+    "http://localhost:5230/calendar/2026/09/26",
+    "http://localhost:5230/calendar/2026/12",
+    "http://localhost:5230/calendar/2026/11/01",
+    "http://localhost:5230/calendar/2026/11/02"
+  ]
+}

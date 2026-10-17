@@ -1,0 +1,223 @@
+time="2026-10-17T16:26:32Z" level=warning msg="/home/user/apps-test/payload/templates/blank/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Image node:20-alpine Pulling 
+ Image mongo:latest Pulling 
+ fff4e2c1b189 Pulling fs layer 0B
+ 6a0ac1617861 Pulling fs layer 0B
+ 4feea04c1543 Pulling fs layer 0B
+ b2cbbfe903b0 Pulling fs layer 0B
+ fff4e2c1b189 Download complete 0B
+ b2cbbfe903b0 Download complete 0B
+ 4feea04c1543 Downloading 3.146MB
+ 6a0ac1617861 Downloading 1.049MB
+ 6a0ac1617861 Downloading 3.864MB
+ 4feea04c1543 Downloading 6.291MB
+ 6a0ac1617861 Download complete 0B
+ 4feea04c1543 Downloading 8.389MB
+ 6a0ac1617861 Extracting 1B
+ 4feea04c1543 Downloading 11.53MB
+ 6a0ac1617861 Pull complete 0B
+ 4feea04c1543 Downloading 14.68MB
+ 4feea04c1543 Downloading 17.83MB
+ 4feea04c1543 Downloading 19.92MB
+ 4feea04c1543 Downloading 23.07MB
+ 4feea04c1543 Downloading 26.21MB
+ 4feea04c1543 Downloading 29.36MB
+ 14f8540414db Download complete 0B
+ 4feea04c1543 Downloading 31.46MB
+ 4feea04c1543 Downloading 34.6MB
+ 0f92261bcd1c Download complete 0B
+ 4feea04c1543 Downloading 37.75MB
+ 4feea04c1543 Downloading 40.89MB
+ 4feea04c1543 Downloading 43.23MB
+ 4feea04c1543 Download complete 0B
+ 4feea04c1543 Extracting 1B
+ 4feea04c1543 Extracting 1B
+ 4feea04c1543 Extracting 1B
+ 4feea04c1543 Extracting 1B
+ 4feea04c1543 Extracting 1B
+ 4feea04c1543 Extracting 1B
+ 4feea04c1543 Extracting 1B
+ 4feea04c1543 Extracting 1B
+ 4feea04c1543 Extracting 1B
+ 4feea04c1543 Extracting 1B
+ 4feea04c1543 Extracting 2B
+ 4feea04c1543 Extracting 2B
+ 4feea04c1543 Pull complete 0B
+ fff4e2c1b189 Pull complete 0B
+ b2cbbfe903b0 Pull complete 0B
+ Image node:20-alpine Pulled 
+ f12ee8b356b1 Pulling fs layer 0B
+ 0ae9586256c2 Pulling fs layer 0B
+ 435bf5c20694 Pulling fs layer 0B
+ e98149e3f6d7 Pulling fs layer 0B
+ 9db81eeecfb4 Pulling fs layer 0B
+ 35a0f6a0a725 Pulling fs layer 0B
+ 87e1c0d00940 Pulling fs layer 0B
+ d9d511d19a19 Pulling fs layer 0B
+ 438d4ef4a55c Pulling fs layer 0B
+ 9db81eeecfb4 Download complete 0B
+ f12ee8b356b1 Download complete 0B
+ 0ae9586256c2 Download complete 0B
+ 435bf5c20694 Downloading 2.097MB
+ 435bf5c20694 Downloading 5.243MB
+ 435bf5c20694 Downloading 8.389MB
+ 435bf5c20694 Downloading 11.53MB
+ 435bf5c20694 Downloading 13.63MB
+ 438d4ef4a55c Downloading 1.049MB
+ 435bf5c20694 Downloading 16.78MB
+ 435bf5c20694 Downloading 19.92MB
+ 438d4ef4a55c Downloading 8.389MB
+ 435bf5c20694 Downloading 22.02MB
+ 438d4ef4a55c Downloading 10.49MB
+ 438d4ef4a55c Downloading 29.36MB
+ 435bf5c20694 Downloading 25.17MB
+ 438d4ef4a55c Downloading 38.8MB
+ 435bf5c20694 Downloading 28.31MB
+ 438d4ef4a55c Downloading 47.19MB
+ 435bf5c20694 Downloading 30.41MB
+ 435bf5c20694 Downloading 33.55MB
+ 438d4ef4a55c Downloading 56.62MB
+ 435bf5c20694 Downloading 36.7MB
+ 438d4ef4a55c Downloading 67.11MB
+ 435bf5c20694 Downloading 39.85MB
+ 438d4ef4a55c Downloading 81.79MB
+ 435bf5c20694 Downloading 42.15MB
+ 438d4ef4a55c Downloading 97.52MB
+ 435bf5c20694 Download complete 0B
+ 438d4ef4a55c Downloading 118.5MB
+ 435bf5c20694 Extracting 1B
+ 438d4ef4a55c Downloading 138.4MB
+ 435bf5c20694 Extracting 1B
+ 438d4ef4a55c Downloading 152MB
+ 435bf5c20694 Extracting 1B
+ 87e1c0d00940 Downloading 263B
+ 438d4ef4a55c Downloading 168.8MB
+ 435bf5c20694 Extracting 1B
+ 87e1c0d00940 Download complete 0B
+ 438d4ef4a55c Downloading 179.3MB
+ 435bf5c20694 Extracting 1B
+ 438d4ef4a55c Downloading 199.2MB
+ 435bf5c20694 Extracting 1B
+ e98149e3f6d7 Download complete 0B
+ 438d4ef4a55c Downloading 220.2MB
+ 435bf5c20694 Extracting 1B
+ 438d4ef4a55c Downloading 244.3MB
+ 435bf5c20694 Extracting 1B
+ 438d4ef4a55c Downloading 262.1MB
+ 435bf5c20694 Extracting 1B
+ d9d511d19a19 Download complete 0B
+ 438d4ef4a55c Downloading 276.8MB
+ 435bf5c20694 Extracting 1B
+ 438d4ef4a55c Downloading 289.4MB
+ 435bf5c20694 Extracting 1B
+ 438d4ef4a55c Downloading 311.4MB
+ 435bf5c20694 Extracting 2B
+ 438d4ef4a55c Downloading 331.4MB
+ 435bf5c20694 Extracting 2B
+ 438d4ef4a55c Downloading 340.6MB
+ 435bf5c20694 Extracting 2B
+ 438d4ef4a55c Downloading 340.6MB
+ 435bf5c20694 Extracting 2B
+ 438d4ef4a55c Download complete 0B
+ 435bf5c20694 Extracting 2B
+ 435bf5c20694 Extracting 2B
+ 435bf5c20694 Extracting 2B
+ 2dd4d47871cb Download complete 0B
+ b28256bd9602 Downloading 2.097MB
+ 435bf5c20694 Extracting 2B
+ b28256bd9602 Download complete 0B
+ 435bf5c20694 Extracting 2B
+ 435bf5c20694 Extracting 2B
+ 435bf5c20694 Extracting 3B
+ 435bf5c20694 Extracting 3B
+ 435bf5c20694 Extracting 3B
+ 435bf5c20694 Pull complete 0B
+ d9d511d19a19 Pull complete 0B
+ 9db81eeecfb4 Pull complete 0B
+ 0ae9586256c2 Pull complete 0B
+ 35a0f6a0a725 Downloading 938.4kB
+ 35a0f6a0a725 Download complete 0B
+ 87e1c0d00940 Pull complete 0B
+ e98149e3f6d7 Pull complete 0B
+ 438d4ef4a55c Extracting 1B
+ 35a0f6a0a725 Pull complete 0B
+ 438d4ef4a55c Extracting 1B
+ 438d4ef4a55c Extracting 1B
+ 438d4ef4a55c Extracting 1B
+ 438d4ef4a55c Extracting 1B
+ 438d4ef4a55c Extracting 1B
+ 438d4ef4a55c Extracting 1B
+ 438d4ef4a55c Extracting 1B
+ 438d4ef4a55c Extracting 1B
+ 438d4ef4a55c Extracting 1B
+ 438d4ef4a55c Extracting 1B
+ 438d4ef4a55c Extracting 2B
+ 438d4ef4a55c Extracting 2B
+ 438d4ef4a55c Extracting 2B
+ 438d4ef4a55c Extracting 2B
+ 438d4ef4a55c Extracting 2B
+ 438d4ef4a55c Extracting 2B
+ 438d4ef4a55c Extracting 2B
+ 438d4ef4a55c Extracting 2B
+ 438d4ef4a55c Extracting 2B
+ 438d4ef4a55c Extracting 2B
+ 438d4ef4a55c Extracting 3B
+ 438d4ef4a55c Extracting 3B
+ 438d4ef4a55c Extracting 3B
+ 438d4ef4a55c Extracting 3B
+ 438d4ef4a55c Extracting 3B
+ 438d4ef4a55c Extracting 3B
+ 438d4ef4a55c Extracting 3B
+ 438d4ef4a55c Extracting 3B
+ 438d4ef4a55c Extracting 3B
+ 438d4ef4a55c Extracting 3B
+ 438d4ef4a55c Extracting 4B
+ 438d4ef4a55c Extracting 4B
+ 438d4ef4a55c Extracting 4B
+ 438d4ef4a55c Extracting 4B
+ 438d4ef4a55c Extracting 4B
+ 438d4ef4a55c Extracting 4B
+ 438d4ef4a55c Extracting 4B
+ 438d4ef4a55c Extracting 4B
+ 438d4ef4a55c Extracting 4B
+ 438d4ef4a55c Extracting 4B
+ 438d4ef4a55c Extracting 5B
+ 438d4ef4a55c Extracting 5B
+ 438d4ef4a55c Extracting 5B
+ 438d4ef4a55c Extracting 5B
+ 438d4ef4a55c Extracting 5B
+ 438d4ef4a55c Extracting 5B
+ 438d4ef4a55c Extracting 5B
+ 438d4ef4a55c Extracting 5B
+ 438d4ef4a55c Extracting 5B
+ 438d4ef4a55c Extracting 5B
+ 438d4ef4a55c Extracting 6B
+ 438d4ef4a55c Extracting 6B
+ 438d4ef4a55c Extracting 6B
+ 438d4ef4a55c Extracting 6B
+ 438d4ef4a55c Extracting 6B
+ 438d4ef4a55c Extracting 6B
+ 438d4ef4a55c Extracting 6B
+ 438d4ef4a55c Extracting 6B
+ 438d4ef4a55c Extracting 6B
+ 438d4ef4a55c Extracting 6B
+ 438d4ef4a55c Extracting 7B
+ 438d4ef4a55c Extracting 7B
+ 438d4ef4a55c Extracting 7B
+ 438d4ef4a55c Extracting 7B
+ 438d4ef4a55c Extracting 7B
+ 438d4ef4a55c Extracting 7B
+ 438d4ef4a55c Extracting 7B
+ 438d4ef4a55c Extracting 7B
+ 438d4ef4a55c Extracting 7B
+ 438d4ef4a55c Extracting 7B
+ 438d4ef4a55c Extracting 8B
+ 438d4ef4a55c Extracting 8B
+ 438d4ef4a55c Extracting 8B
+ f12ee8b356b1 Pull complete 0B
+ 438d4ef4a55c Pull complete 0B
+ Image mongo:latest Pulled 
+
+real	1m6.062s
+user	0m0.086s
+sys	0m0.075s

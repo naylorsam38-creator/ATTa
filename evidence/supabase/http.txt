@@ -1,0 +1,5 @@
+401 / (no auth)
+307 / (basic auth)
+200 /auth/v1/health
+403 /rest/v1/
+200 /storage/v1/status

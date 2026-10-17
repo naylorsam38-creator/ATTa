@@ -1,0 +1,8 @@
+logged in: http://localhost:8000/cloud/workspace/0/apps
+--- clean visit guide
+console: Failed to load resource: the server responded with a status of 400 (Bad Request)
+PAGEERROR: Object {"name":""}
+400 GET http://localhost:8000/builder/api/v1/teams/ILAfx4p1C7d0/resources/ILAfx4p1C7dZ/meta body={"errorCode":400,"errorFlag":"ERROR_FLAG_VALIDATE_REQUEST_BODY_FAILED","errorMessage":"get resource meta info error: failed to connect to `host=onboarding-postgres01v.illacloud.com user=illa database=
+--- create app
+buttons: Upgrade | Create new | Edit
+after create: http://localhost:8000/cloud/workspace/0/apps title=ILLA Cloud

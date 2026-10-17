@@ -1,0 +1,182 @@
+{
+  "startUrl": "http://localhost:8000/",
+  "origin": "http://localhost:8000",
+  "pages": [
+    {
+      "url": "http://localhost:8000/",
+      "finalUrl": "http://localhost:8000/cloud/login",
+      "status": 200,
+      "title": "ILLA Cloud",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/cloud/workspace/0/apps",
+      "finalUrl": "http://localhost:8000/cloud/workspace/0/apps",
+      "status": 200,
+      "title": "ILLA Cloud",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/cloud/workspace/0/resources",
+      "finalUrl": "http://localhost:8000/cloud/workspace/0/resources",
+      "status": 200,
+      "title": "ILLA Cloud",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/build/0/guide?token=<redacted-jwt>",
+      "finalUrl": "http://localhost:8000/build/0/guide",
+      "status": 200,
+      "title": "Loading...",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/cloud/setting",
+      "finalUrl": "http://localhost:8000/cloud/setting/account",
+      "status": 200,
+      "title": "ILLA Cloud",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/cloud",
+      "finalUrl": "http://localhost:8000/cloud/workspace/0/apps",
+      "status": 200,
+      "title": "ILLA Cloud",
+      "error": null
+    }
+  ],
+  "consoleErrors": [
+    {
+      "url": "http://localhost:8000/build/0/guide",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    }
+  ],
+  "pageErrors": [
+    {
+      "url": "http://localhost:8000/build/0/guide",
+      "text": "Object"
+    }
+  ],
+  "failedRequests": [],
+  "badResponses": [
+    {
+      "url": "http://localhost:8000/builder/api/v1/teams/ILAfx4p1C7d0/resources/ILAfx4p1C7dZ/meta",
+      "status": 400,
+      "method": "GET"
+    }
+  ],
+  "clicks": [
+    {
+      "page": "http://localhost:8000/cloud/login",
+      "text": "Cancel",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps"
+    },
+    {
+      "page": "http://localhost:8000/cloud/login",
+      "text": "Upgrade",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps"
+    },
+    {
+      "page": "http://localhost:8000/cloud/login",
+      "text": "Create new",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps"
+    },
+    {
+      "page": "http://localhost:8000/cloud/login",
+      "text": "Create new",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps"
+    },
+    {
+      "page": "http://localhost:8000/cloud/workspace/0/apps",
+      "text": "Upgrade",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps"
+    },
+    {
+      "page": "http://localhost:8000/cloud/workspace/0/apps",
+      "text": "Create new",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps"
+    },
+    {
+      "page": "http://localhost:8000/cloud/workspace/0/apps",
+      "text": "",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps"
+    },
+    {
+      "page": "http://localhost:8000/cloud/workspace/0/apps",
+      "text": "",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps"
+    },
+    {
+      "page": "http://localhost:8000/cloud/workspace/0/resources",
+      "text": "Upgrade",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/resources"
+    },
+    {
+      "page": "http://localhost:8000/cloud/workspace/0/resources",
+      "text": "Create new",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/resources"
+    },
+    {
+      "page": "http://localhost:8000/cloud/workspace/0/resources",
+      "text": "Create new",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/resources"
+    },
+    {
+      "page": "http://localhost:8000/build/0/guide",
+      "text": "Preview",
+      "afterUrl": "http://localhost:8000/build/0/guide"
+    },
+    {
+      "page": "http://localhost:8000/cloud/workspace/0/apps",
+      "text": "Upgrade",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps"
+    },
+    {
+      "page": "http://localhost:8000/cloud/workspace/0/apps",
+      "text": "Create new",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps"
+    },
+    {
+      "page": "http://localhost:8000/cloud/workspace/0/apps",
+      "text": "",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps"
+    },
+    {
+      "page": "http://localhost:8000/cloud/workspace/0/apps",
+      "text": "",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps"
+    },
+    {
+      "page": "http://localhost:8000/cloud/workspace/0/apps",
+      "text": "",
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps"
+    }
+  ],
+  "skipped": [
+    {
+      "reason": "destructive-looking button",
+      "text": "Log out",
+      "page": "http://localhost:8000/cloud/setting/account"
+    }
+  ],
+  "forms": [
+    {
+      "page": "http://localhost:8000/cloud/login",
+      "submitLabel": "Sign in",
+      "filled": 2,
+      "afterUrl": "http://localhost:8000/cloud/workspace/0/apps",
+      "validation": []
+    },
+    {
+      "page": "http://localhost:8000/cloud/setting/account",
+      "submitLabel": "Save Changes",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/cloud/setting/account",
+      "validation": []
+    }
+  ],
+  "notes": [
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded."
+  ],
+  "unvisitedQueue": []
+}

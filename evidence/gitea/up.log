@@ -1,0 +1,12 @@
+ Network t-gitea_gitea Creating 
+ Network t-gitea_gitea Creating 
+ Network t-gitea_gitea Created 
+ Network t-gitea_gitea Created 
+ Container gitea Creating 
+ Container gitea Created 
+ Container gitea Starting 
+ Container gitea Started 
+
+real	0m0.695s
+user	0m0.089s
+sys	0m0.035s

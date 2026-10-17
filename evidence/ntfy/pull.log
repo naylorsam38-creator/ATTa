@@ -1,0 +1,18 @@
+Using default tag: latest
+latest: Pulling from binwiederhier/ntfy
+9eacfaea77f4: Pulling fs layer
+e2de96513ba9: Pulling fs layer
+56b7952e3ab9: Pulling fs layer
+56b7952e3ab9: Download complete
+e2de96513ba9: Download complete
+56b7952e3ab9: Pull complete
+e2de96513ba9: Pull complete
+9eacfaea77f4: Download complete
+9eacfaea77f4: Pull complete
+Digest: sha256:91bb7fa607b02006c119bb4a31032923b414a713a032ecb40f0c5d6bfd5b7e40
+Status: Downloaded newer image for binwiederhier/ntfy:latest
+docker.io/binwiederhier/ntfy:latest
+
+real	0m5.014s
+user	0m0.023s
+sys	0m0.021s

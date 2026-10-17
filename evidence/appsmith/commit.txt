@@ -1,0 +1,3 @@
+commit=fd78f12c57caf42f1e6d1ce2b4860b3bbca6cab2
+date=2026-10-16T10:24:35-05:00
+subject=test(cypress): retry the CommunityIssues row read after Save (#42407)

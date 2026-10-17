@@ -1,0 +1,8 @@
+APP_NAME=Mixpost
+APP_DEBUG=false
+APP_DOMAIN=localhost
+APP_URL=http://localhost:9000
+DB_DATABASE=mixpost_db
+DB_USERNAME=mixpost_user
+DB_PASSWORD=FakeDbPass2026
+SSL_EMAIL=user@example.com

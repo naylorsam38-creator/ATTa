@@ -1,0 +1,1051 @@
+{
+  "startUrl": "https://localhost:9200/",
+  "origin": "https://localhost:9200",
+  "pages": [
+    {
+      "url": "https://localhost:9200/",
+      "finalUrl": "https://localhost:9200/signin/v1/identifier?client_id=web&code_challenge=r6Y8SxTarogZvMq4MvM_R-xt0gDjIjiZIoLs77d7MxM&code_challenge_method=S256&flow=oidc&redirect_uri=https%3A%2F%2Flocalhost%3A9200%2Foidc-callback.html&response_mode=query&response_type=code&scope=openid+profile+email&state=a4d70659fb834be8bdb428fa78aa45e9",
+      "status": 200,
+      "title": "Sign in - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/spaces/personal/admin?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "finalUrl": "https://localhost:9200/files/spaces/personal/admin?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c",
+      "status": 200,
+      "title": "Personal - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "finalUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "status": 200,
+      "title": "Search results - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/spaces/personal",
+      "finalUrl": "https://localhost:9200/files/spaces/personal/admin?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c",
+      "status": 200,
+      "title": "Personal - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/favorites",
+      "finalUrl": "https://localhost:9200/files/favorites?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "status": 200,
+      "title": "Favorite files - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/shares",
+      "finalUrl": "https://localhost:9200/files/shares/with-me?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "status": 200,
+      "title": "Files shared with me - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/spaces/projects",
+      "finalUrl": "https://localhost:9200/files/spaces/projects?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2",
+      "status": 200,
+      "title": "Spaces - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/trash/overview",
+      "finalUrl": "https://localhost:9200/files/trash/personal/admin?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "status": 200,
+      "title": "Personal - Deleted files - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "finalUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "status": 200,
+      "title": "Search results - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "finalUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "status": 200,
+      "title": "Search results - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/shares/with-others",
+      "finalUrl": "https://localhost:9200/files/shares/with-others?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "status": 200,
+      "title": "Files shared with others - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/shares/via-link",
+      "finalUrl": "https://localhost:9200/files/shares/via-link?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "status": 200,
+      "title": "Files shared via link - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "finalUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "status": 200,
+      "title": "Search results - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "finalUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "status": 200,
+      "title": "Search results - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "finalUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "status": 200,
+      "title": "Search results - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "finalUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "status": 200,
+      "title": "Search results - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/shares/with-me",
+      "finalUrl": "https://localhost:9200/files/shares/with-me?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "status": 200,
+      "title": "Files shared with me - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "finalUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "status": 200,
+      "title": "Search results - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "finalUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "status": 200,
+      "title": "Search results - OpenCloud",
+      "error": null
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "finalUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "status": 200,
+      "title": "Search results - OpenCloud",
+      "error": null
+    }
+  ],
+  "consoleErrors": [
+    {
+      "url": "https://localhost:9200/files/spaces/personal/admin?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/spaces/personal/admin?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/favorites?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/favorites?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/shares/with-me?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/shares/with-me?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/spaces/projects?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/spaces/projects?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2",
+      "text": "RangeError: Invalid language tag: en-US@posix\n    at new Collator (<anonymous>)\n    at LC (https://localhost:9200/js/chunks/Yjs-BgeKXdzh.mjs:11:41830)\n    at jn.fn (https://localhost:9200/js/chunks/Yjs-BgeKXdzh.mjs:11:40996)\n    at nt (https://localhost:9200/js/chunks/design-system-components-CjDPQ0-s.mjs:1:7859)\n    at get value (https://localhost:9200/js/chunks/design-system-components-CjDPQ0-s.mjs:1:20097)\n    at P (https://localhost:9200/js/chunks/design-system-components-CjDPQ0-s.mjs:1:1830"
+    },
+    {
+      "url": "https://localhost:9200/files/spaces/projects?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/trash/overview",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/trash/personal/admin?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c",
+      "text": "RangeError: Invalid language tag: en-US@posix\n    at new Collator (<anonymous>)\n    at LC (https://localhost:9200/js/chunks/Yjs-BgeKXdzh.mjs:11:41830)\n    at jn.fn (https://localhost:9200/js/chunks/Yjs-BgeKXdzh.mjs:11:40996)\n    at nt (https://localhost:9200/js/chunks/design-system-components-CjDPQ0-s.mjs:1:7859)\n    at get value (https://localhost:9200/js/chunks/design-system-components-CjDPQ0-s.mjs:1:20097)\n    at P (https://localhost:9200/js/chunks/design-system-components-CjDPQ0-s.mjs:1:1830"
+    },
+    {
+      "url": "https://localhost:9200/files/trash/personal/admin?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c",
+      "text": "TypeError: Failed to execute 'observe' on 'ResizeObserver': parameter 1 is not of type 'Element'.\n    at https://localhost:9200/js/chunks/src-DYVj7rPu.mjs:2:34977\n    at https://localhost:9200/js/chunks/design-system-components-CjDPQ0-s.mjs:3:7935\n    at Jn (https://localhost:9200/js/chunks/design-system-components-CjDPQ0-s.mjs:1:23415)\n    at Yn (https://localhost:9200/js/chunks/design-system-components-CjDPQ0-s.mjs:1:23483)\n    at t.__weh (https://localhost:9200/js/chunks/design-system-compone"
+    },
+    {
+      "url": "https://localhost:9200/files/trash/personal/admin?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/shares/with-others",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/shares/with-others?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/shares/via-link",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/shares/via-link?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Failed to load theme 'TypeError: Failed to fetch'"
+    },
+    {
+      "url": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    }
+  ],
+  "pageErrors": [],
+  "failedRequests": [
+    {
+      "url": "https://localhost:9200/signin/v1/identifier/_/authorize?client_id=web&code_challenge=r6Y8SxTarogZvMq4MvM_R-xt0gDjIjiZIoLs77d7MxM&code_challenge_method=S256&prompt=none&redirect_uri=https%3A%2F%2Flocalhost%3A9200%2Foidc-callback.html&response_mode=query&response_type=code&scope=openid%20profile%20ema",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://localhost:9200/ocs/v2.php/apps/notifications/api/v1/notifications/sse",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://localhost:9200/themes/opencloud/theme.json",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://localhost:9200/app/list",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://localhost:9200/ocs/v1.php/cloud/capabilities?format=json",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://localhost:9200/.well-known/webfinger?resource=https%3A%2F%2Flocalhost%3A9200%2F&platform=web&rel=http%3A%2F%2Fopenid.net%2Fspecs%2Fconnect%2F1.0%2Fissuer",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://localhost:9200/config.json",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "badResponses": [
+    {
+      "url": "https://localhost:9200/graph/v1.0/users/fb081e6e-6453-4840-ad8d-32a25f63155b/photo/$value",
+      "status": 404,
+      "method": "GET"
+    }
+  ],
+  "clicks": [
+    {
+      "page": "https://localhost:9200/signin/v1/identifier?client_id=web&code_challenge=r6Y8SxTarogZvMq4MvM_R-xt0gDjIjiZIoLs77d7MxM&code_challenge_method=S256&flow=oidc&redirect_uri=https%3A%2F%2Flocalhost%3A9200%2Foidc-callback.html&response_mode=query&response_type=code&scope=openid+profile+email&state=a4d70659fb834be8bdb428fa78aa45e9",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/spaces/personal/admin?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c"
+    },
+    {
+      "page": "https://localhost:9200/signin/v1/identifier?client_id=web&code_challenge=r6Y8SxTarogZvMq4MvM_R-xt0gDjIjiZIoLs77d7MxM&code_challenge_method=S256&flow=oidc&redirect_uri=https%3A%2F%2Flocalhost%3A9200%2Foidc-callback.html&response_mode=query&response_type=code&scope=openid+profile+email&state=a4d70659fb834be8bdb428fa78aa45e9",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/spaces/personal/admin?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/spaces/personal/admin?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c"
+    },
+    {
+      "page": "https://localhost:9200/files/spaces/personal/admin?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "Notifications",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "Open sidebar to view details",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "Application Switcher",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "A",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "Switch view mode",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "Display customization options of the files list",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "Type",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "Last Modified",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk",
+      "text": "Title only",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/spaces/personal/admin?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/spaces/personal/admin?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c"
+    },
+    {
+      "page": "https://localhost:9200/files/spaces/personal/admin?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/favorites?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/favorites?items-per-page=100&view-mode=resource-tiles&tiles-size=2"
+    },
+    {
+      "page": "https://localhost:9200/files/favorites?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/shares/with-me?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/shares/with-me?items-per-page=100&view-mode=resource-tiles&tiles-size=2"
+    },
+    {
+      "page": "https://localhost:9200/files/shares/with-me?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/spaces/projects?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/spaces/projects?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2"
+    },
+    {
+      "page": "https://localhost:9200/files/spaces/projects?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/trash/personal/admin?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/trash/personal/admin?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2"
+    },
+    {
+      "page": "https://localhost:9200/files/trash/personal/admin?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "Notifications",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "Close sidebar to hide details",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "Application Switcher",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "A",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "Switch view mode",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "Display customization options of the files list",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "Type",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "Last Modified",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&q_titleOnly=true&sort-by=name&sort-dir=asc",
+      "text": "Title only",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Notifications",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Open sidebar to view details",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Application Switcher",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "A",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Switch view mode",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Display customization options of the files list",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Type",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Last Modified",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Title only",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/shares/with-others?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/shares/with-others?items-per-page=100&view-mode=resource-tiles&tiles-size=2"
+    },
+    {
+      "page": "https://localhost:9200/files/shares/with-others?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/shares/via-link?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/shares/via-link?items-per-page=100&view-mode=resource-tiles&tiles-size=2"
+    },
+    {
+      "page": "https://localhost:9200/files/shares/via-link?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Notifications",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Close sidebar to hide details",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Application Switcher",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "A",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Switch view mode",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Display customization options of the files list",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Type",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Last Modified",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Title only",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Notifications",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Open sidebar to view details",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Application Switcher",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "A",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Switch view mode",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Display customization options of the files list",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Type",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Last Modified",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk",
+      "text": "Title only",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Notifications",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Close sidebar to hide details",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Application Switcher",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "A",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Switch view mode",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Display customization options of the files list",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Type",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Last Modified",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc",
+      "text": "Title only",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Notifications",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Open sidebar to view details",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Application Switcher",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "A",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Switch view mode",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Display customization options of the files list",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Type",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Last Modified",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Title only",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/shares/with-me?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/shares/with-me?items-per-page=100&view-mode=resource-tiles&tiles-size=2"
+    },
+    {
+      "page": "https://localhost:9200/files/shares/with-me?items-per-page=100&view-mode=resource-tiles&tiles-size=2",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Notifications",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Close sidebar to hide details",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Application Switcher",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "A",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Switch view mode",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Display customization options of the files list",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Type",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Last Modified",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Title only",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&sort-by=name&sort-dir=asc&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Notifications",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Open sidebar to view details",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Application Switcher",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "A",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Switch view mode",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Display customization options of the files list",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Type",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Last Modified",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk&q_titleOnly=true",
+      "text": "Title only",
+      "afterUrl": "https://localhost:9200/files/search/list?fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c&sort-by=name&sort-dir=asc&items-per-page=100&view-mode=resource-tiles&tiles-size=2&term=&useScope=false&provider=files.sdk"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "All files",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Notifications",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Close sidebar to hide details",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Application Switcher",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "A",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Search",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Switch view mode",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Display customization options of the files list",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Type",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Last Modified",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true"
+    },
+    {
+      "page": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc&q_titleOnly=true",
+      "text": "Title only",
+      "afterUrl": "https://localhost:9200/files/search/list?items-per-page=100&view-mode=resource-tiles&tiles-size=2&fileId=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&term=&scope=b0284a90-96e7-498d-a132-379c6f275ed2%24b8d24ce7-c257-4865-8e49-420cdb01f73c%21b8d24ce7-c257-4865-8e49-420cdb01f73c&useScope=false&provider=files.sdk&sort-by=name&sort-dir=asc"
+    }
+  ],
+  "skipped": [],
+  "forms": [
+    {
+      "page": "https://localhost:9200/signin/v1/identifier?client_id=web&code_challenge=r6Y8SxTarogZvMq4MvM_R-xt0gDjIjiZIoLs77d7MxM&code_challenge_method=S256&flow=oidc&redirect_uri=https%3A%2F%2Flocalhost%3A9200%2Foidc-callback.html&response_mode=query&response_type=code&scope=openid+profile+email&state=a4d70659fb834be8bdb428fa78aa45e9",
+      "submitLabel": "Log in",
+      "filled": 2,
+      "afterUrl": "https://localhost:9200/files/spaces/personal",
+      "validation": []
+    }
+  ],
+  "notes": [],
+  "unvisitedQueue": []
+}

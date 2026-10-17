@@ -1,0 +1,583 @@
+{
+  "startUrl": "http://localhost:9000/mixpost",
+  "origin": "http://localhost:9000",
+  "pages": [
+    {
+      "url": "http://localhost:9000/mixpost",
+      "finalUrl": "http://localhost:9000/mixpost/login",
+      "status": 200,
+      "title": "Mixpost Auth - Mixpost",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/",
+      "finalUrl": "http://localhost:9000/mixpost",
+      "status": 200,
+      "title": "Dashboard - Mixpost - Mixpost",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/mixpost/accounts",
+      "finalUrl": "http://localhost:9000/mixpost/accounts",
+      "status": 200,
+      "title": "Social Accounts - Mixpost - Mixpost",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/mixpost/posts/create",
+      "finalUrl": "http://localhost:9000/mixpost/posts/create",
+      "status": 200,
+      "title": "Your post - Mixpost - Mixpost",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/mixpost/posts",
+      "finalUrl": "http://localhost:9000/mixpost/posts",
+      "status": 200,
+      "title": "Posts - Mixpost - Mixpost",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/mixpost/calendar",
+      "finalUrl": "http://localhost:9000/mixpost/calendar",
+      "status": 200,
+      "title": "Schedule - Mixpost - Mixpost",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/mixpost/media",
+      "finalUrl": "http://localhost:9000/mixpost/media",
+      "status": 200,
+      "title": "Media Library - Mixpost - Mixpost",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/mixpost/services",
+      "finalUrl": "http://localhost:9000/mixpost/services",
+      "status": 200,
+      "title": "Third Party Services - Mixpost - Mixpost",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/mixpost/settings",
+      "finalUrl": "http://localhost:9000/mixpost/settings",
+      "status": 200,
+      "title": "Settings - Mixpost - Mixpost",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/mixpost/system/status",
+      "finalUrl": "http://localhost:9000/mixpost/system/status",
+      "status": 200,
+      "title": "Status - Mixpost - Mixpost",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/mixpost/system/logs",
+      "finalUrl": "http://localhost:9000/mixpost/system/logs",
+      "status": 200,
+      "title": "System Logs - Mixpost - Mixpost",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/horizon",
+      "finalUrl": "http://localhost:9000/horizon/dashboard",
+      "status": 200,
+      "title": "Horizon - Dashboard",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/mixpost/posts?status=draft",
+      "finalUrl": "http://localhost:9000/mixpost/posts?status=draft",
+      "status": 200,
+      "title": "Posts - Mixpost - Mixpost",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/mixpost/calendar/2026-10-17",
+      "finalUrl": "http://localhost:9000/mixpost/calendar/2026-10-17",
+      "status": 200,
+      "title": "Schedule - Mixpost - Mixpost",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/horizon/",
+      "finalUrl": "http://localhost:9000/horizon/dashboard",
+      "status": 200,
+      "title": "Horizon - Dashboard",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/horizon/monitoring",
+      "finalUrl": "http://localhost:9000/horizon/monitoring",
+      "status": 200,
+      "title": "Horizon - Monitoring",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/horizon/metrics",
+      "finalUrl": "http://localhost:9000/horizon/metrics/jobs",
+      "status": 200,
+      "title": "Horizon - Metrics",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/horizon/batches",
+      "finalUrl": "http://localhost:9000/horizon/batches",
+      "status": 200,
+      "title": "Horizon - Batches",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/horizon/jobs/pending",
+      "finalUrl": "http://localhost:9000/horizon/jobs/pending",
+      "status": 200,
+      "title": "Horizon - Pending Jobs",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/horizon/jobs/completed",
+      "finalUrl": "http://localhost:9000/horizon/jobs/completed",
+      "status": 200,
+      "title": "Horizon - Completed Jobs",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/horizon/jobs/silenced",
+      "finalUrl": "http://localhost:9000/horizon/jobs/silenced",
+      "status": 200,
+      "title": "Horizon - Silenced Jobs",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/horizon/failed",
+      "finalUrl": "http://localhost:9000/horizon/failed",
+      "status": 200,
+      "title": "Horizon - Failed Jobs",
+      "error": null
+    },
+    {
+      "url": "http://localhost:9000/mixpost/calendar/2026-09-01",
+      "finalUrl": "http://localhost:9000/mixpost/calendar/2026-09-01",
+      "status": 200,
+      "title": "Schedule - Mixpost - Mixpost",
+      "error": null
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "badResponses": [],
+  "clicks": [
+    {
+      "page": "http://localhost:9000/mixpost/login",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/login",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/login",
+      "text": "ADD ACCOUNTS",
+      "afterUrl": "http://localhost:9000/mixpost/accounts"
+    },
+    {
+      "page": "http://localhost:9000/mixpost",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost"
+    },
+    {
+      "page": "http://localhost:9000/mixpost",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost"
+    },
+    {
+      "page": "http://localhost:9000/mixpost",
+      "text": "ADD ACCOUNTS",
+      "afterUrl": "http://localhost:9000/mixpost/accounts"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/accounts",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost/accounts"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/accounts",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost/accounts"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/accounts",
+      "text": "CONFIGURE SERVICES",
+      "afterUrl": "http://localhost:9000/mixpost/services"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts/create",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost/posts/create"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts/create",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost/posts/create"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts/create",
+      "text": "",
+      "afterUrl": "http://localhost:9000/mixpost/posts/create"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts/create",
+      "text": "",
+      "afterUrl": "http://localhost:9000/mixpost/posts/create"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts/create",
+      "text": "",
+      "afterUrl": "http://localhost:9000/mixpost/posts/create"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts/create",
+      "text": "",
+      "afterUrl": "http://localhost:9000/mixpost/posts/create"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts/create",
+      "text": "",
+      "afterUrl": "http://localhost:9000/mixpost/posts/create"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts/create",
+      "text": "",
+      "afterUrl": "http://localhost:9000/mixpost/posts/create"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts/create",
+      "text": "",
+      "afterUrl": "http://localhost:9000/mixpost/posts/create"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts/create",
+      "text": "",
+      "afterUrl": "http://localhost:9000/mixpost/posts/create"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts/create",
+      "text": "",
+      "afterUrl": "http://localhost:9000/mixpost/posts/create"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts/create",
+      "text": "",
+      "afterUrl": "http://localhost:9000/mixpost/posts/create"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost/posts"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost/posts"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts",
+      "text": "FILTERS",
+      "afterUrl": "http://localhost:9000/mixpost/posts"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts",
+      "text": "All",
+      "afterUrl": "http://localhost:9000/mixpost/posts"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts",
+      "text": "Drafts",
+      "afterUrl": "http://localhost:9000/mixpost/posts?status=draft"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/calendar",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost/calendar"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/calendar",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost/calendar"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/calendar",
+      "text": "TODAY",
+      "afterUrl": "http://localhost:9000/mixpost/calendar/2026-10-17"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/media",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost/media"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/media",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost/media"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/media",
+      "text": "Stock Photos",
+      "afterUrl": "http://localhost:9000/mixpost/media"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/media",
+      "text": "GIFs",
+      "afterUrl": "http://localhost:9000/mixpost/media"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/services",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost/services"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/services",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost/services"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/services",
+      "text": "Facebook",
+      "afterUrl": "http://localhost:9000/mixpost/services"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/services",
+      "text": "X",
+      "afterUrl": "http://localhost:9000/mixpost/services"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/services",
+      "text": "Unsplash",
+      "afterUrl": "http://localhost:9000/mixpost/services"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/services",
+      "text": "Tenor",
+      "afterUrl": "http://localhost:9000/mixpost/services"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/settings",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost/settings"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/settings",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost/settings"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/settings",
+      "text": "SAVE SETTINGS",
+      "afterUrl": "http://localhost:9000/mixpost/settings"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/system/status",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost/system/status"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/system/status",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost/system/status"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/system/status",
+      "text": "COPY INFO",
+      "afterUrl": "http://localhost:9000/mixpost/system/status"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/system/logs",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost/system/logs"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/system/logs",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost/system/logs"
+    },
+    {
+      "page": "http://localhost:9000/horizon/dashboard",
+      "text": "Switch Theme",
+      "afterUrl": "http://localhost:9000/horizon/dashboard"
+    },
+    {
+      "page": "http://localhost:9000/horizon/dashboard",
+      "text": "Auto Load New Entries",
+      "afterUrl": "http://localhost:9000/horizon/dashboard"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts?status=draft",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost/posts?status=draft"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts?status=draft",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost/posts?status=draft"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts?status=draft",
+      "text": "FILTERS",
+      "afterUrl": "http://localhost:9000/mixpost/posts?status=draft"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/posts?status=draft",
+      "text": "All",
+      "afterUrl": "http://localhost:9000/mixpost/posts"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/calendar/2026-10-17",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost/calendar/2026-10-17"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/calendar/2026-10-17",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost/calendar/2026-10-17"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/calendar/2026-10-17",
+      "text": "TODAY",
+      "afterUrl": "http://localhost:9000/mixpost/calendar/2026-10-17"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/calendar/2026-10-17",
+      "text": "",
+      "afterUrl": "http://localhost:9000/mixpost/calendar/2026-09-01"
+    },
+    {
+      "page": "http://localhost:9000/horizon/dashboard",
+      "text": "Switch Theme",
+      "afterUrl": "http://localhost:9000/horizon/dashboard"
+    },
+    {
+      "page": "http://localhost:9000/horizon/dashboard",
+      "text": "Auto Load New Entries",
+      "afterUrl": "http://localhost:9000/horizon/dashboard"
+    },
+    {
+      "page": "http://localhost:9000/horizon/monitoring",
+      "text": "Switch Theme",
+      "afterUrl": "http://localhost:9000/horizon/monitoring"
+    },
+    {
+      "page": "http://localhost:9000/horizon/monitoring",
+      "text": "Auto Load New Entries",
+      "afterUrl": "http://localhost:9000/horizon/monitoring"
+    },
+    {
+      "page": "http://localhost:9000/horizon/monitoring",
+      "text": "Monitor Tag",
+      "afterUrl": "http://localhost:9000/horizon/monitoring"
+    },
+    {
+      "page": "http://localhost:9000/horizon/metrics/jobs",
+      "text": "Switch Theme",
+      "afterUrl": "http://localhost:9000/horizon/metrics/jobs"
+    },
+    {
+      "page": "http://localhost:9000/horizon/metrics/jobs",
+      "text": "Auto Load New Entries",
+      "afterUrl": "http://localhost:9000/horizon/metrics/jobs"
+    },
+    {
+      "page": "http://localhost:9000/horizon/batches",
+      "text": "Switch Theme",
+      "afterUrl": "http://localhost:9000/horizon/batches"
+    },
+    {
+      "page": "http://localhost:9000/horizon/batches",
+      "text": "Auto Load New Entries",
+      "afterUrl": "http://localhost:9000/horizon/batches"
+    },
+    {
+      "page": "http://localhost:9000/horizon/jobs/pending",
+      "text": "Switch Theme",
+      "afterUrl": "http://localhost:9000/horizon/jobs/pending"
+    },
+    {
+      "page": "http://localhost:9000/horizon/jobs/pending",
+      "text": "Auto Load New Entries",
+      "afterUrl": "http://localhost:9000/horizon/jobs/pending"
+    },
+    {
+      "page": "http://localhost:9000/horizon/jobs/completed",
+      "text": "Switch Theme",
+      "afterUrl": "http://localhost:9000/horizon/jobs/completed"
+    },
+    {
+      "page": "http://localhost:9000/horizon/jobs/completed",
+      "text": "Auto Load New Entries",
+      "afterUrl": "http://localhost:9000/horizon/jobs/completed"
+    },
+    {
+      "page": "http://localhost:9000/horizon/jobs/silenced",
+      "text": "Switch Theme",
+      "afterUrl": "http://localhost:9000/horizon/jobs/silenced"
+    },
+    {
+      "page": "http://localhost:9000/horizon/jobs/silenced",
+      "text": "Auto Load New Entries",
+      "afterUrl": "http://localhost:9000/horizon/jobs/silenced"
+    },
+    {
+      "page": "http://localhost:9000/horizon/failed",
+      "text": "Switch Theme",
+      "afterUrl": "http://localhost:9000/horizon/failed"
+    },
+    {
+      "page": "http://localhost:9000/horizon/failed",
+      "text": "Auto Load New Entries",
+      "afterUrl": "http://localhost:9000/horizon/failed"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/calendar/2026-09-01",
+      "text": "Admin",
+      "afterUrl": "http://localhost:9000/mixpost/calendar/2026-09-01"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/calendar/2026-09-01",
+      "text": "Unlock Pro Features",
+      "afterUrl": "http://localhost:9000/mixpost/calendar/2026-09-01"
+    },
+    {
+      "page": "http://localhost:9000/mixpost/calendar/2026-09-01",
+      "text": "TODAY",
+      "afterUrl": "http://localhost:9000/mixpost/calendar/2026-10-17"
+    }
+  ],
+  "skipped": [
+    {
+      "reason": "destructive-looking button",
+      "text": "Upload",
+      "page": "http://localhost:9000/mixpost/media"
+    }
+  ],
+  "forms": [
+    {
+      "page": "http://localhost:9000/mixpost/login",
+      "submitLabel": "LOG IN",
+      "filled": 3,
+      "afterUrl": "http://localhost:9000/mixpost",
+      "validation": []
+    },
+    {
+      "page": "http://localhost:9000/mixpost/services",
+      "submitLabel": "",
+      "filled": 4,
+      "afterUrl": "http://localhost:9000/mixpost/services",
+      "validation": []
+    }
+  ],
+  "notes": [],
+  "unvisitedQueue": []
+}

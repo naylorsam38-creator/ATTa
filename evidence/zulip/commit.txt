@@ -1,0 +1,3 @@
+commit=e45560dfcfc40c786c689b454ef6f4e7dc0f3eaf
+date=2026-10-16T23:34:48+08:00
+subject=zilencer: Sync communities directory fields from uploaded realm data.

@@ -1,0 +1,18 @@
+ Network t-archivebox_default Creating 
+ Volume t-archivebox_tmp Creating 
+ Volume t-archivebox_tmp Creating 
+ Network t-archivebox_default Creating 
+ Volume t-archivebox_tmp Created 
+ Volume t-archivebox_tmp Created 
+ Network t-archivebox_default Created 
+ Network t-archivebox_default Created 
+ Container t-archivebox-archivebox-1 Creating 
+ Container t-archivebox-archivebox-1 Created 
+ Container t-archivebox-archivebox-1 Starting 
+ Container t-archivebox-archivebox-1 Started 
+ Container t-archivebox-archivebox-1 Waiting 
+ Container t-archivebox-archivebox-1 Healthy 
+
+real	0m32.388s
+user	0m0.196s
+sys	0m0.054s

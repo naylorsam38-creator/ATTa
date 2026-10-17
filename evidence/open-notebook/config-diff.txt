@@ -1,0 +1,10 @@
+29,30c29,30
+<       - "8502:8502"  # Web UI
+<       - "5055:5055"  # REST API
+---
+>       - "127.0.0.1:8502:8502"  # Web UI
+>       - "127.0.0.1:5055:5055"  # REST API
+34c34
+<       - OPEN_NOTEBOOK_ENCRYPTION_KEY=change-me-to-a-secret-string
+---
+>       - OPEN_NOTEBOOK_ENCRYPTION_KEY=<generated-hex>

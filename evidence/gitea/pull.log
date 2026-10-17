@@ -1,0 +1,68 @@
+ Image docker.gitea.com/gitea:28.1.0 Pulling 
+ 7a9a36a82591 Pulling fs layer 0B
+ b13ced041cfb Pulling fs layer 0B
+ 959fa0791b9f Pulling fs layer 0B
+ e2de96513ba9 Pulling fs layer 0B
+ 6c4ef6e6857d Pulling fs layer 0B
+ b13ced041cfb Downloading 3.146MB
+ b13ced041cfb Downloading 6.291MB
+ 959fa0791b9f Download complete 0B
+ b13ced041cfb Downloading 8.389MB
+ e2de96513ba9 Downloading 2.097MB
+ e2de96513ba9 Download complete 0B
+ 6c4ef6e6857d Download complete 0B
+ 7a9a36a82591 Downloading 3.146MB
+ b13ced041cfb Downloading 11.53MB
+ e2de96513ba9 Extracting 1B
+ 44136fa355b3 Download complete 0B
+ 7a9a36a82591 Downloading 5.243MB
+ b13ced041cfb Downloading 14.68MB
+ e2de96513ba9 Extracting 1B
+ 7a9a36a82591 Downloading 7.34MB
+ b13ced041cfb Downloading 16.78MB
+ 351cb1fc3489 Download complete 0B
+ e2de96513ba9 Pull complete 0B
+ 7a9a36a82591 Downloading 10.49MB
+ b13ced041cfb Downloading 19.92MB
+ b13ced041cfb Download complete 0B
+ 7a9a36a82591 Downloading 12.58MB
+ b13ced041cfb Extracting 1B
+ 7a9a36a82591 Downloading 14.68MB
+ b13ced041cfb Extracting 1B
+ 7a9a36a82591 Downloading 16.78MB
+ b13ced041cfb Extracting 1B
+ 7a9a36a82591 Downloading 18.87MB
+ b13ced041cfb Extracting 1B
+ 7a9a36a82591 Downloading 20.97MB
+ b13ced041cfb Extracting 1B
+ 7a9a36a82591 Downloading 24.12MB
+ b13ced041cfb Extracting 1B
+ 7a9a36a82591 Downloading 26.21MB
+ 959fa0791b9f Pull complete 0B
+ 6c4ef6e6857d Pull complete 0B
+ b13ced041cfb Pull complete 0B
+ 7a9a36a82591 Downloading 28.31MB
+ 7a9a36a82591 Downloading 30.41MB
+ 7a9a36a82591 Downloading 32.51MB
+ 7a9a36a82591 Downloading 35.65MB
+ 7a9a36a82591 Downloading 37.75MB
+ 7a9a36a82591 Downloading 39.85MB
+ 7a9a36a82591 Downloading 42.99MB
+ 7a9a36a82591 Downloading 45.09MB
+ 7a9a36a82591 Download complete 0B
+ 7a9a36a82591 Extracting 1B
+ 7a9a36a82591 Extracting 1B
+ 7a9a36a82591 Extracting 1B
+ 7a9a36a82591 Extracting 1B
+ 7a9a36a82591 Extracting 1B
+ 7a9a36a82591 Extracting 1B
+ 7a9a36a82591 Extracting 1B
+ 7a9a36a82591 Extracting 1B
+ 7a9a36a82591 Extracting 1B
+ 7a9a36a82591 Extracting 1B
+ 7a9a36a82591 Pull complete 0B
+ Image docker.gitea.com/gitea:28.1.0 Pulled 
+
+real	0m4.043s
+user	0m0.083s
+sys	0m0.044s

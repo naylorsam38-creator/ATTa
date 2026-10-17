@@ -1,0 +1,61 @@
+{
+  "startUrl": "http://localhost/",
+  "origin": "http://localhost",
+  "pages": [
+    {
+      "url": "http://localhost/",
+      "finalUrl": "http://localhost/",
+      "status": 200,
+      "title": "ntfy",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings",
+      "finalUrl": "http://localhost/settings",
+      "status": 200,
+      "title": "ntfy",
+      "error": null
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://localhost/static/media/workbox-window.prod.es5-Bd17z0YL.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost/static/langs/en.json",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "badResponses": [],
+  "clicks": [
+    {
+      "page": "http://localhost/",
+      "text": "Close",
+      "afterUrl": "http://localhost/"
+    },
+    {
+      "page": "http://localhost/",
+      "text": "All notifications",
+      "afterUrl": "http://localhost/"
+    },
+    {
+      "page": "http://localhost/",
+      "text": "Settings",
+      "afterUrl": "http://localhost/settings"
+    },
+    {
+      "page": "http://localhost/settings",
+      "text": "All notifications",
+      "afterUrl": "http://localhost/"
+    }
+  ],
+  "skipped": [],
+  "forms": [],
+  "notes": [],
+  "unvisitedQueue": []
+}

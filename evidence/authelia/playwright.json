@@ -1,0 +1,140 @@
+{
+  "startUrl": "https://authelia.example.com/?rd=https%3A%2F%2Ftraefik.example.com%2F&rm=GET",
+  "origin": "https://authelia.example.com",
+  "pages": [
+    {
+      "url": "https://authelia.example.com/?rd=https%3A%2F%2Ftraefik.example.com%2F&rm=GET",
+      "finalUrl": "https://authelia.example.com/?rd=https%3A%2F%2Ftraefik.example.com%2F&rm=GET",
+      "status": 200,
+      "title": "Login - Authelia",
+      "error": null
+    },
+    {
+      "url": "https://authelia.example.com/reset-password/step1",
+      "finalUrl": "https://authelia.example.com/reset-password/step1",
+      "status": 200,
+      "title": "Login - Authelia",
+      "error": null
+    },
+    {
+      "url": "https://authelia.example.com/2fa/one-time-password",
+      "finalUrl": "https://authelia.example.com/2fa/one-time-password",
+      "status": 200,
+      "title": "Login - Authelia",
+      "error": null
+    },
+    {
+      "url": "https://authelia.example.com/settings/two-factor-authentication",
+      "finalUrl": "https://authelia.example.com/settings/two-factor-authentication",
+      "status": 200,
+      "title": "Settings - Authelia",
+      "error": null
+    }
+  ],
+  "consoleErrors": [
+    {
+      "url": "https://authelia.example.com/settings/two-factor-authentication",
+      "text": "Failed to load resource: the server responded with a status of 404 ()"
+    }
+  ],
+  "pageErrors": [],
+  "failedRequests": [
+    {
+      "url": "https://authelia.example.com/locales/en/portal.json",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://authelia.example.com/locales/en/consent.json",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://authelia.example.com/locales/en/settings.json",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://authelia.example.com/api/state",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "badResponses": [
+    {
+      "url": "https://authelia.example.com/api/secondfactor/totp",
+      "status": 404,
+      "method": "GET"
+    }
+  ],
+  "clicks": [
+    {
+      "page": "https://authelia.example.com/?rd=https%3A%2F%2Ftraefik.example.com%2F&rm=GET",
+      "text": "English",
+      "afterUrl": "https://traefik.example.com/dashboard/"
+    },
+    {
+      "page": "https://authelia.example.com/reset-password/step1",
+      "text": "CANCEL",
+      "afterUrl": "https://authelia.example.com/2fa/one-time-password"
+    },
+    {
+      "page": "https://authelia.example.com/2fa/one-time-password",
+      "text": "English",
+      "afterUrl": "https://authelia.example.com/2fa/one-time-password"
+    },
+    {
+      "page": "https://authelia.example.com/2fa/one-time-password",
+      "text": "T",
+      "afterUrl": "https://authelia.example.com/2fa/one-time-password"
+    },
+    {
+      "page": "https://authelia.example.com/2fa/one-time-password",
+      "text": "METHODS",
+      "afterUrl": "https://authelia.example.com/2fa/one-time-password"
+    },
+    {
+      "page": "https://authelia.example.com/2fa/one-time-password",
+      "text": "Register device",
+      "afterUrl": "https://authelia.example.com/settings/two-factor-authentication"
+    },
+    {
+      "page": "https://authelia.example.com/settings/two-factor-authentication",
+      "text": "open drawer",
+      "afterUrl": "https://authelia.example.com/settings/two-factor-authentication"
+    },
+    {
+      "page": "https://authelia.example.com/settings/two-factor-authentication",
+      "text": "ADD",
+      "afterUrl": "https://authelia.example.com/settings/two-factor-authentication"
+    },
+    {
+      "page": "https://authelia.example.com/settings/two-factor-authentication",
+      "text": "ADD",
+      "afterUrl": "https://authelia.example.com/settings/two-factor-authentication"
+    }
+  ],
+  "skipped": [
+    {
+      "reason": "destructive-looking button",
+      "text": "RESET",
+      "page": "https://authelia.example.com/reset-password/step1"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "LOGOUT",
+      "page": "https://authelia.example.com/2fa/one-time-password"
+    }
+  ],
+  "forms": [
+    {
+      "page": "https://authelia.example.com/?rd=https%3A%2F%2Ftraefik.example.com%2F&rm=GET",
+      "submitLabel": "SIGN IN",
+      "filled": 3,
+      "afterUrl": "https://authelia.example.com/?rd=https%3A%2F%2Ftraefik.example.com%2F&rm=GET",
+      "validation": []
+    }
+  ],
+  "notes": [],
+  "unvisitedQueue": []
+}

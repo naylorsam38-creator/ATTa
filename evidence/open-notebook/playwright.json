@@ -1,0 +1,367 @@
+{
+  "startUrl": "http://localhost:8502/",
+  "origin": "http://localhost:8502",
+  "pages": [
+    {
+      "url": "http://localhost:8502/",
+      "finalUrl": "http://localhost:8502/notebooks",
+      "status": 200,
+      "title": "Open Notebook",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8502/sources",
+      "finalUrl": "http://localhost:8502/sources",
+      "status": 200,
+      "title": "Open Notebook",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8502/search",
+      "finalUrl": "http://localhost:8502/search",
+      "status": 200,
+      "title": "Open Notebook",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8502/podcasts",
+      "finalUrl": "http://localhost:8502/podcasts",
+      "status": 200,
+      "title": "Open Notebook",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8502/settings/models",
+      "finalUrl": "http://localhost:8502/settings/models",
+      "status": 200,
+      "title": "Open Notebook",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8502/transformations",
+      "finalUrl": "http://localhost:8502/transformations",
+      "status": 200,
+      "title": "Open Notebook",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8502/settings",
+      "finalUrl": "http://localhost:8502/settings",
+      "status": 200,
+      "title": "Open Notebook",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8502/advanced",
+      "finalUrl": "http://localhost:8502/advanced",
+      "status": 200,
+      "title": "Open Notebook",
+      "error": null
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://localhost:5055/api/sources?limit=30&offset=0&sort_by=updated&sort_order=desc",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "badResponses": [],
+  "clicks": [
+    {
+      "page": "http://localhost:8502/notebooks",
+      "text": "",
+      "afterUrl": "http://localhost:8502/notebooks"
+    },
+    {
+      "page": "http://localhost:8502/notebooks",
+      "text": "",
+      "afterUrl": "http://localhost:8502/notebooks"
+    },
+    {
+      "page": "http://localhost:8502/notebooks",
+      "text": "Tile view",
+      "afterUrl": "http://localhost:8502/notebooks"
+    },
+    {
+      "page": "http://localhost:8502/notebooks",
+      "text": "List view",
+      "afterUrl": "http://localhost:8502/notebooks"
+    },
+    {
+      "page": "http://localhost:8502/notebooks",
+      "text": "New Notebook",
+      "afterUrl": "http://localhost:8502/notebooks"
+    },
+    {
+      "page": "http://localhost:8502/notebooks",
+      "text": "New Notebook",
+      "afterUrl": "http://localhost:8502/notebooks"
+    },
+    {
+      "page": "http://localhost:8502/sources",
+      "text": "",
+      "afterUrl": "http://localhost:8502/sources"
+    },
+    {
+      "page": "http://localhost:8502/sources",
+      "text": "New Source",
+      "afterUrl": "http://localhost:8502/sources"
+    },
+    {
+      "page": "http://localhost:8502/search",
+      "text": "",
+      "afterUrl": "http://localhost:8502/search"
+    },
+    {
+      "page": "http://localhost:8502/search",
+      "text": "Ask (beta)",
+      "afterUrl": "http://localhost:8502/search"
+    },
+    {
+      "page": "http://localhost:8502/search",
+      "text": "Search",
+      "afterUrl": "http://localhost:8502/search"
+    },
+    {
+      "page": "http://localhost:8502/podcasts",
+      "text": "",
+      "afterUrl": "http://localhost:8502/podcasts"
+    },
+    {
+      "page": "http://localhost:8502/podcasts",
+      "text": "Episodes",
+      "afterUrl": "http://localhost:8502/podcasts"
+    },
+    {
+      "page": "http://localhost:8502/podcasts",
+      "text": "Profiles",
+      "afterUrl": "http://localhost:8502/podcasts"
+    },
+    {
+      "page": "http://localhost:8502/settings/models",
+      "text": "",
+      "afterUrl": "http://localhost:8502/settings/models"
+    },
+    {
+      "page": "http://localhost:8502/settings/models",
+      "text": "Auto-assign Defaults",
+      "afterUrl": "http://localhost:8502/settings/models"
+    },
+    {
+      "page": "http://localhost:8502/settings/models",
+      "text": "Select a model",
+      "afterUrl": "http://localhost:8502/settings/models"
+    },
+    {
+      "page": "http://localhost:8502/settings/models",
+      "text": "Select a model",
+      "afterUrl": "http://localhost:8502/settings/models"
+    },
+    {
+      "page": "http://localhost:8502/settings/models",
+      "text": "None",
+      "afterUrl": "http://localhost:8502/settings/models"
+    },
+    {
+      "page": "http://localhost:8502/settings/models",
+      "text": "None",
+      "afterUrl": "http://localhost:8502/settings/models"
+    },
+    {
+      "page": "http://localhost:8502/settings/models",
+      "text": "Use fallback (chat default)",
+      "afterUrl": "http://localhost:8502/settings/models"
+    },
+    {
+      "page": "http://localhost:8502/settings/models",
+      "text": "Use fallback (chat default)",
+      "afterUrl": "http://localhost:8502/settings/models"
+    },
+    {
+      "page": "http://localhost:8502/settings/models",
+      "text": "Use fallback (chat default)",
+      "afterUrl": "http://localhost:8502/settings/models"
+    },
+    {
+      "page": "http://localhost:8502/settings/models",
+      "text": "Add Configuration",
+      "afterUrl": "http://localhost:8502/settings/models"
+    },
+    {
+      "page": "http://localhost:8502/settings/models",
+      "text": "Add Configuration",
+      "afterUrl": "http://localhost:8502/settings/models"
+    },
+    {
+      "page": "http://localhost:8502/settings/models",
+      "text": "Add Configuration",
+      "afterUrl": "http://localhost:8502/settings/models"
+    },
+    {
+      "page": "http://localhost:8502/transformations",
+      "text": "",
+      "afterUrl": "http://localhost:8502/transformations"
+    },
+    {
+      "page": "http://localhost:8502/transformations",
+      "text": "",
+      "afterUrl": "http://localhost:8502/transformations"
+    },
+    {
+      "page": "http://localhost:8502/transformations",
+      "text": "Transformations",
+      "afterUrl": "http://localhost:8502/transformations"
+    },
+    {
+      "page": "http://localhost:8502/transformations",
+      "text": "Playground",
+      "afterUrl": "http://localhost:8502/transformations"
+    },
+    {
+      "page": "http://localhost:8502/settings",
+      "text": "",
+      "afterUrl": "http://localhost:8502/settings"
+    },
+    {
+      "page": "http://localhost:8502/settings",
+      "text": "",
+      "afterUrl": "http://localhost:8502/settings"
+    },
+    {
+      "page": "http://localhost:8502/settings",
+      "text": "Simple",
+      "afterUrl": "http://localhost:8502/settings"
+    },
+    {
+      "page": "http://localhost:8502/settings",
+      "text": "Help me choose",
+      "afterUrl": "http://localhost:8502/settings"
+    },
+    {
+      "page": "http://localhost:8502/settings",
+      "text": "Firecrawl",
+      "afterUrl": "http://localhost:8502/settings"
+    },
+    {
+      "page": "http://localhost:8502/settings",
+      "text": "Help me choose",
+      "afterUrl": "http://localhost:8502/settings"
+    },
+    {
+      "page": "http://localhost:8502/settings",
+      "text": "Always",
+      "afterUrl": "http://localhost:8502/settings"
+    },
+    {
+      "page": "http://localhost:8502/settings",
+      "text": "Help me choose",
+      "afterUrl": "http://localhost:8502/settings"
+    },
+    {
+      "page": "http://localhost:8502/settings",
+      "text": "No",
+      "afterUrl": "http://localhost:8502/settings"
+    },
+    {
+      "page": "http://localhost:8502/settings",
+      "text": "Help me choose",
+      "afterUrl": "http://localhost:8502/settings"
+    },
+    {
+      "page": "http://localhost:8502/advanced",
+      "text": "",
+      "afterUrl": "http://localhost:8502/advanced"
+    },
+    {
+      "page": "http://localhost:8502/advanced",
+      "text": "Existing",
+      "afterUrl": "http://localhost:8502/advanced"
+    },
+    {
+      "page": "http://localhost:8502/advanced",
+      "text": "",
+      "afterUrl": "http://localhost:8502/advanced"
+    },
+    {
+      "page": "http://localhost:8502/advanced",
+      "text": "",
+      "afterUrl": "http://localhost:8502/advanced"
+    },
+    {
+      "page": "http://localhost:8502/advanced",
+      "text": "",
+      "afterUrl": "http://localhost:8502/advanced"
+    },
+    {
+      "page": "http://localhost:8502/advanced",
+      "text": "When should I rebuild embeddings?",
+      "afterUrl": "http://localhost:8502/advanced"
+    },
+    {
+      "page": "http://localhost:8502/advanced",
+      "text": "How long does rebuilding take?",
+      "afterUrl": "http://localhost:8502/advanced"
+    },
+    {
+      "page": "http://localhost:8502/advanced",
+      "text": "Is it safe to rebuild while using the app?",
+      "afterUrl": "http://localhost:8502/advanced"
+    }
+  ],
+  "skipped": [
+    {
+      "reason": "destructive-looking button",
+      "text": "Sign Out",
+      "page": "http://localhost:8502/notebooks"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Sign Out",
+      "page": "http://localhost:8502/sources"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Sign Out",
+      "page": "http://localhost:8502/search"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Sign Out",
+      "page": "http://localhost:8502/podcasts"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Sign Out",
+      "page": "http://localhost:8502/settings/models"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Sign Out",
+      "page": "http://localhost:8502/transformations"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Sign Out",
+      "page": "http://localhost:8502/settings"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Sign Out",
+      "page": "http://localhost:8502/advanced"
+    }
+  ],
+  "forms": [
+    {
+      "page": "http://localhost:8502/settings",
+      "submitLabel": "Save",
+      "filled": 4,
+      "afterUrl": "http://localhost:8502/settings",
+      "validation": []
+    }
+  ],
+  "notes": [],
+  "unvisitedQueue": []
+}

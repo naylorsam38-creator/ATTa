@@ -1,0 +1,3 @@
+Type: A
+Name: the desired domain/subdomain
+IP address: IP_OF_YOUR_SERVER>

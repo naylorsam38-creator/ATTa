@@ -1,0 +1,465 @@
+{
+  "startUrl": "http://localhost/user/login",
+  "origin": "http://localhost",
+  "pages": [
+    {
+      "url": "http://localhost/user/login",
+      "finalUrl": "http://localhost/user/login",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/applications",
+      "finalUrl": "http://localhost/applications",
+      "status": 200,
+      "title": "Applications | Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/user/forgotPassword",
+      "finalUrl": "http://localhost/applications",
+      "status": 200,
+      "title": "Applications | Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/user/signup",
+      "finalUrl": "http://localhost/applications",
+      "status": 200,
+      "title": "Applications | Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/general",
+      "finalUrl": "http://localhost/settings/general",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/profile",
+      "finalUrl": "http://localhost/settings/profile",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/email",
+      "finalUrl": "http://localhost/settings/email",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/branding",
+      "finalUrl": "http://localhost/settings/branding",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/audit-logs",
+      "finalUrl": "http://localhost/settings/audit-logs",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/ai",
+      "finalUrl": "http://localhost/settings/ai",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/user-settings",
+      "finalUrl": "http://localhost/settings/user-settings",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/authentication",
+      "finalUrl": "http://localhost/settings/authentication",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/provisioning",
+      "finalUrl": "http://localhost/settings/provisioning",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/access-control",
+      "finalUrl": "http://localhost/settings/access-control",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/instance-settings",
+      "finalUrl": "http://localhost/settings/instance-settings",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/configuration",
+      "finalUrl": "http://localhost/settings/configuration",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/mcp-server",
+      "finalUrl": "http://localhost/settings/mcp-server",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/version",
+      "finalUrl": "http://localhost/settings/version",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/settings/authentication/google-auth",
+      "finalUrl": "http://localhost/settings/authentication/google-auth",
+      "status": 200,
+      "title": "Appsmith",
+      "error": null
+    },
+    {
+      "url": "http://localhost/",
+      "finalUrl": "http://localhost/applications",
+      "status": 200,
+      "title": "Applications | Appsmith",
+      "error": null
+    }
+  ],
+  "consoleErrors": [
+    {
+      "url": "http://localhost/applications",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+    },
+    {
+      "url": "http://localhost/applications",
+      "text": "Error: Internal server error while processing request\n    at http://localhost/static/js/main.6200f3fc.js:2432:79451\n    at Generator.next (<anonymous>)\n    at f (http://localhost/static/js/main.6200f3fc.js:1873:8871)\n    at $ (http://localhost/static/js/main.6200f3fc.js:1873:8671)\n    at http://localhost/static/js/main.6200f3fc.js:1873:8415\n    at g (http://localhost/static/js/main.6200f3fc.js:1873:9420)\n    at f (http://localhost/static/js/main.6200f3fc.js:1873:8931)\n    at l (http://localhost/"
+    },
+    {
+      "url": "http://localhost/applications",
+      "text": "undefined {type: GET_TEMPLATE_FILTERS_ERROR, payload: Object, @@redux-saga/SAGA_ACTION: true}"
+    },
+    {
+      "url": "http://localhost/applications",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "url": "http://localhost/applications",
+      "text": "Error: Received error from cloud services (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target\n    at http://localhost/static/js/main.6200f3fc.js:2432:79451\n    at Generator.next (<anonymous>)\n    at f (http://localhost/static/js/main.6200f3fc.js:1873:8871)\n    at $ (http://localhost/static/js/main.6200f3fc.js:1873:8671)\n    at http://localhost/static/js/main.6200f3fc.js:1873:8415\n"
+    },
+    {
+      "url": "http://localhost/applications",
+      "text": "Error: Received error from cloud services (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target\n    at http://localhost/static/js/main.6200f3fc.js:2432:79573\n    at Generator.next (<anonymous>)\n    at f (http://localhost/static/js/main.6200f3fc.js:1873:8871)\n    at l (http://localhost/static/js/main.6200f3fc.js:1873:9203)\n    at http://localhost/static/js/main.6200f3fc.js:1873:3929\n"
+    },
+    {
+      "url": "http://localhost/settings/profile",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "url": "http://localhost/settings/profile",
+      "text": "Error\n    at http://localhost/static/js/main.6200f3fc.js:2432:79451\n    at Generator.next (<anonymous>)\n    at f (http://localhost/static/js/main.6200f3fc.js:1873:8871)\n    at $ (http://localhost/static/js/main.6200f3fc.js:1873:8671)\n    at http://localhost/static/js/main.6200f3fc.js:1873:8415\n    at g (http://localhost/static/js/main.6200f3fc.js:1873:9420)\n    at f (http://localhost/static/js/main.6200f3fc.js:1873:8931)\n    at l (http://localhost/static/js/main.6200f3fc.js:1873:9203) {type: API"
+    },
+    {
+      "url": "http://localhost/settings/profile",
+      "text": "Error\n    at http://localhost/static/js/main.6200f3fc.js:2432:79573\n    at Generator.next (<anonymous>)\n    at f (http://localhost/static/js/main.6200f3fc.js:1873:8871)\n    at l (http://localhost/static/js/main.6200f3fc.js:1873:9203)\n    at http://localhost/static/js/main.6200f3fc.js:1873:3929\n    at h (http://localhost/static/js/main.6200f3fc.js:1873:1785)\n    at E (http://localhost/static/js/main.6200f3fc.js:1873:1974)\n    at f (http://localhost/static/js/main.6200f3fc.js:1873:1834)\n    at w.<"
+    },
+    {
+      "url": "http://localhost/settings/branding",
+      "text": "TypeError: Could not parse Testy McTestface as a color. Missing a plugin?\n    at or.w [as parse] (http://localhost/static/js/main.6200f3fc.js:1629:55972)\n    at http://localhost/static/js/settings.d2ee6813.chunk.js:364:305\n    at Object.We (http://localhost/static/js/main.6200f3fc.js:6405:140955)\n    at Ke (http://localhost/static/js/main.6200f3fc.js:6405:141109)\n    at http://localhost/static/js/main.6200f3fc.js:6405:159334\n    at Or (http://localhost/static/js/main.6200f3fc.js:6405:159428)\n   "
+    }
+  ],
+  "pageErrors": [],
+  "failedRequests": [
+    {
+      "url": "https://pkg.betterbugs.io/scripts/latest/logs-capture.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost/api/v1/consolidated-api/view?",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://pkg.betterbugs.io/scripts/latest/recorder.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://t.appsmith.com/v1/b",
+      "method": "POST",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost/static/js/svg-icons.b2f3a967.chunk.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "badResponses": [
+    {
+      "url": "http://localhost/api/v1/app-templates/filters",
+      "status": 500,
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost/api/v1/app-templates",
+      "status": 400,
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost/api/v1/git/profile/default",
+      "status": 404,
+      "method": "GET"
+    }
+  ],
+  "clicks": [
+    {
+      "page": "http://localhost/user/login",
+      "text": "",
+      "afterUrl": "http://localhost/settings/general"
+    },
+    {
+      "page": "http://localhost/applications",
+      "text": "",
+      "afterUrl": "http://localhost/settings/general"
+    },
+    {
+      "page": "http://localhost/applications",
+      "text": "",
+      "afterUrl": "http://localhost/settings/general"
+    },
+    {
+      "page": "http://localhost/applications",
+      "text": "",
+      "afterUrl": "http://localhost/settings/general"
+    },
+    {
+      "page": "http://localhost/settings/branding",
+      "text": "Upgrade",
+      "afterUrl": "http://localhost/settings/branding"
+    },
+    {
+      "page": "http://localhost/settings/audit-logs",
+      "text": "Security & compliance\nProactively derisk misconfigured permi",
+      "afterUrl": "http://localhost/settings/audit-logs"
+    },
+    {
+      "page": "http://localhost/settings/audit-logs",
+      "text": "Debugging",
+      "afterUrl": "http://localhost/settings/audit-logs"
+    },
+    {
+      "page": "http://localhost/settings/audit-logs",
+      "text": "Incident management",
+      "afterUrl": "http://localhost/settings/audit-logs"
+    },
+    {
+      "page": "http://localhost/settings/audit-logs",
+      "text": "Upgrade",
+      "afterUrl": "http://localhost/settings/audit-logs"
+    },
+    {
+      "page": "http://localhost/settings/ai",
+      "text": "Test Key",
+      "afterUrl": "http://localhost/settings/ai"
+    },
+    {
+      "page": "http://localhost/settings/ai",
+      "text": "Save Configuration",
+      "afterUrl": "http://localhost/settings/ai"
+    },
+    {
+      "page": "http://localhost/settings/authentication",
+      "text": "Upgrade",
+      "afterUrl": "http://localhost/settings/authentication"
+    },
+    {
+      "page": "http://localhost/settings/authentication",
+      "text": "Upgrade",
+      "afterUrl": "http://localhost/settings/authentication"
+    },
+    {
+      "page": "http://localhost/settings/authentication",
+      "text": "Enable",
+      "afterUrl": "http://localhost/settings/authentication/google-auth"
+    },
+    {
+      "page": "http://localhost/settings/provisioning",
+      "text": "Provision and deprovision users from your IdP\nControl user a",
+      "afterUrl": "http://localhost/settings/provisioning"
+    },
+    {
+      "page": "http://localhost/settings/provisioning",
+      "text": "Automatic group sync",
+      "afterUrl": "http://localhost/settings/provisioning"
+    },
+    {
+      "page": "http://localhost/settings/provisioning",
+      "text": "Upgrade",
+      "afterUrl": "http://localhost/settings/provisioning"
+    },
+    {
+      "page": "http://localhost/settings/access-control",
+      "text": "Secure apps by the least privilege needed\nCreate roles by th",
+      "afterUrl": "http://localhost/settings/access-control"
+    },
+    {
+      "page": "http://localhost/settings/access-control",
+      "text": "Prevent accidental damage to data",
+      "afterUrl": "http://localhost/settings/access-control"
+    },
+    {
+      "page": "http://localhost/settings/access-control",
+      "text": "Restrict public exposure of sensitive data",
+      "afterUrl": "http://localhost/settings/access-control"
+    },
+    {
+      "page": "http://localhost/settings/access-control",
+      "text": "Upgrade",
+      "afterUrl": "http://localhost/settings/access-control"
+    },
+    {
+      "page": "http://localhost/settings/instance-settings",
+      "text": "",
+      "afterUrl": "http://localhost/settings/instance-settings"
+    },
+    {
+      "page": "http://localhost/applications",
+      "text": "",
+      "afterUrl": "http://localhost/settings/general"
+    }
+  ],
+  "skipped": [
+    {
+      "reason": "destructive-looking button",
+      "text": "Save & Restart",
+      "page": "http://localhost/settings/general"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Reset",
+      "page": "http://localhost/settings/general"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Reset",
+      "page": "http://localhost/settings/profile"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Send test email",
+      "page": "http://localhost/settings/email"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Save & Restart",
+      "page": "http://localhost/settings/email"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Reset",
+      "page": "http://localhost/settings/email"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Reset",
+      "page": "http://localhost/settings/user-settings"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Save & Restart",
+      "page": "http://localhost/settings/instance-settings"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Reset",
+      "page": "http://localhost/settings/instance-settings"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Save & Restart",
+      "page": "http://localhost/settings/configuration"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Reset",
+      "page": "http://localhost/settings/configuration"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Save & Restart",
+      "page": "http://localhost/settings/mcp-server"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Reset",
+      "page": "http://localhost/settings/mcp-server"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Save & Restart",
+      "page": "http://localhost/settings/authentication/google-auth"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Reset",
+      "page": "http://localhost/settings/authentication/google-auth"
+    }
+  ],
+  "forms": [
+    {
+      "page": "http://localhost/user/login",
+      "submitLabel": "Sign in",
+      "filled": 2,
+      "afterUrl": "http://localhost/applications",
+      "validation": [
+        "Internal server error while processing request",
+        "There was an unexpected error",
+        "Received error from cloud services (certificate_unknown) PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target"
+      ]
+    },
+    {
+      "page": "http://localhost/settings/email",
+      "submitLabel": "",
+      "filled": 6,
+      "afterUrl": "http://localhost/settings/email",
+      "validation": []
+    },
+    {
+      "page": "http://localhost/settings/branding",
+      "submitLabel": "Submit",
+      "filled": 1,
+      "afterUrl": "http://localhost/settings/branding",
+      "validation": []
+    },
+    {
+      "page": "http://localhost/settings/ai",
+      "submitLabel": "",
+      "filled": 4,
+      "afterUrl": "http://localhost/settings/ai",
+      "validation": []
+    }
+  ],
+  "notes": [
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded."
+  ],
+  "unvisitedQueue": []
+}

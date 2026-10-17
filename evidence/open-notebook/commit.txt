@@ -1,0 +1,3 @@
+commit=a0f6f3081ae06328f0a451b3a3ef2959ca25721d
+date=2026-10-04T23:29:29-03:00
+subject=docs: defaults table matches the code; CHANGELOG entry for the docs overhaul (#1462)

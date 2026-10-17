@@ -1,0 +1,588 @@
+prosody-1  | /package/admin/s6-overlay/libexec/preinit: info: read-only root
+prosody-1  | /package/admin/s6-overlay/libexec/preinit: info: writable /run. Checking for executability.
+prosody-1  | /package/admin/s6-overlay/libexec/preinit: info: container permissions: uid=1000 (s6), euid=0, gid=1000 (s6), egid=1000
+prosody-1  | /package/admin/s6-overlay/libexec/preinit: info: /run permissions: uid=0 (root), gid=0 (root), perms=gxgruxuwuros
+prosody-1  | /package/admin/s6-overlay/libexec/preinit: info: /run belongs to uid 0 instead of 1000 - fixing it
+prosody-1  | s6-rc: info: service s6rc-oneshot-runner: starting
+prosody-1  | s6-rc: info: service s6rc-oneshot-runner successfully started
+prosody-1  | s6-rc: info: service fix-attrs: starting
+prosody-1  | s6-rc: info: service fix-attrs successfully started
+prosody-1  | s6-rc: info: service legacy-cont-init: starting
+prosody-1  | s6-rc: info: service legacy-cont-init successfully started
+prosody-1  | s6-rc: info: service 10-config: starting
+prosody-1  | Prosody normal mode, using default config
+prosody-1  | Choose key size (2048): Key written to /var/lib/prosody/data/meet.jitsi.key
+prosody-1  | Please provide details to include in the certificate config file.
+prosody-1  | Leave the field empty to use the default value or '.' to exclude the field.
+prosody-1  | countryName (GB): localityName (The Internet): organizationName (Your Organisation): organizationalUnitName (XMPP Department): commonName (meet.jitsi): emailAddress (xmpp@meet.jitsi): 
+prosody-1  | Config written to /var/lib/prosody/data/meet.jitsi.cnf
+prosody-1  | Certificate written to /var/lib/prosody/data/meet.jitsi.crt
+prosody-1  | 
+prosody-1  | Choose key size (2048): Key written to /var/lib/prosody/data/auth.meet.jitsi.key
+prosody-1  | Please provide details to include in the certificate config file.
+prosody-1  | Leave the field empty to use the default value or '.' to exclude the field.
+prosody-1  | countryName (GB): localityName (The Internet): organizationName (Your Organisation): organizationalUnitName (XMPP Department): commonName (auth.meet.jitsi): emailAddress (xmpp@auth.meet.jitsi): 
+prosody-1  | Config written to /var/lib/prosody/data/auth.meet.jitsi.cnf
+prosody-1  | Certificate written to /var/lib/prosody/data/auth.meet.jitsi.crt
+prosody-1  | 
+jicofo-1   | /package/admin/s6-overlay/libexec/preinit: info: read-only root
+jvb-1      | /package/admin/s6-overlay/libexec/preinit: info: read-only root
+jvb-1      | /package/admin/s6-overlay/libexec/preinit: info: writable /run. Checking for executability.
+jvb-1      | /package/admin/s6-overlay/libexec/preinit: info: container permissions: uid=1000 (s6), euid=0, gid=1000 (s6), egid=1000
+jvb-1      | /package/admin/s6-overlay/libexec/preinit: info: /run permissions: uid=0 (root), gid=0 (root), perms=gxgruxuwuros
+jvb-1      | /package/admin/s6-overlay/libexec/preinit: info: /run belongs to uid 0 instead of 1000 - fixing it
+jvb-1      | s6-rc: info: service s6rc-oneshot-runner: starting
+jvb-1      | s6-rc: info: service s6rc-oneshot-runner successfully started
+jvb-1      | s6-rc: info: service fix-attrs: starting
+jvb-1      | s6-rc: info: service fix-attrs successfully started
+jvb-1      | s6-rc: info: service legacy-cont-init: starting
+jvb-1      | s6-rc: info: service legacy-cont-init successfully started
+jvb-1      | s6-rc: info: service 10-config: starting
+jvb-1      | No AUTOSCALER_URL defined, leaving autoscaler sidecar disabled
+jvb-1      | s6-rc: info: service 10-config successfully started
+jvb-1      | s6-rc: info: service jvb: starting
+jvb-1      | s6-rc: info: service 50-autoscaler-sidecar: starting
+jvb-1      | s6-rc: info: service jvb successfully started
+jvb-1      | s6-rc: info: service 50-autoscaler-sidecar successfully started
+jvb-1      | s6-rc: info: service legacy-services: starting
+jicofo-1   | /package/admin/s6-overlay/libexec/preinit: info: writable /run. Checking for executability.
+jicofo-1   | /package/admin/s6-overlay/libexec/preinit: info: container permissions: uid=1000 (s6), euid=0, gid=1000 (s6), egid=1000
+jicofo-1   | /package/admin/s6-overlay/libexec/preinit: info: /run permissions: uid=0 (root), gid=0 (root), perms=gxgruxuwuros
+jicofo-1   | /package/admin/s6-overlay/libexec/preinit: info: /run belongs to uid 0 instead of 1000 - fixing it
+jicofo-1   | s6-rc: info: service s6rc-oneshot-runner: starting
+jicofo-1   | s6-rc: info: service s6rc-oneshot-runner successfully started
+jicofo-1   | s6-rc: info: service fix-attrs: starting
+jicofo-1   | s6-rc: info: service fix-attrs successfully started
+jicofo-1   | s6-rc: info: service legacy-cont-init: starting
+jicofo-1   | s6-rc: info: service legacy-cont-init successfully started
+jicofo-1   | s6-rc: info: service 10-config: starting
+jicofo-1   | s6-rc: info: service 10-config successfully started
+jicofo-1   | s6-rc: info: service jicofo: starting
+jvb-1      | s6-rc: info: service legacy-services successfully started
+jvb-1      | JVB 2026-10-17 16:46:47.940 INFO: [1] JitsiConfig.<clinit>#47: Initialized newConfig: merge of /run/jvb/config/jvb.conf: 1,application.conf @ jar:file:/usr/share/jitsi-videobridge/jitsi-videobridge.jar!/application.conf: 1,system properties,reference.conf @ jar:file:/usr/share/jitsi-videobridge/jitsi-videobridge.jar!/reference.conf: 1,reference.conf @ jar:file:/usr/share/jitsi-videobridge/lib/ice4j-3.2-17-geea6cd3.jar!/reference.conf: 1,reference.conf @ jar:file:/usr/share/jitsi-videobridge/lib/jitsi-media-transform-2.3-318-gbf271b11f.jar!/reference.conf: 1
+jvb-1      | JVB 2026-10-17 16:46:47.971 INFO: [1] ReadOnlyConfigurationService.reloadConfiguration#51: loading config file at path /run/jvb/config/sip-communicator.properties
+jvb-1      | JVB 2026-10-17 16:46:47.972 INFO: [1] ReadOnlyConfigurationService.reloadConfiguration#56: Error loading config file: java.io.FileNotFoundException: /run/jvb/config/sip-communicator.properties (No such file or directory)
+jvb-1      | JVB 2026-10-17 16:46:47.973 INFO: [1] JitsiConfig.<clinit>#68: Initialized legacyConfig: sip communicator props (no description provided)
+jvb-1      | JVB 2026-10-17 16:46:48.387 INFO: [1] JvmMetrics.<init>#36: Detected GC type G1
+jvb-1      | JVB 2026-10-17 16:46:48.552 INFO: [1] MetricsUpdater.addUpdateTask#45: Scheduling metrics update task with interval PT5S.
+jvb-1      | JVB 2026-10-17 16:46:48.572 INFO: [1] JitsiConfig$Companion.reloadNewConfig#94: Reloading the Typesafe config source (previously reloaded 0 times).
+jvb-1      | JVB 2026-10-17 16:46:48.629 INFO: [1] MainKt.main#82: Starting jitsi-videobridge version 2.3.318-gbf271b11f
+jvb-1      | JVB 2026-10-17 16:46:48.667 INFO: [1] UlimitCheck.printUlimits#109: Running with open files limit 20000 (hard 20000), thread limit 64298 (hard 64298).
+jvb-1      | JVB 2026-10-17 16:46:48.774 INFO: [26] org.ice4j.ice.harvest.MappingCandidateHarvesters.createStunHarvesters: Using 129.158.227.138:443/udp for StunMappingCandidateHarvester (localAddress=172.18.0.3:0/udp).
+jvb-1      | JVB 2026-10-17 16:46:48.795 INFO: [1] org.ice4j.ice.harvest.AbstractUdpListener.<init>: Initialized AbstractUdpListener with address 172.18.0.3:10000/udp. Receive buffer size 4194304 (asked for 10485760); socket pool size 4
+jvb-1      | JVB 2026-10-17 16:46:48.800 INFO: [1] org.ice4j.ice.harvest.SinglePortUdpHarvester.<init>: Initialized SinglePortUdpHarvester with address 172.18.0.3:10000/udp
+jvb-1      | JVB 2026-10-17 16:46:48.802 INFO: [1] Smack.initialize#38: Setting XML parsing limits.
+web-1      | /package/admin/s6-overlay/libexec/preinit: info: read-only root
+web-1      | /package/admin/s6-overlay/libexec/preinit: info: writable /run. Checking for executability.
+web-1      | /package/admin/s6-overlay/libexec/preinit: info: container permissions: uid=1000 (s6), euid=0, gid=1000 (s6), egid=1000
+web-1      | /package/admin/s6-overlay/libexec/preinit: info: /run permissions: uid=0 (root), gid=0 (root), perms=gxgruxuwuros
+web-1      | /package/admin/s6-overlay/libexec/preinit: info: /run belongs to uid 0 instead of 1000 - fixing it
+web-1      | s6-rc: info: service s6rc-oneshot-runner: starting
+web-1      | s6-rc: info: service s6rc-oneshot-runner successfully started
+web-1      | s6-rc: info: service fix-attrs: starting
+web-1      | s6-rc: info: service fix-attrs successfully started
+web-1      | s6-rc: info: service legacy-cont-init: starting
+web-1      | s6-rc: info: service legacy-cont-init successfully started
+web-1      | s6-rc: info: service 10-config: starting
+web-1      | generating self-signed keys in storage/web/keys, you can replace these with your own keys in /config/keys if required
+jicofo-1   | s6-rc: info: service jicofo successfully started
+jicofo-1   | s6-rc: info: service legacy-services: starting
+jicofo-1   | s6-rc: info: service legacy-services successfully started
+jicofo-1   | Jicofo 2026-10-17 16:46:47.863 INFO: [1] Main.main#49: Starting Jicofo.
+jicofo-1   | Jicofo 2026-10-17 16:46:48.111 INFO: [1] JitsiConfig.<clinit>#47: Initialized newConfig: merge of /run/jicofo/config/jicofo.conf: 1,system properties,reference.conf @ jar:file:/usr/share/jicofo/jicofo.jar!/reference.conf: 1,reference.conf @ jar:file:/usr/share/jicofo/lib/jicofo-common-1.0-1205.jar!/reference.conf: 1,reference.conf @ jar:file:/usr/share/jicofo/lib/jicofo-selector-1.0-1205.jar!/reference.conf: 1
+jvb-1      | JVB 2026-10-17 16:46:48.819 INFO: [1] Smack.initialize#50: Using JitsiXmppStringprep.
+jvb-1      | JVB 2026-10-17 16:46:49.303 INFO: [34] [hostname=xmpp.meet.jitsi id=shard0] MucClient.initializeConnectAndJoin#300: Initializing a new MucClient for [ org.jitsi.xmpp.mucclient.MucClientConfiguration id=shard0 domain=auth.meet.jitsi hostname=xmpp.meet.jitsi port=5222 username=jvb mucs=[jvbbrewery@internal-muc.meet.jitsi] mucNickname=df293002d841 disableCertificateVerification=true]
+web-1      | ...+...........+...+...+..................+.+...+..+.+...+...............+......+.....+....+++++++++++++++++++++++++++++++++++++++*..........+......+...+.........+...+..+.+............+...............+..+...+..........+........+.......+++++++++++++++++++++++++++++++++++++++*.....+.....+....+.........+..+..........+..+.......+.........+..+............+..........+...+..+.+.................+...+............+...............+...+......+....+.........+..+...+.+......+...+...........++++++
+web-1      | ....+...+..+...+.+++++++++++++++++++++++++++++++++++++++*.......+..............+....+...........+.+...+...+........+......+++++++++++++++++++++++++++++++++++++++*....+...+...........+.+...+..+......+...+....+......+.........+.....+..........+...+..............+.+.........+.........+..+...+..............................+....+......+......+..................+........+....+.....+....+...........+......++++++
+web-1      | -----
+web-1      | Using Nginx resolver: =127.0.0.11=
+web-1      | s6-rc: info: service 10-config successfully started
+web-1      | s6-rc: info: service nginx: starting
+web-1      | s6-rc: info: service acme-renewal: starting
+web-1      | s6-rc: info: service nginx successfully started
+web-1      | s6-rc: info: service jaas-account: starting
+web-1      | s6-rc: info: service acme-renewal successfully started
+web-1      | s6-rc: info: service jaas-account successfully started
+web-1      | s6-rc: info: service legacy-services: starting
+web-1      | 2026/10/17 16:46:47 [warn] 122#122: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+prosody-1  | s6-rc: info: service 10-config successfully started
+prosody-1  | s6-rc: info: service 70-register-setup: starting
+prosody-1  | s6-rc: info: service prosody: starting
+prosody-1  | [register-setup] Service starting...
+prosody-1  | [register-setup] Waiting for prosody to be ready...
+prosody-1  | s6-rc: info: service 20-saslauthd: starting
+prosody-1  | s6-rc: info: service 20-saslauthd successfully started
+prosody-1  | s6-rc: info: service prosody successfully started
+prosody-1  | [register-setup] Attempt 1/60...
+prosody-1  | 2026-10-17 16:46:47 startup             info	Hello and welcome to Prosody version 13.0.6
+prosody-1  | 2026-10-17 16:46:47 startup             info	Prosody is using the epoll backend for connection handling
+prosody-1  | 2026-10-17 16:46:47 speakerstats.meet.jitsi:speakerstats_component  info	Starting speakerstats for muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 speakerstats.meet.jitsi:speakerstats_component  info	No host/component found, will wait for it: muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 speakerstats.meet.jitsi:speakerstats_component  info	No host/component found, will wait for it: breakout.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 speakerstats.meet.jitsi:speakerstats_component  info	No host/component found, will wait for it: meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 speakerstats.meet.jitsi:tls                     info	Certificates loaded
+prosody-1  | 2026-10-17 16:46:47 avmoderation.meet.jitsi:av_moderation_component  info	Starting av_moderation for muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 avmoderation.meet.jitsi:av_moderation_component  info	No host/component found, will wait for it: muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 avmoderation.meet.jitsi:av_moderation_component  info	No host/component found, will wait for it: meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 avmoderation.meet.jitsi:tls                      info	Certificates loaded
+prosody-1  | 2026-10-17 16:46:47 portmanager                                      error	Failed to open server port 5222 on ::, Address family not supported by protocol
+jvb-1      | JVB 2026-10-17 16:46:49.336 INFO: [1] TaskPools.<clinit>#86: TaskPools detected 4 processors, creating the CPU pool with that many threads
+web-1      | 2026/10/17 16:46:47 [warn] 122#122: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+jvb-1      | JVB 2026-10-17 16:46:49.367 WARNING: [34] MucClient.createXMPPTCPConnectionConfiguration#119: Disabling certificate verification!
+web-1      | s6-rc: info: service legacy-services successfully started
+jvb-1      | JVB 2026-10-17 16:46:49.405 INFO: [1] HealthChecker.start#122: Started with interval=60000, timeout=PT1M30S, maxDuration=PT3S, stickyFailures=false.
+web-1      | 2026/10/17 16:46:47 [warn] 122#122: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+jvb-1      | JVB 2026-10-17 16:46:49.415 INFO: [1] VideobridgeExpireThread.start#88: Starting with 60 second interval.
+jicofo-1   | Jicofo 2026-10-17 16:46:48.113 INFO: [1] ReadOnlyConfigurationService.reloadConfiguration#40: net.java.sip.communicator.SC_HOME_DIR_LOCATION not set
+jvb-1      | JVB 2026-10-17 16:46:49.425 INFO: [1] MucPublisher.start#36: Starting with interval PT5S.
+prosody-1  | 2026-10-17 16:46:47 portmanager                                      info	Activated service 'c2s' on [*]:5222
+jvb-1      | JVB 2026-10-17 16:46:49.440 INFO: [1] MainKt.main#138: Not starting public http server
+jvb-1      | JVB 2026-10-17 16:46:49.445 INFO: [1] MainKt.main#147: Starting private http server
+jicofo-1   | Jicofo 2026-10-17 16:46:48.114 INFO: [1] JitsiConfig.<clinit>#68: Initialized legacyConfig: sip communicator props (no description provided)
+jvb-1      | JVB 2026-10-17 16:46:49.477 WARNING: [35] [hostname=xmpp.meet.jitsi id=shard0] MucClient.setPresenceExtensions#519: Cannot set presence extension: not connected.
+jvb-1      | JVB 2026-10-17 16:46:49.502 INFO: [34] [hostname=xmpp.meet.jitsi id=shard0] MucClient.initializeConnectAndJoin#401: Dispatching a thread to connect and login.
+jvb-1      | JVB 2026-10-17 16:46:50.011 INFO: [1] org.eclipse.jetty.server.Server.doStart: jetty-12.0.35; built: 2026-05-01T05:38:52.785Z; git: ae9286497b46fd709861e330fb364408a946d6e5; jvm 21.0.12.1+1-1-deb13u1-Debian
+jvb-1      | JVB 2026-10-17 16:46:50.050 INFO: [1] org.eclipse.jetty.server.handler.ContextHandler.doStart: Started oeje10s.ServletContextHandler@421056e5{ROOT,/,b=null,a=AVAILABLE,h=oeje10s.ServletHandler@2849434b{STARTED}}
+jvb-1      | JVB 2026-10-17 16:46:50.054 WARNING: [1] org.eclipse.jetty.util.DeprecationWarning.decorate: Using @Deprecated Class org.eclipse.jetty.ee10.servlets.CrossOriginFilter
+jicofo-1   | Jicofo 2026-10-17 16:46:48.120 INFO: [1] JitsiConfig$Companion.reloadNewConfig#94: Reloading the Typesafe config source (previously reloaded 0 times).
+jicofo-1   | Jicofo 2026-10-17 16:46:48.648 INFO: [1] Smack.initialize#38: Setting XML parsing limits.
+jicofo-1   | Jicofo 2026-10-17 16:46:48.654 INFO: [1] Smack.initialize#50: Using JitsiXmppStringprep.
+jicofo-1   | Jicofo 2026-10-17 16:46:48.982 INFO: [1] MetricsUpdater.addUpdateTask#45: Scheduling metrics update task with interval PT30S.
+jicofo-1   | Jicofo 2026-10-17 16:46:49.019 INFO: [1] JicofoServices.createAuthenticationAuthority#204: Authentication service disabled.
+jicofo-1   | Jicofo 2026-10-17 16:46:49.070 WARNING: [1] [xmpp_connection=client] XmppProviderKt.createXmppConnection#343: Disabling TLS certificate verification!
+jicofo-1   | Jicofo 2026-10-17 16:46:49.173 INFO: [1] XmppServices.<init>#48: No dedicated Service XMPP connection configured, re-using the client XMPP connection.
+jicofo-1   | Jicofo 2026-10-17 16:46:49.215 INFO: [1] XmppServices.<init>#82: No Jigasi detector configured.
+jicofo-1   | Jicofo 2026-10-17 16:46:49.217 INFO: [1] AvModerationHandler.componentsChanged#119: No av_moderation component discovered.
+jicofo-1   | Jicofo 2026-10-17 16:46:49.218 INFO: [1] RoomMetadataHandler.componentsChanged#90: No room_metadata component discovered.
+jicofo-1   | Jicofo 2026-10-17 16:46:49.226 INFO: [1] [connection=client] VisitorsManager.updateAddress#56: VisitorsComponentManager is now disabled with address null
+jicofo-1   | Jicofo 2026-10-17 16:46:49.246 INFO: [1] ConferenceIqHandler.componentsChanged#279: No breakout room component discovered.
+jicofo-1   | Jicofo 2026-10-17 16:46:49.265 INFO: [1] BridgeSelector.<init>#56: Using org.jitsi.jicofo.bridge.SingleBridgeSelectionStrategy
+jicofo-1   | Jicofo 2026-10-17 16:46:49.278 INFO: [1] [type=bridge brewery=jvbbrewery] BaseBrewery.<init>#107: Initialized with JID=jvbbrewery@internal-muc.meet.jitsi
+jicofo-1   | Jicofo 2026-10-17 16:46:49.280 INFO: [1] JicofoServices.<init>#112: No Jibri detector configured.
+jvb-1      | JVB 2026-10-17 16:46:50.182 INFO: [34] [hostname=xmpp.meet.jitsi id=shard0] MucClient$2.connected#338: Connected. isSmEnabled:false isSmAvailable:false isSmResumptionPossible:false
+jicofo-1   | Jicofo 2026-10-17 16:46:49.281 INFO: [1] JicofoServices.<init>#118: No SIP Jibri detector configured.
+jvb-1      | JVB 2026-10-17 16:46:50.182 INFO: [34] [hostname=xmpp.meet.jitsi id=shard0] MucClient.lambda$getConnectAndLoginCallable$8#703: Logging in.
+jicofo-1   | Jicofo 2026-10-17 16:46:49.292 INFO: [1] Application.start#86: Starting ktor on port 8888, host 127.0.0.1
+jvb-1      | JVB 2026-10-17 16:46:50.281 INFO: [34] [hostname=xmpp.meet.jitsi id=shard0] MucClient$2.authenticated#351: Authenticated, resumed=false
+jicofo-1   | Jicofo 2026-10-17 16:46:49.350 INFO: [1] io.ktor.server.engine.EmbeddedServer.createClassLoader: Autoreload is disabled because the development mode is off.
+web-1      | 2026/10/17 16:46:47 [emerg] 122#122: socket() [::]:8000 failed (97: Address family not supported by protocol)
+jicofo-1   | Jicofo 2026-10-17 16:46:49.555 INFO: [27] [xmpp_connection=client] XmppProvider.doConnect#206: Connected, JID=null
+jicofo-1   | Jicofo 2026-10-17 16:46:49.697 INFO: [1] io.ktor.server.engine.BaseApplicationEngine._init_$lambda$1: Application started in 0.364 seconds.
+jicofo-1   | Jicofo 2026-10-17 16:46:49.752 INFO: [27] [xmpp_connection=client] XmppProvider.fireRegistrationStateChanged#256: Set replyTimeout=PT15S
+jicofo-1   | Jicofo 2026-10-17 16:46:49.779 INFO: [27] [xmpp_connection=client] XmppProvider$connectionListener$1.authenticated#130: Registered (resumed=false). isSmEnabled:true isSmAvailable:true isSmResumptionPossible:true
+jicofo-1   | Jicofo 2026-10-17 16:46:49.789 INFO: [27] [xmpp_connection=client] XmppProvider$connectionListener$1.authenticated#141: Will discover components for meet.jitsi
+jicofo-1   | Jicofo 2026-10-17 16:46:49.801 WARNING: [37] [xmpp_connection=client] XmppProvider.setComponents#80: Discovered components: [Component(type=speakerstats, address=speakerstats.meet.jitsi), Component(type=av_moderation, address=avmoderation.meet.jitsi), Component(type=room_metadata, address=metadata.meet.jitsi), Component(type=end_conference, address=endconference.meet.jitsi), Component(type=polls, address=polls.meet.jitsi), Component(type=conference_duration, address=conferenceduration.meet.jitsi), Component(type=breakout_rooms, address=breakout.meet.jitsi), Component(type=lobbyrooms, address=lobby.meet.jitsi)]
+jicofo-1   | Jicofo 2026-10-17 16:46:49.805 INFO: [27] [xmpp_connection=client] XmppProvider.scheduleConnectTask$lambda$3$lambda$2#115: Connected.
+web-1      | 2026/10/17 16:46:49 [warn] 149#149: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:46:49 [warn] 149#149: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+jicofo-1   | Jicofo 2026-10-17 16:46:49.806 INFO: [38] AvModerationHandler.componentsChanged#122: Using av_moderation component at avmoderation.meet.jitsi.
+jicofo-1   | Jicofo 2026-10-17 16:46:49.812 INFO: [38] [connection=client] VisitorsManager.updateAddress#56: VisitorsComponentManager is now disabled with address null
+jicofo-1   | Jicofo 2026-10-17 16:46:49.814 INFO: [42] RoomMetadataHandler.componentsChanged#93: Using room_metadata component at metadata.meet.jitsi.
+jicofo-1   | Jicofo 2026-10-17 16:46:49.815 INFO: [43] ConferenceIqHandler.componentsChanged#282: Using breakout room component at breakout.meet.jitsi.
+jicofo-1   | Jicofo 2026-10-17 16:46:49.955 INFO: [35] [type=bridge brewery=jvbbrewery] BaseBrewery.start#199: Joined the room.
+jicofo-1   | Jicofo 2026-10-17 16:46:50.092 INFO: [1] JicofoServices.<init>#163: Registering GlobalMetrics periodic updates.
+jicofo-1   | Jicofo 2026-10-17 16:46:50.092 INFO: [40] io.ktor.server.engine.EmbeddedServer$start$3.invokeSuspend: Responding at http://127.0.0.1:8888
+jicofo-1   | Jicofo 2026-10-17 16:46:50.413 INFO: [35] [type=bridge brewery=jvbbrewery] BaseBrewery.addInstance#379: Added brewery instance: jvbbrewery@internal-muc.meet.jitsi/df293002d841
+jicofo-1   | Jicofo 2026-10-17 16:46:50.424 INFO: [35] BridgeSelector.addJvbAddress#99: Added new videobridge: Bridge[jid=jvbbrewery@internal-muc.meet.jitsi/df293002d841, version=2.3.318-gbf271b11f, relayId=null, region=null, correctedStress=1.11]
+jicofo-1   | Jicofo 2026-10-17 16:46:50.431 INFO: [46] JvbDoctor.bridgeAdded#133: Scheduled health-check task for: Bridge[jid=jvbbrewery@internal-muc.meet.jitsi/df293002d841, version=2.3.318-gbf271b11f, relayId=null, region=null, correctedStress=1.11]
+jicofo-1   | s6-rc: info: service legacy-services: stopping
+jicofo-1   | s6-rc: info: service legacy-services successfully stopped
+jicofo-1   | s6-rc: info: service jicofo: stopping
+jicofo-1   | Jicofo 2026-10-17 16:47:39.583 INFO: [48] Main.lambda$main$1#94: Caught signal SIGTERM, shutting down.
+jicofo-1   | Jicofo 2026-10-17 16:47:39.583 INFO: [1] Main.main#116: Stopping services.
+jicofo-1   | Jicofo 2026-10-17 16:47:41.608 INFO: [1] JvbDoctor.bridgeRemoved#110: Stopping health-check task for: Bridge[jid=jvbbrewery@internal-muc.meet.jitsi/df293002d841, version=2.3.318-gbf271b11f, relayId=null, region=null, correctedStress=0.03]
+prosody-1  | 2026-10-17 16:46:47 portmanager                                      info	Activated service 'c2s_direct_tls' on no ports
+prosody-1  | 2026-10-17 16:46:47 portmanager                                      info	Activated service 'legacy_ssl' on no ports
+prosody-1  | 2026-10-17 16:46:47 portmanager                                      error	Failed to open server port 5280 on ::, Address family not supported by protocol
+prosody-1  | 2026-10-17 16:46:47 portmanager                                      info	Activated service 'http' on [*]:5280
+prosody-1  | 2026-10-17 16:46:47 portmanager                                      info	Activated service 'https' on no ports
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:http                                  info	Serving 'websocket' at http://meet.jitsi:5280/xmpp-websocket
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:http                                  info	Serving 'altconnect' at http://meet.jitsi:5280/.well-known
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:http                                  info	Serving 'bosh' at http://meet.jitsi:5280/http-bind
+prosody-1  | 2026-10-17 16:46:47 mod_http                                         info	Serving 'health' at http://meet.jitsi:5280/health
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:muc_lobby_rooms                       info	No host/component found, will wait for it: lobby.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:muc_lobby_rooms                       info	No host/component found, will wait for it: muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:room_destroy                          info	loaded
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:muc_breakout_rooms                    info	No host/component found, will wait for it: breakout.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:muc_breakout_rooms                    info	No host/component found, will wait for it: muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:tls                                   info	Certificates loaded
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:conference_duration                   info	No host/component found, will wait for it: muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:features_identity                     info	Adding identity speakerstats for host speakerstats.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:features_identity                     info	Adding identity av_moderation for host avmoderation.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 focus.meet.jitsi:tls                             info	Certificates loaded
+jvb-1      | JVB 2026-10-17 16:46:50.311 INFO: [34] [hostname=xmpp.meet.jitsi id=shard0] MucClient$MucWrapper.join#826: Joined MUC: jvbbrewery@internal-muc.meet.jitsi
+jvb-1      | JVB 2026-10-17 16:46:50.460 WARNING: [1] org.glassfish.jersey.server.wadl.WadlFeature.configure: JAXBContext implementation could not be found. WADL feature is disabled.
+jvb-1      | JVB 2026-10-17 16:46:50.565 WARNING: [1] org.glassfish.jersey.internal.inject.Providers.checkProviderRuntime: A provider org.jitsi.rest.Health registered in SERVER runtime does not implement any provider interfaces applicable in the SERVER runtime. Due to constraint configuration problems the provider org.jitsi.rest.Health will be ignored. 
+jvb-1      | JVB 2026-10-17 16:46:50.565 WARNING: [1] org.glassfish.jersey.internal.inject.Providers.checkProviderRuntime: A provider org.jitsi.rest.Version registered in SERVER runtime does not implement any provider interfaces applicable in the SERVER runtime. Due to constraint configuration problems the provider org.jitsi.rest.Version will be ignored. 
+jvb-1      | JVB 2026-10-17 16:46:50.565 WARNING: [1] org.glassfish.jersey.internal.inject.Providers.checkProviderRuntime: A provider org.jitsi.videobridge.rest.prometheus.Prometheus registered in SERVER runtime does not implement any provider interfaces applicable in the SERVER runtime. Due to constraint configuration problems the provider org.jitsi.videobridge.rest.prometheus.Prometheus will be ignored. 
+jvb-1      | JVB 2026-10-17 16:46:50.714 INFO: [1] org.eclipse.jetty.ee10.servlet.ServletContextHandler.doStart: Started oeje10s.ServletContextHandler@421056e5{ROOT,/,b=null,a=AVAILABLE,h=oeje10s.ServletHandler@2849434b{STARTED}}
+jvb-1      | JVB 2026-10-17 16:46:50.726 INFO: [1] org.eclipse.jetty.server.AbstractConnector.doStart: Started ServerConnector@267f9765{HTTP/1.1, (http/1.1)}{0.0.0.0:8080}
+jvb-1      | JVB 2026-10-17 16:46:50.730 INFO: [1] org.eclipse.jetty.server.Server.doStart: Started oejs.Server@26844abb{STARTING}[12.0.35,sto=0] @3324ms
+jvb-1      | JVB 2026-10-17 16:46:55.236 INFO: [26] org.ice4j.ice.harvest.MappingCandidateHarvesters.initialize: Initialized mapping harvesters (delay=6560ms).  stunDiscoveryFailed=true
+jvb-1      | s6-rc: info: service legacy-services: stopping
+jvb-1      | s6-rc: info: service legacy-services successfully stopped
+jvb-1      | s6-rc: info: service jvb: stopping
+jvb-1      | s6-rc: info: service 50-autoscaler-sidecar: stopping
+jvb-1      | s6-rc: info: service 50-autoscaler-sidecar successfully stopped
+jvb-1      | JVB 2026-10-17 16:47:42.833 INFO: [52] MainKt.main$lambda$7$0#174: Caught signal SIGTERM, shutting down.
+jvb-1      | JVB 2026-10-17 16:47:42.834 INFO: [1] MainKt.main#187: Bridge shutting down
+jvb-1      | JVB 2026-10-17 16:47:42.834 INFO: [1] HealthChecker.stop#135: Stopped
+jvb-1      | JVB 2026-10-17 16:47:42.851 INFO: [1] [hostname=xmpp.meet.jitsi id=shard0] MucClient$2.connectionClosed#370: Closed.
+jvb-1      | JVB 2026-10-17 16:47:42.851 INFO: [1] org.eclipse.jetty.server.Server.doStop: Stopped oejs.Server@26844abb{STOPPING}[12.0.35,sto=0]
+jvb-1      | JVB 2026-10-17 16:47:42.854 INFO: [1] org.eclipse.jetty.server.AbstractConnector.doStop: Stopped ServerConnector@267f9765{HTTP/1.1, (http/1.1)}{0.0.0.0:8080}
+jvb-1      | JVB 2026-10-17 16:47:42.861 INFO: [1] org.eclipse.jetty.ee10.servlet.ServletContextHandler.doStop: Stopped oeje10s.ServletContextHandler@421056e5{ROOT,/,b=null,a=AVAILABLE,h=oeje10s.ServletHandler@2849434b{STOPPED}}
+jvb-1      | JVB 2026-10-17 16:47:42.863 INFO: [1] VideobridgeExpireThread.stop#120: Stopping.
+prosody-1  | 2026-10-17 16:46:47 metadata.meet.jitsi:room_metadata_component      info	Starting room metadata for muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 metadata.meet.jitsi:room_metadata_component      info	No host/component found, will wait for it: muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 metadata.meet.jitsi:room_metadata_component      info	No host/component found, will wait for it: breakout.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:features_identity                     info	Adding identity room_metadata for host metadata.meet.jitsi
+jvb-1      | s6-rc: info: service jvb successfully stopped
+jvb-1      | s6-rc: info: service 10-config: stopping
+jvb-1      | s6-rc: info: service 10-config successfully stopped
+jvb-1      | s6-rc: info: service legacy-cont-init: stopping
+jvb-1      | s6-rc: info: service legacy-cont-init successfully stopped
+jvb-1      | s6-rc: info: service fix-attrs: stopping
+jvb-1      | s6-rc: info: service fix-attrs successfully stopped
+prosody-1  | 2026-10-17 16:46:47 metadata.meet.jitsi:tls                          info	Certificates loaded
+prosody-1  | 2026-10-17 16:46:47 lobby.meet.jitsi:tls                             info	Certificates loaded
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:muc_lobby_rooms                       info	Lobby component loaded lobby.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 breakout.meet.jitsi:tls                          info	Certificates loaded
+prosody-1  | 2026-10-17 16:46:47 breakout.meet.jitsi:muc_message_moderation       info	Loaded MUC message moderation and correction for breakout.meet.jitsi
+jvb-1      | s6-rc: warning: service s6rc-oneshot-runner is marked as essential, not stopping it
+prosody-1  | 2026-10-17 16:46:47 speakerstats.meet.jitsi:speakerstats_component   info	Breakout component loaded breakout.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 speakerstats.meet.jitsi:speakerstats_component   info	Hook to muc events on breakout.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:muc_breakout_rooms                    info	Breakout rooms component created breakout.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:muc_breakout_rooms                    info	Hook to muc events on breakout.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 metadata.meet.jitsi:room_metadata_component      info	Hook to muc events on breakout.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 auth.meet.jitsi:tls                              info	Certificates loaded
+prosody-1  | 2026-10-17 16:46:47 auth.meet.jitsi:limits_exception                 info	loaded; unlimited_jids={focus@auth.meet.jitsi, jvb@auth.meet.jitsi} unlimited_size=10485760
+prosody-1  | 2026-10-17 16:46:47 endconference.meet.jitsi:end_conference          info	Starting end_conference for muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:features_identity                     info	Adding identity end_conference for host endconference.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 endconference.meet.jitsi:tls                     info	Certificates loaded
+prosody-1  | 2026-10-17 16:46:47 internal-muc.meet.jitsi:tls                      info	Certificates loaded
+prosody-1  | 2026-10-17 16:46:47 polls.meet.jitsi:polls_component                 info	No host/component found, will wait for it: muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:features_identity                     info	Adding identity polls for host polls.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 polls.meet.jitsi:tls                             info	Certificates loaded
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_resource_validate             info	module loaded (anonymous_strict=false)
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:tls                               info	Certificates loaded
+web-1      | 2026/10/17 16:46:49 [warn] 149#149: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:46:49 [emerg] 149#149: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:46:50 [warn] 152#152: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:46:50 [warn] 152#152: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:46:50 [warn] 152#152: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:46:50 [emerg] 152#152: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:46:51 [warn] 155#155: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:46:51 [warn] 155#155: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:46:51 [warn] 155#155: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:46:51 [emerg] 155#155: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:46:52 [warn] 158#158: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:46:52 [warn] 158#158: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:46:52 [warn] 158#158: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:46:52 [emerg] 158#158: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:46:53 [warn] 161#161: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:46:53 [warn] 161#161: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:46:53 [warn] 161#161: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:46:53 [emerg] 161#161: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:46:54 [warn] 164#164: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:46:54 [warn] 164#164: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:46:54 [warn] 164#164: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:46:54 [emerg] 164#164: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:46:55 [warn] 167#167: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:46:55 [warn] 167#167: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:46:55 [warn] 167#167: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:46:55 [emerg] 167#167: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:46:56 [warn] 170#170: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:46:56 [warn] 170#170: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:46:56 [warn] 170#170: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:46:56 [emerg] 170#170: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:46:57 [warn] 173#173: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+jicofo-1   | Jicofo 2026-10-17 16:47:41.609 INFO: [1] [type=bridge brewery=jvbbrewery] BaseBrewery.stop#236: Left the room.
+jicofo-1   | Jicofo 2026-10-17 16:47:41.609 INFO: [1] [type=bridge brewery=jvbbrewery] BaseBrewery.removeInstance#391: Removed brewery instance: jvbbrewery@internal-muc.meet.jitsi/df293002d841
+jicofo-1   | Jicofo 2026-10-17 16:47:41.609 INFO: [1] BridgeSelector.removeJvbAddress#112: Removing JVB: jvbbrewery@internal-muc.meet.jitsi/df293002d841
+jicofo-1   | Jicofo 2026-10-17 16:47:41.609 WARNING: [1] BridgeSelector.removeJvbAddress#115: Lost a bridge: jvbbrewery@internal-muc.meet.jitsi/df293002d841
+web-1      | 2026/10/17 16:46:57 [warn] 173#173: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:46:57 [warn] 173#173: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:46:57 [emerg] 173#173: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:46:58 [warn] 176#176: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:46:58 [warn] 176#176: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:46:58 [warn] 176#176: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:46:58 [emerg] 176#176: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:46:59 [warn] 179#179: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:46:59 [warn] 179#179: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_message_moderation            info	Loaded MUC message moderation and correction for muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_domain_mapper                 info	Loading mod_muc_domain_mapper for host speakerstats.meet.jitsi!
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_domain_mapper                 info	Loading mod_muc_domain_mapper for host avmoderation.meet.jitsi!
+web-1      | 2026/10/17 16:46:59 [warn] 179#179: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:46:59 [emerg] 179#179: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:00 [warn] 182#182: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:00 [warn] 182#182: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:00 [warn] 182#182: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:00 [emerg] 182#182: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:01 [warn] 185#185: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:01 [warn] 185#185: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:01 [warn] 185#185: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:01 [emerg] 185#185: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:02 [warn] 188#188: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:02 [warn] 188#188: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:02 [warn] 188#188: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:02 [emerg] 188#188: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:03 [warn] 191#191: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:03 [warn] 191#191: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:03 [warn] 191#191: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:03 [emerg] 191#191: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:04 [warn] 194#194: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:04 [warn] 194#194: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:04 [warn] 194#194: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:04 [emerg] 194#194: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:05 [warn] 197#197: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:05 [warn] 197#197: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:05 [warn] 197#197: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:05 [emerg] 197#197: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:06 [warn] 200#200: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:06 [warn] 200#200: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:06 [warn] 200#200: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:06 [emerg] 200#200: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:07 [warn] 203#203: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:07 [warn] 203#203: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:07 [warn] 203#203: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:07 [emerg] 203#203: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:08 [warn] 206#206: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:08 [warn] 206#206: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:08 [warn] 206#206: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:08 [emerg] 206#206: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:10 [warn] 209#209: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:10 [warn] 209#209: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:10 [warn] 209#209: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:10 [emerg] 209#209: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:11 [warn] 212#212: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:11 [warn] 212#212: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:11 [warn] 212#212: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:11 [emerg] 212#212: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:12 [warn] 215#215: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:12 [warn] 215#215: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_domain_mapper                 info	Loading mod_muc_domain_mapper for host meet.jitsi!
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_domain_mapper                 info	Loading mod_muc_domain_mapper for host auth.meet.jitsi!
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_domain_mapper                 info	Loading mod_muc_domain_mapper for host muc.meet.jitsi!
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_domain_mapper                 info	Loading mod_muc_domain_mapper for host lobby.meet.jitsi!
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_domain_mapper                 info	Loading mod_muc_domain_mapper for host breakout.meet.jitsi!
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_domain_mapper                 info	Loading mod_muc_domain_mapper for host internal-muc.meet.jitsi!
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_domain_mapper                 info	Loading mod_muc_domain_mapper for host endconference.meet.jitsi!
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_domain_mapper                 info	Loading mod_muc_domain_mapper for host metadata.meet.jitsi!
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_domain_mapper                 info	Loading mod_muc_domain_mapper for host polls.meet.jitsi!
+prosody-1  | 2026-10-17 16:46:47 muc.meet.jitsi:muc_domain_mapper                 info	Loading mod_muc_domain_mapper for host focus.meet.jitsi!
+web-1      | 2026/10/17 16:47:12 [warn] 215#215: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:12 [emerg] 215#215: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:13 [warn] 218#218: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:13 [warn] 218#218: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:13 [warn] 218#218: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:13 [emerg] 218#218: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:14 [warn] 221#221: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:14 [warn] 221#221: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:14 [warn] 221#221: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:14 [emerg] 221#221: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:15 [warn] 224#224: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:15 [warn] 224#224: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:15 [warn] 224#224: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:15 [emerg] 224#224: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:16 [warn] 227#227: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:16 [warn] 227#227: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:16 [warn] 227#227: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:16 [emerg] 227#227: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:17 [warn] 230#230: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:17 [warn] 230#230: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:17 [warn] 230#230: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:17 [emerg] 230#230: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:18 [warn] 233#233: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:18 [warn] 233#233: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:18 [warn] 233#233: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:18 [emerg] 233#233: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:19 [warn] 236#236: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:19 [warn] 236#236: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:19 [warn] 236#236: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:19 [emerg] 236#236: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:20 [warn] 239#239: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:20 [warn] 239#239: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:20 [warn] 239#239: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:20 [emerg] 239#239: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:21 [warn] 242#242: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:21 [warn] 242#242: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:21 [warn] 242#242: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:21 [emerg] 242#242: socket() [::]:8000 failed (97: Address family not supported by protocol)
+jicofo-1   | Jicofo 2026-10-17 16:47:41.626 INFO: [1] [xmpp_connection=client] XmppProvider$connectionListener$1.connectionClosed#149: XMPP connection closed
+jicofo-1   | Jicofo 2026-10-17 16:47:41.627 INFO: [1] [xmpp_connection=client] XmppProvider.shutdown#177: Disconnected.
+jicofo-1   | Jicofo 2026-10-17 16:47:41.627 INFO: [1] Main.main#119: Jicofo has been stopped, exiting with exit code 143
+jicofo-1   | s6-rc: info: service jicofo successfully stopped
+jicofo-1   | s6-rc: info: service 10-config: stopping
+jicofo-1   | s6-rc: info: service 10-config successfully stopped
+jicofo-1   | s6-rc: info: service legacy-cont-init: stopping
+jicofo-1   | s6-rc: info: service legacy-cont-init successfully stopped
+jicofo-1   | s6-rc: info: service fix-attrs: stopping
+jicofo-1   | s6-rc: info: service fix-attrs successfully stopped
+jicofo-1   | s6-rc: warning: service s6rc-oneshot-runner is marked as essential, not stopping it
+prosody-1  | 2026-10-17 16:46:47 meet.jitsi:muc_breakout_rooms                    info	Hook to muc events on muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 avmoderation.meet.jitsi:av_moderation_component  info	Hook to muc events on muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 metadata.meet.jitsi:room_metadata_component      info	Hook to muc events on muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 speakerstats.meet.jitsi:speakerstats_component   info	Conference component loaded muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 speakerstats.meet.jitsi:speakerstats_component   info	Hook to muc events on muc.meet.jitsi
+prosody-1  | 2026-10-17 16:46:47 speakerstats.meet.jitsi:speakerstats_component   info	Main muc service table: 0x561738ba3b20
+prosody-1  | 2026-10-17 16:46:48 mod_cron                                         info	Running periodic tasks
+prosody-1  | 2026-10-17 16:46:49 c2s56173824d7c0                                  info	Client connected
+prosody-1  | [register-setup] Prosody is ready!
+prosody-1  | Prosody normal mode, using default config
+prosody-1  | [register-setup] Registering focus user...
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	User account created: focus@auth.meet.jitsi
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	Account focus@auth.meet.jitsi role changed to prosody:member
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	Account password changed: focus@auth.meet.jitsi
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	User account enabled: focus@auth.meet.jitsi
+prosody-1  | 2026-10-17 16:46:49 admin561738778990                                info	Admin client disconnected: closed
+prosody-1  | [register-setup] Focus user registered successfully
+prosody-1  | [register-setup] Registering JVB user...
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	User account created: jvb@auth.meet.jitsi
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	Account jvb@auth.meet.jitsi role changed to prosody:member
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	Account password changed: jvb@auth.meet.jitsi
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	User account enabled: jvb@auth.meet.jitsi
+prosody-1  | 2026-10-17 16:46:49 admin5617388f8530                                info	Admin client disconnected: closed
+prosody-1  | [register-setup] JVB user registered successfully
+prosody-1  | [register-setup] Registering Jibri user...
+prosody-1  | 2026-10-17 16:46:49 c2s56173824d7c0                                  info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+prosody-1  | 2026-10-17 16:46:49 c2s561738379a70                                  info	Client connected
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	User account created: jibri@auth.meet.jitsi
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	Account jibri@auth.meet.jitsi role changed to prosody:member
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	Account password changed: jibri@auth.meet.jitsi
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	User account enabled: jibri@auth.meet.jitsi
+prosody-1  | 2026-10-17 16:46:49 admin561738320cc0                                info	Admin client disconnected: closed
+prosody-1  | [register-setup] Jibri user registered successfully
+prosody-1  | [register-setup] Registering Jigasi user...
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	User account created: jigasi@auth.meet.jitsi
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	Account jigasi@auth.meet.jitsi role changed to prosody:member
+web-1      | 2026/10/17 16:47:22 [warn] 245#245: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:22 [warn] 245#245: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:22 [warn] 245#245: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	Account password changed: jigasi@auth.meet.jitsi
+prosody-1  | 2026-10-17 16:46:49 usermanager                                      info	User account enabled: jigasi@auth.meet.jitsi
+prosody-1  | 2026-10-17 16:46:49 admin56173830c090                                info	Admin client disconnected: closed
+prosody-1  | [register-setup] Jigasi user registered successfully
+prosody-1  | 2026-10-17 16:46:49 c2s56173824d7c0                                  info	Authenticated as focus@auth.meet.jitsi [prosody:operator]
+prosody-1  | 2026-10-17 16:46:49 auth.meet.jitsi:limits_exception                 info	Setting stanza size limits for focus@auth.meet.jitsi to 10485760
+web-1      | 2026/10/17 16:47:22 [emerg] 245#245: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:23 [warn] 248#248: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:23 [warn] 248#248: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:23 [warn] 248#248: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:23 [emerg] 248#248: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:24 [warn] 251#251: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:24 [warn] 251#251: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+prosody-1  | 2026-10-17 16:46:49 admin56173899f750                                info	Admin client disconnected: closed
+prosody-1  | [register-setup] Roster command output:
+prosody-1  | Result: true
+prosody-1  | [register-setup] Roster subscription completed successfully
+prosody-1  | [register-setup] Reloading client_proxy module...
+prosody-1  | 2026-10-17 16:46:49 admin5617381d9b60                                info	Admin client disconnected: closed
+prosody-1  | [register-setup] Module reload output:
+prosody-1  | Reloaded on focus.meet.jitsi
+prosody-1  | OK: Module reloaded on 1 host
+prosody-1  | [register-setup] Module reloaded successfully
+prosody-1  | [register-setup] All users registered and roster modified, service completed
+prosody-1  | s6-rc: info: service 70-register-setup successfully started
+prosody-1  | s6-rc: info: service legacy-services: starting
+web-1      | 2026/10/17 16:47:24 [warn] 251#251: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+prosody-1  | s6-rc: info: service legacy-services successfully started
+web-1      | 2026/10/17 16:47:24 [emerg] 251#251: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:25 [warn] 254#254: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:25 [warn] 254#254: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:25 [warn] 254#254: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:25 [emerg] 254#254: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:26 [warn] 257#257: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:26 [warn] 257#257: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:26 [warn] 257#257: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:26 [emerg] 257#257: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:27 [warn] 260#260: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:27 [warn] 260#260: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:27 [warn] 260#260: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:27 [emerg] 260#260: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:28 [warn] 263#263: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:28 [warn] 263#263: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:28 [warn] 263#263: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:28 [emerg] 263#263: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:30 [warn] 266#266: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:30 [warn] 266#266: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:30 [warn] 266#266: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:30 [emerg] 266#266: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:31 [warn] 269#269: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:31 [warn] 269#269: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:31 [warn] 269#269: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:31 [emerg] 269#269: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:32 [warn] 272#272: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:32 [warn] 272#272: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:32 [warn] 272#272: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:32 [emerg] 272#272: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:33 [warn] 275#275: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+prosody-1  | 2026-10-17 16:46:50 c2s561738379a70                                  info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+prosody-1  | 2026-10-17 16:46:50 c2s561738379a70                                  info	Authenticated as jvb@auth.meet.jitsi [prosody:operator]
+prosody-1  | 2026-10-17 16:46:50 auth.meet.jitsi:limits_exception                 info	Setting stanza size limits for jvb@auth.meet.jitsi to 10485760
+prosody-1  | 2026-10-17 16:47:41 c2s56173824d7c0                                  info	Client disconnected: connection closed
+prosody-1  | 2026-10-17 16:47:42 c2s561738379a70                                  info	Client disconnected: connection closed
+prosody-1  | s6-rc: info: service legacy-services: stopping
+prosody-1  | s6-rc: info: service legacy-services successfully stopped
+prosody-1  | s6-rc: info: service 70-register-setup: stopping
+prosody-1  | s6-rc: info: service prosody: stopping
+prosody-1  | s6-rc: info: service 20-saslauthd: stopping
+prosody-1  | s6-rc: info: service 70-register-setup successfully stopped
+web-1      | 2026/10/17 16:47:33 [warn] 275#275: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:33 [warn] 275#275: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:33 [emerg] 275#275: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:34 [warn] 278#278: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:34 [warn] 278#278: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:34 [warn] 278#278: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:34 [emerg] 278#278: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:35 [warn] 281#281: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:35 [warn] 281#281: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:35 [warn] 281#281: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:35 [emerg] 281#281: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:36 [warn] 284#284: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:36 [warn] 284#284: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:36 [warn] 284#284: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+prosody-1  | s6-rc: info: service 20-saslauthd successfully stopped
+prosody-1  | 2026-10-17 16:47:46 startup                                          warn	Received SIGTERM
+prosody-1  | 2026-10-17 16:47:46 startup                                          info	Shutting down: Received SIGTERM
+prosody-1  | 2026-10-17 16:47:46 portmanager                                      info	Deactivated service 'c2s'
+prosody-1  | 2026-10-17 16:47:46 portmanager                                      info	Deactivated service 'c2s_direct_tls'
+prosody-1  | 2026-10-17 16:47:46 portmanager                                      info	Deactivated service 'legacy_ssl'
+prosody-1  | 2026-10-17 16:47:46 general                                          info	Shutting down...
+prosody-1  | 2026-10-17 16:47:46 general                                          info	Shutdown status: Cleaning up
+prosody-1  | 2026-10-17 16:47:46 general                                          info	Shutdown complete
+prosody-1  | s6-rc: info: service prosody successfully stopped
+prosody-1  | s6-rc: info: service 10-config: stopping
+prosody-1  | s6-rc: info: service 10-config successfully stopped
+prosody-1  | s6-rc: info: service legacy-cont-init: stopping
+prosody-1  | s6-rc: info: service legacy-cont-init successfully stopped
+web-1      | 2026/10/17 16:47:36 [emerg] 284#284: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:37 [warn] 287#287: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:37 [warn] 287#287: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:37 [warn] 287#287: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+prosody-1  | s6-rc: info: service fix-attrs: stopping
+web-1      | 2026/10/17 16:47:37 [emerg] 287#287: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:38 [warn] 290#290: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+prosody-1  | s6-rc: info: service fix-attrs successfully stopped
+prosody-1  | s6-rc: warning: service s6rc-oneshot-runner is marked as essential, not stopping it
+web-1      | 2026/10/17 16:47:38 [warn] 290#290: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:38 [warn] 290#290: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:38 [emerg] 290#290: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | 2026/10/17 16:47:39 [warn] 293#293: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:15
+web-1      | 2026/10/17 16:47:39 [warn] 293#293: the "listen ... http2" directive is deprecated, use the "http2" directive instead in /run/web/config/nginx/site-confs/default:18
+web-1      | 2026/10/17 16:47:39 [warn] 293#293: could not build optimal variables_hash, you should increase either variables_hash_max_size: 1024 or variables_hash_bucket_size: 64; ignoring variables_hash_bucket_size
+web-1      | 2026/10/17 16:47:39 [emerg] 293#293: socket() [::]:8000 failed (97: Address family not supported by protocol)
+web-1      | s6-rc: info: service legacy-services: stopping
+web-1      | s6-rc: info: service legacy-services successfully stopped
+web-1      | s6-rc: info: service jaas-account: stopping
+web-1      | s6-rc: info: service acme-renewal: stopping
+web-1      | s6-rc: info: service jaas-account successfully stopped
+web-1      | s6-rc: info: service nginx: stopping
+web-1      | s6-rc: info: service acme-renewal successfully stopped
+web-1      | s6-rc: info: service nginx successfully stopped
+web-1      | s6-rc: info: service 10-config: stopping
+web-1      | s6-rc: info: service 10-config successfully stopped
+web-1      | s6-rc: info: service legacy-cont-init: stopping
+web-1      | s6-rc: info: service legacy-cont-init successfully stopped
+web-1      | s6-rc: info: service fix-attrs: stopping
+web-1      | s6-rc: info: service fix-attrs successfully stopped
+web-1      | s6-rc: warning: service s6rc-oneshot-runner is marked as essential, not stopping it

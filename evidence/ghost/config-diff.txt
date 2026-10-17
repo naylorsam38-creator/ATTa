@@ -1,0 +1,12 @@
+6c6
+< DOMAIN=example.com
+---
+> DOMAIN=localhost
+21c21
+< DATABASE_ROOT_PASSWORD=<redacted>
+---
+> DATABASE_ROOT_PASSWORD=<redacted>
+23c23
+< DATABASE_PASSWORD=<redacted>
+---
+> DATABASE_PASSWORD=<redacted>

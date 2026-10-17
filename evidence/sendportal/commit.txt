@@ -1,0 +1,3 @@
+commit=c76a9cffa11fa764877921dd734eb75848c526ac
+date=2026-10-12T11:19:49+01:00
+subject=Fix sp:install skipping migrations on a fresh install (#344)

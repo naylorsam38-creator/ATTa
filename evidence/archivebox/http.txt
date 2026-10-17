@@ -1,0 +1,3 @@
+302 http://admin.archivebox.localhost:5797/admin/ -> http://admin.archivebox.localhost:5797/admin/login/?next=/admin/
+302 http://admin.archivebox.localhost:5797/ -> http://admin.archivebox.localhost:5797/admin/login/?next=/
+302 http://localhost:5797/ -> http://localhost:5797/admin/login/?next=/

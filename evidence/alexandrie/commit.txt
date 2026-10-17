@@ -1,0 +1,3 @@
+commit=ccf5603ea067a8d20d45d5d5e899ff3235a5c09c
+date=2026-09-21T22:38:07+02:00
+subject=docs: update curl commands and link formatting in README.md (#780)

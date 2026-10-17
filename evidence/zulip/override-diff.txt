@@ -1,0 +1,8 @@
+46c46
+<       SETTING_ZULIP_ADMINISTRATOR: "zulip-admin@example.com"
+---
+>       SETTING_ZULIP_ADMINISTRATOR: "tester@example.com"
+58c58
+<       # CERTIFICATES: "certbot"
+---
+>       CERTIFICATES: "self-signed"

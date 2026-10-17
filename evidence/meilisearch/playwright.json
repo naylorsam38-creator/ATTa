@@ -1,0 +1,74 @@
+{
+  "startUrl": "http://localhost:7700/",
+  "origin": "http://localhost:7700",
+  "pages": [
+    {
+      "url": "http://localhost:7700/",
+      "finalUrl": "http://localhost:7700/",
+      "status": 200,
+      "title": "Mini-dashboard | Meilisearch",
+      "error": null
+    }
+  ],
+  "consoleErrors": [
+    {
+      "url": "http://localhost:7700/",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+    },
+    {
+      "url": "http://localhost:7700/",
+      "text": "MeiliSearchApiError: Invalid value at `.queries[0].indexUid`: `` is not a valid index uid. Index uid can be an integer or a string containing only alphanumeric characters, hyphens (-) and underscores (_), and can not be more than 512 bytes.\n    at a0.la (http://localhost:7700/assets/index-dDwzADMz.js:50:15562)\n    at async l0.multiSearch (http://localhost:7700/assets/index-dDwzADMz.js:50:30669)\n    at async Object.multiSearch (http://localhost:7700/assets/index-dDwzADMz.js:50:33598)\n    at async"
+    }
+  ],
+  "pageErrors": [],
+  "failedRequests": [],
+  "badResponses": [
+    {
+      "url": "http://localhost:7700/multi-search",
+      "status": 400,
+      "method": "POST"
+    }
+  ],
+  "clicks": [
+    {
+      "page": "http://localhost:7700/",
+      "text": "books\n2",
+      "afterUrl": "http://localhost:7700/"
+    },
+    {
+      "page": "http://localhost:7700/",
+      "text": "Api Key",
+      "afterUrl": "http://localhost:7700/"
+    },
+    {
+      "page": "http://localhost:7700/",
+      "text": "Close Panel",
+      "afterUrl": "http://localhost:7700/"
+    }
+  ],
+  "skipped": [
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Subscribe",
+      "page": "http://localhost:7700/"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Subscribe",
+      "page": "http://localhost:7700/"
+    }
+  ],
+  "forms": [
+    {
+      "page": "http://localhost:7700/",
+      "submitLabel": "Export Dataset",
+      "filled": 2,
+      "afterUrl": "http://localhost:7700/",
+      "validation": [
+        "invalid field : Please fill out this field."
+      ]
+    }
+  ],
+  "notes": [],
+  "unvisitedQueue": []
+}

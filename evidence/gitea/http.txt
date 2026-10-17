@@ -1,0 +1,5 @@
+200 http://localhost:3000/
+{
+  "status": "pass",
+  "description": "Gitea: Git with a cup of tea"
+} 200

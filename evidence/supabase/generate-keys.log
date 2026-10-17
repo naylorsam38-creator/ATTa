@@ -1,0 +1,21 @@
+
+JWT_SECRET=<redacted>
+
+ANON_KEY=<redacted>
+SERVICE_ROLE_KEY=<redacted>
+
+SECRET_KEY_BASE=<redacted>
+REALTIME_DB_ENC_KEY=<redacted>
+VAULT_ENC_KEY=<redacted>
+PG_META_CRYPTO_KEY=<redacted>
+LOGFLARE_PUBLIC_ACCESS_TOKEN=<redacted>
+LOGFLARE_PRIVATE_ACCESS_TOKEN=<redacted>
+S3_PROTOCOL_ACCESS_KEY_ID=<redacted>
+S3_PROTOCOL_ACCESS_KEY_SECRET=<redacted>
+MINIO_ROOT_PASSWORD=<redacted>
+
+POSTGRES_PASSWORD=<redacted>
+DASHBOARD_PASSWORD=<redacted>
+
+Updating .env...
+exit=0

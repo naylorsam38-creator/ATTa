@@ -1,0 +1,12 @@
+visited editor title=Table Editor | Default Project | Default Organization | Supabase
+visited database/schemas title=Schema Visualizer | Database | Default Project | Default Organization | Supabase
+visited auth/users title=Users | Authentication | Default Project | Default Organization | Supabase
+visited storage/files title=Files | Storage | Default Project | Default Organization | Supabase
+visited functions title=Edge Functions | Default Project | Default Organization | Supabase
+visited realtime/inspector title=Realtime Inspector | Realtime | Default Project | Default Organization | Supabase
+visited advisors/security title=Advisors | Default Project | Default Organization | Supabase
+visited observability/query-performance title=Query Performance | Observability | Default Project | Default Organization | Supabase
+visited settings/jwt title=JWT Keys | Settings | Default Project | Default Organization | Supabase
+visited database/tables title=Tables | Database | Default Project | Default Organization | Supabase
+visited database/roles title=Roles | Database | Default Project | Default Organization | Supabase
+sql result area: ok; Results Chart 1 row(Limited to only 1

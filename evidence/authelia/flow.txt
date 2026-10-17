@@ -1,0 +1,4 @@
+landed: https://authelia.example.com/?rd=https%3A%2F%2Ftraefik.example.com%2F&rm=GET
+after 1FA: https://traefik.example.com/dashboard/ title=Traefik Proxy
+secure ->: https://authelia.example.com/2fa/one-time-password?rd=https%3A%2F%2Fsecure.example.com%2F&rm=GET
+2fa page text: English T Hi Testy McTestface LOGOUT | SWITCH USER | METHODS One-Time Password The resource you're attempting to access requires two-factor authentication Register your first device by clicking on the link below Register device Powered by Authelia

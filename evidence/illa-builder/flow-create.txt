@@ -1,0 +1,6 @@
+logged in: http://localhost:8000/cloud/workspace/0/apps
+--- create app
+buttons: Upgrade | Create new | Edit
+menu: 
+items: 0
+after create: http://localhost:8000/cloud/workspace/0/apps title=ILLA Cloud

@@ -1,0 +1,40 @@
+ Volume t-alexandrie_rustfs_logs Creating 
+ Volume t-alexandrie_rustfs_logs Creating 
+ Volume t-alexandrie_mysql_data Creating 
+ Volume t-alexandrie_mysql_data Creating 
+ Volume t-alexandrie_rustfs_data Creating 
+ Volume t-alexandrie_rustfs_data Creating 
+ Network t-alexandrie_alexandrie-network Creating 
+ Network t-alexandrie_alexandrie-network Creating 
+ Volume t-alexandrie_rustfs_logs Created 
+ Volume t-alexandrie_rustfs_logs Created 
+ Volume t-alexandrie_mysql_data Created 
+ Volume t-alexandrie_mysql_data Created 
+ Volume t-alexandrie_rustfs_data Created 
+ Volume t-alexandrie_rustfs_data Created 
+ Network t-alexandrie_alexandrie-network Created 
+ Network t-alexandrie_alexandrie-network Created 
+ Container alexandrie-rustfs Creating 
+ Container alexandrie-mysql Creating 
+ Container alexandrie-rustfs Created 
+ Container alexandrie-mysql Created 
+ Container alexandrie-backend Creating 
+ Container alexandrie-backend Created 
+ Container alexandrie-frontend Creating 
+ Container alexandrie-frontend Created 
+ Container alexandrie-rustfs Starting 
+ Container alexandrie-mysql Starting 
+ Container alexandrie-rustfs Started 
+ Container alexandrie-mysql Started 
+ Container alexandrie-mysql Waiting 
+ Container alexandrie-rustfs Waiting 
+ Container alexandrie-rustfs Healthy 
+ Container alexandrie-mysql Healthy 
+ Container alexandrie-backend Starting 
+ Container alexandrie-backend Started 
+ Container alexandrie-frontend Starting 
+ Container alexandrie-frontend Started 
+
+real	0m12.998s
+user	0m0.137s
+sys	0m0.068s

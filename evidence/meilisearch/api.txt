@@ -1,0 +1,6 @@
+{"taskUid":0,"indexUid":"books","status":"enqueued","type":"documentAdditionOrUpdate","enqueuedAt":"2026-10-17T16:44:04.343898279Z"}
+{"results":[{"uid":0,"batchUid":0,"indexUid":"books","status":"processing","type":"documentAdditionOrUpdate","canceledBy":null,"details":{"receivedDocuments":2,"indexedDocuments":null},"error":null,"duration":null,"enqueuedAt":"2026-10-17T16:44:04.343898279Z","startedAt":"2026-10-17T16:44:04.346944531Z","finishedAt":null}],"total":1,"limit":1,"from":0,"next":null}
+{"hits":[],"query":"fictonal","processingTimeMs":18,"limit":20,"offset":0,"estimatedTotalHits":0,"requestUid":"01a14abf-cd6a-7a90-82b6-8bacbc6fb50b"}
+{"message":"Invalid value type at `.limit`: expected a positive integer, but found a string: `\"bad\"`","code":"invalid_search_limit","type":"invalid_request","link":"https://docs.meilisearch.com/errors#invalid_search_limit"}
+task0 after ~2s: succeeded PT2.500378706S None
+{"hits":[{"id":1,"title":"Fictional Test Book","author":"Testy McTestface"}],"query":"fictonal","processingTimeMs":0,"limit":20,"offset":0,"estimatedTotalHits":1,"requestUid":"01a14abf-e67c-7b20-a99a-ebc05c0d5066"}

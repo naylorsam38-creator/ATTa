@@ -1,0 +1,10 @@
+const launch = require('./launch');
+(async () => { const b = await launch(); const ctx = await b.newContext({ httpCredentials: { username: 'supabase', password: 'TestDashPass2026' } }); const p = await ctx.newPage();
+  const reqs = new Map(); p.on('request', r => reqs.set(r, Date.now()));
+  p.on('requestfinished', r => reqs.delete(r));
+  p.on('requestfailed', r => { console.log('FAILED', r.failure().errorText, r.method(), r.url().slice(0, 160)); reqs.delete(r); });
+  p.on('response', r => { if (r.status() >= 400) console.log('HTTP', r.status(), r.url().slice(0, 160)); });
+  p.on('console', m => m.type() === 'error' && console.log('CONSOLE', m.text().split('\n')[0]));
+  await p.goto('http://localhost:8000/project/default', { waitUntil: 'load' }); await p.waitForTimeout(12000);
+  console.log('still pending:', [...reqs.keys()].map(r => r.url().slice(0, 120)));
+  await b.close(); })();

@@ -1,0 +1,4 @@
+commit=906433ac6b1d5ec3cc23f88c8297d29fa87427fd
+date=2026-10-16T12:57:30+00:00
+subject=fix(@medusajs/medusa): accept case-insensitive order directions and report single-query errors on POST /store/search (#17313)
+dtc-starter commit=f677db438f27294fc50e4c7c6612e71ff38eeff5 date=2026-10-09T10:59:29-03:00

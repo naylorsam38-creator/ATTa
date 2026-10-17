@@ -1,0 +1,193 @@
+latest: Pulling from illasoft/illa-builder
+27c45a07ef3f: Pulling fs layer
+bb26f7e78134: Pulling fs layer
+6bfd691179e1: Pulling fs layer
+99b5b1679915: Pulling fs layer
+96147f5085fa: Pulling fs layer
+55c520fc03c5: Pulling fs layer
+2b6113fb2a7b: Pulling fs layer
+6f155ac91c9e: Pulling fs layer
+45587aaa5f27: Pulling fs layer
+b269d1c1b7e1: Pulling fs layer
+144293d36fee: Pulling fs layer
+4effb95d5849: Pulling fs layer
+70b1d2917eb7: Pulling fs layer
+d0ac84d6672c: Pulling fs layer
+3ab0fa81c78d: Pulling fs layer
+e9995326b091: Pulling fs layer
+a0cb03f17886: Pulling fs layer
+5471b8504602: Pulling fs layer
+fc2dee53a4f3: Pulling fs layer
+f09e2f41151c: Pulling fs layer
+c8e073b7ae91: Pulling fs layer
+f1605d32a2b6: Pulling fs layer
+c60d0abf286a: Pulling fs layer
+52861ae3dcdd: Pulling fs layer
+9a18b734ad1d: Pulling fs layer
+ed37d80cc1c8: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+199a7c7929ed: Pulling fs layer
+69d78072d005: Pulling fs layer
+db8e8c8b2242: Pulling fs layer
+7a04a22e62cc: Pulling fs layer
+b8f79c665b71: Pulling fs layer
+5c8d15e7524f: Pulling fs layer
+9d95f1a95fd9: Pulling fs layer
+3e1fafbbcd36: Pulling fs layer
+fe1567fc8859: Pulling fs layer
+bece0b0fcd92: Pulling fs layer
+e378c88b39a6: Pulling fs layer
+c99d80392cac: Pulling fs layer
+4141f703a55b: Pulling fs layer
+f548aa1c95a7: Pulling fs layer
+919f14717d71: Pulling fs layer
+aacdd7753a8f: Pulling fs layer
+5fa13a20dbb1: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+93e29ff85731: Pulling fs layer
+ceb994737231: Pulling fs layer
+461e75036a05: Pulling fs layer
+4293de108664: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+fb07fa6e558c: Pulling fs layer
+47dee4aa857b: Pulling fs layer
+4f8cacebb4d8: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+a7595858cc18: Pulling fs layer
+b3f3493f12b8: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+3b42fd1fc44f: Pulling fs layer
+db272e3176cd: Pulling fs layer
+ad15fd3ac310: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+289632660e7a: Pulling fs layer
+b8af0da60d3e: Pulling fs layer
+c2e7b41d1a20: Pulling fs layer
+70b1d2917eb7: Download complete
+bb26f7e78134: Download complete
+99b5b1679915: Download complete
+d0ac84d6672c: Download complete
+27c45a07ef3f: Download complete
+e9995326b091: Download complete
+3ab0fa81c78d: Download complete
+6f155ac91c9e: Download complete
+a0cb03f17886: Download complete
+96147f5085fa: Download complete
+55c520fc03c5: Download complete
+2b6113fb2a7b: Download complete
+4effb95d5849: Download complete
+b269d1c1b7e1: Download complete
+45587aaa5f27: Download complete
+144293d36fee: Download complete
+5471b8504602: Download complete
+fc2dee53a4f3: Download complete
+c60d0abf286a: Download complete
+c8e073b7ae91: Download complete
+f1605d32a2b6: Download complete
+f09e2f41151c: Download complete
+ed37d80cc1c8: Download complete
+9a18b734ad1d: Download complete
+52861ae3dcdd: Download complete
+4f4fb700ef54: Download complete
+69d78072d005: Download complete
+b8f79c665b71: Download complete
+199a7c7929ed: Download complete
+db8e8c8b2242: Download complete
+7a04a22e62cc: Download complete
+5c8d15e7524f: Download complete
+3e1fafbbcd36: Download complete
+9d95f1a95fd9: Download complete
+e378c88b39a6: Download complete
+fe1567fc8859: Download complete
+bece0b0fcd92: Download complete
+4141f703a55b: Download complete
+f548aa1c95a7: Download complete
+6bfd691179e1: Download complete
+aacdd7753a8f: Download complete
+c99d80392cac: Download complete
+461e75036a05: Download complete
+5fa13a20dbb1: Download complete
+93e29ff85731: Download complete
+47dee4aa857b: Download complete
+a7595858cc18: Download complete
+919f14717d71: Download complete
+4293de108664: Download complete
+b3f3493f12b8: Download complete
+4f8cacebb4d8: Download complete
+fb07fa6e558c: Download complete
+3b42fd1fc44f: Download complete
+ceb994737231: Download complete
+db272e3176cd: Download complete
+ad15fd3ac310: Download complete
+289632660e7a: Download complete
+b8af0da60d3e: Download complete
+1e2ca1264417: Download complete
+e9995326b091: Pull complete
+bb26f7e78134: Pull complete
+a0cb03f17886: Pull complete
+c8e073b7ae91: Pull complete
+99b5b1679915: Pull complete
+d0ac84d6672c: Pull complete
+55c520fc03c5: Pull complete
+4effb95d5849: Pull complete
+27c45a07ef3f: Pull complete
+2b6113fb2a7b: Pull complete
+45587aaa5f27: Pull complete
+f1605d32a2b6: Pull complete
+144293d36fee: Pull complete
+3ab0fa81c78d: Pull complete
+3e1fafbbcd36: Pull complete
+bece0b0fcd92: Pull complete
+c99d80392cac: Pull complete
+f548aa1c95a7: Pull complete
+919f14717d71: Pull complete
+5fa13a20dbb1: Pull complete
+93e29ff85731: Pull complete
+c2e7b41d1a20: Download complete
+ceb994737231: Pull complete
+4293de108664: Pull complete
+fb07fa6e558c: Pull complete
+9d95f1a95fd9: Pull complete
+e378c88b39a6: Pull complete
+4141f703a55b: Pull complete
+aacdd7753a8f: Pull complete
+461e75036a05: Pull complete
+fe1567fc8859: Pull complete
+db272e3176cd: Pull complete
+ad15fd3ac310: Pull complete
+289632660e7a: Pull complete
+b8af0da60d3e: Pull complete
+70b1d2917eb7: Pull complete
+6f155ac91c9e: Pull complete
+96147f5085fa: Pull complete
+b269d1c1b7e1: Pull complete
+5471b8504602: Pull complete
+fc2dee53a4f3: Pull complete
+f09e2f41151c: Pull complete
+9a18b734ad1d: Pull complete
+52861ae3dcdd: Pull complete
+ed37d80cc1c8: Pull complete
+199a7c7929ed: Pull complete
+db8e8c8b2242: Pull complete
+7a04a22e62cc: Pull complete
+5c8d15e7524f: Pull complete
+c60d0abf286a: Pull complete
+4f4fb700ef54: Pull complete
+69d78072d005: Pull complete
+b8f79c665b71: Pull complete
+47dee4aa857b: Pull complete
+a7595858cc18: Pull complete
+b3f3493f12b8: Pull complete
+4f8cacebb4d8: Pull complete
+3b42fd1fc44f: Pull complete
+c2e7b41d1a20: Pull complete
+6bfd691179e1: Pull complete
+Digest: sha256:4cb2e832e4d4b678863442c091975e1250ba60891712a3f825812480bcaa0562
+Status: Downloaded newer image for illasoft/illa-builder:latest
+docker.io/illasoft/illa-builder:latest
+
+real	0m33.607s
+user	0m0.096s
+sys	0m0.042s

@@ -1,0 +1,13 @@
+time="2026-10-17T16:16:08Z" level=warning msg="/home/user/apps-test/appsmith-run/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Network t-appsmith_default Creating 
+ Network t-appsmith_default Creating 
+ Network t-appsmith_default Created 
+ Network t-appsmith_default Created 
+ Container appsmith Creating 
+ Container appsmith Created 
+ Container appsmith Starting 
+ Container appsmith Started 
+
+real	0m2.197s
+user	0m0.072s
+sys	0m0.044s

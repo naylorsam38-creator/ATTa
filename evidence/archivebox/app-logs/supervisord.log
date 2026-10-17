@@ -1,0 +1,36 @@
+2026-10-17 15:06:24,954 INFO Included extra file "/tmp/archivebox/workers/initial_startup.conf" during parsing
+2026-10-17 15:06:24,954 INFO Included extra file "/tmp/archivebox/workers/initial_startup.conf" during parsing
+2026-10-17 15:06:24,958 INFO RPC interface 'supervisor' initialized
+2026-10-17 15:06:24,958 INFO RPC interface 'supervisor' initialized
+2026-10-17 15:06:24,958 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-10-17 15:06:24,958 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-10-17 15:06:24,958 INFO supervisord started with pid 378
+2026-10-17 15:06:24,958 INFO supervisord started with pid 378
+2026-10-17 15:06:25,711 INFO spawned: 'worker_daphne' with pid 382
+2026-10-17 15:06:25,711 INFO spawned: 'worker_daphne' with pid 382
+2026-10-17 15:06:25,711 INFO success: worker_daphne entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:06:25,711 INFO success: worker_daphne entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:06:25,719 INFO spawned: 'worker_sonic' with pid 383
+2026-10-17 15:06:25,719 INFO spawned: 'worker_sonic' with pid 383
+2026-10-17 15:06:25,720 INFO success: worker_sonic entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:06:25,720 INFO success: worker_sonic entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:06:25,725 INFO spawned: 'worker_runner' with pid 384
+2026-10-17 15:06:25,725 INFO spawned: 'worker_runner' with pid 384
+2026-10-17 15:06:25,725 INFO success: worker_runner entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:06:25,725 INFO success: worker_runner entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:06:25,732 INFO spawned: 'worker_supervisord_parent_watchdog' with pid 389
+2026-10-17 15:06:25,732 INFO spawned: 'worker_supervisord_parent_watchdog' with pid 389
+2026-10-17 15:06:25,732 INFO success: worker_supervisord_parent_watchdog entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:06:25,732 INFO success: worker_supervisord_parent_watchdog entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-10-17 15:14:43,407 INFO exited: worker_sonic (exit status 0; expected)
+2026-10-17 15:14:43,407 INFO exited: worker_sonic (exit status 0; expected)
+2026-10-17 15:14:43,407 WARN exited: worker_supervisord_parent_watchdog (terminated by SIGTERM; not expected)
+2026-10-17 15:14:43,407 WARN exited: worker_supervisord_parent_watchdog (terminated by SIGTERM; not expected)
+2026-10-17 15:14:43,407 WARN received SIGTERM indicating exit request
+2026-10-17 15:14:43,407 WARN received SIGTERM indicating exit request
+2026-10-17 15:14:43,407 INFO waiting for worker_daphne, worker_runner to die
+2026-10-17 15:14:43,407 INFO waiting for worker_daphne, worker_runner to die
+2026-10-17 15:14:43,722 WARN exited: worker_runner (exit status 143; not expected)
+2026-10-17 15:14:43,722 WARN exited: worker_runner (exit status 143; not expected)
+2026-10-17 15:14:43,905 INFO exited: worker_daphne (exit status 0; expected)
+2026-10-17 15:14:43,905 INFO exited: worker_daphne (exit status 0; expected)

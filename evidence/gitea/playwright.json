@@ -1,0 +1,387 @@
+{
+  "startUrl": "http://localhost:3000/user/login",
+  "origin": "http://localhost:3000",
+  "pages": [
+    {
+      "url": "http://localhost:3000/user/login",
+      "finalUrl": "http://localhost:3000/user/login",
+      "status": 200,
+      "title": "Sign In - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/",
+      "finalUrl": "http://localhost:3000/",
+      "status": 200,
+      "title": "testuser - Dashboard - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/repo/create",
+      "finalUrl": "http://localhost:3000/repo/create",
+      "status": 200,
+      "title": "New Repository - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/explore/repos",
+      "finalUrl": "http://localhost:3000/explore/repos",
+      "status": 200,
+      "title": "Explore - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/explore/repos?only_show_relevant=false&q=test&sort=recentupdate",
+      "finalUrl": "http://localhost:3000/explore/repos?only_show_relevant=false&q=test&sort=recentupdate",
+      "status": 200,
+      "title": "Explore - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/user/sign_up",
+      "finalUrl": "http://localhost:3000/",
+      "status": 200,
+      "title": "testuser - Dashboard - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/user/forgot_password",
+      "finalUrl": "http://localhost:3000/user/forgot_password",
+      "status": 200,
+      "title": "Forgot Password - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/assets/licenses.txt",
+      "finalUrl": "http://localhost:3000/assets/licenses.txt",
+      "status": 200,
+      "title": "",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/api/swagger",
+      "finalUrl": "http://localhost:3000/api/swagger",
+      "status": 200,
+      "title": "Gitea API",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/notifications",
+      "finalUrl": "http://localhost:3000/notifications",
+      "status": 200,
+      "title": "Notifications - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/issues",
+      "finalUrl": "http://localhost:3000/issues",
+      "status": 200,
+      "title": "Issues - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/issues?type=your_repositories&sort=recentupdate&state=open&q=test&search_mode=exact",
+      "finalUrl": "http://localhost:3000/issues?type=your_repositories&sort=recentupdate&state=open&q=test&search_mode=exact",
+      "status": 200,
+      "title": "Issues - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/pulls",
+      "finalUrl": "http://localhost:3000/pulls",
+      "status": 200,
+      "title": "Pull Requests - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/pulls?type=your_repositories&sort=recentupdate&state=open&q=test&search_mode=exact",
+      "finalUrl": "http://localhost:3000/pulls?type=your_repositories&sort=recentupdate&state=open&q=test&search_mode=exact",
+      "status": 200,
+      "title": "Pull Requests - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/milestones",
+      "finalUrl": "http://localhost:3000/milestones",
+      "status": 200,
+      "title": "Milestones - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/milestones?type=&repos=%5B%5D&sort=&state=open&q=test",
+      "finalUrl": "http://localhost:3000/milestones?type=&repos=%5B%5D&sort=&state=open&q=test",
+      "status": 200,
+      "title": "Milestones - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/repo/migrate",
+      "finalUrl": "http://localhost:3000/repo/migrate",
+      "status": 200,
+      "title": "New Migration - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/org/create",
+      "finalUrl": "http://localhost:3000/org/create",
+      "status": 200,
+      "title": "New Organization - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/testuser",
+      "finalUrl": "http://localhost:3000/testuser",
+      "status": 200,
+      "title": "testuser - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/testuser?tab=repositories&q=test&sort=recentupdate",
+      "finalUrl": "http://localhost:3000/testuser?tab=repositories&q=test&sort=recentupdate",
+      "status": 200,
+      "title": "testuser - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/testuser?tab=stars",
+      "finalUrl": "http://localhost:3000/testuser?tab=stars",
+      "status": 200,
+      "title": "testuser - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/notifications/subscriptions",
+      "finalUrl": "http://localhost:3000/notifications/subscriptions",
+      "status": 200,
+      "title": "Subscriptions - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/user/settings",
+      "finalUrl": "http://localhost:3000/user/settings",
+      "status": 200,
+      "title": "Profile - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/-/admin",
+      "finalUrl": "http://localhost:3000/-/admin",
+      "status": 200,
+      "title": "Dashboard - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/explore/users",
+      "finalUrl": "http://localhost:3000/explore/users",
+      "status": 200,
+      "title": "Explore - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/explore/users?q=testuser",
+      "finalUrl": "http://localhost:3000/explore/users?q=testuser",
+      "status": 200,
+      "title": "Explore - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/-/admin/config",
+      "finalUrl": "http://localhost:3000/-/admin/config",
+      "status": 200,
+      "title": "Summary - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/explore/organizations",
+      "finalUrl": "http://localhost:3000/explore/organizations",
+      "status": 200,
+      "title": "Explore - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/explore/organizations?q=test",
+      "finalUrl": "http://localhost:3000/explore/organizations?q=test",
+      "status": 200,
+      "title": "Explore - Gitea: Git with a cup of tea",
+      "error": null
+    },
+    {
+      "url": "http://localhost:3000/openapi3.v1.json",
+      "finalUrl": "http://localhost:3000/openapi3.v1.json",
+      "status": 200,
+      "title": "",
+      "error": null
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://localhost:3000/openapi3.v1.json",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "badResponses": [],
+  "clicks": [
+    {
+      "page": "http://localhost:3000/api/swagger",
+      "text": "Authorize",
+      "afterUrl": "http://localhost:3000/api/swagger"
+    },
+    {
+      "page": "http://localhost:3000/api/swagger",
+      "text": "Expand operation",
+      "afterUrl": "http://localhost:3000/api/swagger#/admin"
+    }
+  ],
+  "skipped": [
+    {
+      "reason": "destructive-looking link",
+      "text": "Sign Out",
+      "href": "http://localhost:3000/user/logout"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Delete Current Avatar",
+      "page": "http://localhost:3000/user/settings"
+    }
+  ],
+  "forms": [
+    {
+      "page": "http://localhost:3000/user/login",
+      "submitLabel": "Sign In",
+      "filled": 3,
+      "afterUrl": "http://localhost:3000/",
+      "validation": []
+    },
+    {
+      "page": "http://localhost:3000/repo/create",
+      "submitLabel": "Create Repository",
+      "filled": 10,
+      "afterUrl": "http://localhost:3000/repo/create",
+      "validation": [
+        "DefaultBranch must be a well-formed Git reference name."
+      ]
+    },
+    {
+      "page": "http://localhost:3000/explore/repos",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:3000/explore/repos?only_show_relevant=false&q=test&sort=recentupdate",
+      "validation": []
+    },
+    {
+      "page": "http://localhost:3000/issues",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:3000/issues?type=your_repositories&sort=recentupdate&state=open&q=test&search_mode=exact",
+      "validation": []
+    },
+    {
+      "page": "http://localhost:3000/pulls",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:3000/pulls?type=your_repositories&sort=recentupdate&state=open&q=test&search_mode=exact",
+      "validation": []
+    },
+    {
+      "page": "http://localhost:3000/milestones",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:3000/milestones?type=&repos=%5B%5D&sort=&state=open&q=test",
+      "validation": []
+    },
+    {
+      "page": "http://localhost:3000/org/create",
+      "submitLabel": "Create Organization",
+      "filled": 5,
+      "afterUrl": "http://localhost:3000/org/create",
+      "validation": [
+        "Organization Name can only contain alphanumeric characters ('0-9','a-z','A-Z'), dash ('-'), underscore ('_') and dot ('.'). It cannot begin or end with non-alphanumeric characters, and consecutive non-alphanumeric characters are also forbidden.",
+        "Organization Name \nOrganization names should be short and memorable."
+      ]
+    },
+    {
+      "page": "http://localhost:3000/testuser",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:3000/testuser?tab=repositories&q=test&sort=recentupdate",
+      "validation": []
+    },
+    {
+      "page": "http://localhost:3000/user/settings",
+      "submitLabel": "Update Profile",
+      "filled": 7,
+      "afterUrl": "http://localhost:3000/user/settings",
+      "validation": []
+    },
+    {
+      "page": "http://localhost:3000/explore/users",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:3000/explore/users?q=testuser",
+      "validation": []
+    },
+    {
+      "page": "http://localhost:3000/explore/organizations",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:3000/explore/organizations?q=test",
+      "validation": []
+    }
+  ],
+  "notes": [],
+  "unvisitedQueue": [
+    "http://localhost:3000/swagger.v1.json",
+    "http://localhost:3000/notifications?type=unread",
+    "http://localhost:3000/notifications?type=read",
+    "http://localhost:3000/issues?type=your_repositories&sort=recentupdate&state=open",
+    "http://localhost:3000/issues?type=assigned&sort=recentupdate&state=open",
+    "http://localhost:3000/issues?type=created_by&sort=recentupdate&state=open",
+    "http://localhost:3000/issues?type=mentioned&sort=recentupdate&state=open",
+    "http://localhost:3000/issues?type=your_repositories&sort=recentupdate&state=closed",
+    "http://localhost:3000/issues?type=your_repositories&sort=leastupdate&state=open",
+    "http://localhost:3000/issues?type=your_repositories&sort=latest&state=open",
+    "http://localhost:3000/issues?type=your_repositories&sort=oldest&state=open",
+    "http://localhost:3000/issues?type=your_repositories&sort=mostcomment&state=open",
+    "http://localhost:3000/issues?type=your_repositories&sort=leastcomment&state=open",
+    "http://localhost:3000/issues?type=your_repositories&sort=nearduedate&state=open",
+    "http://localhost:3000/issues?type=your_repositories&sort=farduedate&state=open",
+    "http://localhost:3000/issues?type=assigned&sort=recentupdate&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/issues?type=created_by&sort=recentupdate&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/issues?type=mentioned&sort=recentupdate&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/issues?type=your_repositories&sort=recentupdate&state=closed&q=test&search_mode=exact",
+    "http://localhost:3000/issues?type=your_repositories&sort=leastupdate&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/issues?type=your_repositories&sort=latest&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/issues?type=your_repositories&sort=oldest&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/issues?type=your_repositories&sort=mostcomment&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/issues?type=your_repositories&sort=leastcomment&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/issues?type=your_repositories&sort=nearduedate&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/issues?type=your_repositories&sort=farduedate&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/pulls?type=your_repositories&sort=recentupdate&state=open",
+    "http://localhost:3000/pulls?type=assigned&sort=recentupdate&state=open",
+    "http://localhost:3000/pulls?type=created_by&sort=recentupdate&state=open",
+    "http://localhost:3000/pulls?type=review_requested&sort=recentupdate&state=open",
+    "http://localhost:3000/pulls?type=reviewed_by&sort=recentupdate&state=open",
+    "http://localhost:3000/pulls?type=mentioned&sort=recentupdate&state=open",
+    "http://localhost:3000/pulls?type=your_repositories&sort=recentupdate&state=closed",
+    "http://localhost:3000/pulls?type=your_repositories&sort=leastupdate&state=open",
+    "http://localhost:3000/pulls?type=your_repositories&sort=latest&state=open",
+    "http://localhost:3000/pulls?type=your_repositories&sort=oldest&state=open",
+    "http://localhost:3000/pulls?type=your_repositories&sort=mostcomment&state=open",
+    "http://localhost:3000/pulls?type=your_repositories&sort=leastcomment&state=open",
+    "http://localhost:3000/pulls?type=your_repositories&sort=nearduedate&state=open",
+    "http://localhost:3000/pulls?type=your_repositories&sort=farduedate&state=open",
+    "http://localhost:3000/pulls?type=assigned&sort=recentupdate&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/pulls?type=created_by&sort=recentupdate&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/pulls?type=review_requested&sort=recentupdate&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/pulls?type=reviewed_by&sort=recentupdate&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/pulls?type=mentioned&sort=recentupdate&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/pulls?type=your_repositories&sort=recentupdate&state=closed&q=test&search_mode=exact",
+    "http://localhost:3000/pulls?type=your_repositories&sort=leastupdate&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/pulls?type=your_repositories&sort=latest&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/pulls?type=your_repositories&sort=oldest&state=open&q=test&search_mode=exact",
+    "http://localhost:3000/pulls?type=your_repositories&sort=mostcomment&state=open&q=test&search_mode=exact"
+  ]
+}

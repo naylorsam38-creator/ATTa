@@ -1,0 +1,176 @@
+mixpost-1  | .env file created successfully.
+mixpost-1  | 
+mixpost-1  |    INFO  Caching framework bootstrap, configuration, and metadata.  
+mixpost-1  | 
+mixpost-1  |   config ........................................................ 16.21ms DONE
+mixpost-1  |   events ......................................................... 1.32ms DONE
+mixpost-1  |   routes ........................................................ 20.60ms DONE
+mixpost-1  |   views ......................................................... 29.46ms DONE
+mysql-1    | [Entrypoint] MySQL Docker Image 8.0.32-1.2.11-server
+mixpost-1  | 
+mixpost-1  | wait-for-it.sh: waiting 30 seconds for mysql:3306
+mixpost-1  | wait-for-it.sh: mysql:3306 is available after 5 seconds
+mixpost-1  | `migrations` table does not exist.
+mixpost-1  | 
+mixpost-1  |    INFO  Preparing database.  
+mixpost-1  | 
+mixpost-1  |   Creating migration table ...................................... 21.31ms DONE
+mixpost-1  | 
+mixpost-1  |    INFO  Running migrations.  
+mixpost-1  | 
+mixpost-1  |   2014_10_12_000000_create_users_table .......................... 38.75ms DONE
+mixpost-1  |   2014_10_12_100000_create_password_reset_tokens_table .......... 14.18ms DONE
+mixpost-1  |   2019_08_19_000000_create_failed_jobs_table .................... 22.69ms DONE
+mixpost-1  |   2019_12_14_000001_create_personal_access_tokens_table ......... 33.58ms DONE
+mixpost-1  |   2025_01_19_172922_create_mixpost_lite_v2_tables ................ 7.92ms DONE
+mixpost-1  |   2026_03_16_102848_create_job_batches_table .................... 11.18ms DONE
+mixpost-1  |   2026_03_16_102849_create_mixpost_tables ...................... 422.25ms DONE
+mixpost-1  | 
+mixpost-1  | Cache settings has been cleared!
+mixpost-1  | Cache services has been cleared!
+mixpost-1  | User admin@example.com created successfully!
+mixpost-1  | 
+mixpost-1  |                 - Email: admin@example.com
+mixpost-1  |                 - Password: changeme
+mixpost-1  |             
+mixpost-1  |  * Starting periodic command scheduler cron
+mixpost-1  |    ...done.
+mixpost-1  | 
+mixpost-1  |       __  ___ _                            __ 
+mixpost-1  |     /  |/  /(_)_  __ ____   ____   _____ / /_
+mixpost-1  |     / /|_/ // /| |/_// __ \ / __ \ / ___// __/
+mixpost-1  |   / /  / // /_>  < / /_/ // /_/ /(__  )/ /_  
+mixpost-1  |   /_/  /_//_//_/|_|/ .___/ \____//____/ \__/  
+mixpost-1  |                   /_/                         
+mixpost-1  |   
+mixpost-1  | ------- Mixpost has started! -------
+mixpost-1  | 2026-10-17 15:25:02,467 INFO Set uid to user 0 succeeded
+mixpost-1  | 2026-10-17 15:25:02,469 INFO supervisord started with pid 60
+mixpost-1  | 2026-10-17 15:25:03,474 INFO spawned: 'horizon_00' with pid 62
+mysql-1    | [Entrypoint] No password option specified for new database.
+redis-1    | Starting Redis Server
+mysql-1    | [Entrypoint]   A random onetime password will be generated.
+mysql-1    | [Entrypoint] Initializing database
+redis-1    | 1:C 17 Oct 2026 15:24:47.053 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+mysql-1    | 2026-10-17T15:24:46.970919Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+redis-1    | 1:C 17 Oct 2026 15:24:47.054 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+mysql-1    | 2026-10-17T15:24:46.971034Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.32) initializing of server in progress as process 17
+redis-1    | 1:C 17 Oct 2026 15:24:47.054 * Redis version=8.10.2, bits=64, commit=00000000, modified=1, pid=1, just started
+mysql-1    | 2026-10-17T15:24:46.979787Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+mysql-1    | 2026-10-17T15:24:47.857114Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+mysql-1    | 2026-10-17T15:24:49.112414Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+mysql-1    | [Entrypoint] Database initialized
+mixpost-1  | 2026-10-17 15:25:03,477 INFO spawned: 'nginx' with pid 63
+mysql-1    | 2026-10-17T15:24:53.355398Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+mixpost-1  | 2026-10-17 15:25:03,480 INFO spawned: 'php-fpm' with pid 64
+redis-1    | 1:C 17 Oct 2026 15:24:47.054 * Configuration loaded
+mixpost-1  | 2026-10-17 15:25:04,704 INFO success: horizon_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+redis-1    | 1:M 17 Oct 2026 15:24:47.054 * monotonic clock: POSIX clock_gettime
+mysql-1    | 2026-10-17T15:24:53.370235Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.32) starting as process 60
+redis-1    | 1:M 17 Oct 2026 15:24:47.055 * Running mode=standalone, port=6379.
+redis-1    | 1:M 17 Oct 2026 15:24:47.056 * <bf> RedisBloom version 8.10.1 (Git=unknown)
+redis-1    | 1:M 17 Oct 2026 15:24:47.056 * <bf> Registering configuration options: [
+redis-1    | 1:M 17 Oct 2026 15:24:47.056 * <bf> 	{ bf-error-rate       :      0.01 }
+redis-1    | 1:M 17 Oct 2026 15:24:47.056 * <bf> 	{ bf-initial-size     :       100 }
+mixpost-1  | 2026-10-17 15:25:04,705 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+mixpost-1  | 2026-10-17 15:25:04,705 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+mysql-1    | 2026-10-17T15:24:53.391791Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+mysql-1    | 2026-10-17T15:24:53.832012Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+mysql-1    | 2026-10-17T15:24:54.213212Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+mysql-1    | 2026-10-17T15:24:54.213290Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+mysql-1    | 2026-10-17T15:24:54.237829Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+mysql-1    | 2026-10-17T15:24:54.238020Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.32'  socket: '/var/lib/mysql/mysql.sock'  port: 0  MySQL Community Server - GPL.
+mysql-1    | Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+mysql-1    | Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
+mysql-1    | Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
+mysql-1    | Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+mysql-1    | Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+mysql-1    | [Entrypoint] GENERATED ROOT PASSWORD: HF_SG=7T%;5sUR&I:3ka*0k3L478*qJa
+mysql-1    | 
+mysql-1    | [Entrypoint] ignoring /docker-entrypoint-initdb.d/*
+mysql-1    | 
+mysql-1    | 2026-10-17T15:24:56.327893Z 14 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.32).
+mysql-1    | 2026-10-17T15:24:57.698711Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.32)  MySQL Community Server - GPL.
+redis-1    | 1:M 17 Oct 2026 15:24:47.056 * <bf> 	{ bf-expansion-factor :         2 }
+redis-1    | 1:M 17 Oct 2026 15:24:47.056 * <bf> 	{ cf-bucket-size      :         2 }
+redis-1    | 1:M 17 Oct 2026 15:24:47.056 * <bf> 	{ cf-initial-size     :      1024 }
+redis-1    | 1:M 17 Oct 2026 15:24:47.056 * <bf> 	{ cf-max-iterations   :        20 }
+redis-1    | 1:M 17 Oct 2026 15:24:47.056 * <bf> 	{ cf-expansion-factor :         1 }
+redis-1    | 1:M 17 Oct 2026 15:24:47.056 * <bf> 	{ cf-max-expansions   :        32 }
+redis-1    | 1:M 17 Oct 2026 15:24:47.056 * <bf> ]
+redis-1    | 1:M 17 Oct 2026 15:24:47.056 * Module 'bf' loaded from /usr/local/lib/redis/modules//redisbloom.so
+redis-1    | 1:M 17 Oct 2026 15:24:47.061 * <search> search-workers default: 4 (min of MAX_WORKER_THREADS=16 and CPU cores)
+redis-1    | 1:M 17 Oct 2026 15:24:47.061 * <search> Redis version found by RedisSearch : 8.10.2 - oss
+redis-1    | 1:M 17 Oct 2026 15:24:47.061 * <search> RediSearch version 8.10.1 (Git=)
+redis-1    | 1:M 17 Oct 2026 15:24:47.062 * <search> gc: ON, prefix min length: 2, min word length to stem: 4, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, oom policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  1000000, default scorer: BM25STD, 
+redis-1    | 1:M 17 Oct 2026 15:24:47.062 * <search> Initialized thread pools!
+redis-1    | 1:M 17 Oct 2026 15:24:47.062 * <search> Enabled workers threadpool of size 4
+redis-1    | 1:M 17 Oct 2026 15:24:47.062 * <search> Subscribe to config changes
+redis-1    | 1:M 17 Oct 2026 15:24:47.062 * <search> Subscribe to cluster slot migration events
+redis-1    | 1:M 17 Oct 2026 15:24:47.062 * <search> Subscribe to cluster topology change events
+redis-1    | 1:M 17 Oct 2026 15:24:47.062 * <search> Enabled role change notification
+redis-1    | 1:M 17 Oct 2026 15:24:47.063 * <search> Cluster configuration: AUTO partitions, type: 0, coordinator timeout: 0ms
+redis-1    | 1:M 17 Oct 2026 15:24:47.063 * Module 'search' loaded from /usr/local/lib/redis/modules//redisearch.so
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> RedisTimeSeries version 81001, git_sha=
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> Redis version found by RedisTimeSeries : 8.10.2 - oss
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> Registering configuration options: [
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> 	{ ts-compaction-policy   :              }
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> 	{ ts-num-threads         :            3 }
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> 	{ ts-libmr-protocol      :     INTERNAL }
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> 	{ ts-retention-policy    :            0 }
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> 	{ ts-duplicate-policy    :        block }
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> 	{ ts-chunk-size-bytes    :         4096 }
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> 	{ ts-encoding            :   compressed }
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> 	{ ts-ignore-max-time-diff:            0 }
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> 	{ ts-ignore-max-val-diff :     0.000000 }
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> 	{ ts-topology-events     :         true }
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> ]
+redis-1    | 1:M 17 Oct 2026 15:24:47.064 * <timeseries> Detected redis oss (cluster-enabled=no)
+redis-1    | 1:M 17 Oct 2026 15:24:47.065 * <timeseries> Subscribe to ASM events
+redis-1    | 1:M 17 Oct 2026 15:24:47.065 * <timeseries> Subscribe to topology changes events
+redis-1    | 1:M 17 Oct 2026 15:24:47.065 * <timeseries> Enabled diskless replication
+redis-1    | 1:M 17 Oct 2026 15:24:47.065 * Module 'timeseries' loaded from /usr/local/lib/redis/modules//redistimeseries.so
+redis-1    | 1:M 17 Oct 2026 15:24:47.065 * <ReJSON> Created new data type 'ReJSON-RL'
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 * <ReJSON> version: 81000 git sha: unknown branch: unknown
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 * <ReJSON> Exported RedisJSON_V1 API
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 * <ReJSON> Exported RedisJSON_V2 API
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 * <ReJSON> Exported RedisJSON_V3 API
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 * <ReJSON> Exported RedisJSON_V4 API
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 * <ReJSON> Exported RedisJSON_V5 API
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 * <ReJSON> Exported RedisJSON_V6 API
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 * <ReJSON> Exported RedisJSON_V7 API
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 * <ReJSON> Exported RedisJSON_V8 API
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 * <ReJSON> Enabled diskless replication
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 * <ReJSON> Initialized shared string cache, thread safe: true.
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 * Module 'ReJSON' loaded from /usr/local/lib/redis/modules//rejson.so
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 * <search> Acquired RedisJSON_V8 API
+redis-1    | 1:M 17 Oct 2026 15:24:47.066 # Warning: Could not create server TCP listening socket ::*:6379: unable to bind socket, errno: 97
+redis-1    | 1:M 17 Oct 2026 15:24:47.067 * Server initialized
+redis-1    | 1:M 17 Oct 2026 15:24:47.067 * BGSAVE done, 0 keys saved, 0 keys skipped, 89 bytes written.
+redis-1    | 1:M 17 Oct 2026 15:24:47.068 * Creating AOF base file appendonly.aof.1.base.rdb on server start
+redis-1    | 1:M 17 Oct 2026 15:24:47.069 * Creating AOF incr file appendonly.aof.1.incr.aof on server start
+redis-1    | 1:M 17 Oct 2026 15:24:47.069 * Ready to accept connections tcp
+redis-1    | 1:M 17 Oct 2026 15:24:47.069 # WARNING: Redis does not require authentication and is not protected by network restrictions. Redis will accept connections from any IP address on any network interface.
+redis-1    | 1:signal-handler (1792250884) Received SIGTERM scheduling shutdown...
+redis-1    | 1:M 17 Oct 2026 15:28:04.654 * User requested shutdown...
+redis-1    | 1:M 17 Oct 2026 15:28:04.654 * Calling fsync() on the AOF file.
+redis-1    | 1:M 17 Oct 2026 15:28:04.655 * Saving the final RDB snapshot before exiting.
+redis-1    | 1:M 17 Oct 2026 15:28:04.655 * BGSAVE done, 7 keys saved, 0 keys skipped, 1571 bytes written.
+redis-1    | 1:M 17 Oct 2026 15:28:04.657 * DB saved on disk
+redis-1    | 1:M 17 Oct 2026 15:28:04.658 # Redis is now ready to exit, bye bye...
+mysql-1    | [Entrypoint] Server shut down
+mysql-1    | [Entrypoint] Setting root user as expired. Password will need to be changed before database can be used.
+mysql-1    | 
+mysql-1    | [Entrypoint] MySQL init process done. Ready for start up.
+mysql-1    | 
+mysql-1    | [Entrypoint] Starting MySQL 8.0.32-1.2.11-server
+mysql-1    | 2026-10-17T15:24:58.626215Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+mysql-1    | 2026-10-17T15:24:58.627950Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.32) starting as process 1
+mysql-1    | 2026-10-17T15:24:58.636204Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+mysql-1    | 2026-10-17T15:24:58.783392Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+mysql-1    | 2026-10-17T15:24:59.097018Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+mysql-1    | 2026-10-17T15:24:59.097096Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+mysql-1    | 2026-10-17T15:24:59.120837Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '0.0.0.0' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+mysql-1    | 2026-10-17T15:24:59.120916Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.32'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Server - GPL.
+mysql-1    | 2026-10-17T15:28:04.581064Z 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.32).
+mysql-1    | 2026-10-17T15:28:05.448691Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.32)  MySQL Community Server - GPL.

@@ -1,0 +1,3 @@
+302 http://localhost:9000/ -> http://localhost:9000/mixpost
+302 http://localhost:9000/mixpost -> http://localhost:9000/mixpost/login
+200 http://localhost:9000/mixpost/login -> 

@@ -1,0 +1,223 @@
+ Image redis:7-alpine Pulling 
+ Image postgres:15-alpine Pulling 
+ 277e2289225f Pulling fs layer 0B
+ bc2205dd5a3a Pulling fs layer 0B
+ e9516be90840 Pulling fs layer 0B
+ e2de96513ba9 Pulling fs layer 0B
+ c020dab2e853 Pulling fs layer 0B
+ 2c2e40dd947e Pulling fs layer 0B
+ 0976f43b012c Pulling fs layer 0B
+ 6ba2251a51ae Pulling fs layer 0B
+ 3f49193fd82d Pulling fs layer 0B
+ 4f83103187f5 Pulling fs layer 0B
+ 2e9987a42d41 Pulling fs layer 0B
+ 4eb14bae0e1d Pulling fs layer 0B
+ 4f4fb700ef54 Pulling fs layer 0B
+ 7eb50503c2b0 Pulling fs layer 0B
+ 16333ee0c00f Pulling fs layer 0B
+ 83234986c742 Pulling fs layer 0B
+ 1522f9c6f453 Pulling fs layer 0B
+ 9928009b15c8 Pulling fs layer 0B
+ 277e2289225f Download complete 0B
+ bc2205dd5a3a Download complete 0B
+ c020dab2e853 Download complete 0B
+ e9516be90840 Downloading 5.243MB
+ 2e9987a42d41 Download complete 0B
+ e9516be90840 Downloading 17.83MB
+ e9516be90840 Downloading 38.8MB
+ e9516be90840 Downloading 54.53MB
+ e9516be90840 Downloading 58.72MB
+ 2c2e40dd947e Download complete 0B
+ e9516be90840 Downloading 75.5MB
+ e2de96513ba9 Downloading 2.097MB
+ e9516be90840 Downloading 83.89MB
+ e9516be90840 Downloading 85.98MB
+ e2de96513ba9 Download complete 0B
+ e2de96513ba9 Extracting 1B
+ e9516be90840 Downloading 97.52MB
+ 6ba2251a51ae Download complete 0B
+ e2de96513ba9 Extracting 1B
+ e9516be90840 Downloading 110.5MB
+ e2de96513ba9 Extracting 1B
+ e9516be90840 Download complete 0B
+ 3f49193fd82d Download complete 0B
+ e2de96513ba9 Extracting 1B
+ e2de96513ba9 Extracting 1B
+ e2de96513ba9 Extracting 1B
+ 4f83103187f5 Download complete 0B
+ 0976f43b012c Download complete 0B
+ e2de96513ba9 Extracting 1B
+ e2de96513ba9 Extracting 1B
+ 7eb50503c2b0 Download complete 0B
+ e2de96513ba9 Extracting 1B
+ 9928009b15c8 Download complete 0B
+ e2de96513ba9 Extracting 1B
+ e2de96513ba9 Extracting 1B
+ e2de96513ba9 Extracting 2B
+ 4f4fb700ef54 Download complete 0B
+ e2de96513ba9 Extracting 2B
+ 16333ee0c00f Download complete 0B
+ 83234986c742 Download complete 0B
+ e2de96513ba9 Extracting 2B
+ 16333ee0c00f Extracting 1B
+ 16333ee0c00f Extracting 1B
+ e2de96513ba9 Extracting 2B
+ 16333ee0c00f Extracting 1B
+ e2de96513ba9 Extracting 2B
+ bc2205dd5a3a Pull complete 0B
+ 2e9987a42d41 Pull complete 0B
+ 16333ee0c00f Extracting 1B
+ 2c2e40dd947e Pull complete 0B
+ e2de96513ba9 Pull complete 0B
+ e9516be90840 Extracting 1B
+ 3f49193fd82d Pull complete 0B
+ 4eb14bae0e1d Download complete 0B
+ e9516be90840 Extracting 1B
+ 16333ee0c00f Extracting 1B
+ 1522f9c6f453 Downloading 2.097MB
+ 16333ee0c00f Extracting 1B
+ e9516be90840 Extracting 1B
+ 1522f9c6f453 Downloading 5.243MB
+ e9516be90840 Extracting 1B
+ 16333ee0c00f Extracting 1B
+ 1522f9c6f453 Downloading 7.34MB
+ 7eb50503c2b0 Extracting 1B
+ 16333ee0c00f Pull complete 0B
+ e9516be90840 Extracting 1B
+ 83234986c742 Pull complete 0B
+ 1522f9c6f453 Downloading 10.49MB
+ 7eb50503c2b0 Pull complete 0B
+ e9516be90840 Extracting 1B
+ 697de61d3cc1 Download complete 0B
+ 1522f9c6f453 Download complete 0B
+ e9516be90840 Extracting 1B
+ 1522f9c6f453 Extracting 1B
+ d3e3f1b947dc Download complete 0B
+ 1522f9c6f453 Extracting 1B
+ e9516be90840 Extracting 1B
+ e9516be90840 Extracting 1B
+ 1522f9c6f453 Extracting 1B
+ 1522f9c6f453 Pull complete 0B
+ e9516be90840 Extracting 1B
+ 9928009b15c8 Pull complete 0B
+ 4f4fb700ef54 Pull complete 0B
+ e9516be90840 Extracting 1B
+ 4eb14bae0e1d Pull complete 0B
+ 3beebc06c4ca Download complete 0B
+ e9516be90840 Extracting 2B
+ 54779914f171 Download complete 0B
+ e9516be90840 Extracting 2B
+ e9516be90840 Extracting 2B
+ e9516be90840 Extracting 2B
+ Image redis:7-alpine Pulled 
+ e9516be90840 Extracting 2B
+ e9516be90840 Extracting 2B
+ e9516be90840 Extracting 2B
+ e9516be90840 Extracting 2B
+ e9516be90840 Extracting 2B
+ e9516be90840 Extracting 3B
+ e9516be90840 Extracting 3B
+ e9516be90840 Extracting 3B
+ e9516be90840 Extracting 3B
+ e9516be90840 Extracting 3B
+ e9516be90840 Extracting 3B
+ e9516be90840 Extracting 3B
+ e9516be90840 Extracting 3B
+ e9516be90840 Extracting 3B
+ e9516be90840 Extracting 3B
+ e9516be90840 Extracting 3B
+ c020dab2e853 Pull complete 0B
+ e9516be90840 Pull complete 0B
+ 4f83103187f5 Pull complete 0B
+ 277e2289225f Pull complete 0B
+ 6ba2251a51ae Pull complete 0B
+ 0976f43b012c Pull complete 0B
+ Image postgres:15-alpine Pulled 
+ Image t-medusa-medusa Building 
+ Image t-medusa-storefront Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 981B done
+#1 DONE 0.0s
+
+#2 [storefront internal] load build definition from Dockerfile
+#2 transferring dockerfile: 380B done
+#2 DONE 0.0s
+
+#3 [storefront internal] load metadata for docker.io/library/node:20-alpine
+#3 DONE 3.3s
+
+#4 [storefront internal] load .dockerignore
+#4 transferring context: 284B done
+#4 DONE 0.0s
+
+#5 [medusa 1/8] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#5 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.0s done
+#5 DONE 0.1s
+
+#6 [medusa internal] load build context
+#6 transferring context: 2.47MB 0.1s done
+#6 DONE 0.1s
+
+#5 [storefront 1/8] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#5 sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122 0B / 1.26MB 0.2s
+#5 sha256:fff4e2c1b189bf87d63ad8bd07f7f4eb288d6f2b6a07a8bb44c60e8c075d2096 0B / 445B 0.2s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 0B / 43.23MB 0.2s
+#5 sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 0B / 3.86MB 0.2s
+#5 sha256:fff4e2c1b189bf87d63ad8bd07f7f4eb288d6f2b6a07a8bb44c60e8c075d2096 445B / 445B 0.4s done
+#5 sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122 1.26MB / 1.26MB 0.5s done
+#5 sha256:fff4e2c1b189bf87d63ad8bd07f7f4eb288d6f2b6a07a8bb44c60e8c075d2096 445B / 445B 0.4s done
+#5 sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122 1.26MB / 1.26MB 0.5s done
+#5 sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 3.86MB / 3.86MB 0.7s done
+#5 sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 3.86MB / 3.86MB 0.7s done
+#5 extracting sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 0.1s done
+#5 extracting sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 0.1s done
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 8.39MB / 43.23MB 1.4s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 12.58MB / 43.23MB 1.7s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 31.46MB / 43.23MB 1.8s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 43.23MB / 43.23MB 1.9s done
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 43.23MB / 43.23MB 1.9s done
+#5 extracting sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287
+#5 extracting sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 1.2s done
+#5 extracting sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 1.2s done
+#5 extracting sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122 0.0s done
+#5 extracting sha256:fff4e2c1b189bf87d63ad8bd07f7f4eb288d6f2b6a07a8bb44c60e8c075d2096 done
+#5 DONE 3.2s
+
+#7 [medusa 2/8] WORKDIR /server
+#7 DONE 0.6s
+
+#8 [storefront 3/8] RUN npm install pnpm@10.11.1 -g
+#8 70.88 npm error code SELF_SIGNED_CERT_IN_CHAIN
+#8 70.88 npm error errno SELF_SIGNED_CERT_IN_CHAIN
+#8 70.88 npm error request to https://registry.npmjs.org/pnpm failed, reason: self-signed certificate in certificate chain
+#8 70.88 npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-17T16_41_35_351Z-debug-0.log
+#8 ERROR: process "/bin/sh -c npm install pnpm@10.11.1 -g" did not complete successfully: exit code: 1
+------
+ > [storefront 3/8] RUN npm install pnpm@10.11.1 -g:
+70.88 npm error code SELF_SIGNED_CERT_IN_CHAIN
+70.88 npm error errno SELF_SIGNED_CERT_IN_CHAIN
+70.88 npm error request to https://registry.npmjs.org/pnpm failed, reason: self-signed certificate in certificate chain
+70.88 npm error A complete log of this run can be found in: /root/.npm/_logs/2026-10-17T16_41_35_351Z-debug-0.log
+------
+Dockerfile:5
+
+--------------------
+
+   3 |     WORKDIR /server
+
+   4 |     
+
+   5 | >>> RUN npm install pnpm@10.11.1 -g
+
+   6 |     
+
+   7 |     COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json .npmrc ./
+
+--------------------
+
+target storefront: failed to solve: process "/bin/sh -c npm install pnpm@10.11.1 -g" did not complete successfully: exit code: 1
+
+
+real	1m27.182s
+user	0m0.461s
+sys	0m0.415s

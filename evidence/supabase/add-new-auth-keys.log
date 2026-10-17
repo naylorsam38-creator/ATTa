@@ -1,0 +1,19 @@
+
+SUPABASE_PUBLISHABLE_KEY=<redacted>
+SUPABASE_SECRET_KEY=<redacted>
+
+JWT_KEYS=<redacted>
+
+JWT_JWKS=<redacted>
+
+Ensure the following configuration is uncommented in docker-compose.yml for the asymmetric key pair to work:
+
+  Auth:     GOTRUE_JWT_KEYS: ${JWT_KEYS:-[]}
+  Realtime: API_JWT_JWKS: ${JWT_JWKS:-{"keys":[]}}
+  Storage:  JWT_JWKS: ${JWT_JWKS:-{"keys":[]}}
+  Functions:  SUPABASE_JWKS: ${JWT_JWKS:-{"keys":[]}}
+
+Updating .env...
+Updating docker-compose.yml...
+Done.
+exit=0

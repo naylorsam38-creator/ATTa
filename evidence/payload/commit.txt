@@ -1,0 +1,3 @@
+commit=d5b01b40d81cd32621aa883cc8a3cc78ce13bf2d
+date=2026-10-17T09:21:01-04:00
+subject=fix(tanstack-start): prevent subtree remounts on router refresh (#18806)

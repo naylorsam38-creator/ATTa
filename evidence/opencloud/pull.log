@@ -1,0 +1,28 @@
+latest: Pulling from opencloudeu/opencloud-rolling
+98593406e982: Pulling fs layer
+60b68df80d22: Pulling fs layer
+e2de96513ba9: Pulling fs layer
+be0239bf98a7: Pulling fs layer
+d849ba1451e6: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+4f4fb700ef54: Download complete
+d849ba1451e6: Download complete
+e2de96513ba9: Download complete
+60b68df80d22: Download complete
+44136fa355b3: Download complete
+e2de96513ba9: Pull complete
+94b6d3288598: Download complete
+98593406e982: Download complete
+be0239bf98a7: Download complete
+4f4fb700ef54: Pull complete
+d849ba1451e6: Pull complete
+60b68df80d22: Pull complete
+be0239bf98a7: Pull complete
+98593406e982: Pull complete
+Digest: sha256:8fc64ca861739cc62095cd558814f2eba6a90acf5998d884e439b33a47875da8
+Status: Downloaded newer image for opencloudeu/opencloud-rolling:latest
+docker.io/opencloudeu/opencloud-rolling:latest
+
+real	0m7.511s
+user	0m0.032s
+sys	0m0.015s

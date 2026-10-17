@@ -1,0 +1,28 @@
+{
+  "startUrl": "https://localhost:8443/",
+  "origin": "https://localhost:8443",
+  "pages": [
+    {
+      "url": "https://localhost:8443/",
+      "finalUrl": "about:blank",
+      "status": null,
+      "title": "",
+      "error": "page.goto: net::ERR_CONNECTION_CLOSED at https://localhost:8443/"
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [
+    {
+      "url": "https://localhost:8443/",
+      "method": "GET",
+      "error": "net::ERR_CONNECTION_CLOSED"
+    }
+  ],
+  "badResponses": [],
+  "clicks": [],
+  "skipped": [],
+  "forms": [],
+  "notes": [],
+  "unvisitedQueue": []
+}

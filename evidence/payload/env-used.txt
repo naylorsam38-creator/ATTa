@@ -1,0 +1,2 @@
+DATABASE_URL=mongodb://mongo/payload-test
+PAYLOAD_SECRET=<generated>

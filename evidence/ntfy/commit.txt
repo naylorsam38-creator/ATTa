@@ -1,0 +1,3 @@
+commit=0c12448b3ef76c829b2bd49e7cec79717ec1f0c9
+date=2026-10-17T11:20:46-04:00
+subject=Merge pull request #2060 from binwiederhier/schema-compat-floor

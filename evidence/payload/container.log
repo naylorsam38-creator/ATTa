@@ -1,0 +1,12 @@
+time="2026-10-17T16:29:25Z" level=warning msg="Can't retrieve logs for \"t-payload-mongo-1\": Error response from daemon: configured logging driver does not support reading"
+payload-1  | Internal Error: Error when performing the request to https://registry.npmjs.org/pnpm; for troubleshooting help, see https://github.com/nodejs/corepack#troubleshooting
+payload-1  |     at fetch (/usr/local/lib/node_modules/corepack/dist/lib/corepack.cjs:22089:11)
+payload-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+payload-1  |     at async fetchAsJson (/usr/local/lib/node_modules/corepack/dist/lib/corepack.cjs:22103:20)
+payload-1  |     at async fetchAvailableTags (/usr/local/lib/node_modules/corepack/dist/lib/corepack.cjs:22042:20)
+payload-1  |     at async fetchAvailableTags2 (/usr/local/lib/node_modules/corepack/dist/lib/corepack.cjs:22214:14)
+payload-1  |     at async Engine.resolveDescriptor (/usr/local/lib/node_modules/corepack/dist/lib/corepack.cjs:23033:20)
+payload-1  |     at async PrepareCommand.execute (/usr/local/lib/node_modules/corepack/dist/lib/corepack.cjs:23617:24)
+payload-1  |     at async PrepareCommand.validateAndExecute (/usr/local/lib/node_modules/corepack/dist/lib/corepack.cjs:20278:22)
+payload-1  |     at async _Cli.run (/usr/local/lib/node_modules/corepack/dist/lib/corepack.cjs:21215:18)
+payload-1  |     at async Object.runMain (/usr/local/lib/node_modules/corepack/dist/lib/corepack.cjs:23704:19)

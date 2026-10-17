@@ -1,0 +1,4 @@
+
+
+Do you want to configure OpenCloud with certificate checking disabled?
+ This is not recommended for public instances! [yes | no = default] 2026/10/17 16:54:47 Could not create config: open /etc/opencloud/opencloud.yaml: permission denied

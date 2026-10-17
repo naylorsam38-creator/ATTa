@@ -1,0 +1,5 @@
+validating /home/user/apps-test/actual/packages/sync-server/docker-compose.yml: services.actual_server.environment must be a mapping
+
+real	0m0.081s
+user	0m0.058s
+sys	0m0.058s

@@ -1,0 +1,9 @@
+
+
+Do you want to configure OpenCloud with certificate checking disabled?
+ This is not recommended for public instances! [yes | no = default] 
+=========================================
+ generated OpenCloud Config
+=========================================
+ configpath : /etc/opencloud/opencloud.yaml
+

@@ -1,0 +1,777 @@
+{
+  "startUrl": "http://localhost:8200/",
+  "origin": "http://localhost:8200",
+  "pages": [
+    {
+      "url": "http://localhost:8200/",
+      "finalUrl": "http://localhost:8200/",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/signup",
+      "finalUrl": "http://localhost:8200/signup",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/login",
+      "finalUrl": "http://localhost:8200/login",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/dashboard/home",
+      "finalUrl": "http://localhost:8200/dashboard/home",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/dashboard",
+      "finalUrl": "http://localhost:8200/dashboard/home",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/reference/documentation",
+      "finalUrl": "http://localhost:8200/reference/documentation",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/about",
+      "finalUrl": "http://localhost:8200/about",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/reference/privacy",
+      "finalUrl": "http://localhost:8200/reference/privacy",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/dashboard/categories",
+      "finalUrl": "http://localhost:8200/dashboard/categories",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/dashboard/docs",
+      "finalUrl": "http://localhost:8200/dashboard/docs",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/dashboard/cdn",
+      "finalUrl": "http://localhost:8200/dashboard/cdn",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/dashboard/cdn/diagram",
+      "finalUrl": "http://localhost:8200/dashboard/cdn/diagram",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/dashboard/admin",
+      "finalUrl": "http://localhost:8200/dashboard/home",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/dashboard/settings?p=profile",
+      "finalUrl": "http://localhost:8200/dashboard/settings?p=profile",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/dashboard/docs/new",
+      "finalUrl": "http://localhost:8200/dashboard/docs/new",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/dashboard/teams",
+      "finalUrl": "http://localhost:8200/dashboard/teams",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8200/dashboard/join-workspace",
+      "finalUrl": "http://localhost:8200/dashboard/home",
+      "status": 200,
+      "title": "Alexandrie",
+      "error": null
+    }
+  ],
+  "consoleErrors": [
+    {
+      "url": "http://localhost:8200/",
+      "text": "Failed to load resource: the server responded with a status of 403 (rate limit exceeded)"
+    },
+    {
+      "url": "http://localhost:8200/login",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "url": "http://localhost:8200/dashboard/home",
+      "text": "Hydration completed but contains mismatches."
+    },
+    {
+      "url": "http://localhost:8200/dashboard/cdn/diagram",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "url": "http://localhost:8200/dashboard/home",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "pageErrors": [
+    {
+      "url": "http://localhost:8200/",
+      "text": "NotAllowedError: Failed to execute 'writeText' on 'Clipboard': Write permission denied."
+    }
+  ],
+  "failedRequests": [
+    {
+      "url": "http://localhost:8200/_nuxt/DQ2HVLE1.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/CU1zZieD.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/D55jIi7M.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/Bk-FeH69.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/BiVbIb9k.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/C2nv3FEO.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/CAzVXjCt.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/BkeNLniw.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/Dec7kEvu.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/BRjLMJjQ.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/DmDRWUmE.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/zCxpU8UC.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/BuKaOmU5.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/BUOYQngr.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/dB34aaMg.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/Dyy7uWfy.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/BTLfumcA.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/BdyY-pkN.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/CZwuvaQE.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/AppSelect.CIXiq8NH.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/DvWNSPFF.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/qrcode.vue.C5cdobu4.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/Bxr7EMXs.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/AppColorPicker.Bgl-vHaN.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/UserAvatar.MEliJfyO.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/BWx1JRYn.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/yp7IxE7j.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/LoaderSpinner.CZ-fD5FA.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/AppHint.BYDZgkQi.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/Bd17z0YL.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/AppCheck.BE2awq3Z.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/CT2EvzBJ.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/2SUfVgVz.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/AppToggle.DMsBddwC.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/DataTable.DZr9bKRq.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/AppRadio.BBFocatY.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/AppFooter.DKCWQEWo.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/BdI3Akb_.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/DiNd4owc.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/Stats.DukQ24iE.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/NoContent.VvhtUXgW.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/Team.CuMN9QYW.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/BphbXacm.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/CMCoSx8_.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/bHT-otvm.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/AppButton.HsiN66tb.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8200/_nuxt/AppBtnIcon.CbJr-Ogl.css",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "badResponses": [
+    {
+      "url": "https://api.github.com/repos/Smaug6739/Alexandrie/contributors?per_page=50",
+      "status": 403,
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8201/api/auth/oidc/providers",
+      "status": 404,
+      "method": "GET"
+    },
+    {
+      "url": "https://embed.diagrams.net/?embed=1&ui=min&spin=1&proto=json",
+      "status": 403,
+      "method": "GET"
+    },
+    {
+      "url": "http://localhost:8201/api/nodes/invitations/join",
+      "status": 404,
+      "method": "POST"
+    }
+  ],
+  "clicks": [
+    {
+      "page": "http://localhost:8200/",
+      "text": "01\nCapture Ideas Instantly\nQuick notes & drafts",
+      "afterUrl": "http://localhost:8200/"
+    },
+    {
+      "page": "http://localhost:8200/",
+      "text": "02\nOrganize Your Knowledge\nStructure & categorize",
+      "afterUrl": "http://localhost:8200/"
+    },
+    {
+      "page": "http://localhost:8200/",
+      "text": "03\nCollaborate Seamlessly\nTeam workflows",
+      "afterUrl": "http://localhost:8200/"
+    },
+    {
+      "page": "http://localhost:8200/",
+      "text": "",
+      "afterUrl": "http://localhost:8200/"
+    },
+    {
+      "page": "http://localhost:8200/",
+      "text": "",
+      "afterUrl": "http://localhost:8200/"
+    },
+    {
+      "page": "http://localhost:8200/",
+      "text": "Is Alexandrie really free and open-source?",
+      "afterUrl": "http://localhost:8200/"
+    },
+    {
+      "page": "http://localhost:8200/",
+      "text": "Can I self-host Alexandrie on my own server?",
+      "afterUrl": "http://localhost:8200/"
+    },
+    {
+      "page": "http://localhost:8200/",
+      "text": "Does Alexandrie work offline?",
+      "afterUrl": "http://localhost:8200/"
+    },
+    {
+      "page": "http://localhost:8200/",
+      "text": "How is my data stored and secured?",
+      "afterUrl": "http://localhost:8200/"
+    },
+    {
+      "page": "http://localhost:8200/",
+      "text": "Does it support code blocks and math equations?",
+      "afterUrl": "http://localhost:8200/"
+    },
+    {
+      "page": "http://localhost:8200/",
+      "text": "Is there a mobile app available?",
+      "afterUrl": "http://localhost:8200/"
+    },
+    {
+      "page": "http://localhost:8200/",
+      "text": "English",
+      "afterUrl": "http://localhost:8200/"
+    },
+    {
+      "page": "http://localhost:8200/signup",
+      "text": "",
+      "afterUrl": "http://localhost:8200/signup"
+    },
+    {
+      "page": "http://localhost:8200/signup",
+      "text": "",
+      "afterUrl": "http://localhost:8200/signup"
+    },
+    {
+      "page": "http://localhost:8200/signup",
+      "text": "English",
+      "afterUrl": "http://localhost:8200/signup"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/home",
+      "text": "Press / to navigate",
+      "afterUrl": "http://localhost:8200/dashboard/home"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/home",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/home"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/home",
+      "text": "+ New document",
+      "afterUrl": "http://localhost:8200/dashboard/docs/new"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/home",
+      "text": "Press / to navigate",
+      "afterUrl": "http://localhost:8200/dashboard/home"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/home",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/home"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/home",
+      "text": "+ New document",
+      "afterUrl": "http://localhost:8200/dashboard/docs/new"
+    },
+    {
+      "page": "http://localhost:8200/reference/documentation",
+      "text": "English",
+      "afterUrl": "http://localhost:8200/reference/documentation"
+    },
+    {
+      "page": "http://localhost:8200/about",
+      "text": "English",
+      "afterUrl": "http://localhost:8200/about"
+    },
+    {
+      "page": "http://localhost:8200/reference/privacy",
+      "text": "English",
+      "afterUrl": "http://localhost:8200/reference/privacy"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/categories",
+      "text": "+ Workspace",
+      "afterUrl": "http://localhost:8200/dashboard/categories"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/categories",
+      "text": "+ Category",
+      "afterUrl": "http://localhost:8200/dashboard/categories"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/categories",
+      "text": "Press / to navigate",
+      "afterUrl": "http://localhost:8200/dashboard/categories"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/categories",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/categories"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/docs",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/docs"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/docs",
+      "text": "Press / to navigate",
+      "afterUrl": "http://localhost:8200/dashboard/docs"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/docs",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/docs"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/docs",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/docs"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/docs",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/docs"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/docs",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/docs"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/docs",
+      "text": "+ Create new document",
+      "afterUrl": "http://localhost:8200/dashboard/docs/new"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/cdn",
+      "text": "Press / to navigate",
+      "afterUrl": "http://localhost:8200/dashboard/cdn"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/cdn",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/cdn"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/cdn",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/cdn"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/cdn",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/cdn"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/cdn/diagram",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/cdn/diagram"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/cdn/diagram",
+      "text": "Press / to navigate",
+      "afterUrl": "http://localhost:8200/dashboard/cdn/diagram"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/cdn/diagram",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/cdn/diagram"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/home",
+      "text": "Press / to navigate",
+      "afterUrl": "http://localhost:8200/dashboard/home"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/home",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/home"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/home",
+      "text": "+ New document",
+      "afterUrl": "http://localhost:8200/dashboard/docs/new"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/settings?p=profile",
+      "text": "Press / to navigate",
+      "afterUrl": "http://localhost:8200/dashboard/settings?p=profile"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/settings?p=profile",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/settings?p=profile"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/settings?p=profile",
+      "text": "Update",
+      "afterUrl": "http://localhost:8200/dashboard/settings?p=profile"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/docs/new",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/docs/new"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/docs/new",
+      "text": "Press / to navigate",
+      "afterUrl": "http://localhost:8200/dashboard/home"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/docs/new",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/home"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/teams",
+      "text": "Press / to navigate",
+      "afterUrl": "http://localhost:8200/dashboard/teams"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/teams",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/teams"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/teams",
+      "text": "Create team",
+      "afterUrl": "http://localhost:8200/dashboard/teams"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/teams",
+      "text": "Join a team or workspace",
+      "afterUrl": "http://localhost:8200/dashboard/join-workspace"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/home",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/home"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/home",
+      "text": "Go back",
+      "afterUrl": "http://localhost:8200/dashboard/home"
+    },
+    {
+      "page": "http://localhost:8200/dashboard/home",
+      "text": "",
+      "afterUrl": "http://localhost:8200/dashboard/home"
+    }
+  ],
+  "skipped": [
+    {
+      "reason": "destructive-looking button",
+      "text": "04\nPublish & Share\nGo live instantly",
+      "page": "http://localhost:8200/"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Can I import my notes from other apps?",
+      "page": "http://localhost:8200/"
+    },
+    {
+      "reason": "destructive-looking link",
+      "text": "Click here",
+      "href": "http://localhost:8200/login/request-reset"
+    },
+    {
+      "reason": "destructive-looking link",
+      "text": "",
+      "href": "http://localhost:8200/dashboard/import"
+    },
+    {
+      "reason": "destructive-looking link",
+      "text": "Import",
+      "href": "http://localhost:8200/dashboard/import"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Import",
+      "page": "http://localhost:8200/dashboard/categories"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Upload",
+      "page": "http://localhost:8200/dashboard/cdn"
+    }
+  ],
+  "forms": [
+    {
+      "page": "http://localhost:8200/signup",
+      "submitLabel": "Sign up",
+      "filled": 4,
+      "afterUrl": "http://localhost:8200/login",
+      "validation": []
+    },
+    {
+      "page": "http://localhost:8200/login",
+      "submitLabel": "Login",
+      "filled": 2,
+      "afterUrl": "http://localhost:8200/dashboard/home",
+      "validation": []
+    },
+    {
+      "page": "http://localhost:8200/dashboard/settings?p=profile",
+      "submitLabel": "Update",
+      "filled": 3,
+      "afterUrl": "http://localhost:8200/dashboard/settings?p=profile",
+      "validation": [
+        "Profile updated"
+      ]
+    },
+    {
+      "page": "http://localhost:8200/dashboard/home",
+      "submitLabel": "Join",
+      "filled": 1,
+      "afterUrl": "http://localhost:8200/dashboard/home",
+      "validation": [
+        "Not found"
+      ]
+    }
+  ],
+  "notes": [],
+  "unvisitedQueue": []
+}

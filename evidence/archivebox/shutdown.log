@@ -1,0 +1,30 @@
+archivebox-1  | 2026-10-17 15:14:13 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:13 HTTP     GET /admin/machine/machine/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:13 HTTP     GET /admin/machine/machine/?q=Test+value 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:14 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:14 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:14 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:23 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:23 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:23 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:23 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:24 HTTP     GET /admin/machine/machine/?q=Test+value 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 
+archivebox-1  | [🛑] Got SIGTERM, stopping gracefully...
+archivebox-1  | [🦸‍♂️] Stopping supervisord process (pid=378)...
+archivebox-1  | 
+archivebox-1  | [🟩] ArchiveBox server shut down gracefully.

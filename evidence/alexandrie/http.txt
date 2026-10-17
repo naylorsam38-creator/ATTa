@@ -1,0 +1,6 @@
+200 http://localhost:8200/
+404 http://localhost:8201/
+404 http://localhost:8201/api/health
+403 http://localhost:9000/
+000 http://localhost:9005/
+connfail http://localhost:9005/

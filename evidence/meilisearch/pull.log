@@ -1,0 +1,27 @@
+v1.37: Pulling from getmeili/meilisearch
+73c20f3b35c5: Pulling fs layer
+a9daf8f24c3c: Pulling fs layer
+b183f222294f: Pulling fs layer
+d49a2dee86fb: Pulling fs layer
+c54218976a92: Pulling fs layer
+9a6a4131227b: Pulling fs layer
+9a6a4131227b: Download complete
+73c20f3b35c5: Download complete
+d49a2dee86fb: Download complete
+c54218976a92: Download complete
+b183f222294f: Download complete
+d49a2dee86fb: Pull complete
+c54218976a92: Pull complete
+17030ec1f191: Download complete
+a9daf8f24c3c: Download complete
+a9daf8f24c3c: Pull complete
+9a6a4131227b: Pull complete
+73c20f3b35c5: Pull complete
+b183f222294f: Pull complete
+Digest: sha256:9cde2774864e6c19cdd09fcd2950bc01ac9a0454b6f343fffafa14faae6eb7ea
+Status: Downloaded newer image for getmeili/meilisearch:v1.37
+docker.io/getmeili/meilisearch:v1.37
+
+real	0m9.114s
+user	0m0.023s
+sys	0m0.024s

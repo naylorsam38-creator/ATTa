@@ -1,0 +1,6 @@
+release zip: 
+/root
+api status 403
+latest tag via redirect: 
+using tag stable-11248 (git checkout of release tag; github.com archive download returned 403 via session proxy)
+commit=276801c7fd4233f7288ba95bd132c219852c7ac7 date=2026-09-14T13:24:34+00:00

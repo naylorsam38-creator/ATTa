@@ -1,0 +1,484 @@
+db-1  | 2026-10-17 15:49:34+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.44-1.el9 started.
+db-1  | 2026-10-17 15:49:34+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+db-1  | 2026-10-17 15:49:34+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.44-1.el9 started.
+db-1  | 2026-10-17 15:49:34+00:00 [Note] [Entrypoint]: Initializing database files
+db-1  | 2026-10-17T15:49:34.514092Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+db-1  | 2026-10-17T15:49:34.514242Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.44) initializing of server in progress as process 81
+db-1  | 2026-10-17T15:49:34.521594Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+db-1  | 2026-10-17T15:49:34.771070Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+db-1  | 2026-10-17T15:49:35.650814Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+db-1  | 2026-10-17 15:49:37+00:00 [Note] [Entrypoint]: Database files initialized
+db-1  | 2026-10-17 15:49:37+00:00 [Note] [Entrypoint]: Starting temporary server
+db-1  | 2026-10-17T15:49:38.034020Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+db-1  | 2026-10-17T15:49:38.036866Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.44) starting as process 125
+db-1  | 2026-10-17T15:49:38.054151Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+db-1  | 2026-10-17T15:49:38.212217Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+db-1  | 2026-10-17T15:49:38.370570Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+db-1  | 2026-10-17T15:49:38.370623Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+db-1  | 2026-10-17T15:49:38.372157Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+db-1  | 2026-10-17T15:49:38.388178Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+db-1  | 2026-10-17T15:49:38.388224Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.44'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
+db-1  | 2026-10-17 15:49:38+00:00 [Note] [Entrypoint]: Temporary server started.
+db-1  | '/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
+db-1  | Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+db-1  | Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
+db-1  | Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
+db-1  | Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
+db-1  | Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+db-1  | Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+db-1  | 2026-10-17 15:49:40+00:00 [Note] [Entrypoint]: Creating database ghost
+db-1  | 2026-10-17 15:49:40+00:00 [Note] [Entrypoint]: Creating user ghost
+db-1  | 2026-10-17 15:49:40+00:00 [Note] [Entrypoint]: Giving user ghost access to schema ghost
+db-1  | 
+db-1  | 2026-10-17 15:49:40+00:00 [Note] [Entrypoint]: /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/create-multiple-databases.sh
+db-1  | Creating multiple databases: activitypub
+db-1  | Creating database: activitypub
+db-1  | mysql: [Warning] Using a password on the command line interface can be insecure.
+db-1  | Multiple databases created
+db-1  | 
+db-1  | 2026-10-17 15:49:40+00:00 [Note] [Entrypoint]: Stopping temporary server
+db-1  | 2026-10-17T15:49:40.418294Z 14 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.44).
+db-1  | 2026-10-17T15:49:41.918349Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.44)  MySQL Community Server - GPL.
+db-1  | 2026-10-17 15:49:42+00:00 [Note] [Entrypoint]: Temporary server stopped
+db-1  | 
+db-1  | 2026-10-17 15:49:42+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
+db-1  | 
+db-1  | 2026-10-17T15:49:42.697616Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+db-1  | 2026-10-17T15:49:42.699277Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.44) starting as process 1
+db-1  | 2026-10-17T15:49:42.705011Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+db-1  | 2026-10-17T15:49:42.848560Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+db-1  | 2026-10-17T15:49:42.991480Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+db-1  | 2026-10-17T15:49:42.991528Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+db-1  | 2026-10-17T15:49:42.994295Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+db-1  | 2026-10-17T15:49:43.010157Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '0.0.0.0' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+db-1  | 2026-10-17T15:49:43.010234Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.44'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+db-1  | 2026-10-17T15:51:12.057231Z 0 [System] [MY-013172] [Server] Received SHUTDOWN from user <via user signal>. Shutting down mysqld (Version: 8.0.44).
+db-1  | 2026-10-17T15:51:15.497288Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.44)  MySQL Community Server - GPL.
+ghost-1  | [2026-10-17 15:49:45] [31mERROR[39m (Code: -97)
+ghost-1  | [31m
+ghost-1  | [31m(Code: -97)[39m
+ghost-1  | 
+ghost-1  | [37m"There was an error starting your server."[39m
+ghost-1  | [33m"Please use the error code above to search for a solution."[39m
+ghost-1  | 
+ghost-1  | [1m[37mError ID:[39m[22m
+ghost-1  |     [90mb0052d91-c373-491b-a44f-61d55b24d2f1[39m
+ghost-1  | 
+ghost-1  | [90m----------------------------------------[39m
+ghost-1  | 
+ghost-1  | [90mInternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21)[39m
+ghost-1  | [39m
+ghost-1  | InternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+ghost-1  |   statusCode: 500,
+ghost-1  |   errorType: 'InternalServerError',
+ghost-1  |   level: 'critical',
+ghost-1  |   id: 'b0052d91-c373-491b-a44f-61d55b24d2f1',
+ghost-1  |   context: 'There was an error starting your server.',
+ghost-1  |   help: 'Please use the error code above to search for a solution.',
+ghost-1  |   errorDetails: undefined,
+ghost-1  |   code: null,
+ghost-1  |   property: null,
+ghost-1  |   redirect: null,
+ghost-1  |   hideStack: false
+ghost-1  | }
+ghost-1  | [2026-10-17 15:49:45] [35mWARN[39m Ghost is shutting down
+ghost-1  | [2026-10-17 15:49:45] [35mWARN[39m Ghost has shut down
+ghost-1  | [2026-10-17 15:49:45] [35mWARN[39m Your site is now offline
+ghost-1  | [2026-10-17 15:49:45] [35mWARN[39m Ghost was running for a few seconds
+ghost-1  | [2026-10-17 15:49:47] [31mERROR[39m (Code: -97)
+ghost-1  | [31m
+ghost-1  | [31m(Code: -97)[39m
+ghost-1  | 
+ghost-1  | [37m"There was an error starting your server."[39m
+ghost-1  | [33m"Please use the error code above to search for a solution."[39m
+ghost-1  | 
+ghost-1  | [1m[37mError ID:[39m[22m
+ghost-1  |     [90m4dd71413-6ae2-4fbe-ad96-c2641bb93f14[39m
+ghost-1  | 
+ghost-1  | [90m----------------------------------------[39m
+ghost-1  | 
+ghost-1  | [90mInternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21)[39m
+ghost-1  | [39m
+ghost-1  | InternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+ghost-1  |   statusCode: 500,
+ghost-1  |   errorType: 'InternalServerError',
+ghost-1  |   level: 'critical',
+ghost-1  |   id: '4dd71413-6ae2-4fbe-ad96-c2641bb93f14',
+ghost-1  |   context: 'There was an error starting your server.',
+ghost-1  |   help: 'Please use the error code above to search for a solution.',
+ghost-1  |   errorDetails: undefined,
+ghost-1  |   code: null,
+ghost-1  |   property: null,
+ghost-1  |   redirect: null,
+ghost-1  |   hideStack: false
+ghost-1  | }
+ghost-1  | [2026-10-17 15:49:47] [35mWARN[39m Ghost is shutting down
+ghost-1  | [2026-10-17 15:49:47] [35mWARN[39m Ghost has shut down
+ghost-1  | [2026-10-17 15:49:47] [35mWARN[39m Your site is now offline
+ghost-1  | [2026-10-17 15:49:47] [35mWARN[39m Ghost was running for a few seconds
+ghost-1  | [2026-10-17 15:49:48] [31mERROR[39m (Code: -97)
+ghost-1  | [31m
+ghost-1  | [31m(Code: -97)[39m
+ghost-1  | 
+ghost-1  | [37m"There was an error starting your server."[39m
+ghost-1  | [33m"Please use the error code above to search for a solution."[39m
+ghost-1  | 
+ghost-1  | [1m[37mError ID:[39m[22m
+ghost-1  |     [90m53feab5f-e6df-42e4-86d9-9232330f7f8a[39m
+ghost-1  | 
+ghost-1  | [90m----------------------------------------[39m
+ghost-1  | 
+ghost-1  | [90mInternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21)[39m
+ghost-1  | [39m
+ghost-1  | InternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+ghost-1  |   statusCode: 500,
+ghost-1  |   errorType: 'InternalServerError',
+ghost-1  |   level: 'critical',
+ghost-1  |   id: '53feab5f-e6df-42e4-86d9-9232330f7f8a',
+ghost-1  |   context: 'There was an error starting your server.',
+ghost-1  |   help: 'Please use the error code above to search for a solution.',
+ghost-1  |   errorDetails: undefined,
+ghost-1  |   code: null,
+ghost-1  |   property: null,
+ghost-1  |   redirect: null,
+ghost-1  |   hideStack: false
+ghost-1  | }
+ghost-1  | [2026-10-17 15:49:48] [35mWARN[39m Ghost is shutting down
+ghost-1  | [2026-10-17 15:49:48] [35mWARN[39m Ghost has shut down
+ghost-1  | [2026-10-17 15:49:48] [35mWARN[39m Your site is now offline
+ghost-1  | [2026-10-17 15:49:48] [35mWARN[39m Ghost was running for a few seconds
+ghost-1  | [2026-10-17 15:49:50] [31mERROR[39m (Code: -97)
+ghost-1  | [31m
+ghost-1  | [31m(Code: -97)[39m
+ghost-1  | 
+ghost-1  | [37m"There was an error starting your server."[39m
+ghost-1  | [33m"Please use the error code above to search for a solution."[39m
+ghost-1  | 
+ghost-1  | [1m[37mError ID:[39m[22m
+ghost-1  |     [90m6d1d2ccc-e6d3-4018-9c68-75736a2c06ff[39m
+ghost-1  | 
+ghost-1  | [90m----------------------------------------[39m
+ghost-1  | 
+ghost-1  | [90mInternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21)[39m
+ghost-1  | [39m
+ghost-1  | InternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+ghost-1  |   statusCode: 500,
+ghost-1  |   errorType: 'InternalServerError',
+ghost-1  |   level: 'critical',
+ghost-1  |   id: '6d1d2ccc-e6d3-4018-9c68-75736a2c06ff',
+ghost-1  |   context: 'There was an error starting your server.',
+ghost-1  |   help: 'Please use the error code above to search for a solution.',
+ghost-1  |   errorDetails: undefined,
+ghost-1  |   code: null,
+ghost-1  |   property: null,
+ghost-1  |   redirect: null,
+ghost-1  |   hideStack: false
+ghost-1  | }
+ghost-1  | [2026-10-17 15:49:50] [35mWARN[39m Ghost is shutting down
+ghost-1  | [2026-10-17 15:49:50] [35mWARN[39m Ghost has shut down
+ghost-1  | [2026-10-17 15:49:50] [35mWARN[39m Your site is now offline
+ghost-1  | [2026-10-17 15:49:50] [35mWARN[39m Ghost was running for a few seconds
+ghost-1  | [2026-10-17 15:49:52] [31mERROR[39m (Code: -97)
+ghost-1  | [31m
+ghost-1  | [31m(Code: -97)[39m
+ghost-1  | 
+ghost-1  | [37m"There was an error starting your server."[39m
+ghost-1  | [33m"Please use the error code above to search for a solution."[39m
+ghost-1  | 
+ghost-1  | [1m[37mError ID:[39m[22m
+ghost-1  |     [90m338a1f3d-e36a-4798-a1b7-1bc4a93b9b12[39m
+ghost-1  | 
+ghost-1  | [90m----------------------------------------[39m
+ghost-1  | 
+ghost-1  | [90mInternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21)[39m
+ghost-1  | [39m
+ghost-1  | InternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+ghost-1  |   statusCode: 500,
+ghost-1  |   errorType: 'InternalServerError',
+ghost-1  |   level: 'critical',
+ghost-1  |   id: '338a1f3d-e36a-4798-a1b7-1bc4a93b9b12',
+ghost-1  |   context: 'There was an error starting your server.',
+ghost-1  |   help: 'Please use the error code above to search for a solution.',
+ghost-1  |   errorDetails: undefined,
+ghost-1  |   code: null,
+ghost-1  |   property: null,
+ghost-1  |   redirect: null,
+ghost-1  |   hideStack: false
+ghost-1  | }
+ghost-1  | [2026-10-17 15:49:52] [35mWARN[39m Ghost is shutting down
+ghost-1  | [2026-10-17 15:49:52] [35mWARN[39m Ghost has shut down
+ghost-1  | [2026-10-17 15:49:52] [35mWARN[39m Your site is now offline
+ghost-1  | [2026-10-17 15:49:52] [35mWARN[39m Ghost was running for a few seconds
+ghost-1  | [2026-10-17 15:49:55] [31mERROR[39m (Code: -97)
+ghost-1  | [31m
+ghost-1  | [31m(Code: -97)[39m
+ghost-1  | 
+ghost-1  | [37m"There was an error starting your server."[39m
+ghost-1  | [33m"Please use the error code above to search for a solution."[39m
+ghost-1  | 
+ghost-1  | [1m[37mError ID:[39m[22m
+ghost-1  |     [90m63861db9-48a2-403f-890b-51363088636d[39m
+ghost-1  | 
+ghost-1  | [90m----------------------------------------[39m
+ghost-1  | 
+ghost-1  | [90mInternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21)[39m
+ghost-1  | [39m
+ghost-1  | InternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+ghost-1  |   statusCode: 500,
+ghost-1  |   errorType: 'InternalServerError',
+ghost-1  |   level: 'critical',
+ghost-1  |   id: '63861db9-48a2-403f-890b-51363088636d',
+ghost-1  |   context: 'There was an error starting your server.',
+ghost-1  |   help: 'Please use the error code above to search for a solution.',
+ghost-1  |   errorDetails: undefined,
+caddy-1  | {"level":"info","ts":1792252185.0505009,"msg":"maxprocs: Leaving GOMAXPROCS=4: CPU quota undefined"}
+caddy-1  | {"level":"info","ts":1792252185.050795,"msg":"GOMEMLIMIT is updated","package":"github.com/KimMachineGun/automemlimit/memlimit","GOMEMLIMIT":15187437158,"previous":9223372036854775807}
+ghost-1  |   code: null,
+caddy-1  | {"level":"info","ts":1792252185.0508416,"msg":"using config from file","file":"/etc/caddy/Caddyfile"}
+caddy-1  | {"level":"info","ts":1792252185.05289,"msg":"adapted config to JSON","adapter":"caddyfile"}
+caddy-1  | {"level":"info","ts":1792252185.0542183,"logger":"admin","msg":"admin endpoint started","address":"localhost:2019","enforce_origin":false,"origins":["//localhost:2019","//[::1]:2019","//127.0.0.1:2019"]}
+caddy-1  | {"level":"info","ts":1792252185.0544899,"logger":"http.auto_https","msg":"server is listening only on the HTTPS port but has no TLS connection policies; adding one to enable TLS","server_name":"srv0","https_port":443}
+caddy-1  | {"level":"info","ts":1792252185.0545242,"logger":"http.auto_https","msg":"enabling automatic HTTP->HTTPS redirects","server_name":"srv0"}
+caddy-1  | {"level":"info","ts":1792252185.0547445,"logger":"tls.cache.maintenance","msg":"started background certificate maintenance","cache":"0xc000158080"}
+caddy-1  | {"level":"warn","ts":1792252185.0604324,"logger":"pki.ca.local","msg":"installing root certificate (you might be prompted for password)","path":"storage:pki/authorities/local/root.crt"}
+caddy-1  | {"level":"info","ts":1792252185.061326,"msg":"warning: \"certutil\" is not available, install \"certutil\" with \"apt install libnss3-tools\" or \"yum install nss-tools\" and try again"}
+caddy-1  | {"level":"info","ts":1792252185.0613523,"msg":"define JAVA_HOME environment variable to use the Java trust"}
+caddy-1  | {"level":"info","ts":1792252185.0914264,"msg":"certificate installed properly in linux trusts"}
+caddy-1  | {"level":"info","ts":1792252185.091874,"logger":"http","msg":"enabling HTTP/3 listener","addr":":443"}
+caddy-1  | {"level":"info","ts":1792252185.0923274,"logger":"http.log","msg":"server running","name":"srv0","protocols":["h1","h2","h3"]}
+caddy-1  | {"level":"warn","ts":1792252185.0925448,"logger":"http","msg":"HTTP/2 skipped because it requires TLS","network":"tcp","addr":":80"}
+ghost-1  |   property: null,
+caddy-1  | {"level":"warn","ts":1792252185.0926194,"logger":"http","msg":"HTTP/3 skipped because it requires TLS","network":"tcp","addr":":80"}
+ghost-1  |   redirect: null,
+caddy-1  | {"level":"info","ts":1792252185.0930512,"logger":"http.log","msg":"server running","name":"remaining_auto_https_redirects","protocols":["h1","h2","h3"]}
+ghost-1  |   hideStack: false
+caddy-1  | {"level":"info","ts":1792252185.0930738,"logger":"http","msg":"enabling automatic TLS certificate management","domains":["localhost"]}
+ghost-1  | }
+caddy-1  | {"level":"info","ts":1792252185.093614,"msg":"autosaved config (load with --resume flag)","file":"/config/caddy/autosave.json"}
+caddy-1  | {"level":"info","ts":1792252185.0938578,"msg":"serving initial configuration"}
+caddy-1  | {"level":"info","ts":1792252185.0944467,"logger":"tls","msg":"cleaning storage unit","storage":"FileStorage:/data/caddy"}
+caddy-1  | {"level":"info","ts":1792252185.094979,"logger":"tls.obtain","msg":"acquiring lock","identifier":"localhost"}
+caddy-1  | {"level":"info","ts":1792252185.095998,"logger":"tls","msg":"finished cleaning storage units"}
+caddy-1  | {"level":"info","ts":1792252185.0960128,"logger":"tls.obtain","msg":"lock acquired","identifier":"localhost"}
+caddy-1  | {"level":"info","ts":1792252185.0960824,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"localhost"}
+caddy-1  | {"level":"info","ts":1792252185.1002471,"logger":"tls.obtain","msg":"certificate obtained successfully","identifier":"localhost","issuer":"local"}
+caddy-1  | {"level":"info","ts":1792252185.100346,"logger":"tls.obtain","msg":"releasing lock","identifier":"localhost"}
+caddy-1  | {"level":"warn","ts":1792252185.1008713,"logger":"tls","msg":"stapling OCSP","identifiers":["localhost"]}
+caddy-1  | 2026/10/17 15:51:11.513	[34mINFO[0m	http.log.access.log0	handled request	{"request": {"remote_ip": "172.18.0.1", "remote_port": "45708", "client_ip": "172.18.0.1", "proto": "HTTP/1.1", "method": "GET", "host": "localhost", "uri": "/", "headers": {"User-Agent": ["curl/8.5.0"], "Accept": ["*/*"]}}, "bytes_read": 0, "user_id": "", "duration": 0.000027246, "size": 0, "status": 308, "resp_headers": {"Server": ["Caddy"], "Connection": ["close"], "Location": ["https://localhost/"], "Content-Type": []}}
+caddy-1  | {"level":"error","ts":1792252271.5302377,"logger":"http.log.error.log0","msg":"dial tcp: lookup ghost on 127.0.0.11:53: no such host","request":{"remote_ip":"172.18.0.1","remote_port":"51016","client_ip":"172.18.0.1","proto":"HTTP/2.0","method":"GET","host":"localhost","uri":"/","headers":{"Accept":["*/*"],"User-Agent":["curl/8.5.0"]},"tls":{"resumed":false,"version":772,"cipher_suite":4865,"proto":"h2","server_name":"localhost"}},"duration":0.003326201,"status":502,"err_id":"5khw8quv3","err_trace":"reverseproxy.statusError (reverseproxy.go:1390)"}
+caddy-1  | 2026/10/17 15:51:11.530	[31mERROR[0m	http.log.access.log0	handled request	{"request": {"remote_ip": "172.18.0.1", "remote_port": "51016", "client_ip": "172.18.0.1", "proto": "HTTP/2.0", "method": "GET", "host": "localhost", "uri": "/", "headers": {"User-Agent": ["curl/8.5.0"], "Accept": ["*/*"]}, "tls": {"resumed": false, "version": 772, "cipher_suite": 4865, "proto": "h2", "server_name": "localhost"}}, "bytes_read": 0, "user_id": "", "duration": 0.003326201, "size": 0, "status": 502, "resp_headers": {"Strict-Transport-Security": ["max-age=31536000;"], "X-Content-Type-Options": ["nosniff"], "Server": ["Caddy"], "Alt-Svc": ["h3=\":443\"; ma=2592000"], "X-Xss-Protection": ["1; mode=block"], "Content-Security-Policy": ["frame-ancestors 'self' "], "Referrer-Policy": ["strict-origin-when-cross-origin"]}}
+caddy-1  | 2026/10/17 15:51:11.546	[31mERROR[0m	http.log.access.log0	handled request	{"request": {"remote_ip": "172.18.0.1", "remote_port": "51028", "client_ip": "172.18.0.1", "proto": "HTTP/2.0", "method": "GET", "host": "localhost", "uri": "/ghost/", "headers": {"User-Agent": ["curl/8.5.0"], "Accept": ["*/*"]}, "tls": {"resumed": false, "version": 772, "cipher_suite": 4865, "proto": "h2", "server_name": "localhost"}}, "bytes_read": 0, "user_id": "", "duration": 0.001416693, "size": 0, "status": 502, "resp_headers": {"X-Xss-Protection": ["1; mode=block"], "Content-Security-Policy": ["frame-ancestors 'self' "], "Referrer-Policy": ["strict-origin-when-cross-origin"], "Strict-Transport-Security": ["max-age=31536000;"], "X-Content-Type-Options": ["nosniff"], "Server": ["Caddy"], "Alt-Svc": ["h3=\":443\"; ma=2592000"]}}
+caddy-1  | {"level":"error","ts":1792252271.5463321,"logger":"http.log.error.log0","msg":"dial tcp: lookup ghost on 127.0.0.11:53: no such host","request":{"remote_ip":"172.18.0.1","remote_port":"51028","client_ip":"172.18.0.1","proto":"HTTP/2.0","method":"GET","host":"localhost","uri":"/ghost/","headers":{"User-Agent":["curl/8.5.0"],"Accept":["*/*"]},"tls":{"resumed":false,"version":772,"cipher_suite":4865,"proto":"h2","server_name":"localhost"}},"duration":0.001416693,"status":502,"err_id":"6x6ekce5r","err_trace":"reverseproxy.statusError (reverseproxy.go:1390)"}
+caddy-1  | {"level":"info","ts":1792252271.8176017,"msg":"shutting down apps, then terminating","signal":"SIGTERM"}
+caddy-1  | {"level":"warn","ts":1792252271.817691,"msg":"exiting; byeee!! 👋","signal":"SIGTERM"}
+caddy-1  | {"level":"info","ts":1792252271.8177779,"logger":"http","msg":"servers shutting down with eternal grace period"}
+caddy-1  | {"level":"info","ts":1792252271.818457,"logger":"admin","msg":"stopped previous server","address":"localhost:2019"}
+caddy-1  | {"level":"info","ts":1792252271.8185523,"msg":"shutdown complete","signal":"SIGTERM","exit_code":0}
+ghost-1  | [2026-10-17 15:49:55] [35mWARN[39m Ghost is shutting down
+ghost-1  | [2026-10-17 15:49:55] [35mWARN[39m Ghost has shut down
+ghost-1  | [2026-10-17 15:49:55] [35mWARN[39m Your site is now offline
+ghost-1  | [2026-10-17 15:49:55] [35mWARN[39m Ghost was running for a few seconds
+ghost-1  | [2026-10-17 15:49:59] [31mERROR[39m (Code: -97)
+ghost-1  | [31m
+ghost-1  | [31m(Code: -97)[39m
+ghost-1  | 
+ghost-1  | [37m"There was an error starting your server."[39m
+ghost-1  | [33m"Please use the error code above to search for a solution."[39m
+ghost-1  | 
+ghost-1  | [1m[37mError ID:[39m[22m
+ghost-1  |     [90m1937bde9-90e1-4b6f-9f3a-ae709440e44e[39m
+ghost-1  | 
+ghost-1  | [90m----------------------------------------[39m
+ghost-1  | 
+ghost-1  | [90mInternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21)[39m
+ghost-1  | [39m
+ghost-1  | InternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+ghost-1  |   statusCode: 500,
+ghost-1  |   errorType: 'InternalServerError',
+ghost-1  |   level: 'critical',
+ghost-1  |   id: '1937bde9-90e1-4b6f-9f3a-ae709440e44e',
+ghost-1  |   context: 'There was an error starting your server.',
+ghost-1  |   help: 'Please use the error code above to search for a solution.',
+ghost-1  |   errorDetails: undefined,
+ghost-1  |   code: null,
+ghost-1  |   property: null,
+ghost-1  |   redirect: null,
+ghost-1  |   hideStack: false
+ghost-1  | }
+ghost-1  | [2026-10-17 15:49:59] [35mWARN[39m Ghost is shutting down
+ghost-1  | [2026-10-17 15:49:59] [35mWARN[39m Ghost has shut down
+ghost-1  | [2026-10-17 15:49:59] [35mWARN[39m Your site is now offline
+ghost-1  | [2026-10-17 15:49:59] [35mWARN[39m Ghost was running for a few seconds
+ghost-1  | [2026-10-17 15:50:07] [31mERROR[39m (Code: -97)
+ghost-1  | [31m
+ghost-1  | [31m(Code: -97)[39m
+ghost-1  | 
+ghost-1  | [37m"There was an error starting your server."[39m
+ghost-1  | [33m"Please use the error code above to search for a solution."[39m
+ghost-1  | 
+ghost-1  | [1m[37mError ID:[39m[22m
+ghost-1  |     [90m3602c535-3746-40d4-bf68-089d2e957a58[39m
+ghost-1  | 
+ghost-1  | [90m----------------------------------------[39m
+ghost-1  | 
+ghost-1  | [90mInternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21)[39m
+ghost-1  | [39m
+ghost-1  | InternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+ghost-1  |   statusCode: 500,
+ghost-1  |   errorType: 'InternalServerError',
+ghost-1  |   level: 'critical',
+ghost-1  |   id: '3602c535-3746-40d4-bf68-089d2e957a58',
+ghost-1  |   context: 'There was an error starting your server.',
+ghost-1  |   help: 'Please use the error code above to search for a solution.',
+ghost-1  |   errorDetails: undefined,
+ghost-1  |   code: null,
+ghost-1  |   property: null,
+ghost-1  |   redirect: null,
+ghost-1  |   hideStack: false
+ghost-1  | }
+ghost-1  | [2026-10-17 15:50:07] [35mWARN[39m Ghost is shutting down
+ghost-1  | [2026-10-17 15:50:07] [35mWARN[39m Ghost has shut down
+ghost-1  | [2026-10-17 15:50:07] [35mWARN[39m Your site is now offline
+ghost-1  | [2026-10-17 15:50:07] [35mWARN[39m Ghost was running for a few seconds
+ghost-1  | [2026-10-17 15:50:21] [31mERROR[39m (Code: -97)
+ghost-1  | [31m
+ghost-1  | [31m(Code: -97)[39m
+ghost-1  | 
+ghost-1  | [37m"There was an error starting your server."[39m
+ghost-1  | [33m"Please use the error code above to search for a solution."[39m
+ghost-1  | 
+ghost-1  | [1m[37mError ID:[39m[22m
+ghost-1  |     [90mb3e89190-26df-4d85-bb57-cf02c6535e1b[39m
+ghost-1  | 
+ghost-1  | [90m----------------------------------------[39m
+ghost-1  | 
+ghost-1  | [90mInternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21)[39m
+ghost-1  | [39m
+ghost-1  | InternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+ghost-1  |   statusCode: 500,
+ghost-1  |   errorType: 'InternalServerError',
+ghost-1  |   level: 'critical',
+ghost-1  |   id: 'b3e89190-26df-4d85-bb57-cf02c6535e1b',
+ghost-1  |   context: 'There was an error starting your server.',
+ghost-1  |   help: 'Please use the error code above to search for a solution.',
+ghost-1  |   errorDetails: undefined,
+ghost-1  |   code: null,
+ghost-1  |   property: null,
+ghost-1  |   redirect: null,
+ghost-1  |   hideStack: false
+ghost-1  | }
+ghost-1  | [2026-10-17 15:50:21] [35mWARN[39m Ghost is shutting down
+ghost-1  | [2026-10-17 15:50:21] [35mWARN[39m Ghost has shut down
+ghost-1  | [2026-10-17 15:50:21] [35mWARN[39m Your site is now offline
+ghost-1  | [2026-10-17 15:50:21] [35mWARN[39m Ghost was running for a few seconds
+ghost-1  | InternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+ghost-1  |   statusCode: 500,
+ghost-1  |   errorType: 'InternalServerError',
+ghost-1  |   level: 'critical',
+ghost-1  |   id: '7454141b-380a-4755-82f2-4d350989aeb5',
+ghost-1  |   context: 'There was an error starting your server.',
+ghost-1  |   help: 'Please use the error code above to search for a solution.',
+ghost-1  |   errorDetails: undefined,
+ghost-1  |   code: null,
+ghost-1  |   property: null,
+ghost-1  |   redirect: null,
+ghost-1  |   hideStack: false
+ghost-1  | }
+ghost-1  | [2026-10-17 15:50:48] [31mERROR[39m (Code: -97)
+ghost-1  | [31m
+ghost-1  | [31m(Code: -97)[39m
+ghost-1  | 
+ghost-1  | [37m"There was an error starting your server."[39m
+ghost-1  | [33m"Please use the error code above to search for a solution."[39m
+ghost-1  | 
+ghost-1  | [1m[37mError ID:[39m[22m
+ghost-1  |     [90m7454141b-380a-4755-82f2-4d350989aeb5[39m
+ghost-1  | 
+ghost-1  | [90m----------------------------------------[39m
+ghost-1  | 
+ghost-1  | [90mInternalServerError: (Code: -97)
+ghost-1  |     at Server.<anonymous> (/var/lib/ghost/versions/6.71.0/core/server/ghost-server.js:91:34)
+ghost-1  |     at Server.emit (node:events:519:28)
+ghost-1  |     at emitErrorNT (node:net:1977:8)
+ghost-1  |     at process.processTicksAndRejections (node:internal/process/task_queues:89:21)[39m
+ghost-1  | [39m
+ghost-1  | [2026-10-17 15:50:48] [35mWARN[39m Ghost is shutting down
+ghost-1  | [2026-10-17 15:50:48] [35mWARN[39m Ghost has shut down
+ghost-1  | [2026-10-17 15:50:48] [35mWARN[39m Your site is now offline
+ghost-1  | [2026-10-17 15:50:48] [35mWARN[39m Ghost was running for a few seconds

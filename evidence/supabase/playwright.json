@@ -1,0 +1,1405 @@
+{
+  "startUrl": "http://localhost:8000/",
+  "origin": "http://localhost:8000",
+  "pages": [
+    {
+      "url": "http://localhost:8000/",
+      "finalUrl": "http://localhost:8000/project/default",
+      "status": 200,
+      "title": "Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions",
+      "finalUrl": "http://localhost:8000/project/default/functions",
+      "status": 200,
+      "title": "Edge Functions | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/general",
+      "finalUrl": "http://localhost:8000/project/default/settings/general",
+      "status": 200,
+      "title": "General | Settings | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default?connectTab=framework&showConnect=true",
+      "finalUrl": "http://localhost:8000/project/default?connectTab=framework&showConnect=true",
+      "status": 200,
+      "title": "Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor",
+      "finalUrl": "http://localhost:8000/project/default/editor",
+      "status": 200,
+      "title": "Table Editor | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql",
+      "finalUrl": "http://localhost:8000/project/default/sql/new",
+      "status": 200,
+      "title": "SQL Editor | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/database/schemas",
+      "finalUrl": "http://localhost:8000/project/default/database/schemas",
+      "status": 200,
+      "title": "Schema Visualizer | Database | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/auth/users",
+      "finalUrl": "http://localhost:8000/project/default/auth/users",
+      "status": 200,
+      "title": "Users | Authentication | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/storage/files",
+      "finalUrl": "http://localhost:8000/project/default/storage/files",
+      "status": 200,
+      "title": "Files | Storage | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/realtime/inspector",
+      "finalUrl": "http://localhost:8000/project/default/realtime/inspector",
+      "status": 200,
+      "title": "Realtime Inspector | Realtime | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/advisors/security",
+      "finalUrl": "http://localhost:8000/project/default/advisors/security",
+      "status": 200,
+      "title": "Advisors | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/query-performance",
+      "finalUrl": "http://localhost:8000/project/default/observability/query-performance",
+      "status": 200,
+      "title": "Query Performance | Observability | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations",
+      "finalUrl": "http://localhost:8000/project/default/integrations",
+      "status": 200,
+      "title": "Integrations | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions/secrets",
+      "finalUrl": "http://localhost:8000/project/default/functions/secrets",
+      "status": 200,
+      "title": "Secrets | Edge Functions | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions?showConnect=true",
+      "finalUrl": "http://localhost:8000/project/default/functions?showConnect=true&connectTab=framework",
+      "status": 200,
+      "title": "Edge Functions | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/api-keys",
+      "finalUrl": "http://localhost:8000/project/default/settings/api-keys",
+      "status": 200,
+      "title": "API Keys | Settings | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/jwt",
+      "finalUrl": "http://localhost:8000/project/default/settings/jwt",
+      "status": 200,
+      "title": "JWT Keys | Settings | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "finalUrl": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "status": 200,
+      "title": "Integrations | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations/vault/overview",
+      "finalUrl": "http://localhost:8000/project/default/integrations/vault/overview",
+      "status": 200,
+      "title": "Integrations | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/general?showConnect=true",
+      "finalUrl": "http://localhost:8000/project/default/settings/general?showConnect=true&connectTab=framework",
+      "status": 200,
+      "title": "General | Settings | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/account/me",
+      "finalUrl": "http://localhost:8000/account/me",
+      "status": 200,
+      "title": "Preferences | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor?showConnect=true&connectTab=framework",
+      "finalUrl": "http://localhost:8000/project/default/editor?showConnect=true&connectTab=framework",
+      "status": 200,
+      "title": "Table Editor | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/templates",
+      "finalUrl": "http://localhost:8000/project/default/sql/templates",
+      "status": 200,
+      "title": "Templates | SQL Editor | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/examples",
+      "finalUrl": "http://localhost:8000/project/default/sql/examples",
+      "status": 200,
+      "title": "SQL Editor | Default Project | Default Organization | Supabase",
+      "error": null
+    },
+    {
+      "url": "http://localhost:8000/project/default/observability/connections",
+      "finalUrl": "http://localhost:8000/project/default/observability/connections",
+      "status": 200,
+      "title": "Database Connections | Observability | Default Project | Default Organization | Supabase",
+      "error": null
+    }
+  ],
+  "consoleErrors": [
+    {
+      "url": "http://localhost:8000/project/default",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/general",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/general",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/general",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/general",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/general",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/general",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default?connectTab=framework&showConnect=true",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default?connectTab=framework&showConnect=true",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default?connectTab=framework&showConnect=true",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default?connectTab=framework&showConnect=true",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default?connectTab=framework&showConnect=true",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default?connectTab=framework&showConnect=true",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/new",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/new",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/new",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/new",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/new",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/new",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/database/schemas",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/database/schemas",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/database/schemas",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/database/schemas",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/database/schemas",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/database/schemas",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/storage/files",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/storage/files",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/storage/files",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/storage/files",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/storage/files",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/storage/files",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/realtime/inspector",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/realtime/inspector",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/realtime/inspector",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/realtime/inspector",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/realtime/inspector",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/realtime/inspector",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/advisors/security",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/1qi37y4j_yg0e.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/1qi37y4j_yg0e.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/advisors/security",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/advisors/security",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/advisors/security",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/advisors/security",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/advisors/security",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/observability/query-performance",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/08zja__9tk1nv.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/08zja__9tk1nv.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/observability/query-performance",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/observability/query-performance",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/observability/query-performance",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/observability/query-performance",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/observability/query-performance",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/3q33axukajjmy.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/3q33axukajjmy.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions/secrets",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions/secrets",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/08zja__9tk1nv.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/08zja__9tk1nv.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions/secrets",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions/secrets",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions/secrets",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions/secrets",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions?showConnect=true&connectTab=framework",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions?showConnect=true&connectTab=framework",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions?showConnect=true&connectTab=framework",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions?showConnect=true&connectTab=framework",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions?showConnect=true&connectTab=framework",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/functions?showConnect=true&connectTab=framework",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/jwt",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/jwt",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/jwt",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/jwt",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/jwt",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/settings/jwt",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations/vault/overview",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations/vault/overview",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations/vault/overview",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations/vault/overview",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations/vault/overview",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/integrations/vault/overview",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor?showConnect=true&connectTab=framework",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor?showConnect=true&connectTab=framework",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0ahr816-ai41f.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor?showConnect=true&connectTab=framework",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor?showConnect=true&connectTab=framework",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor?showConnect=true&connectTab=framework",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/editor?showConnect=true&connectTab=framework",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/templates",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/templates",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/templates",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/templates",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/templates",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/templates",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/examples",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at a (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11167)\n    at queryFn (http://localhost:8000/_next/static/chunks/1f89pvc48m7xs.js:1:11534)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/examples",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at s (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:32901)\n    at queryFn (http://localhost:8000/_next/static/chunks/0cqv-923w-u50.js:1280:33087)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/ch"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/examples",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async i (http://localhost:8000/_next/static/chunks/0-mljq7_4hcb5.js:1:28388)"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/examples",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at queryFn (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2583)\n    at Object.o [as fn] (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:11454)\n    at m (http://localhost:8000/_next/static/chunks/2ht03zks0alez.js:1:22241)\n    at Object.start (http://localhost:8000/_next/static/chunks/2ht"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/examples",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at i (http://localhost:8000/_next/static/chunks/44lb0djqbl3ij.js:1:2348)\n    at k (http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22273)\n    at http://localhost:8000/_next/static/chunks/3mk8tq5im5gq5.js:3:22336\n    at oJ (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:89189)\n    at uS (http://localhost:8000/_next/static/chunks/3zq_tz5uo6e-1.js:1:105077)\n    at uw"
+    },
+    {
+      "url": "http://localhost:8000/project/default/sql/examples",
+      "text": "TypeError: Failed to fetch\n    at y (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:1:786)\n    at m (http://localhost:8000/_next/static/chunks/40vza-f1m0mah.js:3:17782)\n    at async d (http://localhost:8000/_next/static/chunks/0w89cg36isda_.js:1:4963)"
+    }
+  ],
+  "pageErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://localhost:8000/monaco-editor/vs/loader.js",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8000/api/enabled-features-overrides",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8000/api/platform/deployment-mode",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8000/api/platform/profile",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8000/api/get-deployment-commit",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8000/api/cli-release-version",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8000/api/platform/integrations/github/authorization",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8000/img/supabase-logo.svg",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8000/api/v1/projects/default/functions",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8000/api/ai/sql/generate-v4",
+      "method": "POST",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8000/img/reports/bg-grafana-dark.svg",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:8000/img/reports/bg-grafana-light.svg",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "badResponses": [],
+  "clicks": [
+    {
+      "page": "http://localhost:8000/project/default",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default"
+    },
+    {
+      "page": "http://localhost:8000/project/default",
+      "text": "Search...\n\nCtrl K",
+      "afterUrl": "http://localhost:8000/project/default"
+    },
+    {
+      "page": "http://localhost:8000/project/default",
+      "text": "Help",
+      "afterUrl": "http://localhost:8000/project/default"
+    },
+    {
+      "page": "http://localhost:8000/project/default",
+      "text": "Advisor Center",
+      "afterUrl": "http://localhost:8000/project/default"
+    },
+    {
+      "page": "http://localhost:8000/project/default",
+      "text": "SQL Editor",
+      "afterUrl": "http://localhost:8000/project/default"
+    },
+    {
+      "page": "http://localhost:8000/project/default",
+      "text": "AI Assistant",
+      "afterUrl": "http://localhost:8000/project/default"
+    },
+    {
+      "page": "http://localhost:8000/project/default",
+      "text": "Settings",
+      "afterUrl": "http://localhost:8000/project/default"
+    },
+    {
+      "page": "http://localhost:8000/project/default",
+      "text": "Sidebar control",
+      "afterUrl": "http://localhost:8000/project/default"
+    },
+    {
+      "page": "http://localhost:8000/project/default",
+      "text": "Copy\nproject URL and API keys",
+      "afterUrl": "http://localhost:8000/project/default"
+    },
+    {
+      "page": "http://localhost:8000/project/default",
+      "text": "Drag to reorder section",
+      "afterUrl": "http://localhost:8000/project/default"
+    },
+    {
+      "page": "http://localhost:8000/project/default",
+      "text": "Framework\n\nUse a client library",
+      "afterUrl": "http://localhost:8000/project/default?connectTab=framework&showConnect=true"
+    },
+    {
+      "page": "http://localhost:8000/project/default/functions",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/functions?showConnect=true"
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/general",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/settings/general?showConnect=true"
+    },
+    {
+      "page": "http://localhost:8000/project/default?connectTab=framework&showConnect=true",
+      "text": "Framework\n\nUse a client library",
+      "afterUrl": "http://localhost:8000/project/default"
+    },
+    {
+      "page": "http://localhost:8000/project/default/editor",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/editor?showConnect=true&connectTab=framework"
+    },
+    {
+      "page": "http://localhost:8000/project/default/sql/new",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/sql/new?showConnect=true&connectTab=framework"
+    },
+    {
+      "page": "http://localhost:8000/project/default/database/schemas",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/database/schemas?showConnect=true&connectTab=framework"
+    },
+    {
+      "page": "http://localhost:8000/project/default/auth/users",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/auth/users"
+    },
+    {
+      "page": "http://localhost:8000/project/default/auth/users",
+      "text": "Search...\n\nCtrl K",
+      "afterUrl": "http://localhost:8000/project/default/auth/users"
+    },
+    {
+      "page": "http://localhost:8000/project/default/auth/users",
+      "text": "Help",
+      "afterUrl": "http://localhost:8000/project/default/auth/users"
+    },
+    {
+      "page": "http://localhost:8000/project/default/auth/users",
+      "text": "Advisor Center",
+      "afterUrl": "http://localhost:8000/project/default/auth/users"
+    },
+    {
+      "page": "http://localhost:8000/project/default/auth/users",
+      "text": "SQL Editor",
+      "afterUrl": "http://localhost:8000/project/default/auth/users"
+    },
+    {
+      "page": "http://localhost:8000/project/default/auth/users",
+      "text": "AI Assistant",
+      "afterUrl": "http://localhost:8000/project/default/auth/users"
+    },
+    {
+      "page": "http://localhost:8000/project/default/auth/users",
+      "text": "Settings",
+      "afterUrl": "http://localhost:8000/project/default/auth/users"
+    },
+    {
+      "page": "http://localhost:8000/project/default/auth/users",
+      "text": "Sidebar control",
+      "afterUrl": "http://localhost:8000/project/default/auth/users"
+    },
+    {
+      "page": "http://localhost:8000/project/default/auth/users",
+      "text": "Email address",
+      "afterUrl": "http://localhost:8000/project/default/auth/users"
+    },
+    {
+      "page": "http://localhost:8000/project/default/auth/users",
+      "text": "All columns",
+      "afterUrl": "http://localhost:8000/project/default/auth/users"
+    },
+    {
+      "page": "http://localhost:8000/project/default/auth/users",
+      "text": "Refresh",
+      "afterUrl": "http://localhost:8000/project/default/auth/users"
+    },
+    {
+      "page": "http://localhost:8000/project/default/auth/users",
+      "text": "Add user",
+      "afterUrl": "http://localhost:8000/project/default/auth/users"
+    },
+    {
+      "page": "http://localhost:8000/project/default/storage/files",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/storage/files?showConnect=true&connectTab=framework"
+    },
+    {
+      "page": "http://localhost:8000/project/default/realtime/inspector",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/realtime/inspector?showConnect=true&connectTab=framework"
+    },
+    {
+      "page": "http://localhost:8000/project/default/advisors/security",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/advisors/security"
+    },
+    {
+      "page": "http://localhost:8000/project/default/advisors/security",
+      "text": "Search...\n\nCtrl K",
+      "afterUrl": "http://localhost:8000/project/default/advisors/security"
+    },
+    {
+      "page": "http://localhost:8000/project/default/advisors/security",
+      "text": "Help",
+      "afterUrl": "http://localhost:8000/project/default/advisors/security"
+    },
+    {
+      "page": "http://localhost:8000/project/default/advisors/security",
+      "text": "Advisor Center",
+      "afterUrl": "http://localhost:8000/project/default/advisors/security"
+    },
+    {
+      "page": "http://localhost:8000/project/default/advisors/security",
+      "text": "SQL Editor",
+      "afterUrl": "http://localhost:8000/project/default/advisors/security"
+    },
+    {
+      "page": "http://localhost:8000/project/default/advisors/security",
+      "text": "AI Assistant",
+      "afterUrl": "http://localhost:8000/project/default/advisors/security"
+    },
+    {
+      "page": "http://localhost:8000/project/default/advisors/security",
+      "text": "Settings",
+      "afterUrl": "http://localhost:8000/project/default/advisors/security"
+    },
+    {
+      "page": "http://localhost:8000/project/default/advisors/security",
+      "text": "Sidebar control",
+      "afterUrl": "http://localhost:8000/project/default/advisors/security"
+    },
+    {
+      "page": "http://localhost:8000/project/default/advisors/security",
+      "text": "Errors\n0 errors",
+      "afterUrl": "http://localhost:8000/project/default/advisors/security"
+    },
+    {
+      "page": "http://localhost:8000/project/default/advisors/security",
+      "text": "Warnings\n0 warnings",
+      "afterUrl": "http://localhost:8000/project/default/advisors/security?preset=WARN&id="
+    },
+    {
+      "page": "http://localhost:8000/project/default/observability/query-performance",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/observability/query-performance?showConnect=true&connectTab=framework"
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/integrations?showConnect=true&connectTab=framework"
+    },
+    {
+      "page": "http://localhost:8000/project/default/functions/secrets",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/functions/secrets?showConnect=true&connectTab=framework"
+    },
+    {
+      "page": "http://localhost:8000/project/default/functions?showConnect=true&connectTab=framework",
+      "text": "Framework\n\nUse a client library",
+      "afterUrl": "http://localhost:8000/project/default/functions"
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/api-keys",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/settings/api-keys"
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/api-keys",
+      "text": "Search...\n\nCtrl K",
+      "afterUrl": "http://localhost:8000/project/default/settings/api-keys"
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/api-keys",
+      "text": "Help",
+      "afterUrl": "http://localhost:8000/project/default/settings/api-keys"
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/api-keys",
+      "text": "Advisor Center",
+      "afterUrl": "http://localhost:8000/project/default/settings/api-keys"
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/api-keys",
+      "text": "SQL Editor",
+      "afterUrl": "http://localhost:8000/project/default/settings/api-keys"
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/api-keys",
+      "text": "AI Assistant",
+      "afterUrl": "http://localhost:8000/project/default/settings/api-keys"
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/api-keys",
+      "text": "Settings",
+      "afterUrl": "http://localhost:8000/project/default/settings/api-keys"
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/api-keys",
+      "text": "Sidebar control",
+      "afterUrl": "http://localhost:8000/project/default/settings/api-keys"
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/jwt",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/settings/jwt?showConnect=true&connectTab=framework"
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/integrations/data_api/overview"
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "text": "Search...\n\nCtrl K",
+      "afterUrl": "http://localhost:8000/project/default/integrations/data_api/overview"
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "text": "Help",
+      "afterUrl": "http://localhost:8000/project/default/integrations/data_api/overview"
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "text": "Advisor Center",
+      "afterUrl": "http://localhost:8000/project/default/integrations/data_api/overview"
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "text": "SQL Editor",
+      "afterUrl": "http://localhost:8000/project/default/integrations/data_api/overview"
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "text": "AI Assistant",
+      "afterUrl": "http://localhost:8000/project/default/integrations/data_api/overview"
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "text": "Settings",
+      "afterUrl": "http://localhost:8000/project/default/integrations/data_api/overview"
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "text": "Sidebar control",
+      "afterUrl": "http://localhost:8000/project/default/integrations/data_api/overview"
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "text": "Read more",
+      "afterUrl": "http://localhost:8000/project/default/integrations/data_api/overview"
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "text": "Primary Database",
+      "afterUrl": "http://localhost:8000/project/default/integrations/data_api/overview"
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "text": "Copy",
+      "afterUrl": "http://localhost:8000/project/default/integrations/data_api/overview"
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/vault/overview",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/integrations/vault/overview?showConnect=true&connectTab=framework"
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/general?showConnect=true&connectTab=framework",
+      "text": "Framework\n\nUse a client library",
+      "afterUrl": "http://localhost:8000/project/default/settings/general?showConnect=true&connectTab=framework"
+    },
+    {
+      "page": "http://localhost:8000/account/me",
+      "text": "Search...\n\nCtrl K",
+      "afterUrl": "http://localhost:8000/account/me"
+    },
+    {
+      "page": "http://localhost:8000/account/me",
+      "text": "Help",
+      "afterUrl": "http://localhost:8000/account/me"
+    },
+    {
+      "page": "http://localhost:8000/account/me",
+      "text": "Advisor Center",
+      "afterUrl": "http://localhost:8000/account/me"
+    },
+    {
+      "page": "http://localhost:8000/account/me",
+      "text": "Settings",
+      "afterUrl": "http://localhost:8000/account/me"
+    },
+    {
+      "page": "http://localhost:8000/account/me",
+      "text": "System",
+      "afterUrl": "http://localhost:8000/account/me"
+    },
+    {
+      "page": "http://localhost:8000/account/me",
+      "text": "Dark",
+      "afterUrl": "http://localhost:8000/account/me"
+    },
+    {
+      "page": "http://localhost:8000/account/me",
+      "text": "Light",
+      "afterUrl": "http://localhost:8000/account/me"
+    },
+    {
+      "page": "http://localhost:8000/account/me",
+      "text": "Expand on hover",
+      "afterUrl": "http://localhost:8000/account/me"
+    },
+    {
+      "page": "http://localhost:8000/account/me",
+      "text": "Auto detect (UTC)",
+      "afterUrl": "http://localhost:8000/account/me"
+    },
+    {
+      "page": "http://localhost:8000/account/me",
+      "text": "",
+      "afterUrl": "http://localhost:8000/account/me"
+    },
+    {
+      "page": "http://localhost:8000/account/me",
+      "text": "",
+      "afterUrl": "http://localhost:8000/account/me"
+    },
+    {
+      "page": "http://localhost:8000/account/me",
+      "text": "",
+      "afterUrl": "http://localhost:8000/account/me"
+    },
+    {
+      "page": "http://localhost:8000/project/default/editor?showConnect=true&connectTab=framework",
+      "text": "Framework\n\nUse a client library",
+      "afterUrl": "http://localhost:8000/project/default/editor"
+    },
+    {
+      "page": "http://localhost:8000/project/default/sql/templates",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/sql/templates?showConnect=true&connectTab=framework"
+    },
+    {
+      "page": "http://localhost:8000/project/default/sql/examples",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/sql/examples?showConnect=true&connectTab=framework"
+    },
+    {
+      "page": "http://localhost:8000/project/default/observability/connections",
+      "text": "Connect",
+      "afterUrl": "http://localhost:8000/project/default/observability/connections?showConnect=true&connectTab=framework"
+    }
+  ],
+  "skipped": [
+    {
+      "reason": "destructive-looking button",
+      "text": "Send message",
+      "page": "http://localhost:8000/project/default?connectTab=framework&showConnect=true"
+    },
+    {
+      "reason": "destructive-looking link",
+      "text": "Installed\nDatabase Webhooks\n\nSend real-time data from your d",
+      "href": "http://localhost:8000/project/default/integrations/webhooks/overview"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Delete message",
+      "page": "http://localhost:8000/project/default/functions?showConnect=true&connectTab=framework"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Send message",
+      "page": "http://localhost:8000/project/default/functions?showConnect=true&connectTab=framework"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Delete message",
+      "page": "http://localhost:8000/project/default/settings/general?showConnect=true&connectTab=framework"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Send message",
+      "page": "http://localhost:8000/project/default/settings/general?showConnect=true&connectTab=framework"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Delete message",
+      "page": "http://localhost:8000/project/default/editor?showConnect=true&connectTab=framework"
+    },
+    {
+      "reason": "destructive-looking button",
+      "text": "Send message",
+      "page": "http://localhost:8000/project/default/editor?showConnect=true&connectTab=framework"
+    }
+  ],
+  "forms": [
+    {
+      "page": "http://localhost:8000/project/default/functions",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/functions",
+      "validation": [
+        "Edge Functions | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/general",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/settings/general",
+      "validation": [
+        "Self-hosted Supabase\n\nProject settings are configured via environment variables.\n\nDocs",
+        "General | Settings | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default?connectTab=framework&showConnect=true",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default?connectTab=framework&showConnect=true",
+      "validation": [
+        "Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/editor",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/editor",
+      "validation": [
+        "Table Editor | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/sql/new",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/sql/new",
+      "validation": [
+        "SQL Editor | Default Project | Default Organization | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/database/schemas",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/database/schemas",
+      "validation": [
+        "No tables in schema\n\nThe “public” schema doesn’t have any tables.\n\nNew table",
+        "Schema Visualizer | Database | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/auth/users",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/auth/users",
+      "validation": [
+        "Users | Authentication | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/storage/files",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/storage/files",
+      "validation": [
+        "Files | Storage | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/realtime/inspector",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/realtime/inspector",
+      "validation": [
+        "Realtime Inspector | Realtime | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/advisors/security",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/advisors/security",
+      "validation": [
+        "Advisors | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/observability/query-performance",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/observability/query-performance",
+      "validation": [
+        "Query Performance | Observability | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/integrations",
+      "validation": [
+        "Integrations | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/functions/secrets",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/functions/secrets",
+      "validation": [
+        "Self-hosted Supabase\n\nSet custom secrets via environment variables.\n\nDocs",
+        "Secrets | Edge Functions | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/api-keys",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/settings/api-keys",
+      "validation": [
+        "Self-hosted Supabase\n\nSUPABASE_PUBLISHABLE_KEY and SUPABASE_SECRET_KEY are set via environment variables.\n\nDocs",
+        "API Keys | Settings | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/settings/jwt",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/settings/jwt",
+      "validation": [
+        "JWT Keys | Settings | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/integrations/data_api/overview",
+      "validation": [
+        "Managed via configuration variables\n\nData API settings are configured via config.toml for CLI and local development, or via docker-compose.yml and .env for self-hosted deployments.",
+        "Integrations | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/integrations/vault/overview",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/integrations/vault/overview",
+      "validation": [
+        "Integrations | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/sql/templates",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/sql/templates",
+      "validation": [
+        "SQL Editor | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/sql/examples",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/sql/examples",
+      "validation": [
+        "Templates | SQL Editor | Supabase"
+      ]
+    },
+    {
+      "page": "http://localhost:8000/project/default/observability/connections",
+      "submitLabel": "",
+      "filled": 1,
+      "afterUrl": "http://localhost:8000/project/default/observability/connections",
+      "validation": [
+        "Database Connections | Observability | Supabase"
+      ]
+    }
+  ],
+  "notes": [
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded.",
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded."
+  ],
+  "unvisitedQueue": [
+    "http://localhost:8000/project/default/sql/new?showConnect=true&connectTab=framework",
+    "http://localhost:8000/project/default/database/tables",
+    "http://localhost:8000/project/default/database/functions",
+    "http://localhost:8000/project/default/database/triggers/data",
+    "http://localhost:8000/project/default/database/types",
+    "http://localhost:8000/project/default/database/extensions",
+    "http://localhost:8000/project/default/database/indexes",
+    "http://localhost:8000/project/default/database/publications",
+    "http://localhost:8000/project/default/database/policies",
+    "http://localhost:8000/project/default/database/roles",
+    "http://localhost:8000/project/default/database/settings",
+    "http://localhost:8000/project/default/database/migrations",
+    "http://localhost:8000/project/default/editor?create=table",
+    "http://localhost:8000/project/default/database/schemas?showConnect=true&connectTab=framework",
+    "http://localhost:8000/project/default/storage/files/policies",
+    "http://localhost:8000/project/default/storage/files?showConnect=true&connectTab=framework",
+    "http://localhost:8000/project/default/realtime/policies",
+    "http://localhost:8000/project/default/database/triggers",
+    "http://localhost:8000/project/default/realtime/inspector?showConnect=true&connectTab=framework",
+    "http://localhost:8000/project/default/advisors/performance",
+    "http://localhost:8000/project/default/observability/query-performance",
+    "http://localhost:8000/project/default/advisors/security?preset=WARN&id=",
+    "http://localhost:8000/project/default/observability/query-performance?showConnect=true&connectTab=framework",
+    "http://localhost:8000/project/default/integrations?category=wrapper",
+    "http://localhost:8000/project/default/integrations?category=postgres_extension",
+    "http://localhost:8000/project/default/integrations/webhooks/overview",
+    "http://localhost:8000/project/default/integrations/cron/overview",
+    "http://localhost:8000/project/default/integrations/queues/overview",
+    "http://localhost:8000/project/default/integrations/stripe_sync_engine/overview",
+    "http://localhost:8000/project/default/integrations/airtable_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/auth0_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/bigquery_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/cal_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/calendly_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/clerk_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/clickhouse_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/cfd1_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/cognito_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/firebase_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/graphiql/overview",
+    "http://localhost:8000/project/default/integrations/hubspot_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/iceberg_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/logflare_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/mssql_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/notion_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/orb_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/paddle_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/redis_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/s3_vectors_wrapper/overview",
+    "http://localhost:8000/project/default/integrations/s3_wrapper/overview"
+  ]
+}

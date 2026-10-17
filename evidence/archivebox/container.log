@@ -1,0 +1,718 @@
+archivebox-1  | [*] Verifying and updating existing ArchiveBox collection to v0.9.73...
+archivebox-1  | ----------------------------------------------------------------------
+archivebox-1  | 
+archivebox-1  | [*] Verifying archive folder structure...
+archivebox-1  |     + ./archive, ./sources, ./logs...
+archivebox-1  |     + ./ArchiveBox.conf...
+archivebox-1  | 
+archivebox-1  | [*] Verifying main SQL index and running any migrations needed...
+archivebox-1  |     - Converging existing machine_binary table...
+archivebox-1  |     ✓ machine_binary table ready
+archivebox-1  | ✓ Fresh install or all snapshots already have crawls
+archivebox-1  |     ✓ No ArchiveResults need Process migration
+archivebox-1  |     ✓ Process migration complete: 0 migrated
+archivebox-1  |     - Rebuilding empty ArchiveResult table with UUID primary keys...
+archivebox-1  |     ✓ ArchiveResult UUID primary key migration complete (0 records)
+archivebox-1  |     Operations to perform:
+archivebox-1  |     Apply all migrations: admin, api, auth, contenttypes, core, crawls, machine, personas, sessions
+archivebox-1  |     Running migrations:
+archivebox-1  |     Applying contenttypes.0001_initial... OK
+archivebox-1  |     Applying auth.0001_initial... OK
+archivebox-1  |     Applying admin.0001_initial... OK
+archivebox-1  |     Applying admin.0002_logentry_remove_auto_add... OK
+archivebox-1  |     Applying admin.0003_logentry_add_action_flag_choices... OK
+archivebox-1  |     Applying contenttypes.0002_remove_content_type_name... OK
+archivebox-1  |     Applying auth.0002_alter_permission_name_max_length... OK
+archivebox-1  |     Applying auth.0003_alter_user_email_max_length... OK
+archivebox-1  |     Applying auth.0004_alter_user_username_opts... OK
+archivebox-1  |     Applying auth.0005_alter_user_last_login_null... OK
+archivebox-1  |     Applying auth.0006_require_contenttypes_0002... OK
+archivebox-1  |     Applying auth.0007_alter_validators_add_error_messages... OK
+archivebox-1  |     Applying auth.0008_alter_user_username_max_length... OK
+archivebox-1  |     Applying auth.0009_alter_user_last_name_max_length... OK
+archivebox-1  |     Applying auth.0010_alter_group_name_max_length... OK
+archivebox-1  |     Applying auth.0011_update_proxy_permissions... OK
+archivebox-1  |     Applying auth.0012_alter_user_first_name_max_length... OK
+archivebox-1  |     Applying api.0001_initial... OK
+archivebox-1  |     Applying machine.0001_initial... OK
+archivebox-1  |     Applying machine.0005_converge_binary_model... OK
+archivebox-1  |     Applying machine.0006_process... OK
+archivebox-1  |     Applying machine.0007_add_process_type_and_parent... OK
+archivebox-1  |     Applying machine.0008_add_worker_type_field... OK
+archivebox-1  |     Applying machine.0009_alter_binary_status... OK
+archivebox-1  |     Applying machine.0010_alter_process_process_type... OK
+archivebox-1  |     Applying machine.0011_remove_binary_output_dir... OK
+archivebox-1  |     Applying machine.0012_add_machine_config_if_missing... OK
+archivebox-1  |     Applying machine.0013_alter_machine_config... OK
+archivebox-1  |     Applying machine.0014_process_machine_pro_pid_6eec8b_idx_and_more... OK
+archivebox-1  |     Applying machine.0015_process_progress_indexes... OK
+archivebox-1  |     Applying machine.0016_process_delete_at... OK
+archivebox-1  |     Applying machine.0017_shorten_process_progress_index_names... OK
+archivebox-1  |     Applying machine.0018_alter_process_process_type... OK
+archivebox-1  |     Applying machine.0019_single_active_runner_constraint... OK
+archivebox-1  |     Applying machine.0020_repair_process_binary_iface_links... OK
+archivebox-1  |     Applying machine.0021_networkinterface_blank_defaults... OK
+archivebox-1  |     Applying machine.0022_networkinterface_identity_without_mac... OK
+archivebox-1  |     Applying personas.0001_initial... OK
+archivebox-1  |     Applying personas.0002_alter_persona_id... OK
+archivebox-1  |     Applying personas.0003_persona_permissions... OK
+archivebox-1  |     Applying personas.0004_hydrate_persona_permissions... OK
+archivebox-1  |     Applying crawls.0001_initial... OK
+archivebox-1  |     Applying crawls.0002_upgrade_from_0_8_6... OK
+archivebox-1  |     Applying crawls.0003_remove_crawlschedule_num_uses_failed_and_more... OK
+archivebox-1  |     Applying crawls.0004_remove_crawl_output_dir... OK
+archivebox-1  |     Applying crawls.0005_add_crawl_limits... OK
+archivebox-1  |     Applying crawls.0006_crawl_crawl_admin_order_idx... OK
+archivebox-1  |     Applying crawls.0007_remove_crawl_crawl_admin_order_idx_and_more... OK
+archivebox-1  |     Applying crawls.0008_split_crawl_snapshot_size_limits... OK
+archivebox-1  |     Applying crawls.0009_crawl_progress_status_idx... OK
+archivebox-1  |     Applying crawls.0010_crawl_delete_at... OK
+archivebox-1  |     Applying crawls.0011_move_crawl_limits_to_config... OK
+archivebox-1  |     Applying crawls.0012_drop_stale_crawl_timeout_column... OK
+archivebox-1  |     Applying crawls.0013_crawl_permissions... OK
+archivebox-1  |     Applying crawls.0014_crawl_persona_fk... OK
+archivebox-1  |     Applying crawls.0015_alter_crawl_status... OK
+archivebox-1  |     Applying crawls.0016_hydrate_crawl_permissions... OK
+archivebox-1  |     Applying core.0001_initial... OK
+archivebox-1  |     Applying core.0002_auto_20200625_1521... OK
+archivebox-1  |     Applying core.0003_auto_20200630_1034... OK
+archivebox-1  |     Applying core.0004_auto_20200713_1552... OK
+archivebox-1  |     Applying core.0005_auto_20200728_0326... OK
+archivebox-1  |     Applying core.0006_auto_20201012_1520... OK
+archivebox-1  |     Applying core.0007_archiveresult... OK
+archivebox-1  |     Applying core.0008_auto_20210105_1421... OK
+archivebox-1  |     Applying core.0009_auto_20210216_1038... OK
+archivebox-1  |     Applying core.0010_auto_20210216_1055... OK
+archivebox-1  |     Applying core.0011_auto_20210216_1331... OK
+archivebox-1  |     Applying core.0012_auto_20210216_1425... OK
+archivebox-1  |     Applying core.0013_auto_20210218_0729... OK
+archivebox-1  |     Applying core.0014_auto_20210218_0729... OK
+archivebox-1  |     Applying core.0015_auto_20210218_0730... OK
+archivebox-1  |     Applying core.0016_auto_20210218_1204... OK
+archivebox-1  |     Applying core.0017_auto_20210219_0211... OK
+archivebox-1  |     Applying core.0018_auto_20210327_0952... OK
+archivebox-1  |     Applying core.0019_auto_20210401_0654... OK
+archivebox-1  |     Applying core.0020_auto_20210410_1031... OK
+archivebox-1  |     Applying core.0021_auto_20220914_0934... OK
+archivebox-1  |     Applying core.0022_auto_20231023_2008... OK
+archivebox-1  |     Applying core.0023_upgrade_to_0_9_0... OK
+archivebox-1  |     Applying core.0024_assign_default_crawl... OK
+archivebox-1  |     Applying core.0025_alter_archiveresult_options_alter_snapshot_options_and_more... OK
+archivebox-1  |     Applying core.0026_add_process_to_archiveresult... OK
+archivebox-1  |     Applying core.0027_copy_archiveresult_to_process... OK
+archivebox-1  |     Applying core.0028_alter_snapshot_fs_version... OK
+archivebox-1  |     Applying core.0029_migrate_archiveresult_to_uuid_pk... OK
+archivebox-1  |     Applying core.0030_alter_archiveresult_id... OK
+archivebox-1  |     Applying core.0031_add_archiveresult_snapshot_status_index... OK
+archivebox-1  |     Applying core.0032_remove_archiveresult_retry_at... OK
+archivebox-1  |     Applying core.0033_alter_archiveresult_status... OK
+archivebox-1  |     Applying core.0034_remove_tag_slug... OK
+archivebox-1  |     Applying core.0035_archiveresult_archiveresult_start_idx... OK
+archivebox-1  |     Applying core.0036_snapshot_snapshot_public_order_idx... OK
+archivebox-1  |     Applying core.0037_alter_snapshot_url_max_length... OK
+archivebox-1  |     Applying core.0038_snapshot_progress_idx... OK
+archivebox-1  |     Applying core.0039_alter_archiveresult_process... OK
+archivebox-1  |     Applying core.0040_archiveresult_delete_at_snapshot_delete_at... OK
+archivebox-1  |     Applying core.0041_snapshot_permissions... OK
+archivebox-1  |     Applying core.0042_snapshot_output_size... OK
+archivebox-1  |     Applying core.0043_archiveresult_retry_at... OK
+archivebox-1  |     Applying core.0044_alter_archiveresult_status_alter_snapshot_status... OK
+archivebox-1  |     Applying core.0045_archiveresult_unique_hook... OK
+archivebox-1  |     Applying core.0046_repair_snapshot_permissions... OK
+archivebox-1  |     Applying core.0047_archiveresult_status_snapshot_index... OK
+archivebox-1  |     Applying core.0048_remove_archiveresult_config... OK
+archivebox-1  |     Applying core.0049_alter_snapshot_url... OK
+archivebox-1  |     Applying core.0050_snapshot_permissions_not_null... OK
+archivebox-1  |     Applying core.0051_postgres_url_pattern_ops_index... OK
+archivebox-1  |     Applying core.0053_alter_archiveresult_options... OK
+archivebox-1  |     Applying core.0054_snapshot_fs_version_index... OK
+archivebox-1  |     Applying core.0055_repair_legacy_retry_timestamps... OK
+archivebox-1  |     Applying core.0057_repair_migrated_process_links... OK
+archivebox-1  |     Applying core.0058_snapshot_deleting_status... OK
+archivebox-1  |     Applying crawls.0017_drop_stale_crawl_limit_columns... OK
+archivebox-1  |     Applying crawls.0018_freeze_crawl_config_snapshots... OK
+archivebox-1  |     Applying crawls.0019_crawlschedule_config... OK
+archivebox-1  |     Applying machine.0023_repair_binary_field_indexes... OK
+archivebox-1  |     Applying sessions.0001_initial... OK
+archivebox-1  | 
+archivebox-1  |     √ ./index.sqlite3
+archivebox-1  | 
+archivebox-1  | [*] Checking links from indexes and archive folders (safe to Ctrl+C)...
+archivebox-1  |     √ Loaded 0 links from existing main index.
+archivebox-1  |     > Skipping orphan snapshot import during init.
+archivebox-1  | 
+archivebox-1  |     Hint: To import orphaned snapshot directories and reconcile filesystem 
+archivebox-1  | state, run:
+archivebox-1  |         archivebox update --rescan --migrate-only
+archivebox-1  | 
+archivebox-1  | ----------------------------------------------------------------------
+archivebox-1  | [√] Done. Verified and updated the existing ArchiveBox collection.
+archivebox-1  | 
+archivebox-1  |     Hint: To finish web setup, run:
+archivebox-1  |         archivebox server  # then visit 
+archivebox-1  | http://admin.archivebox.localhost:5797/admin/
+archivebox-1  | 
+archivebox-1  |     To add new links, you can run:
+archivebox-1  |         archivebox add < ~/some/path/to/list_of_links.txt
+archivebox-1  | 
+archivebox-1  |     For more usage and examples, run:
+archivebox-1  |         archivebox help
+archivebox-1  | 
+archivebox-1  | Hint: Open the Admin UI to create the first admin and finish web setup:
+archivebox-1  |       http://admin.archivebox.localhost:5797/admin/
+archivebox-1  |       (When running remotely, replace localhost with this server's IP address or
+archivebox-1  | hostname.)
+archivebox-1  | 
+archivebox-1  | [+] Starting ArchiveBox webserver...
+archivebox-1  |     > Starting ArchiveBox webserver on BIND_ADDR http://0.0.0.0:5797
+archivebox-1  |     > Log in to ArchiveBox Admin UI on BASE_URL  
+archivebox-1  | http://archivebox.localhost:5797/admin/
+archivebox-1  |     > Writing ArchiveBox error log to ./logs/errors.log
+archivebox-1  | 
+archivebox-1  | [!] BASE_URL is not set. Generated URLs will fall back to 
+archivebox-1  | http://archivebox.localhost:<port>.
+archivebox-1  |     That's fine for local browsing on this machine. Set BASE_URL when running 
+archivebox-1  | behind
+archivebox-1  |     a reverse proxy / ingress / public hostname, e.g.
+archivebox-1  |       BASE_URL=https://archive.example.com archivebox server 0.0.0.0:5797
+archivebox-1  | 
+archivebox-1  | [🦸‍♂️] Supervisord starting...
+archivebox-1  |     > Writing supervisord logs to: ./logs/supervisord.log
+archivebox-1  |     > Writing task worker logs to: ./logs/worker_*.log
+archivebox-1  |     > Using supervisord config file: /tmp/archivebox/supervisord.conf
+archivebox-1  |     > Using supervisord UNIX socket: /tmp/archivebox/supervisord.sock
+archivebox-1  | 
+archivebox-1  | [🦸‍♂️] Supervisord connected (pid=378) via 
+archivebox-1  | unix:///tmp/archivebox/supervisord.sock.
+archivebox-1  | [*] Starting orchestrator, server, sonic in this process (pid=7)...
+archivebox-1  | 
+archivebox-1  | [🦸‍♂️] Supervisord syncing subprocess worker: worker_daphne...
+archivebox-1  |      - Worker worker_daphne: started RUNNING (pid 382, uptime 0:00:00)
+archivebox-1  | [🦸‍♂️] Supervisord syncing subprocess worker: worker_sonic...
+archivebox-1  |      - Worker worker_sonic: started RUNNING (pid 383, uptime 0:00:00)
+archivebox-1  | [🦸‍♂️] Supervisord syncing subprocess worker: worker_runner...
+archivebox-1  |      - Worker worker_runner: started RUNNING (pid 384, uptime 0:00:00)
+archivebox-1  | [🦸‍♂️] Supervisord syncing subprocess worker: 
+archivebox-1  | worker_supervisord_parent_watchdog...
+archivebox-1  |      - Worker worker_supervisord_parent_watchdog: started RUNNING (pid 389, 
+archivebox-1  | uptime 0:00:00)
+archivebox-1  | 
+archivebox-1  | Tailing worker logs (Ctrl+C to stop)...
+archivebox-1  | 
+archivebox-1  |     
+archivebox-1  |     
+archivebox-1  |     
+archivebox-1  | 
+archivebox-1  | [2026-10-17 15:06:26] INFO     daphne.cli Starting server at          cli.py:284
+archivebox-1  |                                tcp:port=5797:interface=0.0.0.0
+archivebox-1  |                       INFO     daphne.server HTTP/2 support not    server.py:126
+archivebox-1  |                                enabled (install the http2 and tls
+archivebox-1  |                                Twisted extras)
+archivebox-1  |                       INFO     daphne.server Configuring endpoint  server.py:135
+archivebox-1  |                                tcp:port=5797:interface=0.0.0.0
+archivebox-1  |                       INFO     daphne.server Listening on TCP      server.py:166
+archivebox-1  |                                address 0.0.0.0:5797
+archivebox-1  | 2026-10-17 15:06:49 HTTP     GET /admin/ 302 172.18.0.1
+archivebox-1  | 2026-10-17 15:06:49 HTTP     GET /admin/login/?next=/admin/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:06:50 HTTP     POST /admin/login/?next=/admin/ 302 172.18.0.1
+archivebox-1  | 2026-10-17 15:06:50 HTTP     GET /admin/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:06:51 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:06:51 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:06:51 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:06:59 HTTP     GET /admin/login/?next=/admin/ 302 172.18.0.1
+archivebox-1  | 2026-10-17 15:06:59 HTTP     GET /admin/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:00 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:00 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:00 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:01 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:01 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:01 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:03 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:04 HTTP     GET /admin/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:04 HTTP     GET / 302 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:04 HTTP     GET /admin/login/?next=/ 302 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:04 HTTP     GET /admin/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:04 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:04 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:04 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:14 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:14 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:14 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:14 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:14 HTTP     GET /admin/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:14 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:15 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:15 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:15 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:25 HTTP     POST 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:25 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:25 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:25 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:35 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:35 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:35 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:35 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:36 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:36 HTTP     GET /add/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:37 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:37 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:37 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:37 HTTP     GET 
+archivebox-1  | /api/v1/core/tags/autocomplete/?q=Test%20value&api_key=[REDACTED] 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:56 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:56 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:56 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:56 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:57 HTTP     GET /add/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:57 HTTP     GET /admin/crawls/crawl/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:58 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:58 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:07:58 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:19 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:19 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:19 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:19 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:20 HTTP     GET /admin/crawls/crawl/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:20 HTTP     GET /admin/core/archiveresult/?o=-1 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:20 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:20 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:20 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:42 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:42 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:42 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:42 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:42 HTTP     GET /admin/core/archiveresult/?o=-1 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:42 HTTP     GET /admin/core/tag/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:43 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:43 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:08:43 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:04 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:04 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:04 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:05 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:05 HTTP     GET /admin/core/tag/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:05 HTTP     GET /docs/ 302 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:06 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:06 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:06 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:15 HTTP     GET /api/v1/docs 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:16 HTTP     GET /api/v1/openapi.json 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:17 HTTP     GET /api/v1/docs 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:17 HTTP     GET /api/v1/openapi.json 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:17 HTTP     GET /admin/password_change/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:18 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:18 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:18 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:39 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:40 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:40 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:40 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:40 HTTP     GET /admin/password_change/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:40 HTTP     GET 
+archivebox-1  | /admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:41 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:41 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:09:41 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:02 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:02 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:02 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:02 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:03 HTTP     GET 
+archivebox-1  | /admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:03 HTTP     GET /admin/crawls/crawlschedule/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:03 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:03 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:03 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:25 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:25 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:25 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:25 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:25 HTTP     GET /admin/crawls/crawlschedule/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:25 HTTP     GET /admin/core/snapshot/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:26 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:26 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:26 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:47 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:47 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:47 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:48 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:48 HTTP     GET /admin/core/snapshot/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:48 HTTP     GET /admin/core/archiveresult/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:49 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:49 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:10:49 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:10 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:10 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:10 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:10 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:11 HTTP     GET /admin/core/archiveresult/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:11 HTTP     GET /admin/personas/persona/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:11 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:11 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:11 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:34 HTTP     GET /admin/personas/persona/?q=Test+value 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:35 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:35 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:35 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:43 HTTP     GET /admin/personas/persona/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:43 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:43 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:43 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:45 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:45 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:45 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:45 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:45 HTTP     GET /admin/personas/persona/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:45 HTTP     GET /admin/personas/persona/?q=Test+value 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:46 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:46 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:46 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:55 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:55 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:55 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:56 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:56 HTTP     GET /admin/personas/persona/?q=Test+value 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:56 HTTP     GET /admin/auth/user/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:57 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:57 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:11:57 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:21 HTTP     GET /admin/auth/user/?q=Test+value 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:22 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:22 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:22 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:30 HTTP     GET /admin/auth/user/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:30 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:30 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:30 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:32 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:32 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:32 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:32 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:32 HTTP     GET /admin/auth/user/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:32 HTTP     GET /admin/auth/user/?q=Test+value 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:33 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:33 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:33 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:42 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:42 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:42 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:42 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:43 HTTP     GET /admin/auth/user/?q=Test+value 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:43 HTTP     GET /admin/environment/config/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:44 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:44 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:44 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:53 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:53 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:53 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:53 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:54 HTTP     GET /admin/environment/config/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:54 HTTP     GET /admin/environment/binaries/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:55 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:55 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:12:55 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:04 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:04 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:04 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:04 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:05 HTTP     GET /admin/environment/binaries/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:05 HTTP     GET /admin/environment/plugins/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:05 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:06 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:06 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:15 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:15 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:15 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:15 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:16 HTTP     GET /admin/environment/plugins/ 200 172.18.0.1
+archivebox-1  | [🦸‍♂️] Supervisord connected (pid=378) via 
+archivebox-1  | unix:///tmp/archivebox/supervisord.sock.
+archivebox-1  | 2026-10-17 15:13:16 HTTP     GET /admin/environment/workers/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:16 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:16 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:16 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:26 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:26 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:26 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:26 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | [🦸‍♂️] Supervisord connected (pid=378) via 
+archivebox-1  | unix:///tmp/archivebox/supervisord.sock.
+archivebox-1  | 2026-10-17 15:13:26 HTTP     GET /admin/environment/workers/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:26 HTTP     GET /admin/environment/logs/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:27 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:27 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:27 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:36 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:36 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:36 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:36 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:37 HTTP     GET /admin/environment/logs/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:37 HTTP     GET /admin/machine/machine/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:38 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:38 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:13:38 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:02 HTTP     GET /admin/machine/machine/?q=Test+value 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:02 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:02 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:02 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:11 HTTP     GET /admin/machine/machine/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:11 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:11 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:11 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:13 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:13 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:13 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:13 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:13 HTTP     GET /admin/machine/machine/ 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:13 HTTP     GET /admin/machine/machine/?q=Test+value 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:14 HTTP     GET /api/v1/docs?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:14 HTTP     GET /public/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:14 HTTP     GET /admin/login/?archivebox_setup_probe=1 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:23 HTTP     GET /api/v1/docs?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:23 HTTP     GET /public/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:23 HTTP     GET /admin/login/?archivebox_setup_probe=2 200 
+archivebox-1  | 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:23 HTTP     GET 
+archivebox-1  | /admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/?BASE_URL=http%3A
+archivebox-1  | %2F%2Farchivebox.localhost%3A5797&SERVER_SECURITY_MODE=auto&PUBLIC_INDEX=True&PU
+archivebox-1  | BLIC_ADD_VIEW=False&PERMISSIONS=public 200 172.18.0.1
+archivebox-1  | 2026-10-17 15:14:24 HTTP     GET /admin/machine/machine/?q=Test+value 200 
+archivebox-1  | 172.18.0.1

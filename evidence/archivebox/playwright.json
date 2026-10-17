@@ -1,0 +1,1225 @@
+{
+  "startUrl": "http://admin.archivebox.localhost:5797/admin/",
+  "origin": "http://admin.archivebox.localhost:5797",
+  "pages": [
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/login/?next=/admin/",
+      "status": 200,
+      "title": "Set up ArchiveBox | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/",
+      "status": 200,
+      "title": "Admin Views | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/",
+      "status": 200,
+      "title": "Machine object (06ad38eefdc673f48000b3aa516ef1f5) | Change machine | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/add/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/add/",
+      "status": 200,
+      "title": "Archived Sites",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/",
+      "status": 200,
+      "title": "Select Crawl to change | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1",
+      "status": 200,
+      "title": "Select Archive Result to change | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/core/tag/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/core/tag/",
+      "status": 200,
+      "title": "Tags | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/docs/",
+      "finalUrl": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "status": 200,
+      "title": "Home · ArchiveBox/ArchiveBox Wiki · GitHub",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/api/v1/docs",
+      "finalUrl": "http://admin.archivebox.localhost:5797/api/v1/docs",
+      "status": 200,
+      "title": "ArchiveBox API",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/password_change/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/password_change/",
+      "status": 200,
+      "title": "Password change | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+      "status": 200,
+      "title": "Select Crawl to change | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/",
+      "status": 200,
+      "title": "Select Scheduled Crawl to change | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/core/snapshot/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/core/snapshot/",
+      "status": 200,
+      "title": "Select Snapshot to change | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/",
+      "status": 200,
+      "title": "Select Archive Result to change | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/personas/persona/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/personas/persona/",
+      "status": 200,
+      "title": "Select persona to change | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/personas/persona/?q=Test+value",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/personas/persona/?q=Test+value",
+      "status": 200,
+      "title": "Select persona to change | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/auth/user/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/auth/user/",
+      "status": 200,
+      "title": "Select user to change | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/auth/user/?q=Test+value",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/auth/user/?q=Test+value",
+      "status": 200,
+      "title": "Select user to change | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/environment/config/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/environment/config/",
+      "status": 200,
+      "title": "Computed Configuration Values | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/environment/binaries/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/environment/binaries/",
+      "status": 200,
+      "title": "Binaries | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/environment/plugins/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/environment/plugins/",
+      "status": 200,
+      "title": "Installed plugins | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/environment/workers/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/environment/workers/",
+      "status": 200,
+      "title": "Running worker processes | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/environment/logs/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/environment/logs/",
+      "status": 200,
+      "title": "Debug Log files | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/machine/machine/",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/",
+      "status": 200,
+      "title": "Select machine to change | Admin | ArchiveBox",
+      "error": null
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/machine/machine/?q=Test+value",
+      "finalUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/?q=Test+value",
+      "status": 200,
+      "title": "Select machine to change | Admin | ArchiveBox",
+      "error": null
+    }
+  ],
+  "consoleErrors": [
+    {
+      "url": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/personas/persona/",
+      "text": "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://admin.archivebox.localhost:5797/admin/personas/persona/:4009:9)"
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/auth/user/",
+      "text": "Progress fetch error: TypeError: Failed to fetch\n    at fetchProgress (http://admin.archivebox.localhost:5797/admin/auth/user/:4009:9)"
+    }
+  ],
+  "pageErrors": [
+    {
+      "url": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "text": "NotAllowedError: Failed to execute 'writeText' on 'Clipboard': Write permission denied."
+    }
+  ],
+  "failedRequests": [
+    {
+      "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=1",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=1",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=1",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=1",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://api.archivebox.localhost:5797/api/v1/docs?archivebox_setup_probe=2",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://web.archivebox.localhost:5797/public/?archivebox_setup_probe=2",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://web.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://snap-456789abcdef.archivebox.localhost:5797/health/?archivebox_setup_probe=2",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/admin/login/?archivebox_setup_probe=2",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://admin.archivebox.localhost:5797/progress.json",
+      "method": "GET",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "badResponses": [
+    {
+      "url": "https://github.com/_global-navigation/payloads.json?can_toggle_site_admin_and_employee_status=0&is_admin_mode_on=0&is_ui_opted_out=0&show_ui_opt_out=0&v=8",
+      "status": 404,
+      "method": "GET"
+    }
+  ],
+  "clicks": [
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/login/?next=/admin/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/login/?next=/admin/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/login/?next=/admin/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/login/?next=/admin/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/login/?next=/admin/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/add/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/add/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/add/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/add/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/add/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/add/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/add/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/add/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/add/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/tag/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/tag/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/tag/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/tag/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/tag/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/tag/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/tag/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/tag/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/tag/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "text": "Platform",
+      "afterUrl": "https://github.com/ArchiveBox/ArchiveBox/wiki"
+    },
+    {
+      "page": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "text": "Solutions",
+      "afterUrl": "https://github.com/ArchiveBox/ArchiveBox/wiki"
+    },
+    {
+      "page": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "text": "Resources",
+      "afterUrl": "https://github.com/ArchiveBox/ArchiveBox/wiki"
+    },
+    {
+      "page": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "text": "Open Source",
+      "afterUrl": "https://github.com/ArchiveBox/ArchiveBox/wiki"
+    },
+    {
+      "page": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "text": "Enterprise",
+      "afterUrl": "https://github.com/ArchiveBox/ArchiveBox/wiki"
+    },
+    {
+      "page": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "text": "Search or jump to, type / to search",
+      "afterUrl": "https://github.com/ArchiveBox/ArchiveBox/wiki"
+    },
+    {
+      "page": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "text": "",
+      "afterUrl": "https://github.com/ArchiveBox/ArchiveBox/wiki"
+    },
+    {
+      "page": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "text": "",
+      "afterUrl": "https://github.com/ArchiveBox/ArchiveBox/wiki"
+    },
+    {
+      "page": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "text": "Copy to clipboard",
+      "afterUrl": "https://github.com/ArchiveBox/ArchiveBox/wiki"
+    },
+    {
+      "page": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "text": "Manage cookies",
+      "afterUrl": "https://github.com/ArchiveBox/ArchiveBox/wiki"
+    },
+    {
+      "page": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+      "text": "Do not share my personal information",
+      "afterUrl": "https://github.com/ArchiveBox/ArchiveBox/wiki"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/api/v1/docs",
+      "text": "Authorize",
+      "afterUrl": "http://admin.archivebox.localhost:5797/api/v1/docs"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/api/v1/docs",
+      "text": "Collapse operation",
+      "afterUrl": "http://admin.archivebox.localhost:5797/api/v1/docs#/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/password_change/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/password_change/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/password_change/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/password_change/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/password_change/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/password_change/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/password_change/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/password_change/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/password_change/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/snapshot/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/snapshot/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/snapshot/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/snapshot/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/snapshot/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/snapshot/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/snapshot/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/snapshot/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/snapshot/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/personas/persona/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/personas/persona/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/personas/persona/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/personas/persona/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/personas/persona/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/personas/persona/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/personas/persona/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/personas/persona/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/personas/persona/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/personas/persona/?q=Test+value",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/personas/persona/?q=Test+value"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/personas/persona/?q=Test+value",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/personas/persona/?q=Test+value"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/personas/persona/?q=Test+value",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/personas/persona/?q=Test+value"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/personas/persona/?q=Test+value",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/personas/persona/?q=Test+value"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/personas/persona/?q=Test+value",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/auth/user/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/auth/user/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/auth/user/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▾",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/auth/user/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/auth/user/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/auth/user/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/auth/user/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/auth/user/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/auth/user/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/auth/user/?q=Test+value",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/auth/user/?q=Test+value"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/auth/user/?q=Test+value",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/auth/user/?q=Test+value"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/auth/user/?q=Test+value",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/auth/user/?q=Test+value"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/auth/user/?q=Test+value",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/auth/user/?q=Test+value"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/auth/user/?q=Test+value",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/config/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/config/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/config/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/config/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/config/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/config/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/config/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/config/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/config/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/binaries/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/binaries/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/binaries/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/binaries/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/binaries/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/binaries/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/binaries/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/binaries/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/binaries/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/plugins/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/plugins/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/plugins/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/plugins/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/plugins/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/plugins/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/plugins/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/plugins/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/plugins/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/workers/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/workers/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/workers/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/workers/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/workers/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/workers/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/workers/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/workers/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/workers/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/logs/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/logs/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/logs/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/logs/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/logs/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/logs/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/logs/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/environment/logs/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/logs/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/?q=Test+value",
+      "text": "Hosting Location: What machine are you hosting this ArchiveB",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/?q=Test+value"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/?q=Test+value",
+      "text": "DNS mode: How will DNS point to this ArchiveBox server?\n▸",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/?q=Test+value"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/?q=Test+value",
+      "text": "Ingress & TLS mode: How will HTTPS traffic reach this Archiv",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/?q=Test+value"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/?q=Test+value",
+      "text": "Retry access checks",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/?q=Test+value"
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/?q=Test+value",
+      "text": "Review and save in Machine config →",
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/#BASE_URL"
+    }
+  ],
+  "skipped": [
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/"
+    },
+    {
+      "reason": "destructive-looking link",
+      "text": "🗑 Delete",
+      "href": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/delete/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/"
+    },
+    {
+      "reason": "destructive-looking link",
+      "text": "Create new profile / import from Chrome ->",
+      "href": "http://admin.archivebox.localhost:5797/admin/personas/persona/add/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/add/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/core/tag/"
+    },
+    {
+      "reason": "destructive-looking link",
+      "text": "/api/v1/core/tags/remove-from-snapshot/",
+      "href": "http://admin.archivebox.localhost:5797/api/v1/docs"
+    },
+    {
+      "reason": "destructive-looking link",
+      "text": "/api/v1/cli/remove",
+      "href": "http://admin.archivebox.localhost:5797/api/v1/docs"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/password_change/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/core/snapshot/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/personas/persona/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/auth/user/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/config/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/binaries/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/plugins/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/workers/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/environment/logs/"
+    },
+    {
+      "reason": "destructive-looking form submit",
+      "label": "Log out",
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/"
+    }
+  ],
+  "forms": [
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/login/?next=/admin/",
+      "submitLabel": "Create admin and continue",
+      "filled": 3,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/",
+      "validation": []
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/",
+      "submitLabel": "",
+      "filled": 18,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/change/",
+      "validation": [
+        "Please correct the error below.",
+        "Stats:\nEnter a valid JSON.",
+        "Enter a valid JSON."
+      ]
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/add/",
+      "submitLabel": "Create Crawl and Start Archiving ➕",
+      "filled": 54,
+      "afterUrl": "http://admin.archivebox.localhost:5797/add/",
+      "validation": []
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/",
+      "submitLabel": "Search",
+      "filled": 1,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/",
+      "validation": [
+        "invalid field action: Please select an item in the list."
+      ]
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1",
+      "submitLabel": "Search",
+      "filled": 1,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/?o=-1",
+      "validation": [
+        "invalid field action: Please select an item in the list."
+      ]
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/tag/",
+      "submitLabel": "Create",
+      "filled": 1,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/tag/",
+      "validation": []
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/password_change/",
+      "submitLabel": "Change my password",
+      "filled": 3,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/password_change/",
+      "validation": []
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+      "submitLabel": "Search",
+      "filled": 1,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawl/?created_at__gte=2026-10-16&o=-1",
+      "validation": [
+        "invalid field action: Please select an item in the list."
+      ]
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/",
+      "submitLabel": "Search",
+      "filled": 1,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/",
+      "validation": []
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/snapshot/",
+      "submitLabel": "Search",
+      "filled": 2,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/snapshot/",
+      "validation": []
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/",
+      "submitLabel": "Search",
+      "filled": 1,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/core/archiveresult/",
+      "validation": [
+        "invalid field action: Please select an item in the list."
+      ]
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/personas/persona/",
+      "submitLabel": "Search",
+      "filled": 1,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/personas/persona/",
+      "validation": [
+        "invalid field action: Please select an item in the list."
+      ]
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/personas/persona/",
+      "submitLabel": "",
+      "filled": 2,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/personas/persona/?q=Test+value",
+      "validation": [
+        "invalid field action: Please select an item in the list."
+      ]
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/auth/user/",
+      "submitLabel": "Search",
+      "filled": 1,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/auth/user/",
+      "validation": [
+        "invalid field action: Please select an item in the list."
+      ]
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/auth/user/",
+      "submitLabel": "",
+      "filled": 3,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/auth/user/?q=Test+value",
+      "validation": [
+        "invalid field action: Please select an item in the list."
+      ]
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/",
+      "submitLabel": "Search",
+      "filled": 1,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/",
+      "validation": [
+        "invalid field action: Please select an item in the list."
+      ]
+    },
+    {
+      "page": "http://admin.archivebox.localhost:5797/admin/machine/machine/",
+      "submitLabel": "",
+      "filled": 3,
+      "afterUrl": "http://admin.archivebox.localhost:5797/admin/machine/machine/?q=Test+value",
+      "validation": [
+        "invalid field action: Please select an item in the list."
+      ]
+    }
+  ],
+  "notes": [
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded.",
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded.",
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded.",
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded.",
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded.",
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded.",
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded.",
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded.",
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded.",
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded.",
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded.",
+    "submit click failed: elementHandle.click: Timeout 3000ms exceeded."
+  ],
+  "unvisitedQueue": [
+    "http://admin.archivebox.localhost:5797/admin/machine/networkinterface/",
+    "http://admin.archivebox.localhost:5797/admin/machine/binary/",
+    "http://admin.archivebox.localhost:5797/admin/machine/process/",
+    "http://admin.archivebox.localhost:5797/admin/api/apitoken/",
+    "http://admin.archivebox.localhost:5797/admin/api/outboundwebhook/",
+    "http://admin.archivebox.localhost:5797/admin/api/",
+    "http://admin.archivebox.localhost:5797/admin/api/apitoken/add/",
+    "http://admin.archivebox.localhost:5797/admin/api/outboundwebhook/add/",
+    "http://admin.archivebox.localhost:5797/admin/auth/",
+    "http://admin.archivebox.localhost:5797/admin/auth/user/add/",
+    "http://admin.archivebox.localhost:5797/admin/core/",
+    "http://admin.archivebox.localhost:5797/admin/core/archiveresult/add/",
+    "http://admin.archivebox.localhost:5797/admin/core/snapshot/add/",
+    "http://admin.archivebox.localhost:5797/admin/core/tag/add/",
+    "http://admin.archivebox.localhost:5797/admin/crawls/",
+    "http://admin.archivebox.localhost:5797/admin/crawls/crawl/add/",
+    "http://admin.archivebox.localhost:5797/admin/crawls/crawlschedule/add/",
+    "http://admin.archivebox.localhost:5797/admin/environment/",
+    "http://admin.archivebox.localhost:5797/admin/machine/",
+    "http://admin.archivebox.localhost:5797/admin/machine/binary/add/",
+    "http://admin.archivebox.localhost:5797/admin/machine/machine/add/",
+    "http://admin.archivebox.localhost:5797/admin/machine/networkinterface/add/",
+    "http://admin.archivebox.localhost:5797/admin/machine/process/add/",
+    "http://admin.archivebox.localhost:5797/admin/personas/",
+    "http://admin.archivebox.localhost:5797/admin/personas/persona/add/",
+    "http://admin.archivebox.localhost:5797/admin/machine/machine/06ad38eefdc673f48000b3aa516ef1f5/history/",
+    "http://admin.archivebox.localhost:5797/admin/machine/networkinterface/?q=06ad38eefdc673f48000b3aa516ef1f5",
+    "http://admin.archivebox.localhost:5797/public/",
+    "http://admin.archivebox.localhost:5797/admin/personas/persona/06ad38eefe3f7f0d8000f1f689c75590/change/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/pdftoppm/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/singlefile/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/wget/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/archivewebpage/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/node/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/abxbus/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/browsers/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/chromium/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/ublock/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/istilldontcareaboutcookies/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/twocaptcha/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/claudechrome/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/yt-dlp/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/ffmpeg/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/gallery-dl/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/git/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/readability-extractor/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/defuddle/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/forum-dl/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/postlight-parser/",
+    "http://admin.archivebox.localhost:5797/admin/environment/binaries/trafilatura/"
+  ]
+}

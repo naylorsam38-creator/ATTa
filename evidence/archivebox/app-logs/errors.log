@@ -1,0 +1,11 @@
+
+> /venv/bin/archivebox server 0.0.0.0:5797; TS=2026-10-17__15:06:20 VERSION=0.9.73 IN_DOCKER=True IS_TTY=False
+
+> /venv/lib/python3.13/site-packages/daphne/__main__.py --bind=0.0.0.0 --port=5797 archivebox.core.asgi:application; TS=2026-10-17__15:06:26 VERSION=0.9.73 IN_DOCKER=True IS_TTY=False
+daphne.cli Starting server at tcp:port=5797:interface=0.0.0.0
+daphne.server HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+daphne.server Configuring endpoint tcp:port=5797:interface=0.0.0.0
+daphne.server Listening on TCP address 0.0.0.0:5797
+
+> /venv/bin/archivebox run --daemon; TS=2026-10-17__15:06:26 VERSION=0.9.73 IN_DOCKER=True IS_TTY=False
+daphne.server Killed 0 pending application instances

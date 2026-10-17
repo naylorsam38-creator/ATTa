@@ -1,0 +1,13 @@
+200 https://localhost:9200/
+{
+    "installed": true,
+    "maintenance": false,
+    "needsDbUpgrade": false,
+    "version": "0.1.0.0",
+    "versionstring": "0.1.0",
+    "edition": "rolling",
+    "productname": "OpenCloud",
+    "product": "OpenCloud",
+    "productversion": "8.1.0",
+    "channel": ""
+} 200 /status.php

@@ -1,0 +1,137 @@
+Checking for pre-requisites
+Pulling Authelia docker image for setup
+Resetting compose.yml, configuration.yml and users_database.yml
+Generating SSL certificate for *.example.com
+ Image traefik/whoami Pulling 
+ Image traefik/whoami Pulling 
+ Image traefik:v3.6.13 Pulling 
+ 382602cc3889 Pulling fs layer 0B
+ d1d4c14c4beb Pulling fs layer 0B
+ de9121e65ab8 Pulling fs layer 0B
+ 7e8a8ec6ab16 Pulling fs layer 0B
+ 4bfffbb6e80b Pulling fs layer 0B
+ 8213dc07c4f6 Pulling fs layer 0B
+ 6a0ac1617861 Pulling fs layer 0B
+ 382602cc3889 Pulling fs layer 0B
+ de9121e65ab8 Pulling fs layer 0B
+ d1d4c14c4beb Pulling fs layer 0B
+ de9121e65ab8 Download complete 0B
+ de9121e65ab8 Extracting 1B
+ de9121e65ab8 Download complete 0B
+ de9121e65ab8 Extracting 1B
+ de9121e65ab8 Extracting 1B
+ de9121e65ab8 Extracting 1B
+ de9121e65ab8 Pull complete 0B
+ de9121e65ab8 Pull complete 0B
+ d1d4c14c4beb Download complete 0B
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Download complete 0B
+ d1d4c14c4beb Extracting 1B
+ 7e8a8ec6ab16 Download complete 0B
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ 382602cc3889 Downloading 2.097MB
+ 382602cc3889 Downloading 2.097MB
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ 382602cc3889 Download complete 0B
+ 382602cc3889 Download complete 0B
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ 4bfffbb6e80b Downloading 16.78MB
+ 6a0ac1617861 Downloading 2.097MB
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ 4bfffbb6e80b Downloading 36.7MB
+ 6a0ac1617861 Download complete 0B
+ d1d4c14c4beb Extracting 1B
+ 6a0ac1617861 Extracting 1B
+ 4bfffbb6e80b Downloading 41.94MB
+ d1d4c14c4beb Extracting 1B
+ d1d4c14c4beb Extracting 1B
+ 6a0ac1617861 Extracting 1B
+ 4bfffbb6e80b Downloading 48.21MB
+ d1d4c14c4beb Extracting 2B
+ d1d4c14c4beb Extracting 2B
+ 6a0ac1617861 Extracting 1B
+ 4bfffbb6e80b Download complete 0B
+ d1d4c14c4beb Pull complete 0B
+ d1d4c14c4beb Pull complete 0B
+ 8213dc07c4f6 Download complete 0B
+ 382602cc3889 Extracting 1B
+ 382602cc3889 Extracting 1B
+ 6a0ac1617861 Extracting 1B
+ 382602cc3889 Pull complete 0B
+ 382602cc3889 Pull complete 0B
+ 6a0ac1617861 Pull complete 0B
+ 8213dc07c4f6 Extracting 1B
+ 4bfffbb6e80b Extracting 1B
+ 8213dc07c4f6 Pull complete 0B
+ ab14b3e1106a Downloading 10.85kB
+ 4bfffbb6e80b Extracting 1B
+ ab14b3e1106a Download complete 0B
+ ab14b3e1106a Download complete 0B
+ 4bfffbb6e80b Extracting 1B
+ c4ff06acfb6c Download complete 0B
+ Image traefik/whoami Pulled 
+ c4ff06acfb6c Download complete 0B
+ 4bfffbb6e80b Extracting 1B
+ 4bfffbb6e80b Extracting 1B
+ 4bfffbb6e80b Extracting 1B
+ Image traefik/whoami Pulled 
+ 4bfffbb6e80b Extracting 1B
+ 4bfffbb6e80b Extracting 1B
+ c6324ba32ade Download complete 0B
+ 72e6f81c8ee9 Download complete 0B
+ 4bfffbb6e80b Extracting 1B
+ 4bfffbb6e80b Extracting 1B
+ 4bfffbb6e80b Extracting 2B
+ 4bfffbb6e80b Extracting 2B
+ 4bfffbb6e80b Extracting 2B
+ 4bfffbb6e80b Extracting 2B
+ 7e8a8ec6ab16 Pull complete 0B
+ 4bfffbb6e80b Pull complete 0B
+ Image traefik:v3.6.13 Pulled 
+ Network local_net Creating 
+ Network local_net Creating 
+ Network local_net Created 
+ Network local_net Created 
+ Container traefik Creating 
+ Container secure Creating 
+ Container public Creating 
+ Container authelia Creating 
+ Container public Created 
+ Container secure Created 
+ Container authelia Created 
+ Container traefik Created 
+ Container public Starting 
+ Container authelia Starting 
+ Container traefik Starting 
+ Container secure Starting 
+ Container public Started 
+ Container authelia Started 
+ Container traefik Started 
+ Container secure Started 
+Setup completed successfully.
+
+You can now visit the following locations:
+- https://public.example.com - Bypasses Authelia
+- https://traefik.example.com - Secured with Authelia one-factor authentication
+- https://secure.example.com - Secured with Authelia two-factor authentication (see note below)
+
+You will need to authorize the self-signed certificate upon visiting each domain.
+To visit https://secure.example.com you will need to register a device for second factor authentication and confirm by clicking on a link sent by email. Since this is a demo with a fake email address, the content of the email will be stored in './authelia/notification.txt'.
+Upon registering, you can grab this link easily by running the following command: 'grep -Eo '"https://.*" ' ./authelia/notification.txt'.
+
+real	0m12.946s
+user	0m0.415s
+sys	0m0.202s

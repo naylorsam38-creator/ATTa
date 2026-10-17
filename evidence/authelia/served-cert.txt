@@ -1,0 +1,3 @@
+subject=CN = TRAEFIK DEFAULT CERT
+issuer=CN = TRAEFIK DEFAULT CERT
+subject=O = Authelia, CN = *.example.com
