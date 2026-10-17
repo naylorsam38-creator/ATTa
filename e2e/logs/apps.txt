@@ -29,3 +29,35 @@
   mixpost b: PASS — HTTP 200 final http://127.0.0.1:9103/mixpost/login title "Mixpost Auth - Mixpost" (33 chars visible); screenshot b-direct-home.png
   mixpost c: FAIL — browser left the proxy: ended on http://127.0.0.1:9103/mixpost/login
   mixpost d: FAIL — script tag not in the live DOM
+  mixpost e: FAIL — left the proxy: http://127.0.0.1:9103/mixpost
+  mixpost f: FAIL — no clickable same-origin links found after login
+  mixpost g: N/A — app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe
+  mixpost h: PASS — largest asset /vendor/mixpost-auth/assets/Inter-SemiBold-DtdDzxp6.ttf (315756B): direct 200 315756B e8cbc2b88bc42682 vs proxy 200 315756B e8cbc2b88bc42682; 25 M
+  mixpost i: FAIL — 2 compressed response(s) broken
+  mixpost j: FAIL — no port button on the page, so the mover cannot be attached
+  mixpost k: PASS — console errors: direct 0, proxy 0 (0 only seen through proxy); failed requests 0; 5xx 0; proxy log: "PASS"; full list console.txt
+== alexandrie
+  alexandrie a: PASS — alexandrie-frontend ghcr.io/smaug6739/alexandrie-frontend:latest Up 16 minutes | alexandrie-backend ghcr.io/smaug6739/alexandrie-backend:latest Up 16 minutes | 
+  alexandrie b: PASS — HTTP 200 final http://127.0.0.1:9104/ title "Alexandrie" (5532 chars visible); screenshot b-direct-home.png
+  alexandrie c: PASS — HTTP 200 final http://127.0.0.1:9204/ title "Alexandrie" (direct title "Alexandrie"); screenshot c-proxy-home.png
+  alexandrie d: PASS — HTML via proxy (/ 200): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true window.__capabilityPort=0.2.0 bu
+  alexandrie e: FAIL — still on login form. Recent errors: Failed to load resource: the server responded with a status of 400 (Bad Request) | Failed to load resource: net::ERR_CERT_AU
+  alexandrie f: PASS — 6 links clicked from http://127.0.0.1:9204/login: ok "Home" / -> http://127.0.0.1:9204/ errors: Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID / Faile
+  alexandrie g: N/A — app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe
+  alexandrie h: PASS — largest asset /screenshots/mock/1.png (1655572B): direct 200 1655572B 2de2b21690373810 vs proxy 200 1655572B 2de2b21690373810; 25 MB POST /login: direct -> 200 
+  alexandrie i: PASS — HTML /login 200 ae=gzip: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || HTML /login 200 ae=br: app sent none, proxy sent 200 none d
+  alexandrie j: FAIL — <a> "Click here" display:inline: dragged +120,+60 -> on screen moved 0,0, style.translate="120px 60px" saved=true
+  alexandrie k: FAIL — Failed to load resource: the server responded with a status of 400 (Bad Request) | Failed to load resource: the server responded with a status of 404 (Not Found
+== memos
+  memos a: PASS — e2e-memos-memos-1 neosmemo/memos:stable Up 17 minutes ; GET / -> 200
+  memos b: PASS — HTTP 200 final http://127.0.0.1:9105/auth/signup title "Memos" (214 chars visible); screenshot b-direct-home.png
+  memos c: PASS — HTTP 200 final http://127.0.0.1:9205/auth/signup title "Memos" (direct title "Memos"); screenshot c-proxy-home.png
+  memos d: PASS — HTML via proxy (/ 200): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=true window.__capabilityPort=0.2.0 bu
+  memos e: PASS — signup submitted, now at http://127.0.0.1:9205/; signup logged the user in; password field still shown: false; final http://127.0.0.1:9205/; screenshots e*-*.pn
+  memos f: PASS — 3 links clicked from http://127.0.0.1:9205/: ok "Calendar" /calendar -> http://127.0.0.1:9205/calendar/2026/10 || ok "Map" /map -> http://127.0.0.1:9205/map err
+  memos g: FAIL — server-sent events never reach the browser through the proxy (status 404)
+  memos h: PASS — largest asset /assets/index-P0PJ_Ipj.js (1260714B): direct 200 1260714B 987f5f8116829624 vs proxy 200 1260714B 987f5f8116829624; 25 MB POST /auth: direct -> 200
+  memos i: PASS — HTML / 200 ae=gzip: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || HTML / 200 ae=br: app sent none, proxy sent 200 none decodes=tru
+  memos j: PASS — attach: "button-mover is in (trusted)."; <button> "Memos" display:flex: dragged +120,+60 -> on screen moved 120,60, style.translate="120px 60px" saved=true; aft
+  memos k: FAIL — Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID | Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID | Failed to load resource: net::ERR_CERT_AUT
+EXIT 0

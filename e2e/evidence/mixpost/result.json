@@ -1,0 +1,78 @@
+{
+  "app": "mixpost",
+  "direct": "http://127.0.0.1:9103",
+  "proxy": "http://127.0.0.1:9203",
+  "checks": {
+    "a": {
+      "status": "PASS",
+      "evidence": "e2e-mixpost-mixpost-1 inovector/mixpost:latest Up 16 minutes | e2e-mixpost-redis-1 redis:7 Up 16 minutes | e2e-mixpost-mysql-1 mysql:8.0 Up 16 minutes (healthy) ; GET / -> 302",
+      "error": null,
+      "pointsTo": null
+    },
+    "b": {
+      "status": "PASS",
+      "evidence": "HTTP 200 final http://127.0.0.1:9103/mixpost/login title \"Mixpost Auth - Mixpost\" (33 chars visible); screenshot b-direct-home.png",
+      "error": null,
+      "pointsTo": null
+    },
+    "c": {
+      "status": "FAIL",
+      "evidence": "HTTP 200 final http://127.0.0.1:9103/mixpost/login title \"Mixpost Auth - Mixpost\" (direct title \"Mixpost Auth - Mixpost\"); screenshot c-proxy-home.png",
+      "error": "browser left the proxy: ended on http://127.0.0.1:9103/mixpost/login",
+      "pointsTo": "proxy: proxyRequest() forwards Location headers untouched and sets Host to the target"
+    },
+    "d": {
+      "status": "FAIL",
+      "evidence": "HTML via proxy (/ 302 -> -> leaves proxy: http://127.0.0.1:9103/mixpost): hook tag present; /_cp/port.js -> 200, 31628B, identical to adapter/port.js: true; in browser: tag=false window.__capabilityPort=null button=false",
+      "error": "script tag not in the live DOM",
+      "pointsTo": "port.js / proxy injectHook()"
+    },
+    "e": {
+      "status": "FAIL",
+      "evidence": "login submitted, now at http://127.0.0.1:9103/mixpost; password field still shown: false; final http://127.0.0.1:9103/mixpost; screenshots e*-*.png",
+      "error": "left the proxy: http://127.0.0.1:9103/mixpost",
+      "pointsTo": null
+    },
+    "f": {
+      "status": "FAIL",
+      "evidence": "0 links clicked from http://127.0.0.1:9103/mixpost: ; screenshots f*.png",
+      "error": "no clickable same-origin links found after login",
+      "pointsTo": null
+    },
+    "g": {
+      "status": "N/A",
+      "evidence": "app opened no WebSocket/SSE during the session (and its source has none for the UI); proxy behaviour covered by the neutral probe",
+      "error": null,
+      "pointsTo": null
+    },
+    "h": {
+      "status": "PASS",
+      "evidence": "largest asset /vendor/mixpost-auth/assets/Inter-SemiBold-DtdDzxp6.ttf (315756B): direct 200 315756B e8cbc2b88bc42682 vs proxy 200 315756B e8cbc2b88bc42682; 25 MB POST /mixpost/login: direct -> 419 in 106ms, proxy -> 419 in 173ms \"<!DOCTYPE html> <html lang=\"en\" class=\"scroll-smooth overflow-x-hidden\"> <head> \"",
+      "error": null,
+      "pointsTo": null
+    },
+    "i": {
+      "status": "FAIL",
+      "evidence": "HTML /mixpost 200 ae=gzip: app sent gzip, proxy sent 200 gzip decodes=true hook=true length-ok=true || HTML /mixpost 200 ae=br: app sent none, proxy sent 200 none decodes=true hook=true length-ok=true || asset /_cp/port.js ae=gzip: app gzip, proxy none, decoded identical=false || asset /_cp/port.js ae=br: app none, proxy none, decoded identical=false",
+      "error": "2 compressed response(s) broken",
+      "pointsTo": null
+    },
+    "j": {
+      "status": "FAIL",
+      "evidence": null,
+      "error": "no port button on the page, so the mover cannot be attached",
+      "pointsTo": "see check d"
+    },
+    "k": {
+      "status": "PASS",
+      "evidence": "console errors: direct 0, proxy 0 (0 only seen through proxy); failed requests 0; 5xx 0; proxy log: \"PASS\"; full list console.txt",
+      "error": null,
+      "pointsTo": null
+    }
+  },
+  "directConsoleErrors": [],
+  "proxyConsoleErrors": [],
+  "failedRequests": [],
+  "badResponses": [],
+  "websockets": []
+}
