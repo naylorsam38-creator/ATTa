@@ -1,0 +1,1759 @@
+{
+  "apps": {
+    "agno": {
+      "app": "Agno",
+      "category_guess": {
+        "category": "online_course_lms",
+        "confidence": "high",
+        "evidence": [
+          "words: agent, learning"
+        ],
+        "runner_up": "developer_tools (7)",
+        "score": 15.0
+      },
+      "deploy_files": [],
+      "deployable": false,
+      "frameworks": [],
+      "look": [],
+      "numbers": [
+        2
+      ],
+      "profile": "package",
+      "profile_confidence": "medium",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "Python code with no web pages and no container recipe: a library/framework",
+      "repository": "agno-agi/agno",
+      "root": "libs/agno",
+      "root_found": "depth 2 (3 candidates)",
+      "rule_profile": "package",
+      "seed_categories": [
+        "AI Development"
+      ],
+      "skin_category": "developer_tools",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": []
+    },
+    "apache airflow": {
+      "app": "Apache Airflow",
+      "category_guess": {
+        "category": "project_management",
+        "confidence": "high",
+        "evidence": [
+          "words: pipelines, dag, orchestration, task, tasks, issue"
+        ],
+        "runner_up": "crm (12)",
+        "score": 29.0
+      },
+      "deploy_files": [
+        "Dockerfile",
+        "Dockerfile.ci",
+        "task-sdk-integration-tests/docker-compose-local.yaml",
+        "task-sdk-integration-tests/docker-compose.yaml"
+      ],
+      "deployable": true,
+      "frameworks": [],
+      "look": [],
+      "numbers": [
+        18
+      ],
+      "profile": "web",
+      "profile_confidence": "medium",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "only folder-name web evidence: chart/templates/, dev/templates/, devel-common/sphinx_design/static/",
+      "repository": "apache/airflow",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Data Engineering"
+      ],
+      "skin_category": "project_management",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "chart/templates/",
+        "dev/templates/",
+        "devel-common/sphinx_design/static/",
+        "registry/public/"
+      ]
+    },
+    "appsmith": {
+      "app": "Appsmith",
+      "category_guess": {
+        "category": "dashboard",
+        "confidence": "medium",
+        "evidence": [
+          "words: dashboard, dashboards, admin"
+        ],
+        "runner_up": "online_course_lms (6)",
+        "score": 7.0
+      },
+      "deploy_files": [
+        "Dockerfile"
+      ],
+      "deployable": true,
+      "frameworks": [],
+      "look": [],
+      "numbers": [
+        4,
+        22
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: static/",
+      "repository": "appsmithorg/appsmith",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Automation",
+        "No Code Platforms"
+      ],
+      "skin_category": "form_builder_and_survey",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "app/client/public/",
+        "deploy/helm/templates/",
+        "static/"
+      ]
+    },
+    "archivebox": {
+      "app": "archivebox",
+      "category_guess": {
+        "category": "file_storage_and_sync",
+        "confidence": "high",
+        "evidence": [
+          "words: archiving, preservation, backup, archive, snapshot"
+        ],
+        "runner_up": "social_feed (6)",
+        "score": 25.0
+      },
+      "deploy_files": [
+        "Dockerfile",
+        "docker-compose.yml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "django",
+        "docker",
+        "archivebox"
+      ],
+      "look": [],
+      "numbers": [],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: archivebox/manage.py, publicsite/ar/index.html, publicsite/es/index.html, publicsite/fr/index.html",
+      "repository": null,
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [],
+      "skin_category": "file_storage_and_sync",
+      "skin_confidence": "high",
+      "skin_evidence": [
+        "words: archiving, preservation, backup, archive, snapshot"
+      ],
+      "skin_runner_up": "social_feed (6)",
+      "skin_source": "auto",
+      "skin_status": "MAPPED",
+      "sources": [
+        "library"
+      ],
+      "status": "MAPPED",
+      "tree_from": "library",
+      "web_evidence": [
+        "archivebox/manage.py",
+        "archivebox/progressmonitor/templates/",
+        "archivebox/templates/",
+        "archivebox/templates/static/",
+        "bin/templates/",
+        "publicsite/ar/index.html",
+        "publicsite/es/index.html",
+        "publicsite/fr/index.html",
+        "publicsite/index.html",
+        "publicsite/ru/index.html"
+      ]
+    },
+    "billionmail": {
+      "app": "BillionMail",
+      "category_guess": {
+        "category": "email_client",
+        "confidence": "high",
+        "evidence": [
+          "words: email, newsletter, mail"
+        ],
+        "runner_up": "dashboard (4)",
+        "score": 18.0
+      },
+      "deploy_files": [
+        "docker-compose.test.yml",
+        "docker-compose.yml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "docker"
+      ],
+      "look": [],
+      "numbers": [
+        15
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: core/frontend/index.html",
+      "repository": "Billionmail/BillionMail",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Marketing"
+      ],
+      "skin_category": "email_client",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "core/frontend/",
+        "core/frontend/index.html",
+        "core/frontend/public/",
+        "core/public/",
+        "core/resource/public/"
+      ]
+    },
+    "botpress": {
+      "app": "Botpress",
+      "category_guess": {
+        "category": "developer_tools",
+        "confidence": "medium",
+        "evidence": [
+          "words: repository, code, devtools, git, issues"
+        ],
+        "runner_up": "team_chat (4)",
+        "score": 6.0
+      },
+      "deploy_files": [
+        "Dockerfile"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "node"
+      ],
+      "look": [],
+      "numbers": [
+        38
+      ],
+      "profile": "web",
+      "profile_confidence": "medium",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "only folder-name web evidence: packages/cli/templates/",
+      "repository": "botpress/botpress",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Customer Support"
+      ],
+      "skin_category": "helpdesk_ticketing",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "packages/cli/templates/"
+      ]
+    },
+    "clearflask": {
+      "app": "ClearFlask",
+      "category_guess": {
+        "category": "email_client",
+        "confidence": "high",
+        "evidence": [
+          "words: email, mail, smtp, imap"
+        ],
+        "runner_up": "file_storage_and_sync (8)",
+        "score": 16.0
+      },
+      "deploy_files": [],
+      "deployable": false,
+      "frameworks": [],
+      "look": [],
+      "numbers": [
+        37
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: clearflask-frontend/public/index.html",
+      "repository": "clearflask/clearflask",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Production Management"
+      ],
+      "skin_category": "helpdesk_ticketing",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "clearflask-frontend/public/",
+        "clearflask-frontend/public/index.html"
+      ]
+    },
+    "codex": {
+      "app": "Codex",
+      "look": [],
+      "numbers": [
+        16
+      ],
+      "profile": null,
+      "profile_confidence": null,
+      "profile_source": null,
+      "profile_status": "NEEDS_REVIEW",
+      "repository": "OPENAI-CODEX-NEEDS-EXACT-REPO",
+      "seed_categories": [
+        "AI Code Assistants"
+      ],
+      "skin_category": null,
+      "skin_confidence": null,
+      "skin_source": "BLOCKED_APPS",
+      "skin_status": "BLOCKED",
+      "sources": [
+        "seed"
+      ],
+      "status": "BLOCKED",
+      "tree_from": "git"
+    },
+    "colanode": {
+      "app": "Colanode",
+      "category_guess": {
+        "category": "team_chat",
+        "confidence": "high",
+        "evidence": [
+          "words: team, collaboration, workspace, chat, messaging"
+        ],
+        "runner_up": "collaborative_document_editor (6)",
+        "score": 28.0
+      },
+      "deploy_files": [],
+      "deployable": false,
+      "frameworks": [
+        "node"
+      ],
+      "look": [],
+      "numbers": [
+        25,
+        30
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: apps/desktop/index.html, apps/mobile/index.html, apps/mobile/vite.config.ts, apps/web/index.html",
+      "repository": "colanode/colanode",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Knowledge Management",
+        "Team Chat"
+      ],
+      "skin_category": "team_chat",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "apps/desktop/index.html",
+        "apps/mobile/index.html",
+        "apps/mobile/vite.config.ts",
+        "apps/web/",
+        "apps/web/index.html",
+        "apps/web/public/",
+        "apps/web/vite.config.js",
+        "packages/ui/"
+      ]
+    },
+    "coolify": {
+      "app": "coolify",
+      "category_guess": {
+        "category": "devops_console",
+        "confidence": "high",
+        "evidence": [
+          "words: server, deployment, docker, self-hosted, servers, deploy"
+        ],
+        "runner_up": "file_storage_and_sync (4)",
+        "score": 18.0
+      },
+      "deploy_files": [
+        "docker-compose-maxio.dev.yml",
+        "docker-compose.dev-multi.yml",
+        "docker-compose.dev.yml",
+        "docker-compose.prod.yml",
+        "docker-compose.windows.yml",
+        "docker-compose.yml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "laravel",
+        "php",
+        "node",
+        "docker"
+      ],
+      "look": [],
+      "numbers": [
+        31
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "fixed rules",
+      "repository": "coollabsio/coolify",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Hosting Control Panels"
+      ],
+      "skin_category": "devops_console",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "library",
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "library",
+      "web_evidence": [
+        "artisan",
+        "public/",
+        "storage/app/public/",
+        "templates/",
+        "vite.config.js"
+      ]
+    },
+    "docker moby": {
+      "app": "Docker Moby",
+      "category_guess": {
+        "category": "devops_console",
+        "confidence": "medium",
+        "evidence": [
+          "words: orchestration, container, docker"
+        ],
+        "runner_up": "project_management (6)",
+        "score": 6.0
+      },
+      "deploy_files": [
+        "Dockerfile",
+        "Dockerfile.simple",
+        "Dockerfile.windows",
+        "api/Dockerfile"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "go"
+      ],
+      "look": [],
+      "numbers": [
+        1,
+        3
+      ],
+      "profile": "system",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "fixed rules",
+      "repository": "moby/moby",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "system",
+      "seed_categories": [
+        "Developer Tools",
+        "DevOps"
+      ],
+      "skin_category": "devops_console",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "api/templates/",
+        "daemon/logger/templates/"
+      ]
+    },
+    "flarum": {
+      "app": "Flarum",
+      "category_guess": {
+        "category": "social_feed",
+        "confidence": "high",
+        "evidence": [
+          "words: forum, discussion, community"
+        ],
+        "runner_up": "developer_tools (1)",
+        "score": 18.0
+      },
+      "deploy_files": [],
+      "deployable": false,
+      "frameworks": [
+        "php"
+      ],
+      "look": [],
+      "numbers": [
+        34
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "fixed rules",
+      "repository": "flarum/flarum",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Community Apps"
+      ],
+      "skin_category": "social_feed",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "public/"
+      ]
+    },
+    "formbee": {
+      "app": "FormBee",
+      "category_guess": {
+        "category": "form_builder_and_survey",
+        "confidence": "medium",
+        "evidence": [
+          "words: form, forms"
+        ],
+        "runner_up": "email_client (12)",
+        "score": 14.0
+      },
+      "deploy_files": [],
+      "deployable": false,
+      "frameworks": [
+        "node"
+      ],
+      "look": [],
+      "numbers": [
+        36
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: client/FormBee/angular.json, client/",
+      "repository": "FormBee/FormBee",
+      "root": "server",
+      "root_found": "depth 1 (2 candidates)",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Forms & Surveys"
+      ],
+      "skin_category": "form_builder_and_survey",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "client/FormBee/angular.json"
+      ]
+    },
+    "frp": {
+      "app": "FRP",
+      "category_guess": {
+        "category": "developer_tools",
+        "confidence": "medium",
+        "evidence": [
+          "words: ide, developer, api"
+        ],
+        "runner_up": "helpdesk_ticketing (6)",
+        "score": 6.0
+      },
+      "deploy_files": [],
+      "deployable": false,
+      "frameworks": [
+        "go"
+      ],
+      "look": [],
+      "numbers": [
+        35
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "fixed rules",
+      "repository": "fatedier/frp",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Networking"
+      ],
+      "skin_category": "devops_console",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "web/",
+        "web/frpc/index.html",
+        "web/frpc/public/",
+        "web/frpc/vite.config.mts",
+        "web/frps/index.html",
+        "web/frps/public/",
+        "web/frps/vite.config.mts"
+      ]
+    },
+    "ghost": {
+      "app": "Ghost",
+      "category_guess": {
+        "category": "collaborative_document_editor",
+        "confidence": "medium",
+        "evidence": [
+          "words: docs"
+        ],
+        "runner_up": "social_feed (4)",
+        "score": 5.0
+      },
+      "deploy_files": [
+        "Dockerfile.production",
+        "e2e/Dockerfile.e2e",
+        "e2e/Dockerfile.runner"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "node"
+      ],
+      "look": [],
+      "numbers": [
+        32
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: apps/activitypub/index.html, apps/activitypub/vite.config.mjs, apps/admin/index.html, apps/admin/vite.config.ts",
+      "repository": "TryGhost/Ghost",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Blogging"
+      ],
+      "skin_category": "note_taking",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "apps/activitypub/index.html",
+        "apps/activitypub/public/",
+        "apps/activitypub/vite.config.mjs",
+        "apps/admin/index.html",
+        "apps/admin/vite.config.ts",
+        "apps/admin-toolbar/vite.config.mjs",
+        "apps/admin-x-framework/vite.config.ts",
+        "apps/announcement-bar/vite.config.mjs",
+        "apps/comments-ui/vite.config.mts",
+        "apps/ember-admin/public/"
+      ]
+    },
+    "gitea": {
+      "app": "gitea",
+      "category_guess": {
+        "category": "developer_tools",
+        "confidence": "high",
+        "evidence": [
+          "words: git, repositories, code, ci, github"
+        ],
+        "runner_up": "parcel_tracking (7)",
+        "score": 13.0
+      },
+      "deploy_files": [
+        "Dockerfile",
+        "Dockerfile.rootless"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "node",
+        "go"
+      ],
+      "look": [],
+      "numbers": [],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "fixed rules",
+      "repository": null,
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [],
+      "skin_category": "developer_tools",
+      "skin_confidence": "high",
+      "skin_evidence": [
+        "words: git, repositories, code, ci, github"
+      ],
+      "skin_runner_up": "parcel_tracking (7)",
+      "skin_source": "auto",
+      "skin_status": "MAPPED",
+      "sources": [
+        "library"
+      ],
+      "status": "MAPPED",
+      "tree_from": "library",
+      "web_evidence": [
+        "modules/public/",
+        "modules/templates/",
+        "modules/web/",
+        "public/",
+        "routers/web/",
+        "templates/",
+        "vite.config.ts",
+        "web_src/"
+      ]
+    },
+    "grafana": {
+      "app": "Grafana",
+      "category_guess": {
+        "category": "dashboard",
+        "confidence": "high",
+        "evidence": [
+          "words: grafana, metrics, dashboard, dashboards, monitoring, observability"
+        ],
+        "runner_up": "team_chat (6)",
+        "score": 41.0
+      },
+      "deploy_files": [
+        "Dockerfile"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "node",
+        "go"
+      ],
+      "look": [],
+      "numbers": [
+        5
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "Go app with a top-level web folder: public/",
+      "repository": "grafana/grafana",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Monitoring"
+      ],
+      "skin_category": "dashboard",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "emails/templates/",
+        "pkg/api/static/",
+        "pkg/services/frontend/",
+        "pkg/web/",
+        "public/",
+        "public/views/index.html"
+      ]
+    },
+    "graphite": {
+      "app": "Graphite",
+      "category_guess": {
+        "category": "collaborative_document_editor",
+        "confidence": "high",
+        "evidence": [
+          "words: editor, design"
+        ],
+        "runner_up": "note_taking (3)",
+        "score": 10.0
+      },
+      "deploy_files": [],
+      "deployable": false,
+      "frameworks": [],
+      "look": [],
+      "numbers": [
+        27
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: frontend/index.html, frontend/svelte.config.js, frontend/vite.config.ts, frontend/",
+      "repository": "GraphiteEditor/Graphite",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Code Editors"
+      ],
+      "skin_category": "project_management",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "desktop/ui/",
+        "frontend/",
+        "frontend/index.html",
+        "frontend/svelte.config.js",
+        "frontend/vite.config.ts",
+        "website/static/",
+        "website/templates/"
+      ]
+    },
+    "krayin crm": {
+      "app": "Krayin CRM",
+      "category_guess": {
+        "category": "crm",
+        "confidence": "high",
+        "evidence": [
+          "words: crm, customer, sales"
+        ],
+        "runner_up": "social_feed (9)",
+        "score": 19.0
+      },
+      "deploy_files": [],
+      "deployable": false,
+      "frameworks": [
+        "laravel",
+        "php",
+        "node"
+      ],
+      "look": [],
+      "numbers": [
+        24
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "fixed rules",
+      "repository": "krayin/laravel-crm",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Ecommerce"
+      ],
+      "skin_category": "crm",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "artisan",
+        "public/",
+        "storage/app/public/",
+        "vite.config.js"
+      ]
+    },
+    "langflow": {
+      "app": "Langflow",
+      "category_guess": {
+        "category": "devops_console",
+        "confidence": "medium",
+        "evidence": [
+          "words: orchestration, deploy, server"
+        ],
+        "runner_up": "parcel_tracking (6)",
+        "score": 6.0
+      },
+      "deploy_files": [
+        ".devcontainer/Dockerfile",
+        "deploy/docker-compose.override.yml",
+        "deploy/docker-compose.yml",
+        "docker_example/Dockerfile",
+        "docker_example/docker-compose.yml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "node"
+      ],
+      "look": [],
+      "numbers": [
+        8,
+        11
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: src/frontend/index.html, src/frontend/vite.config.mts",
+      "repository": "langflow-ai/langflow",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "AI Assistants",
+        "AI Agents"
+      ],
+      "skin_category": "online_course_lms",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "docker/frontend/",
+        "src/frontend/",
+        "src/frontend/index.html",
+        "src/frontend/public/",
+        "src/frontend/vite.config.mts"
+      ]
+    },
+    "medplum": {
+      "app": "Medplum",
+      "category_guess": {
+        "category": "appointment_booking",
+        "confidence": "medium",
+        "evidence": [
+          "words: healthcare"
+        ],
+        "runner_up": "developer_tools (6)",
+        "score": 7.0
+      },
+      "deploy_files": [
+        "Dockerfile",
+        "docker-compose.full-stack.yml",
+        "docker-compose.yml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "node",
+        "docker"
+      ],
+      "look": [],
+      "numbers": [
+        20
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: packages/agent/vite.config.ts, packages/app/index.html, packages/app/vite.config.ts, packages/ccda/vite.config.ts",
+      "repository": "medplum/medplum",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Authentication"
+      ],
+      "skin_category": "appointment_booking",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "charts/templates/",
+        "packages/agent/vite.config.ts",
+        "packages/app/index.html",
+        "packages/app/static/",
+        "packages/app/vite.config.ts",
+        "packages/ccda/vite.config.ts",
+        "packages/cdk/vite.config.ts",
+        "packages/cli/vite.config.ts",
+        "packages/core/vite.config.ts",
+        "packages/create-medplum/vite.config.ts"
+      ]
+    },
+    "memos": {
+      "app": "Memos",
+      "category_guess": {
+        "category": "note_taking",
+        "confidence": "high",
+        "evidence": [
+          "words: memo, memos, markdown, note, notes"
+        ],
+        "runner_up": "collaborative_document_editor (4)",
+        "score": 35.0
+      },
+      "deploy_files": [
+        "scripts/Dockerfile",
+        "scripts/compose.yaml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "go"
+      ],
+      "look": [],
+      "numbers": [
+        21
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "fixed rules",
+      "repository": "usememos/memos",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Note Taking"
+      ],
+      "skin_category": "note_taking",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "server/frontend/",
+        "web/",
+        "web/index.html",
+        "web/public/",
+        "web/src/pages/",
+        "web/vite.config.mts"
+      ]
+    },
+    "next ai draw io": {
+      "app": "Next AI Draw.io",
+      "category_guess": {
+        "category": "collaborative_document_editor",
+        "confidence": "high",
+        "evidence": [
+          "words: diagram, document"
+        ],
+        "runner_up": "online_course_lms (7)",
+        "score": 11.0
+      },
+      "deploy_files": [
+        "Dockerfile",
+        "docker-compose.yml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "node",
+        "docker"
+      ],
+      "look": [],
+      "numbers": [
+        29
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: electron/settings/index.html, next.config.ts, public/",
+      "repository": "lyway/next-ai-draw-io",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "AI Design Tools"
+      ],
+      "skin_category": "collaborative_document_editor",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "components/ui/",
+        "electron/settings/index.html",
+        "next.config.ts",
+        "public/"
+      ]
+    },
+    "open design": {
+      "app": "Open Design",
+      "category_guess": {
+        "category": "collaborative_document_editor",
+        "confidence": "high",
+        "evidence": [
+          "words: design, canvas, docs"
+        ],
+        "runner_up": "dashboard (8)",
+        "score": 17.0
+      },
+      "deploy_files": [
+        "deploy/Dockerfile",
+        "deploy/Dockerfile.local",
+        "deploy/docker-compose.linux.yml",
+        "deploy/docker-compose.yml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "node"
+      ],
+      "look": [],
+      "numbers": [
+        13
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: apps/web/next.config.ts, templates/",
+      "repository": "attentiondotnet/open-design",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Design Tools"
+      ],
+      "skin_category": "collaborative_document_editor",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "apps/landing-page/public/",
+        "apps/web/",
+        "apps/web/next.config.ts",
+        "apps/web/public/",
+        "charts/open-design/templates/",
+        "design-templates/html-ppt/templates/",
+        "plugins/spec/templates/",
+        "skills/brand-extract/templates/",
+        "templates/"
+      ]
+    },
+    "opencart": {
+      "app": "OpenCart",
+      "category_guess": {
+        "category": "e_commerce_storefront",
+        "confidence": "high",
+        "evidence": [
+          "words: ecommerce, store, merchant"
+        ],
+        "runner_up": "developer_tools (7)",
+        "score": 13.0
+      },
+      "deploy_files": [
+        "docker-compose.yml",
+        "tools/Dockerfile"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "php",
+        "docker"
+      ],
+      "look": [],
+      "numbers": [
+        33
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "fixed rules",
+      "repository": "opencart/opencart",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Social Media"
+      ],
+      "skin_category": "e_commerce_storefront",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "tools/daux.io/templates/",
+        "upload/extension/index.html",
+        "upload/index.html"
+      ]
+    },
+    "opencloud": {
+      "app": "OpenCloud",
+      "category_guess": {
+        "category": "form_builder_and_survey",
+        "confidence": "medium",
+        "evidence": [
+          "words: form, forms"
+        ],
+        "runner_up": "dashboard (5)",
+        "score": 6.0
+      },
+      "deploy_files": [
+        "Dockerfile"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "php",
+        "go"
+      ],
+      "look": [],
+      "numbers": [
+        17
+      ],
+      "profile": "service",
+      "profile_confidence": "medium",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "Go app, web folders only deeper down: services/frontend/, services/idp/public/, services/web/",
+      "repository": "opencloud-eu/opencloud",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "service",
+      "seed_categories": [
+        "File Storage"
+      ],
+      "skin_category": "file_storage_and_sync",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "services/frontend/",
+        "services/idp/public/",
+        "services/web/"
+      ]
+    },
+    "plane": {
+      "app": "Plane",
+      "category_guess": {
+        "category": "project_management",
+        "confidence": "high",
+        "evidence": [
+          "words: management, project, sprint, issue, issues"
+        ],
+        "runner_up": "social_feed (9)",
+        "score": 16.0
+      },
+      "deploy_files": [
+        "docker-compose-local.yml",
+        "docker-compose-test.yml",
+        "docker-compose.yml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "node",
+        "docker"
+      ],
+      "look": [],
+      "numbers": [
+        14
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: apps/admin/vite.config.ts, apps/api/manage.py, apps/space/vite.config.ts, apps/web/vite.config.ts",
+      "repository": "makeplane/plane",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Collaboration"
+      ],
+      "skin_category": "project_management",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "apps/admin/public/",
+        "apps/admin/vite.config.ts",
+        "apps/api/manage.py",
+        "apps/api/templates/",
+        "apps/space/public/",
+        "apps/space/vite.config.ts",
+        "apps/web/",
+        "apps/web/public/",
+        "apps/web/vite.config.ts"
+      ]
+    },
+    "polar": {
+      "app": "Polar",
+      "category_guess": {
+        "category": "e_commerce_storefront",
+        "confidence": "high",
+        "evidence": [
+          "words: billing, checkout, subscriptions, merchant, product"
+        ],
+        "runner_up": "online_course_lms (8)",
+        "score": 17.0
+      },
+      "deploy_files": [
+        "server/Dockerfile",
+        "server/docker-compose.yml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "node"
+      ],
+      "look": [],
+      "numbers": [
+        12
+      ],
+      "profile": "web",
+      "profile_confidence": "medium",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "only folder-name web evidence: clients/apps/web/, clients/packages/ui/",
+      "repository": "polarsource/polar",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Invoicing Finance"
+      ],
+      "skin_category": "e_commerce_storefront",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "clients/apps/web/",
+        "clients/packages/ui/"
+      ]
+    },
+    "stride": {
+      "app": "Stride",
+      "category_guess": {
+        "category": "collaborative_document_editor",
+        "confidence": "high",
+        "evidence": [
+          "words: editor, docs"
+        ],
+        "runner_up": "developer_tools (3)",
+        "score": 7.0
+      },
+      "deploy_files": [],
+      "deployable": false,
+      "frameworks": [],
+      "look": [],
+      "numbers": [
+        28
+      ],
+      "profile": "system",
+      "profile_confidence": "medium",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": ".NET solution with no web pages: built, not browsed",
+      "repository": "stride3d/stride",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "system",
+      "seed_categories": [
+        "Game Development"
+      ],
+      "skin_category": "project_management",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "sources/templates/"
+      ]
+    },
+    "supabase": {
+      "app": "Supabase",
+      "category_guess": {
+        "category": "dashboard",
+        "confidence": "medium",
+        "evidence": [
+          "words: postgres, database"
+        ],
+        "runner_up": "helpdesk_ticketing (7)",
+        "score": 9.0
+      },
+      "deploy_files": [
+        "docker/docker-compose.caddy.yml",
+        "docker/docker-compose.envoy.yml",
+        "docker/docker-compose.kong.yml",
+        "docker/docker-compose.logs.yml",
+        "docker/docker-compose.nginx.yml",
+        "docker/docker-compose.pg15.yml",
+        "docker/docker-compose.pg17.yml",
+        "docker/docker-compose.pgbouncer.yml",
+        "docker/docker-compose.rustfs.yml",
+        "docker/docker-compose.s3.yml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "node"
+      ],
+      "look": [],
+      "numbers": [
+        23,
+        26
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: apps/design-system/next.config.mjs, apps/learn/next.config.mjs, apps/lite-studio/vite.config.ts, apps/studio/next.config.ts",
+      "repository": "supabase/supabase",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "CMS",
+        "Search"
+      ],
+      "skin_category": "dashboard",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "apps/design-system/next.config.mjs",
+        "apps/design-system/public/",
+        "apps/kb/public/",
+        "apps/learn/next.config.mjs",
+        "apps/learn/public/",
+        "apps/lite-studio/public/",
+        "apps/lite-studio/vite.config.ts",
+        "apps/studio/next.config.ts",
+        "apps/studio/pages/",
+        "apps/studio/public/"
+      ]
+    },
+    "super productivity": {
+      "app": "Super Productivity",
+      "category_guess": {
+        "category": "todo_list",
+        "confidence": "high",
+        "evidence": [
+          "words: productivity, todo, list, pomodoro, tasks, timer"
+        ],
+        "runner_up": "parcel_tracking (14)",
+        "score": 29.0
+      },
+      "deploy_files": [
+        "Dockerfile",
+        "Dockerfile.e2e.dev",
+        "Dockerfile.e2e.dev.fast",
+        "docker-compose.e2e.fast.yaml",
+        "docker-compose.e2e.yaml",
+        "docker-compose.supersync.yaml",
+        "docker-compose.yaml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "node",
+        "docker"
+      ],
+      "look": [],
+      "numbers": [
+        6,
+        19
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: android/smoke-page/index.html, angular.json, src/index.html",
+      "repository": "super-productivity/super-productivity",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Productivity",
+        "Project Management"
+      ],
+      "skin_category": "todo_list",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "android/smoke-page/index.html",
+        "angular.json",
+        "packages/super-sync-server/public/",
+        "packages/super-sync-server/templates/",
+        "src/app/pages/",
+        "src/app/ui/",
+        "src/index.html",
+        "src/static/"
+      ]
+    },
+    "tidb": {
+      "app": "TiDB",
+      "category_guess": {
+        "category": "calendar_and_scheduling",
+        "confidence": "medium",
+        "evidence": [
+          "words: availability"
+        ],
+        "runner_up": "file_storage_and_sync (3)",
+        "score": 5.0
+      },
+      "deploy_files": [
+        "Dockerfile",
+        "Dockerfile.enterprise",
+        "br/docker-compose.yaml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "go"
+      ],
+      "look": [],
+      "numbers": [
+        10
+      ],
+      "profile": "service",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "Go app with no web folders",
+      "repository": "pingcap/tidb",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "service",
+      "seed_categories": [
+        "Databases"
+      ],
+      "skin_category": "accounting_ledger",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": []
+    },
+    "traefik": {
+      "app": "Traefik",
+      "category_guess": {
+        "category": "devops_console",
+        "confidence": "medium",
+        "evidence": [
+          "words: proxy, docker, infrastructure, kubernetes"
+        ],
+        "runner_up": "helpdesk_ticketing (6)",
+        "score": 7.0
+      },
+      "deploy_files": [
+        "Dockerfile"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "go"
+      ],
+      "look": [],
+      "numbers": [
+        7
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "fixed rules",
+      "repository": "traefik/traefik",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Security"
+      ],
+      "skin_category": "devops_console",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "pkg/config/static/",
+        "webui/",
+        "webui/index.html",
+        "webui/public/",
+        "webui/src/pages/",
+        "webui/static/",
+        "webui/vite.config.ts"
+      ]
+    },
+    "umami": {
+      "app": "Umami",
+      "category_guess": {
+        "category": "dashboard",
+        "confidence": "high",
+        "evidence": [
+          "words: analytics, database"
+        ],
+        "runner_up": "collaborative_document_editor (3)",
+        "score": 7.0
+      },
+      "deploy_files": [
+        "Dockerfile",
+        "docker-compose.test.yml",
+        "docker-compose.yml"
+      ],
+      "deployable": true,
+      "frameworks": [
+        "node",
+        "docker"
+      ],
+      "look": [],
+      "numbers": [
+        9
+      ],
+      "profile": "web",
+      "profile_confidence": "high",
+      "profile_source": "rules",
+      "profile_status": "MAPPED",
+      "profile_why": "web evidence: next.config.ts, public/",
+      "repository": "umami-software/umami",
+      "root": ".",
+      "root_found": "top level",
+      "rule_profile": "web",
+      "seed_categories": [
+        "Analytics"
+      ],
+      "skin_category": "dashboard",
+      "skin_confidence": "set by hand",
+      "skin_source": "APP_MAP",
+      "skin_status": "MAPPED",
+      "sources": [
+        "seed"
+      ],
+      "status": "MAPPED",
+      "tree_from": "git",
+      "web_evidence": [
+        "next.config.ts",
+        "public/"
+      ]
+    }
+  },
+  "how_to_change": "Set skin_category to any category in out/skins_library/_index.json (keep skin_status MAPPED), or set profile + profile_source \"human\". A sync never overwrites either.",
+  "ruleset": 2,
+  "schema": "ATTA_APP_CATALOGUE.v2"
+}

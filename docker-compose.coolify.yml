@@ -1,0 +1,21 @@
+# ATTa v121 as a Coolify service. deploy-atta.sh sends this to Coolify; you can also paste it into
+# Coolify -> New Resource -> Docker Compose Empty, after building the image on the server:
+#   docker build -t atta:v121 /path/to/ATTa
+services:
+  atta:
+    image: atta:v121
+    pull_policy: never          # built on this server; there is no registry copy
+    network_mode: host          # test runs publish on the host's 127.0.0.1 and the checks must reach them
+    restart: unless-stopped
+    environment:
+      APP_BUILDER_ROOT: /srv/app-builder
+      APP_BUILDER_HOST: 0.0.0.0
+      APP_BUILDER_PORT: "8787"
+      # Each live app's skin/adapter proxy runs in this same image (same Node as its check).
+      ATTA_IMAGE: atta:v121
+    volumes:
+      # ATTa builds and test-runs apps on this server's Docker.
+      - /var/run/docker.sock:/var/run/docker.sock
+      # SAME path inside and out: apps ATTa starts are started by the host's Docker and
+      # must find their folders at the path ATTa gave.
+      - /srv/app-builder:/srv/app-builder
