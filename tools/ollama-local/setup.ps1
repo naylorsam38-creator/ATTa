@@ -160,8 +160,10 @@ try {
     $panelSrc = Join-Path $PSScriptRoot "ModelPanel.ps1"
     if (Test-Path $panelSrc) {
         New-Item -ItemType Directory -Force $PanelDir | Out-Null
-        Copy-Item $panelSrc $PanelDir -Force
-        Unblock-File (Join-Path $PanelDir "ModelPanel.ps1")
+        foreach ($f in "ModelPanel.ps1", "AwsGpu.ps1") {
+            $src = Join-Path $PSScriptRoot $f
+            if (Test-Path $src) { Copy-Item $src $PanelDir -Force; Unblock-File (Join-Path $PanelDir $f) }
+        }
         $targets = @(
             (Join-Path ([Environment]::GetFolderPath("Desktop")) "Ollama Model Panel.lnk"),
             (Join-Path ([Environment]::GetFolderPath("Programs")) "Ollama Model Panel.lnk")

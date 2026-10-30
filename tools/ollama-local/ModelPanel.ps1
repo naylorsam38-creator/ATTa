@@ -75,7 +75,7 @@ function Set-KeepAlive($model, $keepAlive) {
 # ------------------------------------------------------------------ UI
 $form = New-Object Windows.Forms.Form
 $form.Text = "Ollama Model Panel"
-$form.Size = New-Object Drawing.Size 560, 470
+$form.Size = New-Object Drawing.Size 560, 560
 $form.StartPosition = "CenterScreen"
 $form.Font = New-Object Drawing.Font "Segoe UI", 10
 if (Test-Path $OllamaApp) { $form.Icon = [Drawing.Icon]::ExtractAssociatedIcon($OllamaApp) }
@@ -156,6 +156,32 @@ Add-Button "Download model" 320 362 212 {
     $name = $dl.Text.Trim(); if (-not $name) { return }
     Start-Process powershell.exe -ArgumentList "-NoExit", "-Command", "& '$OllamaExe' pull '$name'; Write-Host 'Done - click Refresh in the panel.'"
 } | Out-Null
+
+# Paid option: rent an AWS GPU server (see AwsGpu.ps1). Each opens a window showing progress.
+$AwsScript = Join-Path $PSScriptRoot "AwsGpu.ps1"
+function Start-Aws($action, $extra = @()) {
+    Start-Process powershell.exe -ArgumentList (@("-NoExit", "-ExecutionPolicy", "Bypass", "-File", "`"$AwsScript`"", "-Action", $action) + $extra)
+}
+
+$awsLabel = New-Object Windows.Forms.Label
+$awsLabel.Text = "Need more power? Rent an AWS GPU (paid, ~`$1/hour, qwen3-coder:30b):"
+$awsLabel.Location = New-Object Drawing.Point 12, 410
+$awsLabel.Size = New-Object Drawing.Size 520, 22
+$form.Controls.Add($awsLabel)
+
+$rent = Add-Button "Rent AWS GPU" 12 436 200 {
+    $pick = New-Object Windows.Forms.FolderBrowserDialog
+    $pick.Description = "Folder to open Claude Code in"
+    $pick.SelectedPath = $env:USERPROFILE
+    $dir = if ($pick.ShowDialog() -eq "OK") { $pick.SelectedPath } else { $env:USERPROFILE }
+    Start-Aws "Start" @("-ProjectDir", "`"$dir`"")
+}
+$rent.BackColor = [Drawing.Color]::FromArgb(230, 120, 0); $rent.ForeColor = [Drawing.Color]::White
+
+$stopAws = Add-Button "Stop AWS GPU" 220 436 150 { Start-Aws "Stop" }
+$stopAws.BackColor = [Drawing.Color]::FromArgb(198, 40, 40); $stopAws.ForeColor = [Drawing.Color]::White
+
+Add-Button "AWS status / cost" 378 436 154 { Start-Aws "Status" } | Out-Null
 
 $timer = New-Object Windows.Forms.Timer
 $timer.Interval = 3000
