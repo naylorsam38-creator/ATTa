@@ -30,3 +30,6 @@ OK (skipped=10)
 Real-container emulation of the whole chain on a fresh server (same code, real ClamAV engine): preflight, install0,
 install1, install2, installabl, install3, preflight-after, smoke, live0, live1, live2, undo3, undoabl, undo2, undo1,
 undo0: all PASS (ACCEPTANCE_RECORDS/item-3.md).
+
+## One-file download
+`AIRexploit-H100-complete-b6.zip` (SHA-256 `2fcd6a3b22b7a86da8685db155689bb448d73cb4936e0a155223377c5f068a58`): the same validated pack folder as above (identical after unzip, MANIFEST OK), plus this note and START-HERE.md.
