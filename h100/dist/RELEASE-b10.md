@@ -25,4 +25,14 @@ next to the main model; testing Qwen3-ASR or Nemotron needs the main model's sha
 pick) and N2 (the call uses WebSocket over HTTPS, not WebRTC). DEVIATIONS D52-D54.
 
 ## Offline results (session 9)
-(filled in below after the full run)
+- Clean copy (fresh unzip, MANIFEST 905 files OK, `bash -n` on every stage and remote script): `run_checks.py` 551 OK
+  (80 skipped); coverage PASS 204 rows (unchanged); `run_addon_checks.py` 295 OK (14 skipped: b9's 10 plus the 4 voice-call
+  tests, which need pipecat) with real Tika, ClamAV, archive-scanner and code-sandbox containers, SearXNG and Chromium.
+- The voice-call image built from the clean copy (pipecat-ai 1.8.0): its 4 tests OK inside it (read-only, no capabilities).
+- Stand-ins (SIMULATED) where no real service exists here: the H100 GPU and speech models, LiteLLM/Open WebUI admin APIs,
+  Google, the Manager's model in the voice tests. Those are the live checks L-W41..L-W45.
+
+## Package
+- `AIRexploit-H100-complete-b10.zip` SHA-256 `1348064a408b0e18ebf073ebb68659f5357bd88d9e48e58195f3e66e377f525d`, MANIFEST 905 files.
+  It differs from the clean-copy-validated build (`3460fec0...`) only in BUILD_STATE.md and BUILD_LOG.md (the results above);
+  every code, stage and test file is byte-identical.
