@@ -16,4 +16,13 @@ Records: BLOCKED-ON-SAM (N1, N2 DECIDED), DECISIONS OD-39, DEVIATIONS D53, ACCEP
 LIVE_ACCEPTANCE_CHECKLIST (L-W42C), INSTALL_RUNBOOK, BUILD_STATE, BUILD_LOG.
 
 ## Offline results (session 9, b11)
-(filled in below after the full run)
+- Clean copy (fresh unzip, MANIFEST 909 files OK, `bash -n` on every stage and remote script): `run_checks.py` 551 OK
+  (80 skipped); coverage PASS 204 rows (unchanged); `run_addon_checks.py` 300 OK (14 skipped: b9's 10 plus the 4 voice-call
+  tests, which need pipecat) with real Tika, ClamAV, archive-scanner and code-sandbox containers, SearXNG and Chromium.
+- The voice-call image built from the clean copy: its 4 tests OK inside it (read-only, no capabilities).
+- The comparison (tests/test_stt.py, 8 OK) uses the real script, hub and worker; SIMULATED: the H100 controller (a stand-in
+  with the same admin API), the GPU, docker and the speech models. Real timings and memory figures are live check L-W42C.
+
+## Package
+- `AIRexploit-H100-complete-b11.zip` SHA-256 `340b611697fc21050e08586fb2dc4fe9b9843f2cabe9b7518ade2cd2cf2fd791`, MANIFEST 909 files.
+  It differs from the clean-copy-validated build (`324b9fc3...`) only in BUILD_STATE.md and BUILD_LOG.md (the results above).
