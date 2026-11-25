@@ -153,6 +153,12 @@ def load_settings(environment: str | None = None, root: Path | None = None,
             raise ConfigurationError([f"isolation overlay {iso} not found: refusing to fall back to the "
                                       "non-isolated configuration"])   # never a silent fallback to production
         layer = _read_yaml(Path(iso))
+        # Explicit ATTA__ variables still win over the overlay: inside a qualification they are set only by the
+        # runner or deliberately by a test (e.g. pointing at a closed port to prove a dependency failure is detected).
+        explicit = {tuple(p.lower() for p in n[len(ENV_PREFIX):].split("__") if p)
+                    for n in environ if n.startswith(ENV_PREFIX)}
+        layer = {sec: {k: v for k, v in (keys or {}).items() if (sec, k) not in explicit}
+                 for sec, keys in layer.items()}
         for section, keys in layer.items():
             allowed = ISOLATION_KEYS.get(section)
             bad = [k for k in (keys or {}) if allowed is None or k not in allowed]

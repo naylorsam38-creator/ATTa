@@ -211,6 +211,9 @@ def run_suite(suite: str, *, manifest: dict, profile: str, out_root: Path, bundl
             results = [_blocked(t, data["tests"][t], meta, "no OS-level network namespace available: an air-gapped "
                                 "PASS cannot be established on this machine") for t in test_ids]
             return _finish(ws, meta, results, None, None)
+        # the re-executed run must evaluate conditions against THIS manifest, not whatever a test may have written
+        # into a shared deployment directory meanwhile
+        (ws / "qualification_manifest.json").write_text(json.dumps(manifest, default=str))
         cmd = isolation.in_new_netns([sys.executable, "-m", "backend.deployment", "qualify", "--suite", suite,
                                       "--inside-netns", "--qid", qid, "--profile", profile] +
                                      (["--bundle", bundle] if bundle else []))

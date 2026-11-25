@@ -390,8 +390,9 @@ def test_S01B_T14_secret_exclusion_from_generated_reports(real_env, tmp_path):
 
 def test_S01B_T15_installation_plan_generation(tmp_path):
     deploy = tmp_path / "deploy"
-    inst = _installer(deploy, {}, profile="LOCAL_CPU", start_services=False)
-    code = inst.run()
+    with disposable_pg(tmp_path / "pg") as pg:     # own database: the plan must not depend on an outer environment
+        inst = _installer(deploy, pg.env(), profile="LOCAL_CPU", start_services=False)
+        code = inst.run()
     assert code == 10 and inst.state["state"] == "AWAITING_OPERATOR_ACTION"
     plan = json.loads((deploy / "install_plan.json").read_text())
     for k in ("detected_environment", "selected_profile", "existing_dependencies", "missing_dependencies",

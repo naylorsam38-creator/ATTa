@@ -142,8 +142,12 @@ def main(argv=None) -> int:
         from .qualification import run_suite
         suite = a.suite or "LOCAL"
         root = Path(os.environ.get("ATTA_QUAL_OUT") or (a.out or ddir() / "qualification"))
+        passed_on = root / (a.qid or "") / "qualification_manifest.json"
         try:
-            m = mf.verify(ddir() / "environment_manifest.json")
+            if a.inside_netns and a.qid and passed_on.is_file():
+                m = json.loads(passed_on.read_text())       # the outer call's manifest (see run_suite)
+            else:
+                m = mf.verify(ddir() / "environment_manifest.json")
         except mf.ManifestError:
             s = _settings()
             env = discovery.discover(s)
