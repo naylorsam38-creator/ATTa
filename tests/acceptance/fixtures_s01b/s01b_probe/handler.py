@@ -15,7 +15,23 @@ def healthcheck():
             cg = f.read()
     except OSError:
         pass
-    return {"healthy": True, "uid": os.getuid() if hasattr(os, "getuid") else None, "pid": os.getpid(),
+    win = {}
+    if os.name == "nt":
+        import windows_isolation            # the child's own module directory (capability_runtime) is on sys.path
+        win["integrity"] = windows_isolation.current_integrity()
+        try:                                # a low-integrity worker must not be able to write to the user profile
+            with open(os.path.join(os.path.expanduser("~"), "atta-s01b-lowil-probe.txt"), "w") as f:
+                f.write("x")
+            win["profile_write"] = "ALLOWED"
+        except OSError as exc:
+            win["profile_write"] = f"denied: {exc}"
+        try:
+            with open("workspace-write.txt", "w") as f:
+                f.write("x")
+            win["workspace_write"] = "ok"
+        except OSError as exc:
+            win["workspace_write"] = f"denied: {exc}"
+    return {"healthy": True, "windows": win, "uid": os.getuid() if hasattr(os, "getuid") else None, "pid": os.getpid(),
             "external_network": net, "cuda_visible_devices": os.environ.get("CUDA_VISIBLE_DEVICES"), "cgroup": cg}
 
 

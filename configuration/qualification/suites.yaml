@@ -26,7 +26,7 @@ tests:
                       command: [npx, --no-install, playwright, test, -c, tests/end_to_end/playwright.config.ts]}
   Q-NETWORK-DENIED:  {title: "External network is unreachable inside the qualification namespace", builtin: network_denied, requires: [netns]}
   Q-OFFLINE-INSTALL: {title: "Clean installation from the offline dependency bundle with no network", builtin: offline_install, requires: [netns, bundle], timeout_s: 1800}
-  Q-WINDOWS-JOBS:    {title: "Windows Job Object process-tree termination", requires: [os:windows], environment_specific: true,
+  Q-WINDOWS-JOBS:    {title: "Windows worker isolation: Job Object tree kill + memory limit, restricted LOW-integrity token, workspace ACL, firewall (run as Administrator)", requires: [os:windows], environment_specific: true,
                       command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/acceptance/test_s01b_acceptance.py, -k, T41]}
   Q-H100-IDENTITY:   {title: "H100 identity, count, VRAM, driver, CUDA", requires: [gpu:h100], environment_specific: true, builtin: h100_identity}
   Q-H100-WORKER-GPU: {title: "GPU visible to the intended model worker only", requires: [gpu:h100], environment_specific: true, builtin: h100_worker_gpu}

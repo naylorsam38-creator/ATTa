@@ -1,140 +1,278 @@
 # Stage 01B requirement-to-implementation-to-test register (checked by S01B-T45).
-# status: VERIFIED (tested on this machine) | PARTIAL (implemented, part not testable or not built here) | BLOCKED
+# status: VERIFIED (tested on this machine) | PARTIAL (implemented, part not testable or not built here) | BLOCKED (implemented, qualification impossible here)
 stage: S01B
 requirements:
 - id: S01B-R01
-  section: "1 Architectural rule (one source tree, adaptive pipeline)"
-  implemented_in: [backend/deployment/__init__.py, backend/deployment/installer.py, backend/deployment/__main__.py]
-  tests: [S01B-T15, S01B-T16, S01B-T39]
+  section: 1 Architectural rule (one source tree, adaptive pipeline)
+  implemented_in:
+  - backend/deployment/__init__.py
+  - backend/deployment/installer.py
+  - backend/deployment/__main__.py
+  tests:
+  - S01B-T15
+  - S01B-T16
+  - S01B-T39
   status: VERIFIED
 - id: S01B-R02
-  section: "2 Deployment profiles AUTO, LOCAL_CPU, LOCAL_NVIDIA, H100, TEST_ISOLATED, AIR_GAPPED"
-  implemented_in: [backend/deployment/profiles.py, configuration/profiles/local_cpu.yaml, configuration/profiles/local_nvidia.yaml,
-                   configuration/profiles/h100.yaml, configuration/profiles/test_isolated.yaml, configuration/profiles/air_gapped.yaml]
-  tests: [S01B-T02, S01B-T03, S01B-T04]
+  section: 2 Deployment profiles AUTO, LOCAL_CPU, LOCAL_NVIDIA, H100, TEST_ISOLATED, AIR_GAPPED
+  implemented_in:
+  - backend/deployment/profiles.py
+  - configuration/profiles/local_cpu.yaml
+  - configuration/profiles/local_nvidia.yaml
+  - configuration/profiles/h100.yaml
+  - configuration/profiles/test_isolated.yaml
+  - configuration/profiles/air_gapped.yaml
+  tests:
+  - S01B-T02
+  - S01B-T03
+  - S01B-T04
   status: VERIFIED
   note: LOCAL_NVIDIA and H100 selection verified with synthetic copies of the real discovery result; no GPU on this machine.
 - id: S01B-R03
-  section: "3 Hardware and environment discovery (read-only)"
-  implemented_in: [backend/deployment/discovery.py]
-  tests: [S01B-T01, S01B-T11, S01B-T12]
+  section: 3 Hardware and environment discovery (read-only)
+  implemented_in:
+  - backend/deployment/discovery.py
+  tests:
+  - S01B-T01
+  - S01B-T11
+  - S01B-T12
   status: VERIFIED
 - id: S01B-R04
-  section: "4 Environment manifest (integrity, no plaintext credentials)"
-  implemented_in: [backend/deployment/manifest.py]
-  tests: [S01B-T05, S01B-T06, S01B-T14]
+  section: 4 Environment manifest (integrity, no plaintext credentials)
+  implemented_in:
+  - backend/deployment/manifest.py
+  tests:
+  - S01B-T05
+  - S01B-T06
+  - S01B-T14
   status: VERIFIED
 - id: S01B-R05
-  section: "5 Model discovery (configured roots, removable media, index, no copying, MODEL_NOT_FOUND/INCOMPATIBLE)"
-  implemented_in: [backend/deployment/models.py]
-  tests: [S01B-T07, S01B-T08, S01B-T09, S01B-T10]
+  section: 5 Model discovery (configured roots, removable media, index, no copying, MODEL_NOT_FOUND/INCOMPATIBLE)
+  implemented_in:
+  - backend/deployment/models.py
+  tests:
+  - S01B-T07
+  - S01B-T08
+  - S01B-T09
+  - S01B-T10
   status: VERIFIED
   note: Windows drive candidates (D:\ etc.) are evaluated only on Windows; real USB media not attached to this machine.
 - id: S01B-R06
-  section: "6 Model runtime selection foundation (deterministic, no external fallback)"
-  implemented_in: [backend/deployment/runtimes.py]
-  tests: [S01B-T10, S01B-T11]
+  section: 6 Model runtime selection foundation (deterministic, no external fallback)
+  implemented_in:
+  - backend/deployment/runtimes.py
+  tests:
+  - S01B-T10
+  - S01B-T11
   status: VERIFIED
 - id: S01B-R07
-  section: "7 Configuration resolver (precedence, validation, report)"
-  implemented_in: [backend/deployment/resolver.py, backend/settings/loader.py, backend/settings/schema.py]
-  tests: [S01B-T13, S01B-T14, S01B-T12]
+  section: 7 Configuration resolver (precedence, validation, report)
+  implemented_in:
+  - backend/deployment/resolver.py
+  - backend/settings/loader.py
+  - backend/settings/schema.py
+  tests:
+  - S01B-T13
+  - S01B-T14
+  - S01B-T12
   status: VERIFIED
 - id: S01B-R08
-  section: "8 Installation state machine (resumable, recorded, rollback)"
-  implemented_in: [backend/deployment/installer.py]
-  tests: [S01B-T15, S01B-T16, S01B-T17]
+  section: 8 Installation state machine (resumable, recorded, rollback)
+  implemented_in:
+  - backend/deployment/installer.py
+  tests:
+  - S01B-T15
+  - S01B-T16
+  - S01B-T17
   status: VERIFIED
 - id: S01B-R09
-  section: "9 Installation plan before any change"
-  implemented_in: [backend/deployment/installer.py]
-  tests: [S01B-T15]
+  section: 9 Installation plan before any change
+  implemented_in:
+  - backend/deployment/installer.py
+  tests:
+  - S01B-T15
   status: VERIFIED
 - id: S01B-R10
-  section: "10 One-click entry points (thin launchers)"
-  implemented_in: [install.sh, run.sh, healthcheck.sh, INSTALL.bat, RUN.bat, HEALTHCHECK.bat]
-  tests: [S01B-T34, S01B-T35, S01B-T39]
+  section: 10 One-click entry points (thin launchers)
+  implemented_in:
+  - install.sh
+  - run.sh
+  - healthcheck.sh
+  - INSTALL.bat
+  - RUN.bat
+  - HEALTHCHECK.bat
+  tests:
+  - S01B-T34
+  - S01B-T35
+  - S01B-T39
   status: PARTIAL
-  note: The .bat launchers are syntax-reviewed only; they have not been executed on Windows (BLOCKERS B-S01B-01).
+  note: install.sh/run.sh/healthcheck.sh executed here; the .bat launchers (incl. offline path with bundled Python) have not
+    been executed on Windows (BLOCKERS B-S01B-01).
 - id: S01B-R11
-  section: "11 Dependency locking, system manifest, runtime compatibility matrix, drift detection"
-  implemented_in: [backend/deployment/deps.py, configuration/locks/backend-core.lock.txt, configuration/locks/system-dependencies.yaml,
-                   configuration/locks/runtime-compatibility.yaml]
-  tests: [S01B-T18]
+  section: 11 Dependency locking, system manifest, runtime compatibility matrix, drift detection
+  implemented_in:
+  - backend/deployment/deps.py
+  - configuration/locks/backend-core.lock.txt
+  - configuration/locks/system-dependencies.yaml
+  - configuration/locks/runtime-compatibility.yaml
+  - backend/deployment/deps.py
+  tests:
+  - S01B-T18
   status: PARTIAL
-  note: Container image digests cannot be resolved without a Docker daemon (BLOCKERS B-S01B-03).
+  note: Python (core + full) and Node locks, system manifest, runtime matrix, drift and source-import coverage are verified;
+    container image digests need a Docker daemon (BLOCKERS B-S01B-03).
 - id: S01B-R12
-  section: "12 Offline dependency bundle (hash manifest, no keys, no models unless explicit)"
-  implemented_in: [backend/deployment/bundle.py]
-  tests: [S01B-T19]
-  status: VERIFIED
-  note: Container images are not bundled here (no Docker daemon); recorded in the bundle notes.
+  section: 12 Offline dependency bundle (hash manifest, no keys, no models unless explicit)
+  implemented_in:
+  - backend/deployment/bundle.py
+  - install.sh
+  - INSTALL.bat
+  tests:
+  - S01B-T19
+  - S01B-T26
+  status: PARTIAL
+  note: Complete bundle (both Python locks, bundled CPython, root + mobile npm, browsers, apt system closure) built and installed
+    offline inside a network namespace (AIR_GAPPED Q-OFFLINE-INSTALL). Container images BLOCKED without Docker daemon (B-S01B-03);
+    fresh system-package install only simulated here (B-S01B-09).
 - id: S01B-R13
-  section: "13 Zero-hidden-Internet requirement (OFFLINE_UNAVAILABLE)"
-  implemented_in: [backend/deployment/offline_audit.py, backend/deployment/netaudit/sitecustomize.py]
-  tests: [S01B-T20, S01B-T25, S01B-T26]
+  section: 13 Zero-hidden-Internet requirement (OFFLINE_UNAVAILABLE)
+  implemented_in:
+  - backend/deployment/offline_audit.py
+  - backend/deployment/netaudit/sitecustomize.py
+  tests:
+  - S01B-T20
+  - S01B-T25
+  - S01B-T26
   status: VERIFIED
 - id: S01B-R14
-  section: "14 Isolated BUILD/TEST/QUALIFICATION environments (DB, Redis, storage namespace, workspace, ports, credentials)"
-  implemented_in: [backend/deployment/isolation.py, backend/deployment/qualification.py]
-  tests: [S01B-T21, S01B-T22, S01B-T23, S01B-T24]
+  section: 14 Isolated BUILD/TEST/QUALIFICATION environments (DB, Redis, storage namespace, workspace, ports, credentials)
+  implemented_in:
+  - backend/deployment/isolation.py
+  - backend/deployment/qualification.py
+  tests:
+  - S01B-T21
+  - S01B-T22
+  - S01B-T23
+  - S01B-T24
   status: VERIFIED
 - id: S01B-R15
-  section: "15 Network isolation for offline qualification (real OS isolation)"
-  implemented_in: [backend/deployment/isolation.py, backend/deployment/netns_exec.py, backend/deployment/qualification.py]
-  tests: [S01B-T25, S01B-T26]
+  section: 15 Network isolation for offline qualification (real OS isolation)
+  implemented_in:
+  - backend/deployment/isolation.py
+  - backend/deployment/netns_exec.py
+  - backend/deployment/qualification.py
+  tests:
+  - S01B-T25
+  - S01B-T26
   status: VERIFIED
 - id: S01B-R16
-  section: "16 Windows isolation (Job Objects, restricted identities, ACLs, firewall)"
-  implemented_in: [backend/capability_runtime/runner.py]
-  tests: [S01B-T41]
+  section: 16 Windows isolation (Job Objects, restricted identities, ACLs, firewall)
+  implemented_in:
+  - backend/capability_runtime/windows_isolation.py
+  - backend/capability_runtime/runner.py
+  - backend/capability_runtime/child.py
+  - backend/deployment/windows_hardening.py
+  - backend/deployment/installer.py
+  - tests/unit/test_windows_isolation.py
+  tests:
+  - S01B-T41
   status: BLOCKED
-  note: Job Object tree termination implemented but untested (no Windows host); restricted identities, ACLs and firewall rules not implemented (BLOCKERS B-S01B-01).
+  note: 'IMPLEMENTED: Job Object (tree kill, memory limit), restricted LOW-integrity token, workspace ACLs, firewall-bound
+    worker interpreter. Qualification BLOCKED: never executed on Windows (S01B-T41 needs a Windows host, as Administrator);
+    platform-independent logic unit-tested on Linux (BLOCKERS B-S01B-01).'
 - id: S01B-R17
-  section: "17 Linux/H100 isolation (service users, permissions, limits, cgroups, netns, GPU visibility)"
-  implemented_in: [backend/capability_runtime/child.py, backend/capability_runtime/supervisor.py, backend/capability_runtime/runner.py]
-  tests: [S01B-T42]
+  section: 17 Linux/H100 isolation (service users, permissions, limits, cgroups, netns, GPU visibility)
+  implemented_in:
+  - backend/capability_runtime/child.py
+  - backend/capability_runtime/supervisor.py
+  - backend/capability_runtime/runner.py
+  tests:
+  - S01B-T42
   status: VERIFIED
   note: Verified on Linux with cgroup v1; GPU visibility verified as hidden (no GPU present).
 - id: S01B-R18
-  section: "18 Resource profiles (may only lower Stage 01A limits)"
-  implemented_in: [backend/deployment/profiles.py, backend/orchestration/service.py]
-  tests: [S01B-T29, S01B-T02]
+  section: 18 Resource profiles (may only lower Stage 01A limits)
+  implemented_in:
+  - backend/deployment/profiles.py
+  - backend/orchestration/service.py
+  tests:
+  - S01B-T29
+  - S01B-T02
   status: VERIFIED
 - id: S01B-R19
-  section: "19 Service health (STARTING..BLOCKED, propagation, revalidation)"
-  implemented_in: [backend/service_manager/health_monitor.py, backend/service_manager/manager.py]
-  tests: [S01B-T27, S01B-T28]
+  section: 19 Service health (STARTING..BLOCKED, propagation, revalidation)
+  implemented_in:
+  - backend/service_manager/health_monitor.py
+  - backend/service_manager/manager.py
+  tests:
+  - S01B-T27
+  - S01B-T28
   status: VERIFIED
 - id: S01B-R20
-  section: "20 Qualification engine (single runner, required fields, BLOCKED never PASS)"
-  implemented_in: [backend/deployment/qualification.py, configuration/qualification/suites.yaml, backend/verification/build_controller.py]
-  tests: [S01B-T23, S01B-T44]
+  section: 20 Qualification engine (single runner, required fields, BLOCKED never PASS)
+  implemented_in:
+  - backend/deployment/qualification.py
+  - configuration/qualification/suites.yaml
+  - backend/verification/build_controller.py
+  tests:
+  - S01B-T23
+  - S01B-T44
   status: VERIFIED
 - id: S01B-R21
-  section: "21 LOCAL offline qualification"
-  implemented_in: [configuration/qualification/suites.yaml]
-  tests: [S01B-T29, S01B-T30, S01B-T31, S01B-T32, S01B-T33, S01B-T36, S01B-T37, S01B-T38]
+  section: 21 LOCAL offline qualification
+  implemented_in:
+  - configuration/qualification/suites.yaml
+  tests:
+  - S01B-T29
+  - S01B-T30
+  - S01B-T31
+  - S01B-T32
+  - S01B-T33
+  - S01B-T36
+  - S01B-T37
+  - S01B-T38
   status: VERIFIED
   note: Model inference tests become mandatory at Stage 03.
 - id: S01B-R22
-  section: "22 H100 qualification suite (BLOCKED without real H100)"
-  implemented_in: [backend/deployment/qualification.py, configuration/qualification/suites.yaml]
-  tests: [S01B-T43, S01B-T44]
+  section: 22 H100 qualification suite (BLOCKED without real H100)
+  implemented_in:
+  - backend/deployment/qualification.py
+  - configuration/qualification/suites.yaml
+  tests:
+  - S01B-T43
+  - S01B-T44
   status: BLOCKED
   note: No H100 on this machine; every H100 test is BLOCKED (not executed), never PASS (BLOCKERS B-S01B-02).
 - id: S01B-R23
-  section: "23 Portability (no hard-coded users, paths, hosts, GPUs, passwords, keys)"
-  implemented_in: [backend/deployment/discovery.py, backend/deployment/models.py, install.sh, run.sh]
-  tests: [S01B-T34, S01B-T14, S01B-T39]
+  section: 23 Portability (no hard-coded users, paths, hosts, GPUs, passwords, keys)
+  implemented_in:
+  - backend/deployment/discovery.py
+  - backend/deployment/models.py
+  - install.sh
+  - run.sh
+  tests:
+  - S01B-T34
+  - S01B-T14
+  - S01B-T39
   status: VERIFIED
 - id: S01B-R24
-  section: "24 Plug-in deployment behaviour (extract, install, discover, qualify, activate, open)"
-  implemented_in: [install.sh, backend/deployment/installer.py, backend/deployment/__main__.py]
-  tests: [S01B-T39, S01B-T40, S01B-T16]
+  section: 24 Plug-in deployment behaviour (extract, install, discover, qualify, activate, open)
+  implemented_in:
+  - install.sh
+  - backend/deployment/installer.py
+  - backend/deployment/__main__.py
+  tests:
+  - S01B-T39
+  - S01B-T40
+  - S01B-T16
   status: VERIFIED
 - id: S01B-R25
-  section: "26 Stage 01 final integration (regression protection, superseded tests recorded)"
-  implemented_in: [configuration/build/stages/S01F.yaml]
-  tests: [S01B-T36, S01B-T37, S01B-T38, S01B-T45]
+  section: 26 Stage 01 final integration (regression protection, superseded tests recorded)
+  implemented_in:
+  - configuration/build/stages/S01F.yaml
+  tests:
+  - S01B-T36
+  - S01B-T37
+  - S01B-T38
+  - S01B-T45
   status: VERIFIED

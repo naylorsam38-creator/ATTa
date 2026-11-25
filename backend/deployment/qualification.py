@@ -68,11 +68,28 @@ def _builtin(name: str, ctx: dict) -> tuple[int, str]:
         reached = isolation.external_reachable()
         return (0 if not reached else 1), json.dumps({"external_reached": reached})
     if name == "offline_install":
+        # Complete offline installation from the bundle with no network: bundled CPython, every Python lock, both npm
+        # projects, system packages resolvable from the bundle alone, and the bundled browser actually launching.
         venv = Path(ctx["workspace"]) / "offline-venv"
-        r = subprocess.run([sys.executable, "-m", "backend.deployment", "bundle", "install-offline", "--bundle",
-                            ctx["bundle"], "--venv", str(venv)], cwd=REPO_ROOT, capture_output=True, text=True,
-                           timeout=1800, env=ctx["env"])
-        return r.returncode, r.stdout[-4000:] + r.stderr[-4000:]
+        steps, log = [
+            ("install-offline", [sys.executable, "-m", "backend.deployment", "bundle", "install-offline", "--full",
+                                 "--bundle", ctx["bundle"], "--venv", str(venv)]),
+            ("install-system --simulate", [sys.executable, "-m", "backend.deployment", "bundle", "install-system",
+                                           "--simulate", "--bundle", ctx["bundle"]]),
+            ("bundled browser", [str(venv / ("Scripts/python.exe" if os.name == "nt" else "bin/python")), "-c",
+                                 "from playwright.sync_api import sync_playwright\n"
+                                 "with sync_playwright() as p:\n b=p.chromium.launch(); pg=b.new_page();"
+                                 " pg.set_content('<p>offline</p>'); print('chromium', b.version, pg.inner_text('p'))"]),
+            ("bundle unchanged", [sys.executable, "-m", "backend.deployment", "bundle", "verify", "--bundle",
+                                  ctx["bundle"]]),
+        ], ""
+        for label, cmd in steps:
+            env = {**ctx["env"], "PLAYWRIGHT_BROWSERS_PATH": str(Path(ctx["bundle"]).resolve() / "browsers")}
+            r = subprocess.run(cmd, cwd=REPO_ROOT, capture_output=True, text=True, timeout=3600, env=env)
+            log += f"== {label}: exit {r.returncode}\n{r.stdout[-1500:]}{r.stderr[-1500:]}\n"
+            if r.returncode != 0:
+                return r.returncode, log
+        return 0, log
     if name == "h100_identity":
         from .discovery import nvidia_gpus
         g = nvidia_gpus()
@@ -146,21 +163,16 @@ def run_suite(suite: str, *, manifest: dict, profile: str, out_root: Path, bundl
         pg.start()
         pg.migrate(env)
         env.update(pg.env())
-        # The isolated endpoints are ALSO written to this qualification's own deployment directory (configuration
-        # layer 4). Existing test helpers deliberately reset ATTA__ overrides for the platforms they start; with this
-        # file those platforms still resolve to the disposable cluster, never to the production database.
-        dep = ws / "deployment"
-        dep.mkdir(parents=True, exist_ok=True)
-        (dep / "discovered.yaml").write_text(
-            "# GENERATED for one qualification run: isolated resources only (never production)\n" + yaml.safe_dump({
-                "database": {"host": "127.0.0.1", "port": pg.port, "name": "atta", "sslmode": "disable"},
-                "redis": {"port": int(env["ATTA__REDIS__PORT"])},
-                "api": {"port": int(env["ATTA__API__PORT"])},
-                "runtime": {"directory": env["ATTA__RUNTIME__DIRECTORY"]},
-                "logging": {"directory": env["ATTA__LOGGING__DIRECTORY"]},
-                "object_storage": {"bucket": env["ATTA__OBJECT_STORAGE__BUCKET"]},
-                "capabilities": {"catalogue_namespace": env["ATTA__CAPABILITIES__CATALOGUE_NAMESPACE"]}},
-                sort_keys=True))
+        # The isolated endpoints are also written to an isolation overlay (ATTA_ISOLATION_FILE, highest configuration
+        # precedence, restricted to endpoint keys). Existing test helpers deliberately reset ATTA__ overrides for the
+        # platforms they start, and installers rewrite discovered.yaml; with the overlay every child still resolves
+        # to the disposable cluster, never to the production database.
+        overlay = ws / "isolation.yaml"
+        overlay.write_text("# GENERATED for one qualification run: isolated resources only\n" + yaml.safe_dump({
+            "database": {"host": "127.0.0.1", "port": pg.port, "name": "atta", "sslmode": "disable"},
+            "object_storage": {"bucket": env["ATTA__OBJECT_STORAGE__BUCKET"]},
+            "capabilities": {"catalogue_namespace": env["ATTA__CAPABILITIES__CATALOGUE_NAMESPACE"]}}, sort_keys=True))
+        env["ATTA_ISOLATION_FILE"] = str(overlay)
         isolation_detail = {"database": f"disposable cluster on 127.0.0.1:{pg.port}", "workspace": str(ws),
                             "network": "new kernel network namespace (loopback only)" if inside_netns else "host"}
     except isolation.IsolationUnavailable as exc:

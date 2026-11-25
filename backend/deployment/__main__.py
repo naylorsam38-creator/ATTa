@@ -12,7 +12,7 @@
   qualify --suite S [--profile P] [--bundle DIR]   isolated qualification (AIR_GAPPED runs in a network namespace)
   deps [--check]               dependency lock / drift report
   audit-offline                zero-hidden-Internet audit
-  bundle create|verify|install-offline ...
+  bundle create|verify|coverage|install-offline|install-system ...
 """
 from __future__ import annotations
 
@@ -59,6 +59,8 @@ def main(argv=None) -> int:
     ap.add_argument("--venv")
     ap.add_argument("--models", nargs="*")
     ap.add_argument("--require")
+    for flag in ("--simulate", "--no-node", "--no-python", "--no-browsers", "--no-system", "--no-images", "--full"):
+        ap.add_argument(flag, action="store_true")
     ap.add_argument("--env", dest="environment")
     a = ap.parse_args(argv)
     from . import deps, discovery, manifest as mf, models as mdl, profiles, resolver
@@ -159,7 +161,8 @@ def main(argv=None) -> int:
     if cmd == "deps":
         r = deps.report()
         out(r)
-        return 0 if (r["python"]["ok"] and r["node"].get("ok", True) and not r["unbounded"]) or not a.check else 1
+        ok = r["python"]["ok"] and r["node"].get("ok", True) and not r["unbounded"] and r["imports"]["ok"]
+        return 0 if ok or not a.check else 1
     if cmd == "audit-offline":
         from .offline_audit import audit
         r = audit(_settings())
@@ -168,16 +171,28 @@ def main(argv=None) -> int:
     if cmd == "bundle":
         from . import bundle
         if a.sub == "create":
-            m = bundle.create(Path(a.out), models=a.models)
+            m = bundle.create(Path(a.out), models=a.models, include_node=not a.no_node, python_runtime=not a.no_python,
+                              browsers=not a.no_browsers, system_packages=not a.no_system, images=not a.no_images)
             print(f"bundle written: {len(m['files'])} files")
+            for k, v in m["coverage"].items():
+                print(f"  {k:<17} {v.get('status', 'INCLUDED') if isinstance(v, dict) else v}"
+                      + (f"  ({v['reason']})" if isinstance(v, dict) and v.get("reason") else ""))
             return 0
         if a.sub == "verify":
             p = bundle.verify(Path(a.bundle))
             print("\n".join(p) or "BUNDLE OK")
             return 0 if not p else 1
         if a.sub == "install-offline":
-            bundle.install_offline(Path(a.bundle), Path(a.venv))
+            r = bundle.install_offline(Path(a.bundle), Path(a.venv), full=a.full)
+            print(json.dumps(r))
             print("offline install OK")
+            return 0
+        if a.sub == "install-system":
+            print(bundle.install_system(Path(a.bundle), simulate=a.simulate))
+            print("offline system packages OK")
+            return 0
+        if a.sub == "coverage":
+            print(json.dumps(json.loads((Path(a.bundle) / "bundle_manifest.json").read_text())["coverage"], indent=2))
             return 0
     ap.error(f"unknown command {cmd}")
     return 2

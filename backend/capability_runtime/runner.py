@@ -51,12 +51,15 @@ class RunResult:
 class CapabilityRuntime:
     def __init__(self, *, python: str = sys.executable, memory_limit_mb: int = 1024, attestor: Attestor | None = None,
                  network: str = "host", worker_user: str | None = None, cuda_visible_devices: str | None = None,
-                 isolation_required: bool = False):
+                 isolation_required: bool = False, site_dirs: list[str] | None = None,
+                 windows_isolation: bool = True):
         """network: 'none' gives each handler a private empty network namespace (Linux, privileged); worker_user drops
         the handler to an unprivileged account; GPUs are hidden from handlers unless cuda_visible_devices is set."""
         self.python, self.memory_limit_mb = python, memory_limit_mb
         self.network, self.worker_user, self.cuda_visible_devices = network, worker_user, cuda_visible_devices
         self.isolation_required = isolation_required
+        # site_dirs: package directories added explicitly when workers use a dedicated interpreter (Windows firewall)
+        self.site_dirs, self.windows_isolation = list(site_dirs or []), windows_isolation
         self._attestor = attestor or Attestor()
         self._gateway: Attestor | None = None
         self._running: dict[str, subprocess.Popen] = {}
@@ -103,7 +106,17 @@ class CapabilityRuntime:
                "memory_limit_mb": self.memory_limit_mb, "cpu_seconds": int(timeout_s) + 2,
                "isolation": {"network": network or self.network, "user": self.worker_user,
                              "cuda_visible_devices": self.cuda_visible_devices, "memory_mb": self.memory_limit_mb,
-                             "required": self.isolation_required}}
+                             "required": self.isolation_required,
+                             "windows_restricted": os.name == "nt" and self.windows_isolation},
+               "site_dirs": self.site_dirs}
+        if os.name == "nt" and self.windows_isolation:
+            from .windows_isolation import secure_workspace
+            try:
+                req["isolation"]["workspace_acl"] = secure_workspace(str(workdir))
+            except OSError as exc:
+                if self.isolation_required:
+                    raise RuntimeRefused(f"workspace ACL could not be applied: {exc}") from exc
+                req["isolation"]["workspace_acl"] = {"error": str(exc)}
         env = {"PATH": os.environ.get("PATH", os.defpath), "LANG": "C.UTF-8", "PYTHONDONTWRITEBYTECODE": "1"}
         kwargs: dict = {"stdin": subprocess.PIPE, "stdout": subprocess.PIPE, "stderr": subprocess.PIPE, "env": env,
                         "cwd": str(workdir), "text": True}
@@ -113,7 +126,7 @@ class CapabilityRuntime:
             kwargs["start_new_session"] = True
         t0 = time.monotonic()
         proc = subprocess.Popen([self.python, "-I", str(SUPERVISOR)], **kwargs)
-        job = _windows_job(proc) if os.name == "nt" else None
+        job = _windows_job(proc, self.memory_limit_mb) if os.name == "nt" else None
         with self._lock:
             self._running[ticket.execution_id] = proc
         out, deadline, sent, status = "", t0 + timeout_s + 5.0, False, None
@@ -201,36 +214,12 @@ class CapabilityRuntime:
 
 
 # ------------------------------------------------------------------------------------------------ Windows Job Objects
-def _windows_job(proc):
-    """Place the supervisor (and therefore every process it starts) in a Job Object with KILL_ON_JOB_CLOSE.
-    Implemented with ctypes; NOT yet executed on Windows in this project's evidence (BLOCKERS B-015)."""
-    import ctypes
-    from ctypes import wintypes
-    k32 = ctypes.WinDLL("kernel32", use_last_error=True)
-
-    class BASIC(ctypes.Structure):
-        _fields_ = [("PerProcessUserTimeLimit", ctypes.c_int64), ("PerJobUserTimeLimit", ctypes.c_int64),
-                    ("LimitFlags", wintypes.DWORD), ("MinimumWorkingSetSize", ctypes.c_size_t),
-                    ("MaximumWorkingSetSize", ctypes.c_size_t), ("ActiveProcessLimit", wintypes.DWORD),
-                    ("Affinity", ctypes.c_size_t), ("PriorityClass", wintypes.DWORD), ("SchedulingClass", wintypes.DWORD)]
-
-    class IOC(ctypes.Structure):
-        _fields_ = [(n, ctypes.c_uint64) for n in ("r", "w", "o", "rb", "wb", "ob")]
-
-    class EXT(ctypes.Structure):
-        _fields_ = [("BasicLimitInformation", BASIC), ("IoInfo", IOC), ("ProcessMemoryLimit", ctypes.c_size_t),
-                    ("JobMemoryLimit", ctypes.c_size_t), ("PeakProcessMemoryUsed", ctypes.c_size_t),
-                    ("PeakJobMemoryUsed", ctypes.c_size_t)]
-    job = k32.CreateJobObjectW(None, None)
-    info = EXT()
-    info.BasicLimitInformation.LimitFlags = 0x2000   # JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE
-    k32.SetInformationJobObject(job, 9, ctypes.byref(info), ctypes.sizeof(info))   # ExtendedLimitInformation
-    k32.AssignProcessToJobObject(job, wintypes.HANDLE(int(proc._handle)))
-    return job
+def _windows_job(proc, memory_limit_mb: int | None = None):
+    """Job Object with kill-on-close, per-process memory limit, no breakaway (windows_isolation.create_job)."""
+    from .windows_isolation import create_job
+    return create_job(proc, memory_limit_mb)
 
 
 def _windows_kill_job(job) -> None:
-    import ctypes
-    k32 = ctypes.WinDLL("kernel32", use_last_error=True)
-    k32.TerminateJobObject(job, 1)
-    k32.CloseHandle(job)
+    from .windows_isolation import kill_job
+    kill_job(job)

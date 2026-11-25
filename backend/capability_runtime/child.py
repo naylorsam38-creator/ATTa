@@ -100,6 +100,16 @@ def isolate(req):
             applied["user"] = user
         except (KeyError, OSError) as exc:
             problems.append(f"cannot drop to worker account {user}: {exc}")
+    if iso.get("windows_restricted"):
+        try:
+            import windows_isolation          # sibling module (the child runs as a script with `python -I`)
+            applied["windows"] = windows_isolation.restrict_current_process()
+            if applied["windows"].get("integrity") != "low":
+                problems.append(f"integrity level is {applied['windows'].get('integrity')}, expected low")
+        except Exception as exc:  # noqa: BLE001 — reported; refused when isolation is required
+            problems.append(f"restricted Windows token unavailable: {exc}")
+        if iso.get("workspace_acl"):
+            applied["workspace_acl"] = iso["workspace_acl"]
     gpu = iso.get("cuda_visible_devices")
     os.environ["CUDA_VISIBLE_DEVICES"] = gpu if gpu is not None else ""
     applied["cuda_visible_devices"] = os.environ["CUDA_VISIBLE_DEVICES"]
@@ -182,6 +192,9 @@ def main():
                                 "error": "; ".join(iso_problems), "isolation": applied}) + "\n")
         return
     limits(req)
+    for d in req.get("site_dirs") or []:     # dedicated worker interpreter: the venv's packages, added explicitly
+        import site
+        site.addsitedir(d)
     sys.meta_path.insert(0, SnapshotFinder(files, "capability:" + req["capability_id"], req["package_dir"]))
     os.chdir(req.get("workdir") or os.getcwd())
     mode = req["mode"]

@@ -7,17 +7,23 @@ python -m backend.deployment bundle create --out /media/usb/atta-offline
 python -m backend.deployment bundle verify --bundle /media/usb/atta-offline
 ```
 
-Contents:
+Contents (`bundle coverage --bundle DIR` prints what was included and why anything was not):
 
-| Path | What |
-|---|---|
-| `wheels/` | every package of `configuration/locks/backend-core.lock.txt`, downloaded with `--require-hashes --only-binary=:all:` |
-| `npm-cache/` | npm cache populated by `npm ci` from `package-lock.json` (Electron binary skipped) |
-| `assets/database`, `assets/configuration/locks` | migrations, bootstrap SQL, all lock files |
-| `bundle_manifest.json` | SHA-256 + size of every file, the Python and Node lock hashes, notes |
+| Path | Component | Status on this build machine |
+|---|---|---|
+| `wheels/` | every package of **both** Python locks (`backend-core` 48 packages, `backend-full` 106 — all extras), `--require-hashes --only-binary=:all:` | INCLUDED |
+| `python/cpython-*` + `tools/uv` | relocatable CPython of the same X.Y (python-build-standalone via uv) + uv, so the target needs no Python | INCLUDED (3.13.14) |
+| `npm-cache/` | npm cache for the root workspaces lock **and** `apps/mobile/package-lock.json`; every lock entry needed on this platform is checked by integrity hash (other-platform optional packages are skipped and counted) | INCLUDED (101 + 466 entries, 0 missing) |
+| `browsers/` | Playwright Chromium builds (end-to-end tests, browser extra) | INCLUDED |
+| `system/debs/` + `Packages` | Debian/Ubuntu `.deb` closure of PostgreSQL 16, pgvector, Redis, git computed by apt's own resolver against an empty package database (base-system packages excluded), with a local apt repository index | INCLUDED (33 packages) |
+| `images/` | `docker save` of the pinned compose images with resolved digests | **BLOCKED** — no Docker daemon here |
+| `assets/` | migrations, bootstrap SQL, every lock and manifest file | INCLUDED |
+| `bundle_manifest.json` | SHA-256 + size of every file, lock hashes, platform, coverage | — |
 
-Never included: private keys (verification fails if one is found), credentials, models (only with an explicit
-`--models PATH…`), container images when no Docker daemon is available (recorded in `notes`).
+Never included: private keys (verification fails if a file holds private-key material; certificate trust stores are
+allowed), credentials, models (only with an explicit `--models PATH…`). A bundle targets the same OS, architecture and
+Python X.Y as the machine that built it; build one per target platform. On Windows the system installers (PostgreSQL,
+pgvector, Memurai/Redis) are operator-provided (`OPERATOR_PROVIDED` in the coverage).
 
 `verify` reports: lock mismatch, missing or modified files, unlisted files, private-key material.
 
@@ -28,9 +34,14 @@ Never included: private keys (verification fails if one is found), credentials, 
 INSTALL.bat --offline-bundle E:\atta-offline --profile AIR_GAPPED
 ```
 
-pip runs with `--no-index --find-links bundle/wheels --require-hashes`; npm with `--offline --cache bundle/npm-cache`.
-`python -m backend.deployment bundle install-offline --bundle DIR --venv DIR` does the same into a fresh environment
-and import-checks the result. Verified on this machine **inside a kernel network namespace with no network at all**
+pip runs with `--no-index --find-links bundle/wheels --require-hashes`; npm with `--offline` against a private copy
+of the bundled cache (the bundle itself is never modified — verified after every offline install). Without a suitable
+host Python the launchers copy the bundled CPython out of the bundle and use it. `--install-system` installs PostgreSQL,
+pgvector and Redis from the bundle used as a local apt repository (`bundle install-system`, administrator). On this
+build machine those packages were already installed, so the real installation could only be shown as a re-install
+simulation that apt satisfied from the bundle alone (`install-system --simulate`, inside the network namespace).
+`python -m backend.deployment bundle install-offline [--full] --bundle DIR --venv DIR` does the Python/Node part into a
+fresh environment and import-checks it. Verified on this machine **inside a kernel network namespace with no network at all**
 (AIR_GAPPED qualification `Q-OFFLINE-INSTALL`).
 
 ## 3. Zero hidden Internet

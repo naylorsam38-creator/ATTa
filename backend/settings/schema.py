@@ -170,6 +170,9 @@ class DeploymentSettings(_Strict):
     worker_network: Literal["host", "none"] = "host"   # "none": tool workers get their own empty network namespace
     worker_user: str | None = None                      # unprivileged OS account for tool workers (when run as root)
     health_recovery_confirmations: int = Field(default=2, ge=1, le=10)
+    # Windows: restricted worker identity (privileges removed, LOW integrity), workspace ACLs, Job Object limits and
+    # the dedicated firewall-bound worker interpreter (runtime/worker-python/atta-worker.exe) when INSTALL created it.
+    windows_worker_isolation: bool = True
 
 
 class RuntimeSettings(_Strict):

@@ -32,14 +32,19 @@ API → `supervisor.py` (own session, child subreaper, cgroups) → `child.py`:
 
 | Control | Linux (VERIFIED, S01B-T42) | Windows |
 |---|---|---|
-| Process tree termination | subreaper + kill of all descendants, incl. detached ones | Job Object `KILL_ON_JOB_CLOSE` — implemented, untested (BLOCKED) |
-| Memory / process limits | cgroup v2 or v1 (`memory`, `pids`) + rlimits | NOT implemented on Windows (the Job Object sets only kill-on-close) |
-| Network | empty namespace when `deployment.worker_network: none` (H100 and AIR_GAPPED profiles); a task whose contract permits network destinations runs with host networking (destinations still enforced by the drift guard) | firewall rules NOT implemented (BLOCKED) |
-| Identity | drop to an unprivileged account (`deployment.worker_user`, e.g. `atta-builder`) | restricted tokens / ACLs NOT implemented (BLOCKED) |
+| Process tree termination | subreaper + kill of all descendants, incl. detached ones | Job Object `KILL_ON_JOB_CLOSE`, `DIE_ON_UNHANDLED_EXCEPTION`, no breakaway (`windows_isolation.create_job`) |
+| Memory / process limits | cgroup v2 or v1 (`memory`, `pids`) + rlimits | Job Object per-process memory limit (`JOB_OBJECT_LIMIT_PROCESS_MEMORY`) |
+| Network | empty namespace when `deployment.worker_network: none` (H100 and AIR_GAPPED profiles); a task whose contract permits network destinations runs with host networking (destinations still enforced by the drift guard) | Windows Defender Firewall rules bound to the dedicated worker interpreter `runtime/worker-python/atta-worker.exe`: all non-loopback outbound blocked, all inbound blocked; API inbound allowed from loopback only (`backend/deployment/windows_hardening.py`, applied by INSTALL as an administrator action) |
+| Identity | drop to an unprivileged account (`deployment.worker_user`, e.g. `atta-builder`) | restricted identity: before capability code loads, the child removes every token privilege except SeChangeNotify and lowers itself to LOW integrity (cannot write to the profile, repository, configuration, model folders or registry; cannot regain privileges). Workspace ACL: inheritance removed, SYSTEM full + service account modify, LOW integrity label (icacls) |
 | GPU | `CUDA_VISIBLE_DEVICES=""` unless explicitly granted | same variable |
 | Code integrity | package bytes hashed and verified before privileges are dropped | same |
 
 `CapabilityRuntime(isolation_required=True)` makes a missing control a refusal instead of a recorded degradation.
+
+**Windows status:** every Windows control above is implemented; none has been executed on Windows yet. The logic that
+can be checked on Linux (firewall address ranges, ACL commands, Job Object flags, worker-interpreter provisioning) is
+covered by `tests/unit/test_windows_isolation.py`; behaviour is certified only by S01B-T41 run as Administrator on a
+Windows host, which the verifier records BLOCKED until then (BLOCKERS B-S01B-01).
 
 ## Service health
 

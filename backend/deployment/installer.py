@@ -14,7 +14,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 from backend.contracts import canonical_hash, iso_utc, new_id
-from backend.settings.loader import REPO_ROOT
+from backend.settings.loader import REPO_ROOT, resolve_path
 
 from . import deps, discovery, manifest as mf, models as mdl, profiles, resolver
 
@@ -36,6 +36,9 @@ TRANSITIONS = {
     "ROLLED_BACK": {"DISCOVER"},
 }
 EXIT = {"READY": 0, "AWAITING_OPERATOR_ACTION": 10, "BLOCKED": 11, "FAILED": 12, "ROLLED_BACK": 13}
+
+
+WINDOWS_HARDENING = "Windows worker isolation: worker interpreter + firewall rules"
 
 
 class InstallError(RuntimeError):
@@ -180,6 +183,13 @@ class Installer:
         if not env["services"].get("postgres", {}).get("healthy"):
             actions.append({"action": "provide PostgreSQL 16 + pgvector and run database/bootstrap.sql as superuser",
                             "admin": True, "network": False, "offline_possible": True, "operator": True})
+        if os.name == "nt" and s.deployment.windows_worker_isolation:
+            from . import windows_hardening
+            actions.append({"action": WINDOWS_HARDENING, "admin": True, "network": False, "offline_possible": True,
+                            # not elevated: the operator must re-run INSTALL.bat as Administrator once
+                            "operator": not windows_hardening.is_admin(),
+                            "detail": "dedicated worker interpreter runtime/worker-python/atta-worker.exe; firewall: "
+                                      "workers loopback-only outbound, no inbound; API inbound loopback-only"})
         actions.append({"action": "apply database migrations (migration role)", "admin": False, "network": False,
                         "offline_possible": True})
         plan = {
@@ -247,6 +257,11 @@ class Installer:
                     if r.returncode != 0:
                         raise InstallError(f"npm ci failed: {r.stderr[-500:]}")
                     done.append(a["action"])
+                elif a["action"] == WINDOWS_HARDENING:
+                    from . import windows_hardening
+                    s = self._resolution().settings
+                    done.append(a["action"] + ": " + json.dumps(windows_hardening.apply(
+                        resolve_path(s.runtime.directory), s.api.port)["verified"]))
                 elif a["action"] == "install locked Python packages":
                     raise InstallError("Python environment drifted from the lock: re-run the INSTALL launcher, which "
                                        "bootstraps the virtual environment from the lock or the offline bundle")

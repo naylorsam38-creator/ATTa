@@ -5,6 +5,7 @@ makes the controller NOT ready, and the gateway refuses to execute: autonomous e
 the controller to keep up appearances."""
 from __future__ import annotations
 
+import os
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -87,7 +88,15 @@ def build_controller_service(settings: Settings, *, policy: PolicyEngine | None 
         monitor.start()
     policy = policy or PolicyEngine()
     d = settings.deployment
-    runtime = CapabilityRuntime(memory_limit_mb=settings.workers.memory_limit_mb, network=d.worker_network,
+    worker_python, site_dirs = sys.executable, None
+    if os.name == "nt" and d.windows_worker_isolation:
+        from backend.deployment import windows_hardening
+        exe = windows_hardening.worker_exe(resolve_path(settings.runtime.directory))
+        if exe.is_file():     # created by INSTALL (admin) together with the firewall rules bound to it
+            worker_python, site_dirs = str(exe), windows_hardening.site_dirs()
+    runtime = CapabilityRuntime(python=worker_python, site_dirs=site_dirs,
+                                windows_isolation=d.windows_worker_isolation,
+                                memory_limit_mb=settings.workers.memory_limit_mb, network=d.worker_network,
                                 worker_user=d.worker_user, cuda_visible_devices=None if not d.gpu_visible_to_workers else "0",
                                 isolation_required=d.worker_network == "none")
     trust = TrustStore.load(resolve_path(settings.capabilities.trust_store),

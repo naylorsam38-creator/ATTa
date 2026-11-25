@@ -12,3 +12,12 @@ container_images:              # tags are pinned; digests are BLOCKED until reso
   - {image: minio/minio, tag: RELEASE.2025-09-07T16-13-09Z, digest: null}
   - {image: temporalio/temporal, tag: 1.5.1, digest: null}
   - {image: python, tag: 3.13-slim-bookworm, digest: null}
+# Offline bundle system packages (Stage 01B §12). Debian/Ubuntu: the dependency closure is downloaded as .deb files
+# (base-system packages of priority required/important are assumed present). Windows: operator-provided installers.
+offline_system_packages:
+  debian: [postgresql-16, postgresql-client-16, postgresql-16-pgvector, redis-server, git]
+  windows: ["PostgreSQL 16 x64 installer (EDB)", "pgvector for PostgreSQL 16 (Windows build)", "Memurai or Redis 7 for Windows", "Git for Windows"]
+# Third-party imports deliberately NOT locked (checked by `deps --check`): only Internet-dependent optional features
+# guarded by ImportError, reported OFFLINE_UNAVAILABLE. Any other unlocked import fails the dependency check.
+unlocked_optional_imports:
+  anthropic: "legacy ATTa optional LLM repair (04-deployment/llm_repair.py): needs Internet + API key; guarded, OFFLINE_UNAVAILABLE"

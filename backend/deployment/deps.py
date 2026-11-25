@@ -82,5 +82,73 @@ def unbounded_specs() -> list[str]:
     return problems
 
 
+# Source trees whose imports must be satisfiable from the locks (legacy ATTa uses the standard library only and is
+# covered as well, so a new third-party import anywhere is caught).
+SOURCE_DIRS = ["backend", "capabilities", "scripts", "02-front-door", "04-deployment"]
+
+
+def _locked_names(lock: Path) -> set[str]:
+    out = set()
+    for line in lock.read_text().splitlines():
+        m = LOCK_LINE.match(line.strip())
+        if m:
+            out.add(_norm(m.group(1)))
+    return out
+
+
+def import_coverage() -> dict:
+    """Every top-level third-party module imported by the source must map to a distribution pinned in a lock.
+    Core imports must be in backend-core.lock.txt; optional (try/except ImportError, extras) in backend-full."""
+    import ast
+    import sys
+    dist_of = md.packages_distributions()
+    local = {p.name for p in REPO_ROOT.iterdir() if p.is_dir()} | {"backend", "capabilities", "handler", "s01_helpers"}
+    core = _locked_names(REPO_ROOT / "configuration/locks/backend-core.lock.txt")
+    full = _locked_names(REPO_ROOT / "configuration/locks/backend-full.lock.txt")
+    for d in SOURCE_DIRS:                                   # in-repository modules (legacy code adds its dirs to sys.path)
+        base = REPO_ROOT / d
+        local |= {q.stem for q in base.rglob("*.py")} | {q.parent.name for q in base.rglob("*.py")} \
+            if base.is_dir() else set()
+    import yaml
+    allowed = (yaml.safe_load((REPO_ROOT / "configuration/locks/system-dependencies.yaml").read_text())
+               .get("unlocked_optional_imports") or {})
+    seen: dict[str, set[str]] = {}
+    for d in SOURCE_DIRS:
+        base = REPO_ROOT / d
+        for f in base.rglob("*.py") if base.is_dir() else []:
+            try:
+                tree = ast.parse(f.read_text(encoding="utf-8", errors="replace"))
+            except SyntaxError:
+                continue
+            local_mods = {q.stem for q in f.parent.glob("*.py")} | {q.name for q in f.parent.iterdir() if q.is_dir()}
+            for node in ast.walk(tree):
+                names = []
+                if isinstance(node, ast.Import):
+                    names = [a.name for a in node.names]
+                elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+                    names = [node.module]
+                for n in names:
+                    top = n.split(".")[0]
+                    if top in sys.stdlib_module_names or top in local or top in local_mods or top == "__future__":
+                        continue
+                    rel = f.relative_to(REPO_ROOT) if REPO_ROOT in f.resolve().parents else f
+                    seen.setdefault(top, set()).add(str(rel))
+    rows, missing, optional_only = {}, [], []
+    for top, files in sorted(seen.items()):
+        dists = {_norm(x) for x in dist_of.get(top, [])}
+        where = "core" if dists & core else ("full" if dists & full else None)
+        rows[top] = {"distributions": sorted(dists), "lock": where, "files": sorted(files)[:5]}
+        if where is None and top in allowed:
+            rows[top]["lock"] = "unlocked-optional"
+            rows[top]["reason"] = allowed[top]
+        elif where is None:
+            missing.append(top)
+        elif where == "full":
+            optional_only.append(top)
+    return {"modules": rows, "missing": missing, "full_lock_only": optional_only,
+            "unlocked_optional": sorted(t for t in rows if rows[t]["lock"] == "unlocked-optional"), "ok": not missing}
+
+
 def report() -> dict:
-    return {"python": python_drift(), "node": node_drift(), "unbounded": unbounded_specs()}
+    return {"python": python_drift(), "node": node_drift(), "unbounded": unbounded_specs(),
+            "imports": import_coverage()}

@@ -474,6 +474,18 @@ def test_S01B_T18_dependency_lock_validation(tmp_path):
     d2 = deps.python_drift(bad)
     assert not d2["ok"] and any("fastapi" in x for x in json.dumps(d2).split('"'))
     assert deps.unbounded_specs() == []
+    cov = deps.import_coverage()          # every third-party import of the source tree is pinned in a lock
+    assert cov["ok"], cov["missing"]
+    assert cov["modules"]["fastapi"]["lock"] == "core" and cov["modules"]["playwright"]["lock"] == "full"
+    planted = tmp_path / "planted"
+    planted.mkdir()
+    (planted / "uses_unlocked.py").write_text("import totally_unlocked_pkg_xyz\n")
+    orig = deps.SOURCE_DIRS
+    deps.SOURCE_DIRS = orig + [str(planted)]
+    try:
+        assert "totally_unlocked_pkg_xyz" in deps.import_coverage()["missing"], "an unlocked import must be detected"
+    finally:
+        deps.SOURCE_DIRS = orig
     for f in ("system-dependencies.yaml", "runtime-compatibility.yaml"):
         assert yaml.safe_load((ROOT / "configuration/locks" / f).read_text())
     cp = subprocess.run([PY, "-m", "backend.deployment", "deps", "--check"], cwd=ROOT, env=clean_env(),
@@ -485,9 +497,25 @@ def test_S01B_T18_dependency_lock_validation(tmp_path):
 def test_S01B_T19_offline_dependency_manifest_validation(tmp_path):
     from backend.deployment import bundle
     b = tmp_path / "bundle"
-    bundle.create(b, include_node=False)
+    # Full-coverage components are exercised by the AIR_GAPPED Q-OFFLINE-INSTALL step (bundled CPython, both npm
+    # projects, browsers); here: every Python lock, system packages, image handling, manifest integrity.
+    bundle.create(b, include_node=False, python_runtime=False, browsers=False)
     assert bundle.verify(b) == []
     m = json.loads((b / "bundle_manifest.json").read_text())
+    cov = m["coverage"]
+    assert cov["python_wheels"]["backend-core.lock.txt"]["packages"] > 0
+    assert cov["python_wheels"]["backend-full.lock.txt"]["packages"] >= cov["python_wheels"]["backend-core.lock.txt"]["packages"]
+    from backend.deployment.deps import python_lock
+    names = {w.name.split("-")[0].lower().replace("_", "-") for w in (b / "wheels").glob("*.whl")}
+    full = set(python_lock(ROOT / "configuration/locks/backend-full.lock.txt"))
+    assert {n.replace("_", "-") for n in full} <= {n.replace(".", "-") for n in names} | \
+        {n for n in full if n.replace("-", "_") in {x.replace("-", "_") for x in names}}, "every locked package has a wheel"
+    if sys.platform.startswith("linux") and shutil.which("apt-get"):
+        assert cov["system_packages"]["status"] == "INCLUDED" and (b / "system/debs/Packages").is_file()
+        assert cov["system_packages"]["debs"] == cov["system_packages"]["closure"] > 0
+    assert cov["container_images"]["status"] in ("INCLUDED", "BLOCKED")
+    if cov["container_images"]["status"] == "BLOCKED":
+        assert "Docker" in cov["container_images"]["reason"] and len(cov["container_images"]["images"]) >= 4
     assert m["includes_models"] is False and not (b / "models").exists()
     assert all(len(v["sha256"]) == 64 for v in m["files"].values())
     wheel = next(p for p in (b / "wheels").iterdir())
@@ -503,7 +531,13 @@ def test_S01B_T19_offline_dependency_manifest_validation(tmp_path):
     (b / "assets" / "extra.txt").unlink()
     (b / "assets" / "k.pem").write_text("-----BEGIN PRIVATE KEY-----\nAAAA\n-----END PRIVATE KEY-----\n")
     assert any("private key" in p.lower() for p in bundle.verify(b))
-    record("S01B-T19", {"files": len(m["files"]), "notes": m["notes"]})
+    (b / "assets" / "k.pem").unlink()
+    # Node coverage check detects a cache that lacks locked packages
+    empty = tmp_path / "empty-cache"
+    empty.mkdir()
+    nc = bundle.node_coverage(ROOT / "package-lock.json", empty)
+    assert nc["missing_count"] > 0 and nc["cached"] == 0
+    record("S01B-T19", {"files": len(m["files"]), "coverage": cov})
 
 
 def test_S01B_T20_core_frontend_contains_no_mandatory_external_assets():
@@ -949,6 +983,7 @@ def test_S01B_T40_upgrade_from_current_baseline_qualification(tmp_path):
 
 # ------------------------------------------------------------------------------------------------ T41-T45 platform
 def _probe_run(pkg: str, tmp: Path, timeout_s: float, **rt_kw):
+    """Run a fixture package's healthcheck in the real isolated runtime; returns (result, workdir)."""
     from backend.capability_registry.package import package_digest
     from backend.capability_runtime import CapabilityRuntime
     rt = CapabilityRuntime(**rt_kw)
@@ -966,17 +1001,51 @@ def _probe_run(pkg: str, tmp: Path, timeout_s: float, **rt_kw):
 
 @pytest.mark.qualification_wrapper
 def test_S01B_T41_windows_specific_tests():
-    """Windows only (the build controller records it BLOCKED elsewhere): Job Object process-tree termination."""
+    """Windows only (the build controller records it BLOCKED elsewhere). Certifies every Windows worker control:
+    struct layout, Job Object tree termination + memory limit, restricted token (privileges removed, LOW integrity),
+    workspace ACL + integrity label, and — when run as Administrator — the firewall rules of the worker interpreter."""
     if os.name != "nt":
         pytest.fail("Windows-specific test executed on a non-Windows host: the verifier must record it BLOCKED")
+    import ctypes
     import tempfile
+    from backend.capability_runtime import windows_isolation as wi
+    from backend.deployment import windows_hardening as wh
+    sizes = {k: ctypes.sizeof(v) for k, v in wi._structs().items()}
+    assert sizes == {"BASIC": 64, "IOC": 48, "EXT": 144, "LUID": 8, "LUID_AND_ATTRIBUTES": 12,
+                     "SID_AND_ATTRIBUTES": 16, "TOKEN_MANDATORY_LABEL": 16}, sizes
     tmp = Path(tempfile.mkdtemp())
     r, work = _probe_run("s01b_spawn", tmp, 3.0)
     assert r.status == "timeout"
     pid = int((work / "descendant.pid").read_text())
     time.sleep(1)
     assert not _pid_alive(pid), "the Job Object must terminate the detached descendant"
-    record("S01B-T41", {"descendant": pid, "result": r.status})
+    p, pwork = _probe_run("s01b_probe", tmp / "probe", 20.0, isolation_required=True)
+    assert p.status == "ok", (p.status, p.error, p.stderr_tail)
+    w = p.value["windows"]
+    assert w["integrity"] == "low", w
+    assert w["profile_write"].startswith("denied"), w
+    assert w["workspace_write"] == "ok", w
+    assert p.isolation["windows"]["privileges_kept"] == ["SeChangeNotifyPrivilege"]
+    acl = subprocess.run(["icacls", str(pwork)], capture_output=True, text=True).stdout
+    assert "Mandatory Label\\Low Mandatory Level" in acl and "(I)" not in acl, acl
+    fw = {}
+    if wh.is_admin():
+        exe = wh.provision_worker_interpreter(tmp / "rt")
+        for cmd in wh.remove_commands():
+            subprocess.run(cmd, capture_output=True)
+        for cmd in wh.firewall_rules(exe, isolation.free_port()):
+            assert subprocess.run(cmd, capture_output=True).returncode == 0
+        fw = wh.verify(exe)
+        assert all(fw.values()), fw
+        blocked = subprocess.run([str(exe), "-I", "-c", "import socket\ntry:\n socket.create_connection(('1.1.1.1',443),"
+                                  "timeout=3); print('CONNECTED')\nexcept OSError as e: print('BLOCKED', e)"],
+                                 capture_output=True, text=True, timeout=30).stdout
+        for cmd in wh.remove_commands():
+            subprocess.run(cmd, capture_output=True)
+        assert "BLOCKED" in blocked, blocked
+    else:
+        pytest.fail("run S01B-T41 as Administrator: the firewall part of Windows isolation must be certified too")
+    record("S01B-T41", {"descendant": pid, "windows": w, "privileges": p.isolation["windows"], "firewall": fw})
 
 
 @pytest.mark.skipif(not LINUX, reason="Linux-specific")

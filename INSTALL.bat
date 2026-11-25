@@ -33,6 +33,16 @@ for %%V in (3.13 3.12) do (
 if not defined PY (
   python -c "import sys; sys.exit(0 if (3,12)<=sys.version_info[:2]<(3,14) else 1)" >nul 2>&1 && set "PY=python"
 )
+if not defined PY if defined BUNDLE (
+  rem offline target without Python: copy the bundled CPython out of the bundle and use it
+  for /d %%R in ("%BUNDLE%\python\cpython-*") do (
+    if not defined PY (
+      xcopy /e /i /q /y "%%~fR" "%ROOT%runtime\python-runtime\%%~nxR" >nul
+      set "PY=%ROOT%runtime\python-runtime\%%~nxR\python.exe"
+      echo [install] using the bundled Python runtime
+    )
+  )
+)
 if not defined PY (
   echo [install] ERROR: Python 3.12 or 3.13 is required: https://www.python.org/downloads/windows/
   exit /b 1
@@ -46,7 +56,7 @@ if not exist "%ATTA_VENV%\Scripts\python.exe" (
   %PY% -m venv "%ATTA_VENV%" || exit /b 1
 )
 set "VPY=%ATTA_VENV%\Scripts\python.exe"
-"%VPY%" -m pip install --disable-pip-version-check -q --upgrade "pip>=25" >nul || exit /b 1
+if not defined BUNDLE ("%VPY%" -m pip install --disable-pip-version-check -q --upgrade "pip>=25" >nul || exit /b 1)
 if defined BUNDLE (
   echo [install] installing locked backend dependencies OFFLINE from %BUNDLE%\wheels
   "%VPY%" -m pip install --disable-pip-version-check -q --no-index --find-links "%BUNDLE%\wheels" --require-hashes --no-deps -r "%LOCK%" || exit /b 1
@@ -64,8 +74,15 @@ if "%WITH_NODE%"=="1" (
   ) else (
     if "%WITH_DESKTOP%"=="1" (set "ELECTRON_SKIP_BINARY_DOWNLOAD=") else (set "ELECTRON_SKIP_BINARY_DOWNLOAD=1")
     echo [install] installing locked Node workspaces
-    if defined BUNDLE (call npm ci --offline --logs-max=0 --cache "%BUNDLE%\npm-cache" --no-audit --no-fund --loglevel=error || exit /b 1) else (call npm ci --no-audit --no-fund --loglevel=error || exit /b 1)
-    if "%WITH_MOBILE%"=="1" (pushd apps\mobile & call npm ci --no-audit --no-fund --loglevel=error & popd)
+    set "NPM_OFF="
+    if defined BUNDLE (
+      rem private copy of the bundled npm cache: npm writes into its cache, the bundle must stay intact
+      if exist "%ROOT%runtime\npm-offline-cache" rmdir /s /q "%ROOT%runtime\npm-offline-cache"
+      xcopy /e /i /q /y "%BUNDLE%\npm-cache" "%ROOT%runtime\npm-offline-cache" >nul
+      set "NPM_OFF=--offline --logs-max=0 --cache "%ROOT%runtime\npm-offline-cache""
+    )
+    call npm ci !NPM_OFF! --no-audit --no-fund --loglevel=error || exit /b 1
+    if "%WITH_MOBILE%"=="1" (pushd apps\mobile & call npm ci !NPM_OFF! --no-audit --no-fund --loglevel=error & popd)
   )
 )
 where redis-server >nul 2>&1

@@ -45,6 +45,7 @@ tasks:
   - scripts/**
   - pyproject.toml
   - backend/verification/**
+  - tests/unit/**
   - backend/deployment/__init__.py
   - backend/deployment/discovery.py
   - backend/deployment/profiles.py
@@ -200,6 +201,7 @@ tasks:
   - scripts/**
   - pyproject.toml
   - backend/verification/**
+  - tests/unit/**
   - backend/deployment/resolver.py
   - backend/deployment/installer.py
   - backend/deployment/__main__.py
@@ -325,6 +327,7 @@ tasks:
   - scripts/**
   - pyproject.toml
   - backend/verification/**
+  - tests/unit/**
   - backend/deployment/deps.py
   - backend/deployment/bundle.py
   - backend/deployment/offline_audit.py
@@ -385,10 +388,13 @@ tasks:
   - scripts/**
   - pyproject.toml
   - backend/verification/**
+  - tests/unit/**
   - backend/deployment/isolation.py
   - backend/deployment/netns_exec.py
   - backend/deployment/netaudit/**
   - backend/deployment/qualification.py
+  - backend/deployment/windows_hardening.py
+  - backend/deployment/installer.py
   - configuration/qualification/**
   - backend/capability_runtime/**
   - backend/orchestration/gateway.py
@@ -534,6 +540,7 @@ tasks:
   - scripts/**
   - pyproject.toml
   - backend/verification/**
+  - tests/unit/**
   required_changes:
   - Stage 01A tests run unchanged against disposable clusters under LOCAL_CPU and TEST_ISOLATED
   acceptance_tests:

@@ -24,6 +24,11 @@ PY=""
 for c in python3.13 python3.12 python3; do
   if command -v "$c" >/dev/null 2>&1 && "$c" -c 'import sys; sys.exit(0 if (3,12)<=sys.version_info[:2]<(3,14) else 1)'; then PY="$(command -v "$c")"; break; fi
 done
+if [ -z "$PY" ] && [ -n "$BUNDLE" ]; then           # offline target without Python: use the bundled CPython
+  RT="$(ls -d "$BUNDLE"/python/cpython-*/ 2>/dev/null | head -1)"
+  if [ -n "$RT" ]; then mkdir -p "$ROOT/runtime/python-runtime"; cp -a "$RT" "$ROOT/runtime/python-runtime/"
+    PY="$ROOT/runtime/python-runtime/$(basename "$RT")/bin/python3"; say "using the bundled Python runtime"; fi
+fi
 [ -n "$PY" ] || fail "Python 3.12 or 3.13 is required (https://www.python.org/downloads/)"
 say "python: $PY ($("$PY" -V 2>&1))"
 command -v git >/dev/null 2>&1 || fail "git is required"
@@ -49,15 +54,24 @@ if [ "$WITH_NODE" = 1 ]; then
   if command -v node >/dev/null 2>&1 && node -e 'process.exit(+process.versions.node.split(".")[0] >= 20 ? 0 : 1)'; then
     say "installing locked Node workspaces (npm ci)"
     if [ "$WITH_DESKTOP" = 1 ]; then unset ELECTRON_SKIP_BINARY_DOWNLOAD; else export ELECTRON_SKIP_BINARY_DOWNLOAD=1; fi
-    if [ -n "$BUNDLE" ]; then (cd "$ROOT" && npm ci --offline --logs-max=0 --cache "$BUNDLE/npm-cache" --no-audit --no-fund --loglevel=error)
-    else (cd "$ROOT" && npm ci --no-audit --no-fund --loglevel=error); fi
-    if [ "$WITH_MOBILE" = 1 ]; then (cd "$ROOT/apps/mobile" && npm ci --no-audit --no-fund --loglevel=error); fi
+    NPM_OFF=()
+    if [ -n "$BUNDLE" ]; then       # private copy of the bundled cache: npm writes into its cache, the bundle stays intact
+      rm -rf "$ROOT/runtime/npm-offline-cache"; mkdir -p "$ROOT/runtime"; cp -a "$BUNDLE/npm-cache" "$ROOT/runtime/npm-offline-cache"
+      NPM_OFF=(--offline --logs-max=0 --cache "$ROOT/runtime/npm-offline-cache"); fi
+    (cd "$ROOT" && npm ci "${NPM_OFF[@]}" --no-audit --no-fund --loglevel=error)
+    if [ "$WITH_MOBILE" = 1 ]; then (cd "$ROOT/apps/mobile" && npm ci "${NPM_OFF[@]}" --no-audit --no-fund --loglevel=error); fi
   else
     say "WARNING: Node.js >= 20 not found — web/desktop clients skipped (backend still installs)"
   fi
 fi
 
-# 4. System services
+# 4. System services (offline: from the bundle used as a local apt repository)
+if [ "$INSTALL_SYSTEM" = 1 ] && [ -n "$BUNDLE" ] && [ -f "$BUNDLE/system/debs/Packages" ]; then
+  say "installing system packages OFFLINE from $BUNDLE/system/debs"
+  if [ "$(id -u)" -eq 0 ]; then "$VENV/bin/python" -m backend.deployment bundle install-system --bundle "$BUNDLE"
+  else sudo "$VENV/bin/python" -m backend.deployment bundle install-system --bundle "$BUNDLE"; fi
+fi
+[ -n "$BUNDLE" ] && [ -d "$BUNDLE/browsers" ] && say "browsers: set PLAYWRIGHT_BROWSERS_PATH=$BUNDLE/browsers (or copy it) for browser features"
 if ! command -v redis-server >/dev/null 2>&1; then
   if [ "$INSTALL_SYSTEM" = 1 ] && command -v apt-get >/dev/null 2>&1; then
     say "installing redis-server (approved system dependency)"; sudo apt-get install -y redis-server

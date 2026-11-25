@@ -147,6 +147,15 @@ def load_settings(environment: str | None = None, root: Path | None = None,
             if layer.get(section, {}).get(key) not in (None, ""):
                 problems.append(f"operator.yaml sets secret {section}.{key}; use {SECRET_FIELDS[(section, key)]}")
         data = _merge(data, layer)
+    iso = environ.get("ATTA_ISOLATION_FILE")         # qualification isolation overlay: wins over everything
+    if iso:
+        layer = _read_yaml(Path(iso))
+        for section, keys in layer.items():
+            allowed = ISOLATION_KEYS.get(section)
+            bad = [k for k in (keys or {}) if allowed is None or k not in allowed]
+            if bad:
+                problems.append(f"isolation overlay may not set {section}.{','.join(map(str, bad))}")
+        data = _merge(data, layer)
     if profile_file is not None:
         data.setdefault("deployment", {})["profile"] = profile.upper()
 
@@ -157,6 +166,11 @@ def load_settings(environment: str | None = None, root: Path | None = None,
     except ValidationError as exc:
         raise ConfigurationError([f"{'.'.join(str(x) for x in e['loc'])}: {e['msg']}" for e in exc.errors()]) from exc
     return settings
+
+
+# Only isolated-resource endpoints may come from a qualification overlay (never secrets, policy or limits).
+ISOLATION_KEYS = {"database": {"host", "port", "name", "sslmode"}, "object_storage": {"bucket"},
+                  "capabilities": {"catalogue_namespace"}}
 
 
 def resolve_path(settings_path: str, root: Path | None = None) -> Path:
