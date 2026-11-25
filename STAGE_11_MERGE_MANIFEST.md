@@ -2,31 +2,37 @@
 
 Produced by Parallel Agent 3. **Not merged, not pushed to the authoritative branch.** For independent review.
 
-## 1. Baseline
+## 1. Baseline and final commits
 
 | | |
 |---|---|
 | Baseline commit | `21104c413c30a3b2714f877892970e7db19a1d19` (Stage 01A gate passed) |
-| Supplied archive | `ATTa-stage01A.zip` SHA-256 `ccf1e9435e7e3a810157fb3d5dc6588ffa0a32548a0f73cc4b9005c51f5d5592`, byte-identical to the commit |
-| Sidecar branch | `stage-11-research-sidecar` (local only; not pushed) — the commit containing this file |
-| Merge method | the sidecar commit applies on top of `21104c4` without conflicts; against a tree that already merged 01B/04, see §11 |
+| Supplied archive | `ATTa-stage01A.zip` SHA-256 `ccf1e9435e7e3a810157fb3d5dc6588ffa0a32548a0f73cc4b9005c51f5d5592`, byte-identical to the baseline |
+| **Final Stage 11 source commit (qualified, frozen)** | `__FROZEN__` |
+| Release candidate | tag `stage11-rc1` = the evidence commit on top of `__FROZEN_SHORT__` (evidence + documentation only) |
+| Branch | `claude/focused-cori-ajjjn0` (isolated; never pushed to or merged into the authoritative branch) |
+| Package | `ATTa-STAGE-11-COMPLETE.zip` (changes only; SHA-256 recorded in the hand-off and `evidence/stage_11/final/PACKAGE_SHA256.txt`) |
+| History | `history/stage11.bundle` in the package (`git fetch stage11.bundle HEAD:refs/heads/stage11` in a clone containing the baseline) |
 
-## 2. Files
+## 2. Files (baseline → final source commit `__FROZEN_SHORT__`)
 
-Totals: 64 added, 6 modified, 0 deleted. SHA-256 of every added/modified file: `evidence/stage_11/SHA256SUMS`; per-file hashes also in the Stage 11 section of `CHANGE_MANIFEST.md`.
+Totals: 90 added, 6 modified, 0 deleted (the evidence commit adds further files under `evidence/stage_11/final/`
+and updates `STAGE_11_*.md`). Per-file SHA-256: the package's `SHA256SUMS`; the Stage 11 section of `CHANGE_MANIFEST.md`.
 
 | Area | Added | Modified |
 |---|---|---|
-| `(root)` | `STAGE_11_CHANGE_MANIFEST.md`<br>`STAGE_11_MERGE_MANIFEST.md`<br>`STAGE_11_VERIFICATION.md` | `BLOCKERS.md`<br>`CHANGE_MANIFEST.md`<br>`DECISIONS.md`<br>`IMPLEMENTATION_PROGRESS.md`<br>`MASTER_IMPLEMENTATION_REGISTER.md` |
-| `backend/research` | `backend/research/__init__.py`<br>`backend/research/api.py`<br>`backend/research/claims.py`<br>`backend/research/config.py`<br>`backend/research/contracts.py`<br>`backend/research/dedup.py`<br>`backend/research/errors.py`<br>`backend/research/evidence.py`<br>`backend/research/ids.py`<br>`backend/research/local_sources.py`<br>`backend/research/network.py`<br>`backend/research/planner.py`<br>`backend/research/quality.py`<br>`backend/research/security.py`<br>`backend/research/service.py`<br>`backend/research/store.py`<br>`backend/research/urls.py`<br>`backend/research/verification.py`<br>`backend/research/worker.py` | — |
+| `(root)` | `STAGE_11_ARCHITECTURE.md`<br>`STAGE_11_CHANGE_MANIFEST.md`<br>`STAGE_11_MERGE_MANIFEST.md`<br>`STAGE_11_REQUIREMENT_MATRIX.md`<br>`STAGE_11_VERIFICATION.md` | `BLOCKERS.md`<br>`CHANGE_MANIFEST.md`<br>`DECISIONS.md`<br>`IMPLEMENTATION_PROGRESS.md`<br>`MASTER_IMPLEMENTATION_REGISTER.md` |
+| `backend/research` | `backend/research/__init__.py`<br>`backend/research/api.py`<br>`backend/research/claims.py`<br>`backend/research/config.py`<br>`backend/research/contracts.py`<br>`backend/research/dedup.py`<br>`backend/research/errors.py`<br>`backend/research/evidence.py`<br>`backend/research/hub.py`<br>`backend/research/ids.py`<br>`backend/research/local_sources.py`<br>`backend/research/network.py`<br>`backend/research/operator_config.py`<br>`backend/research/planner.py`<br>`backend/research/provider_check.py`<br>`backend/research/quality.py`<br>`backend/research/security.py`<br>`backend/research/service.py`<br>`backend/research/store.py`<br>`backend/research/urls.py`<br>`backend/research/verification.py`<br>`backend/research/wiring.py`<br>`backend/research/worker.py` | — |
 | `capabilities/research_evidence` | `capabilities/research_evidence/capability.yaml`<br>`capabilities/research_evidence/handler.py` | — |
 | `capabilities/research_web` | `capabilities/research_web/capability.yaml`<br>`capabilities/research_web/extract.py`<br>`capabilities/research_web/handler.py`<br>`capabilities/research_web/netguard.py`<br>`capabilities/research_web/providers.py`<br>`capabilities/research_web/retrieval_policy.py` | — |
 | `configuration` | `configuration/research.yaml` | — |
 | `database` | `database/migrations/0011_stage11_research.sql` | — |
 | `documentation` | — | `documentation/requirements/requirement_register.yaml` |
-| `documentation/stage11` | `documentation/stage11/CITATION_MODEL.md`<br>`documentation/stage11/RESEARCH_ARCHITECTURE.md`<br>`documentation/stage11/RESEARCH_PROVIDER_INTERFACE.md`<br>`documentation/stage11/SOURCE_SECURITY.md`<br>`documentation/stage11/permissions.stage11.yaml`<br>`documentation/stage11/tool_numbers.stage11.yaml` | — |
-| `evidence/stage_11` | `evidence/stage_11/S11-CANCELLATION.json`<br>`evidence/stage_11/S11-EVIDENCE-TOOLS.json`<br>`evidence/stage_11/S11-INJECTION-CONTAINED.json`<br>`evidence/stage_11/S11-OFFLINE-AIR_GAPPED.json`<br>`evidence/stage_11/S11-OFFLINE-OFFLINE.json`<br>`evidence/stage_11/S11-PIPELINE-STANDARD.json`<br>`evidence/stage_11/S11-RESTART-RECOVERY.json`<br>`evidence/stage_11/runs/legacy_baseline.log`<br>`evidence/stage_11/runs/legacy_baseline.xml`<br>`evidence/stage_11/runs/legacy_sidecar.log`<br>`evidence/stage_11/runs/legacy_sidecar.xml`<br>`evidence/stage_11/runs/platform_baseline.log`<br>`evidence/stage_11/runs/platform_baseline.xml`<br>`evidence/stage_11/runs/platform_sidecar.log`<br>`evidence/stage_11/runs/platform_sidecar.xml`<br>`evidence/stage_11/runs/s11.log`<br>`evidence/stage_11/runs/s11.xml` | — |
-| `tests/research` | `tests/research/conftest.py`<br>`tests/research/fixture_server.py`<br>`tests/research/harness.py`<br>`tests/research/test_s11_api.py`<br>`tests/research/test_s11_contracts.py`<br>`tests/research/test_s11_extraction_dedup.py`<br>`tests/research/test_s11_pipeline.py`<br>`tests/research/test_s11_registration_tools.py`<br>`tests/research/test_s11_url_security.py` | — |
+| `documentation/stage11` | `documentation/stage11/CITATION_MODEL.md`<br>`documentation/stage11/RESEARCH_ARCHITECTURE.md`<br>`documentation/stage11/RESEARCH_PROVIDER_INTERFACE.md`<br>`documentation/stage11/SOURCE_SECURITY.md`<br>`documentation/stage11/STAGE03_MODEL_GATEWAY_REQUIREMENTS.md`<br>`documentation/stage11/integration/research.providers.example.yaml`<br>`documentation/stage11/integration/stage02_research_permissions.yaml`<br>`documentation/stage11/integration/stage04_app_wiring.patch`<br>`documentation/stage11/permissions.stage11.yaml`<br>`documentation/stage11/tool_numbers.stage11.yaml` | — |
+| `evidence/stage_11` | `evidence/stage_11/S11-CANCELLATION.json`<br>`evidence/stage_11/S11-CREDENTIAL-ISOLATION.json`<br>`evidence/stage_11/S11-EVIDENCE-TOOLS.json`<br>`evidence/stage_11/S11-HUB-INTEGRATION.json`<br>`evidence/stage_11/S11-INJECTION-CONTAINED.json`<br>`evidence/stage_11/S11-MIGRATION.json`<br>`evidence/stage_11/S11-OFFLINE-AIR_GAPPED.json`<br>`evidence/stage_11/S11-OFFLINE-OFFLINE.json`<br>`evidence/stage_11/S11-PIPELINE-STANDARD.json`<br>`evidence/stage_11/S11-RESTART-RECOVERY.json`<br>`evidence/stage_11/SHA256SUMS`<br>`evidence/stage_11/runs/legacy_baseline.log`<br>`evidence/stage_11/runs/legacy_baseline.xml`<br>`evidence/stage_11/runs/legacy_sidecar.log`<br>`evidence/stage_11/runs/legacy_sidecar.xml`<br>`evidence/stage_11/runs/platform_baseline.log`<br>`evidence/stage_11/runs/platform_baseline.xml`<br>`evidence/stage_11/runs/platform_sidecar.log`<br>`evidence/stage_11/runs/platform_sidecar.xml`<br>`evidence/stage_11/runs/s11.log`<br>`evidence/stage_11/runs/s11.xml` | — |
+| `packaging/stage11` | `packaging/stage11/INSTALL.md`<br>`packaging/stage11/compat/check_compat.py`<br>`packaging/stage11/install.bat`<br>`packaging/stage11/install.ps1`<br>`packaging/stage11/install.py`<br>`packaging/stage11/install.sh` | — |
+| `scripts` | `scripts/build_stage11_package.py` | — |
+| `tests/research` | `tests/research/conftest.py`<br>`tests/research/fixture_server.py`<br>`tests/research/fixtures/envprobe/capability.yaml`<br>`tests/research/fixtures/envprobe/handler.py`<br>`tests/research/harness.py`<br>`tests/research/test_s11_api.py`<br>`tests/research/test_s11_contracts.py`<br>`tests/research/test_s11_extraction_dedup.py`<br>`tests/research/test_s11_installer.py`<br>`tests/research/test_s11_integration_kits.py`<br>`tests/research/test_s11_pipeline.py`<br>`tests/research/test_s11_qualification.py`<br>`tests/research/test_s11_registration_tools.py`<br>`tests/research/test_s11_url_security.py` | — |
 
 Deleted files: **none**.
 
@@ -95,7 +101,10 @@ Until then the production registry reports both packages `untrusted` and nothing
 
 `backend/research/api.py` → `build_research_router()`. Stage 04 mounts it with ONE call after the app is created:
 `from backend.research.wiring import wire_research_api; wire_research_api(app)` — idempotent; the service is resolved
-lazily from `app.state.controller_service` (the one controller). Every route evaluates the central policy
+lazily from `app.state.controller_service` (the one controller). The exact additive patch for `backend/api/app.py`
+(two lines; applies to the baseline app.py; verified by q::test_stage04_app_patch_applies_and_wires_the_api) is
+`documentation/stage11/integration/stage04_app_wiring.patch` — apply it only together with Stage 04 so no other
+worker's app.py changes are overwritten. Every route evaluates the central policy
 engine (operations `research.create|read|list|start|cancel`) → **DENIED until Stage 02**.
 
 | Method | Path | Request | Response |
@@ -208,3 +217,27 @@ with the actual Stage 01B / Stage 04 packages in a temporary repository, runs st
 installer, and optionally all test suites (new failures separated from documented pre-existing ones).
 Verified here against synthetic packages only; the run against the actual packages is BLOCKED until they are
 supplied (B-S11-11).
+
+## 15. Installation and rollback commands
+
+```
+# verify the zip SHA-256 against the hand-off, unzip, then (Linux/macOS | Windows cmd | PowerShell):
+python install.py <ATTa root> --check            install.bat C:\ATTa --check        .\install.ps1 C:\ATTa --check
+python install.py <ATTa root> --report /tmp/stage11-install.json
+git -C <ATTa root> add -A && git -C <ATTa root> commit -m "Stage 11: web search and deep research"
+ATTA_ENV=<env> python -m backend.database migrate
+# alternative for an unchanged 01A branch:  git fetch history/stage11.bundle HEAD:refs/heads/stage11 && git merge stage11
+```
+Rollback: failed installs roll back automatically (exit 5); a killed install: `python install.py <root>
+--rollback-interrupted`; installed but uncommitted: `git checkout -- $(cat MODIFIED_FILES.txt)` + delete
+`ADDED_FILES.txt` paths; committed: `git revert <commit>`; database: `DROP SCHEMA research CASCADE;` and
+`DELETE FROM public.atta_schema_migrations WHERE name = 'migration:0011_stage11_research.sql';` (migration role).
+
+## 16. Remaining external dependencies
+
+Live search provider (B-S11-01) · operator trust/numbering/permission activation (B-S11-02) · Stage 03 model
+(B-S11-03, B-S11-14) · Stage 02 credentials/API/approvals (B-S11-04, B-S11-05) · Stage 07 (B-S11-06) · Stage 15
+browser (B-S11-07) · PDF parser (B-S11-08) · network-namespace isolation (B-S11-09) · Stage 01B provider (B-S11-10) ·
+actual Stage 01B/04 packages (B-S11-11) · Windows execution (B-S11-12) · Stage 12 package (B-S11-13) · upgrade from a
+01B-migrated database (B-S11-15). Requirement-level status: STAGE_11_REQUIREMENT_MATRIX.md.
+

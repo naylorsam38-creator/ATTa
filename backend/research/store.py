@@ -87,9 +87,10 @@ class ResearchStore:
 
     def list_runs(self, limit: int = 50, after: str | None = None, tenant_id: str | None = None) -> list[dict]:
         with self.db.tx() as x:
+            # newest first (research history); the cursor is the last research_id of the previous page
             q = "SELECT research_id, mode, question, status, verification_status, created_at, updated_at FROM " \
-                "research.runs WHERE (%s::text IS NULL OR research_id > %s) AND (%s::text IS NULL OR tenant_id = %s) " \
-                "ORDER BY research_id LIMIT %s"
+                "research.runs WHERE (%s::text IS NULL OR research_id < %s) AND (%s::text IS NULL OR tenant_id = %s) " \
+                "ORDER BY research_id DESC LIMIT %s"
             return x.execute(q, (after, after, tenant_id, tenant_id, limit)).fetchall()
 
     def set_status(self, research_id: str, status: ResearchStatus, *, reason: str, error: dict | None = None,

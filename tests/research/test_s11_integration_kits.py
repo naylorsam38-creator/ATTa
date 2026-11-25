@@ -166,8 +166,17 @@ def test_wiring_end_to_end_with_simulated_stage02_grant(h, fx):
         assert client.get(f"/v1/research/{rid}/result").json()["research_status"] in (
             "COMPLETED", "COMPLETED_WITH_LIMITATIONS")
         assert client.post(f"/v1/research/{rid}/start", json={}).status_code == 403   # execution stays Stage 02
-        listing = client.get("/v1/research", params={"limit": 200}).json()["items"]
-        assert any(i["research_id"] == rid for i in listing)
+        first = client.get("/v1/research", params={"limit": 5}).json()["items"]
+        assert [i["research_id"] for i in first] == sorted((i["research_id"] for i in first), reverse=True)
+        assert first[0]["research_id"] >= rid                            # history: newest first (shared DB)
+        ids, cursor = [], None
+        for _ in range(200):                                             # cursor pagination reaches every run
+            page = client.get("/v1/research", params={"limit": 50, **({"cursor": cursor} if cursor else {})}).json()
+            ids += [i["research_id"] for i in page["items"]]
+            cursor = page["next_cursor"]
+            if not cursor:
+                break
+        assert rid in ids and len(ids) == len(set(ids)) and ids == sorted(ids, reverse=True)
 
 
 # ------------------------------------------------------------------------------------------------ Stage 02 registration
