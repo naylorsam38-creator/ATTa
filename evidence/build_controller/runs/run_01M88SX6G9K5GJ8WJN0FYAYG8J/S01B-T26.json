@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T26",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T26_offline_core_startup"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:34:40.489Z",
+  "finished_at": "2026-11-25T07:34:49.181Z",
+  "duration_s": 8.692,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 7.64s\n",
+  "stderr": "",
+  "output_sha256": "4696128434ffc40b2248c27432f76d832c15781d3acaf0c112236eeba2864c29"
+}

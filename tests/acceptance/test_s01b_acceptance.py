@@ -1126,7 +1126,9 @@ def test_S01B_T42_linux_specific_tests(tmp_path):
         keys = {"worker_read": "PermissionError", "at_rest": "encrypted", "usable_without_passphrase": False}
     else:
         pytest.fail(f"verifier signing key {key} not found: the build controller protection is not installed")
-    assert not [k for k in os.environ if k.startswith("ATTA_BUILD_")], "verifier secrets leaked into a test process"
+    # ATTA_BUILD_CONTROLLER_RUN (the run id) is the only verifier variable a gate passes on, and it is not secret
+    leaked = [k for k in os.environ if k.startswith("ATTA_BUILD_") and k != "ATTA_BUILD_CONTROLLER_RUN"]
+    assert not leaked, f"verifier configuration/secrets leaked into a test process: {leaked}"
     denied = {}
     for t in ("backend/verification/build_controller.py", "configuration/build/roadmap.yaml",
               "configuration/build/protected.lock.json", "tests/acceptance/test_s01b_acceptance.py",

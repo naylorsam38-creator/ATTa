@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T25",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T25_external_network_denial_detection"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:34:35.507Z",
+  "finished_at": "2026-11-25T07:34:40.486Z",
+  "duration_s": 4.979,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 4.02s\n",
+  "stderr": "",
+  "output_sha256": "fae79ad0fbf8a3072f15b85c59a8c926a7e729b0757650c55ce2bad555e97e5e"
+}

@@ -1,0 +1,11 @@
+{
+  "launchers": [
+    "install.sh",
+    "run.sh",
+    "healthcheck.sh",
+    "INSTALL.bat",
+    "RUN.bat",
+    "HEALTHCHECK.bat"
+  ],
+  "run_unactivated_exit": 20
+}

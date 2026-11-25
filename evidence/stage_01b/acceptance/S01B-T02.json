@@ -1,0 +1,26 @@
+{
+  "real_machine": {
+    "requested": "AUTO",
+    "selected": "LOCAL_CPU",
+    "compatible": true,
+    "reasons": [],
+    "resources": {
+      "worker_count": 2,
+      "parallel_tasks": 4,
+      "worker_memory_mb": 1024,
+      "model_context_tokens": 4096,
+      "max_concurrent_tools_per_task": 1,
+      "background_jobs": 1,
+      "controller_caps": {
+        "max_active_tasks_per_objective": 4,
+        "max_concurrent_tools_per_task": 1
+      }
+    }
+  },
+  "synthetic_cases": {
+    "no_gpu": "LOCAL_CPU",
+    "rtx_8gb": "LOCAL_NVIDIA",
+    "a100_80gb": "LOCAL_NVIDIA",
+    "h100_80gb": "H100"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "discovered": "test.text",
+  "launchers_unchanged": [
+    "HEALTHCHECK.bat",
+    "INSTALL.bat",
+    "RUN.bat",
+    "START.bat",
+    "healthcheck.sh",
+    "install.sh",
+    "run.sh",
+    "start.sh"
+  ]
+}

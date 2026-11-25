@@ -1,0 +1,14 @@
+{
+  "plan": {
+    "selected_profile": "LOCAL_CPU",
+    "actions": [
+      {
+        "action": "apply database migrations (migration role)",
+        "admin": false,
+        "network": false,
+        "offline_possible": true
+      }
+    ],
+    "plan_sha256": "2664a0429da866886bf84cc4c228b347b7d709aadd23df6ae9d7e5108b452f6d"
+  }
+}

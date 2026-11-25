@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T05",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T05_environment_manifest_persistence"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:32:28.821Z",
+  "finished_at": "2026-11-25T07:32:35.616Z",
+  "duration_s": 6.796,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 5.65s\n",
+  "stderr": "",
+  "output_sha256": "5260ae2e8a58e4435ad6a54bda2f4a626ad014178fc91fa85cd0df68abfebb60"
+}

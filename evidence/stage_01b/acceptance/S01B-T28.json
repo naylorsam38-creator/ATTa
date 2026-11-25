@@ -1,0 +1,8 @@
+{
+  "states_after_recovery": [
+    "DEGRADED",
+    "DEGRADED",
+    "HEALTHY"
+  ],
+  "confirmations_required": 3
+}

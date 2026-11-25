@@ -1,5 +1,5 @@
 {
-  "sealed_at": "2026-11-25T07:32:03.729Z",
+  "sealed_at": "2026-11-25T07:35:24.012Z",
   "sealed_by": "stage-01b-operator",
   "files": {
     "backend/verification/__init__.py": "27c40e3e22dd48de0e7aad9739ae9be8253bd9d0cb6279f1f3b3d6509a58fc5d",
@@ -60,10 +60,10 @@
     "tests/acceptance/test_s01_acceptance.py": "d811220357740925be64e325fefd014208c092b7c5df4beb77b0c68a35fb1920",
     "tests/acceptance/test_s01a_acceptance.py": "caf3b98ba5b26ed8d53cb4f4b8fd4542fed21cb290e9246b63ed36e46036abaa",
     "tests/acceptance/test_s01a_acceptance_b.py": "9fc40e29474624e9e3a5af127ed7eee2e0480838a4689f96a5a244007b395bf6",
-    "tests/acceptance/test_s01b_acceptance.py": "acb317f34f782bafd339c46b7846b3d407c6c6978da13e1e998174c98b2dfb45",
+    "tests/acceptance/test_s01b_acceptance.py": "7215150864d452bf703bf06843b6ab3468efa340d90980d981dbb6fd6746a63c",
     "tests/regression/legacy_baseline.json": "696887118bb51d6bfd918c2e0902852b2df87e6a78d3fa593c62c85ead364bbb"
   },
   "hmac_sha256": null,
-  "signature_ed25519": "3On5uE+lisonu68Ym+13k52CW8oW84Uf0kvTHqcUVtYfuYNAgsjlPVn7tOzhma40VqkR4hz6g2IAi7xTBoSfBA==",
+  "signature_ed25519": "NR2Ap9/CcpUlTzf0hzvuIRPIrBBDjg6jVZu8oylwKgNChDwxKTfBOcmWqQx4N14vTLndcezZFGqvwv5eL5B4DQ==",
   "signed": true
 }

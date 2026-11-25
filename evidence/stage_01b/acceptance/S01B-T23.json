@@ -1,0 +1,13 @@
+{
+  "workspace": "/tmp/pytest-of-root/pytest-262/test_S01B_T23_isolated_filesys0/qual/qual_01M88T15GR1P2SS7A4JY96G4Y5",
+  "isolation": {
+    "database": "disposable cluster on 127.0.0.1:49955",
+    "workspace": "/tmp/pytest-of-root/pytest-262/test_S01B_T23_isolated_filesys0/qual/qual_01M88T15GR1P2SS7A4JY96G4Y5",
+    "network": "host"
+  },
+  "counts": {
+    "PASS": 2,
+    "FAIL": 0,
+    "BLOCKED": 0
+  }
+}

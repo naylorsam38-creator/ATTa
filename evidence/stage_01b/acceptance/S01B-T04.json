@@ -1,0 +1,30 @@
+{
+  "reasons": [
+    "H100 profile requires an NVIDIA GPU: nvidia-smi not found",
+    "vLLM runtime not installed (required primary runtime for H100)"
+  ],
+  "installer_exit": 11,
+  "transitions": [
+    {
+      "at": "2026-11-25T07:32:23.883Z",
+      "run_id": "run_01M88SXDPBYY7MXTG32MWE76HY",
+      "from": "NEW",
+      "to": "DISCOVER",
+      "reason": "installation started",
+      "evidence": {}
+    },
+    {
+      "at": "2026-11-25T07:32:24.184Z",
+      "run_id": "run_01M88SXDPBYY7MXTG32MWE76HY",
+      "from": "DISCOVER",
+      "to": "BLOCKED",
+      "reason": "profile H100 incompatible with this machine",
+      "evidence": {
+        "reasons": [
+          "H100 profile requires an NVIDIA GPU: nvidia-smi not found",
+          "vLLM runtime not installed (required primary runtime for H100)"
+        ]
+      }
+    }
+  ]
+}

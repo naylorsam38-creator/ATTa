@@ -1,0 +1,58 @@
+{
+  "files": 149,
+  "coverage": {
+    "python_wheels": {
+      "backend-core.lock.txt": {
+        "packages": 48,
+        "sha256": "840213b3141621db087a6c0466331ee9bc230c625bede3d8f40fea1d311e77d0"
+      },
+      "backend-full.lock.txt": {
+        "packages": 106,
+        "sha256": "c8af200bc1794ef86766b7bcc829ad9f5c3ccf2a32f6abcbbaa988a8fad9c7e4"
+      },
+      "wheels": 106,
+      "interpreter_tags": "cp313-linux-x86_64"
+    },
+    "python_runtime": {
+      "status": "EXCLUDED",
+      "reason": "--no-python"
+    },
+    "node": {
+      "status": "EXCLUDED",
+      "reason": "--no-node"
+    },
+    "browsers": {
+      "status": "EXCLUDED",
+      "reason": "--no-browsers"
+    },
+    "system_packages": {
+      "status": "INCLUDED",
+      "manager": "apt",
+      "requested": [
+        "postgresql-16",
+        "postgresql-client-16",
+        "postgresql-16-pgvector",
+        "redis-server",
+        "git"
+      ],
+      "closure": 33,
+      "debs": 33,
+      "index": "system/debs/Packages"
+    },
+    "container_images": {
+      "status": "BLOCKED",
+      "reason": "no Docker daemon: images cannot be pulled, resolved to digests or saved",
+      "images": [
+        "pgvector/pgvector:0.8.1-pg16",
+        "redis:7.4-alpine",
+        "minio/minio:RELEASE.2025-09-07T16-13-09Z",
+        "temporalio/temporal:1.5.1",
+        "python:3.13-slim-bookworm"
+      ]
+    },
+    "models": {
+      "status": "EXCLUDED",
+      "reason": "models are referenced in place; include only on request"
+    }
+  }
+}

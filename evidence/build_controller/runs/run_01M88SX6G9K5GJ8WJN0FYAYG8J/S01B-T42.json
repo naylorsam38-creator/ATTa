@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T42",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T42_linux_specific_tests"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:34:57.317Z",
+  "finished_at": "2026-11-25T07:35:02.510Z",
+  "duration_s": 5.193,
+  "exit_code": 1,
+  "expected_exit_code": 0,
+  "passed": false,
+  "timed_out": false,
+  "stdout": "F                                                                        [100%]\n=================================== FAILURES ===================================\n______________________ test_S01B_T42_linux_specific_tests ______________________\n\ntmp_path = PosixPath('/tmp/pytest-of-root/pytest-268/test_S01B_T42_linux_specific_t0')\n\n    @pytest.mark.skipif(not LINUX, reason=\"Linux-specific\")\n    def test_S01B_T42_linux_specific_tests(tmp_path):\n        caps = discovery.isolation_capabilities()\n        worker = None\n        import pwd\n        for u in (\"atta-builder\", \"nobody\"):\n            try:\n                pwd.getpwnam(u)\n                worker = u\n                break\n            except KeyError:\n                continue\n        can_isolate = os.geteuid() == 0 and caps.get(\"network_namespace\")\n        if not can_isolate:\n            pytest.fail(\"Linux isolation unavailable (needs privileges for network namespaces): record as BLOCKED\")\n        r, _ = _probe_run(\"s01b_probe\", tmp_path, 20.0, network=\"none\", worker_user=worker, memory_limit_mb=256,\n                          isolation_required=True)\n        assert r.status == \"ok\", (r.status, r.error, r.stderr_tail)\n        v = r.value\n        assert v[\"uid\"] == pwd.getpwnam(worker).pw_uid and v[\"uid\"] != 0\n        assert v[\"external_network\"] != \"connected\" and (\"Errno\" in v[\"external_network\"] or \"Error\" in v[\"external_network\"])\n        assert v[\"cuda_visible_devices\"] == \"\"\n        assert r.isolation.get(\"network\") == \"private empty namespace\", r.isolation\n        if caps.get(\"cgroup_v1_memory\") or caps.get(\"cgroup_v2\"):\n            assert \"atta\" in v[\"cgroup\"], v[\"cgroup\"]\n        r2, work = _probe_run(\"s01b_spawn\", tmp_path / \"spawn\", 3.0)\n        assert r2.status == \"timeout\" and not r2.survivors\n        pid = int((work / \"descendant.pid\").read_text())\n        time.sleep(0.5)\n        assert not _pid_alive(pid), \"detached descendant must be killed with the tree\"\n        # Independent verifier keys: unreadable by the worker account, encrypted at rest (a root test process reading the\n        # file gets ciphertext only), and no verifier secret is present in this test's environment.\n        key = Path(os.environ.get(\"ATTA_BUILD_SIGNING_KEY_FILE\", \"/etc/atta-verifier/build_signing_ed25519.pem\"))\n        keys = {}\n        if key.exists():\n            rd = subprocess.run([\"runuser\", \"-u\", worker, \"--\", PY, \"-I\", \"-c\", f\"open({str(key)!r},'rb').read()\"],\n                                capture_output=True, text=True, timeout=60)\n            assert rd.returncode != 0 and \"PermissionError\" in rd.stderr, rd.stderr\n            from cryptography.hazmat.primitives import serialization\n            raw = key.read_bytes()\n            assert b\"ENCRYPTED PRIVATE KEY\" in raw, \"verifier signing key must be encrypted at rest\"\n            with pytest.raises(TypeError):\n                serialization.load_pem_private_key(raw, password=None)\n            keys = {\"worker_read\": \"PermissionError\", \"at_rest\": \"encrypted\", \"usable_without_passphrase\": False}\n        else:\n            pytest.fail(f\"verifier signing key {key} not found: the build controller protection is not installed\")\n>       assert not [k for k in os.environ if k.startswith(\"ATTA_BUILD_\")], \"verifier secrets leaked into a test process\"\nE       AssertionError: verifier secrets leaked into a test process\nE       assert not ['ATTA_BUILD_CONTROLLER_RUN']\n\ntests/acceptance/test_s01b_acceptance.py:1129: AssertionError\n=========================== short test summary info ============================\nFAILED tests/acceptance/test_s01b_acceptance.py::test_S01B_T42_linux_specific_tests\n1 failed in 4.07s\n",
+  "stderr": "",
+  "output_sha256": "9a1149fc2a75e1be3e37d67e78753d6e22bca69a0ea3a82bda7c344267b8435a"
+}

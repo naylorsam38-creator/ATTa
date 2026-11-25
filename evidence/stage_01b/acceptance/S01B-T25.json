@@ -1,0 +1,22 @@
+{
+  "suite": {
+    "PASS": 2,
+    "FAIL": 0,
+    "BLOCKED": 0
+  },
+  "audit": [
+    {
+      "pid": 20947,
+      "argv0": "-c",
+      "kind": "dns",
+      "target": "1.1.1.1"
+    },
+    {
+      "pid": 20947,
+      "argv0": "-c",
+      "kind": "connect",
+      "target": "1.1.1.1:443"
+    }
+  ],
+  "inside": "DENIED 101"
+}

@@ -1,0 +1,17 @@
+{
+  "chain": [
+    1024,
+    333,
+    444,
+    555
+  ],
+  "provenance": [
+    "profile:LOCAL_CPU",
+    "local",
+    "local-environment",
+    "operator"
+  ],
+  "invalid": [
+    "workers.memory_limit_mb: Input should be greater than or equal to 128"
+  ]
+}

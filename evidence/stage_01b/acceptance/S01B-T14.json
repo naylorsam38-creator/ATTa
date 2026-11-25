@@ -1,0 +1,14 @@
+{
+  "files_checked": [
+    "discovered.yaml",
+    "effective_config.json",
+    "effective_config.txt",
+    "env_01M88SYFYBGQ9MJXW078F72W9R.json",
+    "environment.json",
+    "environment_manifest.json",
+    "install_state.json",
+    "install_transitions.jsonl",
+    "model_index.json"
+  ],
+  "leaks": []
+}

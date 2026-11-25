@@ -1,0 +1,43 @@
+{
+  "tiny-hf": {
+    "model_id": "tiny-hf",
+    "display_name": "tiny-hf",
+    "path": "/tmp/pytest-of-root/pytest-245/test_S01B_T07_model_discovery_0/models/hf/tiny-hf",
+    "format": "safetensors",
+    "size_bytes": 2048,
+    "fingerprint": "sha256-partial:5e32a44161f64bc06b38027a358fa0600fb7bbcabbb1d36d44c54d12b5c544cf",
+    "compatible_runtimes": [
+      "vllm"
+    ],
+    "estimated_memory_mb": 1024,
+    "context_length": 8192,
+    "architecture": "LlamaForCausalLM",
+    "status": "AVAILABLE",
+    "last_verified": "2026-11-25T07:32:38.171Z",
+    "mtime_ns": 0,
+    "removable": false,
+    "extra": {}
+  },
+  "tiny-q4": {
+    "model_id": "tiny-q4",
+    "display_name": "Tiny Test Llama",
+    "path": "/tmp/pytest-of-root/pytest-245/test_S01B_T07_model_discovery_0/models/llama/tiny-q4.gguf",
+    "format": "gguf",
+    "size_bytes": 4305,
+    "fingerprint": "sha256-partial:583d369ef98631e1b4f6f6568be69716035b0162bc65e015e4fe64b23b74f6ef",
+    "compatible_runtimes": [
+      "llamacpp",
+      "ollama"
+    ],
+    "estimated_memory_mb": 256,
+    "context_length": 4096,
+    "architecture": "llama",
+    "status": "AVAILABLE",
+    "last_verified": "2026-11-25T07:32:38.171Z",
+    "mtime_ns": 1795591958159273614,
+    "removable": false,
+    "extra": {
+      "gguf_version": 3
+    }
+  }
+}

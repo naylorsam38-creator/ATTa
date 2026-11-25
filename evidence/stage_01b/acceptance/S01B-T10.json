@@ -1,0 +1,10 @@
+{
+  "cli": {
+    "status": "MODEL_NOT_FOUND",
+    "model_id": "no-such-model-xyz",
+    "runtime": null,
+    "model_path": null,
+    "reason": "no model with this identifier in the discovered model locations; nothing will be downloaded"
+  },
+  "exit": 11
+}

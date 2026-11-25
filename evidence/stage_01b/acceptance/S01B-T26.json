@@ -1,0 +1,98 @@
+{
+  "external_reachable": [],
+  "start_exit": 0,
+  "start_tail": "il\": \"HTTP 200 from http://127.0.0.1:40847/v1/health/live\",\n        \"checked_at\": \"2026-11-25T07:34:46.314967Z\"\n      }\n    },\n    \"controller\": {\n      \"name\": \"controller\",\n      \"essential\": true,\n      \"mode\": \"external\",\n      \"status\": \"healthy\",\n      \"health_state\": \"HEALTHY\",\n      \"pid\": null,\n      \"restarts\": 0,\n      \"detail\": \"HTTP 200 from http://127.0.0.1:40847/v1/health/controller\",\n      \"health\": {\n        \"name\": \"controller\",\n        \"essential\": true,\n        \"status\": \"healthy\",\n        \"latency_ms\": 26.75,\n        \"detail\": \"HTTP 200 from http://127.0.0.1:40847/v1/health/controller\",\n        \"checked_at\": \"2026-11-25T07:34:46.344069Z\"\n      }\n    }\n  },\n  \"models\": [\n    {\n      \"name\": \"model:ollama-local\",\n      \"essential\": false,\n      \"status\": \"unhealthy\",\n      \"latency_ms\": 7.19,\n      \"detail\": \"ConnectError: [Errno 111] Connection refused\",\n      \"checked_at\": \"2026-11-25T07:34:44.673711Z\"\n    },\n    {\n      \"name\": \"model:llamacpp-local\",\n      \"essential\": false,\n      \"status\": \"unhealthy\",\n      \"latency_ms\": 6.05,\n      \"detail\": \"ConnectError: [Errno 111] Connection refused\",\n      \"checked_at\": \"2026-11-25T07:34:44.679806Z\"\n    }\n  ],\n  \"capabilities\": [\n    {\n      \"id\": \"ops.system_status\",\n      \"version\": \"1.0.0\",\n      \"state\": \"available\",\n      \"executable\": true,\n      \"source\": \"/home/user/ATTa/capabilities/ops_system_status/capability.yaml\",\n      \"requirement\": \"CAP-40\",\n      \"risk\": \"low\",\n      \"problems\": []\n    }\n  ]\n}\n",
+  "live_status": 200,
+  "live": {
+    "status": "healthy",
+    "service": "atta-api",
+    "version": "0.1.0",
+    "checked_at": "2026-11-25T07:34:47.055503Z"
+  },
+  "ready_status": 200,
+  "ready": {
+    "ready": true,
+    "status": "degraded",
+    "environment": "test",
+    "dependencies": [
+      {
+        "name": "postgres",
+        "essential": true,
+        "status": "healthy",
+        "latency_ms": 17.27,
+        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0, schema current (3 migrations), runtime role 'atta_app' least-privileged",
+        "checked_at": "2026-11-25T07:34:47.102084Z"
+      },
+      {
+        "name": "redis",
+        "essential": true,
+        "status": "healthy",
+        "latency_ms": 4.05,
+        "detail": "Redis 7.0.15 at 127.0.0.1:33869",
+        "checked_at": "2026-11-25T07:34:47.089762Z"
+      },
+      {
+        "name": "object_storage",
+        "essential": false,
+        "status": "unhealthy",
+        "latency_ms": 0.02,
+        "detail": "RuntimeError: object storage credentials not configured (ATTA_S3_ACCESS_KEY_ID / ATTA_S3_SECRET_ACCESS_KEY)",
+        "checked_at": "2026-11-25T07:34:47.086989Z"
+      },
+      {
+        "name": "temporal",
+        "essential": false,
+        "status": "unhealthy",
+        "latency_ms": 0.62,
+        "detail": "ConnectionRefusedError: [Errno 111] Connection refused",
+        "checked_at": "2026-11-25T07:34:47.089247Z"
+      }
+    ],
+    "capabilities": {
+      "available": 1
+    },
+    "reasons": [],
+    "checked_at": "2026-11-25T07:34:47.102745Z"
+  },
+  "controller_status": 200,
+  "controller": {
+    "ready": true,
+    "components": {
+      "controller": {
+        "ok": true,
+        "detail": "svc_01M88T1RMW7QS103616J25KMKZ"
+      },
+      "capability_registry": {
+        "ok": true,
+        "detail": "1 executable"
+      },
+      "contract_storage": {
+        "ok": true,
+        "detail": "control schema reachable"
+      },
+      "checkpoint_storage": {
+        "ok": true,
+        "detail": "control.checkpoints reachable"
+      },
+      "tool_catalogue": {
+        "ok": true,
+        "detail": "1 numbered tools, 0 unnumbered"
+      },
+      "verification_service": {
+        "ok": true,
+        "detail": "independent-verifier/1"
+      },
+      "execution_worker": {
+        "ok": true,
+        "detail": "supervised process runtime"
+      },
+      "security_enforcement": {
+        "ok": true,
+        "detail": "anonymous tool.execute is denied"
+      }
+    },
+    "active_tasks": 0,
+    "blocked_tasks": 0
+  },
+  "stop_exit": 0
+}

@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T14",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T14_secret_exclusion_from_generated_reports"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:32:57.121Z",
+  "finished_at": "2026-11-25T07:32:59.517Z",
+  "duration_s": 2.396,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 1.25s\n",
+  "stderr": "",
+  "output_sha256": "7fcb450075fe0423992569f6a8084a81cf6ebc0a0f7ebf6b259ab005c479c011"
+}
