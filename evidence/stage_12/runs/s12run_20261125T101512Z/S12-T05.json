@@ -1,0 +1,24 @@
+{
+  "id": "S12-T05",
+  "description": "test_S12_T05_duplicate_integration_ids_rejected",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_manifest.py::test_S12_T05_duplicate_integration_ids_rejected"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:20:13.449Z",
+  "finished": "2026-11-25T10:20:17.799Z",
+  "duration_s": 4.35,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "d05f6fcad6b148bb8b073440065adcc3eea6be9bdd2b48e09030a3e3f8a90a25",
+  "output_tail": ".                                                                        [100%]\n1 passed in 3.97s"
+}

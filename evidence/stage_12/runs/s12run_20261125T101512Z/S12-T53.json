@@ -1,0 +1,24 @@
+{
+  "id": "S12-T53",
+  "description": "test_S12_T53_skill_upgrade_never_changes_an_active_tasks_pinned_version",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_skills.py::test_S12_T53_skill_upgrade_never_changes_an_active_tasks_pinned_version"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:22:43.383Z",
+  "finished": "2026-11-25T10:22:52.022Z",
+  "duration_s": 8.64,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "79ca4173af47ce27fe9fe51db24d8a20058111b072cd4f64ced9e89b628b0a85",
+  "output_tail": ".                                                                        [100%]\n1 passed in 8.22s"
+}

@@ -4,7 +4,7 @@
 |---|---|---|---|
 | **S01** | Architecture and build infrastructure | **GATE PASSED** 2026-11-25 (run `run_01M88CEBEHP90WASN470WNT557`, 9/9 tasks, 25/25 tests); verified checkpoint `checkpoint-S01-70WNT557` at `fa406b3` | STAGE_01_VERIFICATION.md, `evidence/build_controller/` |
 | **S01A** | Deterministic LLM control, tool allocation and drift prevention | **GATE PASSED** 2026-11-25 (run `run_01M88H4W3NJ3NSPWSHPV29RR48`, 10/10 tasks incl. Checkpoints A and B, 61/61 test entries; an earlier run FAILED and was fixed — see report); verified checkpoint `checkpoint-S01A-PV29RR48` at `5662dd2` | `evidence/build_controller/`, `evidence/stage_01a/` |
-| **S12 (sidecar)** | Connectors, MCP, skills and plugins (parallel worker 4 numbering; see DECISIONS D-S12-11) | **IMPLEMENTED IN SIDECAR, VERIFIED IN SIDECAR, NOT YET INTEGRATED** — run `s12run_20261125T070151Z` at `e137a92`: 38/38 Stage 12 tests; Stage 01/01A/legacy regressions identical to baseline | STAGE_12_VERIFICATION.md, `evidence/stage_12/` |
+| **S12 (sidecar)** | Connectors, MCP, skills and plugins (parallel worker 4 numbering; see DECISIONS D-S12-11) | **IMPLEMENTED IN SIDECAR, VERIFIED IN SIDECAR, NOT YET INTEGRATED** — final run `s12run_20261125T101512Z` at `fe3c032`: 53 PASS + 1 BLOCKED (01B-only, passed in the 01B trial) of 54 Stage 12 tests; Stage 01/01A/legacy regressions identical to baseline; no regressions on Worker A's Stage 01B (416ca30) or Worker 3's Stage 11 (bb1a60b) trees | STAGE_12_VERIFICATION.md, `evidence/stage_12/` |
 | S02 | Authentication, tenant isolation, permissions, credential protection, human approvals → controller | NOT STARTED — not to be started in this stage | — |
 | S03 – S20 | revised roadmap: `configuration/build/roadmap.yaml` | NOT STARTED | — |
 

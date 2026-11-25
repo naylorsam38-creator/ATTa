@@ -1,0 +1,24 @@
+{
+  "id": "S12-T71",
+  "description": "test_S12_T71_isolation_adapter_reports_the_real_runtime_honestly",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_compat.py::test_S12_T71_isolation_adapter_reports_the_real_runtime_honestly"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:15:32.790Z",
+  "finished": "2026-11-25T10:15:33.536Z",
+  "duration_s": 0.75,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "3be62f393f5921607a873beb897436b1f6af7bf8e959115d728ee0ecc5bd3a34",
+  "output_tail": ".                                                                        [100%]\n1 passed in 0.35s"
+}

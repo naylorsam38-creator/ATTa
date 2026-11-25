@@ -1,0 +1,24 @@
+{
+  "id": "S12-T80",
+  "description": "test_S12_T80_dry_run_changes_nothing_and_reports_the_plan",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_installer.py::test_S12_T80_dry_run_changes_nothing_and_reports_the_plan"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:17:01.321Z",
+  "finished": "2026-11-25T10:17:03.136Z",
+  "duration_s": 1.82,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "3275522a65c60210c9aee3615ac7c007be3d0dd63b9902e872ac3dd10094cc3d",
+  "output_tail": ".                                                                        [100%]\n1 passed in 1.41s"
+}

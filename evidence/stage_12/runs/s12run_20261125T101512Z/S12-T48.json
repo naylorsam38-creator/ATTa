@@ -1,0 +1,24 @@
+{
+  "id": "S12-T48",
+  "description": "test_S12_T48_mcp_stdio_server_confined_by_stage01b_network_namespace",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_mcp_bypass.py::test_S12_T48_mcp_stdio_server_confined_by_stage01b_network_namespace"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:22:13.527Z",
+  "finished": "2026-11-25T10:22:14.267Z",
+  "duration_s": 0.74,
+  "counts": {
+    "skipped": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "974684aa703b68a74ce69594ea9068be4a3284632a43d45698e6916162ed4c13",
+  "output_tail": "s                                                                        [100%]\n1 skipped in 0.32s"
+}

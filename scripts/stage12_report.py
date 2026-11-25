@@ -44,9 +44,13 @@ def main():
          f"for backend/database/tests/configuration: {not run['working_tree_dirty']}",
          f"* Baseline: Stage 01 + 01A at `{BASE}`", f"* Python {run['python']}, PostgreSQL 16 + pgvector, Chromium "
          "(Playwright) for the legacy browser tests", "",
-         f"## Stage 12 tests: {sum(r['result'] == 'PASS' for r in s12)}/{len(s12)} PASS" + ("" if ok12 else " — FAILURES"),
+         f"## Stage 12 tests: {sum(r['result'] == 'PASS' and set(r['counts']) != {'skipped'} for r in s12)} PASS, "
+         f"{sum(set(r['counts']) == {'skipped'} for r in s12)} BLOCKED, "
+         f"{sum(r['result'] != 'PASS' for r in s12)} FAIL (of {len(s12)})",
          "", "| Test | Subject | Result | Exit | Started (UTC) | Duration s | Evidence |", "|---|---|---|---|---|---|---|"]
     for r in s12:
+        if r["result"] == "PASS" and set(r.get("counts", {})) == {"skipped"}:
+            r = {**r, "result": "BLOCKED (skipped here; needs Stage 01B — PASSED in the 01B trial tree)"}
         L.append(f"| {r['id']} | {TITLES.get(r['id'], '')} | **{r['result']}** | {r['exit_code']} | {r['started']} | "
                  f"{r['duration_s']} | `evidence/stage_12/runs/{run['run']}/{r['id']}.json`, "
                  f"`evidence/stage_12/acceptance/{r['id']}.json` |")
@@ -83,6 +87,22 @@ def main():
            ("independent verification", "T10 (verifier report), T30 (atta-integration-verify/1), T54"),
            ("Stage 01 / Stage 01A / existing ATTa regression", "REG-*")]
     L += [f"| {a} | {b} |" for a, b in cov]
+    tdir = ROOT / "evidence/stage_12/trials"
+    trials = [{**json.loads((d / "summary.json").read_text()), "trial": d.name} for d in sorted(tdir.iterdir())
+              if (d / "summary.json").is_file()] if tdir.is_dir() else []
+    if trials:
+        L += ["", "## Trial installs on the other workers' real trees (installer + pre/post suites)", "",
+              "| Trial | Tree | Sidecar | Suite | Pre | Post | New failures |", "|---|---|---|---|---|---|---|"]
+        for t in trials:
+            pre, post = t["phases"].get("pre", {}).get("suites", {}), t["phases"].get("post", {}).get("suites", {})
+            for name in post:
+                reg = (t.get("regressions") or {}).get(name)
+                L.append(f"| {t['trial']} | `{t['phases']['post']['tree_commit'][:7]}` | `{t['sidecar_commit'][:7]}` | "
+                         f"{name} | {pre.get(name, {}).get('counts', '—')} | {post[name]['counts']} | "
+                         f"{'—' if reg is None else (', '.join(x.split('::')[-1] for x in reg) or 'none')} |")
+        L += ["", "`stage01b-run1-regression-found` is the first 01B trial: it found S01B-T18/T23/T24 failing because "
+              "01B's dependency-import coverage parsed the Stage 12 bridge files; fixed by making them templates "
+              "(`*.py.tmpl`); the later `stage01b` trial (code `86ffda7`) shows no regression."]
     L += ["", "## BLOCKED dependencies (honest, not faked)", "",
           "* OS isolation (Stage 01B) — RESTRICTED/ISOLATED_SANDBOX integrations report BLOCKED (T14; test double only "
           "proves the interface).",

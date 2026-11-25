@@ -1,0 +1,24 @@
+{
+  "id": "S12-T73",
+  "description": "test_S12_T73_attach_uses_the_controllers_own_runtime_for_isolation",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_compat.py::test_S12_T73_attach_uses_the_controllers_own_runtime_for_isolation"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:15:34.767Z",
+  "finished": "2026-11-25T10:15:39.098Z",
+  "duration_s": 4.33,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "d75f24109b330b5925db942b8956d9758c13d5f5102920d8a97687fb7df45420",
+  "output_tail": ".                                                                        [100%]\n1 passed in 3.86s"
+}

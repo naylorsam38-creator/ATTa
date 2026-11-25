@@ -1,7 +1,7 @@
 {
   "integration_id": "test.text_plugin",
   "problems": [
-    "capability id integration.test.text_plugin already registered from /tmp/pytest-of-root/pytest-65/test_S12_T20_capability_id_col0/h-475244/capabilities/collide/capability.yaml (collision)"
+    "capability id integration.test.text_plugin already registered from /tmp/pytest-of-root/pytest-262/test_S12_T20_capability_id_col0/h-77a107/capabilities/collide/capability.yaml (collision)"
   ],
   "rolled_back": false,
   "status": "FAILED",

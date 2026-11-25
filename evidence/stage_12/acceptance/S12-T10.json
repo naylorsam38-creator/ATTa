@@ -1,5 +1,5 @@
 {
-  "registry_source": "/tmp/pytest-of-root/pytest-55/test_S12_T10_install_transacti0/h-c9393f/integrations/packages/integration.test.notes_connector/capability.yaml",
+  "registry_source": "/tmp/pytest-of-root/pytest-252/test_S12_T10_install_transacti0/h-9c00d1/integrations/packages/integration.test.notes_connector/capability.yaml",
   "result": {
     "capability_id": "integration.test.notes_connector",
     "integration_id": "test.notes_connector",

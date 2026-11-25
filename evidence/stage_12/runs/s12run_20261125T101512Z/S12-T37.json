@@ -1,0 +1,24 @@
+{
+  "id": "S12-T37",
+  "description": "test_S12_T37_dynamic_health_and_audit_records",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_execution.py::test_S12_T37_dynamic_health_and_audit_records"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:16:50.755Z",
+  "finished": "2026-11-25T10:17:01.320Z",
+  "duration_s": 10.56,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "10a3b76ea0f133b5b8fe9ad096f8912f94e6b7898317154e8d9a02fa774a89cc",
+  "output_tail": ".                                                                        [100%]\n1 passed in 10.10s"
+}

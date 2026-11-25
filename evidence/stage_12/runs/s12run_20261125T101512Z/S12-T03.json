@@ -1,0 +1,24 @@
+{
+  "id": "S12-T03",
+  "description": "test_S12_T03_semantic_rules",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_manifest.py::test_S12_T03_semantic_rules"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:20:06.447Z",
+  "finished": "2026-11-25T10:20:07.511Z",
+  "duration_s": 1.06,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "0ee5888eac5501909c7d7da392d69c44baa7c918e85045cdb4f2eb4f722f4c68",
+  "output_tail": ".                                                                        [100%]\n1 passed in 0.70s"
+}

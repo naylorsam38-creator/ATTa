@@ -1,0 +1,24 @@
+{
+  "id": "REG-S01A-A",
+  "description": "Stage 01A acceptance (packages 01-04, checkpoint A)",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:23:04.566Z",
+  "finished": "2026-11-25T10:24:31.004Z",
+  "duration_s": 86.44,
+  "counts": {
+    "passed": 27
+  },
+  "failed_tests": [],
+  "output_sha256": "2d493d3fa37a40d8f548dddc199c6117a384a9e4955d7abc7dcf502eb91fc379",
+  "output_tail": "...........................                                              [100%]\n27 passed in 86.00s (0:01:26)"
+}

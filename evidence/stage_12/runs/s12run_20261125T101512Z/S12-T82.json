@@ -1,0 +1,24 @@
+{
+  "id": "S12-T82",
+  "description": "test_S12_T82_other_workers_additions_are_preserved",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_installer.py::test_S12_T82_other_workers_additions_are_preserved"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:17:05.835Z",
+  "finished": "2026-11-25T10:17:08.032Z",
+  "duration_s": 2.2,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "129d6bf5db5a76730f76f2745a6a72aa2915246d2366bdcaa01c99a0d9b8cc1b",
+  "output_tail": ".                                                                        [100%]\n1 passed in 1.84s"
+}

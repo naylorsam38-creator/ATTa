@@ -1,0 +1,24 @@
+{
+  "id": "S12-T81",
+  "description": "test_S12_T81_install_repeat_uninstall_reinstall",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_installer.py::test_S12_T81_install_repeat_uninstall_reinstall"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:17:03.136Z",
+  "finished": "2026-11-25T10:17:05.835Z",
+  "duration_s": 2.7,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "6b19a9156f4a5a0e26dda1aa3fa761d666fd6f947b4a5f844e57268607f0b44a",
+  "output_tail": ".                                                                        [100%]\n1 passed in 2.32s"
+}

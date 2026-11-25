@@ -1,0 +1,24 @@
+{
+  "id": "S12-T14",
+  "description": "test_S12_T14_trust_classification",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_lifecycle.py::test_S12_T14_trust_classification"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:18:23.854Z",
+  "finished": "2026-11-25T10:18:42.003Z",
+  "duration_s": 18.15,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "25441ef238b9a3058de7ffd01073f6211da670f2d112550e27108ae40c44dfbe",
+  "output_tail": ".                                                                        [100%]\n1 passed in 17.65s"
+}

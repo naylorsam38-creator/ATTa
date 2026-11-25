@@ -1,0 +1,24 @@
+{
+  "id": "S12-T20",
+  "description": "test_S12_T20_capability_id_collision_and_dependency_checks",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_lifecycle.py::test_S12_T20_capability_id_collision_and_dependency_checks"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:19:57.796Z",
+  "finished": "2026-11-25T10:20:04.805Z",
+  "duration_s": 7.01,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "27d21c00fbb3397fce3ec813fbf30e34734624d49e35f33fba7b2d31d357a71f",
+  "output_tail": ".                                                                        [100%]\n1 passed in 6.45s"
+}

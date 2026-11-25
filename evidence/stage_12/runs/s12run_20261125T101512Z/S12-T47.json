@@ -1,0 +1,24 @@
+{
+  "id": "S12-T47",
+  "description": "test_S12_T47_mcp_credentials_and_network_restrictions",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_mcp_bypass.py::test_S12_T47_mcp_credentials_and_network_restrictions"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:21:58.970Z",
+  "finished": "2026-11-25T10:22:13.527Z",
+  "duration_s": 14.56,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "ad8ed4e71a7ccc541b75f28c3e17cb67d7e9895f2aa828d047607100320fe413",
+  "output_tail": ".                                                                        [100%]\n1 passed in 14.14s"
+}

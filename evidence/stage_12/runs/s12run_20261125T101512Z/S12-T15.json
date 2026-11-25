@@ -1,0 +1,24 @@
+{
+  "id": "S12-T15",
+  "description": "test_S12_T15_upgrade_detects_permission_expansion_and_requires_a_new_signature",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_lifecycle.py::test_S12_T15_upgrade_detects_permission_expansion_and_requires_a_new_signature"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:18:42.004Z",
+  "finished": "2026-11-25T10:18:55.024Z",
+  "duration_s": 13.02,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "e2455ff6cfd350a8d864f1ab0948f7cd145055563bc2c25dcc7c62123da63850",
+  "output_tail": ".                                                                        [100%]\n1 passed in 12.54s"
+}

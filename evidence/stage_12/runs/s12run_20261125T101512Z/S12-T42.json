@@ -1,0 +1,24 @@
+{
+  "id": "S12-T42",
+  "description": "test_S12_T42_mcp_host_client_timeout_cancellation_and_server_requests",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_mcp.py::test_S12_T42_mcp_host_client_timeout_cancellation_and_server_requests"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:20:48.946Z",
+  "finished": "2026-11-25T10:20:53.001Z",
+  "duration_s": 4.05,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "d1fbddf0ade714ed8e49058e2238859f1158e63a9a94ecad8ebf449efc6a77c7",
+  "output_tail": ".                                                                        [100%]\n1 passed in 3.58s"
+}

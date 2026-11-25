@@ -1,0 +1,24 @@
+{
+  "id": "S12-T84",
+  "description": "test_S12_T84_migration_numbering_conflicts",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_installer.py::test_S12_T84_migration_numbering_conflicts"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:17:09.947Z",
+  "finished": "2026-11-25T10:17:12.518Z",
+  "duration_s": 2.57,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "d26d9086271b3c01fd8c7d73af01431a8319e8474b3741d8881689e73c03c3f8",
+  "output_tail": ".                                                                        [100%]\n1 passed in 2.18s"
+}

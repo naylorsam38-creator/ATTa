@@ -1,0 +1,24 @@
+{
+  "id": "S12-T40",
+  "description": "test_S12_T40_mcp_negotiation_and_discovery",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_mcp.py::test_S12_T40_mcp_negotiation_and_discovery"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:20:18.837Z",
+  "finished": "2026-11-25T10:20:29.182Z",
+  "duration_s": 10.34,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "3acf91844739f93814e44c780cfe849ef0313b8ebe1ca9475730c27efbeb93fd",
+  "output_tail": ".                                                                        [100%]\n1 passed in 9.87s"
+}

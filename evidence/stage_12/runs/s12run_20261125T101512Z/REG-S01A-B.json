@@ -1,0 +1,27 @@
+{
+  "id": "REG-S01A-B",
+  "description": "Stage 01A acceptance B (packages 05-08, checkpoint B; T48 re-runs Stage 01, T49 legacy ATTa)",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py"
+  ],
+  "exit_code": 1,
+  "result": "FAIL",
+  "started": "2026-11-25T10:24:31.004Z",
+  "finished": "2026-11-25T10:29:23.322Z",
+  "duration_s": 292.32,
+  "counts": {
+    "failed": 1,
+    "passed": 25
+  },
+  "failed_tests": [
+    "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T51_worker_cannot_alter_protected_verification_criteria"
+  ],
+  "output_sha256": "f0c9fb1fb1c5e3185017610cf5017469dd544a999afc354da683cd03b272bc50",
+  "output_tail": ".......................F..                                               [100%]\n=================================== FAILURES ===================================\n______ test_S01A_T51_worker_cannot_alter_protected_verification_criteria _______\n\n    def test_S01A_T51_worker_cannot_alter_protected_verification_criteria():\n        from backend.verification.build_controller import BuildController\n        from backend.verification.protection import protection_problems\n        bc = BuildController(ROOT)\n        problems = protection_problems(bc)\n>       assert problems == [], \"OS protection is not in place: run scripts/protect_verifier.sh\\n\" + \"\\n\".join(problems)\nE       AssertionError: OS protection is not in place: run scripts/protect_verifier.sh\nE         worker account 'atta-builder' does not exist: run scripts/protect_verifier.sh\nE       assert ['worker acco..._verifier.sh'] == []\nE         \nE         Left contains one more item: \"worker account 'atta-builder' does not exist: run scripts/protect_verifier.sh\"\nE         Use -v to get more diff\n\ntests/acceptance/test_s01a_acceptance_b.py:641: AssertionError\n=============================== warnings summary ===============================\ntests/acceptance/test_s01a_acceptance_b.py::test_S01A_T31_no_direct_tool_execution_outside_controller\n  /home/user/ATTa/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nFAILED tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T51_worker_cannot_alter_protected_verification_criteria\n1 failed, 25 passed, 1 warning in 291.70s (0:04:51)"
+}

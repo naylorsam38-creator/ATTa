@@ -1,0 +1,24 @@
+{
+  "id": "S12-T19",
+  "description": "test_S12_T19_no_self_grant_no_self_add_no_risk_or_budget_self_change",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_lifecycle.py::test_S12_T19_no_self_grant_no_self_add_no_risk_or_budget_self_change"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:19:43.112Z",
+  "finished": "2026-11-25T10:19:57.796Z",
+  "duration_s": 14.68,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "1a01d3efb02754a9adeadfb44136a7deb92c46ea17f10c9e43cca29ea30f7eb4",
+  "output_tail": ".                                                                        [100%]\n1 passed in 14.18s"
+}

@@ -578,7 +578,794 @@
           "output_sha256": "6d1dada4db8e8d4ae5bc97cb990b5223137718546a7c8861658283e0252c1c13"
         }
       ]
+    },
+    "s12run_20261125T101512Z": {
+      "run": "s12run_20261125T101512Z",
+      "code_under_test": "fe3c0321cb1825a903e000deda7dbb84f59f7201",
+      "working_tree_dirty": false,
+      "recorded": "2026-11-25T10:33:27.038Z",
+      "python": "3.13.18",
+      "results": [
+        {
+          "id": "S12-T60",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:15:12.674Z",
+          "finished": "2026-11-25T10:15:21.444Z",
+          "duration_s": 8.77,
+          "output_sha256": "26ec230f01af50c6fc4300824fdfd10405ed2256bce0ff998a4fea0280868661"
+        },
+        {
+          "id": "S12-T61",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:15:21.445Z",
+          "finished": "2026-11-25T10:15:32.094Z",
+          "duration_s": 10.65,
+          "output_sha256": "295f3823a6d0dd809945d8354609a1dbb2d77c29049bb589cc6c47ac5cf08d54"
+        },
+        {
+          "id": "S12-T70",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:15:32.094Z",
+          "finished": "2026-11-25T10:15:32.789Z",
+          "duration_s": 0.7,
+          "output_sha256": "fc4efa05ec8ff7ed11c8f5fb2578bb82b5de5a8d34ed02c3e116981f5db95c2e"
+        },
+        {
+          "id": "S12-T71",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:15:32.790Z",
+          "finished": "2026-11-25T10:15:33.536Z",
+          "duration_s": 0.75,
+          "output_sha256": "3be62f393f5921607a873beb897436b1f6af7bf8e959115d728ee0ecc5bd3a34"
+        },
+        {
+          "id": "S12-T72",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:15:33.536Z",
+          "finished": "2026-11-25T10:15:34.767Z",
+          "duration_s": 1.23,
+          "output_sha256": "b7b3aa92344a38bedb2ba74f765049f69319b8af87f14816cc3a4df38eeb870a"
+        },
+        {
+          "id": "S12-T73",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:15:34.767Z",
+          "finished": "2026-11-25T10:15:39.098Z",
+          "duration_s": 4.33,
+          "output_sha256": "d75f24109b330b5925db942b8956d9758c13d5f5102920d8a97687fb7df45420"
+        },
+        {
+          "id": "S12-T30",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:15:39.099Z",
+          "finished": "2026-11-25T10:15:48.626Z",
+          "duration_s": 9.53,
+          "output_sha256": "b174aaa54bed6ee2f39a55fbb11f26bcd047483cb815d4c8f4fe66f8ad12149e"
+        },
+        {
+          "id": "S12-T31",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:15:48.627Z",
+          "finished": "2026-11-25T10:16:02.467Z",
+          "duration_s": 13.84,
+          "output_sha256": "d43977d92875d99c82d88477f74f5fa6d73f314b66fe181b3487c5d755ef0a37"
+        },
+        {
+          "id": "S12-T32",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:16:02.467Z",
+          "finished": "2026-11-25T10:16:11.591Z",
+          "duration_s": 9.12,
+          "output_sha256": "eccf82b11741c2124bb3462d149310368086bfa77dbe280a4ad22b5c3bcf5fb4"
+        },
+        {
+          "id": "S12-T33",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:16:11.591Z",
+          "finished": "2026-11-25T10:16:20.914Z",
+          "duration_s": 9.32,
+          "output_sha256": "6c17f41c5dc01d13b1e04d8267ea28263ac641b65e56c13f68db70171ee33b9b"
+        },
+        {
+          "id": "S12-T34",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:16:20.914Z",
+          "finished": "2026-11-25T10:16:30.740Z",
+          "duration_s": 9.83,
+          "output_sha256": "d44121ea723d444124d35ef144ba64060384509c8d6d1bb83b30d1c61d75b7da"
+        },
+        {
+          "id": "S12-T35",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:16:30.741Z",
+          "finished": "2026-11-25T10:16:43.198Z",
+          "duration_s": 12.46,
+          "output_sha256": "040e1f87d9abab9dc5b7cd5046490b5c07c85f795e4b20b0ae76e7f6690aed14"
+        },
+        {
+          "id": "S12-T36",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:16:43.198Z",
+          "finished": "2026-11-25T10:16:50.755Z",
+          "duration_s": 7.56,
+          "output_sha256": "f5c08af86a8af5faf56e4f8b5b0be93549079c9283f9cf7c8bd4b0789322e259"
+        },
+        {
+          "id": "S12-T37",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:16:50.755Z",
+          "finished": "2026-11-25T10:17:01.320Z",
+          "duration_s": 10.56,
+          "output_sha256": "10a3b76ea0f133b5b8fe9ad096f8912f94e6b7898317154e8d9a02fa774a89cc"
+        },
+        {
+          "id": "S12-T80",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:17:01.321Z",
+          "finished": "2026-11-25T10:17:03.136Z",
+          "duration_s": 1.82,
+          "output_sha256": "3275522a65c60210c9aee3615ac7c007be3d0dd63b9902e872ac3dd10094cc3d"
+        },
+        {
+          "id": "S12-T81",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:17:03.136Z",
+          "finished": "2026-11-25T10:17:05.835Z",
+          "duration_s": 2.7,
+          "output_sha256": "6b19a9156f4a5a0e26dda1aa3fa761d666fd6f947b4a5f844e57268607f0b44a"
+        },
+        {
+          "id": "S12-T82",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:17:05.835Z",
+          "finished": "2026-11-25T10:17:08.032Z",
+          "duration_s": 2.2,
+          "output_sha256": "129d6bf5db5a76730f76f2745a6a72aa2915246d2366bdcaa01c99a0d9b8cc1b"
+        },
+        {
+          "id": "S12-T83",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:17:08.033Z",
+          "finished": "2026-11-25T10:17:09.946Z",
+          "duration_s": 1.91,
+          "output_sha256": "a447b0ef6625e5f28651aff634c1379f233d8e6c96a9490bcd361bc624dc0b5f"
+        },
+        {
+          "id": "S12-T84",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:17:09.947Z",
+          "finished": "2026-11-25T10:17:12.518Z",
+          "duration_s": 2.57,
+          "output_sha256": "d26d9086271b3c01fd8c7d73af01431a8319e8474b3741d8881689e73c03c3f8"
+        },
+        {
+          "id": "S12-T85",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:17:12.519Z",
+          "finished": "2026-11-25T10:17:16.531Z",
+          "duration_s": 4.01,
+          "output_sha256": "e5365f2f0f1330c30053e4a02885e383d95892b54264212d7b4f59c2f8860eb4"
+        },
+        {
+          "id": "S12-T86",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:17:16.531Z",
+          "finished": "2026-11-25T10:17:18.958Z",
+          "duration_s": 2.43,
+          "output_sha256": "3a0934a0d39527281353ac978dced94348902349f24910579c52056fc7cb3187"
+        },
+        {
+          "id": "S12-T87",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:17:18.958Z",
+          "finished": "2026-11-25T10:17:21.446Z",
+          "duration_s": 2.49,
+          "output_sha256": "a4701b2a9bc0a139d4429a56263a85a23a9889f74e615adefc4c2d4ac75697bc"
+        },
+        {
+          "id": "S12-T88",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:17:21.447Z",
+          "finished": "2026-11-25T10:17:24.676Z",
+          "duration_s": 3.23,
+          "output_sha256": "fd18abbf371befb9aaa72bf10b1d53948ccb3264b17fa28c7af3a906a7c6aa06"
+        },
+        {
+          "id": "S12-T10",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:17:24.676Z",
+          "finished": "2026-11-25T10:17:33.068Z",
+          "duration_s": 8.39,
+          "output_sha256": "87c5a42004b2afd57be8e43cd1b3ea3ca0ca28cd4fe41ea07821da5f3695289e"
+        },
+        {
+          "id": "S12-T11",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:17:33.068Z",
+          "finished": "2026-11-25T10:17:50.542Z",
+          "duration_s": 17.47,
+          "output_sha256": "e2292878f36fc67aba215b5f2658fc3d05441b7c711fae5019ebc20356e6226c"
+        },
+        {
+          "id": "S12-T12",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:17:50.543Z",
+          "finished": "2026-11-25T10:18:12.197Z",
+          "duration_s": 21.65,
+          "output_sha256": "0dd19a75ce277b4b0008b581c95fb183042d780953fe3f1f4f9bc81c101fcbe3"
+        },
+        {
+          "id": "S12-T13",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:18:12.198Z",
+          "finished": "2026-11-25T10:18:23.853Z",
+          "duration_s": 11.66,
+          "output_sha256": "0487639cf96a421b123b2f9326550c45a49ef5ad37f0f39eaf6ea9e0fa4aabb0"
+        },
+        {
+          "id": "S12-T14",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:18:23.854Z",
+          "finished": "2026-11-25T10:18:42.003Z",
+          "duration_s": 18.15,
+          "output_sha256": "25441ef238b9a3058de7ffd01073f6211da670f2d112550e27108ae40c44dfbe"
+        },
+        {
+          "id": "S12-T15",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:18:42.004Z",
+          "finished": "2026-11-25T10:18:55.024Z",
+          "duration_s": 13.02,
+          "output_sha256": "e2455ff6cfd350a8d864f1ab0948f7cd145055563bc2c25dcc7c62123da63850"
+        },
+        {
+          "id": "S12-T16",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:18:55.024Z",
+          "finished": "2026-11-25T10:19:07.064Z",
+          "duration_s": 12.04,
+          "output_sha256": "569f1586ee026a923e587b25c83800ea10b5a95b0bf876af1be6eecf77414eee"
+        },
+        {
+          "id": "S12-T17",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:19:07.064Z",
+          "finished": "2026-11-25T10:19:27.499Z",
+          "duration_s": 20.43,
+          "output_sha256": "697081ec8f92ed19ec475af14cfbbf7d5f52d66a3a603c63cc2dd4e022e9386e"
+        },
+        {
+          "id": "S12-T18",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:19:27.499Z",
+          "finished": "2026-11-25T10:19:43.112Z",
+          "duration_s": 15.61,
+          "output_sha256": "ba0f3ac7b5a74d06d6602b71a85150aa8f4a5ff2783d9529f0023ae9a3793dab"
+        },
+        {
+          "id": "S12-T19",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:19:43.112Z",
+          "finished": "2026-11-25T10:19:57.796Z",
+          "duration_s": 14.68,
+          "output_sha256": "1a01d3efb02754a9adeadfb44136a7deb92c46ea17f10c9e43cca29ea30f7eb4"
+        },
+        {
+          "id": "S12-T20",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:19:57.796Z",
+          "finished": "2026-11-25T10:20:04.805Z",
+          "duration_s": 7.01,
+          "output_sha256": "27d21c00fbb3397fce3ec813fbf30e34734624d49e35f33fba7b2d31d357a71f"
+        },
+        {
+          "id": "S12-T01",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:20:04.805Z",
+          "finished": "2026-11-25T10:20:05.613Z",
+          "duration_s": 0.81,
+          "output_sha256": "b4eb7be9000651a3e89c6a77e8b346d05d1d706d620aa6f8193e574a39b3ced1"
+        },
+        {
+          "id": "S12-T02",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:20:05.613Z",
+          "finished": "2026-11-25T10:20:06.446Z",
+          "duration_s": 0.83,
+          "output_sha256": "59b9466559aeabf218a54ec041fd83cd357cf9bf1d80a17c47aab62ed0c205bf"
+        },
+        {
+          "id": "S12-T03",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:20:06.447Z",
+          "finished": "2026-11-25T10:20:07.511Z",
+          "duration_s": 1.06,
+          "output_sha256": "0ee5888eac5501909c7d7da392d69c44baa7c918e85045cdb4f2eb4f722f4c68"
+        },
+        {
+          "id": "S12-T04",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:20:07.512Z",
+          "finished": "2026-11-25T10:20:13.449Z",
+          "duration_s": 5.94,
+          "output_sha256": "7000d425d3858265156c3153372b1ada26d0cc85b74803ba5ef81117410b8665"
+        },
+        {
+          "id": "S12-T05",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:20:13.449Z",
+          "finished": "2026-11-25T10:20:17.799Z",
+          "duration_s": 4.35,
+          "output_sha256": "d05f6fcad6b148bb8b073440065adcc3eea6be9bdd2b48e09030a3e3f8a90a25"
+        },
+        {
+          "id": "S12-T06",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:20:17.799Z",
+          "finished": "2026-11-25T10:20:18.837Z",
+          "duration_s": 1.04,
+          "output_sha256": "b336bfbb42d8a55315e2f7350d4a6528e0fd95453f81c1e21f96f9ae7c5d2932"
+        },
+        {
+          "id": "S12-T40",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:20:18.837Z",
+          "finished": "2026-11-25T10:20:29.182Z",
+          "duration_s": 10.34,
+          "output_sha256": "3acf91844739f93814e44c780cfe849ef0313b8ebe1ca9475730c27efbeb93fd"
+        },
+        {
+          "id": "S12-T41",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:20:29.182Z",
+          "finished": "2026-11-25T10:20:48.946Z",
+          "duration_s": 19.76,
+          "output_sha256": "d9b5630b82b9f48cd1b602416b7ac939dc7bbd76172939c9cb7f0b57938248a0"
+        },
+        {
+          "id": "S12-T42",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:20:48.946Z",
+          "finished": "2026-11-25T10:20:53.001Z",
+          "duration_s": 4.05,
+          "output_sha256": "d1fbddf0ade714ed8e49058e2238859f1158e63a9a94ecad8ebf449efc6a77c7"
+        },
+        {
+          "id": "S12-T43",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:20:53.001Z",
+          "finished": "2026-11-25T10:21:09.279Z",
+          "duration_s": 16.28,
+          "output_sha256": "da2b57bfa827c6ea4583c5f0ecb80f9540f4752f35cc6f7924ecb5c42fa11bb1"
+        },
+        {
+          "id": "S12-T44",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:21:09.280Z",
+          "finished": "2026-11-25T10:21:31.371Z",
+          "duration_s": 22.09,
+          "output_sha256": "82bae81373dc0a4599f5891e65a450aa47efe361997a5a64ff249b3a17028493"
+        },
+        {
+          "id": "S12-T45",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:21:31.371Z",
+          "finished": "2026-11-25T10:21:47.437Z",
+          "duration_s": 16.07,
+          "output_sha256": "2fac4a8781ccb9ab52bc80b93b86599104f12a53e493baa0868c59a838be82c3"
+        },
+        {
+          "id": "S12-T46",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:21:47.438Z",
+          "finished": "2026-11-25T10:21:58.970Z",
+          "duration_s": 11.53,
+          "output_sha256": "122951fd5445a1470971234802d967837ef14910a9794c9e4f8ea74f3d0c614e"
+        },
+        {
+          "id": "S12-T47",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:21:58.970Z",
+          "finished": "2026-11-25T10:22:13.527Z",
+          "duration_s": 14.56,
+          "output_sha256": "ad8ed4e71a7ccc541b75f28c3e17cb67d7e9895f2aa828d047607100320fe413"
+        },
+        {
+          "id": "S12-T48",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "skipped": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:22:13.527Z",
+          "finished": "2026-11-25T10:22:14.267Z",
+          "duration_s": 0.74,
+          "output_sha256": "974684aa703b68a74ce69594ea9068be4a3284632a43d45698e6916162ed4c13"
+        },
+        {
+          "id": "S12-T50",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:22:14.267Z",
+          "finished": "2026-11-25T10:22:23.067Z",
+          "duration_s": 8.8,
+          "output_sha256": "e52fd768797af77bddd8b6ad23c4cc6bde5437dd57999d055d10db39cea85615"
+        },
+        {
+          "id": "S12-T51",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:22:23.067Z",
+          "finished": "2026-11-25T10:22:33.617Z",
+          "duration_s": 10.55,
+          "output_sha256": "081f65d3d67bcfa8384eb7a476c38edf274dfc02438d11db9f665fd7be1dee24"
+        },
+        {
+          "id": "S12-T52",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:22:33.617Z",
+          "finished": "2026-11-25T10:22:43.383Z",
+          "duration_s": 9.77,
+          "output_sha256": "7ab31553287510ace70a4dbeea7cc87336eded12c09d9213d1d2d6f88785fbc3"
+        },
+        {
+          "id": "S12-T53",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:22:43.383Z",
+          "finished": "2026-11-25T10:22:52.022Z",
+          "duration_s": 8.64,
+          "output_sha256": "79ca4173af47ce27fe9fe51db24d8a20058111b072cd4f64ced9e89b628b0a85"
+        },
+        {
+          "id": "S12-T54",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 1
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:22:52.023Z",
+          "finished": "2026-11-25T10:23:00.859Z",
+          "duration_s": 8.84,
+          "output_sha256": "c06d3a6048af643441115d3cd28cb4c5e523569ec8de10a5f9af7dc418aee733"
+        },
+        {
+          "id": "REG-S01-UNIT",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 35
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:23:00.859Z",
+          "finished": "2026-11-25T10:23:04.566Z",
+          "duration_s": 3.71,
+          "output_sha256": "93d367068c7c89c60f7ee4f268629aa902e56fa390b235932261828a48c3adf4"
+        },
+        {
+          "id": "REG-S01A-A",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 27
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:23:04.566Z",
+          "finished": "2026-11-25T10:24:31.004Z",
+          "duration_s": 86.44,
+          "output_sha256": "2d493d3fa37a40d8f548dddc199c6117a384a9e4955d7abc7dcf502eb91fc379"
+        },
+        {
+          "id": "REG-S01A-B",
+          "result": "FAIL",
+          "exit_code": 1,
+          "counts": {
+            "failed": 1,
+            "passed": 25
+          },
+          "failed_tests": [
+            "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T51_worker_cannot_alter_protected_verification_criteria"
+          ],
+          "started": "2026-11-25T10:24:31.004Z",
+          "finished": "2026-11-25T10:29:23.322Z",
+          "duration_s": 292.32,
+          "output_sha256": "f0c9fb1fb1c5e3185017610cf5017469dd544a999afc354da683cd03b272bc50"
+        },
+        {
+          "id": "REG-S01",
+          "result": "FAIL",
+          "exit_code": 1,
+          "counts": {
+            "failed": 5,
+            "passed": 11
+          },
+          "failed_tests": [
+            "tests/acceptance/test_s01_acceptance.py::test_S01_T06_discover_valid_capability_manifest",
+            "tests/acceptance/test_s01_acceptance.py::test_S01_T07_reject_invalid_capability_manifest",
+            "tests/acceptance/test_s01_acceptance.py::test_S01_T08_reject_duplicate_capability_identifiers",
+            "tests/acceptance/test_s01_acceptance.py::test_S01_T09_new_capability_registers_without_changing_start",
+            "tests/acceptance/test_s01_acceptance.py::test_S01_T13_protected_operations_default_to_deny"
+          ],
+          "started": "2026-11-25T10:29:23.323Z",
+          "finished": "2026-11-25T10:32:11.647Z",
+          "duration_s": 168.32,
+          "output_sha256": "39a1ab02a8a449414580fa8875d8a7066dffb9edec223ae0bda425578a9836a9"
+        },
+        {
+          "id": "REG-LEGACY",
+          "result": "PASS",
+          "exit_code": 0,
+          "counts": {
+            "passed": 263,
+            "skipped": 5
+          },
+          "failed_tests": [],
+          "started": "2026-11-25T10:32:11.648Z",
+          "finished": "2026-11-25T10:33:27.016Z",
+          "duration_s": 75.37,
+          "output_sha256": "c6d0da485262a7a04fc0981f3347a40c5db24fc5bd6b96fab75be6b63324bba6"
+        }
+      ]
     }
   },
-  "latest": "s12run_20261125T070151Z"
+  "latest": "s12run_20261125T101512Z"
 }

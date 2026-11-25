@@ -1,0 +1,24 @@
+{
+  "id": "S12-T32",
+  "description": "test_S12_T32_policy_and_approval_still_apply_to_trusted_enabled_integrations",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_execution.py::test_S12_T32_policy_and_approval_still_apply_to_trusted_enabled_integrations"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:16:02.467Z",
+  "finished": "2026-11-25T10:16:11.591Z",
+  "duration_s": 9.12,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "eccf82b11741c2124bb3462d149310368086bfa77dbe280a4ad22b5c3bcf5fb4",
+  "output_tail": ".                                                                        [100%]\n1 passed in 8.61s"
+}

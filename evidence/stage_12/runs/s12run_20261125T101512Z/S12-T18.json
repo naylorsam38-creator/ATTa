@@ -1,0 +1,24 @@
+{
+  "id": "S12-T18",
+  "description": "test_S12_T18_active_task_version_pinning",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_lifecycle.py::test_S12_T18_active_task_version_pinning"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:19:27.499Z",
+  "finished": "2026-11-25T10:19:43.112Z",
+  "duration_s": 15.61,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "ba0f3ac7b5a74d06d6602b71a85150aa8f4a5ff2783d9529f0023ae9a3793dab",
+  "output_tail": ".                                                                        [100%]\n1 passed in 15.15s"
+}

@@ -23,16 +23,20 @@
     "version": "1.0.0"
   },
   "valid_mcp": {
-    "digest": "dab2882335c2721ab1e1d30c5ca11b0a0fbcb941489b0752304aac8c1b89a4b2",
+    "digest": "87d4e2d839b12734846be09b5e40e12775b122e5377332c7cd6fc538907b8e8f",
     "id": "test.echo_mcp",
-    "package_digest": "b7291ff834c99bee92b3414c84047cdad6d81448824e221ba940e2ae03583cca",
+    "package_digest": "0e6863dba47acb5de7951ce973b8fa243ef3a4894bca3dda490f46c00d638e47",
     "tools": [
       "echo",
       "add",
       "slow",
       "inject",
       "big",
-      "fail"
+      "fail",
+      "probe_env",
+      "net_probe",
+      "ask_client",
+      "admin_reset"
     ],
     "type": "MCP_SERVER",
     "version": "1.0.0"

@@ -13,9 +13,9 @@
       "reserved": 0.0
     },
     "cpu_seconds": {
-      "consumed": 0.116,
+      "consumed": 0.111,
       "limit": 600.0,
-      "remaining": 599.884,
+      "remaining": 599.889,
       "reserved": 0.0
     },
     "external_api_calls": {
@@ -61,7 +61,7 @@
       "reserved": 0.0
     }
   },
-  "contract_hash": "0c70779f3662ad0e50b64efa62c99e22a370c182dee267ecd738761a3f066fa3",
+  "contract_hash": "430d2081e7b92b8766b4d4c2c0a564da5ba6e21490e0f8cc3ca5c9734ba00232",
   "flags": [
     "budget/limit change request",
     "instruction override",

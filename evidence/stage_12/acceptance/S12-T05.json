@@ -5,9 +5,9 @@
     "integration_type": "PLUGIN",
     "manifest_digest": "fbb884fcb07c12b8ffca1fa680e96a4809e03d916394f7eb43288541ef713a4e",
     "problems": [
-      "duplicate integration_id 'test.text_plugin' in: /tmp/pytest-of-root/pytest-68/test_S12_T05_duplicate_integra0/h-c5d743/integrations_src/valid_plugin/integration.yaml, /tmp/pytest-of-root/pytest-68/test_S12_T05_duplicate_integra0/h-c5d743/integrations_src/valid_plugin_copy/integration.yaml"
+      "duplicate integration_id 'test.text_plugin' in: /tmp/pytest-of-root/pytest-265/test_S12_T05_duplicate_integra0/h-6f3d9e/integrations_src/valid_plugin/integration.yaml, /tmp/pytest-of-root/pytest-265/test_S12_T05_duplicate_integra0/h-6f3d9e/integrations_src/valid_plugin_copy/integration.yaml"
     ],
-    "source": "/tmp/pytest-of-root/pytest-68/test_S12_T05_duplicate_integra0/h-c5d743/integrations_src/valid_plugin/integration.yaml",
+    "source": "/tmp/pytest-of-root/pytest-265/test_S12_T05_duplicate_integra0/h-6f3d9e/integrations_src/valid_plugin/integration.yaml",
     "valid": false,
     "version": "1.0.0"
   },
@@ -17,9 +17,9 @@
     "integration_type": "PLUGIN",
     "manifest_digest": "fbb884fcb07c12b8ffca1fa680e96a4809e03d916394f7eb43288541ef713a4e",
     "problems": [
-      "duplicate integration_id 'test.text_plugin' in: /tmp/pytest-of-root/pytest-68/test_S12_T05_duplicate_integra0/h-c5d743/integrations_src/valid_plugin/integration.yaml, /tmp/pytest-of-root/pytest-68/test_S12_T05_duplicate_integra0/h-c5d743/integrations_src/valid_plugin_copy/integration.yaml"
+      "duplicate integration_id 'test.text_plugin' in: /tmp/pytest-of-root/pytest-265/test_S12_T05_duplicate_integra0/h-6f3d9e/integrations_src/valid_plugin/integration.yaml, /tmp/pytest-of-root/pytest-265/test_S12_T05_duplicate_integra0/h-6f3d9e/integrations_src/valid_plugin_copy/integration.yaml"
     ],
-    "source": "/tmp/pytest-of-root/pytest-68/test_S12_T05_duplicate_integra0/h-c5d743/integrations_src/valid_plugin_copy/integration.yaml",
+    "source": "/tmp/pytest-of-root/pytest-265/test_S12_T05_duplicate_integra0/h-6f3d9e/integrations_src/valid_plugin_copy/integration.yaml",
     "valid": false,
     "version": "1.0.0"
   }

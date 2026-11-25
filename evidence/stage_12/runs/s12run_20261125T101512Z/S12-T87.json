@@ -1,0 +1,24 @@
+{
+  "id": "S12-T87",
+  "description": "test_S12_T87_crlf_windows_checkout",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_installer.py::test_S12_T87_crlf_windows_checkout"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:17:18.958Z",
+  "finished": "2026-11-25T10:17:21.446Z",
+  "duration_s": 2.49,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "a4701b2a9bc0a139d4429a56263a85a23a9889f74e615adefc4c2d4ac75697bc",
+  "output_tail": ".                                                                        [100%]\n1 passed in 2.12s"
+}

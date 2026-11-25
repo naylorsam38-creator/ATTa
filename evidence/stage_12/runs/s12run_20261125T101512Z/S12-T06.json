@@ -1,0 +1,24 @@
+{
+  "id": "S12-T06",
+  "description": "test_S12_T06_credentials_are_references_and_secrets_are_redacted",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_manifest.py::test_S12_T06_credentials_are_references_and_secrets_are_redacted"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:20:17.799Z",
+  "finished": "2026-11-25T10:20:18.837Z",
+  "duration_s": 1.04,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "b336bfbb42d8a55315e2f7350d4a6528e0fd95453f81c1e21f96f9ae7c5d2932",
+  "output_tail": ".                                                                        [100%]\n1 passed in 0.49s"
+}
