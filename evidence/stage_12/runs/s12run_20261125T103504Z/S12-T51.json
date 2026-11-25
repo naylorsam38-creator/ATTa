@@ -1,0 +1,24 @@
+{
+  "id": "S12-T51",
+  "description": "test_S12_T51_invalid_skill_references_are_rejected",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_skills.py::test_S12_T51_invalid_skill_references_are_rejected"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:42:33.045Z",
+  "finished": "2026-11-25T10:42:43.882Z",
+  "duration_s": 10.84,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "9dde997c0e1299eff9e0e24333a77fccd7996fa5384a9c0a93ee9bbfbcbef262",
+  "output_tail": ".                                                                        [100%]\n1 passed in 10.43s"
+}

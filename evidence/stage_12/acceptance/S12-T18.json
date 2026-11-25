@@ -3,20 +3,20 @@
   "pins": [
     {
       "integration_id": "test.text_plugin",
-      "namespace": "test-a8e0bfc12c38",
-      "objective_id": "obj_01M893FJWEM1WCM71G93NK4CEV",
+      "namespace": "test-1420c3c6ffcf",
+      "objective_id": "obj_01M894MH7P824YQK1DY0EWVHXV",
       "package_digest": "cfb2f4c6efbfc51a244ef8db7c2ca2f4c7eeaca51599e88d491d6311bf36b454",
-      "pinned_at": "2026-11-25 10:19:36.437325+00:00",
+      "pinned_at": "2026-11-25 10:39:47.140760+00:00",
       "task_id": "TASK-0001",
       "tool_number": "024.500",
       "version": "1.0.0"
     },
     {
       "integration_id": "test.text_plugin",
-      "namespace": "test-a8e0bfc12c38",
-      "objective_id": "obj_01M893FRRDGV8TPCNGQJ1KYYET",
+      "namespace": "test-1420c3c6ffcf",
+      "objective_id": "obj_01M894MQ424Y6E6K5F2Y67PCNK",
       "package_digest": "cea966fcd075261acf003698ca41b4d46243753ac4a989fa2f8ecda2a7e9a24c",
-      "pinned_at": "2026-11-25 10:19:42.412579+00:00",
+      "pinned_at": "2026-11-25 10:39:53.173435+00:00",
       "task_id": "TASK-0002",
       "tool_number": "024.500",
       "version": "1.1.0"

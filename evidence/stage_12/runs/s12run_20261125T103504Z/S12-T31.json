@@ -1,0 +1,24 @@
+{
+  "id": "S12-T31",
+  "description": "test_S12_T31_installation_is_not_global_availability_and_unassigned_tools_are_refused",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_execution.py::test_S12_T31_installation_is_not_global_availability_and_unassigned_tools_are_refused"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:35:46.424Z",
+  "finished": "2026-11-25T10:36:02.189Z",
+  "duration_s": 15.77,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "c23b83a7beafc26f962c8df2c28fa4ea6ac1bc19548b32b4e22da7b8d2af59ca",
+  "output_tail": ".                                                                        [100%]\n1 passed in 15.36s"
+}

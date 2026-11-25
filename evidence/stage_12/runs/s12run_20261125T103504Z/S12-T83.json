@@ -1,0 +1,24 @@
+{
+  "id": "S12-T83",
+  "description": "test_S12_T83_conflicting_changes_are_refused_without_any_change",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_installer.py::test_S12_T83_conflicting_changes_are_refused_without_any_change"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:37:15.100Z",
+  "finished": "2026-11-25T10:37:16.968Z",
+  "duration_s": 1.87,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "33b662fdd3508192388779035d895f2d57122672755940fd2356172dbe21537b",
+  "output_tail": ".                                                                        [100%]\n1 passed in 1.43s"
+}

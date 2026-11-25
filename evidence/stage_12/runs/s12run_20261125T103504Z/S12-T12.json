@@ -1,0 +1,24 @@
+{
+  "id": "S12-T12",
+  "description": "test_S12_T12_stable_tool_ids_across_remove_reinstall_and_upgrade",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_lifecycle.py::test_S12_T12_stable_tool_ids_across_remove_reinstall_and_upgrade"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:38:02.651Z",
+  "finished": "2026-11-25T10:38:23.874Z",
+  "duration_s": 21.22,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "f2e1a3d669eea14d1003db7a9f55b6437abcc759c2f77002ce3eee21df306e7e",
+  "output_tail": ".                                                                        [100%]\n1 passed in 20.76s"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "S12-T72",
+  "description": "test_S12_T72_api_mount_is_idempotent_for_stage04",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_compat.py::test_S12_T72_api_mount_is_idempotent_for_stage04"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:35:29.297Z",
+  "finished": "2026-11-25T10:35:31.861Z",
+  "duration_s": 2.56,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "22af610ddbfec47d5a1e0f52f70867012ee8f130d5e75cca93562795d121ce98",
+  "output_tail": ".                                                                        [100%]\n1 passed in 2.11s"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "S12-T86",
+  "description": "test_S12_T86_upgrade_replaces_only_untouched_installed_content",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_installer.py::test_S12_T86_upgrade_replaces_only_untouched_installed_content"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:37:25.231Z",
+  "finished": "2026-11-25T10:37:28.355Z",
+  "duration_s": 3.12,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "5a5841b0790f6293a78bd665e21b494b4e8f828ff30ee3a89bbf9649683df2f6",
+  "output_tail": ".                                                                        [100%]\n1 passed in 2.72s"
+}

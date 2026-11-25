@@ -1,0 +1,24 @@
+{
+  "id": "S12-T11",
+  "description": "test_S12_T11_failed_install_rolls_back_completely",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_lifecycle.py::test_S12_T11_failed_install_rolls_back_completely"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:37:45.429Z",
+  "finished": "2026-11-25T10:38:02.650Z",
+  "duration_s": 17.22,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "798f2f4ea1c88d9f8479448261ac889e052bb0e9a11ad50265b0d5330daee71f",
+  "output_tail": ".                                                                        [100%]\n1 passed in 16.84s"
+}

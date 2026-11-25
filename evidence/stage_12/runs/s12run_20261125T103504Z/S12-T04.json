@@ -1,0 +1,24 @@
+{
+  "id": "S12-T04",
+  "description": "test_S12_T04_discovery_reads_metadata_only_and_never_executes_code",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_manifest.py::test_S12_T04_discovery_reads_metadata_only_and_never_executes_code"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:40:17.070Z",
+  "finished": "2026-11-25T10:40:23.101Z",
+  "duration_s": 6.03,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "3f2fe59a9105a24c7958a4dc123ac8742f73a4c2131bdc2c4309fa942c22d5ff",
+  "output_tail": ".                                                                        [100%]\n1 passed in 5.58s"
+}

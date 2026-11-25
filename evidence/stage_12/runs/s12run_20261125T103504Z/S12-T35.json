@@ -1,0 +1,24 @@
+{
+  "id": "S12-T35",
+  "description": "test_S12_T35_offline_mode_network_integrations_unavailable_local_ones_work",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_execution.py::test_S12_T35_offline_mode_network_integrations_unavailable_local_ones_work"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:36:32.388Z",
+  "finished": "2026-11-25T10:36:46.932Z",
+  "duration_s": 14.54,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "2d7b6336f3b92ffa66d826f7927ece37174e7791269a0dd0bdca9ed392a03557",
+  "output_tail": ".                                                                        [100%]\n1 passed in 14.12s"
+}

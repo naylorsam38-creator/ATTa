@@ -1,0 +1,24 @@
+{
+  "id": "S12-T43",
+  "description": "test_S12_T43_mcp_tool_timeout_and_cancellation_through_the_gateway",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_mcp.py::test_S12_T43_mcp_tool_timeout_and_cancellation_through_the_gateway"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:41:02.050Z",
+  "finished": "2026-11-25T10:41:18.362Z",
+  "duration_s": 16.31,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "55b4635925c0f0a6ce8df2bee9722f6133d383567aa0439657ff4ea219ff47e2",
+  "output_tail": ".                                                                        [100%]\n1 passed in 15.88s"
+}

@@ -4,7 +4,7 @@ Files added/modified/deleted on `stage-12-integrations-sidecar` relative to the 
 
 ## Stage 12 (sidecar) — 21104c413c30..working tree
 
-Totals: 289 added, 10 modified, 0 deleted.
+Totals: 343 added, 10 modified, 0 deleted.
 
 Stage 01 acceptance tests and helpers are unchanged (protected by the S01A stage).
 
@@ -14,13 +14,13 @@ Stage 01 acceptance tests and helpers are unchanged (protected by the S01A stage
 |---|---|---|
 | modified | `.gitignore` | `3dd9f8842ece04f4` |
 | modified | `BLOCKERS.md` | `b3d93bf9228b7cca` |
-| modified | `CHANGE_MANIFEST.md` | `1c307f11027c6cc2` |
+| modified | `CHANGE_MANIFEST.md` | `674294ed6f6ac866` |
 | modified | `DECISIONS.md` | `f58b87a9eadbd67c` |
 | modified | `IMPLEMENTATION_PROGRESS.md` | `f5e904e15f2339d4` |
 | modified | `MASTER_IMPLEMENTATION_REGISTER.md` | `3cb9a9d655d455ad` |
-| added | `STAGE_12_CHANGE_MANIFEST.md` | `77583198c5c68183` |
+| added | `STAGE_12_CHANGE_MANIFEST.md` | `573c781560fcaa05` |
 | added | `STAGE_12_MERGE_MANIFEST.md` | `5242410ca4e16a1d` |
-| added | `STAGE_12_VERIFICATION.md` | `77e062ae3914f661` |
+| added | `STAGE_12_VERIFICATION.md` | `3b58019bf5e9e38b` |
 
 ### backend/api
 
@@ -107,41 +107,41 @@ Stage 01 acceptance tests and helpers are unchanged (protected by the S01A stage
 | added | `evidence/stage_12/acceptance/S12-T01.json` | `a6193e3b2f770381` |
 | added | `evidence/stage_12/acceptance/S12-T02.json` | `bff7518faea7a266` |
 | added | `evidence/stage_12/acceptance/S12-T03.json` | `56810e55a400ac2a` |
-| added | `evidence/stage_12/acceptance/S12-T04.json` | `992a880fae005f10` |
-| added | `evidence/stage_12/acceptance/S12-T05.json` | `6f0b0f2912bc890f` |
+| added | `evidence/stage_12/acceptance/S12-T04.json` | `f9e6222f09d3a184` |
+| added | `evidence/stage_12/acceptance/S12-T05.json` | `912f8e694fbb4055` |
 | added | `evidence/stage_12/acceptance/S12-T06.json` | `8b52ac5044b72c77` |
-| added | `evidence/stage_12/acceptance/S12-T10.json` | `fe84f626c0bd0efa` |
+| added | `evidence/stage_12/acceptance/S12-T10.json` | `f8a74c110d1c9696` |
 | added | `evidence/stage_12/acceptance/S12-T11.json` | `1e6991ec76a7969a` |
 | added | `evidence/stage_12/acceptance/S12-T12.json` | `992e195c7119d77e` |
 | added | `evidence/stage_12/acceptance/S12-T13.json` | `f6eb9fb25a016310` |
-| added | `evidence/stage_12/acceptance/S12-T14.json` | `8e14ff43a5ab3e41` |
+| added | `evidence/stage_12/acceptance/S12-T14.json` | `176cd033763811c6` |
 | added | `evidence/stage_12/acceptance/S12-T15.json` | `c868bbde88d3dae3` |
 | added | `evidence/stage_12/acceptance/S12-T16.json` | `4ae276beb10fef57` |
 | added | `evidence/stage_12/acceptance/S12-T17.json` | `2c9e8705bdcd10ed` |
-| added | `evidence/stage_12/acceptance/S12-T18.json` | `f66ca4033b1b2206` |
+| added | `evidence/stage_12/acceptance/S12-T18.json` | `9a2e148e8d845fb0` |
 | added | `evidence/stage_12/acceptance/S12-T19.json` | `75921c927d9491cd` |
-| added | `evidence/stage_12/acceptance/S12-T20.json` | `25ed5b6a47412234` |
-| added | `evidence/stage_12/acceptance/S12-T30.json` | `46a22dd519d2c69a` |
+| added | `evidence/stage_12/acceptance/S12-T20.json` | `4c54003124b379e7` |
+| added | `evidence/stage_12/acceptance/S12-T30.json` | `4002915126aa9186` |
 | added | `evidence/stage_12/acceptance/S12-T31.json` | `1aa8e3c9f2b889da` |
-| added | `evidence/stage_12/acceptance/S12-T32.json` | `c68087d9c999e2c8` |
-| added | `evidence/stage_12/acceptance/S12-T33.json` | `9956e391d6825a16` |
+| added | `evidence/stage_12/acceptance/S12-T32.json` | `652f678be7cf9943` |
+| added | `evidence/stage_12/acceptance/S12-T33.json` | `3e213b16939f7c26` |
 | added | `evidence/stage_12/acceptance/S12-T34.json` | `f2d184dca75af6ac` |
-| added | `evidence/stage_12/acceptance/S12-T35.json` | `f78028ff2c33db45` |
-| added | `evidence/stage_12/acceptance/S12-T36.json` | `7ea4726f6510000d` |
+| added | `evidence/stage_12/acceptance/S12-T35.json` | `3f42e8c7ba02d975` |
+| added | `evidence/stage_12/acceptance/S12-T36.json` | `8d53c0b7d3893b86` |
 | added | `evidence/stage_12/acceptance/S12-T37.json` | `5b65d97cbab378ae` |
 | added | `evidence/stage_12/acceptance/S12-T40.json` | `a4e4f2ed03951fb1` |
 | added | `evidence/stage_12/acceptance/S12-T41.json` | `2f9bef958dd07371` |
 | added | `evidence/stage_12/acceptance/S12-T42.json` | `494ae16eb1ea9eb9` |
-| added | `evidence/stage_12/acceptance/S12-T43.json` | `f3e04cf6d866661a` |
+| added | `evidence/stage_12/acceptance/S12-T43.json` | `3021d35fee2855c3` |
 | added | `evidence/stage_12/acceptance/S12-T44.json` | `57b4ddf8c6fb63b5` |
-| added | `evidence/stage_12/acceptance/S12-T45.json` | `4e588e44d888bc4c` |
+| added | `evidence/stage_12/acceptance/S12-T45.json` | `7975be2e60fbf227` |
 | added | `evidence/stage_12/acceptance/S12-T46.json` | `dc9a1eb13b479b3a` |
-| added | `evidence/stage_12/acceptance/S12-T47.json` | `1e8fa91fe75c8e9a` |
+| added | `evidence/stage_12/acceptance/S12-T47.json` | `2d428bbbff75e8a9` |
 | added | `evidence/stage_12/acceptance/S12-T50.json` | `256c2b34257c9fc6` |
 | added | `evidence/stage_12/acceptance/S12-T51.json` | `cf460f99c31a5a06` |
 | added | `evidence/stage_12/acceptance/S12-T52.json` | `a993e75597853b86` |
 | added | `evidence/stage_12/acceptance/S12-T53.json` | `3fb8653878d64189` |
-| added | `evidence/stage_12/acceptance/S12-T54.json` | `ebee07631275c8f5` |
+| added | `evidence/stage_12/acceptance/S12-T54.json` | `b7bc96d731227c9c` |
 | added | `evidence/stage_12/acceptance/S12-T60.json` | `d8a607035d64ed65` |
 | added | `evidence/stage_12/acceptance/S12-T61.json` | `7efa92baa04abbd4` |
 | added | `evidence/stage_12/acceptance/S12-T70.json` | `b5651cd48bb2ff81` |
@@ -157,7 +157,7 @@ Stage 01 acceptance tests and helpers are unchanged (protected by the S01A stage
 | added | `evidence/stage_12/acceptance/S12-T86.json` | `746b91883f120bb1` |
 | added | `evidence/stage_12/acceptance/S12-T87.json` | `5ddc46e73e5488d4` |
 | added | `evidence/stage_12/acceptance/S12-T88.json` | `fd6bddd2c2a5aef5` |
-| added | `evidence/stage_12/run_summary.json` | `1269bff765e93985` |
+| added | `evidence/stage_12/run_summary.json` | `b863814e66338702` |
 | added | `evidence/stage_12/trials/stage01b-run1-regression-found/post/S01.json` | `6c56f55d0d2bc330` |
 | added | `evidence/stage_12/trials/stage01b-run1-regression-found/post/S01A-A.json` | `b92f9e57984b33c3` |
 | added | `evidence/stage_12/trials/stage01b-run1-regression-found/post/S01A-B.json` | `c091991c6a4b5938` |
@@ -202,7 +202,7 @@ Stage 01 acceptance tests and helpers are unchanged (protected by the S01A stage
 | added | `installer/stage12/README.md` | `aeeb5fd22f2329d9` |
 | added | `installer/stage12/build_payload.py` | `340ddcf37f1cb59e` |
 | added | `installer/stage12/install.bat` | `17c9b15873cabff7` |
-| added | `installer/stage12/install.py` | `1d36a6532f8339a1` |
+| added | `installer/stage12/install.py` | `78fd095221c05ac8` |
 | added | `installer/stage12/install.sh` | `bc350fe337ecebe3` |
 
 ### integrations
@@ -223,7 +223,7 @@ Stage 01 acceptance tests and helpers are unchanged (protected by the S01A stage
 | Change | Path | SHA-256 (16) |
 |---|---|---|
 | added | `scripts/export_integration_contracts.py` | `b601cfb90152e657` |
-| added | `scripts/stage12_report.py` | `dbda84f03da7c10e` |
+| added | `scripts/stage12_report.py` | `d391c5d1678e19c2` |
 | added | `scripts/stage12_trial.py` | `c0b652f3c30e0128` |
 | added | `scripts/stage12_verify.py` | `60f6cbe843487773` |
 

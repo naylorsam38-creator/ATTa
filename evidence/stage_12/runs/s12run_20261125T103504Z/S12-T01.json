@@ -1,0 +1,24 @@
+{
+  "id": "S12-T01",
+  "description": "test_S12_T01_manifest_validation_accepts_every_valid_fixture",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_manifest.py::test_S12_T01_manifest_validation_accepts_every_valid_fixture"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:40:14.223Z",
+  "finished": "2026-11-25T10:40:15.064Z",
+  "duration_s": 0.84,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "791acbb2840ecff621592488f8e65512e312896e3865560d4000495c22ef5d13",
+  "output_tail": ".                                                                        [100%]\n1 passed in 0.42s"
+}

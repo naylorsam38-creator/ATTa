@@ -1,0 +1,24 @@
+{
+  "id": "S12-T50",
+  "description": "test_S12_T50_skill_loading_and_tool_reference_resolution",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_skills.py::test_S12_T50_skill_loading_and_tool_reference_resolution"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:42:24.316Z",
+  "finished": "2026-11-25T10:42:33.045Z",
+  "duration_s": 8.73,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "ca6957bd2ca0844479c973ddcfac3fb057e919db95750ad96df55594451931e4",
+  "output_tail": ".                                                                        [100%]\n1 passed in 8.31s"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "S12-T41",
+  "description": "test_S12_T41_mcp_schema_drift_and_malicious_metadata_are_refused",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_mcp.py::test_S12_T41_mcp_schema_drift_and_malicious_metadata_are_refused"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:40:39.715Z",
+  "finished": "2026-11-25T10:40:57.975Z",
+  "duration_s": 18.26,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "bbe8b86813cf5bd560a1f6a7ef2a306074be72ffff80cec7a3e34d20816321d1",
+  "output_tail": ".                                                                        [100%]\n1 passed in 17.86s"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "S12-T54",
+  "description": "test_S12_T54_plugin_packaging_contributions_and_inert_ui_metadata",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_skills.py::test_S12_T54_plugin_packaging_contributions_and_inert_ui_metadata"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:43:04.651Z",
+  "finished": "2026-11-25T10:43:13.662Z",
+  "duration_s": 9.01,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "926a430381c54aaa147915fecb2b6299e6cc7e50e7fe092392d44cd8a3bfb15d",
+  "output_tail": ".                                                                        [100%]\n1 passed in 8.59s"
+}

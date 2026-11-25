@@ -10,7 +10,7 @@ This sidecar has not been merged into the authoritative application, and contain
 | Baseline (Stage 01 + 01A, gate passed) | `21104c413c30a3b2714f877892970e7db19a1d19` on `origin/claude/ai-app-stage-01-foundation-82jy3a` |
 | Note | The supplied working branch `claude/lucid-maxwell-uc91v4` initially pointed at ATTa v121.5 (`cef7329`) **without** Stage 01/01A; the Stage 01A gate commit above was used as the authoritative baseline |
 | Sidecar branch | `stage-12-integrations-sidecar` (local), published as `claude/lucid-maxwell-uc91v4` |
-| Final code commit | `86ffda7` (trial-verified on the real Stage 01B and Stage 11 trees); final sidecar verification run recorded in STAGE_12_VERIFICATION.md |
+| Final code | backend/tests `86ffda7` (trial-verified on the real Stage 01B and Stage 11 trees; full regression run `s12run_20261125T101512Z`); installer fixes `d84cdc3` (Stage 12 suite rerun `s12run_20261125T103504Z`: 53 PASS + 1 BLOCKED, 0 FAIL); later commits: documentation only |
 | Other workers' trees used (read-only, never merged) | Stage 01B `416ca30` (the package supplied by the owner; byte-identical to that git commit) · Stage 11 `bb1a60b` (`origin/claude/focused-cori-ajjjn0`) · Stage 04: not published |
 
 ## 1a. How to install — transactional plug-in installer (changes-only ZIP)

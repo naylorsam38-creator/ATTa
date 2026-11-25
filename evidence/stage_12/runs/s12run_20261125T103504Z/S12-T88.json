@@ -1,0 +1,24 @@
+{
+  "id": "S12-T88",
+  "description": "test_S12_T88_installed_tree_imports_and_verifies",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_installer.py::test_S12_T88_installed_tree_imports_and_verifies"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:37:31.678Z",
+  "finished": "2026-11-25T10:37:35.763Z",
+  "duration_s": 4.08,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "ef305d1aea37d97835af7e32f2d8b736c69b414049470c5048d108dff94ee78a",
+  "output_tail": ".                                                                        [100%]\n1 passed in 3.61s"
+}

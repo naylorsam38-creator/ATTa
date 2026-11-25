@@ -1,12 +1,12 @@
 {
   "audit": {
     "detail": "risk 'medium' needs human approval, which is not available until Stage 02",
-    "objective_id": "obj_01M8939ABHCN1M1WJQAN2B0WKN",
+    "objective_id": "obj_01M894DYBEASFRFPATKE4SVVED",
     "policy": {
       "binding": {
         "arguments_hash": "8fc4299c9010ec1965100467bb7c14b01134703f7f7d74e09bb6c98cd3bdad24",
-        "contract_hash": "f887d2b6766becc7870038ca66ee18fcb3c925896a4a75d233b6afc8a2c600f6",
-        "execution_id": "exe_01M8939AQRVPD72ED0Q1G1D4GV",
+        "contract_hash": "72dbc453042059ec10f8e4485d2edaf2f09b7a35958cc01f789e0555ef1a4bb4",
+        "execution_id": "exe_01M894DYSG39YW45A7F8TKME34",
         "tool_id": "021.502"
       },
       "decision": "deny",

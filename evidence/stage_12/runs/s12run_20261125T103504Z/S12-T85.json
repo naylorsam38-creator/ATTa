@@ -1,0 +1,24 @@
+{
+  "id": "S12-T85",
+  "description": "test_S12_T85_checksum_failure_and_rollback_and_crash_recovery",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_installer.py::test_S12_T85_checksum_failure_and_rollback_and_crash_recovery"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:37:20.300Z",
+  "finished": "2026-11-25T10:37:25.231Z",
+  "duration_s": 4.93,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "9e2eeceb5633485daf1e2b9130a4019164c70df46ea7babb1e4058349166ce8f",
+  "output_tail": ".                                                                        [100%]\n1 passed in 4.43s"
+}

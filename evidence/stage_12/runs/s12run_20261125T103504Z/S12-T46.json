@@ -1,0 +1,24 @@
+{
+  "id": "S12-T46",
+  "description": "test_S12_T46_mcp_cannot_bypass_allocation_permissions_or_reach_client_capabilities",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_mcp_bypass.py::test_S12_T46_mcp_cannot_bypass_allocation_permissions_or_reach_client_capabilities"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:41:56.367Z",
+  "finished": "2026-11-25T10:42:08.079Z",
+  "duration_s": 11.71,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "205a624913509fa6f67e79a2cf14c9aafa4e877e568e87cbe0aba37a470e2868",
+  "output_tail": ".                                                                        [100%]\n1 passed in 11.22s"
+}

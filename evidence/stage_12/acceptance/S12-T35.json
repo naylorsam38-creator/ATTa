@@ -10,7 +10,7 @@
     ]
   },
   "offline": {
-    "checked_at": "2026-11-25T10:16:42.328Z",
+    "checked_at": "2026-11-25T10:36:45.941Z",
     "detail": {},
     "integration_id": "test.remote_connector",
     "reasons": [
@@ -23,7 +23,7 @@
     "version": "1.0.0"
   },
   "online": {
-    "checked_at": "2026-11-25T10:16:42.987Z",
+    "checked_at": "2026-11-25T10:36:46.704Z",
     "detail": {},
     "integration_id": "test.remote_connector",
     "reasons": [

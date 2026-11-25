@@ -1,0 +1,24 @@
+{
+  "id": "S12-T70",
+  "description": "test_S12_T70_connectivity_most_restrictive_signal_wins_live",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_compat.py::test_S12_T70_connectivity_most_restrictive_signal_wins_live"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T10:35:27.860Z",
+  "finished": "2026-11-25T10:35:28.572Z",
+  "duration_s": 0.71,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "7d42ef5504b9f8dea803cd978f146b4a7a910815a154ed9e4e59883957d8862e",
+  "output_tail": ".                                                                        [100%]\n1 passed in 0.31s"
+}
