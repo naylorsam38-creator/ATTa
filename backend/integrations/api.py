@@ -124,3 +124,12 @@ def build_integrations_router(authorize: Callable[[str], Callable]) -> APIRouter
         return _call(_svc(request).plugins)
 
     return r
+
+
+def mount_integrations(app, authorize: Callable[[str], Callable]) -> bool:
+    """Mount the Stage 12 routes once (idempotent): Stage 04 may call this too without duplicating routes."""
+    if getattr(app.state, "stage12_router_mounted", False):
+        return False
+    app.include_router(build_integrations_router(authorize), prefix="/v1")
+    app.state.stage12_router_mounted = True
+    return True

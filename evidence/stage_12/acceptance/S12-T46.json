@@ -1,0 +1,29 @@
+{
+  "allocation": "tool_not_in_pool for every unallocated tool of the server",
+  "approval": "risk 'high' needs human approval, which is not available until Stage 02",
+  "client_requests": [
+    {
+      "error": {
+        "code": -32601,
+        "message": "method not supported by ATTa client"
+      },
+      "id": "srv-1",
+      "jsonrpc": "2.0"
+    },
+    {
+      "error": {
+        "code": -32601,
+        "message": "method not supported by ATTa client"
+      },
+      "id": "srv-2",
+      "jsonrpc": "2.0"
+    }
+  ],
+  "direct_runtime": "RuntimeRefused",
+  "server_env_keys": [
+    "LANG",
+    "PATH",
+    "PYTHONDONTWRITEBYTECODE",
+    "PYTHONUNBUFFERED"
+  ]
+}

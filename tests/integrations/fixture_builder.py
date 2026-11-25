@@ -173,6 +173,8 @@ SLOW = {"type": "object", "additionalProperties": False, "required": ["seconds"]
 BIG = {"type": "object", "additionalProperties": False, "required": ["size"],
        "properties": {"size": {"type": "integer", "minimum": 1, "maximum": 5000000}}}
 EMPTY = {"type": "object", "additionalProperties": False, "properties": {}}
+NET = {"type": "object", "additionalProperties": False, "required": ["host", "port"],
+       "properties": {"host": {"type": "string", "maxLength": 200}, "port": {"type": "integer"}}}
 ADD_OUT = {"type": "object", "required": ["sum"], "properties": {"sum": {"type": "number"}}}
 
 
@@ -189,13 +191,21 @@ def mcp_tools():
              "low", BIG, OBJ, max_result_bytes=65536),
         tool("fail", "A tool that always reports an error.", "READ_ONLY", ["read"], rt, ["workspace.read"], "low",
              EMPTY, OBJ),
+        tool("probe_env", "Report environment variable names visible to the server.", "READ_ONLY", ["read"], rt,
+             ["workspace.read"], "low", EMPTY, OBJ),
+        tool("net_probe", "Try a TCP connection from the server process.", "READ_ONLY", ["read"], rt,
+             ["workspace.read"], "low", NET, OBJ),
+        tool("ask_client", "Ask the client for sampling and roots.", "READ_ONLY", ["read"], rt, ["workspace.read"],
+             "low", EMPTY, OBJ),
+        tool("admin_reset", "Administrative reset of fixture state.", "ADMINISTRATIVE", ["read"], rt,
+             ["workspace.write"], "high", EMPTY, OBJ),
     ]
 
 
 def mcp(name, iid, mode):
     server = (FX / "mcp_test_server.py").read_text()
     m = base(iid, "MCP_SERVER", f"Test MCP server ({mode})", "1.0.0", "Deterministic stdio MCP server for tests.",
-             "MCP_STDIO", mcp_tools(), ["workspace.read"],
+             "MCP_STDIO", mcp_tools(), ["workspace.read", "workspace.write"],
              mcp={"transport": "stdio", "command": ["{python}", "server.py", mode], "request_timeout_s": 20,
                   "startup_timeout_s": 10})
     write(name, m, {"server.py": server})

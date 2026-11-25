@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import ipaddress
 from dataclasses import dataclass
+from typing import Callable
 
 from .types import ConnectivityMode
 
@@ -24,17 +25,29 @@ def is_loopback(host: str) -> bool:
 
 @dataclass(frozen=True)
 class NetworkPolicy:
+    """`mode` is the configured fallback; `provider` (optional) returns the LIVE mode on every check, so a change of
+    deployment profile / qualified offline state takes effect without restarting integrations."""
     mode: ConnectivityMode
     allowed_hosts: frozenset[str] = frozenset()
+    provider: Callable[[], ConnectivityMode] | None = None
+
+    def current(self) -> ConnectivityMode:
+        if self.provider is None:
+            return self.mode
+        try:
+            return self.provider()
+        except Exception:  # noqa: BLE001 — an unreadable connectivity source fails closed
+            return ConnectivityMode.AIR_GAPPED
 
     def host_allowed(self, host: str, declared: tuple[str, ...]) -> tuple[bool, str]:
         if host not in declared:
             return False, f"host '{host}' is not declared in the integration's network_requirements"
         if is_loopback(host):
             return True, "loopback"
-        if self.mode is ConnectivityMode.AIR_GAPPED:
-            return False, "OFFLINE_UNAVAILABLE: deployment is AIR_GAPPED"
-        if self.mode is ConnectivityMode.RESTRICTED and host not in self.allowed_hosts:
+        mode = self.current()
+        if mode in (ConnectivityMode.AIR_GAPPED, ConnectivityMode.OFFLINE):
+            return False, f"OFFLINE_UNAVAILABLE: deployment is {mode.value}"
+        if mode is ConnectivityMode.RESTRICTED and host not in self.allowed_hosts:
             return False, f"host '{host}' is not in the operator's allowed_network_hosts (RESTRICTED)"
         return True, "allowed"
 

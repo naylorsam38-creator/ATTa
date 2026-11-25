@@ -106,8 +106,15 @@ def _iid(source) -> str:
     return yaml.safe_load(Path(source).read_text())["integration_id"]
 
 
+def stage01b_runtime_present() -> bool:
+    import inspect
+    from backend.capability_runtime import CapabilityRuntime
+    return "isolation_required" in inspect.signature(CapabilityRuntime.__init__).parameters
+
+
 def build12(tmp: Path, *, connectivity: str = "ONLINE", isolation=None, broker=None, allowed_hosts=(),
-            reuse: H12 | None = None, fixtures: list[str] | None = None, **cfg) -> H12:
+            reuse: H12 | None = None, fixtures: list[str] | None = None, worker_network: str | None = None,
+            connectivity_provider=None, settings=None, **cfg) -> H12:
     if reuse is not None:
         h = build(tmp, reuse=reuse.h)
         src = reuse.src
@@ -123,9 +130,14 @@ def build12(tmp: Path, *, connectivity: str = "ONLINE", isolation=None, broker=N
                                     connectivity=connectivity, allowed_network_hosts=list(allowed_hosts),
                                     mcp_definitions=None, health_max_age_s=0, mcp_request_timeout_s=20,
                                     mcp_startup_timeout_s=10, **cfg)
+    if worker_network is not None:          # Stage 01B runtime only: real per-handler isolation
+        assert stage01b_runtime_present(), "Stage 01B runtime not present"
+        h.controller.runtime.network = worker_network
+        h.controller.runtime.isolation_required = worker_network == "none"
     svc = attach(h.controller, db=Database(h.settings), config=config,
                  authorizer=AuthorizationVerifier(h.root / "operator.pub"), namespace=h.namespace,
-                 isolation=isolation, broker=broker)
+                 isolation=isolation, broker=broker, connectivity_provider=connectivity_provider,
+                 settings=settings)
     return H12(h, svc, src, config)
 
 
@@ -139,5 +151,5 @@ def new_task_id() -> str:
     return f"TASK-{uuid.uuid4().int % 9000 + 1000:04d}"
 
 
-__all__ = ["build12", "H12", "record", "write_notes", "P", "start", "ExplicitTestProposals", "TaskSpec",
+__all__ = ["stage01b_runtime_present", "build12", "H12", "record", "write_notes", "P", "start", "ExplicitTestProposals", "TaskSpec",
            "TrustClass", "canonical_hash", "FIX", "ROOT"]

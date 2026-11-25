@@ -322,8 +322,18 @@ class IntegrationService:
 
 # ---------------------------------------------------------------------- wiring
 def attach(controller, *, db, config: IntegrationsConfig | None = None, authorizer: AuthorizationVerifier,
-           namespace: str = "default", network=None, isolation=None, broker=None, install_root=None) -> IntegrationService:
+           namespace: str = "default", network=None, isolation=None, broker=None, install_root=None,
+           settings=None, connectivity_provider=None) -> IntegrationService:
+    """settings / connectivity_provider: Stage 01B settings and/or a Stage 11 / 01B `current_mode()` provider.
+    isolation defaults to the controller's own runtime (Stage 01B isolation when present, honestly unavailable
+    otherwise)."""
+    from .adapters import ConnectivitySources, RuntimeIsolation
     config = config or load_integrations_config()
+    if network is None:
+        network = ConnectivitySources(config.connectivity, settings, connectivity_provider).policy(
+            config.allowed_network_hosts)
+    if isolation is None:
+        isolation = RuntimeIsolation(controller.runtime)
     store = IntegrationStore(db, namespace)
     registry, catalogue, gateway = controller.registry, controller.catalogue, controller.gateway
     manager = IntegrationManager(store=store, registry=registry, catalogue=catalogue, catalog=controller.policy.catalog,
@@ -358,7 +368,7 @@ def attach_to_controller_service(svc, settings) -> IntegrationService | None:
         from backend.settings.loader import resolve_path
         c = svc.controller
         return attach(c, db=Database(settings), authorizer=AuthorizationVerifier(resolve_path(c.config.operator_public_key)),
-                      namespace=settings.capabilities.catalogue_namespace)
+                      namespace=settings.capabilities.catalogue_namespace, settings=settings)
     except Exception as exc:  # noqa: BLE001
         log.error("integrations unavailable: %s", exc)
         return None

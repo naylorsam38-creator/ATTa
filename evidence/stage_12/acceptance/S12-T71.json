@@ -1,0 +1,16 @@
+{
+  "default_report": {
+    "available": false,
+    "guarantees": [
+      "separate interpreter process (python -I)",
+      "stripped environment (no ATTa secrets)",
+      "rlimits (memory, cpu, file size, open files, no core)",
+      "process-tree kill",
+      "package bytes re-verified before execution",
+      "task workspace working directory"
+    ],
+    "provider": "stage01a-supervised-runtime",
+    "reason": "BLOCKED: the Stage 01B isolating runtime is not present in this build"
+  },
+  "mode": "stage01a-baseline: isolation honestly UNAVAILABLE"
+}

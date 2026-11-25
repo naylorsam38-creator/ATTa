@@ -40,7 +40,8 @@ def test_S12_T40_mcp_negotiation_and_discovery(tmp_path):
     assert srv["lifecycle"] == "HEALTHY" and srv["protocol_version"] == "2025-06-18"
     caps = H.store.mcp_capabilities(MCP)
     tools = {c["name"]: c for c in caps if c["kind"] == "tool"}
-    assert set(tools) == {"echo", "add", "slow", "inject", "big", "fail"} and all(c["accepted"] for c in tools.values())
+    assert set(tools) == {"echo", "add", "slow", "inject", "big", "fail", "probe_env", "net_probe", "ask_client",
+                          "admin_reset"} and all(c["accepted"] for c in tools.values())
     assert [c["name"] for c in caps if c["kind"] == "resource"] == ["test://notes/1"]
     assert [c["name"] for c in caps if c["kind"] == "prompt"] == ["summarise"]
     assert H.svc.health(MCP)["status"] == "HEALTHY"
@@ -178,9 +179,14 @@ def test_S12_T45_http_transport_network_policy_and_dynamic_health(tmp_path):
         assert H.svc.health("test.http_mcp")["status"] == "HEALTHY", "loopback is allowed while AIR_GAPPED"
         n = H.number("test.http_mcp", "echo")
         o = H.objective()
-        c, ctx = start(H.h, o.objective_id, H.spec("TASK-0001", "mcp.test", ["read"], n, paths=["."],
-                                                    proposed_tool_ids=[n]))
-        r = H.h.controller.gateway.execute(ctx, P("TASK-0001", n, "read", {"text": "over http"}))
+        c0, ctx0 = start(H.h, o.objective_id, H.spec("TASK-0001", "mcp.test", ["read"], n, paths=["."],
+                                                      proposed_tool_ids=[n]))
+        r0 = H.h.controller.gateway.execute(ctx0, P("TASK-0001", n, "read", {"text": "no destination"}))
+        assert r0.status == "rejected" and r0.violations[0].rule == "integration_network_not_permitted", r0
+        o = H.objective()
+        c, ctx = start(H.h, o.objective_id, H.spec("TASK-0002", "mcp.test", ["read"], n, paths=["."],
+                                                    proposed_tool_ids=[n], permitted_network_destinations=["127.0.0.1"]))
+        r = H.h.controller.gateway.execute(ctx, P("TASK-0002", n, "read", {"text": "over http"}))
         assert r.status == "executed" and r.output["content"][0]["text"] == "over http"
         hdrs = [{k.lower(): v for k, v in q["headers"].items()} for q in srv.requests]
         assert any(h.get("mcp-session-id") == "test-session-1" for h in hdrs), hdrs

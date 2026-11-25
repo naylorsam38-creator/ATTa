@@ -133,7 +133,12 @@ class ExecutionMode(str, Enum):
 class ConnectivityMode(str, Enum):
     ONLINE = "ONLINE"
     RESTRICTED = "RESTRICTED"     # only hosts explicitly allowed by the operator
+    OFFLINE = "OFFLINE"           # Stage 11 vocabulary: no external network (treated exactly like AIR_GAPPED here)
     AIR_GAPPED = "AIR_GAPPED"     # loopback only; network integrations report OFFLINE_UNAVAILABLE
+
+
+# Most restrictive wins when several sources disagree (fail closed).
+CONNECTIVITY_ORDER = {"ONLINE": 0, "RESTRICTED": 1, "OFFLINE": 2, "AIR_GAPPED": 3}
 
 
 # Permanent numbering: integration tools are numbered CCC.TTT with CCC = the register capability of their type and

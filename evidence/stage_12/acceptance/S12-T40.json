@@ -3,10 +3,14 @@
     "summarise",
     "test://notes/1",
     "add",
+    "admin_reset",
+    "ask_client",
     "big",
     "echo",
     "fail",
     "inject",
+    "net_probe",
+    "probe_env",
     "slow"
   ],
   "install": {

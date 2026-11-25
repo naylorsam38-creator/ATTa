@@ -55,11 +55,17 @@ class StdioConnection:
             raise McpTransportError("stdio command must be a non-empty argv list")
         base_env = {"PATH": os.environ.get("PATH", os.defpath), "LANG": "C.UTF-8", "PYTHONDONTWRITEBYTECODE": "1",
                     "PYTHONUNBUFFERED": "1"}
+        if os.name == "nt":       # Windows cannot start Python without these; they carry no secrets
+            for k in ("SYSTEMROOT", "SYSTEMDRIVE", "PATHEXT", "TEMP", "TMP", "COMSPEC"):
+                if os.environ.get(k):
+                    base_env[k] = os.environ[k]
         base_env.update(env or {})
+        group = {"creationflags": getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)} if os.name == "nt" \
+            else {"start_new_session": True}
         try:
             self.proc = subprocess.Popen(list(argv), stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                          stderr=subprocess.PIPE, cwd=cwd, env=base_env, shell=False,
-                                         start_new_session=True, bufsize=0)
+                                         bufsize=0, **group)
         except OSError as exc:
             raise McpTransportError("could not start MCP server: %s" % exc)
         self.inbox = queue.Queue()
@@ -132,6 +138,20 @@ class StdioConnection:
             self.proc.wait(timeout=1.0)
         except subprocess.TimeoutExpired:
             pass
+        if os.name == "nt":
+            # Windows: kill the server and its whole process tree (no process groups/signals as on POSIX). Under
+            # Stage 01B the supervising Job Object additionally kills anything left when the handler ends.
+            if self.proc.poll() is None:
+                try:
+                    subprocess.run(["taskkill", "/PID", str(self.proc.pid), "/T", "/F"], capture_output=True,
+                                   timeout=10)
+                except (OSError, subprocess.SubprocessError):
+                    pass
+                try:
+                    self.proc.kill()
+                except OSError:
+                    pass
+            return
         for sig in (signal.SIGTERM, signal.SIGKILL):
             if self.proc.poll() is not None:
                 break

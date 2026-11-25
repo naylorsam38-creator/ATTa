@@ -135,8 +135,8 @@ def create_app(settings: Settings | None = None, *, policy: PolicyEngine | None 
         return dep
 
     app.include_router(build_router(authorize), prefix="/v1")
-    from backend.integrations.api import build_integrations_router   # Stage 12 contracts (policy-protected)
-    app.include_router(build_integrations_router(authorize), prefix="/v1")
+    from backend.integrations.api import mount_integrations   # Stage 12 contracts (policy-protected, idempotent)
+    mount_integrations(app, authorize)
 
     @app.get("/v1/health/live", response_model=HealthReport, tags=["health"])
     def live(_: RequestContext = Depends(authorize("health.live"))):

@@ -1,0 +1,21 @@
+{
+  "credential_health": {
+    "checked_at": "2026-11-25T07:33:41.115Z",
+    "detail": {},
+    "integration_id": "test.cred_mcp",
+    "reasons": [
+      "credential 'api_key' unavailable: credential management is provided by Stage 02 (BLOCKED)"
+    ],
+    "state": "ENABLED",
+    "status": "AUTH_REQUIRED",
+    "trust_class": "TRUSTED",
+    "version": "1.0.0"
+  },
+  "redirect": {
+    "error": "MCP server attempted a redirect; refused",
+    "error_type": "McpTransportError",
+    "leftovers_killed": 0,
+    "status": "error",
+    "survivors": []
+  }
+}

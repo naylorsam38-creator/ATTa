@@ -76,6 +76,18 @@ class ExecutionGuard:
             store.event(rec.integration_id, "execution_denied", "execution-guard", {**base, "reasons": a.reasons()},
                         version=rec.version)
             return Violation(rule, "tool_id", "; ".join(a.reasons())[:500])
+        hosts = sorted(rec.manifest.get("network_requirements", {}).get("hosts") or [])
+        missing = [h for h in hosts if h not in (contract.permitted_network_destinations or [])]
+        if missing:
+            # The task contract — not the integration — decides where a task may connect. With Stage 01B the
+            # gateway gives a worker host networking ONLY when the contract permits destinations; without them the
+            # worker (and any MCP server it starts) runs in an empty network namespace.
+            store.event(rec.integration_id, "execution_denied", "execution-guard",
+                        {**base, "reason": "network destinations not permitted by the task contract",
+                         "missing": missing}, version=rec.version)
+            return Violation("integration_network_not_permitted", "tool_id",
+                             f"integration needs {missing}; the task contract permits "
+                             f"{list(contract.permitted_network_destinations)}")
         pin = store.pin(ctx.objective_id, ctx.task_id, proposal.tool_id, rec.integration_id, rec.version,
                         rec.package_digest or "")
         if pin["version"] != rec.version or pin["package_digest"] != (rec.package_digest or ""):

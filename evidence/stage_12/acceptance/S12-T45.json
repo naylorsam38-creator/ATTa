@@ -1,6 +1,6 @@
 {
   "down": {
-    "checked_at": "2026-11-25T07:07:33.094Z",
+    "checked_at": "2026-11-25T07:31:53.211Z",
     "detail": {
       "health": {
         "detail": "McpTransportError: MCP server unreachable: <urlopen error [Errno 111] Connection refused>",

@@ -163,8 +163,84 @@ tools:
   cancellable: true
   idempotency: idempotent
   capability: fixture
+- name: probe_env
+  description: Report environment variable names visible to the server.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: *id001
+  input_schema: *id004
+  output_schema: *id003
+  error_schema: *id002
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  capability: fixture
+- name: net_probe
+  description: Try a TCP connection from the server process.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: *id001
+  input_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - host
+    - port
+    properties:
+      host:
+        type: string
+        maxLength: 200
+      port:
+        type: integer
+  output_schema: *id003
+  error_schema: *id002
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  capability: fixture
+- name: ask_client
+  description: Ask the client for sampling and roots.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: *id001
+  input_schema: *id004
+  output_schema: *id003
+  error_schema: *id002
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  capability: fixture
+- name: admin_reset
+  description: Administrative reset of fixture state.
+  side_effect: ADMINISTRATIVE
+  operations:
+  - read
+  task_types: *id001
+  input_schema: *id004
+  output_schema: *id003
+  error_schema: *id002
+  permissions:
+  - workspace.write
+  risk: high
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  capability: fixture
 permissions_requested:
 - workspace.read
+- workspace.write
 network_requirements:
   hosts: []
 credential_requirements: []
@@ -184,4 +260,4 @@ mcp:
   startup_timeout_s: 10
 integrity:
   files:
-    server.py: 2e6c5cbe49e950bbfbf0ee30f127e41d5f31103c0285493c12d5642340e5d448
+    server.py: 14753dfa0899dd9663406439266aa5d243d9592af53654b9b7ad75de7deae0f9
