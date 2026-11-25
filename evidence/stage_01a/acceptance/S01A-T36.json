@@ -1,10 +1,10 @@
 {
   "repair_contract": {
     "task_id": "TASK-0002",
-    "parent_objective_id": "obj_01M88FPCN9N5PZYK6ZKTQKJ08X",
+    "parent_objective_id": "obj_01M88GV8886KPYT7VW10VQEY8W",
     "parent_task_id": "TASK-0001",
     "contract_version": 1,
-    "contract_hash": "b683cd6897e08f73b7660bf2a2fe7d1e2bc4df24c972180b2f0762429d846961",
+    "contract_hash": "cd8572f469f31bd66a34f99ede10698f4abd0dcc4d43cc0ce032eb73f458effb",
     "requirement_ids": [
       "FR-01"
     ],

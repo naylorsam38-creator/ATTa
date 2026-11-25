@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T31",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T31_no_direct_tool_execution_outside_controller"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:51:12.290Z",
+  "finished_at": "2026-11-25T04:51:15.548Z",
+  "duration_s": 3.258,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.25s\n",
+  "stderr": "",
+  "output_sha256": "24b46701e9994409aa1605b5bd4bfa23ebbc12f523d146a5a7818b677a1497f0"
+}

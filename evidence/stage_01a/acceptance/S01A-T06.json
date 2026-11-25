@@ -1,10 +1,10 @@
 {
   "contract": {
     "task_id": "TASK-0001",
-    "parent_objective_id": "obj_01M88FBA0YQ75Q2YMGRKNZ41HK",
+    "parent_objective_id": "obj_01M88GQ30CB3KF0CXA7S1NS5MN",
     "parent_task_id": null,
     "contract_version": 1,
-    "contract_hash": "01f6b56538a4537d2db524a154ddadd468437a8e9f6847ee9013da7b137f4f04",
+    "contract_hash": "2192c52cd4abf70f5ad6fe24e67ce270216be6bd42dcea4c9d4ab7784ce9f113",
     "requirement_ids": [
       "FR-01"
     ],

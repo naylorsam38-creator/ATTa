@@ -7,41 +7,49 @@
       "name": "postgres",
       "essential": true,
       "status": "healthy",
-      "latency_ms": 18.62,
-      "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0",
-      "checked_at": "2026-11-25T03:37:51.089482Z"
+      "latency_ms": 18.78,
+      "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0, schema current (3 migrations), runtime role 'atta_app' least-privileged",
+      "checked_at": "2026-11-25T04:58:02.036574Z"
     },
     "redis": {
       "name": "redis",
       "essential": true,
       "status": "unhealthy",
-      "latency_ms": 1.63,
-      "detail": "ConnectionError: Error 111 connecting to 127.0.0.1:37613. Connection refused.",
-      "checked_at": "2026-11-25T03:37:51.091158Z"
+      "latency_ms": 1.4,
+      "detail": "ConnectionError: Error 111 connecting to 127.0.0.1:56057. Connection refused.",
+      "checked_at": "2026-11-25T04:58:02.038017Z"
     },
     "object_storage": {
       "name": "object_storage",
       "essential": false,
       "status": "unhealthy",
-      "latency_ms": 66.88,
+      "latency_ms": 67.29,
       "detail": "RuntimeError: object storage credentials not configured (ATTA_S3_ACCESS_KEY_ID / ATTA_S3_SECRET_ACCESS_KEY)",
-      "checked_at": "2026-11-25T03:37:51.158105Z"
+      "checked_at": "2026-11-25T04:58:02.105355Z"
     },
     "temporal": {
       "name": "temporal",
       "essential": false,
       "status": "unhealthy",
-      "latency_ms": 0.16,
+      "latency_ms": 0.15,
       "detail": "ConnectionRefusedError: [Errno 111] Connection refused",
-      "checked_at": "2026-11-25T03:37:51.158290Z"
+      "checked_at": "2026-11-25T04:58:02.105524Z"
     },
     "api": {
       "name": "api",
       "essential": true,
       "status": "unhealthy",
-      "latency_ms": 41.9,
+      "latency_ms": 6.7,
       "detail": "ConnectError: [Errno 111] Connection refused",
-      "checked_at": "2026-11-25T03:37:51.200227Z"
+      "checked_at": "2026-11-25T04:58:02.112254Z"
+    },
+    "controller": {
+      "name": "controller",
+      "essential": true,
+      "status": "unhealthy",
+      "latency_ms": 5.93,
+      "detail": "ConnectError: [Errno 111] Connection refused",
+      "checked_at": "2026-11-25T04:58:02.118215Z"
     }
   },
   "capabilities": [
@@ -50,7 +58,7 @@
       "version": "1.0.0",
       "state": "dependency_missing",
       "executable": false,
-      "source": "/tmp/pytest-of-root/pytest-18/test_S01_T10_detect_unavailabl0/chained/capability.yaml",
+      "source": "/tmp/pytest-of-root/pytest-109/test_S01_T10_detect_unavailabl0/chained/capability.yaml",
       "requirement": "CAP-40",
       "risk": "low",
       "problems": [
@@ -62,7 +70,7 @@
       "version": "1.0.0",
       "state": "dependency_missing",
       "executable": false,
-      "source": "/tmp/pytest-of-root/pytest-18/test_S01_T10_detect_unavailabl0/missing_cap/capability.yaml",
+      "source": "/tmp/pytest-of-root/pytest-109/test_S01_T10_detect_unavailabl0/missing_cap/capability.yaml",
       "requirement": "CAP-40",
       "risk": "low",
       "problems": [
@@ -74,7 +82,7 @@
       "version": "1.0.0",
       "state": "dependency_missing",
       "executable": false,
-      "source": "/tmp/pytest-of-root/pytest-18/test_S01_T10_detect_unavailabl0/needs_mod/capability.yaml",
+      "source": "/tmp/pytest-of-root/pytest-109/test_S01_T10_detect_unavailabl0/needs_mod/capability.yaml",
       "requirement": "CAP-40",
       "risk": "low",
       "problems": [
@@ -86,7 +94,7 @@
       "version": "1.0.0",
       "state": "dependency_missing",
       "executable": false,
-      "source": "/tmp/pytest-of-root/pytest-18/test_S01_T10_detect_unavailabl0/needs_svc/capability.yaml",
+      "source": "/tmp/pytest-of-root/pytest-109/test_S01_T10_detect_unavailabl0/needs_svc/capability.yaml",
       "requirement": "CAP-40",
       "risk": "low",
       "problems": [

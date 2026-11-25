@@ -3,18 +3,18 @@
     {
       "start_state": "degraded",
       "pids": [
-        18196,
-        18200,
-        18205
+        2329,
+        2332,
+        2337
       ],
       "stop": "stopped cleanly"
     },
     {
       "start_state": "degraded",
       "pids": [
-        18224,
-        18229,
-        18234
+        2373,
+        2376,
+        2381
       ],
       "stop": "stopped cleanly"
     }

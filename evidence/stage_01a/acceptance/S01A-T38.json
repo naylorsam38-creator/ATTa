@@ -1,7 +1,7 @@
 {
-  "checkpoint": "chk_01M88FJQWPBP87D9D9NH4S1VKM",
+  "checkpoint": "chk_01M88GW1HWA566TQFESQANPXDJ",
   "recovery": {
-    "checkpoint": "chk_01M88FJQWPBP87D9D9NH4S1VKM",
+    "checkpoint": "chk_01M88GW1HWA566TQFESQANPXDJ",
     "actions": [
       {
         "check_output": "TASK-0001/OUT-01",

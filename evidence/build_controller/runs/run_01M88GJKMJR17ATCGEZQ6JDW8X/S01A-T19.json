@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T19",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T19_reject_unauthorised_resource_ids"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:50:55.299Z",
+  "finished_at": "2026-11-25T04:50:58.417Z",
+  "duration_s": 3.117,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.22s\n",
+  "stderr": "",
+  "output_sha256": "732f8d154896be6b6d98e92417b90f627e9ab33c65c5d3abb855763e9eb3f30a"
+}

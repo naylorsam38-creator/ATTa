@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T18",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T18_reject_invalid_tool_arguments"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:50:52.040Z",
+  "finished_at": "2026-11-25T04:50:55.299Z",
+  "duration_s": 3.258,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.36s\n",
+  "stderr": "",
+  "output_sha256": "103bf29205be66bdac8d64ed4dc1b72aaa5c7372a96610f8674ec0260f948435"
+}

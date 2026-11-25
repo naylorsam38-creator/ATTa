@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T09",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T09_allocate_only_compatible_tools"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:49:52.680Z",
+  "finished_at": "2026-11-25T04:49:56.017Z",
+  "duration_s": 3.337,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.26s\n",
+  "stderr": "",
+  "output_sha256": "810bc9f3f7336b25d1022f1e886b31bc747de99d7b76983f12e8e6c222866db7"
+}

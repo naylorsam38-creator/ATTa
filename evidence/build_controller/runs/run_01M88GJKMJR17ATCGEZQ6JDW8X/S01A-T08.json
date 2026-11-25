@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T08",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T08_reject_circular_dependencies"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:49:27.199Z",
+  "finished_at": "2026-11-25T04:49:30.095Z",
+  "duration_s": 2.896,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.04s\n",
+  "stderr": "",
+  "output_sha256": "ea08d0d8cbbc967fe0df0e9ad261496733e266de7c14d4d9a493f2bb3722e12a"
+}

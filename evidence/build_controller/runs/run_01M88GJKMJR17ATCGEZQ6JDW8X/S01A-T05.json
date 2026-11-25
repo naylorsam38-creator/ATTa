@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T05",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T05_reject_duplicate_tool_identifiers"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:49:47.630Z",
+  "finished_at": "2026-11-25T04:49:52.678Z",
+  "duration_s": 5.049,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 4.09s\n",
+  "stderr": "",
+  "output_sha256": "3de429cb9750fe9e18d6e4a5804ba199514c2996fb507f228dd66ebab68110ba"
+}

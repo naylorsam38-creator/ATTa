@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T11",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T11_worker_cannot_increase_its_own_permissions"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:50:45.545Z",
+  "finished_at": "2026-11-25T04:50:48.627Z",
+  "duration_s": 3.082,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.19s\n",
+  "stderr": "",
+  "output_sha256": "c025392b97936947b16582a300ae897cbcb2c608d010b0a752908b7641a46c5b"
+}

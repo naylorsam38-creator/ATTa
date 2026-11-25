@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T14",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T14_concurrent_controllers_cannot_exceed_limit"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:50:14.050Z",
+  "finished_at": "2026-11-25T04:50:26.775Z",
+  "duration_s": 12.725,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 11.81s\n",
+  "stderr": "",
+  "output_sha256": "98570c9368fe2bdadd0fda3d26c931cdc85013e443b4015a660c796a9d8649cc"
+}

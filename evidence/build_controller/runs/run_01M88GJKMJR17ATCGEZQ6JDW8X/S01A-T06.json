@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T06",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T06_generate_and_validate_task_contract"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:49:21.063Z",
+  "finished_at": "2026-11-25T04:49:24.161Z",
+  "duration_s": 3.098,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.18s\n",
+  "stderr": "",
+  "output_sha256": "3bc955c628f7678a9d341c6051090b6ddfe3afec11d5e7b70f2bcaeaf412ac7f"
+}

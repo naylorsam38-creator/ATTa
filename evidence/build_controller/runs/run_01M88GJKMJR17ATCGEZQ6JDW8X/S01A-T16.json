@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T16",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T16_no_progression_after_failed_integration"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:50:30.640Z",
+  "finished_at": "2026-11-25T04:50:34.620Z",
+  "duration_s": 3.98,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 3.08s\n",
+  "stderr": "",
+  "output_sha256": "66417a111dbb1b66a312e7cec618c0c196dd3fa3d25f08163e5a5e401878a1c0"
+}

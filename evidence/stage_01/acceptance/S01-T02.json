@@ -8,6 +8,6 @@
     "jsonschema": "4.26.0"
   },
   "next": "16.4.6",
-  "duration_s": 17.4,
-  "install_stdout_tail": "[install] python: /usr/local/bin/python3.13 (Python 3.13.18)\n[install] creating virtual environment /tmp/pytest-of-root/pytest-11/test_S01_T02_clean_environment0/venv\n[install] installing locked backend dependencies (backend-core.lock.txt)\nNo broken requirements found.\nCONFIGURATION VALID\n[install] INSTALL COMPLETE\n"
+  "duration_s": 18.4,
+  "install_stdout_tail": "[install] python: /usr/local/bin/python3.13 (Python 3.13.18)\n[install] creating virtual environment /tmp/pytest-of-root/pytest-109/test_S01_T02_clean_environment0/venv\n[install] installing locked backend dependencies (backend-core.lock.txt)\nNo broken requirements found.\nCONFIGURATION VALID\n[install] INSTALL COMPLETE\n"
 }

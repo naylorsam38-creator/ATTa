@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T35",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T35_reject_fabricated_or_missing_evidence"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:53:47.190Z",
+  "finished_at": "2026-11-25T04:53:53.123Z",
+  "duration_s": 5.933,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 5.09s\n",
+  "stderr": "",
+  "output_sha256": "7cf02fdd5978e27b67636df7d902e5c24abd42da281a01cefb88f1b9dc5e20f9"
+}

@@ -49,9 +49,12 @@ def run_command(test_id: str, command: list[str], cwd: Path, expected_exit_code:
                 env: dict[str, str] | None = None) -> CommandEvidence:
     started, t0 = iso_utc(), time.monotonic()
     timed_out = False
+    # Code under test must never learn the verifier's configuration (signing-key path, operator key, users):
+    # ATTA_BUILD_* variables are removed from every test environment.
+    base_env = {k: v for k, v in os.environ.items() if not k.startswith("ATTA_BUILD_")}
     try:
         cp = subprocess.run(command, cwd=str(cwd), capture_output=True, text=True, timeout=timeout_s,
-                            env={**os.environ, **(env or {})}, encoding="utf-8", errors="replace")
+                            env={**base_env, **(env or {})}, encoding="utf-8", errors="replace")
         code, out, err = cp.returncode, cp.stdout, cp.stderr
     except subprocess.TimeoutExpired as exc:
         timed_out, code = True, None

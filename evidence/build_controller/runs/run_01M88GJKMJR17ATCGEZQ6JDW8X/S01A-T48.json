@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T48",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T48_existing_stage01_acceptance_tests"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:54:51.496Z",
+  "finished_at": "2026-11-25T04:55:57.919Z",
+  "duration_s": 66.423,
+  "exit_code": 1,
+  "expected_exit_code": 0,
+  "passed": false,
+  "timed_out": false,
+  "stdout": "F                                                                        [100%]\n=================================== FAILURES ===================================\n_______________ test_S01A_T48_existing_stage01_acceptance_tests ________________\n\ntmp_path = PosixPath('/tmp/pytest-of-root/pytest-105/test_S01A_T48_existing_stage010')\n\n    def test_S01A_T48_existing_stage01_acceptance_tests(tmp_path):\n        junit = tmp_path / \"s01.xml\"\n        subprocess.run([PY, \"-m\", \"pytest\", \"-q\", \"-p\", \"no:cacheprovider\", str(S01_TESTS), \"-k\", \"not T16\",\n                        f\"--junitxml={junit}\"], cwd=ROOT, capture_output=True, text=True, timeout=1800)\n        res = _junit(junit)\n        expected_pass = [n for n in res if n not in SUPERSEDED]\n>       assert len(expected_pass) == 10 and all(res[n][0] == \"passed\" for n in expected_pass), \\\n            {n: res[n][0] for n in expected_pass}\nE       AssertionError: {'test_S01_T01_repository_structure': 'passed', 'test_S01_T02_clean_environment_install': 'passed', 'test_S01_T03_start_service_manager': 'passed', 'test_S01_T04_backend_liveness': 'passed', ...}\nE       assert (10 == 10 and False)\nE        +  where 10 = len(['test_S01_T01_repository_structure', 'test_S01_T02_clean_environment_install', 'test_S01_T03_start_service_manager', ...kend_liveness', 'test_S01_T05_readiness_reflects_dependency_health', 'test_S01_T10_detect_unavailable_dependency', ...])\nE        +  and   False = all(<generator object test_S01A_T48_existing_stage01_acceptance_tests.<locals>.<genexpr> at 0x7f1c05726b50>)\n\ntests/acceptance/test_s01a_acceptance_b.py:571: AssertionError\n=========================== short test summary info ============================\nFAILED tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T48_existing_stage01_acceptance_tests\n1 failed in 65.48s (0:01:05)\n",
+  "stderr": "",
+  "output_sha256": "897e78c2ffbad19d8bcdaecff90f14374e7b172d61d220495eb3f074e81542c1"
+}

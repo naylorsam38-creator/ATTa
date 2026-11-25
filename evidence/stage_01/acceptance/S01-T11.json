@@ -1,18 +1,19 @@
 {
   "startup_with_postgres_down": {
-    "manager_pid": 18135,
+    "manager_pid": 2100,
     "state": "failed",
     "ready": false,
     "environment": "test",
-    "started_at": "2026-11-25T03:37:52.948Z",
-    "updated_at": "2026-11-25T03:37:55.324Z",
+    "started_at": "2026-11-25T04:58:02.788Z",
+    "updated_at": "2026-11-25T04:58:05.566Z",
     "reasons": [
-      "essential service 'postgres' failed to start: OperationalError: connection failed: connection to server at \"127.0.0.1\", port 36015 failed: Connection refused\n\tIs the server running on that host and accepting TCP/IP connections?"
+      "essential service 'postgres' failed to start: OperationalError: connection failed: connection to server at \"127.0.0.1\", port 33539 failed: Connection refused\n\tIs the server running on that host and accepting TCP/IP connections?"
     ],
     "startup_order": [
       "postgres",
       "redis",
       "api",
+      "controller",
       "object_storage",
       "temporal"
     ],
@@ -24,14 +25,14 @@
         "status": "failed",
         "pid": null,
         "restarts": 0,
-        "detail": "OperationalError: connection failed: connection to server at \"127.0.0.1\", port 36015 failed: Connection refused\n\tIs the server running on that host and accepting TCP/IP connections?",
+        "detail": "OperationalError: connection failed: connection to server at \"127.0.0.1\", port 33539 failed: Connection refused\n\tIs the server running on that host and accepting TCP/IP connections?",
         "health": {
           "name": "postgres",
           "essential": true,
           "status": "unhealthy",
-          "latency_ms": 0.61,
-          "detail": "OperationalError: connection failed: connection to server at \"127.0.0.1\", port 36015 failed: Connection refused\n\tIs the server running on that host and accepting TCP/IP connections?",
-          "checked_at": "2026-11-25T03:37:55.061213Z"
+          "latency_ms": 0.81,
+          "detail": "OperationalError: connection failed: connection to server at \"127.0.0.1\", port 33539 failed: Connection refused\n\tIs the server running on that host and accepting TCP/IP connections?",
+          "checked_at": "2026-11-25T04:58:04.939269Z"
         }
       },
       "redis": {
@@ -73,6 +74,16 @@
         "restarts": 0,
         "detail": "",
         "health": null
+      },
+      "controller": {
+        "name": "controller",
+        "essential": true,
+        "mode": "external",
+        "status": "pending",
+        "pid": null,
+        "restarts": 0,
+        "detail": "",
+        "health": null
       }
     },
     "models": [
@@ -80,17 +91,17 @@
         "name": "model:ollama-local",
         "essential": false,
         "status": "unhealthy",
-        "latency_ms": 6.26,
+        "latency_ms": 9.14,
         "detail": "ConnectError: [Errno 111] Connection refused",
-        "checked_at": "2026-11-25T03:37:53.297641Z"
+        "checked_at": "2026-11-25T04:58:03.172190Z"
       },
       {
         "name": "model:llamacpp-local",
         "essential": false,
         "status": "unhealthy",
-        "latency_ms": 5.97,
+        "latency_ms": 8.82,
         "detail": "ConnectError: [Errno 111] Connection refused",
-        "checked_at": "2026-11-25T03:37:53.303647Z"
+        "checked_at": "2026-11-25T04:58:03.181054Z"
       }
     ],
     "capabilities": [
@@ -107,17 +118,18 @@
     ]
   },
   "after_first_crash": {
-    "manager_pid": 18141,
+    "manager_pid": 2114,
     "state": "degraded",
     "ready": true,
     "environment": "test",
-    "started_at": "2026-11-25T03:37:56.413Z",
-    "updated_at": "2026-11-25T03:37:58.946Z",
+    "started_at": "2026-11-25T04:58:06.896Z",
+    "updated_at": "2026-11-25T04:58:10.399Z",
     "reasons": [],
     "startup_order": [
       "postgres",
       "redis",
       "api",
+      "controller",
       "object_storage",
       "temporal"
     ],
@@ -129,14 +141,14 @@
         "status": "healthy",
         "pid": null,
         "restarts": 0,
-        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0",
+        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0, schema current (3 migrations), runtime role 'atta_app' least-privileged",
         "health": {
           "name": "postgres",
           "essential": true,
           "status": "healthy",
-          "latency_ms": 15.16,
-          "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0",
-          "checked_at": "2026-11-25T03:37:58.475825Z"
+          "latency_ms": 16.2,
+          "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0, schema current (3 migrations), runtime role 'atta_app' least-privileged",
+          "checked_at": "2026-11-25T04:58:09.899109Z"
         }
       },
       "redis": {
@@ -144,16 +156,16 @@
         "essential": true,
         "mode": "managed",
         "status": "healthy",
-        "pid": 18165,
+        "pid": 2154,
         "restarts": 1,
-        "detail": "Redis 7.0.15 at 127.0.0.1:34267",
+        "detail": "Redis 7.0.15 at 127.0.0.1:53027",
         "health": {
           "name": "redis",
           "essential": true,
           "status": "healthy",
-          "latency_ms": 2.25,
-          "detail": "Redis 7.0.15 at 127.0.0.1:34267",
-          "checked_at": "2026-11-25T03:37:58.935388Z"
+          "latency_ms": 7.66,
+          "detail": "Redis 7.0.15 at 127.0.0.1:53027",
+          "checked_at": "2026-11-25T04:58:10.362881Z"
         }
       },
       "object_storage": {
@@ -170,7 +182,7 @@
           "status": "unhealthy",
           "latency_ms": 0.01,
           "detail": "RuntimeError: object storage credentials not configured (ATTA_S3_ACCESS_KEY_ID / ATTA_S3_SECRET_ACCESS_KEY)",
-          "checked_at": "2026-11-25T03:37:58.946391Z"
+          "checked_at": "2026-11-25T04:58:10.399082Z"
         }
       },
       "temporal": {
@@ -185,9 +197,9 @@
           "name": "temporal",
           "essential": false,
           "status": "unhealthy",
-          "latency_ms": 0.1,
+          "latency_ms": 0.09,
           "detail": "ConnectionRefusedError: [Errno 111] Connection refused",
-          "checked_at": "2026-11-25T03:37:58.946500Z"
+          "checked_at": "2026-11-25T04:58:10.399186Z"
         }
       },
       "api": {
@@ -195,16 +207,33 @@
         "essential": true,
         "mode": "managed",
         "status": "healthy",
-        "pid": 18149,
+        "pid": 2122,
         "restarts": 0,
-        "detail": "HTTP 200 from http://127.0.0.1:42357/v1/health/live",
+        "detail": "HTTP 200 from http://127.0.0.1:57135/v1/health/live",
         "health": {
           "name": "api",
           "essential": true,
           "status": "healthy",
-          "latency_ms": 10.91,
-          "detail": "HTTP 200 from http://127.0.0.1:42357/v1/health/live",
-          "checked_at": "2026-11-25T03:37:58.946350Z"
+          "latency_ms": 11.49,
+          "detail": "HTTP 200 from http://127.0.0.1:57135/v1/health/live",
+          "checked_at": "2026-11-25T04:58:10.374431Z"
+        }
+      },
+      "controller": {
+        "name": "controller",
+        "essential": true,
+        "mode": "external",
+        "status": "healthy",
+        "pid": null,
+        "restarts": 0,
+        "detail": "HTTP 200 from http://127.0.0.1:57135/v1/health/controller",
+        "health": {
+          "name": "controller",
+          "essential": true,
+          "status": "healthy",
+          "latency_ms": 24.57,
+          "detail": "HTTP 200 from http://127.0.0.1:57135/v1/health/controller",
+          "checked_at": "2026-11-25T04:58:10.399045Z"
         }
       }
     },
@@ -213,17 +242,17 @@
         "name": "model:ollama-local",
         "essential": false,
         "status": "unhealthy",
-        "latency_ms": 7.34,
+        "latency_ms": 9.36,
         "detail": "ConnectError: [Errno 111] Connection refused",
-        "checked_at": "2026-11-25T03:37:56.844528Z"
+        "checked_at": "2026-11-25T04:58:07.354784Z"
       },
       {
         "name": "model:llamacpp-local",
         "essential": false,
         "status": "unhealthy",
-        "latency_ms": 6.22,
+        "latency_ms": 9.38,
         "detail": "ConnectError: [Errno 111] Connection refused",
-        "checked_at": "2026-11-25T03:37:56.850789Z"
+        "checked_at": "2026-11-25T04:58:07.364226Z"
       }
     ],
     "capabilities": [
@@ -240,12 +269,12 @@
     ]
   },
   "after_second_crash": {
-    "manager_pid": 18141,
+    "manager_pid": 2114,
     "state": "failed",
     "ready": false,
     "environment": "test",
-    "started_at": "2026-11-25T03:37:56.413Z",
-    "updated_at": "2026-11-25T03:37:59.471Z",
+    "started_at": "2026-11-25T04:58:06.896Z",
+    "updated_at": "2026-11-25T04:58:10.959Z",
     "reasons": [
       "essential service 'redis' is failed: process exited (-9); restart budget exhausted (1 in 300.0s)"
     ],
@@ -253,6 +282,7 @@
       "postgres",
       "redis",
       "api",
+      "controller",
       "object_storage",
       "temporal"
     ],
@@ -264,14 +294,14 @@
         "status": "healthy",
         "pid": null,
         "restarts": 0,
-        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0",
+        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0, schema current (3 migrations), runtime role 'atta_app' least-privileged",
         "health": {
           "name": "postgres",
           "essential": true,
           "status": "healthy",
-          "latency_ms": 12.83,
-          "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0",
-          "checked_at": "2026-11-25T03:37:59.460808Z"
+          "latency_ms": 18.9,
+          "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0, schema current (3 migrations), runtime role 'atta_app' least-privileged",
+          "checked_at": "2026-11-25T04:58:10.919477Z"
         }
       },
       "redis": {
@@ -286,9 +316,9 @@
           "name": "redis",
           "essential": true,
           "status": "unhealthy",
-          "latency_ms": 1.37,
-          "detail": "ConnectionError: Error 111 connecting to 127.0.0.1:34267. Connection refused.",
-          "checked_at": "2026-11-25T03:37:59.462268Z"
+          "latency_ms": 1.68,
+          "detail": "ConnectionError: Error 111 connecting to 127.0.0.1:53027. Connection refused.",
+          "checked_at": "2026-11-25T04:58:10.921252Z"
         }
       },
       "object_storage": {
@@ -305,7 +335,7 @@
           "status": "unhealthy",
           "latency_ms": 0.02,
           "detail": "RuntimeError: object storage credentials not configured (ATTA_S3_ACCESS_KEY_ID / ATTA_S3_SECRET_ACCESS_KEY)",
-          "checked_at": "2026-11-25T03:37:59.471566Z"
+          "checked_at": "2026-11-25T04:58:10.958533Z"
         }
       },
       "temporal": {
@@ -320,9 +350,9 @@
           "name": "temporal",
           "essential": false,
           "status": "unhealthy",
-          "latency_ms": 0.1,
+          "latency_ms": 0.12,
           "detail": "ConnectionRefusedError: [Errno 111] Connection refused",
-          "checked_at": "2026-11-25T03:37:59.471676Z"
+          "checked_at": "2026-11-25T04:58:10.958663Z"
         }
       },
       "api": {
@@ -330,16 +360,33 @@
         "essential": true,
         "mode": "managed",
         "status": "healthy",
-        "pid": 18149,
+        "pid": 2122,
         "restarts": 0,
-        "detail": "HTTP 200 from http://127.0.0.1:42357/v1/health/live",
+        "detail": "HTTP 200 from http://127.0.0.1:57135/v1/health/live",
         "health": {
           "name": "api",
           "essential": true,
           "status": "healthy",
-          "latency_ms": 9.03,
-          "detail": "HTTP 200 from http://127.0.0.1:42357/v1/health/live",
-          "checked_at": "2026-11-25T03:37:59.471525Z"
+          "latency_ms": 11.73,
+          "detail": "HTTP 200 from http://127.0.0.1:57135/v1/health/live",
+          "checked_at": "2026-11-25T04:58:10.933275Z"
+        }
+      },
+      "controller": {
+        "name": "controller",
+        "essential": true,
+        "mode": "external",
+        "status": "healthy",
+        "pid": null,
+        "restarts": 0,
+        "detail": "HTTP 200 from http://127.0.0.1:57135/v1/health/controller",
+        "health": {
+          "name": "controller",
+          "essential": true,
+          "status": "healthy",
+          "latency_ms": 25.17,
+          "detail": "HTTP 200 from http://127.0.0.1:57135/v1/health/controller",
+          "checked_at": "2026-11-25T04:58:10.958487Z"
         }
       }
     },
@@ -348,17 +395,17 @@
         "name": "model:ollama-local",
         "essential": false,
         "status": "unhealthy",
-        "latency_ms": 7.34,
+        "latency_ms": 9.36,
         "detail": "ConnectError: [Errno 111] Connection refused",
-        "checked_at": "2026-11-25T03:37:56.844528Z"
+        "checked_at": "2026-11-25T04:58:07.354784Z"
       },
       {
         "name": "model:llamacpp-local",
         "essential": false,
         "status": "unhealthy",
-        "latency_ms": 6.22,
+        "latency_ms": 9.38,
         "detail": "ConnectError: [Errno 111] Connection refused",
-        "checked_at": "2026-11-25T03:37:56.850789Z"
+        "checked_at": "2026-11-25T04:58:07.364226Z"
       }
     ],
     "capabilities": [
@@ -383,17 +430,17 @@
         "name": "postgres",
         "essential": true,
         "status": "healthy",
-        "latency_ms": 15.03,
-        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0",
-        "checked_at": "2026-11-25T03:37:59.594211Z"
+        "latency_ms": 16.6,
+        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0, schema current (3 migrations), runtime role 'atta_app' least-privileged",
+        "checked_at": "2026-11-25T04:58:11.177027Z"
       },
       {
         "name": "redis",
         "essential": true,
         "status": "unhealthy",
-        "latency_ms": 2.32,
-        "detail": "ConnectionError: Error 111 connecting to 127.0.0.1:34267. Connection refused.",
-        "checked_at": "2026-11-25T03:37:59.582367Z"
+        "latency_ms": 2.48,
+        "detail": "ConnectionError: Error 111 connecting to 127.0.0.1:53027. Connection refused.",
+        "checked_at": "2026-11-25T04:58:11.163718Z"
       },
       {
         "name": "object_storage",
@@ -401,23 +448,23 @@
         "status": "unhealthy",
         "latency_ms": 0.02,
         "detail": "RuntimeError: object storage credentials not configured (ATTA_S3_ACCESS_KEY_ID / ATTA_S3_SECRET_ACCESS_KEY)",
-        "checked_at": "2026-11-25T03:37:59.580673Z"
+        "checked_at": "2026-11-25T04:58:11.161736Z"
       },
       {
         "name": "temporal",
         "essential": false,
         "status": "unhealthy",
-        "latency_ms": 0.34,
+        "latency_ms": 1.6,
         "detail": "ConnectionRefusedError: [Errno 111] Connection refused",
-        "checked_at": "2026-11-25T03:37:59.582521Z"
+        "checked_at": "2026-11-25T04:58:11.163556Z"
       }
     ],
     "capabilities": {
       "available": 1
     },
     "reasons": [
-      "essential dependency 'redis' is unhealthy: ConnectionError: Error 111 connecting to 127.0.0.1:34267. Connection refused."
+      "essential dependency 'redis' is unhealthy: ConnectionError: Error 111 connecting to 127.0.0.1:53027. Connection refused."
     ],
-    "checked_at": "2026-11-25T03:37:59.594825Z"
+    "checked_at": "2026-11-25T04:58:11.177641Z"
   }
 }

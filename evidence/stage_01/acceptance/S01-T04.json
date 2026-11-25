@@ -3,18 +3,18 @@
     "status": "healthy",
     "service": "atta-api",
     "version": "0.1.0",
-    "checked_at": "2026-11-25T03:37:22.190593Z"
+    "checked_at": "2026-11-25T04:57:54.407376Z"
   },
   "headers": {
-    "date": "Wed, 25 Nov 2026 03:37:21 GMT",
+    "date": "Wed, 25 Nov 2026 04:57:53 GMT",
     "server": "uvicorn",
     "content-length": "102",
     "content-type": "application/json",
     "vary": "Origin",
-    "x-correlation-id": "cor_01M88CF2GDNN72BRZSEJWHQPER",
-    "x-request-id": "req_01M88CF2GDWA2BD5RYPWD8W628",
+    "x-correlation-id": "cor_01M88H2HF6B1K606C6Z38M505P",
+    "x-request-id": "req_01M88H2HF603BH21DYPJ3XDK52",
     "x-content-type-options": "nosniff",
     "cache-control": "no-store"
   },
-  "api_pid": 17947
+  "api_pid": 1993
 }

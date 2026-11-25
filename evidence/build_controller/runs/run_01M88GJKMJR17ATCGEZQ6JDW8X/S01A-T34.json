@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T34",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T34_reject_completion_without_verification"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:53:43.287Z",
+  "finished_at": "2026-11-25T04:53:47.189Z",
+  "duration_s": 3.903,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 3.06s\n",
+  "stderr": "",
+  "output_sha256": "48df863d17064056c0d7e8a995463d4f55a46966e63c9be6593d1e729ca707b0"
+}

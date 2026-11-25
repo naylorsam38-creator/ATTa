@@ -1,0 +1,25 @@
+{
+  "test_id": "S01A-CPA-02",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/unit",
+    "tests/integration",
+    "tests/security"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:52:42.612Z",
+  "finished_at": "2026-11-25T04:52:47.080Z",
+  "duration_s": 4.468,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": "...................................                                      [100%]\n35 passed in 3.46s\n",
+  "stderr": "",
+  "output_sha256": "45b535b26c3f5f58f20e1512d89544be670e0c57e32402953c1d1e955b748b50"
+}

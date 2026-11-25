@@ -4,7 +4,7 @@
     "components": {
       "controller": {
         "ok": true,
-        "detail": "svc_01M88FVXXY6G5T7AAQTTRNTKD5"
+        "detail": "svc_01M88GWC3BH0RBGX4RTE4T6EWT"
       },
       "capability_registry": {
         "ok": true,
@@ -35,7 +35,7 @@
         "detail": "anonymous tool.execute is denied"
       }
     },
-    "active_tasks": 59,
-    "blocked_tasks": 21
+    "active_tasks": 110,
+    "blocked_tasks": 34
   }
 }

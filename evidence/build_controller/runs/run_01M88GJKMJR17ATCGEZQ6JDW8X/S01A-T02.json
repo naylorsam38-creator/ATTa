@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T02",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T02_reject_unauthorised_objective_modification"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:49:18.058Z",
+  "finished_at": "2026-11-25T04:49:21.062Z",
+  "duration_s": 3.004,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.05s\n",
+  "stderr": "",
+  "output_sha256": "05f8728bd70b877b6b76e9ef846d97bae0d77b92170ad9f3382cee821caa91ea"
+}

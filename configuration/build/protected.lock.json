@@ -1,12 +1,12 @@
 {
-  "sealed_at": "2026-11-25T04:48:15.740Z",
+  "sealed_at": "2026-11-25T04:59:05.592Z",
   "sealed_by": "root@build-host verifier (sandbox; see BLOCKERS B-009/B-016)",
   "files": {
     "backend/verification/__init__.py": "27c40e3e22dd48de0e7aad9739ae9be8253bd9d0cb6279f1f3b3d6509a58fc5d",
     "backend/verification/__main__.py": "206ab17b8e5f15ff587438a91d0dd96986174f6b914a41f55841cf0fe52ad87a",
     "backend/verification/build_controller.py": "f9a6c250583aa41e328bcc9fd7f5748cac01efe2ae2f63d2d2226376baafef88",
     "backend/verification/protection.py": "8d3fb270809f80d7a51d47d9b2402acd73b375f8db4ef5afa7f1604f2cadf750",
-    "backend/verification/runner.py": "93553677e95b63e7330eac8634998f2d212a6e58c2933b9aefb002c46d86b229",
+    "backend/verification/runner.py": "547688fe3f597c194046a66bb4adb3032c7b581ae81d806631a77fc4c37f5a72",
     "backend/verification/verify.py": "8a3a84ce016939ee500a0421e345064eda17383524a09769be110a8b590f9ca7",
     "configuration/build/roadmap.yaml": "829d2fe40295f5dd2b14fc9a038b2796828e8a3e16a564046b84760cabd19b74",
     "configuration/build/stages/S01.yaml": "b550efe154e08b772019a27fbf23fc723eef8fca50210da67ce14e78c5ecfa2b",
@@ -46,6 +46,6 @@
     "tests/regression/legacy_baseline.json": "696887118bb51d6bfd918c2e0902852b2df87e6a78d3fa593c62c85ead364bbb"
   },
   "hmac_sha256": null,
-  "signature_ed25519": "cVXuBG0A1d93ur8tp0qxpefiG2nXT4igBdPUEtwfayUMM/39d3IpzLQHPi+kQCuC11mepGrrtt+6ms2NCfTmBw==",
+  "signature_ed25519": "PdY/ZnbCzDJOAz+LQ6Un9ECk4EOA3L4KFkncMnxTSUCcdkumP/0qzPpQgkoXPp+Hj2Yi0lBhF9shsUTgCS13DQ==",
   "signed": true
 }

@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T47",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T47_complete_requirement_traceability"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:54:10.814Z",
+  "finished_at": "2026-11-25T04:54:16.991Z",
+  "duration_s": 6.177,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 5.25s\n",
+  "stderr": "",
+  "output_sha256": "267a3ec85664ff9f7c4f609b7dc8a45a56723a7ed2eb7cf457201c74557a2504"
+}

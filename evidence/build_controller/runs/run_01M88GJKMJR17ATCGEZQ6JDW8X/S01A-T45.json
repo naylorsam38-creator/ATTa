@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T45",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T45_context_excludes_unrelated_information"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:50:01.241Z",
+  "finished_at": "2026-11-25T04:50:05.170Z",
+  "duration_s": 3.929,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.98s\n",
+  "stderr": "",
+  "output_sha256": "43b7b6fdee2f9e1eb9fc198f76d1e16dd6c4eb1e31cbe495deb309deaeb4f1dc"
+}

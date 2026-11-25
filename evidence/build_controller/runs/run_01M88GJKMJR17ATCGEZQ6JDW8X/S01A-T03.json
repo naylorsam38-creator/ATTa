@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T03",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T03_permanent_numbered_identifiers"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:49:33.369Z",
+  "finished_at": "2026-11-25T04:49:38.078Z",
+  "duration_s": 4.709,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 3.80s\n",
+  "stderr": "",
+  "output_sha256": "75c5ffc6b10e22635cdf10db61986ef8e9437e57f1e37e4c2e490fde2a7fd145"
+}

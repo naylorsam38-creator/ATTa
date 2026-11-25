@@ -8,17 +8,17 @@
         "name": "postgres",
         "essential": true,
         "status": "healthy",
-        "latency_ms": 12.29,
-        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0",
-        "checked_at": "2026-11-25T03:37:26.399463Z"
+        "latency_ms": 18.35,
+        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0, schema current (3 migrations), runtime role 'atta_app' least-privileged",
+        "checked_at": "2026-11-25T04:57:58.746022Z"
       },
       {
         "name": "redis",
         "essential": true,
         "status": "healthy",
-        "latency_ms": 3.12,
-        "detail": "Redis 7.0.15 at 127.0.0.1:33255",
-        "checked_at": "2026-11-25T03:37:26.390998Z"
+        "latency_ms": 2.94,
+        "detail": "Redis 7.0.15 at 127.0.0.1:40427",
+        "checked_at": "2026-11-25T04:57:58.731300Z"
       },
       {
         "name": "object_storage",
@@ -26,22 +26,22 @@
         "status": "unhealthy",
         "latency_ms": 0.02,
         "detail": "RuntimeError: object storage credentials not configured (ATTA_S3_ACCESS_KEY_ID / ATTA_S3_SECRET_ACCESS_KEY)",
-        "checked_at": "2026-11-25T03:37:26.388315Z"
+        "checked_at": "2026-11-25T04:57:58.728772Z"
       },
       {
         "name": "temporal",
         "essential": false,
         "status": "unhealthy",
-        "latency_ms": 1.66,
+        "latency_ms": 0.13,
         "detail": "ConnectionRefusedError: [Errno 111] Connection refused",
-        "checked_at": "2026-11-25T03:37:26.390118Z"
+        "checked_at": "2026-11-25T04:57:58.730563Z"
       }
     ],
     "capabilities": {
       "available": 1
     },
     "reasons": [],
-    "checked_at": "2026-11-25T03:37:26.399978Z"
+    "checked_at": "2026-11-25T04:57:58.746503Z"
   },
   "redis_down": {
     "ready": false,
@@ -52,17 +52,17 @@
         "name": "postgres",
         "essential": true,
         "status": "healthy",
-        "latency_ms": 12.89,
-        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0",
-        "checked_at": "2026-11-25T03:37:28.393461Z"
+        "latency_ms": 16.47,
+        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0, schema current (3 migrations), runtime role 'atta_app' least-privileged",
+        "checked_at": "2026-11-25T04:58:01.601417Z"
       },
       {
         "name": "redis",
         "essential": true,
         "status": "unhealthy",
-        "latency_ms": 2.47,
-        "detail": "ConnectionError: Error 111 connecting to 127.0.0.1:52747. Connection refused.",
-        "checked_at": "2026-11-25T03:37:28.383788Z"
+        "latency_ms": 2.41,
+        "detail": "ConnectionError: Error 111 connecting to 127.0.0.1:59391. Connection refused.",
+        "checked_at": "2026-11-25T04:58:01.588179Z"
       },
       {
         "name": "object_storage",
@@ -70,23 +70,23 @@
         "status": "unhealthy",
         "latency_ms": 0.02,
         "detail": "RuntimeError: object storage credentials not configured (ATTA_S3_ACCESS_KEY_ID / ATTA_S3_SECRET_ACCESS_KEY)",
-        "checked_at": "2026-11-25T03:37:28.381840Z"
+        "checked_at": "2026-11-25T04:58:01.586856Z"
       },
       {
         "name": "temporal",
         "essential": false,
         "status": "unhealthy",
-        "latency_ms": 1.55,
+        "latency_ms": 0.22,
         "detail": "ConnectionRefusedError: [Errno 111] Connection refused",
-        "checked_at": "2026-11-25T03:37:28.383604Z"
+        "checked_at": "2026-11-25T04:58:01.588015Z"
       }
     ],
     "capabilities": {
       "available": 1
     },
     "reasons": [
-      "essential dependency 'redis' is unhealthy: ConnectionError: Error 111 connecting to 127.0.0.1:52747. Connection refused."
+      "essential dependency 'redis' is unhealthy: ConnectionError: Error 111 connecting to 127.0.0.1:59391. Connection refused."
     ],
-    "checked_at": "2026-11-25T03:37:28.393990Z"
+    "checked_at": "2026-11-25T04:58:01.601950Z"
   }
 }

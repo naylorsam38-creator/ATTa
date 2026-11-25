@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T25",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T25_enforce_retry_limits"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T04:52:52.687Z",
+  "finished_at": "2026-11-25T04:52:58.448Z",
+  "duration_s": 5.762,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 4.63s\n",
+  "stderr": "",
+  "output_sha256": "a374070f09be4aa92c7c0e98b5045b0469a529b857457beb427d047d7a2192d9"
+}
