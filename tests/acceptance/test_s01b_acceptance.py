@@ -902,6 +902,7 @@ def test_S01B_T35_new_capability_discovery_requires_no_launcher_modification(tmp
 
 # ------------------------------------------------------------------------------------------------ T36-T40 regression
 @pytest.mark.qualification_wrapper
+@pytest.mark.privileged             # the legacy suite's installer tests change file ownership (chown): root only
 def test_S01B_T36_legacy_atta_regression_suite(tmp_path):
     before, src = evidence_digest(), source_tree(tmp_path)
     cp = subprocess.run([PY, "-m", "pytest", "-q", "-p", "no:cacheprovider",

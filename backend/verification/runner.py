@@ -54,6 +54,48 @@ class CommandEvidence:
         return json.dumps(asdict(self), indent=2)
 
 
+def share_ca_bundles(env: dict[str, str], uid: int, gid: int, dest: str = "/var/lib/atta-tester/ca") -> dict[str, str]:
+    """Environment variables that point to a CA certificate bundle the test identity cannot read (e.g. a proxy CA under
+    the verifier's home) are re-pointed to a world-readable copy. Only public certificate bundles qualify: a file
+    holding any private key is never copied."""
+    import hashlib
+    import stat
+    out: dict[str, str] = {}
+    for k, v in env.items():
+        if not v or not v.startswith("/") or not os.path.isfile(v):
+            continue
+        try:
+            st = os.stat(v)
+            readable = (st.st_uid == uid and st.st_mode & stat.S_IRUSR) or (st.st_gid == gid and st.st_mode & stat.S_IRGRP) \
+                or st.st_mode & stat.S_IROTH
+            parents_ok = all(os.stat(p).st_mode & stat.S_IXOTH for p in _parents(v))
+            if readable and parents_ok:
+                continue
+            data = open(v, "rb").read(16 << 20)
+        except OSError:
+            continue
+        if b"BEGIN CERTIFICATE" not in data or b"PRIVATE KEY" in data:
+            continue
+        os.makedirs(dest, mode=0o755, exist_ok=True)
+        os.chmod(dest, 0o755)
+        target = os.path.join(dest, hashlib.sha256(data).hexdigest()[:16] + ".crt")
+        if not os.path.isfile(target):
+            with open(target + ".tmp", "wb") as f:
+                f.write(data)
+            os.chmod(target + ".tmp", 0o644)
+            os.replace(target + ".tmp", target)
+        out[k] = target
+    return out
+
+
+def _parents(path: str) -> list[str]:
+    out, p = [], os.path.dirname(path)
+    while p and p != "/":
+        out.append(p)
+        p = os.path.dirname(p)
+    return out
+
+
 def unprivileged_prefix(user: str | None) -> tuple[list[str], dict[str, str]]:
     """Command prefix + environment overrides that run a test as the dedicated unprivileged test identity.
     Only possible when the verifier itself is root on a POSIX host; otherwise ([], {}) — the caller records that."""
@@ -68,7 +110,8 @@ def unprivileged_prefix(user: str | None) -> tuple[list[str], dict[str, str]]:
     runuser = shutil.which("runuser")
     if not runuser:
         return [], {}
-    return [runuser, "-u", user, "--"], {"HOME": pw.pw_dir, "USER": user, "LOGNAME": user}
+    return [runuser, "-u", user, "--"], {"HOME": pw.pw_dir, "USER": user, "LOGNAME": user,
+                                          **share_ca_bundles(dict(os.environ), pw.pw_uid, pw.pw_gid)}
 
 
 def run_command(test_id: str, command: list[str], cwd: Path, expected_exit_code: int = 0, timeout_s: float = 600,

@@ -25,7 +25,7 @@ tests:
   Q-S01-OFFLINE:     {source_copy: true, title: "Stage 01 acceptance that needs no package registry", timeout_s: 1800,
                       command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/acceptance/test_s01_acceptance.py, -k,
                                 "not T02 and not T16 and not T06 and not T07 and not T08 and not T09 and not T13"]}
-  Q-LEGACY:          {source_copy: true, title: "Existing ATTa application builder regression suite", timeout_s: 1800,
+  Q-LEGACY:          {privileged: true, source_copy: true, title: "Existing ATTa application builder regression suite", timeout_s: 1800,
                       command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T49_existing_atta_application_builder_regression"]}
   Q-UNIT:            {title: "Unit, integration and security suites", timeout_s: 600, command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/unit, tests/integration, tests/security]}
   # The existing e2e spec addresses the test environment's API port 8810; inside a qualification namespace it is free.

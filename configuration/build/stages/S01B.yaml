@@ -629,6 +629,7 @@ tasks:
     - -p
     - no:cacheprovider
     - tests/acceptance/test_s01b_acceptance.py::test_S01B_T36_legacy_atta_regression_suite
+    privileged: true
   - id: S01B-T37
     description: stage01 regression suite
     timeout_s: 2400

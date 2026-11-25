@@ -165,7 +165,7 @@ def source_copy(dest: Path, root: Path = REPO_ROOT) -> Path:
     for rel in LOCAL_CONFIG:
         if (root / rel).is_file():
             shutil.copy2(root / rel, dest / rel)
-    links = [p for p in root.glob("node_modules")] + list(root.glob("apps/*/node_modules")) + \
+    links = [p for p in root.glob(".venv")] + [p for p in root.glob("node_modules")] + list(root.glob("apps/*/node_modules")) + \
         list(root.glob("packages/*/node_modules")) + list(root.glob("apps/web/.next"))
     for p in links:
         t = dest / p.relative_to(root)
