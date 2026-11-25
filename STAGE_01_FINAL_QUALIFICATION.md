@@ -1,80 +1,96 @@
 # STAGE 01 FINAL QUALIFICATION
 
-**Verdict: NOT YET PASSED.** The Stage 01 FINAL gate (S01F) has been executed three times; none reached a PASS
-verdict. Runs 1 and 2 were aborted after genuine qualification-environment defects were observed; run 3 was **stopped
-externally before completion**. Every defect found has been corrected and the affected step re-verified individually,
-but a complete S01F pass on the final source revision has **not** been recorded. Stage 01B itself is qualified
-(STAGE_01B_VERIFICATION.md: gate run 5 PASSED, 43 PASS / 0 FAIL / 2 BLOCKED, revision `42edea8`).
+**Verdict: STAGE 01 FINAL GATE PASSED (pre-live qualification).** Run `run_01M892B6CWSF7TPB7CYFYK63A4` (FINAL run 4) qualified source revision
+`3fb3916ff461e7f1fae95c07c3fe32a739338687` (base `3fb3916ff4`). S01F-T01…T04 PASSED; S01F-T05 (H100 hardware) **BLOCKED — not executed**
+(no H100 on the qualification machine). Verified checkpoint `checkpoint-S01F-YFYK63A4`.
 
-This report states exactly what was executed. It does not claim a pass that has not occurred.
+**Physical production qualification is outstanding** for Windows and NVIDIA H100 (PHYSICAL_QUALIFICATION.md): those
+implementations are present and unchanged but have never run on that hardware, and are never reported as passed.
 
 ## Release source revision
 
-Final source: the commit carrying this report (tag `v1-stage01-rc1`). Code changed after the qualified S01B revision
-`42edea8`: one fix in `backend/deployment/bundle.py` (rebuilding a previous bundle from scratch, found by S01F-T02),
-re-verified individually, not yet covered by a full gate run.
+| Item | Value |
+|---|---|
+| Final application source (frozen, sealed) | `86f3c88` (seal of the final candidate) |
+| S01B gate run 6 PASSED on it | `run_01M891PVYCP7XPDTA9583Z3X2P` — evidence commit `86f3c8878b`… |
+| FINAL gate run 4 PASSED on | `3fb3916ff461e7f1fae95c07c3fe32a739338687` (= final source + S01B evidence only) |
+| Release tag | `v1-stage01` (local; the remote refuses tag pushes from this environment, HTTP 403 — not published) |
 
 ## Qualification environment
 
-Linux x86_64, 4 cores, 16 GB, no GPU, cgroup v1, kernel network namespaces available; PostgreSQL 16 + pgvector,
-Redis 7, Node 22, Python 3.13. Verifier root; non-privileged tests ran as the unprivileged `atta-tester` identity;
-qualification steps use disposable PostgreSQL clusters, their own Redis ports, runtime and bucket, a private source
-copy and, for AIR_GAPPED, a new kernel network namespace.
+Linux x86_64 (kernel 6.18), 4 cores, 16 GB RAM, no GPU, cgroup v1, kernel network namespaces; PostgreSQL 16 +
+pgvector, Redis 7, Node 22, Python 3.13. Verifier: root, Ed25519-signed seal (key encrypted at rest), OS protection
+intact. Non-privileged steps ran as the unprivileged `atta-tester` identity. Every qualification suite used a
+disposable PostgreSQL cluster, its own Redis port, runtime directory and bucket, a hermetic git configuration, a
+private source copy for the earlier stages' unchanged suites and — for AIR_GAPPED — a new kernel network namespace with
+no route to the Internet.
 
-## S01F runs (all kept in `evidence/build_controller/ledger.jsonl`)
+## Gate results — run `run_01M892B6CWSF7TPB7CYFYK63A4`
 
-| Run | S01F-T01 deps | S01F-T02 bundle | S01F-T03 LOCAL | S01F-T04 AIR_GAPPED | S01F-T05 H100 | Outcome |
-|---|---|---|---|---|---|---|
-| 1 `…4RY47CGJ` | PASS | PASS | FAIL: Stage 01 platforms reached the production DB (relative isolation-overlay path) | not reached | not reached | aborted; fixed (absolute paths, loader fails closed) |
-| 2 `…FX3044MX` | PASS | FAIL: bundle rebuild into an existing folder | FAIL: nested isolation, S01-T11 overlay precedence, nested air-gap manifest, S01B-T15 database | not reached | not reached | aborted; fixed, re-verified individually |
-| 3 `…AJR78Z4K` | PASS | FAIL: same bundle rebuild defect (fixed afterwards) | FAIL: Q-FRONTEND only (stale root-owned `test-results/`) | partial, below | not reached | **stopped externally** |
+| Test | Requirement | Status | Identity | Started (UTC) | Finished (UTC) | Exit | Evidence |
+|---|---|---|---|---|---|---|---|
+| S01F-T01 | dependency locks match the installed environment | PASS | atta-tester | 2026-11-25T09:59:43.792Z | 2026-11-25T09:59:44.903Z | 0 | `S01F-T01.json` `9a7e6a848dfd…` |
+| S01F-T02 | offline dependency bundle built from the locks | PASS | atta-tester | 2026-11-25T09:59:44.909Z | 2026-11-25T10:00:47.984Z | 0 | `S01F-T02.json` `67bca188bf30…` |
+| S01F-T03 | LOCAL suite in isolated resources: Stage 01 regression with superseded-test accounting, Stage 0 | PASS | root | 2026-11-25T10:00:47.990Z | 2026-11-25T10:11:37.518Z | 0 | `S01F-T03.json` `67230a96631b…` |
+| S01F-T04 | AIR_GAPPED suite inside a new kernel network namespace, incl. offline install from the bundle | PASS | root | 2026-11-25T10:11:37.522Z | 2026-11-25T10:18:10.639Z | 0 | `S01F-T04.json` `77cab70708ac…` |
+| S01F-T05 | H100 hardware qualification (real H100 only) | BLOCKED | — | — | — | not executed | `S01F-T05.json` `bf445e02b486…` |
 
-### Run 3: LOCAL suite (`qual_01M88ZT4JJCDGGEB9KYK6R57GA`, status FAIL)
+### LOCAL suite — `qual_01M892D5AM0HWGQAC5JVV4G07R`: **PASS** (10 PASS, 0 FAIL, 1 BLOCKED); isolation: host, disposable cluster on 127.0.0.1:40093, test identity `atta-tester`
 
-| Step | Title | Status | Identity | Exit |
-|---|---|---|---|---|
-| Q-DEPS | Dependency locks match installed packages (no drift) | PASS | atta-tester | 0 |
-| Q-OFFLINE-AUDIT | No hidden Internet dependency in core configuration and frontend sources | PASS | atta-tester | 0 |
-| Q-UNIT | Unit, integration and security suites | PASS | atta-tester | 0 |
-| Q-S01-REGRESSION | Stage 01 acceptance with explicit supersession (S01A-T48) | PASS | atta-tester | 0 |
-| Q-S01A-CORE | Stage 01A controller acceptance T01-T27 | PASS | atta-tester | 0 |
-| Q-S01A-REST | Stage 01A acceptance T28-T53 (without long regressions and OS-protection check) | PASS | atta-tester | 0 |
-| Q-S01B | Stage 01B acceptance (environment-independent subset) | PASS | atta-tester | 0 |
-| Q-S01B-PRIV | Stage 01B acceptance needing OS privileges (network namespaces, cgroups, user sw | PASS | root | 0 |
-| Q-LEGACY | Existing ATTa application builder regression suite | PASS | root | 0 |
-| Q-FRONTEND | Frontend + backend startup end-to-end in a real browser | FAIL | atta-tester | 1 |
-| Q-WINDOWS-JOBS | Windows worker isolation: Job Object tree kill + memory limit, restricted LOW-in | BLOCKED | — | not executed |
+| Step | What it qualifies | Status | Identity | Exit | Evidence SHA-256 |
+|---|---|---|---|---|---|
+| Q-DEPS | Dependency locks match installed packages (no drift) | PASS | atta-tester | 0 | `b012f44804bf` |
+| Q-OFFLINE-AUDIT | No hidden Internet dependency in core configuration and frontend sources | PASS | atta-tester | 0 | `e01f2342601a` |
+| Q-UNIT | Unit, integration and security suites | PASS | atta-tester | 0 | `bc936711c292` |
+| Q-S01-REGRESSION | Stage 01 acceptance with explicit supersession (S01A-T48) | PASS | atta-tester | 0 | `79d57f5d1a55` |
+| Q-S01A-CORE | Stage 01A controller acceptance T01-T27 | PASS | atta-tester | 0 | `27024b4a16f8` |
+| Q-S01A-REST | Stage 01A acceptance T28-T53 (without long regressions and OS-protection check) | PASS | atta-tester | 0 | `648d3fd45138` |
+| Q-S01B | Stage 01B acceptance (environment-independent subset) | PASS | atta-tester | 0 | `6502f2d8d585` |
+| Q-S01B-PRIV | Stage 01B acceptance needing OS privileges (network namespaces, cgroups, user switching) | PASS | root | 0 | `6678460d51a3` |
+| Q-LEGACY | Existing ATTa application builder regression suite | PASS | root | 0 | `23b74da5def1` |
+| Q-FRONTEND | Frontend + backend startup end-to-end in a real browser | PASS | atta-tester | 0 | `17419e088be2` |
+| Q-WINDOWS-JOBS | Windows worker isolation: Job Object tree kill + memory limit, restricted LOW-integrity to | BLOCKED | — | not executed: requires Windows (this is linux); Windows-specific behaviour | `—` |
 
-Q-FRONTEND failed only because a git-ignored `test-results/` folder left by earlier root executions could not be
-removed by the test identity. The folder was removed (no source change) and Q-FRONTEND re-run individually as
-`atta-tester`: **PASS**. Q-WINDOWS-JOBS is environment-specific and **BLOCKED** (no Windows host).
+### AIR_GAPPED suite — `qual_01M8930ZMHC2TW2X5SYKVMHEWT`: **PASS** (10 PASS, 0 FAIL, 0 BLOCKED); isolation: new kernel network namespace (loopback only), disposable cluster on 127.0.0.1:38555, test identity `atta-tester`
 
-### Run 3: AIR_GAPPED suite, steps completed before the stop (`qual_01M890DF4JZDPAGJS9NSGTZPPM`)
+| Step | What it qualifies | Status | Identity | Exit | Evidence SHA-256 |
+|---|---|---|---|---|---|
+| Q-NETWORK-DENIED | External network is unreachable inside the qualification namespace | PASS | root | 0 | `1940eda9e09d` |
+| Q-DEPS | Dependency locks match installed packages (no drift) | PASS | atta-tester | 0 | `b012f44804bf` |
+| Q-OFFLINE-AUDIT | No hidden Internet dependency in core configuration and frontend sources | PASS | atta-tester | 0 | `e01f2342601a` |
+| Q-UNIT | Unit, integration and security suites | PASS | atta-tester | 0 | `d1ba9cfda618` |
+| Q-S01-OFFLINE | Stage 01 acceptance that needs no package registry | PASS | atta-tester | 0 | `4d142a391e88` |
+| Q-S01A-CORE | Stage 01A controller acceptance T01-T27 | PASS | atta-tester | 0 | `dc26b1c68f9e` |
+| Q-S01A-REST | Stage 01A acceptance T28-T53 (without long regressions and OS-protection check) | PASS | atta-tester | 0 | `964ff9f09a71` |
+| Q-LEGACY | Existing ATTa application builder regression suite | PASS | root | 0 | `f95a6bd4051c` |
+| Q-FRONTEND | Frontend + backend startup end-to-end in a real browser | PASS | atta-tester | 0 | `dd20134f47e2` |
+| Q-OFFLINE-INSTALL | Clean installation from the offline dependency bundle with no network | PASS | root | 0 | `532da2d093fe` |
 
-| Step | Result |
+## Combined Stage 01 coverage (what these suites exercised)
+
+| Area | Where qualified |
 |---|---|
-| Q-DEPS | completed (builtin/check step; see its log) |
-| Q-LEGACY | 1 passed in 70.27s (0:01:10) |
-| Q-NETWORK-DENIED | completed (builtin/check step; see its log) |
-| Q-OFFLINE-AUDIT | completed (builtin/check step; see its log) |
-| Q-S01-OFFLINE | 9 passed, 7 deselected in 41.87s |
-| Q-S01A-CORE | 27 passed in 85.32s (0:01:25) |
-| Q-S01A-REST | 23 passed, 3 deselected in 113.71s (0:01:53) |
-| Q-UNIT | 43 passed in 9.84s |
+| Existing ATTa application builder (legacy suite, unchanged baseline) | Q-LEGACY (LOCAL + AIR_GAPPED), S01B-T36 |
+| Stage 01 foundation: structure, clean install, service manager start/stop/restart, liveness/readiness, dependency failure, build controller, register, default-DENY | Q-S01-REGRESSION (S01A-T48: Stage 01 suite with the 5 superseded tests proven to fail only under stricter controls), Q-S01-OFFLINE |
+| Stage 01A controller: contracts, numbered tool catalogue, allocation, Focus-4, gateway, drift guard, budgets, cancellation, verification, repair, checkpoints, recovery, traceability, controller startup | Q-S01A-CORE, Q-S01A-REST (LOCAL + AIR_GAPPED) |
+| Stage 01B deployment: discovery, profiles, manifests, model/runtime selection, configuration precedence, installer/plan/resume/rollback, locks, offline audit, isolation, health, launchers, clean install, upgrade | Q-S01B, Q-S01B-PRIV, S01B gate run 6 (43 PASS / 2 BLOCKED) |
+| Frontend ↔ backend in a real browser | Q-FRONTEND (LOCAL + AIR_GAPPED) |
+| Offline operation and offline installation from the bundle | Q-NETWORK-DENIED, Q-OFFLINE-INSTALL (AIR_GAPPED) |
+| Dependency integrity | Q-DEPS, S01F-T01, S01F-T02 |
 
-Not reached before the stop: Q-FRONTEND (air-gapped) and Q-OFFLINE-INSTALL. Both passed in the earlier standalone
-AIR_GAPPED qualification of Stage 01B (10/10), but not inside an S01F run.
+## Earlier FINAL runs (kept in the ledger)
 
-## Requirement coverage
+| Run | Outcome |
+|---|---|
+| 1 `…4RY47CGJ` | aborted: Stage 01 platforms reached the production database (relative isolation-overlay path) — fixed |
+| 2 `…FX3044MX` | aborted: nested isolation contexts, S01-T11 overlay precedence, nested air-gap manifest, S01B-T15 database, bundle rebuild — fixed |
+| 3 `…AJR78Z4K` | stopped externally; LOCAL Q-FRONTEND failed (frontend test wrote `test-results/` into the repository; fixed at the cause: runs in the private source copy), S01F-T02 bundle rebuild — fixed |
+| 4 `…YFYK63A4` | **PASSED** (this report) |
 
-Stage 01 foundation, the Stage 01A controller (Focus-4, tool pool, gateway, drift guard, budgets, cancellation,
-recovery, verification, audit records) and Stage 01B deployment (discovery, profiles, manifests, installer, offline
-bundles, isolation, health) are covered by their passed gates: S01 (passed), S01A (passed), S01B (gate run 5 passed).
-The FINAL gate's purpose, one combined isolated re-qualification on the final revision, is outstanding.
+## Outstanding (physical, not software)
 
-## Outstanding
-
-1. **One complete S01F run on the final revision**: re-run S01B first (`bundle.py` changed after run 5, ~25 min), then
-   `verify.py verify-stage S01F --base <S01B evidence commit>` (~50 min).
-2. Physical qualification (PHYSICAL_QUALIFICATION.md): Windows (S01B-T41, Q-WINDOWS-JOBS) and H100 (S01B-T43,
-   S01F-T05) remain BLOCKED: implemented, never executed on that hardware.
+1. Windows 10/11 x64: S01B-T41 and Q-WINDOWS-JOBS — BLOCKED (no Windows host). Windows offline bundle lacks pgvector,
+   Redis/Memurai, Git for Windows and browsers (not obtainable from the build machine): **Windows offline installation is
+   not complete and not qualified.**
+2. NVIDIA H100 80 GB: S01B-T43 and S01F-T05 — BLOCKED (no H100). Inference qualification additionally needs Stage 03.
+3. Container images in the offline bundle — BLOCKED (no Docker daemon).
