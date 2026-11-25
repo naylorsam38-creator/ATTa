@@ -1,0 +1,27 @@
+{
+  "test_id": "S01F-T04",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "backend.deployment",
+    "qualify",
+    "--suite",
+    "AIR_GAPPED",
+    "--bundle",
+    "runtime/qualification/gate-bundle",
+    "--out",
+    "runtime/qualification/final"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "root",
+  "started_at": "2026-11-25T10:11:37.522Z",
+  "finished_at": "2026-11-25T10:18:10.639Z",
+  "duration_s": 393.117,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": "{\n  \"suite\": \"AIR_GAPPED\",\n  \"results\": [\n    {\n      \"suite\": \"AIR_GAPPED\",\n      \"qualification_id\": \"qual_01M8930ZMHC2TW2X5SYKVMHEWT\",\n      \"status\": \"PASS\",\n      \"counts\": {\n        \"PASS\": 10,\n        \"FAIL\": 0,\n        \"BLOCKED\": 0\n      }\n    }\n  ]\n}\n",
+  "stderr": "",
+  "output_sha256": "315016b9c728f6f7fd9de0fb2cca8b87ed6f73b3f3567ee251b312bd965ac400"
+}

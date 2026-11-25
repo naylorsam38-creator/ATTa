@@ -1,0 +1,25 @@
+{
+  "test_id": "S01F-T05",
+  "status": "BLOCKED",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "backend.deployment",
+    "qualify",
+    "--suite",
+    "H100",
+    "--profile",
+    "H100",
+    "--out",
+    "runtime/qualification/final"
+  ],
+  "requires": [
+    "gpu:h100"
+  ],
+  "reasons": [
+    "an NVIDIA H100 (>= 79 GB) is required; none found on this host"
+  ],
+  "environment_specific": true,
+  "recorded_at": "2026-11-25T10:18:10.643Z",
+  "executed": false
+}
