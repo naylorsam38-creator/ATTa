@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PY = str(ROOT / ".venv" / "bin" / "python")
 TRIALS = {
     "base": {"ref": "21104c413c30a3b2714f877892970e7db19a1d19", "worker": "Stage 01A baseline", "extra": []},
-    "stage01b": {"ref": "origin/claude/ai-app-stage-01-foundation-82jy3a", "worker": "Worker A — Stage 01B",
+    "stage01b": {"ref": "416ca300e9aa28f6e5a423b571366cbe67dc3559", "worker": "Worker A — Stage 01B (supplied package 416ca30)",
                  "extra": [("S01B", ["tests/acceptance/test_s01b_acceptance.py"])]},
     "stage11": {"ref": "origin/claude/focused-cori-ajjjn0", "worker": "Worker 3 — Stage 11",
                 "extra": [("S11", ["tests/research"])]},
