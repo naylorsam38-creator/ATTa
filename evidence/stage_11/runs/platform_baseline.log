@@ -1,0 +1,444 @@
+...................................F....FFFF...F..F..................... [ 69%]
+..........................FF.F..                                         [100%]
+=================================== FAILURES ===================================
+______________________ test_S01_T01_repository_structure _______________________
+
+    def test_S01_T01_repository_structure():
+>       tracked = set(subprocess.run(["git", "ls-files", "--cached", "--others", "--exclude-standard"], cwd=ROOT,
+                                     capture_output=True, text=True, check=True).stdout.splitlines())
+
+tests/acceptance/test_s01_acceptance.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (['git', 'ls-files', '--cached', '--others', '--exclude-standard'],)
+kwargs = {'cwd': PosixPath('/tmp/claude-0/-home-user-ATTa/03d01eb8-e3f4-55c5-a5d6-ff9fc90e44cc/scratchpad/baseline_zip/ATTa-stage01A'), 'text': True, 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'ls-files', '--cached', '--others', '--exclude-standard']' returned non-zero exit status 128.
+
+/usr/local/lib/python3.13/subprocess.py:578: CalledProcessError
+_______________ test_S01_T06_discover_valid_capability_manifest ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-28/test_S01_T06_discover_valid_ca0')
+
+    def test_S01_T06_discover_valid_capability_manifest(tmp_path):
+        write_capability(tmp_path, "echo", "test.echo")
+        reg = CapabilityRegistry([ROOT / "capabilities", tmp_path])
+        report = {a.id: a for a in reg.discover()}
+>       assert report["test.echo"].state is AvailabilityState.AVAILABLE and report["test.echo"].executable
+E       assert (<AvailabilityState.UNTRUSTED: 'untrusted'> is <AvailabilityState.AVAILABLE: 'available'>)
+E        +  where <AvailabilityState.UNTRUSTED: 'untrusted'> = CapabilityAvailability(id='test.echo', version='1.0.0', state=<AvailabilityState.UNTRUSTED: 'untrusted'>, executable=F...uirement='CAP-40', risk=<RiskClass.LOW: 'low'>, problems=["capability 'test.echo' is not in the operator trust store"]).state
+E        +  and   <AvailabilityState.AVAILABLE: 'available'> = AvailabilityState.AVAILABLE
+
+tests/acceptance/test_s01_acceptance.py:197: AssertionError
+----------------------------- Captured stderr call -----------------------------
+------------------------------ Captured log call -------------------------------
+INFO     atta.capabilities:registry.py:237 capability test.echo available -> untrusted
+INFO     atta.capabilities:registry.py:143 capability ops.system_status: available
+INFO     atta.capabilities:registry.py:143 capability test.echo: untrusted
+_______________ test_S01_T07_reject_invalid_capability_manifest ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-28/test_S01_T07_reject_invalid_ca0')
+
+    def test_S01_T07_reject_invalid_capability_manifest(tmp_path):
+        for name, (cid, handler, raw) in INVALID_CASES.items():
+            d = write_capability(tmp_path, name, cid, handler=handler, raw_manifest=raw,
+                                 timeout_s=99999 if name == "excessive_timeout" else 10)
+            text = (d / "capability.yaml").read_text()
+            if name == "bad_version":
+                text = text.replace("version: 1.0.0", "version: one")
+            if name == "missing_module":
+                text = text.replace("handler:execute", "nowhere:execute")
+            if name == "bad_input_schema":
+                text = text.replace("input_schema: {type: object", "input_schema: {type: notatype")
+            (d / "capability.yaml").write_text(text)
+        (tmp_path / "unhealthy").mkdir()
+        write_capability(tmp_path, "unhealthy", "test.unhealthy", handler="def execute(p, c):\n    return {'echo': ''}\n"
+                         "def healthcheck():\n    return {'healthy': False, 'why': 'disk'}\ndef verify(p, o):\n    return True\n")
+        write_capability(tmp_path, "good", "test.good")
+        reg = CapabilityRegistry([tmp_path], policy=AllowAllForTest(), max_timeout_s=900)
+        report = reg.discover()
+        by_src = {Path(a.source).parent.name: a for a in report}
+        for name in INVALID_CASES:
+            a = by_src[name]
+>           assert a.state is AvailabilityState.INVALID, (name, a)
+E           AssertionError: ('wrong_arity', CapabilityAvailability(id='test.arity', version='1.0.0', state=<AvailabilityState.UNTRUSTED: 'untruste...rement='CAP-40', risk=<RiskClass.LOW: 'low'>, problems=["capability 'test.arity' is not in the operator trust store"]))
+E           assert <AvailabilityState.UNTRUSTED: 'untrusted'> is <AvailabilityState.INVALID: 'invalid'>
+E            +  where <AvailabilityState.UNTRUSTED: 'untrusted'> = CapabilityAvailability(id='test.arity', version='1.0.0', state=<AvailabilityState.UNTRUSTED: 'untrusted'>, executable=...irement='CAP-40', risk=<RiskClass.LOW: 'low'>, problems=["capability 'test.arity' is not in the operator trust store"]).state
+E            +  and   <AvailabilityState.INVALID: 'invalid'> = AvailabilityState.INVALID
+
+tests/acceptance/test_s01_acceptance.py:242: AssertionError
+----------------------------- Captured stderr call -----------------------------
+------------------------------ Captured log call -------------------------------
+INFO     atta.capabilities:registry.py:237 capability test.arity available -> untrusted
+INFO     atta.capabilities:registry.py:237 capability test.good available -> untrusted
+INFO     atta.capabilities:registry.py:237 capability test.importerr available -> untrusted
+INFO     atta.capabilities:registry.py:237 capability test.notcallable available -> untrusted
+INFO     atta.capabilities:registry.py:237 capability test.unhealthy available -> untrusted
+INFO     atta.capabilities:registry.py:143 capability BadId: invalid
+INFO     atta.capabilities:registry.py:143 capability test.arity: untrusted
+INFO     atta.capabilities:registry.py:143 capability test.badschema: invalid
+INFO     atta.capabilities:registry.py:143 capability test.badver: invalid
+INFO     atta.capabilities:registry.py:143 capability test.good: untrusted
+INFO     atta.capabilities:registry.py:143 capability test.importerr: untrusted
+INFO     atta.capabilities:registry.py:143 capability test.missing: invalid
+INFO     atta.capabilities:registry.py:143 capability test.nomodule: invalid
+INFO     atta.capabilities:registry.py:143 capability test.notcallable: untrusted
+INFO     atta.capabilities:registry.py:143 capability test.timeout: invalid
+INFO     atta.capabilities:registry.py:143 capability test.unhealthy: untrusted
+_____________ test_S01_T08_reject_duplicate_capability_identifiers _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-28/test_S01_T08_reject_duplicate_0')
+
+    def test_S01_T08_reject_duplicate_capability_identifiers(tmp_path):
+        a, b = tmp_path / "dirA", tmp_path / "dirB"
+        write_capability(a, "echo_one", "test.dup")
+        write_capability(b, "echo_two", "test.dup")
+        write_capability(a, "other", "test.unique")
+        reg = CapabilityRegistry([a, b], policy=AllowAllForTest())
+        report = reg.discover()
+        dups = [x for x in report if x.id == "test.dup"]
+        assert len(dups) == 2 and all(x.state is AvailabilityState.REJECTED_DUPLICATE for x in dups)
+        assert all(not x.executable and "duplicate" in x.problems[0] for x in dups)
+>       assert reg.get("test.dup") is None and reg.executable_ids() == ["test.unique"]
+E       AssertionError: assert (None is None and [] == ['test.unique']
+E        +  where None = get('test.dup')
+E        +    where get = <backend.capability_registry.registry.CapabilityRegistry object at 0x7f604b14bb60>.get
+E         
+E         Right contains one more item: 'test.unique'
+E         Use -v to get more diff)
+
+tests/acceptance/test_s01_acceptance.py:266: AssertionError
+----------------------------- Captured stderr call -----------------------------
+------------------------------ Captured log call -------------------------------
+INFO     atta.capabilities:registry.py:237 capability test.unique available -> untrusted
+INFO     atta.capabilities:registry.py:143 capability test.dup: rejected_duplicate
+INFO     atta.capabilities:registry.py:143 capability test.dup: rejected_duplicate
+INFO     atta.capabilities:registry.py:143 capability test.unique: untrusted
+_________ test_S01_T09_new_capability_registers_without_changing_start _________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-28/test_S01_T09_new_capability_re0')
+
+    def test_S01_T09_new_capability_registers_without_changing_start(tmp_path):
+        start_files = ["START.bat", "start.sh"]
+        before = {f: hashlib.sha256((ROOT / f).read_bytes()).hexdigest() for f in start_files}
+        capdir = tmp_path / "installed"
+        cp = subprocess.run([PY, str(ROOT / "scripts/new_capability.py"), "text.word_count", "--requirement", "CAP-40",
+                             "--dir", str(capdir)], capture_output=True, text=True)
+        assert cp.returncode == 0, cp.stderr
+        d = capdir / "text_word_count"
+        (d / "handler.py").write_text(textwrap.dedent('''\
+            def execute(payload, context):
+                return {"result": str(len(payload.get("text", "").split()))}
+    
+            def healthcheck():
+                return {"healthy": True}
+    
+            def verify(payload, output):
+                return {"verified": output["result"].isdigit()}
+            '''))
+        m = (d / "capability.yaml").read_text().replace("enabled: false", "enabled: true").replace(
+            "properties: {}}", "properties: {text: {type: string}}}")
+        (d / "capability.yaml").write_text(m)
+        env = platform_env("t09", ATTA__CAPABILITIES__DIRECTORIES=json.dumps(["capabilities", str(capdir)]))
+        start = subprocess.run(["bash", str(ROOT / "start.sh"), "--json"], cwd=ROOT, env=env, capture_output=True,
+                               text=True, timeout=180)
+        try:
+>           assert start.returncode == 0, start.stdout + start.stderr
+E           AssertionError: not installed: run ./install.sh
+E             
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['bash', '/tmp/claude-0/-home-user-ATTa/03d01eb8-e3f4-55c5-a5d6-ff9fc90e44cc/scratchpad/baseline_zip/ATTa-stage01A/start.sh', '--json'], returncode=1, stdout='', stderr='not installed: run ./install.sh\n').returncode
+
+tests/acceptance/test_s01_acceptance.py:299: AssertionError
+______________ test_S01_T13_protected_operations_default_to_deny _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-28/test_S01_T13_protected_operati0')
+
+    def test_S01_T13_protected_operations_default_to_deny(tmp_path):
+        from fastapi.testclient import TestClient
+        from backend.api.app import create_app
+        from backend.contracts import DependencyHealth, HealthStatus
+        marker = tmp_path / "executed.txt"
+        write_capability(tmp_path, "sidefx", "test.sidefx", handler=textwrap.dedent(f"""\
+            def execute(payload, context):
+                open({str(marker)!r}, "w").write("ran")
+                return {{"echo": "x"}}
+            def healthcheck():
+                return True
+            def verify(p, o):
+                return True
+            """))
+        engine = PolicyEngine()
+        reg = CapabilityRegistry([ROOT / "capabilities", tmp_path], policy=engine)
+        reg.discover()
+>       assert reg.get("test.sidefx").executable
+E       AssertionError: assert False
+E        +  where False = RegisteredCapability(id='test.sidefx', source='/tmp/pytest-of-root/pytest-28/test_S01_T13_protected_operati0/sidefx/ca...True, idempotency='non_idempotent', version='1.0.0')], probe_problems=None, health_ok=None, health_at=0.0, fixed=False).executable
+E        +    where RegisteredCapability(id='test.sidefx', source='/tmp/pytest-of-root/pytest-28/test_S01_T13_protected_operati0/sidefx/ca...True, idempotency='non_idempotent', version='1.0.0')], probe_problems=None, health_ok=None, health_at=0.0, fixed=False) = get('test.sidefx')
+E        +      where get = <backend.capability_registry.registry.CapabilityRegistry object at 0x7f604d17aeb0>.get
+
+tests/acceptance/test_s01_acceptance.py:506: AssertionError
+----------------------------- Captured stderr call -----------------------------
+------------------------------ Captured log call -------------------------------
+INFO     atta.capabilities:registry.py:237 capability test.sidefx available -> untrusted
+INFO     atta.capabilities:registry.py:143 capability ops.system_status: available
+INFO     atta.capabilities:registry.py:143 capability test.sidefx: untrusted
+________ test_S01_T16_existing_functionality_not_removed_or_downgraded _________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-28/test_S01_T16_existing_function0')
+
+    def test_S01_T16_existing_functionality_not_removed_or_downgraded(tmp_path):
+>       changed = subprocess.run(["git", "diff", "--name-status", BASE_COMMIT, "--", *LEGACY_PATHS, *_legacy_tests()],
+                                 cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
+
+tests/acceptance/test_s01_acceptance.py:613: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (['git', 'diff', '--name-status', 'cef732913714fdcc5e58ae35ce4c484032289ec0', '--', '01-specs', ...],)
+kwargs = {'cwd': PosixPath('/tmp/claude-0/-home-user-ATTa/03d01eb8-e3f4-55c5-a5d6-ff9fc90e44cc/scratchpad/baseline_zip/ATTa-stage01A'), 'text': True, 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'diff', '--name-status', 'cef732913714fdcc5e58ae35ce4c484032289ec0', '--', '01-specs', '02-front-door', '03-ui-skins-capability-package', '04-deployment', '05-coolify', 'docs', 'tests/fixtures', 'run', 'Dockerfile', 'docker-compose.coolify.yml', 'release.json', 'START-HERE.txt', '.dockerignore', 'tests/test_resilience_boundary.py', 'tests/test_v1141_installer.py', 'tests/test_v114_hardening.py', 'tests/test_v115_security.py', 'tests/test_v117_coolify.py', 'tests/test_v118_merge.py', 'tests/test_v119_login_proof.py', 'tests/test_v120_stage2.py', 'tests/test_v121_2_parallel_isolation.py', 'tests/test_v121_3_record_diagnostic.py', 'tests/test_v121_4_control_layer.py', 'tests/test_v121_journey_author.py']' returned non-zero exit status 129.
+
+/usr/local/lib/python3.13/subprocess.py:578: CalledProcessError
+_______________ test_S01A_T48_existing_stage01_acceptance_tests ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-28/test_S01A_T48_existing_stage010')
+
+    def test_S01A_T48_existing_stage01_acceptance_tests(tmp_path):
+        junit = tmp_path / "s01.xml"
+        subprocess.run([PY, "-m", "pytest", "-q", "-p", "no:cacheprovider", str(S01_TESTS), "-k", "not T16",
+                        f"--junitxml={junit}"], cwd=ROOT, capture_output=True, text=True, timeout=1800)
+        res = _junit(junit)
+        expected_pass = [n for n in res if n not in SUPERSEDED]
+>       assert len(expected_pass) == 10 and all(res[n][0] == "passed" for n in expected_pass), \
+            {n: res[n][0] for n in expected_pass}
+E       AssertionError: {'test_S01_T01_repository_structure': 'failed', 'test_S01_T02_clean_environment_install': 'passed', 'test_S01_T03_start_service_manager': 'passed', 'test_S01_T04_backend_liveness': 'passed', ...}
+E       assert (10 == 10 and False)
+E        +  where 10 = len(['test_S01_T01_repository_structure', 'test_S01_T02_clean_environment_install', 'test_S01_T03_start_service_manager', ...kend_liveness', 'test_S01_T05_readiness_reflects_dependency_health', 'test_S01_T10_detect_unavailable_dependency', ...])
+E        +  and   False = all(<generator object test_S01A_T48_existing_stage01_acceptance_tests.<locals>.<genexpr> at 0x7f604af69700>)
+
+tests/acceptance/test_s01a_acceptance_b.py:571: AssertionError
+__________ test_S01A_T49_existing_atta_application_builder_regression __________
+
+    def test_S01A_T49_existing_atta_application_builder_regression():
+        cp = subprocess.run([PY, "-m", "pytest", "-q", "-p", "no:cacheprovider",
+                             f"{S01_TESTS}::test_S01_T16_existing_functionality_not_removed_or_downgraded"],
+                            cwd=ROOT, capture_output=True, text=True, timeout=1800)
+>       assert cp.returncode == 0, cp.stdout[-3000:]
+E       AssertionError: l_newlines.
+E             
+E                 The other arguments are the same as for the Popen constructor.
+E                 """
+E                 if input is not None:
+E                     if kwargs.get('stdin') is not None:
+E                         raise ValueError('stdin and input arguments may not both be used.')
+E                     kwargs['stdin'] = PIPE
+E             
+E                 if capture_output:
+E                     if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+E                         raise ValueError('stdout and stderr arguments may not be used '
+E                                          'with capture_output.')
+E                     kwargs['stdout'] = PIPE
+E                     kwargs['stderr'] = PIPE
+E             
+E                 with Popen(*popenargs, **kwargs) as process:
+E                     try:
+E                         stdout, stderr = process.communicate(input, timeout=timeout)
+E                     except TimeoutExpired as exc:
+E                         process.kill()
+E                         if _mswindows:
+E                             # Windows accumulates the output in a single blocking
+E                             # read() call run on child threads, with the timeout
+E                             # being done in a join() on those threads.  communicate()
+E                             # _after_ kill() is required to collect that and add it
+E                             # to the exception.
+E                             exc.stdout, exc.stderr = process.communicate()
+E                         else:
+E                             # POSIX _communicate already populated the output so
+E                             # far into the TimeoutExpired exception.
+E                             process.wait()
+E                         raise
+E                     except:  # Including KeyboardInterrupt, communicate handled that.
+E                         process.kill()
+E                         # We don't call process.wait() as .__exit__ does that for us.
+E                         raise
+E                     retcode = process.poll()
+E                     if check and retcode:
+E         >               raise CalledProcessError(retcode, process.args,
+E                                                  output=stdout, stderr=stderr)
+E         E               subprocess.CalledProcessError: Command '['git', 'diff', '--name-status', 'cef732913714fdcc5e58ae35ce4c484032289ec0', '--', '01-specs', '02-front-door', '03-ui-skins-capability-package', '04-deployment', '05-coolify', 'docs', 'tests/fixtures', 'run', 'Dockerfile', 'docker-compose.coolify.yml', 'release.json', 'START-HERE.txt', '.dockerignore', 'tests/test_resilience_boundary.py', 'tests/test_v1141_installer.py', 'tests/test_v114_hardening.py', 'tests/test_v115_security.py', 'tests/test_v117_coolify.py', 'tests/test_v118_merge.py', 'tests/test_v119_login_proof.py', 'tests/test_v120_stage2.py', 'tests/test_v121_2_parallel_isolation.py', 'tests/test_v121_3_record_diagnostic.py', 'tests/test_v121_4_control_layer.py', 'tests/test_v121_journey_author.py']' returned non-zero exit status 129.
+E         
+E         /usr/local/lib/python3.13/subprocess.py:578: CalledProcessError
+E         =========================== short test summary info ============================
+E         FAILED tests/acceptance/test_s01_acceptance.py::test_S01_T16_existing_functionality_not_removed_or_downgraded
+E         1 failed in 0.19s
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/user/ATTa/.venv/bin/python', '-m', 'pytest', '-q', '-p', 'no:cacheprovider', '/tmp/claud...test_s01_acceptance.py::test_S01_T16_existing_functionality_not_removed_or_downgraded\n1 failed in 0.19s\n', stderr='').returncode
+
+tests/acceptance/test_s01a_acceptance_b.py:610: AssertionError
+______ test_S01A_T51_worker_cannot_alter_protected_verification_criteria _______
+
+    def test_S01A_T51_worker_cannot_alter_protected_verification_criteria():
+        from backend.verification.build_controller import BuildController
+        from backend.verification.protection import protection_problems
+        bc = BuildController(ROOT)
+        problems = protection_problems(bc)
+>       assert problems == [], "OS protection is not in place: run scripts/protect_verifier.sh\n" + "\n".join(problems)
+E       AssertionError: OS protection is not in place: run scripts/protect_verifier.sh
+E         worker account 'atta-builder' does not exist: run scripts/protect_verifier.sh
+E       assert ['worker acco..._verifier.sh'] == []
+E         
+E         Left contains one more item: "worker account 'atta-builder' does not exist: run scripts/protect_verifier.sh"
+E         Use -v to get more diff
+
+tests/acceptance/test_s01a_acceptance_b.py:641: AssertionError
+=========================== short test summary info ============================
+FAILED tests/acceptance/test_s01_acceptance.py::test_S01_T01_repository_structure
+FAILED tests/acceptance/test_s01_acceptance.py::test_S01_T06_discover_valid_capability_manifest
+FAILED tests/acceptance/test_s01_acceptance.py::test_S01_T07_reject_invalid_capability_manifest
+FAILED tests/acceptance/test_s01_acceptance.py::test_S01_T08_reject_duplicate_capability_identifiers
+FAILED tests/acceptance/test_s01_acceptance.py::test_S01_T09_new_capability_registers_without_changing_start
+FAILED tests/acceptance/test_s01_acceptance.py::test_S01_T13_protected_operations_default_to_deny
+FAILED tests/acceptance/test_s01_acceptance.py::test_S01_T16_existing_functionality_not_removed_or_downgraded
+FAILED tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T48_existing_stage01_acceptance_tests
+FAILED tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T49_existing_atta_application_builder_regression
+FAILED tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T51_worker_cannot_alter_protected_verification_criteria
+10 failed, 94 passed in 303.63s (0:05:03)
+exit 1

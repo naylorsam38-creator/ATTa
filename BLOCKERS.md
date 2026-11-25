@@ -24,3 +24,18 @@ Updated at Stage 01A.
 | B-016 | OS protection against THIS build agent | NOT ENFORCEABLE HERE | The protection is applied and verified against the worker account `atta-builder` (S01A-T51), but this session's agent runs as root (the verifier identity) and is therefore not constrained by it | Run future implementation work as `atta-builder` without sudo |
 | B-017 | Five Stage 01 acceptance tests superseded | RECORDED | S01-T06/T07/T08/T09/T13 encode behaviour removed by corrections 1/4 and gateway-only execution; files unchanged; causes proven by S01A-T48 (DECISIONS D-029) | Not a defect — stricter replacements pass |
 | B-018 | Semantic relevance of proposals | BY DESIGN | The drift guard is structural; it does not judge meaning. Criteria needing semantic judgement use `human_review`, which blocks completion until a human accepts (UI in Stage 04) | Stage 04 review UI |
+
+### Stage 11 sidecar (CAP-11 / CAP-12) — added in the sidecar only
+
+| ID | Item | Status | Why | Unblocked by |
+|---|---|---|---|---|
+| B-S11-01 | Live web search | BLOCKED | No search provider is configured (`configuration/research.yaml` `providers: []`); no Internet was used by any test | Operator configures a provider (e.g. self-hosted SearXNG with JSON output) and runs a live check |
+| B-S11-02 | Stage 11 packages executable in production | BLOCKED (operator action) | `research.web` / `research.evidence` are discovered but `untrusted`; tool numbers and permissions are proposed in `documentation/stage11/*.stage11.yaml`; the protected files `configuration/tool_numbers.yaml`, `permissions.yaml`, `capability_trust.json` are not edited by the sidecar | Operator merges the proposals, signs the packages (`capability_registry trust`), re-seals |
+| B-S11-03 | Model-driven planning, claim construction, natural-language synthesis | BLOCKED — Stage 03 | `HubPlanner` / `HubClaimBuilder` raise `BLOCKED_DEPENDENCY` | Stage 03 Hub adapter |
+| B-S11-04 | Credentialed providers (Brave) | BLOCKED — Stage 02 | Handlers get a clean environment; credentials need Stage 02 protection | Stage 02 credential injection |
+| B-S11-05 | Research API reachable by users | BLOCKED — Stage 02 | Central policy denies `research.*` operations; router not mounted | Stage 02 auth + Stage 04 mounting |
+| B-S11-06 | Project knowledge / uploaded files as research sources | BLOCKED — Stage 07 | Only `ProjectKnowledgeSource` interface + explicit attachments exist | Stage 07 implementation |
+| B-S11-07 | Interactive (JavaScript) pages | BLOCKED — Stage 15 (roadmap S16) | Controlled HTTP retrieval only; thin HTML pages are reported as a browser dependency | Browser automation stage |
+| B-S11-08 | PDF text extraction | BLOCKED_DEPENDENCY | No approved PDF parser in the locked dependencies | Approve and lock a parser |
+| B-S11-09 | Network-stack isolation of research handlers | BLOCKED (B-014) | Application-level SSRF controls only; handlers share the host network namespace | Sandbox stage |
+| B-S11-10 | Stage 01B network-mode provider | INTERFACE ONLY | `NetworkModeProvider` is consumed; Stage 01B is not merged | Merge Stage 01B and pass its provider to `ResearchService` |

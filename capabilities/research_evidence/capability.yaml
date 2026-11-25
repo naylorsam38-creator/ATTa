@@ -1,0 +1,119 @@
+manifest_version: 1
+id: research.evidence
+version: 1.0.0
+description: >-
+  Stage 11 (CAP-12) deep-research evidence tools: capture exact evidence spans from stored extractions, compare
+  sources (near-duplicate / syndication detection), draft citations and re-check them. Works only on the task
+  workspace; authoritative citation binding and verification stay with the research service.
+requirement: CAP-12
+handlers:
+  execute: handler:capture_evidence
+  healthcheck: handler:healthcheck
+  verify: handler:verify
+input_schema: {type: object}
+output_schema: {type: object}
+permissions: [workspace.read]
+risk: low
+dependencies: {capabilities: [], services: [], python: []}
+timeout_s: 30
+enabled: true
+tools:
+  - name: capture_evidence
+    description: Capture an exact evidence span of an extracted source with its hashes and surrounding context.
+    task_types: [research.analyse, research.retrieve, research.local]
+    operations: [capture]
+    handler: handler:capture_evidence
+    verify: handler:verify
+    path_arguments: [extracted_path]
+    input_schema:
+      type: object
+      additionalProperties: false
+      required: [extracted_path, start, end]
+      properties:
+        extracted_path: {type: string, maxLength: 512}
+        start: {type: integer, minimum: 0}
+        end: {type: integer, minimum: 1}
+    output_schema:
+      type: object
+      required: [ok, error_code]
+      properties: {ok: {type: boolean}, error_code: {type: [string, "null"]}, evidence: {type: object}}
+    permissions: [workspace.read]
+    risk: low
+    resource_types: [web, local]
+    timeout_s: 20
+    cancellable: true
+    idempotency: idempotent
+  - name: compare_sources
+    description: Compare two to four extracted sources for duplication, syndication, titles and stated dates.
+    task_types: [research.compare, research.analyse]
+    operations: [compare]
+    handler: handler:compare_sources
+    verify: handler:verify
+    input_schema:
+      type: object
+      additionalProperties: false
+      required: [extracted_paths]
+      properties:
+        extracted_paths: {type: array, minItems: 2, maxItems: 4, items: {type: string, maxLength: 512}}
+    output_schema:
+      type: object
+      required: [ok, error_code]
+      properties: {ok: {type: boolean}, error_code: {type: [string, "null"]}, pairs: {type: array}}
+    permissions: [workspace.read]
+    risk: low
+    resource_types: [web, local]
+    timeout_s: 30
+    cancellable: true
+    idempotency: idempotent
+  - name: construct_citation
+    description: Draft a citation (quote, hashes, locator, source metadata) for a span; ids are minted by the service.
+    task_types: [research.cite]
+    operations: [cite]
+    handler: handler:construct_citation
+    verify: handler:verify
+    path_arguments: [extracted_path]
+    input_schema:
+      type: object
+      additionalProperties: false
+      required: [extracted_path, start, end]
+      properties:
+        extracted_path: {type: string, maxLength: 512}
+        start: {type: integer, minimum: 0}
+        end: {type: integer, minimum: 1}
+    output_schema:
+      type: object
+      required: [ok, error_code]
+      properties: {ok: {type: boolean}, error_code: {type: [string, "null"]}, citation_draft: {type: object}}
+    permissions: [workspace.read]
+    risk: low
+    resource_types: [web, local]
+    timeout_s: 20
+    cancellable: true
+    idempotency: idempotent
+  - name: verify_citation
+    description: Re-check a drafted citation against the stored extraction (worker self-check, not final verification).
+    task_types: [research.cite]
+    operations: [verify]
+    handler: handler:verify_citation
+    verify: handler:verify
+    path_arguments: [extracted_path]
+    input_schema:
+      type: object
+      additionalProperties: false
+      required: [extracted_path, start, end, quote_sha256, text_sha256]
+      properties:
+        extracted_path: {type: string, maxLength: 512}
+        start: {type: integer, minimum: 0}
+        end: {type: integer, minimum: 1}
+        quote_sha256: {type: string, pattern: "^[0-9a-f]{64}$"}
+        text_sha256: {type: string, pattern: "^[0-9a-f]{64}$"}
+    output_schema:
+      type: object
+      required: [ok, error_code, verified]
+      properties: {ok: {type: boolean}, error_code: {type: [string, "null"]}, verified: {type: boolean}}
+    permissions: [workspace.read]
+    risk: low
+    resource_types: [web, local]
+    timeout_s: 20
+    cancellable: true
+    idempotency: idempotent

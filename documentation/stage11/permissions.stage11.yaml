@@ -1,0 +1,7 @@
+# Stage 11 PROPOSED permission catalog additions — to be merged by the operator into configuration/permissions.yaml
+# (a PROTECTED, sealed file: this sidecar does not edit it). Until then the production registry reports the Stage 11
+# packages as 'untrusted' (not signed) and, once signed, the policy engine would still deny them: fail closed.
+permissions:
+  research.search.query: Send a research query to an explicitly configured search provider (CAP-11, read-only)
+  network.web.read: Retrieve public web content under the trusted research retrieval policy (CAP-11, read-only)
+controller_granted_permissions: [research.search.query, network.web.read]

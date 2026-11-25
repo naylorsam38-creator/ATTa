@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="8" skipped="5" tests="268" time="55.575" timestamp="2026-11-25T06:52:43.295703+00:00" hostname="vm"><testcase classname="tests.test_resilience_boundary" name="test_probe_refused_is_classified" time="0.001" /><testcase classname="tests.test_resilience_boundary" name="test_real_http_response_is_observation_not_verdict" time="0.503" /><testcase classname="tests.test_resilience_boundary" name="test_revision_changes_invalidate_stability" time="0.009" /><testcase classname="tests.test_v1141_installer.EnvFileIsDataNotShell" name="test_attacks_rejected_and_never_run" time="0.430" /><testcase classname="tests.test_v1141_installer.EnvFileIsDataNotShell" name="test_bootstrap_no_longer_sources_env" time="0.002" /><testcase classname="tests.test_v1141_installer.EnvFileIsDataNotShell" name="test_errors_never_echo_values" time="0.001" /><testcase classname="tests.test_v1141_installer.EnvFileIsDataNotShell" name="test_generated_template_passes_and_only_named_keys_are_set" time="0.022" /><testcase classname="tests.test_v1141_installer.EnvFileIsDataNotShell" name="test_old_way_really_ran_code" time="0.005" /><testcase classname="tests.test_v1141_installer.PinnedCompose" name="test_arch_mapping" time="0.011" /><testcase classname="tests.test_v1141_installer.PinnedCompose" name="test_download_that_fails_checksum_is_refused" time="0.015" /><testcase classname="tests.test_v1141_installer.PinnedCompose" name="test_no_unpinned_download_left" time="0.001" /><testcase classname="tests.test_v1141_installer.PinnedCompose" name="test_real_pinned_download_verifies" time="0.000"><skipped type="pytest.skip" message="network test (ATTA_TEST_NETWORK=1)">/home/user/ATTa/tests/test_v1141_installer.py:119: network test (ATTA_TEST_NETWORK=1)</skipped></testcase><testcase classname="tests.test_v1141_installer.PinnedCompose" name="test_right_checksum_installs_0755" time="0.012" /><testcase classname="tests.test_v1141_installer.PinnedCompose" name="test_unsupported_arch_refused_before_download" time="0.016" /><testcase classname="tests.test_v1141_installer.PinnedCompose" name="test_wrong_checksum_not_installed" time="0.009" /><testcase classname="tests.test_v1141_installer.CleanCodeReleases" name="test_adm_backup_copies_through_the_symlink" time="0.077" /><testcase classname="tests.test_v1141_installer.CleanCodeReleases" name="test_broken_code_never_goes_live" time="0.175" /><testcase classname="tests.test_v1141_installer.CleanCodeReleases" name="test_old_layout_migrates" time="0.088" /><testcase classname="tests.test_v1141_installer.CleanCodeReleases" name="test_restore_and_prune" time="6.901" /><testcase classname="tests.test_v1141_installer.CleanCodeReleases" name="test_stale_files_disappear" time="0.176" /><testcase classname="tests.test_v1141_installer.CleanCodeReleases" name="test_symlinks_not_copied" time="0.078" /><testcase classname="tests.test_v1141_installer.PermissionsEveryRun" name="test_rerun_enforces" time="0.090" /><testcase classname="tests.test_v1141_installer.DockerReadiness" name="test_gives_up_when_docker_never_answers" time="2.011" /><testcase classname="tests.test_v1141_installer.DockerReadiness" name="test_waits_until_docker_answers" time="4.018" /><testcase classname="tests.test_v1141_installer.UnitOrdering" name="test_bootstrap_parses" time="0.009" /><testcase classname="tests.test_v1141_installer.UnitOrdering" name="test_docker_services" time="0.001" /><testcase classname="tests.test_v1141_installer.UnitOrdering" name="test_gateway_does_not_need_docker" time="0.001" /><testcase classname="tests.test_v1141_installer.UnitOrdering" name="test_metadata_block_and_daemon_json_kept" time="0.000" /><testcase classname="tests.test_v114_hardening.SystemUpdateIsAdminOnly" name="test_queue_system_update_second_check" time="0.002" /><testcase classname="tests.test_v114_hardening.SystemUpdateIsAdminOnly" name="test_roles" time="0.001" /><testcase classname="tests.test_v114_hardening.SystemUpdateIsAdminOnly" name="test_tester_bundle_changes_nothing" time="0.006" /><testcase classname="tests.test_v114_hardening.AdmAuthorisation" name="test_allowed" time="0.011" /><testcase classname="tests.test_v114_hardening.AdmAuthorisation" name="test_non_admin_job_touches_nothing" time="0.003" /><testcase classname="tests.test_v114_hardening.AdmAuthorisation" name="test_unreadable_accounts_refuses_web_jobs" time="0.004" /><testcase classname="tests.test_v114_hardening.AdmStagingLimits" name="test_file_count" time="0.001" /><testcase classname="tests.test_v114_hardening.AdmStagingLimits" name="test_normal_bundle_still_stages" time="0.002" /><testcase classname="tests.test_v114_hardening.AdmStagingLimits" name="test_total_size" time="0.001" /><testcase classname="tests.test_v114_hardening.AdmStagingLimits" name="test_traversal" time="0.001" /><testcase classname="tests.test_v114_hardening.AdmStagingLimits" name="test_zip_bomb_ratio" time="0.177" /><testcase classname="tests.test_v114_hardening.ContainerHardening" name="test_caps_rule_is_last_and_skippable" time="0.003" /><testcase classname="tests.test_v114_hardening.ContainerHardening" name="test_compose_service_loses_host_access" time="0.001" /><testcase classname="tests.test_v114_hardening.ContainerHardening" name="test_docker_run_flags" time="0.000" /><testcase classname="tests.test_v114_hardening.ContainerHardening" name="test_recipe_remembers_relaxed_caps" time="0.001" /><testcase classname="tests.test_v114_hardening.ContainerHardening" name="test_relaxed_keeps_other_limits" time="0.000" /><testcase classname="tests.test_v114_hardening.Redaction" name="test_leaves_ordinary_text" time="0.000" /><testcase classname="tests.test_v114_hardening.Redaction" name="test_marker_detection" time="0.000" /><testcase classname="tests.test_v114_hardening.Redaction" name="test_redacts" time="0.000" /><testcase classname="tests.test_v114_hardening.LlmRepairNeverLeaksOrWritesBackSecrets" name="test_loop" time="0.001" /><testcase classname="tests.test_v115_security.ReservedNamesAreNotAccounts" name="test_adm_uses_the_same_reserved_list" time="0.302" /><testcase classname="tests.test_v115_security.ReservedNamesAreNotAccounts" name="test_admin_name_env_cannot_be_reserved" time="0.334" /><testcase classname="tests.test_v115_security.ReservedNamesAreNotAccounts" name="test_build_needs_an_origin" time="0.413" /><testcase classname="tests.test_v115_security.ReservedNamesAreNotAccounts" name="test_existing_reserved_account_is_dead" time="0.487" /><testcase classname="tests.test_v115_security.ReservedNamesAreNotAccounts" name="test_reserved_names_cannot_be_created" time="0.329" /><testcase classname="tests.test_v115_security.PipelineTrustsOriginNotNames" name="test_inbox_item_without_record_is_not_system" time="0.271" /><testcase classname="tests.test_v115_security.PipelineTrustsOriginNotNames" name="test_local_inbox_rejects_loose_files" time="0.258" /><testcase classname="tests.test_v115_security.PipelineTrustsOriginNotNames" name="test_local_origin_needs_the_local_check" time="0.251" /><testcase classname="tests.test_v115_security.PipelineTrustsOriginNotNames" name="test_record_without_origin_is_refused" time="0.239" /><testcase classname="tests.test_v115_security.PipelineTrustsOriginNotNames" name="test_untrusted_local_bundle_changes_nothing" time="0.280" /><testcase classname="tests.test_v115_security.PipelineTrustsOriginNotNames" name="test_web_record_naming_system_is_refused" time="0.272" /><testcase classname="tests.test_v115_security.AdmTrustsOriginNotNames" name="test_enqueue_requires_origin_and_requester" time="0.281" /><testcase classname="tests.test_v115_security.AdmTrustsOriginNotNames" name="test_incoming_must_be_protected" time="0.264" /><testcase classname="tests.test_v115_security.AdmTrustsOriginNotNames" name="test_local_job_naming_a_person" time="0.245" /><testcase classname="tests.test_v115_security.AdmTrustsOriginNotNames" name="test_loosened_queue_refuses_everything" time="0.280" /><testcase classname="tests.test_v115_security.AdmTrustsOriginNotNames" name="test_missing_or_unknown_origin" time="0.262" /><testcase classname="tests.test_v115_security.AdmTrustsOriginNotNames" name="test_reserved_web_job_never_backs_up_or_activates" time="0.273" /><testcase classname="tests.test_v115_security.AdmTrustsOriginNotNames" name="test_web_job_naming_system_even_if_an_admin_account_has_that_name" time="0.273" /><testcase classname="tests.test_v115_security.InstallerKeepsTrustFoldersPrivate" name="test_secure_state_on_every_run" time="0.034" /><testcase classname="tests.test_v115_security.RunnerEnvironment" name="test_every_docker_call_is_scrubbed" time="0.001" /><testcase classname="tests.test_v115_security.RunnerEnvironment" name="test_placeholders_never_the_real_value" time="0.002" /><testcase classname="tests.test_v115_security.RunnerEnvironment" name="test_protected_value_detection" time="0.002" /><testcase classname="tests.test_v115_security.RunnerEnvironment" name="test_runner_env_has_no_atta_secrets" time="0.001" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_app_file_holding_an_atta_value_is_caught" time="0.094" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_atta_data_never_mounted_even_with_host_access" time="0.076" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_build_context_outside" time="0.068" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_compose_file_symlinked_out" time="0.003" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_env_file_escaping_by_dots" time="0.002" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_env_file_pointing_at_atta" time="0.002" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_include_outside" time="0.002" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_interpolation_and_passthrough_get_nothing" time="0.072" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_named_volume_binding_the_host" time="0.084" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_ordinary_app_still_renders" time="0.095" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_other_apps_work_folder_not_mountable" time="0.080" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_secret_and_config_files_outside" time="0.073" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_symlinked_dotenv" time="0.003" /><testcase classname="tests.test_v115_security.ComposeCannotReachAttaSecrets" name="test_symlinked_example_is_not_copied" time="0.069" /><testcase classname="tests.test_v115_security.CustomerTokensGoToCoolifyOnly" name="test_check_compares_without_the_old_token" time="0.011" /><testcase classname="tests.test_v115_security.CustomerTokensGoToCoolifyOnly" name="test_coolify_error_echoing_the_value_is_scrubbed" time="0.003" /><testcase classname="tests.test_v115_security.CustomerTokensGoToCoolifyOnly" name="test_delivered_to_coolify_and_only_a_receipt_kept" time="0.005" /><testcase classname="tests.test_v115_security.CustomerTokensGoToCoolifyOnly" name="test_nothing_kept_when_coolify_not_ready" time="0.004" /><testcase classname="tests.test_v115_security.CustomerTokensGoToCoolifyOnly" name="test_refusals" time="0.006" /><testcase classname="tests.test_v115_security.CustomerTokensGoToCoolifyOnly" name="test_service_resource" time="0.503" /><testcase classname="tests.test_v115_security.Gateway" name="test_build_api_filters_details_for_non_admin" time="0.772" /><testcase classname="tests.test_v115_security.Gateway" name="test_build_results_filtered_by_ownership" time="0.023" /><testcase classname="tests.test_v115_security.Gateway" name="test_cross_site_posts_refused" time="0.064" /><testcase classname="tests.test_v115_security.Gateway" name="test_customer_token_form" time="0.063" /><testcase classname="tests.test_v115_security.Gateway" name="test_evidence_cannot_escape" time="0.018" /><testcase classname="tests.test_v115_security.Gateway" name="test_evidence_ownership" time="0.023" /><testcase classname="tests.test_v115_security.Gateway" name="test_fake_png_is_not_rendered" time="0.006" /><testcase classname="tests.test_v115_security.Gateway" name="test_login_is_also_protected" time="0.006" /><testcase classname="tests.test_v115_security.Gateway" name="test_page_html_is_plain_text_download" time="0.007" /><testcase classname="tests.test_v115_security.Gateway" name="test_pages_allow_no_script" time="0.032" /><testcase classname="tests.test_v115_security.Gateway" name="test_reserved_account_cannot_log_in" time="0.160" /><testcase classname="tests.test_v115_security.Gateway" name="test_screenshot_and_json" time="0.039" /><testcase classname="tests.test_v115_security.Gateway" name="test_unknown_types_not_served" time="0.171" /><testcase classname="tests.test_v115_security.V121_5MergeFixes" name="test_service_made_by_atta_gets_tokens_on_the_services_endpoint" time="0.002" /><testcase classname="tests.test_v115_security.V121_5MergeFixes" name="test_skin_proxy_launcher_never_gets_atta_secrets" time="5.509" /><testcase classname="tests.test_v117_coolify.ComposeFromRecipe" name="test_compose_app_uses_the_hardened_rendered_file_minus_host_wiring" time="0.001" /><testcase classname="tests.test_v117_coolify.ComposeFromRecipe" name="test_compose_app_without_its_rendered_file_says_why" time="0.001" /><testcase classname="tests.test_v117_coolify.ComposeFromRecipe" name="test_dockerfile_app_runs_the_image_that_qualified_pinned_per_build" time="0.000" /><testcase classname="tests.test_v117_coolify.ComposeFromRecipe" name="test_image_app_keeps_the_test_runs_fence_and_gets_its_own_address" time="0.000" /><testcase classname="tests.test_v117_coolify.ComposeFromRecipe" name="test_port_falls_back_to_the_images_exposed_port" time="0.000" /><testcase classname="tests.test_v117_coolify.ComposeFromRecipe" name="test_relaxed_caps_recipe_stays_relaxed" time="0.000" /><testcase classname="tests.test_v117_coolify.ComposeFromRecipe" name="test_yaml_writer_round_trips" time="0.002" /><testcase classname="tests.test_v117_coolify.SkinAndAdapterGoLive" name="test_compose_app_skin_points_at_its_web_service" time="0.005" /><testcase classname="tests.test_v117_coolify.SkinAndAdapterGoLive" name="test_gateway_settings_follow_the_skin_live" time="0.003" /><testcase classname="tests.test_v117_coolify.SkinAndAdapterGoLive" name="test_image_app_is_published_only_through_its_skin_proxy" time="0.003" /><testcase classname="tests.test_v117_coolify.SkinAndAdapterGoLive" name="test_live_skin_files_are_a_frozen_copy" time="0.004" /><testcase classname="tests.test_v117_coolify.SkinAndAdapterGoLive" name="test_no_overlay_means_no_live_copy" time="0.001" /><testcase classname="tests.test_v117_coolify.SkinAndAdapterGoLive" name="test_skin_runs_in_atta_image_when_under_coolify" time="0.002" /><testcase classname="tests.test_v117_coolify.Provisioning" name="test_a_new_qualified_app_gets_its_own_service_and_is_started" time="0.514" /><testcase classname="tests.test_v117_coolify.Provisioning" name="test_a_service_lost_from_the_record_is_found_again_by_name" time="0.510" /><testcase classname="tests.test_v117_coolify.Provisioning" name="test_autocreate_off_is_the_old_behaviour" time="0.502" /><testcase classname="tests.test_v117_coolify.Provisioning" name="test_coolify_failing_is_retried_later" time="0.517" /><testcase classname="tests.test_v117_coolify.Provisioning" name="test_each_app_gets_a_separate_service" time="0.516" /><testcase classname="tests.test_v117_coolify.Provisioning" name="test_hand_made_resources_are_never_touched" time="0.506" /><testcase classname="tests.test_v117_coolify.Provisioning" name="test_no_recipe_is_reported_plainly_not_crashed" time="0.502" /><testcase classname="tests.test_v117_coolify.Provisioning" name="test_requalified_app_updates_its_own_service_instead_of_making_another" time="0.519" /><testcase classname="tests.test_v117_coolify.DeployAnswer" name="test_service_started_message_counts_as_accepted" time="0.504" /><testcase classname="tests.test_v117_coolify.LibraryRun" name="test_library_run_in_the_local_inbox_is_picked_up_and_trusted" time="0.001" /><testcase classname="tests.test_v117_coolify.LibraryRun" name="test_library_run_is_picked_up_from_the_inbox" time="0.001" /><testcase classname="tests.test_v117_coolify.LibraryRun" name="test_process_knows_the_library_kind" time="0.002" /><testcase classname="tests.test_v117_coolify.ContainerStart" name="test_coolify_connection_file_wins_over_env" time="0.003" /><testcase classname="tests.test_v117_coolify.ContainerStart" name="test_first_start_queues_one_run_over_the_whole_list" time="0.002" /><testcase classname="tests.test_v117_coolify.ContainerStart" name="test_seed_makes_a_private_data_folder_with_a_real_env" time="0.002" /><testcase classname="tests.test_v117_coolify.Packaging" name="test_coolify_compose_is_valid_and_wired_for_the_host" time="0.001" /><testcase classname="tests.test_v117_coolify.Packaging" name="test_dockerfile_pins_compose_to_the_installer_checksums" time="0.000" /><testcase classname="tests.test_v117_coolify.Packaging" name="test_release_is_v117" time="0.000" /><testcase classname="tests.test_v117_coolify.Packaging" name="test_single_app_list" time="0.000" /><testcase classname="tests.test_v118_merge.CatalogueGuarantee" name="test_app_drops_out_when_it_stops_qualifying_and_returns" time="0.006" /><testcase classname="tests.test_v118_merge.CatalogueGuarantee" name="test_every_seed_category_reaches_a_front_door_category" time="0.005" /><testcase classname="tests.test_v118_merge.CatalogueGuarantee" name="test_hand_set_category_wins" time="0.002" /><testcase classname="tests.test_v118_merge.CatalogueGuarantee" name="test_only_qualified_live_apps_are_shown" time="0.004" /><testcase classname="tests.test_v118_merge.CatalogueGuarantee" name="test_user_view_carries_no_failures" time="0.003" /><testcase classname="tests.test_v118_merge.NoGuessedRepos" name="test_only_verified_entries_are_cloned" time="0.084" /><testcase classname="tests.test_v118_merge.RunnerAndHealer" name="test_heal_model_is_a_real_model_id" time="0.001" /><testcase classname="tests.test_v118_merge.RunnerAndHealer" name="test_runner_keeps_start_gates_and_all_at_once_default" time="0.001" /><testcase classname="tests.test_v118_merge.HttpsRoute" name="test_deploy_script_writes_a_valid_traefik_route" time="0.012" /><testcase classname="tests.test_v119_login_proof.V119JourneyProof" name="test_journey_result_is_recorded_on_stage_6" time="0.351"><failure message="playwright._impl._errors.Error: BrowserType.launch: Failed to launch chromium because executable doesn't exist at /usr/bin/chromium">self = &lt;test_v119_login_proof.V119JourneyProof testMethod=test_journey_result_is_recorded_on_stage_6&gt;
+
+    def setUp(self):
+&gt;       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:32: in __init__
+    self.browser = self.p.chromium.launch(headless=True, executable_path=os.environ.get("ATTA_CHROMIUM","/usr/bin/chromium"))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/playwright/sync_api/_generated.py:16814: in launch
+    self._sync(
+.venv/lib/python3.13/site-packages/playwright/_impl/_browser_type.py:101: in launch
+    await self._channel.send(
+.venv/lib/python3.13/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7f97fcdd4c20&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7f97fc964f40&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Failed to launch chromium because executable doesn't exist at /usr/bin/chromium
+
+.venv/lib/python3.13/site-packages/playwright/_impl/_connection.py:632: Error</failure></testcase><testcase classname="tests.test_v119_login_proof.V119JourneyProof" name="test_login_requires_a_real_test_account" time="0.001"><failure message="playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.&#10;Please use the Async API instead.">self = &lt;test_v119_login_proof.V119JourneyProof testMethod=test_login_requires_a_real_test_account&gt;
+
+    def setUp(self):
+&gt;       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:31: in __init__
+    self.p = sync_playwright().start()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:83: in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7f97fe96afd0&gt;
+
+        def __enter__(self) -&gt; SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+&gt;               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error</failure></testcase><testcase classname="tests.test_v119_login_proof.V119JourneyProof" name="test_login_with_wrong_expectation_fails_even_though_login_worked" time="0.000"><failure message="playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.&#10;Please use the Async API instead.">self = &lt;test_v119_login_proof.V119JourneyProof testMethod=test_login_with_wrong_expectation_fails_even_though_login_worked&gt;
+
+    def setUp(self):
+&gt;       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:31: in __init__
+    self.p = sync_playwright().start()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:83: in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7f97fe93aad0&gt;
+
+        def __enter__(self) -&gt; SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+&gt;               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error</failure></testcase><testcase classname="tests.test_v119_login_proof.V119JourneyProof" name="test_login_without_a_post_login_expectation_is_refused" time="0.000"><failure message="playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.&#10;Please use the Async API instead.">self = &lt;test_v119_login_proof.V119JourneyProof testMethod=test_login_without_a_post_login_expectation_is_refused&gt;
+
+    def setUp(self):
+&gt;       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:31: in __init__
+    self.p = sync_playwright().start()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:83: in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7f97fc5582b0&gt;
+
+        def __enter__(self) -&gt; SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+&gt;               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error</failure></testcase><testcase classname="tests.test_v119_login_proof.V119JourneyProof" name="test_page_load_without_journey_is_not_qualified" time="0.000"><failure message="playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.&#10;Please use the Async API instead.">self = &lt;test_v119_login_proof.V119JourneyProof testMethod=test_page_load_without_journey_is_not_qualified&gt;
+
+    def setUp(self):
+&gt;       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:31: in __init__
+    self.p = sync_playwright().start()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:83: in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7f97fc558fc0&gt;
+
+        def __enter__(self) -&gt; SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+&gt;               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error</failure></testcase><testcase classname="tests.test_v119_login_proof.V119JourneyProof" name="test_real_login_journey_passes" time="0.000"><failure message="playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.&#10;Please use the Async API instead.">self = &lt;test_v119_login_proof.V119JourneyProof testMethod=test_real_login_journey_passes&gt;
+
+    def setUp(self):
+&gt;       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:31: in __init__
+    self.p = sync_playwright().start()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:83: in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7f97fcddfd10&gt;
+
+        def __enter__(self) -&gt; SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+&gt;               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error</failure></testcase><testcase classname="tests.test_v119_login_proof.V119JourneyProof" name="test_wrong_password_fails_the_journey" time="0.000"><failure message="playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.&#10;Please use the Async API instead.">self = &lt;test_v119_login_proof.V119JourneyProof testMethod=test_wrong_password_fails_the_journey&gt;
+
+    def setUp(self):
+&gt;       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:31: in __init__
+    self.p = sync_playwright().start()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:83: in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7f97fcd96470&gt;
+
+        def __enter__(self) -&gt; SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+&gt;               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error</failure></testcase><testcase classname="tests.test_v120_stage2.SystemChoosesTheFoundation" name="test_choice_is_the_same_every_time" time="0.006" /><testcase classname="tests.test_v120_stage2.SystemChoosesTheFoundation" name="test_chosen_foundation_must_itself_be_qualified_and_live" time="0.005" /><testcase classname="tests.test_v120_stage2.SystemChoosesTheFoundation" name="test_empty_category_stays_empty" time="0.008" /><testcase classname="tests.test_v120_stage2.SystemChoosesTheFoundation" name="test_front_door_never_offers_a_pick_or_shows_an_app_name" time="0.003" /><testcase classname="tests.test_v120_stage2.SystemChoosesTheFoundation" name="test_user_gets_one_foundation_per_category_and_no_names" time="0.005" /><testcase classname="tests.test_v120_stage2.HandOffOnlyWhenQualified" name="test_partially_qualified_is_not_a_hand_off_state" time="0.001" /><testcase classname="tests.test_v120_stage2.HandOffOnlyWhenQualified" name="test_pipeline_calls_hand_off_only_for_a_qualified_build" time="0.000" /><testcase classname="tests.test_v120_stage2.HandOffOnlyWhenQualified" name="test_static_snapshot_is_gone_live_catalogue_is_the_only_source" time="0.001" /><testcase classname="tests.test_v120_stage2.JourneyGateIsWired" name="test_env_credentials_are_read_from_the_environment" time="0.000" /><testcase classname="tests.test_v120_stage2.JourneyGateIsWired" name="test_login_contract_needs_account_and_expectation_before_touching_the_page" time="0.000" /><testcase classname="tests.test_v120_stage2.JourneyGateIsWired" name="test_missing_journey_is_a_fail_code" time="0.000" /><testcase classname="tests.test_v120_stage2.JourneyGateIsWired" name="test_release_says_v120_and_carries_v118" time="0.000" /><testcase classname="tests.test_v120_stage2.JourneyGateIsWired" name="test_runner_keeps_journey_in_the_recipe_and_hands_it_to_the_watcher" time="0.001" /><testcase classname="tests.test_v120_stage2.JourneyGateIsWired" name="test_watcher_has_the_gate" time="0.001" /><testcase classname="tests.test_v121_2_parallel_isolation.RevisionIdentity" name="test_adm_release_still_changes_the_revision" time="0.009" /><testcase classname="tests.test_v121_2_parallel_isolation.RevisionIdentity" name="test_app_revision_sees_source_changes_not_runner_env_files" time="0.182" /><testcase classname="tests.test_v121_2_parallel_isolation.RevisionIdentity" name="test_code_change_is_a_new_revision" time="0.002" /><testcase classname="tests.test_v121_2_parallel_isolation.RevisionIdentity" name="test_container_layout_is_never_unknown" time="0.005" /><testcase classname="tests.test_v121_2_parallel_isolation.OutcomeStates" name="test_every_state" time="0.000" /><testcase classname="tests.test_v121_2_parallel_isolation.OutcomeStates" name="test_ladder_rungs_are_separate_observations" time="0.001" /><testcase classname="tests.test_v121_2_parallel_isolation.Fleet" name="test_a_crash_outside_the_check_and_a_vanished_app_are_contained" time="0.232" /><testcase classname="tests.test_v121_2_parallel_isolation.Fleet" name="test_a_hung_app_is_timeout_and_the_fleet_still_reports" time="1.281" /><testcase classname="tests.test_v121_2_parallel_isolation.Fleet" name="test_colliding_identities_are_reported_not_merged" time="0.123" /><testcase classname="tests.test_v121_2_parallel_isolation.Fleet" name="test_every_app_runs_at_the_same_time_by_default" time="1.123" /><testcase classname="tests.test_v121_2_parallel_isolation.Fleet" name="test_failed_start_evidence_rows_name_their_own_job" time="0.527" /><testcase classname="tests.test_v121_2_parallel_isolation.Fleet" name="test_machine_room_waits_are_reported" time="0.900" /><testcase classname="tests.test_v121_2_parallel_isolation.Fleet" name="test_main_all_finishes_without_a_name_error" time="0.279" /><testcase classname="tests.test_v121_2_parallel_isolation.Fleet" name="test_one_app_crashing_is_only_that_apps_result" time="0.403" /><testcase classname="tests.test_v121_2_parallel_isolation.Fleet" name="test_one_at_a_time_is_never_silent" time="0.332" /><testcase classname="tests.test_v121_2_parallel_isolation.Fleet" name="test_report_totals_and_classes_add_up" time="0.463" /><testcase classname="tests.test_v121_2_parallel_isolation.Fleet" name="test_revision_change_mid_check_is_discarded_and_rechecked" time="0.312" /><testcase classname="tests.test_v121_2_parallel_isolation.Fleet" name="test_revision_that_keeps_changing_is_unverified_never_qualified" time="0.117" /><testcase classname="tests.test_v121_2_parallel_isolation.Fleet" name="test_starved_apps_get_a_recorded_sequential_second_pass" time="0.220" /><testcase classname="tests.test_v121_2_parallel_isolation.RealQualifyApp" name="test_identity_travels_in_memory_never_in_the_target_file" time="0.611" /><testcase classname="tests.test_v121_2_parallel_isolation.Stage6Evidence" name="test_each_check_has_its_own_folder_with_its_identity" time="0.018" /><testcase classname="tests.test_v121_2_parallel_isolation.Stage6Evidence" name="test_loop_checks_never_prune_the_evidence_a_result_points_at" time="0.085" /><testcase classname="tests.test_v121_2_parallel_isolation.Stage6Evidence" name="test_old_check_folders_are_pruned_oldest_first" time="0.106" /><testcase classname="tests.test_v121_2_parallel_isolation.GatewayEvidence" name="test_links_name_the_run" time="0.107" /><testcase classname="tests.test_v121_2_parallel_isolation.GatewayEvidence" name="test_routes" time="0.164" /><testcase classname="tests.test_v121_2_parallel_isolation.PipelineGate" name="test_only_barrier_passed_current_revision_results_are_qualified" time="0.037" /><testcase classname="tests.test_v121_3_record_diagnostic" name="test_missing_copy_is_observation_not_atta_root_cause" time="0.004" /><testcase classname="tests.test_v121_3_record_diagnostic" name="test_502_does_not_become_known_root_cause" time="0.002" /><testcase classname="tests.test_v121_3_record_diagnostic" name="test_missing_identity_is_no_action" time="0.001" /><testcase classname="tests.test_v121_3_record_diagnostic" name="test_mismatched_related_identity_is_no_action" time="0.002" /><testcase classname="tests.test_v121_3_record_diagnostic" name="test_protocol_mismatch_needs_explicit_evidence" time="0.002" /><testcase classname="tests.test_v121_3_record_diagnostic" name="test_duplicate_records_cannot_authorize_action" time="0.001" /><testcase classname="tests.test_v121_3_record_diagnostic" name="test_policy_actions_are_closed_set" time="0.000" /><testcase classname="tests.test_v121_3_record_diagnostic" name="test_real_22_record_regression_requires_real_records_when_enabled" time="0.000"><skipped type="pytest.skip" message="real ATTa failure-record directory not mounted in this package run">/home/user/ATTa/tests/test_v121_3_record_diagnostic.py:103: real ATTa failure-record directory not mounted in this package run</skipped></testcase><testcase classname="tests.test_v121_4_control_layer.HashChainedStore" name="test_chain_is_intact_and_counts" time="0.008" /><testcase classname="tests.test_v121_4_control_layer.HashChainedStore" name="test_edit_delete_and_reorder_are_detected" time="0.015" /><testcase classname="tests.test_v121_4_control_layer.HashChainedStore" name="test_long_values_are_stored_as_hash_and_length" time="0.003" /><testcase classname="tests.test_v121_4_control_layer.HashChainedStore" name="test_parallel_threads_and_processes_never_fork_the_chain" time="0.410" /><testcase classname="tests.test_v121_4_control_layer.HashChainedStore" name="test_the_end_of_the_log_is_anchored" time="0.012" /><testcase classname="tests.test_v121_4_control_layer.HashChainedStore" name="test_torn_final_write_is_reported_and_the_log_keeps_working" time="0.003" /><testcase classname="tests.test_v121_4_control_layer.Policy" name="test_explicit_rule_is_exact" time="0.002" /><testcase classname="tests.test_v121_4_control_layer.Policy" name="test_no_file_is_empty_and_everything_escalates" time="0.001" /><testcase classname="tests.test_v121_4_control_layer.Policy" name="test_scaffold_proposes_only_repairs_that_ran_and_keeps_human_rules" time="0.001" /><testcase classname="tests.test_v121_4_control_layer.Policy" name="test_unknown_failure_may_be_escalated_but_never_executed" time="0.002" /><testcase classname="tests.test_v121_4_control_layer.Policy" name="test_untrustworthy_policies_fail_to_load" time="0.004" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_a_change_made_by_the_gates_own_earlier_repair_is_accounted_for" time="0.127" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_a_qualify_failure_with_no_app_is_dated_by_the_build" time="0.083" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_app_changed_since_the_failure_is_refused" time="0.099" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_approval_is_bound_single_use_and_expires" time="1.220" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_build_layer_evidence_is_the_time_the_build_failed" time="0.103" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_default_mode_is_observe_and_never_blocks" time="0.100" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_deployment_changed_since_the_failure_is_refused" time="0.091" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_enforce_with_auto_policy_and_current_evidence_runs" time="0.101" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_enforce_without_policy_refuses_and_never_calls_the_repair" time="0.106" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_incomplete_identity_is_refused" time="0.114" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_no_context_means_ungated" time="0.094" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_off_mode_runs_exactly_as_before_and_records_nothing" time="0.080" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_record_changed_after_the_healer_read_it_is_refused" time="0.089" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_remediation_id_is_deterministic_and_specific" time="0.081" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_repair_exception_is_audited_and_re_raised" time="0.110" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_secrets_in_repair_arguments_and_results_are_redacted_in_the_audit" time="0.095" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_stale_and_future_evidence_is_refused" time="0.104" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_the_memory_of_own_repairs_is_bounded" time="0.087" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_unrecognised_mode_fails_closed" time="0.101" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_untrusted_policy_blocks_in_enforce_but_not_in_observe" time="0.111" /><testcase classname="tests.test_v121_4_control_layer.Gate" name="test_unwritable_audit_blocks_enforce_but_not_observe" time="0.107" /><testcase classname="tests.test_v121_4_control_layer.SelfHealerThroughTheGate" name="test_enforce_with_an_explicit_rule_heals" time="0.160" /><testcase classname="tests.test_v121_4_control_layer.SelfHealerThroughTheGate" name="test_enforce_without_policy_touches_nothing_and_escalates_to_a_person" time="0.178" /><testcase classname="tests.test_v121_4_control_layer.SelfHealerThroughTheGate" name="test_observe_heals_exactly_as_v121_3_and_audits_it" time="0.152" /><testcase classname="tests.test_v121_4_control_layer.SelfHealerThroughTheGate" name="test_run_actions_without_context_is_unchanged" time="0.123" /><testcase classname="tests.test_v121_4_control_layer.LLMToolCallsThroughTheGate" name="test_enforce_refuses_the_models_mutating_call" time="0.095" /><testcase classname="tests.test_v121_4_control_layer.LLMToolCallsThroughTheGate" name="test_observe_lets_the_model_repair_and_records_it" time="0.098" /><testcase classname="tests.test_v121_4_control_layer.RecordsAndDiagnostic" name="test_a_later_run_of_one_app_is_not_this_fleets_record" time="0.507" /><testcase classname="tests.test_v121_4_control_layer.RecordsAndDiagnostic" name="test_control_report_uses_only_records_and_leaves_run_report_alone" time="0.489" /><testcase classname="tests.test_v121_4_control_layer.RecordsAndDiagnostic" name="test_diagnose_reads_the_exported_tree_read_only_and_correctly" time="0.495" /><testcase classname="tests.test_v121_4_control_layer.RecordsAndDiagnostic" name="test_export_is_write_once_and_idempotent" time="0.494" /><testcase classname="tests.test_v121_4_control_layer.RecordsAndDiagnostic" name="test_export_writes_one_record_per_failed_app_with_top_level_identity" time="0.549" /><testcase classname="tests.test_v121_4_control_layer.RecordsAndDiagnostic" name="test_ids_used_as_paths_keep_their_case_and_refuse_path_syntax" time="0.478" /><testcase classname="tests.test_v121_4_control_layer.RecordsAndDiagnostic" name="test_observations_are_recorded_once" time="0.515" /><testcase classname="tests.test_v121_4_control_layer.RecordsAndDiagnostic" name="test_record_diagnostic_run_reads_the_export_as_documented" time="0.481" /><testcase classname="tests.test_v121_4_control_layer.RecordsAndDiagnostic" name="test_the_fleet_is_what_the_runner_reported" time="0.539" /><testcase classname="tests.test_v121_4_control_layer.IdentityCollision" name="test_a_colliding_name_never_gets_the_other_apps_record" time="0.126" /><testcase classname="tests.test_v121_4_control_layer.RecordDiagnosticIdentityRegression" name="test_nested_identity_never_overrides_the_records_own" time="0.002" /><testcase classname="tests.test_v121_4_control_layer.Deployments" name="test_not_configured_blocks_every_app" time="0.505" /><testcase classname="tests.test_v121_4_control_layer.Deployments" name="test_probe_distinguishes_live_from_broken" time="1.008" /><testcase classname="tests.test_v121_4_control_layer.Deployments" name="test_records_alone_never_claim_live" time="0.506" /><testcase classname="tests.test_v121_4_control_layer.CommandLine" name="test_after_run_does_everything_and_is_repeatable" time="0.787" /><testcase classname="tests.test_v121_4_control_layer.CommandLine" name="test_policy_scaffold_writes_reviewable_rules" time="0.593" /><testcase classname="tests.test_v121_4_control_layer.CommandLine" name="test_status_verify_policy_and_approve" time="1.260" /><testcase classname="tests.test_v121_journey_author.CredentialStore" name="test_forget_account" time="0.008" /><testcase classname="tests.test_v121_journey_author.CredentialStore" name="test_store_reference_resolves_from_the_accounts_file_and_never_leaks" time="0.007" /><testcase classname="tests.test_v121_journey_author.ErrorContracts" name="test_authoring_failure_is_a_stage_6_code_with_the_cause" time="0.006" /><testcase classname="tests.test_v121_journey_author.EnvPairs" name="test_admin_pairs_are_found_by_name_shape_not_app_name" time="0.007" /><testcase classname="tests.test_v121_journey_author.EnvPairs" name="test_dot_env_and_rendered_compose_are_read" time="0.007" /><testcase classname="tests.test_v121_journey_author.SubmitSelection" name="test_login_submit_is_inside_the_password_form" time="0.005"><failure message="playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.&#10;Please use the Async API instead.">self = &lt;test_v121_journey_author.SubmitSelection testMethod=test_login_submit_is_inside_the_password_form&gt;
+
+    def test_login_submit_is_inside_the_password_form(self):
+        from playwright.sync_api import sync_playwright
+        sys.modules.pop("system_watcher", None)
+        w = importlib.import_module("system_watcher")
+        exe = os.environ.get("ATTA_CHROMIUM", "/usr/bin/chromium")
+&gt;       with sync_playwright() as p:
+             ^^^^^^^^^^^^^^^^^
+
+tests/test_v121_journey_author.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7f97fc3cc7c0&gt;
+
+        def __enter__(self) -&gt; SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+&gt;               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error</failure></testcase><testcase classname="tests.test_v121_journey_author.SetJourneyContractAction" name="test_validation_and_storage" time="0.014" /><testcase classname="tests.test_v121_journey_author.FleetReport" name="test_groups_by_code_and_passed_first" time="0.006" /><testcase classname="tests.test_v121_journey_author.LiveGotify" name="test_env_admin_class_end_to_end" time="0.000"><skipped type="pytest.skip" message="set ATTA_LIVE_GOTIFY_URL to a running Gotify">/home/user/ATTa/tests/test_v121_journey_author.py:142: set ATTA_LIVE_GOTIFY_URL to a running Gotify</skipped></testcase><testcase classname="tests.test_v121_journey_author.LiveGitea" name="test_signup_class_end_to_end" time="0.000"><skipped type="pytest.skip" message="set ATTA_LIVE_GITEA_URL to a running Gitea">/home/user/ATTa/tests/test_v121_journey_author.py:157: set ATTA_LIVE_GITEA_URL to a running Gitea</skipped></testcase><testcase classname="tests.test_v121_journey_author.LiveNoLogin" name="test_display_only_app_is_reported_not_faked" time="0.000"><skipped type="pytest.skip" message="set ATTA_LIVE_NOLOGIN_URL to a display-only app">/home/user/ATTa/tests/test_v121_journey_author.py:168: set ATTA_LIVE_NOLOGIN_URL to a display-only app</skipped></testcase></testsuite></testsuites>

@@ -1,0 +1,34 @@
+# Stage 11 research configuration (web search and deep research). Operator-controlled.
+# Ceilings below are TRUSTED: a research contract may request limits at or below them, never above, and a research
+# worker can never change them (backend/research/config.py).
+
+# Network mode used when Stage 01B (adaptive deployment / offline qualification) does not supply one.
+# ONLINE | OFFLINE | AIR_GAPPED. Overridden by the environment variable ATTA_NETWORK_MODE, and by the Stage 01B
+# provider once it is merged (backend/research/network.py).
+network_mode: ONLINE
+
+# Search providers must be EXPLICIT. None is configured by default, so external search reports PROVIDER_UNAVAILABLE
+# (BLOCKED) instead of pretending. Example (a self-hosted SearXNG instance with the JSON format enabled):
+#   providers:
+#     - {id: searxng-local, kind: searxng, endpoint: "https://search.example.org", max_results: 10, enabled: true}
+# kind brave needs an API key delivered by Stage 02 credential protection (BLOCKED until then).
+providers: []
+
+# Domains treated as "official" for source-quality metadata (informational; never decides truth).
+official_domain_suffixes: [".gov", ".gov.uk", ".europa.eu", ".int", ".mil", ".gc.ca", ".gov.au"]
+
+# Focus-4: at most this many research subtasks are active per parent objective (cannot exceed the Stage 01A limit).
+max_active_subtasks: 4
+
+# Context management: evidence passages handed to one worker task.
+evidence_selection:
+  max_passages_per_task: 12
+  max_passage_chars: 1200
+
+# Mode defaults (= trusted ceilings for that mode).
+modes:
+  QUICK_SEARCH:      {max_queries: 2,  max_sources: 5,  max_fetches: 3,  max_depth: 0, max_subquestions: 1,  max_batches: 2, time_limit_s: 120,  token_limit: 20000,  context_tokens_per_task: 4096, network_requests: 12,  max_retries: 1}
+  STANDARD_RESEARCH: {max_queries: 8,  max_sources: 12, max_fetches: 12, max_depth: 1, max_subquestions: 4,  max_batches: 6, time_limit_s: 900,  token_limit: 100000, context_tokens_per_task: 8192, network_requests: 60,  max_retries: 2}
+  DEEP_RESEARCH:     {max_queries: 24, max_sources: 40, max_fetches: 40, max_depth: 2, max_subquestions: 12, max_batches: 16, time_limit_s: 3600, token_limit: 400000, context_tokens_per_task: 8192, network_requests: 200, max_retries: 2}
+  SOURCE_COMPARISON: {max_queries: 0,  max_sources: 8,  max_fetches: 8,  max_depth: 0, max_subquestions: 1,  max_batches: 3, time_limit_s: 600,  token_limit: 60000,  context_tokens_per_task: 8192, network_requests: 30,  max_retries: 1}
+  FACT_VERIFICATION: {max_queries: 6,  max_sources: 10, max_fetches: 10, max_depth: 1, max_subquestions: 4,  max_batches: 6, time_limit_s: 900,  token_limit: 80000,  context_tokens_per_task: 8192, network_requests: 50,  max_retries: 2}

@@ -1,0 +1,15 @@
+# Stage 11 PROPOSED permanent tool numbers — to be appended by the operator to configuration/tool_numbers.yaml
+# (a PROTECTED, sealed file: this sidecar does not edit it). CCC = requirement-register capability:
+# CAP-11 web search -> 011, CAP-12 deep research -> 012. Reconciled against the current registry: no existing
+# tool uses 011.xxx or 012.xxx (production catalogue has only 040.001; S01A test fixtures use namespaced tables).
+tools:
+  "011.001": {tool: "research.web:search"}
+  "011.002": {tool: "research.web:fetch_source"}
+  "011.003": {tool: "research.web:extract_content"}
+  "011.004": {tool: "research.web:inspect_metadata"}
+  "011.005": {tool: "research.web:follow_link"}
+  "011.006": {tool: "research.web:search_within_source"}
+  "012.001": {tool: "research.evidence:capture_evidence"}
+  "012.002": {tool: "research.evidence:compare_sources"}
+  "012.003": {tool: "research.evidence:construct_citation"}
+  "012.004": {tool: "research.evidence:verify_citation"}

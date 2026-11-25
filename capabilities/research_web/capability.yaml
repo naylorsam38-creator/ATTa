@@ -1,0 +1,217 @@
+manifest_version: 1
+id: research.web
+version: 1.0.0
+description: >-
+  Stage 11 (CAP-11) web search and controlled source retrieval. Queries explicitly configured search providers,
+  retrieves sources under the trusted retrieval policy (SSRF, redirect, size, timeout and content-type controls),
+  stores content-addressed snapshots and produces typed extractions. Read-only: no forms, no logins, no browser.
+requirement: CAP-11
+handlers:
+  execute: handler:fetch_source
+  healthcheck: handler:healthcheck
+  verify: handler:verify
+input_schema: {type: object}
+output_schema: {type: object}
+permissions: [research.search.query, network.web.read, workspace.read, workspace.write]
+risk: low
+dependencies: {capabilities: [], services: [], python: []}
+timeout_s: 60
+enabled: true
+tools:
+  - name: search
+    description: Query one explicitly configured search provider and return normalised results (never fabricated).
+    task_types: [research.search]
+    operations: [search]
+    handler: handler:search
+    verify: handler:verify
+    url_arguments: [endpoint]
+    input_schema:
+      type: object
+      additionalProperties: false
+      required: [provider_kind, endpoint, query]
+      properties:
+        provider_kind: {type: string, enum: [searxng, brave]}
+        endpoint: {type: string, maxLength: 2048}
+        query: {type: string, minLength: 1, maxLength: 500}
+        max_results: {type: integer, minimum: 1, maximum: 50}
+        options:
+          type: object
+          additionalProperties: false
+          properties:
+            language: {type: string, maxLength: 20}
+            time_range: {type: string, enum: [day, week, month, year]}
+    output_schema:
+      type: object
+      required: [ok, error_code, results]
+      properties:
+        ok: {type: boolean}
+        error_code: {type: [string, "null"]}
+        query: {type: string}
+        results:
+          type: array
+          maxItems: 50
+          items:
+            type: object
+            required: [rank, url, retrieved_at]
+            properties:
+              rank: {type: integer}
+              title: {type: [string, "null"]}
+              url: {type: string}
+              snippet: {type: [string, "null"]}
+              source: {type: [string, "null"]}
+              published_at: {type: [string, "null"]}
+              retrieved_at: {type: string}
+              provider_metadata: {type: object}
+    permissions: [research.search.query, workspace.read]
+    risk: low
+    resource_types: [web]
+    resource_limits: {memory_mb: 256, network_requests: 6}
+    timeout_s: 40
+    cancellable: true
+    idempotency: idempotent
+  - name: fetch_source
+    description: Retrieve one URL under the trusted retrieval policy into an immutable content-addressed snapshot.
+    task_types: [research.retrieve]
+    operations: [fetch]
+    handler: handler:fetch_source
+    verify: handler:verify
+    url_arguments: [url]
+    input_schema:
+      type: object
+      additionalProperties: false
+      required: [url]
+      properties:
+        url: {type: string, maxLength: 2048}
+    output_schema:
+      type: object
+      required: [ok, error_code]
+      properties:
+        ok: {type: boolean}
+        error_code: {type: [string, "null"]}
+        sha256: {type: string}
+        snapshot_path: {type: string}
+        final_url: {type: string}
+        content_type: {type: string}
+        bytes: {type: integer}
+        retrieved_at: {type: string}
+    permissions: [network.web.read, workspace.write]
+    risk: low
+    resource_types: [web]
+    resource_limits: {memory_mb: 256, network_requests: 6}
+    timeout_s: 40
+    cancellable: true
+    idempotency: idempotent
+  - name: extract_content
+    description: Typed extraction (HTML, text, JSON, XML) of a stored snapshot or an authorised local source file.
+    task_types: [research.retrieve, research.local, research.follow]
+    operations: [extract]
+    handler: handler:extract_content
+    verify: handler:verify
+    path_arguments: [snapshot_path]
+    input_schema:
+      type: object
+      additionalProperties: false
+      required: [snapshot_path]
+      properties:
+        snapshot_path: {type: string, maxLength: 512}
+        local_source: {type: boolean}
+        content_type: {type: string, enum: [text/plain, text/markdown, text/csv, text/html, application/json]}
+    output_schema:
+      type: object
+      required: [ok, error_code]
+      properties:
+        ok: {type: boolean}
+        error_code: {type: [string, "null"]}
+        extracted_path: {type: string}
+        content_sha256: {type: string}
+        text_sha256: {type: string}
+        metadata: {type: object}
+    permissions: [workspace.read, workspace.write]
+    risk: low
+    resource_types: [web, local]
+    resource_limits: {memory_mb: 512}
+    timeout_s: 60
+    cancellable: true
+    idempotency: idempotent
+  - name: inspect_metadata
+    description: Return the stated metadata of an extracted source with the provenance of every field.
+    task_types: [research.retrieve, research.local, research.analyse]
+    operations: [inspect]
+    handler: handler:inspect_metadata
+    verify: handler:verify
+    path_arguments: [extracted_path]
+    input_schema:
+      type: object
+      additionalProperties: false
+      required: [extracted_path]
+      properties:
+        extracted_path: {type: string, maxLength: 512}
+    output_schema:
+      type: object
+      required: [ok, error_code]
+      properties:
+        ok: {type: boolean}
+        error_code: {type: [string, "null"]}
+        metadata: {type: object}
+    permissions: [workspace.read]
+    risk: low
+    resource_types: [web, local]
+    timeout_s: 20
+    cancellable: true
+    idempotency: idempotent
+  - name: follow_link
+    description: Retrieve a link that appears in an already extracted source, under the same retrieval policy.
+    task_types: [research.follow]
+    operations: [fetch]
+    handler: handler:follow_link
+    verify: handler:verify
+    url_arguments: [url]
+    path_arguments: [extracted_path]
+    input_schema:
+      type: object
+      additionalProperties: false
+      required: [extracted_path, url]
+      properties:
+        extracted_path: {type: string, maxLength: 512}
+        url: {type: string, maxLength: 2048}
+    output_schema:
+      type: object
+      required: [ok, error_code]
+      properties:
+        ok: {type: boolean}
+        error_code: {type: [string, "null"]}
+    permissions: [network.web.read, workspace.read, workspace.write]
+    risk: low
+    resource_types: [web]
+    resource_limits: {memory_mb: 256, network_requests: 6}
+    timeout_s: 40
+    cancellable: true
+    idempotency: idempotent
+  - name: search_within_source
+    description: Find passages of an extracted source containing given terms; returns exact text spans.
+    task_types: [research.retrieve, research.local, research.follow, research.analyse]
+    operations: [find]
+    handler: handler:search_within_source
+    verify: handler:verify
+    path_arguments: [extracted_path]
+    input_schema:
+      type: object
+      additionalProperties: false
+      required: [extracted_path, terms]
+      properties:
+        extracted_path: {type: string, maxLength: 512}
+        terms: {type: array, minItems: 1, maxItems: 20, items: {type: string, minLength: 1, maxLength: 100}}
+        max_hits: {type: integer, minimum: 1, maximum: 50}
+    output_schema:
+      type: object
+      required: [ok, error_code]
+      properties:
+        ok: {type: boolean}
+        error_code: {type: [string, "null"]}
+        hits: {type: array}
+    permissions: [workspace.read]
+    risk: low
+    resource_types: [web, local]
+    timeout_s: 20
+    cancellable: true
+    idempotency: idempotent

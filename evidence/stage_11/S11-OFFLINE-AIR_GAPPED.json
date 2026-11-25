@@ -1,0 +1,8 @@
+{
+  "web": {
+    "code": "OFFLINE_UNAVAILABLE",
+    "message": "external research is unavailable in network mode AIR_GAPPED and no local sources were given",
+    "details": {}
+  },
+  "local": "COMPLETED_WITH_LIMITATIONS"
+}

@@ -329,28 +329,41 @@ requirements:
   - CAP-01
   - CAP-39
   source_files:
-    implemented: []
-    planned:
-    - capabilities/web_search/
+    implemented:
+    - capabilities/research_web/
+    - backend/research/
+    - configuration/research.yaml
+    - database/migrations/0011_stage11_research.sql
+    planned: []
   interface_controls:
   - Search toggle
   - Inline citations
+  - 'Stage 04 contracts: backend/research/api.py (create, progress, queries, sources, result)'
   api_endpoints:
     implemented: []
     planned:
-    - POST /v1/capabilities/web.search/executions
+    - POST /v1/research (contract in backend/research/api.py; mounted at merge, policy-DENIED until Stage 02)
+    - GET /v1/research/{id}/queries
+    - GET /v1/research/{id}/sources
   security_controls:
-  - Egress allow-list
+  - Egress allow-list (task network destinations + trusted retrieval policy)
+  - SSRF, private-network, metadata, DNS-rebinding, redirect, size, timeout and content-type controls (netguard)
   - Result content treated as untrusted data
-  - Rate limits
+  - Rate limits (research query/fetch/network budgets, DB-enforced)
   - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
     independent verification)
   acceptance_tests:
   - 'S08-CAP11-T01: primary user journey works end to end'
   - 'S08-CAP11-T02: security controls enforced (negative tests)'
   - 'S08-CAP11-T03: regression suite unchanged'
-  status: NOT_STARTED
-  evidence: []
+  - 'Stage 11 sidecar: tests/research/ (see STAGE_11_VERIFICATION.md)'
+  status: PARTIAL
+  status_note: Stage 11 sidecar (roadmap S08) implements search/retrieval/extraction through the Stage 01A controller and
+    verifies it with deterministic local fixtures. Live search is BLOCKED (no provider configured; packages not yet
+    operator-trusted/numbered/granted); not merged into the authoritative branch.
+  evidence:
+  - STAGE_11_VERIFICATION.md
+  - evidence/stage_11
 - id: CAP-12
   title: Deep research
   implementation_stage: S08
@@ -358,30 +371,41 @@ requirements:
   - CAP-11
   - CAP-26
   source_files:
-    implemented: []
+    implemented:
+    - backend/research/
+    - capabilities/research_evidence/
     planned:
-    - backend/orchestration/research_graph.py
-    - workers/research/
+    - backend/orchestration/research_graph.py (Stage 03 model-driven planning/synthesis)
   interface_controls:
   - Research progress view
   - Report with sources
+  - 'Stage 04 contracts: backend/research/api.py (progress, claims, citations, contradictions, checkpoint, cancel)'
   api_endpoints:
     implemented: []
     planned:
     - POST /v1/research
     - GET /v1/research/{id}
+    - POST /v1/research/{id}/cancel
+    - GET /v1/research/{id}/result
   security_controls:
-  - Temporal workflow with budget limits
-  - Per-task cost ceiling
+  - Bounded decomposition (one level, Focus-4 batches, max batches/queries/fetches/sources/depth/time/tokens)
+  - Per-task cost ceiling (Stage 01A task budgets + research budgets; workers cannot raise them)
   - Untrusted-content isolation
+  - Citations minted by the service and independently verified against stored evidence
   - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
     independent verification)
   acceptance_tests:
   - 'S08-CAP12-T01: primary user journey works end to end'
   - 'S08-CAP12-T02: security controls enforced (negative tests)'
   - 'S08-CAP12-T03: regression suite unchanged'
-  status: NOT_STARTED
-  evidence: []
+  - 'Stage 11 sidecar: tests/research/ (see STAGE_11_VERIFICATION.md)'
+  status: PARTIAL
+  status_note: Stage 11 sidecar implements the deterministic deep-research infrastructure (contracts, Focus-4 batches,
+    evidence, claims, citations, contradictions, checkpoints, cancellation, verification). Model-driven planning, claim
+    construction and synthesis are BLOCKED until Stage 03; not merged into the authoritative branch.
+  evidence:
+  - STAGE_11_VERIFICATION.md
+  - evidence/stage_11
 - id: CAP-13
   title: Artifacts
   implementation_stage: S09

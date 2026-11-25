@@ -4,7 +4,7 @@ Generated from `documentation/requirements/requirement_register.yaml` by `python
 
 Register version: 2 — updated 2026-11-25 — current stage: S01A
 
-Status counts: BLOCKED 0, IMPLEMENTED 0, NOT_STARTED 38, PARTIAL 2, VERIFIED 0
+Status counts: BLOCKED 0, IMPLEMENTED 0, NOT_STARTED 36, PARTIAL 4, VERIFIED 0
 
 No capability is marked IMPLEMENTED or VERIFIED until its stage gate passes with recorded evidence.
 
@@ -22,8 +22,8 @@ No capability is marked IMPLEMENTED or VERIFIED until its stage gate passes with
 | CAP-08 | Knowledge base | S06 | CAP-07, CAP-09 | **NOT_STARTED** |
 | CAP-09 | File uploads | S06 | CAP-35, CAP-39 | **NOT_STARTED** |
 | CAP-10 | Vision | S07 | CAP-09, CAP-02 | **NOT_STARTED** |
-| CAP-11 | Web search | S08 | CAP-01, CAP-39 | **NOT_STARTED** |
-| CAP-12 | Deep research | S08 | CAP-11, CAP-26 | **NOT_STARTED** |
+| CAP-11 | Web search | S08 | CAP-01, CAP-39 | **PARTIAL** |
+| CAP-12 | Deep research | S08 | CAP-11, CAP-26 | **PARTIAL** |
 | CAP-13 | Artifacts | S09 | CAP-01 | **NOT_STARTED** |
 | CAP-14 | Document creation | S10 | CAP-13 | **NOT_STARTED** |
 | CAP-15 | Spreadsheet creation | S10 | CAP-13 | **NOT_STARTED** |
@@ -178,26 +178,26 @@ No capability is marked IMPLEMENTED or VERIFIED until its stage gate passes with
 ### CAP-11 — Web search
 
 - **Implementation stage:** S08
-- **Status:** NOT_STARTED
+- **Status:** PARTIAL — Stage 11 sidecar (roadmap S08) implements search/retrieval/extraction through the Stage 01A controller and verifies it with deterministic local fixtures. Live search is BLOCKED (no provider configured; packages not yet operator-trusted/numbered/granted); not merged into the authoritative branch.
 - **Dependencies:** CAP-01, CAP-39
-- **Source files:** **planned:** `capabilities/web_search/`
-- **Interface controls:** Search toggle<br>Inline citations
-- **API endpoints:** **planned:** `POST /v1/capabilities/web.search/executions`
-- **Security controls:** Egress allow-list<br>Result content treated as untrusted data<br>Rate limits<br>Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway, independent verification)
-- **Acceptance tests:** S08-CAP11-T01: primary user journey works end to end<br>S08-CAP11-T02: security controls enforced (negative tests)<br>S08-CAP11-T03: regression suite unchanged
-- **Evidence:** none yet
+- **Source files:** **implemented:** `capabilities/research_web/`, `backend/research/`, `configuration/research.yaml`, `database/migrations/0011_stage11_research.sql`
+- **Interface controls:** Search toggle<br>Inline citations<br>Stage 04 contracts: backend/research/api.py (create, progress, queries, sources, result)
+- **API endpoints:** **planned:** `POST /v1/research (contract in backend/research/api.py; mounted at merge, policy-DENIED until Stage 02)`, `GET /v1/research/{id}/queries`, `GET /v1/research/{id}/sources`
+- **Security controls:** Egress allow-list (task network destinations + trusted retrieval policy)<br>SSRF, private-network, metadata, DNS-rebinding, redirect, size, timeout and content-type controls (netguard)<br>Result content treated as untrusted data<br>Rate limits (research query/fetch/network budgets, DB-enforced)<br>Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway, independent verification)
+- **Acceptance tests:** S08-CAP11-T01: primary user journey works end to end<br>S08-CAP11-T02: security controls enforced (negative tests)<br>S08-CAP11-T03: regression suite unchanged<br>Stage 11 sidecar: tests/research/ (see STAGE_11_VERIFICATION.md)
+- **Evidence:** STAGE_11_VERIFICATION.md<br>evidence/stage_11
 
 ### CAP-12 — Deep research
 
 - **Implementation stage:** S08
-- **Status:** NOT_STARTED
+- **Status:** PARTIAL — Stage 11 sidecar implements the deterministic deep-research infrastructure (contracts, Focus-4 batches, evidence, claims, citations, contradictions, checkpoints, cancellation, verification). Model-driven planning, claim construction and synthesis are BLOCKED until Stage 03; not merged into the authoritative branch.
 - **Dependencies:** CAP-11, CAP-26
-- **Source files:** **planned:** `backend/orchestration/research_graph.py`, `workers/research/`
-- **Interface controls:** Research progress view<br>Report with sources
-- **API endpoints:** **planned:** `POST /v1/research`, `GET /v1/research/{id}`
-- **Security controls:** Temporal workflow with budget limits<br>Per-task cost ceiling<br>Untrusted-content isolation<br>Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway, independent verification)
-- **Acceptance tests:** S08-CAP12-T01: primary user journey works end to end<br>S08-CAP12-T02: security controls enforced (negative tests)<br>S08-CAP12-T03: regression suite unchanged
-- **Evidence:** none yet
+- **Source files:** **implemented:** `backend/research/`, `capabilities/research_evidence/`<br>**planned:** `backend/orchestration/research_graph.py (Stage 03 model-driven planning/synthesis)`
+- **Interface controls:** Research progress view<br>Report with sources<br>Stage 04 contracts: backend/research/api.py (progress, claims, citations, contradictions, checkpoint, cancel)
+- **API endpoints:** **planned:** `POST /v1/research`, `GET /v1/research/{id}`, `POST /v1/research/{id}/cancel`, `GET /v1/research/{id}/result`
+- **Security controls:** Bounded decomposition (one level, Focus-4 batches, max batches/queries/fetches/sources/depth/time/tokens)<br>Per-task cost ceiling (Stage 01A task budgets + research budgets; workers cannot raise them)<br>Untrusted-content isolation<br>Citations minted by the service and independently verified against stored evidence<br>Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway, independent verification)
+- **Acceptance tests:** S08-CAP12-T01: primary user journey works end to end<br>S08-CAP12-T02: security controls enforced (negative tests)<br>S08-CAP12-T03: regression suite unchanged<br>Stage 11 sidecar: tests/research/ (see STAGE_11_VERIFICATION.md)
+- **Evidence:** STAGE_11_VERIFICATION.md<br>evidence/stage_11
 
 ### CAP-13 — Artifacts
 

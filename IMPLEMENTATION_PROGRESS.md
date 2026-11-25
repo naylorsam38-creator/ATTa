@@ -57,3 +57,22 @@ Stage 01A §24 defect corrections: 1 thread timeouts → supervised processes (T
 (T44; API-level for authenticated callers: Stage 02) · 6 argument binding in policy requests (T47 trace shows
 `arguments_hash` bound) · 7 runtime vs migration DB privileges (readiness check + T02/T22/T33/T39 SQL denials) ·
 8 Ed25519 seal + OS protection (T51; independence of keys: BLOCKERS B-009/B-016).
+
+## Stage 11 sidecar — web search and deep research (CAP-11, CAP-12; roadmap S08)
+
+**Status: SIDECAR — implemented and verified with deterministic local fixtures; NOT merged, NOT gate-sealed by the
+build controller; live provider and model integration BLOCKED.** Baseline: `21104c4` (Stage 01A gate passed).
+Details: STAGE_11_VERIFICATION.md, STAGE_11_MERGE_MANIFEST.md, documentation/stage11/.
+
+| Deliverable | Where |
+|---|---|
+| Research contracts (versioned, hashed), 5 modes, trusted ceilings | `backend/research/contracts.py`, `config.py`, `configuration/research.yaml` |
+| Provider-independent search interface (SearXNG adapter; Brave BLOCKED) | `capabilities/research_web/providers.py`, RESEARCH_PROVIDER_INTERFACE.md |
+| Controlled retrieval with SSRF/redirect/size/timeout/type controls | `capabilities/research_web/netguard.py`, `retrieval_policy.py`, `backend/research/urls.py` |
+| Typed extraction with metadata provenance | `capabilities/research_web/extract.py` |
+| Evidence tools (capture, compare, cite, verify citation) | `capabilities/research_evidence/` |
+| Research service on the Stage 01A controller (Focus-4 batches, budgets, checkpoints, resume, cancel) | `backend/research/service.py`, `worker.py`, `planner.py` |
+| Persistence (schema `research`, 14 tables) | `database/migrations/0011_stage11_research.sql`, `backend/research/store.py` |
+| Claims, citation binding, contradictions, independent verification | `backend/research/claims.py`, `verification.py`, CITATION_MODEL.md |
+| Stage 02 / 03 / 04 / 07 / 01B / 15 interfaces | `security.py`, `planner.py`/`claims.py` (Hub), `api.py`, `local_sources.py`, `network.py` |
+| Tests | `tests/research/` |
