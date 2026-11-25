@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T34",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T34_thin_launcher_test"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T08:08:02.616Z",
+  "finished_at": "2026-11-25T08:08:04.492Z",
+  "duration_s": 1.876,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 0.67s\n",
+  "stderr": "",
+  "output_sha256": "214ee14aafa9356017c4df54864e9aa50024481144ed5934ec0a397d9a52400a"
+}

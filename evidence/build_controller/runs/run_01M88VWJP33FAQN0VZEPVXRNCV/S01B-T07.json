@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T07",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T07_model_discovery_from_configured_path"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T08:07:09.906Z",
+  "finished_at": "2026-11-25T08:07:11.292Z",
+  "duration_s": 1.387,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 0.33s\n",
+  "stderr": "",
+  "output_sha256": "2f0a6769adc3878af130de99a8145906855b4da8ec11dc37ff018329cee860fa"
+}

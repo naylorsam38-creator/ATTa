@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T03",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T03_explicit_profile_override_validation"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T08:06:58.490Z",
+  "finished_at": "2026-11-25T08:07:02.976Z",
+  "duration_s": 4.486,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 3.16s\n",
+  "stderr": "",
+  "output_sha256": "0ef1a83346e8747402cd3ae8fbbef8b099701ce658c97514a1fec561b237754d"
+}

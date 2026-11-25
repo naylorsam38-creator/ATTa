@@ -23,5 +23,18 @@
       "0002_runtime_controller.sql"
     ],
     "lock_sha256": "29f5f2cadbc3d1ee20ea1bf8fc0773104ab70e701318899e6330458fdd3d88a7"
+  },
+  {
+    "id": "checkpoint-S01B-EPVXRNCV",
+    "stage": "S01B",
+    "status": "VERIFIED",
+    "commit": "70778c95c0a585734c20a00ff8535fca7d884286",
+    "created_at": "2026-11-25T08:20:14.896Z",
+    "run": "run_01M88VWJP33FAQN0VZEPVXRNCV",
+    "migrations": [
+      "0001_foundation.sql",
+      "0002_runtime_controller.sql"
+    ],
+    "lock_sha256": "d284730466b705f3141b50af9a4b1c40efc1f6af030d8bbc1492badd9989dbdf"
   }
 ]

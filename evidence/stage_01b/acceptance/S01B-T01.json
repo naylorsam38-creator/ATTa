@@ -16,7 +16,7 @@
   },
   "ram": {
     "total_mb": 16087,
-    "available_mb": 15196
+    "available_mb": 15150
   },
   "gpu": {
     "present": false,
@@ -27,10 +27,10 @@
   },
   "isolation": {
     "platform": "linux",
-    "is_root": true,
-    "network_namespace": true,
-    "cgroup_v1_memory": true,
-    "cgroup_v1_pids": true,
+    "is_root": false,
+    "network_namespace": false,
+    "cgroup_v1_memory": false,
+    "cgroup_v1_pids": false,
     "cgroup_v2": false,
     "subreaper": true,
     "runuser": true

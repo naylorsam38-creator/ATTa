@@ -1,6 +1,6 @@
 {
   "drift_detected": {
-    "lock": "/tmp/pytest-of-root/pytest-286/test_S01B_T18_dependency_lock_0/lock.txt",
+    "lock": "/tmp/pytest-of-atta-tester/pytest-56/test_S01B_T18_dependency_lock_0/lock.txt",
     "locked": 48,
     "missing": [],
     "drift": {

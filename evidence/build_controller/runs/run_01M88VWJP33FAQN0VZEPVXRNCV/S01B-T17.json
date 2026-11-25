@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T17",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T17_rollback_after_controlled_failure"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T08:07:43.429Z",
+  "finished_at": "2026-11-25T08:08:02.614Z",
+  "duration_s": 19.184,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 18.03s\n",
+  "stderr": "",
+  "output_sha256": "84fc54e5d0002836de69a376c25b83a45c28a95b45a279767859656f4d31363b"
+}

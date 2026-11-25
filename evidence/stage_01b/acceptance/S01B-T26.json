@@ -1,13 +1,13 @@
 {
   "external_reachable": [],
   "start_exit": 0,
-  "start_tail": "il\": \"HTTP 200 from http://127.0.0.1:52115/v1/health/live\",\n        \"checked_at\": \"2026-11-25T07:37:56.594713Z\"\n      }\n    },\n    \"controller\": {\n      \"name\": \"controller\",\n      \"essential\": true,\n      \"mode\": \"external\",\n      \"status\": \"healthy\",\n      \"health_state\": \"HEALTHY\",\n      \"pid\": null,\n      \"restarts\": 0,\n      \"detail\": \"HTTP 200 from http://127.0.0.1:52115/v1/health/controller\",\n      \"health\": {\n        \"name\": \"controller\",\n        \"essential\": true,\n        \"status\": \"healthy\",\n        \"latency_ms\": 21.81,\n        \"detail\": \"HTTP 200 from http://127.0.0.1:52115/v1/health/controller\",\n        \"checked_at\": \"2026-11-25T07:37:56.618343Z\"\n      }\n    }\n  },\n  \"models\": [\n    {\n      \"name\": \"model:ollama-local\",\n      \"essential\": false,\n      \"status\": \"unhealthy\",\n      \"latency_ms\": 5.75,\n      \"detail\": \"ConnectError: [Errno 111] Connection refused\",\n      \"checked_at\": \"2026-11-25T07:37:54.984806Z\"\n    },\n    {\n      \"name\": \"model:llamacpp-local\",\n      \"essential\": false,\n      \"status\": \"unhealthy\",\n      \"latency_ms\": 5.64,\n      \"detail\": \"ConnectError: [Errno 111] Connection refused\",\n      \"checked_at\": \"2026-11-25T07:37:54.990489Z\"\n    }\n  ],\n  \"capabilities\": [\n    {\n      \"id\": \"ops.system_status\",\n      \"version\": \"1.0.0\",\n      \"state\": \"available\",\n      \"executable\": true,\n      \"source\": \"/home/user/ATTa/capabilities/ops_system_status/capability.yaml\",\n      \"requirement\": \"CAP-40\",\n      \"risk\": \"low\",\n      \"problems\": []\n    }\n  ]\n}\n",
+  "start_tail": "l\": \"HTTP 200 from http://127.0.0.1:35373/v1/health/live\",\n        \"checked_at\": \"2026-11-25T08:09:35.123304Z\"\n      }\n    },\n    \"controller\": {\n      \"name\": \"controller\",\n      \"essential\": true,\n      \"mode\": \"external\",\n      \"status\": \"healthy\",\n      \"health_state\": \"HEALTHY\",\n      \"pid\": null,\n      \"restarts\": 0,\n      \"detail\": \"HTTP 200 from http://127.0.0.1:35373/v1/health/controller\",\n      \"health\": {\n        \"name\": \"controller\",\n        \"essential\": true,\n        \"status\": \"healthy\",\n        \"latency_ms\": 23.3,\n        \"detail\": \"HTTP 200 from http://127.0.0.1:35373/v1/health/controller\",\n        \"checked_at\": \"2026-11-25T08:09:35.148512Z\"\n      }\n    }\n  },\n  \"models\": [\n    {\n      \"name\": \"model:ollama-local\",\n      \"essential\": false,\n      \"status\": \"unhealthy\",\n      \"latency_ms\": 10.44,\n      \"detail\": \"ConnectError: [Errno 111] Connection refused\",\n      \"checked_at\": \"2026-11-25T08:09:33.482760Z\"\n    },\n    {\n      \"name\": \"model:llamacpp-local\",\n      \"essential\": false,\n      \"status\": \"unhealthy\",\n      \"latency_ms\": 10.85,\n      \"detail\": \"ConnectError: [Errno 111] Connection refused\",\n      \"checked_at\": \"2026-11-25T08:09:33.493667Z\"\n    }\n  ],\n  \"capabilities\": [\n    {\n      \"id\": \"ops.system_status\",\n      \"version\": \"1.0.0\",\n      \"state\": \"available\",\n      \"executable\": true,\n      \"source\": \"/home/user/ATTa/capabilities/ops_system_status/capability.yaml\",\n      \"requirement\": \"CAP-40\",\n      \"risk\": \"low\",\n      \"problems\": []\n    }\n  ]\n}\n",
   "live_status": 200,
   "live": {
     "status": "healthy",
     "service": "atta-api",
     "version": "0.1.0",
-    "checked_at": "2026-11-25T07:37:57.336405Z"
+    "checked_at": "2026-11-25T08:09:35.867199Z"
   },
   "ready_status": 200,
   "ready": {
@@ -19,17 +19,17 @@
         "name": "postgres",
         "essential": true,
         "status": "healthy",
-        "latency_ms": 14.54,
+        "latency_ms": 19.23,
         "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0, schema current (3 migrations), runtime role 'atta_app' least-privileged",
-        "checked_at": "2026-11-25T07:37:57.372184Z"
+        "checked_at": "2026-11-25T08:09:35.905814Z"
       },
       {
         "name": "redis",
         "essential": true,
         "status": "healthy",
-        "latency_ms": 4.13,
-        "detail": "Redis 7.0.15 at 127.0.0.1:44593",
-        "checked_at": "2026-11-25T07:37:57.362509Z"
+        "latency_ms": 4.93,
+        "detail": "Redis 7.0.15 at 127.0.0.1:35101",
+        "checked_at": "2026-11-25T08:09:35.892153Z"
       },
       {
         "name": "object_storage",
@@ -37,22 +37,22 @@
         "status": "unhealthy",
         "latency_ms": 0.02,
         "detail": "RuntimeError: object storage credentials not configured (ATTA_S3_ACCESS_KEY_ID / ATTA_S3_SECRET_ACCESS_KEY)",
-        "checked_at": "2026-11-25T07:37:57.358914Z"
+        "checked_at": "2026-11-25T08:09:35.887678Z"
       },
       {
         "name": "temporal",
         "essential": false,
         "status": "unhealthy",
-        "latency_ms": 0.27,
+        "latency_ms": 0.17,
         "detail": "ConnectionRefusedError: [Errno 111] Connection refused",
-        "checked_at": "2026-11-25T07:37:57.359710Z"
+        "checked_at": "2026-11-25T08:09:35.890506Z"
       }
     ],
     "capabilities": {
       "available": 1
     },
     "reasons": [],
-    "checked_at": "2026-11-25T07:37:57.373034Z"
+    "checked_at": "2026-11-25T08:09:35.906509Z"
   },
   "controller_status": 200,
   "controller": {
@@ -60,7 +60,7 @@
     "components": {
       "controller": {
         "ok": true,
-        "detail": "svc_01M88T7JFFZS8KVSFYW8E5PWS2"
+        "detail": "svc_01M88W1GKRVRYG2RTDPGH20EXE"
       },
       "capability_registry": {
         "ok": true,

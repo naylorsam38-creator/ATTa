@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T40",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T40_upgrade_from_current_baseline_qualification"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T08:19:47.208Z",
+  "finished_at": "2026-11-25T08:20:06.837Z",
+  "duration_s": 19.629,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 18.35s\n",
+  "stderr": "",
+  "output_sha256": "01f3250407eda47dd85289577b2ac06893ce615c79ca8dae82ea4d4f8596813e"
+}
