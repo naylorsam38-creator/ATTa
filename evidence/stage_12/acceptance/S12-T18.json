@@ -1,0 +1,25 @@
+{
+  "deferred": "DEFERRED",
+  "pins": [
+    {
+      "integration_id": "test.text_plugin",
+      "namespace": "test-4210a767807b",
+      "objective_id": "obj_01M88R33A1XBWA1V9BQYHRJCWS",
+      "package_digest": "cfb2f4c6efbfc51a244ef8db7c2ca2f4c7eeaca51599e88d491d6311bf36b454",
+      "pinned_at": "2026-11-25 07:00:32.881361+00:00",
+      "task_id": "TASK-0001",
+      "tool_number": "024.500",
+      "version": "1.0.0"
+    },
+    {
+      "integration_id": "test.text_plugin",
+      "namespace": "test-4210a767807b",
+      "objective_id": "obj_01M88R38Y0BA74H4EQV1BV45CP",
+      "package_digest": "cea966fcd075261acf003698ca41b4d46243753ac4a989fa2f8ecda2a7e9a24c",
+      "pinned_at": "2026-11-25 07:00:38.665109+00:00",
+      "task_id": "TASK-0002",
+      "tool_number": "024.500",
+      "version": "1.1.0"
+    }
+  ]
+}

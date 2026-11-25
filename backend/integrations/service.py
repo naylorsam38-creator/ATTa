@@ -8,6 +8,7 @@ is wired into an existing Stage 01A controller by composition:
   gateway.result_filters+= ResultFilter                  (keep or reject only)
   gateway.execute        = RejectionAuditor(execute)     (audit only)
   controller.allocator   = AuditingAllocator(allocator)  (audit only; decisions unchanged)
+  controller.plan/submit_contract = PlanPinner(...)       (records version pins only)
 
 Nothing here gives a model, a worker or an integration a way to install, enable, trust, approve or grant."""
 from __future__ import annotations
@@ -23,7 +24,8 @@ from backend.orchestration.controller import TaskSpec
 
 from .config import IntegrationsConfig, load_integrations_config
 from .manager import IntegrationError, IntegrationManager, _with_dir
-from .runtime import AuditingAllocator, ExecutionGuard, IntegrationTrustGate, RejectionAuditor, ResultFilter
+from .runtime import (AuditingAllocator, ExecutionGuard, IntegrationTrustGate, PlanPinner, RejectionAuditor,
+                      ResultFilter)
 from .skills import ScriptProposalSource, SkillContent, pin_key
 from .store import IntegrationStore
 from .types import IntegrationType, TrustClass
@@ -339,6 +341,8 @@ def attach(controller, *, db, config: IntegrationsConfig | None = None, authoriz
     gateway.result_filters.append(ResultFilter(manager))
     gateway.execute = RejectionAuditor(manager, gateway.execute)
     controller.allocator = AuditingAllocator(controller.allocator, manager)
+    controller.plan = PlanPinner(manager, controller.plan)
+    controller.submit_contract = PlanPinner(manager, controller.submit_contract)
     for p in problems:
         log.warning("integration start: %s", p)
     return IntegrationService(manager, controller)

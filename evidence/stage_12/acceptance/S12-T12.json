@@ -1,0 +1,26 @@
+{
+  "connector": {
+    "create": "021.502",
+    "read": "021.501",
+    "search": "021.500",
+    "send": "021.503"
+  },
+  "plugin_v1": {
+    "bad_output": "024.503",
+    "large": "024.502",
+    "poison": "024.501",
+    "summarize": "024.500"
+  },
+  "plugin_v1_1": {
+    "bad_output": "024.503",
+    "large": "024.502",
+    "poison": "024.501",
+    "summarize": "024.500"
+  },
+  "reinstalled": {
+    "create": "021.502",
+    "read": "021.501",
+    "search": "021.500",
+    "send": "021.503"
+  }
+}

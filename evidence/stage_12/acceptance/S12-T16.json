@@ -1,0 +1,16 @@
+{
+  "events": [
+    "validated",
+    "install_approved",
+    "installed",
+    "enabled",
+    "tool_allocated",
+    "task_pinned",
+    "execution_authorized_by_guard",
+    "tool_executed",
+    "removal_started",
+    "execution_refused",
+    "removed"
+  ],
+  "pending": true
+}

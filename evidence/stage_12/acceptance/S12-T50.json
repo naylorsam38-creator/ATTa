@@ -1,0 +1,38 @@
+{
+  "scripts": [
+    {
+      "description": "Search the notes file for a query.",
+      "kind": "script",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "type": "object"
+      },
+      "skill_id": "find_notes",
+      "skill_version": "1.0.0",
+      "tool_ids": [
+        "021.500"
+      ],
+      "workflow_id": "find_notes",
+      "workflow_version": "1.0.0"
+    }
+  ],
+  "skill": {
+    "content_digest": "0dd1164882f0d3800c2fc87c0b9406003dc782de53eb30cbff364b6cffc3c00b",
+    "skill_id": "find_notes",
+    "tool_references": {
+      "test.notes_connector:read": "021.501",
+      "test.notes_connector:search": "021.500"
+    },
+    "version": "1.0.0"
+  }
+}

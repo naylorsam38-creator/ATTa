@@ -1,0 +1,61 @@
+{
+  "permissions_view": {
+    "approved": [
+      "external.simulated",
+      "workspace.read",
+      "workspace.write"
+    ],
+    "controller_granted": [
+      "external.simulated",
+      "workspace.read",
+      "workspace.write"
+    ],
+    "integration_id": "test.notes_connector",
+    "not_granted": [],
+    "note": "approval of an integration never grants a task permission: tools are usable only when the Stage 01A allocator assigns them to a task and the policy engine allows the exact call",
+    "version": "1.0.0"
+  },
+  "restricted_connector": {
+    "checked_at": "2026-11-25T06:59:43.633Z",
+    "detail": {},
+    "integration_id": "test.notes_connector",
+    "reasons": [
+      "RESTRICTED integrations may only expose READ_ONLY tools (not ['create', 'send'])"
+    ],
+    "state": "ENABLED",
+    "status": "BLOCKED",
+    "trust_class": "RESTRICTED",
+    "version": "1.0.0"
+  },
+  "restricted_plugin_with_sandbox": "HEALTHY",
+  "untrusted": {
+    "checks": {
+      "identity": true,
+      "manifest_snapshot": true,
+      "package_digest": true,
+      "permissions": true,
+      "permissions_in_catalog": true,
+      "policy_preview": {
+        "bad_output": "allocatable by the controller",
+        "large": "allocatable by the controller",
+        "poison": "allocatable by the controller",
+        "summarize": "allocatable by the controller"
+      },
+      "probe_and_health": "deferred",
+      "registered": true,
+      "risk": true,
+      "tools": {
+        "bad_output": "ok",
+        "large": "ok",
+        "poison": "ok",
+        "summarize": "ok"
+      }
+    },
+    "deferred": [
+      "isolated probe/health deferred: untrusted (trust class UNTRUSTED never executes)"
+    ],
+    "passed": true,
+    "problems": [],
+    "verifier": "atta-integration-verifier/1"
+  }
+}

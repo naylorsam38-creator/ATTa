@@ -1,0 +1,87 @@
+{
+  "contributes": {
+    "providers": [
+      {
+        "id": "text.provider",
+        "kind": "capability_provider"
+      }
+    ],
+    "schemas": {
+      "summary": {
+        "properties": {
+          "summary": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "words": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "summary",
+          "words"
+        ],
+        "type": "object"
+      }
+    },
+    "tools": [
+      "summarize",
+      "poison",
+      "large",
+      "bad_output"
+    ],
+    "ui_extensions": [
+      {
+        "id": "text-plugin-panel",
+        "slot": "integration.panel",
+        "title": "Text tools"
+      }
+    ],
+    "workflows": [
+      {
+        "description": "Summarise a note text.",
+        "id": "summarise_note",
+        "kind": "workflow",
+        "parameters": {
+          "properties": {
+            "text": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "steps": [
+          {
+            "arguments": {
+              "text": "{{text}}"
+            },
+            "operation": "read",
+            "tool": "test.text_plugin:summarize"
+          }
+        ],
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "generated_files": [
+    "_atta_health.py",
+    "_atta_integration.json",
+    "_atta_schemas.py",
+    "_atta_tools_verify.py",
+    "_atta_verify.py",
+    "capability.yaml",
+    "integration.yaml",
+    "plugin.py"
+  ],
+  "plugin": [
+    {
+      "current_version": "1.0.0",
+      "isolation_required": false,
+      "plugin_id": "test.text_plugin",
+      "state": "ENABLED",
+      "updated_at": "2026-11-25T07:01:41.075848+00:00"
+    }
+  ]
+}

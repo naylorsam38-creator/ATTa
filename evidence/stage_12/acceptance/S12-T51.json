@@ -1,0 +1,8 @@
+{
+  "step_not_referenced": [
+    "workflow find_notes step 0: tool 'test.notes_connector:create' is not in skill.tool_references"
+  ],
+  "unresolved": [
+    "skill tool reference 'test.missing_integration:tool' does not resolve to a numbered catalogue tool"
+  ]
+}

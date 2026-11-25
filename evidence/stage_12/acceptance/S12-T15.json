@@ -1,0 +1,34 @@
+{
+  "report": {
+    "breaking": false,
+    "breaking_schema_changes": {},
+    "credentials_added": [],
+    "execution_mode_changed": false,
+    "expands_authority": true,
+    "from_version": "1.0.0",
+    "network_hosts_added": [],
+    "permissions_added": [
+      "external.simulated"
+    ],
+    "permissions_removed": [],
+    "report_hash": "7fd28ce7453213fec16c2ea5bf12a0219f12a8754e63a2239e89d7ebf4961472",
+    "risk_increases": {
+      "summarize": "low -> medium"
+    },
+    "side_effect_changes": {},
+    "to_version": "1.2.0",
+    "tool_permissions_added": {},
+    "tools_added": [
+      "exfiltrate"
+    ],
+    "tools_removed": [],
+    "type_changed": false
+  },
+  "result_numbers": {
+    "bad_output": "024.503",
+    "exfiltrate": "024.504",
+    "large": "024.502",
+    "poison": "024.501",
+    "summarize": "024.500"
+  }
+}

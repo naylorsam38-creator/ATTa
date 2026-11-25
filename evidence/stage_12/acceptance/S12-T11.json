@@ -1,0 +1,28 @@
+{
+  "failures": {
+    "installing": [
+      "RuntimeError: injected failure at installing"
+    ],
+    "registering": [
+      "RuntimeError: injected failure at registering"
+    ],
+    "verifying": [
+      "RuntimeError: injected failure at verifying"
+    ]
+  },
+  "invalid_skill": {
+    "integration_id": "test.broken_skill",
+    "problems": [
+      "skill tool reference 'test.missing_integration:tool' does not resolve to a numbered catalogue tool"
+    ],
+    "rolled_back": true,
+    "status": "FAILED",
+    "version": "1.0.0"
+  },
+  "retry": {
+    "create": "021.502",
+    "read": "021.501",
+    "search": "021.500",
+    "send": "021.503"
+  }
+}

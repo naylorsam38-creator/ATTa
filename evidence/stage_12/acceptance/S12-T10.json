@@ -1,0 +1,51 @@
+{
+  "registry_source": "/tmp/pytest-of-root/pytest-44/test_S12_T10_install_transacti0/h-619c53/integrations/packages/integration.test.notes_connector/capability.yaml",
+  "result": {
+    "capability_id": "integration.test.notes_connector",
+    "integration_id": "test.notes_connector",
+    "status": "INSTALLED",
+    "tool_numbers": {
+      "create": "021.502",
+      "read": "021.501",
+      "search": "021.500",
+      "send": "021.503"
+    },
+    "verification": {
+      "checks": {
+        "identity": true,
+        "manifest_snapshot": true,
+        "package_digest": true,
+        "permissions": true,
+        "permissions_in_catalog": true,
+        "policy_preview": {
+          "create": "requires Stage 02 human approval",
+          "read": "allocatable by the controller",
+          "search": "allocatable by the controller",
+          "send": "requires Stage 02 human approval"
+        },
+        "probe_and_health": "passed",
+        "registered": true,
+        "risk": true,
+        "tools": {
+          "create": "ok",
+          "read": "ok",
+          "search": "ok",
+          "send": "ok"
+        }
+      },
+      "deferred": [],
+      "passed": true,
+      "problems": [],
+      "verifier": "atta-integration-verifier/1"
+    },
+    "version": "1.0.0"
+  },
+  "transitions": [
+    "VALIDATING",
+    "AWAITING_APPROVAL",
+    "INSTALLING",
+    "REGISTERING",
+    "VERIFYING",
+    "INSTALLED"
+  ]
+}

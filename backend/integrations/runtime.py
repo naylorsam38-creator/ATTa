@@ -186,3 +186,25 @@ def risk_at_least(a: str, b: str) -> bool:
 
 def _unused():   # keep json imported for type-checkers of generated content
     return json
+
+
+class PlanPinner:
+    """Wraps RuntimeController.plan / submit_contract (composition): after the controller has created contracts,
+    records which integration version each allocated integration tool refers to (task version pinning). Never changes
+    a contract or a decision."""
+
+    def __init__(self, manager: "IntegrationManager", fn):
+        self.manager, self.fn = manager, fn
+
+    def __call__(self, objective_id, *args, **kwargs):
+        res = self.fn(objective_id, *args, **kwargs)
+        for c in (res if isinstance(res, list) else [res]):
+            for number in getattr(c, "permitted_tool_ids", []):
+                rec = self.manager.by_number(number)
+                if rec is not None:
+                    self.manager.store.pin(objective_id, c.task_id, number, rec.integration_id, rec.version,
+                                           rec.package_digest or "")
+                    self.manager.store.event(rec.integration_id, "task_pinned", "controller",
+                                             {"objective_id": objective_id, "task_id": c.task_id, "tool_id": number,
+                                              "version": rec.version}, version=rec.version)
+        return res

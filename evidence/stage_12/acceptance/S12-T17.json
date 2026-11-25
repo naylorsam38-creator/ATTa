@@ -1,0 +1,12 @@
+{
+  "numbers": {
+    "create": "021.502",
+    "read": "021.501",
+    "search": "021.500",
+    "send": "021.503"
+  },
+  "restored": {
+    "test.notes_connector": "ENABLED",
+    "test.text_plugin": "INSTALLED"
+  }
+}

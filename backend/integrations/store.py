@@ -342,14 +342,17 @@ class IntegrationStore:
             return x.execute(q + " ORDER BY pinned_at", a).fetchall()
 
     def active_tasks_using(self, tool_numbers: list[str]) -> list[dict]:
-        """Non-terminal Stage 01A tasks whose CURRENT contract pool contains any of these tool numbers."""
+        """Non-terminal Stage 01A tasks of THIS namespace pinned to any of these tool numbers whose CURRENT contract
+        pool still contains the number. Pins are written when the controller plans the task (and at first execution
+        as a fallback), so planned-but-not-started tasks count too."""
         if not tool_numbers:
             return []
         with self.db.tx() as x:
             return x.execute(
-                "SELECT t.objective_id, t.task_id, t.state, c.contract->'permitted_tool_ids' AS tools "
-                "FROM control.tasks t JOIN control.task_contracts c ON c.objective_id=t.objective_id AND "
-                "c.task_id=t.task_id AND c.version=t.current_version "
-                "WHERE t.state NOT IN ('COMPLETED','FAILED','CANCELLED') AND "
-                "c.contract->'permitted_tool_ids' ?| %s ORDER BY t.objective_id, t.task_id",
-                (list(tool_numbers),)).fetchall()
+                "SELECT DISTINCT t.objective_id, t.task_id, t.state FROM integrations.task_pins p "
+                "JOIN control.tasks t ON t.objective_id=p.objective_id AND t.task_id=p.task_id "
+                "JOIN control.task_contracts c ON c.objective_id=t.objective_id AND c.task_id=t.task_id AND "
+                "c.version=t.current_version "
+                "WHERE p.namespace=%s AND p.tool_number = ANY(%s) AND "
+                "t.state NOT IN ('COMPLETED','FAILED','CANCELLED') AND c.contract->'permitted_tool_ids' ? p.tool_number "
+                "ORDER BY t.objective_id, t.task_id", (self.ns, list(tool_numbers))).fetchall()

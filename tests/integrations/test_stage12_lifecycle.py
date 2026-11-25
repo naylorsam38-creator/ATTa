@@ -230,6 +230,8 @@ def test_S12_T18_active_task_version_pinning(tmp_path):
     n = H.number(PLUG, "summarize")
     o = H.objective()
     c, ctx = start(H.h, o.objective_id, H.spec("TASK-0001", "plugin.text", ["read"], n, paths=["."]))
+    assert [(p["task_id"], p["version"]) for p in H.store.pins(PLUG)] == [("TASK-0001", "1.0.0")], \
+        "the version is pinned when the controller plans the task, before any execution"
     r = H.h.controller.gateway.execute(ctx, P("TASK-0001", n, "read", {"text": "one two three"}))
     assert r.status == "executed" and r.output["version"] == "1.0.0"
     pin = H.store.pins(PLUG)[0]

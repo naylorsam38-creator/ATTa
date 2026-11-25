@@ -1,0 +1,10 @@
+{
+  "events": [
+    "validated",
+    "install_approved",
+    "installed",
+    "enabled",
+    "disabled",
+    "enabled"
+  ]
+}

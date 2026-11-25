@@ -1,0 +1,8 @@
+{
+  "budget_override": "refused",
+  "pool_unchanged": [
+    "024.500"
+  ],
+  "risk_change": "integrity_failed",
+  "self_grant": "refused"
+}
