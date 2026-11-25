@@ -5,6 +5,8 @@
 checkpoint_every: 4          # verified recovery checkpoints: S01 baseline, S01A, then S04, S08, S12, S16, S20
 require_signed_seal_from: S01A      # unsigned seals do not qualify from Stage 01A on
 require_os_protection_from: S01A    # verifier files must be protected from the worker account by the OS
+require_test_user_from: S01B       # acceptance tests run as the unprivileged test identity unless `privileged: true`
+test_user: atta-tester
 verifier_user: root
 worker_user: atta-builder
 signing_key_path: /etc/atta-verifier/build_signing_ed25519.pem

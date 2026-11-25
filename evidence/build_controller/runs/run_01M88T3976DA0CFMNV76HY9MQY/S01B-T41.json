@@ -1,0 +1,22 @@
+{
+  "test_id": "S01B-T41",
+  "status": "BLOCKED",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T41_windows_specific_tests"
+  ],
+  "requires": [
+    "os:windows"
+  ],
+  "reasons": [
+    "os:windows required; this host is linux"
+  ],
+  "environment_specific": true,
+  "recorded_at": "2026-11-25T07:38:07.174Z",
+  "executed": false
+}

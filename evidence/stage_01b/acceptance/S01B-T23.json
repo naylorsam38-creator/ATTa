@@ -1,8 +1,8 @@
 {
-  "workspace": "/tmp/pytest-of-root/pytest-262/test_S01B_T23_isolated_filesys0/qual/qual_01M88T15GR1P2SS7A4JY96G4Y5",
+  "workspace": "/tmp/pytest-of-root/pytest-290/test_S01B_T23_isolated_filesys0/qual/qual_01M88T6ZSSJGS9B371AJ73S082",
   "isolation": {
-    "database": "disposable cluster on 127.0.0.1:49955",
-    "workspace": "/tmp/pytest-of-root/pytest-262/test_S01B_T23_isolated_filesys0/qual/qual_01M88T15GR1P2SS7A4JY96G4Y5",
+    "database": "disposable cluster on 127.0.0.1:54621",
+    "workspace": "/tmp/pytest-of-root/pytest-290/test_S01B_T23_isolated_filesys0/qual/qual_01M88T6ZSSJGS9B371AJ73S082",
     "network": "host"
   },
   "counts": {

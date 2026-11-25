@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T33",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T33_restart_restores_verified_state"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:39:33.784Z",
+  "finished_at": "2026-11-25T07:40:04.192Z",
+  "duration_s": 30.407,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 29.25s\n",
+  "stderr": "",
+  "output_sha256": "089bfe5ce97630b89ccd60fbeb7e2d38656260953b0e58f88b1a79fc85a0dc93"
+}

@@ -631,6 +631,16 @@ def test_S01B_T23_isolated_filesystem_workspace(tmp_path):
     for t in r["results"]:
         assert t["evidence_sha256"] and (ws / t["evidence"]).is_file() if t["evidence"] else True
     assert not str(ws).startswith(str((ROOT / prod_runtime).resolve()))
+    # verifier independence: non-privileged qualification tests never run as root when a test identity exists
+    import pwd
+    try:
+        pwd.getpwnam("atta-tester")
+        tester = True
+    except KeyError:
+        tester = False
+    for t in r["results"]:
+        if not t["privileged"] and (tester or os.geteuid() != 0):
+            assert t["run_as"] != "root", t
     record("S01B-T23", {"workspace": str(ws), "isolation": r["isolation"], "counts": r["counts"]})
 
 
@@ -654,6 +664,7 @@ def _need_netns():
         pytest.fail("no kernel network namespace available: air-gap cannot be enforced here (record BLOCKED, never PASS)")
 
 
+@pytest.mark.privileged
 def test_S01B_T25_external_network_denial_detection(tmp_path):
     _need_netns()
     from backend.deployment.qualification import run_suite
@@ -682,6 +693,7 @@ def test_S01B_T25_external_network_denial_detection(tmp_path):
     record("S01B-T25", {"suite": r["counts"], "audit": attempts, "inside": cp.stdout.strip()})
 
 
+@pytest.mark.privileged
 def test_S01B_T26_offline_core_startup(tmp_path):
     _need_netns()
     os.chmod(tmp_path, 0o755)
@@ -1080,6 +1092,7 @@ def test_S01B_T41_windows_specific_tests():
                         "firewall": fw})
 
 
+@pytest.mark.privileged
 @pytest.mark.skipif(not LINUX, reason="Linux-specific")
 def test_S01B_T42_linux_specific_tests(tmp_path):
     caps = discovery.isolation_capabilities()
@@ -1115,9 +1128,10 @@ def test_S01B_T42_linux_specific_tests(tmp_path):
     key = Path(os.environ.get("ATTA_BUILD_SIGNING_KEY_FILE", "/etc/atta-verifier/build_signing_ed25519.pem"))
     keys = {}
     if key.exists():
-        rd = subprocess.run(["runuser", "-u", worker, "--", PY, "-I", "-c", f"open({str(key)!r},'rb').read()"],
-                            capture_output=True, text=True, timeout=60)
-        assert rd.returncode != 0 and "PermissionError" in rd.stderr, rd.stderr
+        for account in (worker, "atta-tester"):          # implementation worker AND the gate's test identity
+            rd = subprocess.run(["runuser", "-u", account, "--", PY, "-I", "-c", f"open({str(key)!r},'rb').read()"],
+                                capture_output=True, text=True, timeout=60)
+            assert rd.returncode != 0 and "PermissionError" in rd.stderr, (account, rd.stderr)
         from cryptography.hazmat.primitives import serialization
         raw = key.read_bytes()
         assert b"ENCRYPTED PRIVATE KEY" in raw, "verifier signing key must be encrypted at rest"

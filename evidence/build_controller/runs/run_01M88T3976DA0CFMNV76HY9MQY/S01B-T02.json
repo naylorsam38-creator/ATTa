@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T02",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T02_deterministic_profile_selection"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:35:38.448Z",
+  "finished_at": "2026-11-25T07:35:40.296Z",
+  "duration_s": 1.848,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 0.78s\n",
+  "stderr": "",
+  "output_sha256": "d7f7ca327e797eec26e961c6d7c8813aa3b416dc531be00e485bd2dfae98e705"
+}

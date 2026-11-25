@@ -77,7 +77,7 @@ def main(argv: list[str] | None = None) -> int:
                         print(f"    {test['test']:<10} BLOCKED (not executed) {'; '.join(test['reasons'])}  {test['evidence']}")
                         continue
                     print(f"    {test['test']:<10} {'PASS' if test['passed'] else 'FAIL'} exit={test['exit_code']} "
-                          f"{test['duration_s']}s  {test['evidence']}")
+                          f"{test['duration_s']}s as={test.get('run_as')}  {test['evidence']}")
                 for reason in t["reasons"]:
                     print(f"    ! {reason}")
             for fp in r["file_problems"]:

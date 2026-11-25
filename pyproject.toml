@@ -48,5 +48,6 @@ testpaths = ["tests"]
 markers = [
   "acceptance: Stage acceptance tests (protected, sealed by the build controller)",
   "requires_services: needs PostgreSQL and Redis reachable as configured",
+  "privileged: needs OS privileges (network namespaces, cgroups, user switching); run as the verifier, not the test identity",
   "qualification_wrapper: S01B test that wraps another qualification test (run separately, not nested in Q-S01B)",
 ]

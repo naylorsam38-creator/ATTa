@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T44",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T44_unavailable_h100_tests_remain_blocked_elsewhere"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:45:48.236Z",
+  "finished_at": "2026-11-25T07:45:56.339Z",
+  "duration_s": 8.103,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 6.95s\n",
+  "stderr": "",
+  "output_sha256": "4913a4c1a8b2ead968e3bafd481114ac6f8f011bed28c2798a1460d7953dcfa5"
+}

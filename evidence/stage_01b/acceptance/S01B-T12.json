@@ -1,7 +1,7 @@
 {
-  "port": 42003,
+  "port": 49151,
   "warnings": [
-    "port 42003 for managed service 'redis' is in use now (conflict unless it is this installation's own running service)"
+    "port 49151 for managed service 'redis' is in use now (conflict unless it is this installation's own running service)"
   ],
   "manager_exit": 1
 }

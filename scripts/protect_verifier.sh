@@ -19,6 +19,11 @@ PY="${ATTA_VENV:-$ROOT/.venv}/bin/python"
 getent group atta-dev >/dev/null || groupadd atta-dev
 id "$WORKER" >/dev/null 2>&1 || useradd --create-home --shell /bin/bash --gid atta-dev "$WORKER"
 usermod -g atta-dev "$WORKER"
+# Dedicated unprivileged TEST identity (Stage 01B): the build controller runs every non-privileged acceptance test as
+# this account, so test code cannot read the verifier's key directory or alter protected criteria and the ledger.
+TESTER=atta-tester
+id "$TESTER" >/dev/null 2>&1 || useradd --create-home --shell /bin/bash --gid atta-dev "$TESTER"
+su -s /bin/sh "$TESTER" -c "git config --global --add safe.directory '*'" || true
 # 1. tree: group-editable for the worker
 chgrp -R atta-dev "$ROOT"
 chmod -R g+rwX "$ROOT"

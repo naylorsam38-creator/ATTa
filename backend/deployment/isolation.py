@@ -130,14 +130,21 @@ class DisposablePostgres:
             shutil.rmtree(getattr(self, "_tmp_parent", None) or self.dir, ignore_errors=True)
 
 
+LOCAL_CONFIG = ["configuration/local.env", "configuration/local.yaml", "configuration/operator.yaml"]
+
+
 def source_copy(dest: Path, root: Path = REPO_ROOT) -> Path:
-    """A private copy of the source tree (tracked + untracked-but-not-ignored files, exactly as on disk) for running
-    earlier stages' unchanged tests: they write evidence and scratch files relative to their own location, so in a
-    copy they can never overwrite the repository's recorded gate evidence. Installed dependency trees (node_modules,
-    the built web app) are linked read-only-in-practice instead of copied."""
+    """A private copy of the source tree for running earlier stages' unchanged tests: they write evidence and scratch
+    files relative to their own location, so in a copy they can never overwrite the repository's recorded gate
+    evidence. It is a shared clone (full history: regression tests diff against baseline commits) overlaid with the
+    working tree as it is on disk (tracked + untracked-not-ignored files) and the git-ignored LOCAL configuration
+    (database credentials etc.). Installed dependency trees (node_modules, the built web app) are linked."""
+    r = subprocess.run(["git", "clone", "-q", "--shared", str(root), str(dest)], capture_output=True, text=True)
+    if r.returncode != 0:
+        raise IsolationUnavailable(f"source copy failed: {r.stderr[-300:]}")
     files = subprocess.run(["git", "-C", str(root), "ls-files", "-z", "--cached", "--others", "--exclude-standard"],
                            capture_output=True, check=True).stdout.split(b"\0")
-    dest.mkdir(parents=True, exist_ok=True)
+    present = set()
     for raw in files:
         if not raw:
             continue
@@ -145,9 +152,19 @@ def source_copy(dest: Path, root: Path = REPO_ROOT) -> Path:
         src = root / rel
         if not src.is_file() and not src.is_symlink():
             continue                                   # deleted in the working tree
+        present.add(rel)
         target = dest / rel
         target.parent.mkdir(parents=True, exist_ok=True)
+        if target.is_symlink() or target.exists():
+            target.unlink()
         shutil.copy2(src, target, follow_symlinks=False)
+    for raw in subprocess.run(["git", "-C", str(dest), "ls-files", "-z"], capture_output=True, check=True).stdout.split(b"\0"):
+        rel = raw.decode()
+        if rel and rel not in present and (dest / rel).is_file():
+            (dest / rel).unlink()                      # deleted in the working tree: deleted in the copy
+    for rel in LOCAL_CONFIG:
+        if (root / rel).is_file():
+            shutil.copy2(root / rel, dest / rel)
     links = [p for p in root.glob("node_modules")] + list(root.glob("apps/*/node_modules")) + \
         list(root.glob("packages/*/node_modules")) + list(root.glob("apps/web/.next"))
     for p in links:
@@ -155,7 +172,6 @@ def source_copy(dest: Path, root: Path = REPO_ROOT) -> Path:
         if not t.exists():
             t.parent.mkdir(parents=True, exist_ok=True)
             t.symlink_to(p, target_is_directory=True)
-    subprocess.run(["git", "init", "-q", str(dest)], capture_output=True)   # tests that inspect git find a repo
     return dest
 
 

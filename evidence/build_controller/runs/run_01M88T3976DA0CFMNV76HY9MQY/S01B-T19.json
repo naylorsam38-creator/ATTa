@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T19",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T19_offline_dependency_manifest_validation"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:36:43.843Z",
+  "finished_at": "2026-11-25T07:37:22.320Z",
+  "duration_s": 38.477,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 37.33s\n",
+  "stderr": "",
+  "output_sha256": "b51ed34b440abf11b5bfc1a43df64f13f67797e340331f86ad86e742b28ef03d"
+}

@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T39",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T39_clean_installation_qualification"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:44:55.367Z",
+  "finished_at": "2026-11-25T07:45:27.317Z",
+  "duration_s": 31.949,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 30.89s\n",
+  "stderr": "",
+  "output_sha256": "3910bba6fe8310f76c4873ccd6b545d0e7b4819e2465c59c5cb7eb2ec4d59170"
+}

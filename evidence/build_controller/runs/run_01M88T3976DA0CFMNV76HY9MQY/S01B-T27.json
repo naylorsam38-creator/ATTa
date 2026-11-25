@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T27",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T27_dynamic_dependency_failure_propagation"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:37:59.509Z",
+  "finished_at": "2026-11-25T07:38:03.287Z",
+  "duration_s": 3.779,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.74s\n",
+  "stderr": "",
+  "output_sha256": "3b9012003757770e4f783d9d5c9c0ddcfea445a8233f1e200479337495713d1c"
+}

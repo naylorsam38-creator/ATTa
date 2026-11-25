@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T35",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T35_new_capability_discovery_requires_no_launcher_modification"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:36:38.063Z",
+  "finished_at": "2026-11-25T07:36:39.623Z",
+  "duration_s": 1.56,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 0.56s\n",
+  "stderr": "",
+  "output_sha256": "6d44a98bbffee55f42228d79a5f434868cc7ae755665728a72c6f8940401609d"
+}

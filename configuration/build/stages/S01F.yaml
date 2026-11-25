@@ -56,6 +56,7 @@ tasks:
     - backend.deployment
     - deps
     - --check
+    privileged: false
   - id: S01F-T02
     description: offline dependency bundle built from the locks
     timeout_s: 2400
@@ -67,6 +68,7 @@ tasks:
     - create
     - --out
     - runtime/qualification/gate-bundle
+    privileged: false
   - id: S01F-T03
     description: 'LOCAL suite in isolated resources: Stage 01 regression with superseded-test accounting, Stage 01A, Stage
       01B, legacy builder, frontend e2e, unit, dependency and offline audits'
@@ -80,6 +82,7 @@ tasks:
     - LOCAL
     - --out
     - runtime/qualification/final
+    privileged: true
   - id: S01F-T04
     description: AIR_GAPPED suite inside a new kernel network namespace, incl. offline install from the bundle
     timeout_s: 10800
@@ -94,6 +97,7 @@ tasks:
     - runtime/qualification/gate-bundle
     - --out
     - runtime/qualification/final
+    privileged: true
   - id: S01F-T05
     description: H100 hardware qualification (real H100 only)
     timeout_s: 7200
@@ -111,4 +115,5 @@ tasks:
     requires:
     - gpu:h100
     environment_specific: true
+    privileged: true
   rollback: none (qualification only; disposable resources are destroyed)

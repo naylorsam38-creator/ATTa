@@ -1,0 +1,4 @@
+{
+  "test_S01A_T29_process_termination_after_cancellation": "passed",
+  "test_S01A_T30_no_local_side_effects_after_timeout": "passed"
+}

@@ -5,12 +5,18 @@
 # environment_specific: true -> a BLOCKED result does not fail the suite on machines without that hardware/OS.
 # source_copy: true -> run in a private copy of the source tree, so the unchanged earlier-stage tests can never
 #   overwrite the repository's recorded Stage 01 / 01A / 01B evidence (DECISIONS D-056).
+# Non-privileged tests run as this unprivileged account when the runner is root (POSIX); `privileged: true` tests
+# (network namespaces, cgroups, user switching, system packages) and builtins run as the runner itself.
+run_as: atta-tester
 S01A_CORE: &s01a_core "tests/acceptance/test_s01a_acceptance.py"
 tests:
   Q-DEPS:            {title: "Dependency locks match installed packages (no drift)", command: ["{python}", -m, backend.deployment, deps, --check]}
   Q-OFFLINE-AUDIT:   {title: "No hidden Internet dependency in core configuration and frontend sources", command: ["{python}", -m, backend.deployment, audit-offline]}
   Q-S01B:            {source_copy: true, title: "Stage 01B acceptance (environment-independent subset)", timeout_s: 1800, requires: [postgres_binaries],
-                      command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/acceptance/test_s01b_acceptance.py, -m, "not qualification_wrapper"]}
+                      command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/acceptance/test_s01b_acceptance.py, -m, "not qualification_wrapper and not privileged"]}
+  Q-S01B-PRIV:       {title: "Stage 01B acceptance needing OS privileges (network namespaces, cgroups, user switching)",
+                      timeout_s: 1800, privileged: true, requires: [postgres_binaries],
+                      command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/acceptance/test_s01b_acceptance.py, -m, "privileged and not qualification_wrapper"]}
   Q-S01A-CORE:       {source_copy: true, title: "Stage 01A controller acceptance T01-T27", timeout_s: 1800, command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/acceptance/test_s01a_acceptance.py]}
   Q-S01A-REST:       {source_copy: true, title: "Stage 01A acceptance T28-T53 (without long regressions and OS-protection check)", timeout_s: 2400,
                       command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/acceptance/test_s01a_acceptance_b.py, -k, "not T48 and not T49 and not T51"]}
@@ -37,7 +43,7 @@ tests:
                       requires: [gpu:h100, "stage:S03"], environment_specific: true, builtin: stage03}
 suites:
   INSTALL:     {network: host, tests: [Q-DEPS, Q-OFFLINE-AUDIT, Q-UNIT, Q-H100-IDENTITY, Q-H100-WORKER-GPU, Q-H100-VLLM]}
-  LOCAL:       {network: host, tests: [Q-DEPS, Q-OFFLINE-AUDIT, Q-UNIT, Q-S01-REGRESSION, Q-S01A-CORE, Q-S01A-REST, Q-S01B, Q-LEGACY, Q-FRONTEND, Q-WINDOWS-JOBS]}
+  LOCAL:       {network: host, tests: [Q-DEPS, Q-OFFLINE-AUDIT, Q-UNIT, Q-S01-REGRESSION, Q-S01A-CORE, Q-S01A-REST, Q-S01B, Q-S01B-PRIV, Q-LEGACY, Q-FRONTEND, Q-WINDOWS-JOBS]}
   AIR_GAPPED:  {network: none, tests: [Q-NETWORK-DENIED, Q-DEPS, Q-OFFLINE-AUDIT, Q-UNIT, Q-S01-OFFLINE, Q-S01A-CORE, Q-S01A-REST, Q-LEGACY, Q-FRONTEND, Q-OFFLINE-INSTALL]}
   H100:        {network: host, tests: [Q-H100-IDENTITY, Q-H100-WORKER-GPU, Q-H100-VLLM, Q-H100-INFERENCE]}
   FINAL:       {includes: [LOCAL, AIR_GAPPED, H100]}

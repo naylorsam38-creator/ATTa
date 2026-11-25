@@ -91,6 +91,9 @@ class AcceptanceTest:
     # Only an environment_specific test may be BLOCKED without failing its task (e.g. Windows-only, H100-only).
     requires: list[str] = field(default_factory=list)
     environment_specific: bool = False
+    # Stage 01B: tests run as the unprivileged test identity (roadmap `test_user`) unless they need OS privileges
+    # (network namespaces, cgroups, switching users) — those declare `privileged: true` and run as the verifier.
+    privileged: bool = False
 
 
 def _nvidia_gpus() -> list[tuple[str, int]]:
@@ -235,7 +238,8 @@ class BuildController:
                                     expected_result=a.get("expected_result", ""),
                                     timeout_s=float(a.get("timeout_s", 600)),
                                     requires=list(a.get("requires", [])),
-                                    environment_specific=bool(a.get("environment_specific", False)))
+                                    environment_specific=bool(a.get("environment_specific", False)),
+                                    privileged=bool(a.get("privileged", False)))
                      for a in t["acceptance_tests"]]
             tasks.append(Task(id=t["id"], objective=t["objective"], depends_on=list(t["depends_on"]),
                               permitted_paths=list(t["permitted_paths"]), required_changes=list(t["required_changes"]),
@@ -480,6 +484,15 @@ class BuildController:
             except ImportError:
                 from protection import protection_problems
             problems += [f"os-protection: {p}" for p in protection_problems(self)]
+        user = self._test_user(stage.id)
+        if user:
+            import pwd
+            try:
+                pw = pwd.getpwnam(user)
+                if pw.pw_uid == 0:
+                    problems.append(f"test identity {user} must not be root")
+            except KeyError:
+                problems.append(f"unprivileged test identity {user} does not exist (scripts/protect_verifier.sh)")
         if stage.id not in ids:
             problems.append(f"{stage.id} is not in the roadmap")
         else:
@@ -487,6 +500,12 @@ class BuildController:
             if idx > 0 and not self.stage_gate_passed(ids[idx - 1]):
                 problems.append(f"previous stage {ids[idx - 1]} has not passed its gate")
         return problems
+
+    def _test_user(self, stage_id: str) -> str | None:
+        """The unprivileged identity non-privileged acceptance tests run as (from `require_test_user_from` on)."""
+        if os.name != "posix" or os.geteuid() != 0 or not self._requires(stage_id, "require_test_user_from"):
+            return None
+        return self.roadmap.get("test_user")
 
     def _requires(self, stage_id: str, key: str) -> bool:
         start = self.roadmap.get(key)
@@ -531,17 +550,19 @@ class BuildController:
                 if not test.environment_specific:
                     ok = False
                 continue
+            run_as = None if test.privileged else self._test_user(stage.id)
             ev: CommandEvidence = run_command(test.id, self._render(test.command), self.root,
                                               test.expected_exit_code, test.timeout_s,
-                                              env={"ATTA_BUILD_CONTROLLER_RUN": run_id})
+                                              env={"ATTA_BUILD_CONTROLLER_RUN": run_id}, run_as=run_as)
             ev_path = run_dir / f"{test.id}.json"
             ev_path.write_text(ev.to_json())
             rel = str(ev_path.relative_to(self.root)).replace(os.sep, "/")
             self._append({"type": "test_result", "stage": stage.id, "task": task.id, "test": test.id,
                           "run": run_id, "exit_code": ev.exit_code, "expected_exit_code": test.expected_exit_code,
                           "passed": ev.passed, "started_at": ev.started_at, "finished_at": ev.finished_at,
+                          "run_as": ev.run_as, "privileged": test.privileged,
                           "evidence_file": rel, "evidence_sha256": hashlib.sha256(ev_path.read_bytes()).hexdigest()})
-            results.append({"test": test.id, "passed": ev.passed, "exit_code": ev.exit_code,
+            results.append({"test": test.id, "passed": ev.passed, "exit_code": ev.exit_code, "run_as": ev.run_as,
                             "duration_s": ev.duration_s, "evidence": rel})
             ok &= ev.passed
         return ok, results

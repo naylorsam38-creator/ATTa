@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T38",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T38_stage01a_regression_suite"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:42:34.887Z",
+  "finished_at": "2026-11-25T07:44:55.365Z",
+  "duration_s": 140.478,
+  "exit_code": 1,
+  "expected_exit_code": 0,
+  "passed": false,
+  "timed_out": false,
+  "stdout": "F                                                                        [100%]\n=================================== FAILURES ===================================\n___________________ test_S01B_T38_stage01a_regression_suite ____________________\n\ntmp_path = PosixPath('/tmp/pytest-of-root/pytest-312/test_S01B_T38_stage01a_regress0')\n\n    @pytest.mark.qualification_wrapper\n    def test_S01B_T38_stage01a_regression_suite(tmp_path):\n        out = tmp_path / \"s01a.xml\"\n        before, src = evidence_digest(), source_tree(tmp_path)\n        # T48/T49 are S01B-T37/T36; T51 checks the REAL repository's OS protection and keys, which S01B-T42 does\n        # directly (a source copy is not the protected tree).\n        cp = subprocess.run([PY, \"-m\", \"pytest\", \"-q\", \"-p\", \"no:cacheprovider\", S01A_A, S01A_B,\n                             \"-k\", \"not T48 and not T49 and not T51\", f\"--junitxml={out}\"],\n                            cwd=src, capture_output=True, text=True, timeout=3600, env=clean_env(PYTHONPATH=str(src)))\n        assert evidence_digest() == before, \"recorded Stage 01/01A evidence must not change\"\n        res = junit(out)\n        failed = {n: r[1][-800:] for n, r in res.items() if r[0] != \"passed\"}\n>       assert cp.returncode == 0 and not failed and len(res) >= 50, (len(res), failed, cp.stdout[-2000:])\nE       AssertionError: (50, {'test_S01A_T01_create_and_persist_objective_contract': 'x))\nE                         conn_errors.append((tex, descr))\nE          ...cceptance_b.py::test_S01A_T53_complete_multi_task_objective\nE         3 failed, 3 deselected, 47 errors in 137.91s (0:02:17)\nE         ')\nE       assert (1 == 0)\nE        +  where 1 = CompletedProcess(args=['/home/user/ATTa/.venv/bin/python', '-m', 'pytest', '-q', '-p', 'no:cacheprovider', 'tests/acce....py::test_S01A_T53_complete_multi_task_objective\\n3 failed, 3 deselected, 47 errors in 137.91s (0:02:17)\\n', stderr='').returncode\n\ntests/acceptance/test_s01b_acceptance.py:940: AssertionError\n=========================== short test summary info ============================\nFAILED tests/acceptance/test_s01b_acceptance.py::test_S01B_T38_stage01a_regression_suite\n1 failed in 139.42s (0:02:19)\n",
+  "stderr": "",
+  "output_sha256": "572d554755fbbaea77d92a4ff1ef08189cb5995fdd30c4fa74d04b1aebfadc77"
+}

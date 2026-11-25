@@ -1,0 +1,23 @@
+{
+  "active": {
+    "profile": "LOCAL_CPU",
+    "environment_id": "env_01M88TMV3G49AG94XBKFK80ZM4",
+    "manifest_sha256": "9289f0227065c35f3bc58ed7ec95d954d93bad7f37f33f5acc5b78e7ed491d70",
+    "effective_sha256": "3b146cd99eff94dbb6eae29c6ea499fa26736c6621b78fdef9c172cb2ac7d91d",
+    "qualification": [
+      {
+        "suite": "SMOKE",
+        "id": "qual_01M88TN58X452XYYCCTD5QX82H",
+        "status": "PASS",
+        "counts": {
+          "PASS": 2,
+          "FAIL": 0,
+          "BLOCKED": 0
+        }
+      }
+    ],
+    "activated_at": "2026-11-25T07:45:24.814Z",
+    "run_id": "run_01M88TMSGSBRA23D2VY4CG009F"
+  },
+  "tail": "[install] python: /usr/local/bin/python3.13 (Python 3.13.18)\n[install] creating virtual environment /tmp/pytest-of-root/pytest-314/test_S01B_T39_clean_installati0/clean/.venv\n[install] installing locked backend dependencies (backend-core.lock.txt)\nNo broken requirements found.\n[install] created configuration/local.env from the example \u2014 set ATTA_DATABASE_PASSWORD before START\nCONFIGURATION VALID\n[install] INSTALL COMPLETE: locked dependencies installed\ninstallation state: READY (log: /tmp/pytest-of-root/pytest-314/test_S01B_T39_clean_installati0/deploy/install_transitions.jsonl)\n"
+}

@@ -1,0 +1,5 @@
+{
+  "test_S01A_T38_persist_and_restore_verified_checkpoint": "passed",
+  "test_S01A_T39_consumed_budgets_survive_restart": "passed",
+  "test_S01A_T04_identifiers_preserved_after_restart": "passed"
+}

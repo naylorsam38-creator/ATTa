@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T31",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T31_drift_guard_works_in_isolated_qualification"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:38:52.821Z",
+  "finished_at": "2026-11-25T07:39:11.973Z",
+  "duration_s": 19.152,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 18.19s\n",
+  "stderr": "",
+  "output_sha256": "fd7ba230e1820a924165656f6bd3bad56c07666f8e7a4aa738592287ac85c3aa"
+}

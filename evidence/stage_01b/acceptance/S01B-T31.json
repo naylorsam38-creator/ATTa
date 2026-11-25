@@ -1,0 +1,7 @@
+{
+  "test_S01A_T10_reject_tools_outside_pool": "passed",
+  "test_S01A_T19_reject_unauthorised_resource_ids": "passed",
+  "test_S01A_T20_reject_unauthorised_filesystem_paths": "passed",
+  "test_S01A_T21_reject_unauthorised_network_destinations": "passed",
+  "test_S01A_T22_reject_attempts_to_change_acceptance_criteria": "passed"
+}

@@ -1,0 +1,23 @@
+{
+  "test_id": "S01B-T37",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T37_stage01_regression_suite"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T07:40:09.328Z",
+  "finished_at": "2026-11-25T07:42:34.884Z",
+  "duration_s": 145.556,
+  "exit_code": 1,
+  "expected_exit_code": 0,
+  "passed": false,
+  "timed_out": false,
+  "stdout": "F                                                                        [100%]\n=================================== FAILURES ===================================\n____________________ test_S01B_T37_stage01_regression_suite ____________________\n\ntmp_path = PosixPath('/tmp/pytest-of-root/pytest-309/test_S01B_T37_stage01_regressi0')\n\n    @pytest.mark.qualification_wrapper\n    def test_S01B_T37_stage01_regression_suite(tmp_path):\n        # S01A-T48 runs the unchanged Stage 01 suite and proves that the superseded tests fail only because of the\n        # stricter Stage 01A controls (recorded in STAGE_01A_VERIFICATION.md); nothing is rewritten to pass.\n        before, src = evidence_digest(), source_tree(tmp_path)\n        cp = subprocess.run([PY, \"-m\", \"pytest\", \"-q\", \"-p\", \"no:cacheprovider\",\n                             f\"{S01A_B}::test_S01A_T48_existing_stage01_acceptance_tests\"],\n                            cwd=src, capture_output=True, text=True, timeout=2400, env=clean_env(PYTHONPATH=str(src)))\n>       assert cp.returncode == 0, cp.stdout[-3000:]\nE       AssertionError: F                                                                        [100%]\nE         =================================== FAILURES ===================================\nE         _______________ test_S01A_T48_existing_stage01_acceptance_tests ________________\nE         \nE         tmp_path = PosixPath('/tmp/pytest-of-root/pytest-310/test_S01A_T48_existing_stage010')\nE         \nE             def test_S01A_T48_existing_stage01_acceptance_tests(tmp_path):\nE                 junit = tmp_path / \"s01.xml\"\nE                 subprocess.run([PY, \"-m\", \"pytest\", \"-q\", \"-p\", \"no:cacheprovider\", str(S01_TESTS), \"-k\", \"not T16\",\nE                                 f\"--junitxml={junit}\"], cwd=ROOT, capture_output=True, text=True, timeout=1800)\nE                 res = _junit(junit)\nE                 expected_pass = [n for n in res if n not in SUPERSEDED]\nE         >       assert len(expected_pass) == 10 and all(res[n][0] == \"passed\" for n in expected_pass), \\\nE                     {n: res[n][0] for n in expected_pass}\nE         E       AssertionError: {'test_S01_T01_repository_structure': 'passed', 'test_S01_T02_clean_environment_install': 'failed', 'test_S01_T03_start_service_manager': 'failed', 'test_S01_T04_backend_liveness': 'failed', ...}\nE         E       assert (10 == 10 and False)\nE         E        +  where 10 = len(['test_S01_T01_repository_structure', 'test_S01_T02_clean_environment_install', 'test_S01_T03_start_service_manager', ...kend_liveness', 'test_S01_T05_readiness_reflects_dependency_health', 'test_S01_T10_detect_unavailable_dependency', ...])\nE         E        +  and   False = all(<generator object test_S01A_T48_existing_stage01_acceptance_tests.<locals>.<genexpr> at 0x7fe3c2c8a400>)\nE         \nE         tests/acceptance/test_s01a_acceptance_b.py:571: AssertionError\nE         =========================== short test summary info ============================\nE         FAILED tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T48_existing_stage01_acceptance_tests\nE         1 failed in 142.78s (0:02:22)\nE         \nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['/home/user/ATTa/.venv/bin/python', '-m', 'pytest', '-q', '-p', 'no:cacheprovider', 'tests/acce...est_s01a_acceptance_b.py::test_S01A_T48_existing_stage01_acceptance_tests\\n1 failed in 142.78s (0:02:22)\\n', stderr='').returncode\n\ntests/acceptance/test_s01b_acceptance.py:923: AssertionError\n=========================== short test summary info ============================\nFAILED tests/acceptance/test_s01b_acceptance.py::test_S01B_T37_stage01_regression_suite\n1 failed in 144.48s (0:02:24)\n",
+  "stderr": "",
+  "output_sha256": "4633c6ffcb90dedde2a4c8502734a638e91bd2940cf87fd700904bbbf282852e"
+}

@@ -117,6 +117,41 @@ def _builtin(name: str, ctx: dict) -> tuple[int, str]:
     return 2, f"builtin {name} is not implemented"
 
 
+def _whoami() -> str:
+    try:
+        import pwd
+        return pwd.getpwuid(os.geteuid()).pw_name
+    except (ImportError, KeyError):
+        return os.environ.get("USERNAME", "unknown")
+
+
+def _test_identity(data: dict) -> tuple[list[str], dict, "object | None"]:
+    """(runuser prefix, env overrides, pwd entry) for the unprivileged test identity, when this runner is root on a
+    POSIX host and the account exists; otherwise ([], {}, None) and tests run as the current account (recorded)."""
+    user = data.get("run_as")
+    if not user or os.name != "posix" or os.geteuid() != 0 or not shutil.which("runuser"):
+        return [], {}, None
+    import pwd
+    try:
+        pw = pwd.getpwnam(user)
+    except KeyError:
+        return [], {}, None
+    return ["runuser", "-u", user, "--"], {"HOME": pw.pw_dir, "USER": user, "LOGNAME": user}, pw
+
+
+def _hand_over(path: Path, pw) -> None:
+    """Give the test identity ownership of a qualification-owned path (never the disposable cluster's data)."""
+    if pw is None or not path.exists():
+        return
+    for p in [path, *([] if path.is_file() else path.rglob("*"))]:
+        if "postgres" in p.relative_to(path).parts[:1] if p != path else False:
+            continue
+        try:
+            os.lchown(p, pw.pw_uid, pw.pw_gid)
+        except OSError:
+            pass
+
+
 def run_suite(suite: str, *, manifest: dict, profile: str, out_root: Path, bundle: str | None = None,
               inside_netns: bool = False, qid: str | None = None) -> dict:
     data = load_suites()
@@ -177,7 +212,16 @@ def run_suite(suite: str, *, manifest: dict, profile: str, out_root: Path, bundl
                             "network": "new kernel network namespace (loopback only)" if inside_netns else "host"}
     except isolation.IsolationUnavailable as exc:
         isolation_detail = {"error": str(exc)}
-    ctx["env"] = env
+    prefix, overrides, pw = _test_identity(data)
+    ctx.update({"env": env, "run_prefix": prefix, "run_env": overrides, "run_pw": pw})
+    if pw is not None:
+        for d in ("runtime", "deployment"):
+            (ws / d).mkdir(exist_ok=True)
+            _hand_over(ws / d, pw)
+        netaudit.touch()
+        _hand_over(netaudit, pw)
+        os.lchown(ws, pw.pw_uid, pw.pw_gid)
+    isolation_detail["test_identity"] = pw.pw_name if pw is not None else _whoami()
     meta["isolation"] = isolation_detail
     results = []
     try:
@@ -208,8 +252,9 @@ def _blocked(tid: str, spec: dict, meta: dict, reason: str) -> dict:
 
 def _execute(tid: str, spec: dict, meta: dict, ws: Path, env: dict, ctx: dict) -> dict:
     started, t0 = iso_utc(), time.monotonic()
+    run_as = _whoami()
     if spec.get("builtin"):
-        code, out = _builtin(spec["builtin"], ctx)
+        code, out = _builtin(spec["builtin"], ctx)       # builtins run in the (privileged) runner itself
         cmd = f"builtin:{spec['builtin']}"
     else:
         cmd = [c.replace("{python}", sys.executable) for c in spec["command"]]
@@ -218,9 +263,16 @@ def _execute(tid: str, spec: dict, meta: dict, ws: Path, env: dict, ctx: dict) -
             cwd = REPO_ROOT
             if spec.get("source_copy"):
                 # earlier stages' unchanged tests run in a private source copy: their evidence writes land there
-                cwd = ctx.setdefault("source_copy", None) or isolation.source_copy(ws / "src")
-                ctx["source_copy"] = cwd
+                if not ctx.get("source_copy"):
+                    ctx["source_copy"] = isolation.source_copy(ws / "src")
+                    _hand_over(ctx["source_copy"], ctx.get("run_pw"))
+                cwd = ctx["source_copy"]
                 run_env["PYTHONPATH"] = run_env["PYTHONPATH"].replace(str(REPO_ROOT), str(cwd))
+            if not spec.get("privileged") and ctx.get("run_prefix"):
+                # unprivileged test identity: cannot read the verifier keys or alter protected criteria
+                cmd = ctx["run_prefix"] + cmd
+                run_env.update(ctx["run_env"])
+                run_as = ctx["run_pw"].pw_name
             cp = subprocess.run(cmd, cwd=cwd, env=run_env, capture_output=True, text=True,
                                 timeout=float(spec.get("timeout_s", 900)))
             code, out = cp.returncode, (cp.stdout or "")[-200000:] + "\n--- stderr ---\n" + (cp.stderr or "")[-100000:]
@@ -235,7 +287,8 @@ def _execute(tid: str, spec: dict, meta: dict, ws: Path, env: dict, ctx: dict) -
             "command": cmd, "expected": "exit 0", "actual": " | ".join(tail)[-400:], "exit_code": code,
             "evidence": str(ev.relative_to(REPO_ROOT)) if REPO_ROOT in ev.parents else str(ev),
             "evidence_sha256": hashlib.sha256(ev.read_bytes()).hexdigest(),
-            "status": "PASS" if code == 0 else "FAIL", "environment_specific": bool(spec.get("environment_specific"))}
+            "status": "PASS" if code == 0 else "FAIL", "environment_specific": bool(spec.get("environment_specific")),
+            "run_as": run_as, "privileged": bool(spec.get("privileged") or spec.get("builtin"))}
 
 
 def _finish(ws: Path, meta: dict, results: list[dict], attempts, isolation_detail) -> dict:

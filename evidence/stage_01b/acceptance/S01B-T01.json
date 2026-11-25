@@ -16,7 +16,7 @@
   },
   "ram": {
     "total_mb": 16087,
-    "available_mb": 15200
+    "available_mb": 15196
   },
   "gpu": {
     "present": false,

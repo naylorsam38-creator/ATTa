@@ -1,0 +1,30 @@
+{
+  "probe": {
+    "uid": 30033,
+    "external_network": "OSError: [Errno 101] Network is unreachable",
+    "cuda_visible_devices": ""
+  },
+  "isolation": {
+    "cgroups": [
+      "/sys/fs/cgroup/memory/atta-24180",
+      "/sys/fs/cgroup/pids/atta-24180"
+    ],
+    "network": "private empty namespace",
+    "user": "atta-builder",
+    "cuda_visible_devices": ""
+  },
+  "descendant_killed": 24192,
+  "verifier_key": {
+    "worker_read": "PermissionError",
+    "at_rest": "encrypted",
+    "usable_without_passphrase": false
+  },
+  "protected_files_denied_to_worker": {
+    "backend/verification/build_controller.py": true,
+    "configuration/build/roadmap.yaml": true,
+    "configuration/build/protected.lock.json": true,
+    "tests/acceptance/test_s01b_acceptance.py": true,
+    "evidence/build_controller/ledger.jsonl": true,
+    "configuration/qualification/suites.yaml": true
+  }
+}
