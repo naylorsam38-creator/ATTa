@@ -23,8 +23,10 @@ Trust never grants task permission.
 
 ## Isolation contract
 
-`backend/integrations/isolation.py` defines `IsolationProvider.report()`. The sidecar ships `NoOsSandbox`, which
-reports isolation **unavailable**; RESTRICTED or `ISOLATED_SANDBOX` integrations are therefore BLOCKED (S12-T14
+`backend/integrations/isolation.py` defines `IsolationProvider.report()`. `attach()` uses
+`adapters.RuntimeIsolation(controller.runtime)`: with Worker A's Stage 01B runtime and an isolating profile
+(`deployment.worker_network: none` → `isolation_required`) isolation is AVAILABLE and RESTRICTED plugins run inside it
+(S12-T48 in the 01B trial tree); on the 01A baseline it reports **unavailable**; RESTRICTED or `ISOLATED_SANDBOX` integrations are therefore BLOCKED (S12-T14
 shows BLOCKED without a provider and the contract working with a clearly-labelled test double).
 What the supervised runtime does **not** provide, and why TRUSTED means "operator trusts this code": filesystem
 confinement, network namespace, separate user, per-tenant separation. A TRUSTED plugin could read files readable by

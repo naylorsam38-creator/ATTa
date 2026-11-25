@@ -62,3 +62,23 @@ Network: Streamable HTTP only to hosts declared by the manifest and permitted by
 S12-T40 negotiation/discovery/execution, T41 schema drift + malicious metadata, T42 host-side timeout/cancellation/
 no shell strings, T43 gateway timeout and cancellation with process cleanup, T44 failure isolation and no fallback,
 T45 Streamable HTTP, session/protocol headers, AIR_GAPPED loopback, remote host OFFLINE_UNAVAILABLE, dynamic health.
+
+## Hardening for merge with Stage 01B (final package)
+
+* **Network destinations come from the task contract.** An MCP (or any) integration that declares network hosts
+  executes only when every declared host is in the task contract's `permitted_network_destinations`
+  (`integration_network_not_permitted` otherwise). With Worker A's Stage 01B runtime the gateway grants a worker host
+  networking only for such contracts; every other worker — and any stdio MCP server it starts — runs in a private,
+  empty network namespace (verified for real by S12-T48 in the 01B trial tree: a stdio server's connection attempt to
+  a listening loopback port is refused).
+* **stdio servers start from the verified snapshot.** The bridge writes the package bytes the Stage 01A/01B child
+  verified against the approved digest into a private temporary directory and launches the server from there (no
+  time-of-check/time-of-use gap; works when 01B drops the worker to an account that cannot read the install root).
+* **Windows.** `wire.py` uses `CREATE_NEW_PROCESS_GROUP` and `taskkill /T /F` instead of POSIX sessions/signals and
+  passes only the variables Windows needs to start Python (`SYSTEMROOT`, `PATHEXT`, `TEMP`…). Under 01B the Job Object
+  kills anything left. Not executed on a Windows host in this environment (BLOCKERS S12-B10).
+* **Bypass tests** (S12-T46/T47/T48): unallocated tools of the same server refused; ADMINISTRATIVE/high tool needs
+  approval and never reaches the server; the server process sees no ATTa/DB/credential environment variables; the
+  server's `sampling/createMessage` and `roots/list` requests are answered `-32601`; no execution without a
+  gateway-signed ticket; credential-requiring servers are not even allocatable; an HTTP redirect cannot move a call
+  to another endpoint; AIR_GAPPED/OFFLINE blocks remote hosts.

@@ -81,3 +81,19 @@ Every install step runs in one try/rollback block; a failure removes staging and
 previous version on upgrade, marks tool rows `rolled_back`, re-discovers the registry and reloads the catalogue.
 Interrupted installs are rolled back at start (`load_state`). One integration's failure never changes another's
 state; MCP servers run per call in supervised processes; there is no retry loop and no fallback provider.
+
+## Adapters to the other parallel stages (final package)
+
+`backend/integrations/adapters.py` reads — never imports or modifies — the published interfaces of the other workers:
+
+| Source | Interface used | Stage 12 behaviour |
+|---|---|---|
+| Worker A, Stage 01B (`0ec939c`) | `CapabilityRuntime(network=, worker_user=, isolation_required=)`, `settings.deployment.profile`, gateway's per-contract `network="host"` | `RuntimeIsolation` = isolation AVAILABLE only when the runtime REQUIRES it (RESTRICTED / `ISOLATED_SANDBOX` integrations then run); `AIR_GAPPED` profile → network integrations OFFLINE_UNAVAILABLE |
+| Worker 3, Stage 11 (`bb1a60b`) | `NetworkModeProvider.current_mode()`, `ATTA_NETWORK_MODE` | same signal for research and integrations; unknown values fail closed |
+| All | — | `ConnectivitySources`: the **most restrictive** of provider / `ATTA_NETWORK_MODE` / 01B profile / `integrations.yaml`, evaluated live on every check |
+| Worker 2, Stage 04 | not published | `mount_integrations(app, authorize)` is idempotent; contracts in `packages/shared_types/integrations.contracts.generated.json` |
+
+`attach()` defaults to these adapters, so the same code runs on the 01A baseline (isolation honestly UNAVAILABLE),
+on 01B, on 11 and on their merge. Verified by installing into each real tree (`scripts/stage12_trial.py`).
+One registry, one catalogue, one gateway: `attach()` only composes around `controller.registry`,
+`controller.catalogue`, `controller.gateway` and `controller.allocator` (S12-T73).
