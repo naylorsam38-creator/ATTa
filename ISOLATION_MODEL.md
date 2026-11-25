@@ -52,3 +52,24 @@ Windows host, which the verifier records BLOCKED until then (BLOCKERS B-S01B-01)
 revalidation), UNHEALTHY; the service manager adds STOPPED and BLOCKED. A capability depending on an unhealthy
 mandatory service becomes `dependency_missing` immediately (S01B-T27); after recovery it is restored only after
 `recovery_confirmations` consecutive healthy probes (S01B-T28).
+
+### Windows: reading protected secrets, child processes and firewall evasion
+
+* **Reading secrets.** LOW integrity alone blocks writes, not reads. Protected secrets (`configuration/local.env`,
+  key material under `configuration/`, `deployment.windows_protected_paths`) additionally carry a MEDIUM mandatory label
+  with **No-Read-Up, No-Write-Up and No-Execute-Up** (`S:(ML;OICI;NRNWNX;;;ME)`, applied by INSTALL in CONFIGURE). A
+  LOW-integrity worker can therefore neither read nor modify them, whatever their DACL says; the API and operator
+  (medium) are unaffected. S01B-T41 asserts the read and the write are both denied (and that a medium process still
+  reads the file).
+* **Child processes / alternative executables.** Firewall rules bind to `atta-worker.exe`. To stop a worker from
+  starting another program (`cmd.exe`, curl, a renamed copy of the interpreter) to escape them, each worker puts
+  itself into its own nested Job Object with an **active-process limit of 1** before any capability code loads
+  (`deployment.windows_worker_child_processes: false`, default). S01B-T41 attempts `cmd.exe`, a renamed copy of the
+  interpreter and a direct outbound connection from the firewall-bound worker; all three must be denied.
+* **Verifier keys.** The build seal's Ed25519 private key is unreadable by the worker account (0600 root, 0700 directory)
+  and **encrypted at rest**; its passphrase is supplied only while sealing and every `ATTA_BUILD_*` variable is removed
+  from test environments, so even the root-run gate tests can read only ciphertext (S01B-T42; the verifier refuses an
+  unencrypted key, `verify.py protection`).
+* **Regression runs** of the unchanged Stage 01/01A tests execute in a private copy of the source tree (qualification
+  `source_copy` and S01B-T29…T33/T36…T38), so they cannot overwrite the repository's recorded Stage 01/01A evidence;
+  the tests assert the evidence digest is unchanged.

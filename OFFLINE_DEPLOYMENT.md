@@ -20,6 +20,15 @@ Contents (`bundle coverage --bundle DIR` prints what was included and why anythi
 | `assets/` | migrations, bootstrap SQL, every lock and manifest file | INCLUDED |
 | `bundle_manifest.json` | SHA-256 + size of every file, lock hashes, platform, coverage | — |
 
+**Windows target** (`bundle create --target windows`, buildable on this Linux machine): Windows `cp313-win_amd64`
+wheels for both locks (markers evaluated for Windows; 49 + 107 entries, every one checked for a wheel), the Windows
+CPython 3.13 runtime, npm caches resolved for win32-x64 (95 + 466 entries, 0 missing) and PostgreSQL 16 x64 binaries
+(`@embedded-postgres/windows-x64`, integrity-checked by npm; `INSTALL.bat --offline-bundle DIR --install-system`
+unpacks them and the qualification runner finds them). **Not obtainable from this build machine — BLOCKED in the
+coverage until supplied:** pgvector for Windows (no upstream binaries; build with MSVC or use WSL/Docker), Redis or
+Memurai for Windows, Git for Windows (only needed for build-controller gates), and the Windows Playwright Chromium
+(CDN blocked). Supply them with `--windows-installers DIR/<pgvector|redis|git>/…`; they are hashed into the manifest.
+
 Never included: private keys (verification fails if a file holds private-key material; certificate trust stores are
 allowed), credentials, models (only with an explicit `--models PATH…`). A bundle targets the same OS, architecture and
 Python X.Y as the machine that built it; build one per target platform. On Windows the system installers (PostgreSQL,

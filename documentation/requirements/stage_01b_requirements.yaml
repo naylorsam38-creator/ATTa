@@ -131,9 +131,11 @@ requirements:
   - S01B-T19
   - S01B-T26
   status: PARTIAL
-  note: Complete bundle (both Python locks, bundled CPython, root + mobile npm, browsers, apt system closure) built and installed
-    offline inside a network namespace (AIR_GAPPED Q-OFFLINE-INSTALL). Container images BLOCKED without Docker daemon (B-S01B-03);
-    fresh system-package install only simulated here (B-S01B-09).
+  note: Host bundle (both Python locks, bundled CPython, root + mobile npm, browsers, apt system closure) built and installed
+    offline inside a network namespace (AIR_GAPPED Q-OFFLINE-INSTALL). Windows target bundle built here (Windows wheels, Windows
+    CPython, win32 npm caches, PostgreSQL 16 for Windows); pgvector/Redis/Git for Windows and Windows browsers BLOCKED from
+    this build machine (B-S01B-10); container images BLOCKED without a Docker daemon (B-S01B-03); fresh Linux system-package
+    install only simulated (B-S01B-09).
 - id: S01B-R13
   section: 13 Zero-hidden-Internet requirement (OFFLINE_UNAVAILABLE)
   implemented_in:
@@ -168,18 +170,19 @@ requirements:
 - id: S01B-R16
   section: 16 Windows isolation (Job Objects, restricted identities, ACLs, firewall)
   implemented_in:
-  - backend/capability_runtime/windows_isolation.py
-  - backend/capability_runtime/runner.py
   - backend/capability_runtime/child.py
-  - backend/deployment/windows_hardening.py
+  - backend/capability_runtime/runner.py
+  - backend/capability_runtime/windows_isolation.py
   - backend/deployment/installer.py
+  - backend/deployment/windows_hardening.py
+  - tests/acceptance/fixtures_s01b/s01b_winprobe/handler.py
   - tests/unit/test_windows_isolation.py
   tests:
   - S01B-T41
   status: BLOCKED
-  note: 'IMPLEMENTED: Job Object (tree kill, memory limit), restricted LOW-integrity token, workspace ACLs, firewall-bound
-    worker interpreter. Qualification BLOCKED: never executed on Windows (S01B-T41 needs a Windows host, as Administrator);
-    platform-independent logic unit-tested on Linux (BLOCKERS B-S01B-01).'
+  note: 'IMPLEMENTED: Job Object (tree kill, memory limit), restricted LOW-integrity token, no child processes, secrets labelled
+    No-Read-Up/No-Write-Up, workspace ACLs, firewall-bound worker interpreter. Qualification BLOCKED: never executed on Windows
+    (S01B-T41 on Windows as Administrator); platform-independent logic unit-tested on Linux (BLOCKERS B-S01B-01).'
 - id: S01B-R17
   section: 17 Linux/H100 isolation (service users, permissions, limits, cgroups, netns, GPU visibility)
   implemented_in:
@@ -189,7 +192,8 @@ requirements:
   tests:
   - S01B-T42
   status: VERIFIED
-  note: Verified on Linux with cgroup v1; GPU visibility verified as hidden (no GPU present).
+  note: Verified on Linux with cgroup v1; GPU visibility verified as hidden (no GPU present). Verifier signing key unreadable
+    by the worker and encrypted at rest (S01B-T42).
 - id: S01B-R18
   section: 18 Resource profiles (may only lower Stage 01A limits)
   implemented_in:
