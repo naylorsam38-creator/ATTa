@@ -1,0 +1,25 @@
+# Stage 02 permission registration for Stage 11 research — PROPOSAL for controlled integration.
+# Stage 02 owns authentication, tenants, roles and approvals; this file only declares what research needs.
+# Nothing here is active until Stage 02 implements it and the operator approves it.
+#
+# 1) Tool permissions (controller grants, Stage 01A model) — see ../permissions.stage11.yaml
+# 2) API operations evaluated by the central policy engine (backend/research/api.py OPERATIONS):
+api_operations:
+  research.create:  {permission: research.run.create,  risk: low,    tenant_scoped: true, approval: none}
+  research.read:    {permission: research.run.read,    risk: low,    tenant_scoped: true, approval: none, owner_or_role: [research.viewer]}
+  research.list:    {permission: research.run.read,    risk: low,    tenant_scoped: true, approval: none}
+  research.start:   {permission: research.run.execute, risk: medium, tenant_scoped: true,
+                     approval: human_if_external_network,   # replaces the Stage 01A operator Ed25519 approval
+                     bind_approval_to: [principal, tenant, research_id, contract_hash, network_policy]}
+  research.cancel:  {permission: research.run.cancel,  risk: low,    tenant_scoped: true, approval: none, owner_or_role: [research.admin]}
+# 3) New catalog permissions Stage 02 should register for API principals (not controller grants):
+permissions:
+  research.run.create:  Create a research contract (no execution)
+  research.run.read:    Read research contracts, progress, sources, claims, citations and results of the tenant
+  research.run.execute: Start or resume research (network access per tenant policy; approval-bound)
+  research.run.cancel:  Cancel a research run
+# 4) Tenant policy inputs consumed by backend/research/security.py ResearchSecurityContext:
+security_context:
+  network_permitted: per tenant policy (false => research is local/project-only, external = OFFLINE_UNAVAILABLE-like refusal)
+  source_restrictions: tenant-wide excluded domains, merged into every research contract's excluded domains
+  rls: research.* tables carry tenant_id / principal_id; Stage 02 adds RLS policies keyed on atta.tenant_id

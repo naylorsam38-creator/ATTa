@@ -14,7 +14,6 @@ from __future__ import annotations
 from typing import Protocol, runtime_checkable
 
 from .contracts import ResearchContract
-from .errors import ResearchError, ResearchErrorCode
 from .evidence import terms_of
 
 MAX_QUERY_CHARS = 400
@@ -46,16 +45,8 @@ class DeterministicPlanner:
         return None
 
 
-class HubPlanner:
-    name = "hub-planner"
-
-    def __init__(self, hub=None):
-        self.hub = hub
-
-    def decompose(self, contract):
-        raise ResearchError(ResearchErrorCode.BLOCKED_DEPENDENCY, "model-driven decomposition needs the Stage 03 "
-                            "Hub interface", {"dependency": "S03"})
-
-    def query_for(self, contract, subquestion, attempt):
-        raise ResearchError(ResearchErrorCode.BLOCKED_DEPENDENCY, "model-driven query formulation needs Stage 03",
-                            {"dependency": "S03"})
+def __getattr__(name):            # HubPlanner lives in hub.py (Stage 03 integration); kept importable from here
+    if name == "HubPlanner":
+        from .hub import HubPlanner
+        return HubPlanner
+    raise AttributeError(name)

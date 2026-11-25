@@ -77,7 +77,7 @@ def test_catalog() -> Catalog:
 
 def build(tmp: Path, *, port: int | None, providers: list[dict] | None = None, mode: NetworkMode = NetworkMode.ONLINE,
           production_policy: bool = False, numbers: dict | None = None, grant: bool = True,
-          reuse: RH | None = None, claim_builder=None, **cfg_overrides) -> RH:
+          reuse: RH | None = None, claim_builder=None, hub=None, **cfg_overrides) -> RH:
     if reuse is not None:
         root, caps, key, ns = reuse.root, reuse.caps, reuse.operator_key, reuse.namespace
     else:
@@ -124,7 +124,7 @@ def build(tmp: Path, *, port: int | None, providers: list[dict] | None = None, m
     network = StaticNetworkMode(mode)
     store = ResearchStore(db)
     svc = ResearchService(controller=controller, store=store, config=rcfg, network=network,
-                          claim_builder=claim_builder,
+                          claim_builder=claim_builder, hub=hub,
                           loopback_ports_for_tests=frozenset({port}) if port is not None else frozenset())
     return RH(root, caps, controller, svc, store, registry, catalogue, key, ns, network, policy, port)
 

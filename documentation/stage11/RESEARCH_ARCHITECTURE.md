@@ -112,3 +112,17 @@ Migration `database/migrations/0011_stage11_research.sql` (schema `research`): `
 `budgets`, `queries`, `snapshots`, `sources`, `evidence`, `claims`, `claim_sources`, `citations`,
 `contradictions`, `checkpoints`, `events`, `results`. Append-only tables refuse UPDATE/DELETE by trigger and are
 granted SELECT/INSERT only to the runtime role.
+
+## Controlled integration points (prepared, not activated)
+
+| Stage | Entry point | Behaviour until integrated |
+|---|---|---|
+| 02 permissions | `python -m backend.research.operator_config check / render --out DIR`; `documentation/stage11/integration/stage02_research_permissions.yaml` | packages `untrusted`; research API policy-DENIED |
+| 03 model | `ResearchService(hub=ResearchHub, worker_factory=...)` (`backend/research/hub.py`) | deterministic decomposition; claims/synthesis BLOCKED |
+| 04 API | `backend.research.wiring.wire_research_api(app)` | router not mounted |
+| provider | `configuration/research.yaml` + `python -m backend.research.provider_check` | external search PROVIDER_UNAVAILABLE |
+| 01B network mode | `ResearchService(network=<01B NetworkModeProvider>)` | `ATTA_NETWORK_MODE` / configuration |
+
+Model output never bypasses validation: subquestions are bounded and stored once in the contract; claims carry the
+forced label `hub:<name>` and their citations must resolve to stored evidence; a synthesis is accepted only when
+every `[cit_...]` it uses is a verified citation of the research, otherwise it is rejected and listed as a limitation.

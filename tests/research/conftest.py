@@ -27,6 +27,8 @@ def _db_available() -> bool:
 
 
 DB = _db_available()
+if not DB and os.environ.get("ATTA_REQUIRE_DB") == "1":
+    raise RuntimeError("ATTA_REQUIRE_DB=1 but PostgreSQL with the research schema is not reachable")
 requires_db = pytest.mark.skipif(not DB, reason="needs PostgreSQL with migrations applied (ATTA_ENV=test)")
 
 

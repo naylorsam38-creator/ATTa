@@ -25,13 +25,14 @@ from backend.orchestration.authorization import OperatorAuthorization
 from backend.orchestration.controller import ControllerError, PlanningBlocked, RuntimeController, TaskSpec
 from backend.orchestration.drift import resolve_path
 
-from .claims import ClaimBuilder, HubClaimBuilder, analyse_contradictions, bind_claims
+from .claims import ClaimBuilder, analyse_contradictions, bind_claims
 from .config import ResearchConfig
 from .contracts import (ExecutionBudget, NetworkMode, NetworkPolicy, ResearchContract, ResearchMode, ResearchResult,
                         ResearchStatus, TERMINAL_STATUSES, VerificationStatus)
 from .dedup import find_duplicate
 from .errors import ResearchError, ResearchErrorCode
 from .evidence import select_passages, terms_of
+from .hub import HubClaimBuilder as _HubClaims, HubPlanner, hub_available, validate_synthesis
 from .ids import rid
 from .network import ConfiguredNetworkMode, NetworkModeProvider, external_allowed
 from .planner import DeterministicPlanner, ResearchPlanner
@@ -59,11 +60,17 @@ AMENDABLE = frozenset({"scope", "excluded_sources", "domain_restrictions", "time
 class ResearchService:
     def __init__(self, *, controller: RuntimeController, store: ResearchStore, config: ResearchConfig,
                  network: NetworkModeProvider | None = None, planner: ResearchPlanner | None = None,
-                 claim_builder: ClaimBuilder | None = None, loopback_ports_for_tests: frozenset[int] = frozenset()):
+                 claim_builder: ClaimBuilder | None = None, loopback_ports_for_tests: frozenset[int] = frozenset(),
+                 hub=None, worker_factory: Callable[[dict, int], Any] | None = None):
+        """hub: Stage 03 ResearchHub (validated, see hub.py). worker_factory(order, context_tokens) -> ModelAdapter:
+        Stage 03 may supply a model-backed worker; default is the labelled deterministic research worker."""
         self.controller, self.store, self.config = controller, store, config
         self.network = network or ConfiguredNetworkMode(config.network_mode)
-        self.planner = planner or DeterministicPlanner()
-        self.claim_builder = claim_builder or HubClaimBuilder()
+        self.hub = hub
+        self.planner = planner or (HubPlanner(hub) if hub is not None else DeterministicPlanner())
+        self.claim_builder = claim_builder or _HubClaims(hub)
+        self.worker_factory = worker_factory or (lambda order, ctx: DeterministicResearchWorker(order,
+                                                                                               context_tokens=ctx))
         self._test_ports = frozenset(loopback_ports_for_tests)
         self._workers: dict[str, list[DeterministicResearchWorker]] = {}
         self._active_runs: set[str] = set()
@@ -110,8 +117,10 @@ class ResearchService:
             acceptance_criteria=[{"id": "AC-01", "description": "every material claim cites verified stored evidence",
                                   "requirement_ids": [r["id"] for r in reqs]}],
             completion_conditions=["independent research verification passed"], integration_checks=[])
-        contract = ResearchContract.model_validate(draft.model_dump(mode="json") |
-                                                   {"objective_id": objective.objective_id})
+        stored = {"objective_id": objective.objective_id}
+        if not isinstance(self.planner, DeterministicPlanner) and mode is not ResearchMode.SOURCE_COMPARISON:
+            stored["subquestions"] = subs          # a model's decomposition is stored once: stable across resume
+        contract = ResearchContract.model_validate(draft.model_dump(mode="json") | stored)
         self.store.create_run(contract, self._budget_limits(eb), principal_id=sec.principal_id,
                               tenant_id=sec.tenant_id)
         self.store.event(research_id, "objective.created", {"objective_id": objective.objective_id,
@@ -316,7 +325,7 @@ class ResearchService:
                 if order is None:
                     continue
                 order = {**order, **{k: tools.get(v) for k, v in order.get("tool_refs", {}).items()}}
-                workers[tid] = DeterministicResearchWorker(order, context_tokens=c.execution_budget.context_tokens_per_task)
+                workers[tid] = self.worker_factory(order, c.execution_budget.context_tokens_per_task)
             if not workers:
                 return          # nothing of this research to run (never spin on foreign queued tasks)
             with self._lock:
@@ -331,7 +340,7 @@ class ResearchService:
                 if self.controller.store.task(oid, tid)["state"] in TERMINAL_TASK:
                     self.controller.store.release_slot(oid, tid)
 
-    def _run_one(self, research_id: str, oid: str, tid: str, worker: DeterministicResearchWorker) -> str | None:
+    def _run_one(self, research_id: str, oid: str, tid: str, worker) -> str | None:
         try:
             state = self.controller.run_task(oid, tid, worker)
         except Exception as exc:  # noqa: BLE001 — e.g. task cancelled before it started; recorded, never hidden
@@ -827,7 +836,8 @@ class ResearchService:
                               error=exc.as_dict())
         return result
 
-    def _limitations(self, research_id: str, c: ResearchContract, verification: dict) -> list[dict]:
+    def _limitations(self, research_id: str, c: ResearchContract, verification: dict,
+                     synthesis: dict | None = None) -> list[dict]:
         lim = []
         ev = self.store.events(research_id)
         exhausted = sorted({e["detail"].get("metric") for e in ev if e["kind"] == "budget.exhausted"} |
@@ -883,9 +893,13 @@ class ResearchService:
         if unresolved:
             lim.append({"code": "UNRESOLVED_CONTRADICTION", "detail": f"{len(unresolved)} disagreement(s) between "
                         "sources are exposed and not resolved automatically"})
-        if c.research_type is not ResearchMode.QUICK_SEARCH:
+        status = (synthesis or {}).get("status", "BLOCKED")
+        if c.research_type is not ResearchMode.QUICK_SEARCH and status == "BLOCKED":
             lim.append({"code": "BLOCKED_DEPENDENCY", "detail": "natural-language synthesis needs the Stage 03 Hub; "
                         "the summary is a deterministic structured summary", "dependency": "S03"})
+        elif status == "REJECTED":
+            lim.append({"code": "VERIFICATION_FAILED", "detail": "the model synthesis was rejected: it did not rest "
+                        "only on verified citations", "problems": synthesis.get("problems", [])})
         return lim
 
     def _finalise(self, research_id: str, c: ResearchContract, builder: ClaimBuilder) -> dict:
@@ -938,7 +952,8 @@ class ResearchService:
             report["stage01a_trace"] = {"status": trace["status"], "gaps": trace["trace"]["gaps"][:20]}
         except Exception as exc:  # noqa: BLE001
             report["stage01a_trace"] = {"status": "error", "error": str(exc)}
-        limitations = self._limitations(research_id, c, report)
+        synthesis = self._synthesis(research_id, c, report, require_claims)
+        limitations = self._limitations(research_id, c, report, synthesis)
         if not report["passed"]:
             status, vstatus = ResearchStatus.FAILED, VerificationStatus.VERIFICATION_FAILED
             error = ResearchError(ResearchErrorCode.VERIFICATION_FAILED, "; ".join(report["problems"])).as_dict()
@@ -949,13 +964,46 @@ class ResearchService:
         if self.store.cancel_requested(research_id):
             return self._finish_cancelled(research_id, c)
         self.checkpoint(research_id)
-        result = self._assemble(research_id, c, status, vstatus, report, limitations, error)
+        result = self._assemble(research_id, c, status, vstatus, report, limitations, error, synthesis)
         self.store.set_status(research_id, status, reason="finalised", phase="done", verification_status=vstatus.value,
                               error=error)
         return result
 
     # ------------------------------------------------------------------ result
-    def _assemble(self, research_id, c, status, vstatus, verification, limitations, error) -> dict:
+    def _synthesis(self, research_id: str, c: ResearchContract, report: dict, require_claims: bool) -> dict:
+        """Stage 03 synthesis, accepted only when it rests on VERIFIED citations of this research."""
+        blocked = {"natural_language": None, "status": "BLOCKED", "dependency": "S03",
+                   "reason": "Stage 03 Hub/model interface not integrated"}
+        if not require_claims or not hub_available(self.hub) or not report.get("passed"):
+            return blocked
+        cits = [x for x in self.store.citations(research_id) if x["verified"]]
+        verified_claims = [x for x in self.store.claims(research_id) if x["verification_status"] == "VERIFIED"]
+        material = {"question": c.question, "scope": c.scope,
+                    "claims": [{"claim_id": x["claim_id"], "text": x["claim_text"],
+                                "support_status": x["support_status"],
+                                "citation_ids": [k["citation_id"] for k in cits if k["claim_id"] == x["claim_id"]]}
+                               for x in verified_claims],
+                    "contradictions": [{"detail": x["detail"], "status": x["status"]}
+                                       for x in self.store.contradictions(research_id)],
+                    "instruction": "cite only the given citation ids as [cit_...]; do not add facts"}
+        try:
+            raw = self.hub.synthesise(c, material)
+        except Exception as exc:  # noqa: BLE001
+            raw, problems = None, [f"hub synthesis failed: {type(exc).__name__}: {exc}"[:300]]
+        else:
+            problems = []
+        accepted, why = (None, problems) if raw is None else validate_synthesis(
+            raw, {k["citation_id"] for k in cits}, require_citations=c.citation_requirements.require_citations)
+        if accepted is None:
+            self.store.event(research_id, "synthesis.rejected", {"problems": why, "hub": getattr(self.hub, "name", "?")})
+            return {"natural_language": None, "status": "REJECTED", "problems": why,
+                    "hub": getattr(self.hub, "name", "?")}
+        self.store.event(research_id, "synthesis.accepted", {"citation_ids": accepted["citation_ids"],
+                                                             "hub": getattr(self.hub, "name", "?")})
+        return {"natural_language": accepted["text"], "status": "MODEL", "citation_ids": accepted["citation_ids"],
+                "hub": getattr(self.hub, "name", "?"), "validated_by": "hub.validate_synthesis/1"}
+
+    def _assemble(self, research_id, c, status, vstatus, verification, limitations, error, synthesis=None) -> dict:
         claims = self.store.claims(research_id)
         cits = self.store.citations(research_id)
         sources = self.store.sources(research_id)
@@ -997,8 +1045,8 @@ class ResearchService:
         unresolved_q += [f"contradiction {x['contradiction_id']}: {x['detail']}" for x in contradictions]
         comparisons = [e["detail"] for e in self.store.events(research_id, ("sources.compared",))]
         summary = {"type": "deterministic_structured_summary",
-                   "note": "assembled deterministically from stored records; model-written synthesis is BLOCKED "
-                           "until Stage 03",
+                   "note": "assembled deterministically from stored records; a model-written synthesis appears "
+                           "only in `synthesis`, and only after validation against verified citations",
                    "subquestions": len(subs), "queries": len(queries),
                    "sources": {"total": len(sources),
                                "extracted": sum(1 for s in sources if s["extraction_status"] == "extracted"),
@@ -1017,8 +1065,8 @@ class ResearchService:
             sources=[_source_view(s) for s in sources], contradictions=[_row(x) for x in contradictions],
             limitations=limitations, unresolved_questions=unresolved_q, research_status=status,
             verification_status=vstatus, verification=_jsonable(verification), error=error, generated_at=iso_utc(),
-            synthesis={"natural_language": None, "status": "BLOCKED", "dependency": "S03",
-                       "reason": "Stage 03 Hub/model interface not integrated"})
+            synthesis=synthesis or {"natural_language": None, "status": "BLOCKED", "dependency": "S03",
+                                    "reason": "Stage 03 Hub/model interface not integrated"})
         doc = res.model_dump(mode="json")
         self.store.add_result(research_id, doc)
         return doc

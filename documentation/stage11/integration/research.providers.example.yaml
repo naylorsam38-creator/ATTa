@@ -1,0 +1,8 @@
+# Example provider section for configuration/research.yaml (copy the `providers:` block; keep the rest of the file).
+# Validate offline:  python -m backend.research.provider_check --config configuration/research.yaml
+# The endpoint host becomes the ONLY network destination of each search task; it must be a public https endpoint.
+providers:
+  # Self-hosted SearXNG with the JSON output format enabled (settings.yml: search.formats: [html, json]).
+  - {id: searxng-main, kind: searxng, endpoint: "https://search.example.org", max_results: 10, enabled: true}
+  # Brave Search API: BLOCKED until Stage 02 credential protection can inject the API key into the handler.
+  - {id: brave, kind: brave, endpoint: "https://api.search.brave.com/res/v1/web/search", max_results: 10, enabled: false}

@@ -26,6 +26,17 @@ Parallel Agent 3 — Stage 11 web search and deep research. Working branch `stag
    updated CAP-11/CAP-12 in `documentation/requirements/requirement_register.yaml` and re-rendered
    `MASTER_IMPLEMENTATION_REGISTER.md` with `scripts/requirement_register.py render`.
 
+9. **Audit corrections (after the preliminary audit was accepted):** transactional cross-platform installer
+   (`packaging/stage11/install.py`, `.bat`, `.ps1`, `.sh`) with package checksum verification, clean-tree and
+   nested-repository rules, rehearsal, journalled rollback; deterministic package builder
+   (`scripts/build_stage11_package.py`); compatibility harness (`packaging/stage11/compat/check_compat.py`);
+   controlled-integration kits — Stage 03 `backend/research/hub.py`, Stage 04 `backend/research/wiring.py`,
+   Stage 02 `backend/research/operator_config.py` + `documentation/stage11/integration/stage02_research_permissions.yaml`,
+   provider `backend/research/provider_check.py` + example configuration; `ResearchService` gained optional
+   `hub` / `worker_factory` parameters (defaults unchanged); tests `test_s11_integration_kits.py`,
+   `test_s11_installer.py`; `ATTA_REQUIRE_DB=1` makes DB-backed tests fail instead of skipping.
+   No functionality was removed or disabled. Commits preserved on the isolated branch `claude/focused-cori-ajjjn0`.
+
 The complete file list with hashes is in STAGE_11_MERGE_MANIFEST.md and in the Stage 11 section of
 CHANGE_MANIFEST.md.
 

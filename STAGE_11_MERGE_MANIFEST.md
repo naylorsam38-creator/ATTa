@@ -75,21 +75,27 @@ Checkpoint / resume / cancel / authoritative citation verification are deliberat
 
 ## 5. Operator actions required to make Stage 11 executable (protected files — not edited by the sidecar)
 
-1. Append `documentation/stage11/tool_numbers.stage11.yaml` entries to `configuration/tool_numbers.yaml`.
-2. Merge `documentation/stage11/permissions.stage11.yaml` into `configuration/permissions.yaml`
-   (`research.search.query`, `network.web.read` + controller grant).
+1–2. `python -m backend.research.operator_config check` then `render --out <review dir>`: merged copies of
+   `configuration/tool_numbers.yaml` (+ `documentation/stage11/tool_numbers.stage11.yaml`) and
+   `configuration/permissions.yaml` (+ `documentation/stage11/permissions.stage11.yaml`: `research.search.query`,
+   `network.web.read` + controller grant) with their SHA-256; the tool never writes into `configuration/`.
+   The operator reviews and copies them into place.
 3. Sign both packages into `configuration/capability_trust.json` with the operator trust key
    (`python -m backend.capability_registry trust capabilities/research_web --key <operator private key> --operator NAME`,
    same for `capabilities/research_evidence`).
 4. Re-seal the build controller's protected files.
-5. Configure a provider in `configuration/research.yaml` (optional; without it external search is BLOCKED).
+5. Configure a provider in `configuration/research.yaml` (optional; without it external search is BLOCKED);
+   validate with `python -m backend.research.provider_check`; example:
+   `documentation/stage11/integration/research.providers.example.yaml`.
+6. Stage 02 (when it exists): register the API operations/permissions/approvals in
+   `documentation/stage11/integration/stage02_research_permissions.yaml`.
 Until then the production registry reports both packages `untrusted` and nothing in Stage 11 can execute (fail closed).
 
 ## 6. API additions (contract only, not mounted)
 
-`backend/research/api.py` → `build_research_router()`; mount with
-`app.include_router(build_research_router(), prefix="/v1")` and set `app.state.research_service =
-build_research_service(app.state.controller_service)` in the API lifespan. Every route evaluates the central policy
+`backend/research/api.py` → `build_research_router()`. Stage 04 mounts it with ONE call after the app is created:
+`from backend.research.wiring import wire_research_api; wire_research_api(app)` — idempotent; the service is resolved
+lazily from `app.state.controller_service` (the one controller). Every route evaluates the central policy
 engine (operations `research.create|read|list|start|cancel`) → **DENIED until Stage 02**.
 
 | Method | Path | Request | Response |
@@ -160,12 +166,15 @@ directories was modified.
 
 ## 11. Known conflicts / merge notes
 
-* `CHANGE_MANIFEST.md`, `DECISIONS.md`, `BLOCKERS.md`, `IMPLEMENTATION_PROGRESS.md`,
-  `MASTER_IMPLEMENTATION_REGISTER.md`, `requirement_register.yaml`: other sidecars append too → textual conflicts,
-  resolve by keeping both sections; re-render the master register from the merged YAML.
+* Shared documents (`CHANGE_MANIFEST.md`, `DECISIONS.md`, `BLOCKERS.md`, `IMPLEMENTATION_PROGRESS.md`,
+  `requirement_register.yaml`, `MASTER_IMPLEMENTATION_REGISTER.md`): the installer merges them by explicit rules
+  (union for append-only logs, strict 3-way for the register YAML, master register regenerated); a conflict it
+  cannot resolve stops the installation with nothing changed (DECISIONS D-S11-15).
 * Migration numbering: if the integrator wants contiguous numbers, `0011` can be renamed **before** it is applied
   anywhere (the ledger is checksummed by name).
-* `backend/api/app.py`: mounting the router (one line + lifespan wiring) should be done together with Stage 04.
+* `backend/api/app.py`: not edited; Stage 04 adds `wire_research_api(app)` (one line).
+* Stage 01B / Stage 04 compatibility: run `compat/check_compat.py` with the actual packages (not available here;
+  BLOCKERS B-S11-11).
 * Stage numbering: plan "Stage 11" = roadmap S08 (DECISIONS D-S11-01).
 * Build-controller seal: Stage 11 is not a sealed build-controller stage (no `configuration/build/stages/S08.yaml`
   was created, because that directory is protected).
@@ -181,3 +190,21 @@ python scripts/requirement_register.py check
 ```
 Then, after the operator actions of §5: discover the production registry and confirm `research.web` /
 `research.evidence` are `available` and numbered; with a configured provider run one live QUICK_SEARCH and record it.
+
+## 13. Installation package (transactional)
+
+`ATTa-stage11-additions.zip`, built deterministically by `scripts/build_stage11_package.py --release` from the
+sidecar commit. Installer `install.py` (+ `install.bat`, `install.ps1`, `install.sh`): checksum verification of
+every package file → target rules (top level of a clean, non-nested Git repository with Stage 01A) → plan
+(conflicts = exit 3, also in `--check`) → full rehearsal in a temporary `git worktree` → journal + backups →
+apply → verification (content, exact `git status` set, protected files unchanged) → automatic rollback on any
+failure; `--rollback-interrupted` after a hard kill. Tests: `tests/research/test_s11_installer.py`. Details and
+exit codes: `packaging/stage11/INSTALL.md` (shipped as the package's INSTALL.md).
+
+## 14. Compatibility harness
+
+`packaging/stage11/compat/check_compat.py` (shipped as `compat/check_compat.py`): combines the Stage 01A baseline
+with the actual Stage 01B / Stage 04 packages in a temporary repository, runs static overlap checks and this
+installer, and optionally all test suites (new failures separated from documented pre-existing ones).
+Verified here against synthetic packages only; the run against the actual packages is BLOCKED until they are
+supplied (B-S11-11).

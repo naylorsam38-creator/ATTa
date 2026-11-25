@@ -18,6 +18,7 @@ from typing import Protocol, runtime_checkable
 from .contracts import ClaimInput, ResearchContract
 from .errors import ResearchError, ResearchErrorCode
 from .ids import is_rid
+from .hub import HubClaimBuilder  # noqa: F401 — Stage 03 claim builder (re-exported)
 from .store import ResearchStore
 
 
@@ -27,25 +28,6 @@ class ClaimBuilder(Protocol):
 
     def available(self) -> bool: ...
     def build(self, contract: ResearchContract, evidence_packet: dict) -> list[ClaimInput]: ...
-
-
-class HubClaimBuilder:
-    """Stage 03 integration point: claims proposed by the model-independent Hub interface. BLOCKED until Stage 03
-    supplies an adapter; this class never fabricates claims."""
-    name = "hub"
-
-    def __init__(self, hub=None):
-        self.hub = hub
-
-    def available(self) -> bool:
-        return self.hub is not None and getattr(self.hub, "available", lambda: False)()
-
-    def build(self, contract, evidence_packet):
-        if not self.available():
-            raise ResearchError(ResearchErrorCode.BLOCKED_DEPENDENCY, "claim construction and natural-language "
-                                "synthesis need the Stage 03 model interface (Hub), which is not integrated",
-                                {"dependency": "S03"})
-        return self.hub.build_claims(contract, evidence_packet)   # pragma: no cover — Stage 03
 
 
 class ExplicitClaims:

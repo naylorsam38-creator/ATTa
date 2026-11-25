@@ -76,3 +76,6 @@ Details: STAGE_11_VERIFICATION.md, STAGE_11_MERGE_MANIFEST.md, documentation/sta
 | Claims, citation binding, contradictions, independent verification | `backend/research/claims.py`, `verification.py`, CITATION_MODEL.md |
 | Stage 02 / 03 / 04 / 07 / 01B / 15 interfaces | `security.py`, `planner.py`/`claims.py` (Hub), `api.py`, `local_sources.py`, `network.py` |
 | Tests | `tests/research/` |
+| Transactional installer (checksums, clean/nested-repo rules, rehearsal, rollback; Windows/POSIX wrappers) | `packaging/stage11/`, `scripts/build_stage11_package.py` |
+| Compatibility harness for the actual Stage 01B / 04 packages (run BLOCKED: packages not supplied) | `packaging/stage11/compat/check_compat.py` |
+| Controlled-integration kits: Stage 03 hub, Stage 04 wiring, Stage 02 permission registration, provider config | `backend/research/{hub,wiring,operator_config,provider_check}.py`, `documentation/stage11/integration/` |

@@ -100,8 +100,9 @@ def test_planner_is_bounded_and_hub_is_blocked():
     p = DeterministicPlanner()
     c = contract(mode=ResearchMode.DEEP_RESEARCH, subquestions=[f"sub question {i}" for i in range(12)])
     assert len(p.decompose(c)) == 12 and p.query_for(c, "sub question 1", 2) is None   # no unbounded reformulation
+    assert HubPlanner().decompose(c) == list(c.subquestions)      # stored decomposition is authoritative
     with pytest.raises(ResearchError) as e:
-        HubPlanner().decompose(c)
+        HubPlanner().decompose(contract(mode=ResearchMode.DEEP_RESEARCH))
     assert e.value.code is ResearchErrorCode.BLOCKED_DEPENDENCY
 
 
