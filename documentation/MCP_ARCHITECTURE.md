@@ -7,7 +7,7 @@
 | `backend/integrations/mcp/wire.py` | JSON-RPC 2.0 MCP client, **standard library only**: `StdioConnection`, `HttpConnection` (Streamable HTTP: POST, JSON or SSE responses, `Mcp-Session-Id`, `MCP-Protocol-Version`, redirects refused, no proxy), `McpSession` (initialize/negotiation, tools/resources/prompts listing with bounded pagination, tools/call, ping, timeouts, cancellation via `notifications/cancelled`) |
 | `backend/integrations/mcp/client.py` | host-side sessions from an APPROVED manifest; network policy applied before any HTTP connection |
 | `backend/integrations/mcp/validation.py` | `check_server()` — validates server metadata against the approved manifest before anything registers |
-| `backend/integrations/bridges/mcp_bridge.py` | copied into the generated package; performs exactly one `tools/call` inside the Stage 01A supervised runtime |
+| `backend/integrations/bridges/mcp_bridge.py.tmpl` | copied into the generated package; performs exactly one `tools/call` inside the Stage 01A supervised runtime |
 
 The same `wire.py` bytes are used host-side and (as `_atta_mcp_wire.py`) inside the generated package: one protocol
 implementation, two supervised contexts.

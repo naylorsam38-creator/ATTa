@@ -671,7 +671,7 @@ requirements:
     - backend/integrations/mcp/wire.py
     - backend/integrations/mcp/client.py
     - backend/integrations/mcp/validation.py
-    - backend/integrations/bridges/mcp_bridge.py
+    - backend/integrations/bridges/mcp_bridge.py.tmpl
     planned:
     - backend/connectors/mcp_client.py
   interface_controls:
@@ -747,7 +747,7 @@ requirements:
     - backend/integrations/packaging.py
     - backend/integrations/isolation.py
     - backend/integrations/verification.py
-    - backend/integrations/bridges/verify.py
+    - backend/integrations/bridges/verify.py.tmpl
     planned:
     - backend/capability_registry/plugins.py
   interface_controls:

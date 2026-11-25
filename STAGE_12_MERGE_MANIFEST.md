@@ -36,7 +36,7 @@ No protected/sealed file (`configuration/build/**`, `tests/acceptance/**`, `back
 
 * `backend/integrations/` — `types, content, manifest, integration.schema.json, config, credentials, network, isolation,
   assessment, packaging, store, manager, runtime, verification, skills, upgrade, service, api, __main__`;
-  `mcp/{wire,client,validation}.py`; `bridges/{mcp_bridge,verify,health}.py`
+  `mcp/{wire,client,validation}.py`; `bridges/{mcp_bridge,verify,health}.py.tmpl` (templates)
 * `database/migrations/0012_stage12_integrations.sql`
 * `configuration/integrations.yaml`, `configuration/integrations/{mcp_servers.yaml,permissions.proposed.yaml}`
 * `integrations/README.md`, `integrations/available/.gitkeep` (empty source directory — no production fixtures)

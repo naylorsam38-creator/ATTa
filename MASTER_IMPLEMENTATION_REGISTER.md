@@ -312,7 +312,7 @@ No capability is marked IMPLEMENTED or VERIFIED until its stage gate passes with
 - **Implementation stage:** S18
 - **Status:** PARTIAL — Stage 12 SIDECAR (branch stage-12-integrations-sidecar, NOT YET INTEGRATED): unified integration manifests, metadata-only discovery, validation, operator-signed trust/approval, transactional install, registration through the Stage 01A registry/catalogue, permanent numbers, controller-only execution, audit. Credential resolution and approvals: Stage 02; OS isolation and connectivity: Stage 01B. See STAGE_12_VERIFICATION.md.
 - **Dependencies:** CAP-21, CAP-39
-- **Source files:** **implemented:** `backend/integrations/mcp/wire.py`, `backend/integrations/mcp/client.py`, `backend/integrations/mcp/validation.py`, `backend/integrations/bridges/mcp_bridge.py`<br>**planned:** `backend/connectors/mcp_client.py`
+- **Source files:** **implemented:** `backend/integrations/mcp/wire.py`, `backend/integrations/mcp/client.py`, `backend/integrations/mcp/validation.py`, `backend/integrations/bridges/mcp_bridge.py.tmpl`<br>**planned:** `backend/connectors/mcp_client.py`
 - **Interface controls:** MCP server management<br>Tool approval prompts
 - **API endpoints:** **implemented:** `GET /v1/mcp/servers, GET /v1/mcp/servers/{id}/capabilities (Stage 12 sidecar; default DENY)`<br>**planned:** `GET /v1/mcp/servers`, `POST /v1/mcp/servers`
 - **Security controls:** Tool calls pass policy engine<br>Server allow-list<br>Tool output treated as untrusted<br>Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway, independent verification)
@@ -336,7 +336,7 @@ No capability is marked IMPLEMENTED or VERIFIED until its stage gate passes with
 - **Implementation stage:** S12
 - **Status:** PARTIAL — Stage 12 SIDECAR (branch stage-12-integrations-sidecar, NOT YET INTEGRATED): unified integration manifests, metadata-only discovery, validation, operator-signed trust/approval, transactional install, registration through the Stage 01A registry/catalogue, permanent numbers, controller-only execution, audit. Credential resolution and approvals: Stage 02; OS isolation and connectivity: Stage 01B. See STAGE_12_VERIFICATION.md.
 - **Dependencies:** CAP-23, CAP-39
-- **Source files:** **implemented:** `backend/integrations/packaging.py`, `backend/integrations/isolation.py`, `backend/integrations/verification.py`, `backend/integrations/bridges/verify.py`<br>**planned:** `backend/capability_registry/plugins.py`
+- **Source files:** **implemented:** `backend/integrations/packaging.py`, `backend/integrations/isolation.py`, `backend/integrations/verification.py`, `backend/integrations/bridges/verify.py.tmpl`<br>**planned:** `backend/capability_registry/plugins.py`
 - **Interface controls:** Plugin marketplace<br>Install/uninstall
 - **API endpoints:** **implemented:** `GET /v1/plugins (Stage 12 sidecar; default DENY)`<br>**planned:** `GET /v1/plugins`, `POST /v1/plugins/{id}/install`
 - **Security controls:** Signature verification<br>Permission review at install<br>No self-granted permissions (S01 policy rule)<br>Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway, independent verification)

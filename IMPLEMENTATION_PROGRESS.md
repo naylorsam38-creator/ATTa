@@ -70,6 +70,6 @@ Stage 01A §24 defect corrections: 1 thread timeouts → supervised processes (T
 | Permanent integration tool numbers in the ONE catalogue | `catalogue.extra_numbers`, `integrations.tool_numbers` | S12-T10, T12 |
 | Controller-only execution: allocation, guards, result filter, injection/secret handling, audit, version pins | `runtime.py`, gateway hooks | S12-T18, T30–T34, T37 |
 | Connectors (provider adapters, operation classes, credential references, offline) | `credentials.py`, `network.py` | S12-T06, T32, T35, T36 |
-| MCP client (stdio + Streamable HTTP), validation, lifecycle, timeouts, cancellation | `backend/integrations/mcp/`, `bridges/mcp_bridge.py` | S12-T40–T45 |
+| MCP client (stdio + Streamable HTTP), validation, lifecycle, timeouts, cancellation | `backend/integrations/mcp/`, `bridges/mcp_bridge.py.tmpl` | S12-T40–T45 |
 | Skills, scripts, plugins | `skills.py`, `packaging.py`, `service.py` | S12-T50–T54 |
 | Typed API contracts + policy-protected routes | `service.py`, `api.py`, `packages/shared_types/integrations.contracts.generated.json` | S12-T60, T61 |
