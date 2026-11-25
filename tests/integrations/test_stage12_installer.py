@@ -204,8 +204,9 @@ def _payload_v2(payload: Path, tmp: Path, version: str, file_change: str, hunk_t
     for e in m["files"]:
         if e["path"] == "backend/integrations/types.py":
             e["sha256"] = hashlib.sha256(f.read_bytes()).hexdigest()
-    h = m["edits"]["backend/orchestration/gateway.py"][0]
-    h["new"] = h["new"].replace("# Stage 12 extension points", f"# Stage 12 extension points ({hunk_tag})")
+    h = next(x for x in m["edits"]["backend/orchestration/gateway.py"] if "# Stage 12 extension points" in x["new"])
+    import re
+    h["new"] = re.sub(r"# Stage 12 extension points( \(v\d\))?", f"# Stage 12 extension points ({hunk_tag})", h["new"])
     mt = json.dumps(m, indent=1, sort_keys=True)
     (d / "manifest.json").write_text(mt)
     sums = [f"{hashlib.sha256(mt.encode()).hexdigest()}  manifest.json"] + \

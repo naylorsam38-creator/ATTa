@@ -1,0 +1,8 @@
+{
+  "crlf_files": [
+    "backend/orchestration/gateway.py",
+    "DECISIONS.md",
+    "documentation/requirements/requirement_register.yaml",
+    ".gitignore"
+  ]
+}

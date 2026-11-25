@@ -1,0 +1,6 @@
+{
+  "conflicts": [
+    "backend/integrations/types.py: exists with different content (not installed by Stage 12) \u2014 not overwritten",
+    "backend/orchestration/gateway.py: hunk 2/4 \u2014 the original context was found 0 times (expected exactly 1); another change overlaps this location. First lines:\n              self.runtime, self.config, self.attestor = runtime, config, attestor\n              self.controller_id, self.workspace_root = controller_id, workspace_root\n              self.drift = DriftGuard(config.limits.no_progress_window, config.protected_path_prefixes)\n              self._gateway_key = Attestor()"
+  ]
+}

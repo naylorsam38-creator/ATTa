@@ -1,0 +1,10 @@
+{
+  "migration": "database/migrations/0012_stage12_integrations.sql",
+  "plan": {
+    "create": 135,
+    "derived": 1,
+    "gitignore": 1,
+    "hunk": 19,
+    "section-append": 4
+  }
+}

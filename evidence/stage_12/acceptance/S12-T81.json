@@ -1,0 +1,13 @@
+{
+  "files": 135,
+  "install": {
+    "create": 135,
+    "derived": 1,
+    "gitignore": 1,
+    "hunk": 19,
+    "section-append": 4
+  },
+  "reinstall": "INSTALLED",
+  "repeat": "ALREADY_INSTALLED",
+  "uninstall": "UNINSTALLED"
+}

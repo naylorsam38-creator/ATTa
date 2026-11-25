@@ -1,0 +1,11 @@
+{
+  "checksum": "refused",
+  "crash_recovered": true,
+  "rollback_steps": [
+    1,
+    60,
+    140,
+    155
+  ],
+  "verification_rollback": true
+}
