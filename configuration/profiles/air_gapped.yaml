@@ -1,0 +1,9 @@
+# AIR_GAPPED — no external network at all. Remote endpoints are disabled; nothing is downloaded.
+deployment:
+  network_probe: null
+  worker_network: none
+  runtime_preference: [llamacpp, ollama, vllm]
+models:
+  allow_model_downloads: false
+security:
+  allow_paid_infrastructure: false

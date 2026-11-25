@@ -87,6 +87,42 @@ class AcceptanceTest:
     expected_exit_code: int = 0
     expected_result: str = ""
     timeout_s: float = 600
+    # Stage 01B: environment conditions. A test whose conditions are unmet is recorded BLOCKED — never PASSED.
+    # Only an environment_specific test may be BLOCKED without failing its task (e.g. Windows-only, H100-only).
+    requires: list[str] = field(default_factory=list)
+    environment_specific: bool = False
+
+
+def _nvidia_gpus() -> list[tuple[str, int]]:
+    import shutil
+    exe = shutil.which("nvidia-smi")
+    if not exe:
+        return []
+    try:
+        out = subprocess.run([exe, "--query-gpu=name,memory.total", "--format=csv,noheader,nounits"],
+                             capture_output=True, text=True, timeout=20).stdout
+    except (OSError, subprocess.SubprocessError):
+        return []
+    gpus = []
+    for line in out.splitlines():
+        parts = [x.strip() for x in line.split(",")]
+        if len(parts) == 2 and parts[1].isdigit():
+            gpus.append((parts[0], int(parts[1])))
+    return gpus
+
+
+def condition_met(cond: str) -> tuple[bool, str]:
+    """Evaluated by the verifier itself (no worker-editable code). Unknown conditions are never met."""
+    if cond in ("os:windows", "os:linux"):
+        want = {"os:windows": "nt", "os:linux": "posix"}[cond]
+        ok = os.name == want and (cond != "os:linux" or sys.platform.startswith("linux"))
+        return ok, f"{cond} required; this host is {sys.platform}"
+    if cond == "gpu:nvidia":
+        return bool(_nvidia_gpus()), "an NVIDIA GPU (nvidia-smi) is required; none found"
+    if cond == "gpu:h100":
+        ok = any("H100" in n.upper() and mb >= 79 * 1024 for n, mb in _nvidia_gpus())
+        return ok, "an NVIDIA H100 (>= 79 GB) is required; none found on this host"
+    return False, f"unknown environment condition {cond!r}"
 
 
 @dataclass
@@ -145,6 +181,17 @@ class TaskOutcome:
     tests: list[dict] = field(default_factory=list)
 
 
+def _test_reasons(tests: list[dict]) -> list[str]:
+    out = []
+    for t in tests:
+        if t.get("blocked"):
+            if not t.get("environment_specific"):
+                out.append(f"acceptance test {t['test']} BLOCKED (not environment-specific): {'; '.join(t['reasons'])}")
+        elif not t["passed"]:
+            out.append(f"acceptance test {t['test']} failed (exit {t['exit_code']})")
+    return out
+
+
 # ---------------------------------------------------------------------------------------------- controller
 class BuildController:
     def __init__(self, root: Path, python: str = sys.executable):
@@ -186,7 +233,10 @@ class BuildController:
             tests = [AcceptanceTest(id=a["id"], description=a.get("description", ""), command=list(a["command"]),
                                     expected_exit_code=int(a.get("expected_exit_code", 0)),
                                     expected_result=a.get("expected_result", ""),
-                                    timeout_s=float(a.get("timeout_s", 600))) for a in t["acceptance_tests"]]
+                                    timeout_s=float(a.get("timeout_s", 600)),
+                                    requires=list(a.get("requires", [])),
+                                    environment_specific=bool(a.get("environment_specific", False)))
+                     for a in t["acceptance_tests"]]
             tasks.append(Task(id=t["id"], objective=t["objective"], depends_on=list(t["depends_on"]),
                               permitted_paths=list(t["permitted_paths"]), required_changes=list(t["required_changes"]),
                               acceptance_tests=tests, rollback=t["rollback"],
@@ -449,6 +499,23 @@ class BuildController:
         run_dir = self.evidence_dir / "runs" / run_id
         run_dir.mkdir(parents=True, exist_ok=True)
         for test in task.acceptance_tests:
+            unmet = [d for ok, d in (condition_met(c) for c in test.requires) if not ok]
+            if unmet:
+                rec = {"test_id": test.id, "status": "BLOCKED", "command": self._render(test.command),
+                       "requires": test.requires, "reasons": unmet, "environment_specific": test.environment_specific,
+                       "recorded_at": iso_utc(), "executed": False}
+                ev_path = run_dir / f"{test.id}.json"
+                ev_path.write_text(json.dumps(rec, indent=2))
+                rel = str(ev_path.relative_to(self.root)).replace(os.sep, "/")
+                self._append({"type": "test_result", "stage": stage.id, "task": task.id, "test": test.id,
+                              "run": run_id, "status": "BLOCKED", "passed": False, "reasons": unmet,
+                              "environment_specific": test.environment_specific, "evidence_file": rel,
+                              "evidence_sha256": hashlib.sha256(ev_path.read_bytes()).hexdigest()})
+                results.append({"test": test.id, "passed": False, "blocked": True, "exit_code": None,
+                                "reasons": unmet, "environment_specific": test.environment_specific, "evidence": rel})
+                if not test.environment_specific:
+                    ok = False
+                continue
             ev: CommandEvidence = run_command(test.id, self._render(test.command), self.root,
                                               test.expected_exit_code, test.timeout_s,
                                               env={"ATTA_BUILD_CONTROLLER_RUN": run_id})
@@ -486,7 +553,7 @@ class BuildController:
                 reasons += self.file_violations(b, task.permitted_paths, stage.protected_paths)
             ok, tests = self._run_tests(stage, task, run_id)
             if not ok:
-                reasons += [f"acceptance test {t['test']} failed (exit {t['exit_code']})" for t in tests if not t["passed"]]
+                reasons += _test_reasons(tests)
             out = TaskOutcome(task_id, "PASSED" if ok and not reasons else "FAILED", reasons, tests)
         self._append({"type": "task_result", "stage": stage_id, "task": task_id, "run": run_id, "status": out.status,
                       "reasons": out.reasons, "head": self.head()})
@@ -513,7 +580,7 @@ class BuildController:
                               "status": "BLOCKED", "reasons": o.reasons, "head": self.head()})
             else:
                 ok, tests = self._run_tests(stage, task, run_id)
-                reasons = [f"acceptance test {t['test']} failed (exit {t['exit_code']})" for t in tests if not t["passed"]]
+                reasons = _test_reasons(tests)
                 o = TaskOutcome(task.id, "PASSED" if ok else "FAILED", reasons, tests)
                 self._append({"type": "task_result", "stage": stage_id, "task": task.id, "run": run_id,
                               "status": o.status, "reasons": o.reasons, "head": self.head()})
@@ -523,11 +590,15 @@ class BuildController:
         gate = self._append({"type": "stage_gate", "stage": stage_id, "run": run_id,
                              "status": "PASSED" if passed else "FAILED", "head": self.head(), "base": base,
                              "file_problems": file_problems,
-                             "tasks": {o.task_id: o.status for o in outcomes}})
+                             "tasks": {o.task_id: o.status for o in outcomes},
+                             "blocked_tests": [{"test": t["test"], "reasons": t["reasons"],
+                                                "environment_specific": t["environment_specific"]}
+                                               for o in outcomes for t in o.tests if t.get("blocked")]})
         checkpoint = None
         if passed and self._is_checkpoint_stage(stage):
             checkpoint = self.create_checkpoint(stage, run_id)
         return {"stage": stage_id, "run": run_id, "passed": passed, "file_problems": file_problems,
+                "blocked_tests": gate["blocked_tests"],
                 "tasks": [o.__dict__ for o in outcomes], "gate_record": gate["hash"], "checkpoint": checkpoint}
 
     # ------------------------------------------------------------------ checkpoints

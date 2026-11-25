@@ -1,0 +1,701 @@
+# Stage 01B task definitions (PROTECTED). Environment-specific tests (Windows, Linux, H100) carry `requires`:
+# the verifier records them BLOCKED (never PASSED) where the condition is not met on the verifying machine.
+stage: S01B
+title: Adaptive deployment, isolated offline qualification and Stage 01 closure
+base_commit: 21104c413c30a3b2714f877892970e7db19a1d19
+protected_paths:
+- 01-specs/**
+- 02-front-door/**
+- 03-ui-skins-capability-package/**
+- 04-deployment/**
+- 05-coolify/**
+- docs/**
+- tests/test_*.py
+- tests/fixtures/**
+- run
+- Dockerfile
+- docker-compose.coolify.yml
+- release.json
+- START-HERE.txt
+- .dockerignore
+- tests/acceptance/test_s01_acceptance.py
+- tests/acceptance/s01_helpers.py
+- tests/regression/legacy_baseline.json
+- tests/acceptance/test_s01a_acceptance.py
+- tests/acceptance/test_s01a_acceptance_b.py
+- tests/acceptance/s01a_common.py
+- tests/acceptance/s01a_harness.py
+- tests/acceptance/s01a_crash_worker.py
+- tests/acceptance/s01a_trust_all_plugin.py
+- tests/acceptance/fixtures_s01a/**
+tasks:
+- id: S01B-PKG01
+  objective: Read-only environment discovery, deterministic profiles, integrity-protected environment manifest, bounded model
+    discovery and deterministic runtime selection
+  depends_on: []
+  permitted_paths:
+  - tests/acceptance/test_s01b_acceptance.py
+  - tests/acceptance/s01b_common.py
+  - tests/acceptance/s01b_offline_core.py
+  - tests/acceptance/fixtures_s01b/**
+  - configuration/build/**
+  - evidence/**
+  - documentation/**
+  - '*.md'
+  - scripts/**
+  - pyproject.toml
+  - backend/verification/**
+  - backend/deployment/__init__.py
+  - backend/deployment/discovery.py
+  - backend/deployment/profiles.py
+  - backend/deployment/manifest.py
+  - backend/deployment/models.py
+  - backend/deployment/runtimes.py
+  - backend/deployment/__main__.py
+  - configuration/profiles/**
+  - configuration/base.yaml
+  - backend/settings/**
+  required_changes:
+  - discovery of OS/CPU/RAM/storage/GPU/CUDA/Docker/WSL/tools/services/runtimes/ports/interfaces/network/isolation
+  - profiles AUTO, LOCAL_CPU, LOCAL_NVIDIA, H100, TEST_ISOLATED, AIR_GAPPED with validation
+  - environment manifest with SHA-256 and optional Ed25519 signature
+  - GGUF/safetensors/Ollama model discovery without copying
+  - runtime selection with MODEL_NOT_FOUND / MODEL_INCOMPATIBLE / RUNTIME_UNAVAILABLE and no external fallback
+  acceptance_tests:
+  - id: S01B-T01
+    description: environment discovery on supported os
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T01_environment_discovery_on_supported_os
+  - id: S01B-T02
+    description: deterministic profile selection
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T02_deterministic_profile_selection
+  - id: S01B-T03
+    description: explicit profile override validation
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T03_explicit_profile_override_validation
+  - id: S01B-T04
+    description: reject incompatible h100 profile
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T04_reject_incompatible_h100_profile
+  - id: S01B-T05
+    description: environment manifest persistence
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T05_environment_manifest_persistence
+  - id: S01B-T06
+    description: manifest integrity validation
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T06_manifest_integrity_validation
+  - id: S01B-T07
+    description: model discovery from configured path
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T07_model_discovery_from_configured_path
+  - id: S01B-T08
+    description: removable model path discovery
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T08_removable_model_path_discovery
+  - id: S01B-T09
+    description: no unnecessary model copying
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T09_no_unnecessary_model_copying
+  - id: S01B-T10
+    description: missing model returns blocked
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T10_missing_model_returns_blocked
+  - id: S01B-T11
+    description: runtime discovery
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T11_runtime_discovery
+  rollback: revert the discovery/profile/manifest/model/runtime modules; state lives only in runtime/deployment
+- id: S01B-PKG02
+  objective: Configuration precedence, resumable installation state machine, installation plan, rollback and thin launchers
+  depends_on:
+  - S01B-PKG01
+  permitted_paths:
+  - tests/acceptance/test_s01b_acceptance.py
+  - tests/acceptance/s01b_common.py
+  - tests/acceptance/s01b_offline_core.py
+  - tests/acceptance/fixtures_s01b/**
+  - configuration/build/**
+  - evidence/**
+  - documentation/**
+  - '*.md'
+  - scripts/**
+  - pyproject.toml
+  - backend/verification/**
+  - backend/deployment/resolver.py
+  - backend/deployment/installer.py
+  - backend/deployment/__main__.py
+  - backend/settings/**
+  - install.sh
+  - run.sh
+  - healthcheck.sh
+  - INSTALL.bat
+  - RUN.bat
+  - HEALTHCHECK.bat
+  - database/bootstrap.sql
+  - database/README.md
+  - infrastructure/**
+  - backend/service_manager/**
+  required_changes:
+  - operator > local > profile > discovered > defaults with provenance report and redaction
+  - DISCOVER..READY/BLOCKED/FAILED/ROLLING_BACK/ROLLED_BACK persisted and resumable
+  - install plan before any change
+  - RUN refuses unactivated or changed deployments
+  acceptance_tests:
+  - id: S01B-T12
+    description: port conflict detection
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T12_port_conflict_detection
+  - id: S01B-T13
+    description: configuration precedence
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T13_configuration_precedence
+  - id: S01B-T14
+    description: secret exclusion from generated reports
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T14_secret_exclusion_from_generated_reports
+  - id: S01B-T15
+    description: installation plan generation
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T15_installation_plan_generation
+  - id: S01B-T16
+    description: resumable installation
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T16_resumable_installation
+  - id: S01B-T17
+    description: rollback after controlled failure
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T17_rollback_after_controlled_failure
+  - id: S01B-T34
+    description: thin launcher test
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T34_thin_launcher_test
+  - id: S01B-T35
+    description: new capability discovery requires no launcher modification
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T35_new_capability_discovery_requires_no_launcher_modification
+  rollback: restore the previous launchers; runtime/deployment state is per installation
+- id: S01B-PKG03
+  objective: Dependency locking, drift detection, offline bundle with hash manifest and zero-hidden-Internet audit
+  depends_on:
+  - S01B-PKG01
+  permitted_paths:
+  - tests/acceptance/test_s01b_acceptance.py
+  - tests/acceptance/s01b_common.py
+  - tests/acceptance/s01b_offline_core.py
+  - tests/acceptance/fixtures_s01b/**
+  - configuration/build/**
+  - evidence/**
+  - documentation/**
+  - '*.md'
+  - scripts/**
+  - pyproject.toml
+  - backend/verification/**
+  - backend/deployment/deps.py
+  - backend/deployment/bundle.py
+  - backend/deployment/offline_audit.py
+  - configuration/locks/**
+  required_changes:
+  - hash-locked Python, locked Node, system dependency manifest, runtime compatibility matrix
+  - offline bundle create/verify/install-offline (no private keys, no models unless explicit)
+  - OFFLINE_UNAVAILABLE reporting
+  acceptance_tests:
+  - id: S01B-T18
+    description: dependency lock validation
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T18_dependency_lock_validation
+  - id: S01B-T19
+    description: offline dependency manifest validation
+    timeout_s: 1800
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T19_offline_dependency_manifest_validation
+  - id: S01B-T20
+    description: core frontend contains no mandatory external assets
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T20_core_frontend_contains_no_mandatory_external_assets
+  rollback: remove the bundle directory; locks are unchanged
+- id: S01B-PKG04
+  objective: Isolated qualification resources, AIR_GAPPED via kernel network namespaces, worker OS isolation, dynamic service
+    health and the single qualification runner
+  depends_on:
+  - S01B-PKG01
+  permitted_paths:
+  - tests/acceptance/test_s01b_acceptance.py
+  - tests/acceptance/s01b_common.py
+  - tests/acceptance/s01b_offline_core.py
+  - tests/acceptance/fixtures_s01b/**
+  - configuration/build/**
+  - evidence/**
+  - documentation/**
+  - '*.md'
+  - scripts/**
+  - pyproject.toml
+  - backend/verification/**
+  - backend/deployment/isolation.py
+  - backend/deployment/netns_exec.py
+  - backend/deployment/netaudit/**
+  - backend/deployment/qualification.py
+  - configuration/qualification/**
+  - backend/capability_runtime/**
+  - backend/orchestration/gateway.py
+  - backend/orchestration/service.py
+  - backend/service_manager/**
+  required_changes:
+  - disposable PostgreSQL per qualification; own Redis port, runtime dir, bucket, namespace, credentials
+  - network-denied qualification in a new network namespace with audit-hook evidence
+  - cgroups, network namespace, unprivileged worker account, GPU hiding; Windows Job Objects
+  - STARTING/HEALTHY/DEGRADED/UNHEALTHY/STOPPED/BLOCKED with revalidation on recovery
+  acceptance_tests:
+  - id: S01B-T21
+    description: isolated test database
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T21_isolated_test_database
+  - id: S01B-T22
+    description: isolated redis state
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T22_isolated_redis_state
+  - id: S01B-T23
+    description: isolated filesystem workspace
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T23_isolated_filesystem_workspace
+  - id: S01B-T24
+    description: production state remains unchanged by qualification
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T24_production_state_remains_unchanged_by_qualification
+  - id: S01B-T25
+    description: external network denial detection
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T25_external_network_denial_detection
+  - id: S01B-T26
+    description: offline core startup
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T26_offline_core_startup
+  - id: S01B-T27
+    description: dynamic dependency failure propagation
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T27_dynamic_dependency_failure_propagation
+  - id: S01B-T28
+    description: service recovery revalidation
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T28_service_recovery_revalidation
+  - id: S01B-T41
+    description: windows specific tests
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T41_windows_specific_tests
+    requires:
+    - os:windows
+    environment_specific: true
+  - id: S01B-T42
+    description: linux specific tests
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T42_linux_specific_tests
+    requires:
+    - os:linux
+    environment_specific: true
+  rollback: disposable resources are destroyed after each run; isolation options revert to defaults
+- id: S01B-PKG05
+  objective: The Stage 01A controller (Focus-4, drift guard, cancellation, restart) works unchanged under deployment profiles
+    and isolated qualification resources
+  depends_on:
+  - S01B-PKG04
+  permitted_paths: &id001
+  - tests/acceptance/test_s01b_acceptance.py
+  - tests/acceptance/s01b_common.py
+  - tests/acceptance/s01b_offline_core.py
+  - tests/acceptance/fixtures_s01b/**
+  - configuration/build/**
+  - evidence/**
+  - documentation/**
+  - '*.md'
+  - scripts/**
+  - pyproject.toml
+  - backend/verification/**
+  required_changes:
+  - Stage 01A tests run unchanged against disposable clusters under LOCAL_CPU and TEST_ISOLATED
+  acceptance_tests:
+  - id: S01B-T29
+    description: stage01a controller works under local cpu profile
+    timeout_s: 1800
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T29_stage01a_controller_works_under_local_cpu_profile
+  - id: S01B-T30
+    description: focus4 works in isolated qualification
+    timeout_s: 1800
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T30_focus4_works_in_isolated_qualification
+  - id: S01B-T31
+    description: drift guard works in isolated qualification
+    timeout_s: 1800
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T31_drift_guard_works_in_isolated_qualification
+  - id: S01B-T32
+    description: cancellation leaves no subsequent local side effects
+    timeout_s: 1800
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T32_cancellation_leaves_no_subsequent_local_side_effects
+  - id: S01B-T33
+    description: restart restores verified state
+    timeout_s: 1800
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T33_restart_restores_verified_state
+  rollback: none (verification only)
+- id: S01B-PKG06
+  objective: Regression protection, clean installation, upgrade from the Stage 01A baseline, H100 hardware qualification and
+    requirement traceability
+  depends_on:
+  - S01B-PKG02
+  - S01B-PKG03
+  - S01B-PKG05
+  permitted_paths: *id001
+  required_changes:
+  - legacy, Stage 01 and Stage 01A suites unchanged and passing (superseded tests recorded)
+  - clean install and upgrade qualification
+  - H100 tests PASS only on real H100, BLOCKED elsewhere
+  - requirement-to-evidence traceability
+  acceptance_tests:
+  - id: S01B-T36
+    description: legacy atta regression suite
+    timeout_s: 2400
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T36_legacy_atta_regression_suite
+  - id: S01B-T37
+    description: stage01 regression suite
+    timeout_s: 2400
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T37_stage01_regression_suite
+  - id: S01B-T38
+    description: stage01a regression suite
+    timeout_s: 3600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T38_stage01a_regression_suite
+  - id: S01B-T39
+    description: clean installation qualification
+    timeout_s: 2400
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T39_clean_installation_qualification
+  - id: S01B-T40
+    description: upgrade from current baseline qualification
+    timeout_s: 1800
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T40_upgrade_from_current_baseline_qualification
+  - id: S01B-T43
+    description: h100 hardware tests pass only on actual hardware
+    timeout_s: 7200
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T43_h100_hardware_tests_pass_only_on_actual_hardware
+    requires:
+    - gpu:h100
+    environment_specific: true
+  - id: S01B-T44
+    description: unavailable h100 tests remain blocked elsewhere
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T44_unavailable_h100_tests_remain_blocked_elsewhere
+  - id: S01B-T45
+    description: complete requirement to evidence traceability
+    timeout_s: 120
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01b_acceptance.py::test_S01B_T45_complete_requirement_to_evidence_traceability
+  rollback: none (verification only)

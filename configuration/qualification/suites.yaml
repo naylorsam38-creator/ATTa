@@ -1,0 +1,42 @@
+# Machine qualification suites (Stage 01B §20-§22) — PROTECTED. Run by `python -m backend.deployment qualify`.
+# Each test runs against ISOLATED resources (disposable PostgreSQL cluster, own Redis/ports/workspace).
+# requires: conditions evaluated against the environment manifest; unmet -> BLOCKED (never PASS).
+#   os:linux | os:windows | netns | postgres_binaries | node | gpu:nvidia | gpu:h100 | vllm | bundle | stage:S03
+# environment_specific: true -> a BLOCKED result does not fail the suite on machines without that hardware/OS.
+S01A_CORE: &s01a_core "tests/acceptance/test_s01a_acceptance.py"
+tests:
+  Q-DEPS:            {title: "Dependency locks match installed packages (no drift)", command: ["{python}", -m, backend.deployment, deps, --check]}
+  Q-OFFLINE-AUDIT:   {title: "No hidden Internet dependency in core configuration and frontend sources", command: ["{python}", -m, backend.deployment, audit-offline]}
+  Q-S01B:            {title: "Stage 01B acceptance (environment-independent subset)", timeout_s: 1800, requires: [postgres_binaries],
+                      command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/acceptance/test_s01b_acceptance.py, -m, "not qualification_wrapper"]}
+  Q-S01A-CORE:       {title: "Stage 01A controller acceptance T01-T27", timeout_s: 1800, command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/acceptance/test_s01a_acceptance.py]}
+  Q-S01A-REST:       {title: "Stage 01A acceptance T28-T53 (without long regressions and OS-protection check)", timeout_s: 2400,
+                      command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/acceptance/test_s01a_acceptance_b.py, -k, "not T48 and not T49 and not T51"]}
+  Q-S01-REGRESSION:  {title: "Stage 01 acceptance with explicit supersession (S01A-T48)", timeout_s: 2400, network: host,
+                      command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T48_existing_stage01_acceptance_tests"]}
+  Q-S01-OFFLINE:     {title: "Stage 01 acceptance that needs no package registry", timeout_s: 1800,
+                      command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/acceptance/test_s01_acceptance.py, -k,
+                                "not T02 and not T16 and not T06 and not T07 and not T08 and not T09 and not T13"]}
+  Q-LEGACY:          {title: "Existing ATTa application builder regression suite", timeout_s: 1800,
+                      command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T49_existing_atta_application_builder_regression"]}
+  Q-UNIT:            {title: "Unit, integration and security suites", timeout_s: 600, command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/unit, tests/integration, tests/security]}
+  Q-FRONTEND:        {title: "Frontend + backend startup end-to-end in a real browser", timeout_s: 900, requires: [node],
+                      command: [npx, --no-install, playwright, test, -c, tests/end_to_end/playwright.config.ts]}
+  Q-NETWORK-DENIED:  {title: "External network is unreachable inside the qualification namespace", builtin: network_denied, requires: [netns]}
+  Q-OFFLINE-INSTALL: {title: "Clean installation from the offline dependency bundle with no network", builtin: offline_install, requires: [netns, bundle], timeout_s: 1800}
+  Q-WINDOWS-JOBS:    {title: "Windows Job Object process-tree termination", requires: [os:windows], environment_specific: true,
+                      command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/acceptance/test_s01b_acceptance.py, -k, T41]}
+  Q-H100-IDENTITY:   {title: "H100 identity, count, VRAM, driver, CUDA", requires: [gpu:h100], environment_specific: true, builtin: h100_identity}
+  Q-H100-WORKER-GPU: {title: "GPU visible to the intended model worker only", requires: [gpu:h100], environment_specific: true, builtin: h100_worker_gpu}
+  Q-H100-VLLM:       {title: "vLLM runtime importable with CUDA", requires: [gpu:h100, vllm], environment_specific: true, builtin: h100_vllm}
+  Q-H100-INFERENCE:  {title: "Model load, real inference, streaming, cancellation, unload/reload, identity, swap cycles, Hub routing, tool proposals, offline inference",
+                      requires: [gpu:h100, "stage:S03"], environment_specific: true, builtin: stage03}
+suites:
+  INSTALL:     {network: host, tests: [Q-DEPS, Q-OFFLINE-AUDIT, Q-UNIT, Q-H100-IDENTITY, Q-H100-WORKER-GPU, Q-H100-VLLM]}
+  LOCAL:       {network: host, tests: [Q-DEPS, Q-OFFLINE-AUDIT, Q-UNIT, Q-S01-REGRESSION, Q-S01A-CORE, Q-S01A-REST, Q-S01B, Q-LEGACY, Q-FRONTEND, Q-WINDOWS-JOBS]}
+  AIR_GAPPED:  {network: none, tests: [Q-NETWORK-DENIED, Q-DEPS, Q-OFFLINE-AUDIT, Q-UNIT, Q-S01-OFFLINE, Q-S01A-CORE, Q-S01A-REST, Q-LEGACY, Q-FRONTEND, Q-OFFLINE-INSTALL]}
+  H100:        {network: host, tests: [Q-H100-IDENTITY, Q-H100-WORKER-GPU, Q-H100-VLLM, Q-H100-INFERENCE]}
+  FINAL:       {includes: [LOCAL, AIR_GAPPED, H100]}
+  # Small suites used by the S01B acceptance tests themselves (isolation, production-unchanged, network denial).
+  SMOKE:        {network: host, tests: [Q-DEPS, Q-OFFLINE-AUDIT]}
+  SMOKE_AIRGAP: {network: none, tests: [Q-NETWORK-DENIED, Q-DEPS]}

@@ -73,13 +73,20 @@ def main(argv: list[str] | None = None) -> int:
             for t in r["tasks"]:
                 print(f"{t['task_id']:<14} {t['status']}")
                 for test in t["tests"]:
+                    if test.get("blocked"):
+                        print(f"    {test['test']:<10} BLOCKED (not executed) {'; '.join(test['reasons'])}  {test['evidence']}")
+                        continue
                     print(f"    {test['test']:<10} {'PASS' if test['passed'] else 'FAIL'} exit={test['exit_code']} "
                           f"{test['duration_s']}s  {test['evidence']}")
                 for reason in t["reasons"]:
                     print(f"    ! {reason}")
             for fp in r["file_problems"]:
                 print(f"  ! {fp}")
-            print(f"STAGE {a.stage} GATE: {'PASSED' if r['passed'] else 'FAILED'}  run={r['run']}")
+            for b in r["blocked_tests"]:
+                print(f"  BLOCKED {b['test']}: {'; '.join(b['reasons'])}")
+            print(f"STAGE {a.stage} GATE: {'PASSED' if r['passed'] else 'FAILED'}  run={r['run']}"
+                  + (f"  ({len(r['blocked_tests'])} environment-specific tests BLOCKED, not executed)"
+                     if r["blocked_tests"] else ""))
             if r["checkpoint"]:
                 print(f"checkpoint: {json.dumps(r['checkpoint'])}")
             return 0 if r["passed"] else 1

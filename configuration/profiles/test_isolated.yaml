@@ -1,0 +1,6 @@
+# TEST_ISOLATED — qualification runs: disposable database, own Redis/ports/workspace; never production state.
+deployment:
+  runtime_preference: [llamacpp, ollama]
+  controller_caps: {max_concurrent_tools_per_task: 2}
+workers:
+  max_concurrency: 2

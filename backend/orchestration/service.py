@@ -68,15 +68,28 @@ class ControllerService:
                 "blocked_tasks": counts.get("blocked")}
 
 
+def lowered(cfg: ControllerConfig, caps: dict) -> ControllerConfig:
+    """Profile adaptation may only LOWER the trusted controller limits (Stage 01B §18)."""
+    limits = cfg.limits.model_dump()
+    for k, v in (caps or {}).items():
+        if k in limits:
+            limits[k] = type(limits[k])(min(limits[k], v))
+    return cfg.model_copy(update={"limits": cfg.limits.model_validate(limits)})
+
+
 def build_controller_service(settings: Settings, *, policy: PolicyEngine | None = None,
                              start_monitor: bool = True, config: ControllerConfig | None = None) -> ControllerService:
     problems: list[str] = []
     monitor = HealthMonitor(settings, interval_s=settings.runtime.monitor_interval_s * 2,
-                            max_age_s=settings.capabilities.service_health_max_age_s)
+                            max_age_s=settings.capabilities.service_health_max_age_s,
+                            recovery_confirmations=settings.deployment.health_recovery_confirmations)
     if start_monitor:
         monitor.start()
     policy = policy or PolicyEngine()
-    runtime = CapabilityRuntime(memory_limit_mb=settings.workers.memory_limit_mb)
+    d = settings.deployment
+    runtime = CapabilityRuntime(memory_limit_mb=settings.workers.memory_limit_mb, network=d.worker_network,
+                                worker_user=d.worker_user, cuda_visible_devices=None if not d.gpu_visible_to_workers else "0",
+                                isolation_required=d.worker_network == "none")
     trust = TrustStore.load(resolve_path(settings.capabilities.trust_store),
                             resolve_path(settings.capabilities.trust_public_key))
     registry = CapabilityRegistry([resolve_path(d) for d in settings.capabilities.directories], policy=policy,
@@ -85,11 +98,13 @@ def build_controller_service(settings: Settings, *, policy: PolicyEngine | None 
                                   max_timeout_s=settings.deadlines.max_execution_timeout_s, trust=trust,
                                   runtime=runtime, health_max_age_s=30)
     registry.discover()
-    monitor.on_change(lambda changed: registry.refresh_dependencies())
+    # Losing a service disables dependants at once; a RECOVERED service is revalidated (confirmed healthy probes, then
+    # the dependants' own isolated health checks run again) before anything depending on it becomes available.
+    monitor.on_change(lambda changed: registry.recheck_health())
     controller = None
     try:
         db = Database(settings)
-        cfg = config or load_controller_config()
+        cfg = lowered(config or load_controller_config(), settings.deployment.controller_caps)
         catalogue = ToolCatalogue(registry, resolve_path(settings.capabilities.tool_numbers), db,
                                   settings.capabilities.catalogue_namespace).load()
         controller = RuntimeController(store=ControlStore(db), registry=registry, catalogue=catalogue, policy=policy,

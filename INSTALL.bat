@@ -1,12 +1,14 @@
 @echo off
 rem ATTa platform installer (Windows). Linux/macOS: install.sh
-rem   INSTALL.bat [--with-ai] [--with-browser] [--no-node] [--with-desktop] [--with-mobile]
+rem   INSTALL.bat [--with-ai] [--with-browser] [--no-node] [--with-desktop] [--with-mobile] [--offline-bundle DIR]
+rem               [--profile P] [--approve] [--suite S] [--no-start]
+rem Thin launcher: bootstraps locked dependencies, then runs "python -m backend.deployment install".
 rem Installs only locked, approved dependencies. Never downloads models; never starts paid infrastructure.
 setlocal EnableExtensions EnableDelayedExpansion
 cd /d "%~dp0"
 set "ROOT=%~dp0"
 if "%ATTA_VENV%"=="" set "ATTA_VENV=%ROOT%.venv"
-set WITH_AI=0& set WITH_BROWSER=0& set WITH_NODE=1& set WITH_DESKTOP=0& set WITH_MOBILE=0
+set WITH_AI=0& set WITH_BROWSER=0& set WITH_NODE=1& set WITH_DESKTOP=0& set WITH_MOBILE=0& set "BUNDLE="& set "DEPLOY_ARGS="
 :args
 if "%~1"=="" goto argsdone
 if /i "%~1"=="--with-ai" set WITH_AI=1
@@ -14,6 +16,11 @@ if /i "%~1"=="--with-browser" set WITH_BROWSER=1
 if /i "%~1"=="--no-node" set WITH_NODE=0
 if /i "%~1"=="--with-desktop" set WITH_DESKTOP=1
 if /i "%~1"=="--with-mobile" set WITH_MOBILE=1
+if /i "%~1"=="--offline-bundle" (set "BUNDLE=%~2"& set "DEPLOY_ARGS=!DEPLOY_ARGS! --bundle %~2"& shift)
+if /i "%~1"=="--profile" (set "DEPLOY_ARGS=!DEPLOY_ARGS! --profile %~2"& shift)
+if /i "%~1"=="--suite" (set "DEPLOY_ARGS=!DEPLOY_ARGS! --suite %~2"& shift)
+if /i "%~1"=="--approve" set "DEPLOY_ARGS=!DEPLOY_ARGS! --approve"
+if /i "%~1"=="--no-start" set "DEPLOY_ARGS=!DEPLOY_ARGS! --no-start"
 shift
 goto args
 :argsdone
@@ -40,8 +47,13 @@ if not exist "%ATTA_VENV%\Scripts\python.exe" (
 )
 set "VPY=%ATTA_VENV%\Scripts\python.exe"
 "%VPY%" -m pip install --disable-pip-version-check -q --upgrade "pip>=25" >nul || exit /b 1
-echo [install] installing locked backend dependencies
-"%VPY%" -m pip install --disable-pip-version-check -q --require-hashes --no-deps -r "%LOCK%" || exit /b 1
+if defined BUNDLE (
+  echo [install] installing locked backend dependencies OFFLINE from %BUNDLE%\wheels
+  "%VPY%" -m pip install --disable-pip-version-check -q --no-index --find-links "%BUNDLE%\wheels" --require-hashes --no-deps -r "%LOCK%" || exit /b 1
+) else (
+  echo [install] installing locked backend dependencies
+  "%VPY%" -m pip install --disable-pip-version-check -q --require-hashes --no-deps -r "%LOCK%" || exit /b 1
+)
 "%VPY%" -m pip check || exit /b 1
 for /f "delims=" %%S in ('"%VPY%" -c "import sysconfig; print(sysconfig.get_paths()['purelib'])"') do set "SITE=%%S"
 > "%SITE%\atta_platform.pth" echo %ROOT:~0,-1%
@@ -52,7 +64,7 @@ if "%WITH_NODE%"=="1" (
   ) else (
     if "%WITH_DESKTOP%"=="1" (set "ELECTRON_SKIP_BINARY_DOWNLOAD=") else (set "ELECTRON_SKIP_BINARY_DOWNLOAD=1")
     echo [install] installing locked Node workspaces
-    call npm ci --no-audit --no-fund --loglevel=error || exit /b 1
+    if defined BUNDLE (call npm ci --offline --cache "%BUNDLE%\npm-cache" --no-audit --no-fund --loglevel=error || exit /b 1) else (call npm ci --no-audit --no-fund --loglevel=error || exit /b 1)
     if "%WITH_MOBILE%"=="1" (pushd apps\mobile & call npm ci --no-audit --no-fund --loglevel=error & popd)
   )
 )
@@ -68,5 +80,7 @@ if not exist "configuration\local.env" (
 )
 if not exist runtime mkdir runtime
 "%VPY%" -m backend.service_manager validate || exit /b 1
-echo [install] INSTALL COMPLETE
-endlocal
+echo [install] INSTALL COMPLETE: locked dependencies installed
+"%VPY%" -m backend.deployment install %DEPLOY_ARGS%
+if %ERRORLEVEL%==10 (echo [install] review runtime\deployment\install_plan.json, then run INSTALL.bat --approve & exit /b 0)
+exit /b %ERRORLEVEL%

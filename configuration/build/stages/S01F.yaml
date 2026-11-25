@@ -1,0 +1,114 @@
+# Stage 01 FINAL integration gate (PROTECTED). Runs the isolated qualification suites; the H100 suite runs only
+# on a real H100 and is recorded BLOCKED elsewhere.
+stage: S01F
+title: Stage 01 FINAL integration gate (Stage 01 + 01A + 01B + existing ATTa builder)
+base_commit: 21104c413c30a3b2714f877892970e7db19a1d19
+protected_paths:
+- 01-specs/**
+- 02-front-door/**
+- 03-ui-skins-capability-package/**
+- 04-deployment/**
+- 05-coolify/**
+- docs/**
+- tests/test_*.py
+- tests/fixtures/**
+- run
+- Dockerfile
+- docker-compose.coolify.yml
+- release.json
+- START-HERE.txt
+- .dockerignore
+- tests/acceptance/test_s01_acceptance.py
+- tests/acceptance/s01_helpers.py
+- tests/regression/legacy_baseline.json
+- tests/acceptance/test_s01a_acceptance.py
+- tests/acceptance/test_s01a_acceptance_b.py
+- tests/acceptance/s01a_common.py
+- tests/acceptance/s01a_harness.py
+- tests/acceptance/s01a_crash_worker.py
+- tests/acceptance/s01a_trust_all_plugin.py
+- tests/acceptance/fixtures_s01a/**
+- tests/acceptance/test_s01b_acceptance.py
+- tests/acceptance/s01b_common.py
+- tests/acceptance/s01b_offline_core.py
+- tests/acceptance/fixtures_s01b/**
+tasks:
+- id: S01F-QUAL
+  objective: 'One combined, isolated, machine-specific Stage 01 qualification: foundation, controller guardrails, adaptive
+    deployment, legacy builder, startup/shutdown/recovery, capability discovery, policy, offline operation, environment isolation
+    and regression protection'
+  depends_on: []
+  permitted_paths:
+  - evidence/**
+  - '*.md'
+  - documentation/**
+  - configuration/build/**
+  - scripts/**
+  required_changes:
+  - 'no source changes: qualification only'
+  acceptance_tests:
+  - id: S01F-T01
+    description: dependency locks match the installed environment
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - backend.deployment
+    - deps
+    - --check
+  - id: S01F-T02
+    description: offline dependency bundle built from the locks
+    timeout_s: 2400
+    command:
+    - '{python}'
+    - -m
+    - backend.deployment
+    - bundle
+    - create
+    - --out
+    - runtime/qualification/gate-bundle
+  - id: S01F-T03
+    description: 'LOCAL suite in isolated resources: Stage 01 regression with superseded-test accounting, Stage 01A, Stage
+      01B, legacy builder, frontend e2e, unit, dependency and offline audits'
+    timeout_s: 10800
+    command:
+    - '{python}'
+    - -m
+    - backend.deployment
+    - qualify
+    - --suite
+    - LOCAL
+    - --out
+    - runtime/qualification/final
+  - id: S01F-T04
+    description: AIR_GAPPED suite inside a new kernel network namespace, incl. offline install from the bundle
+    timeout_s: 10800
+    command:
+    - '{python}'
+    - -m
+    - backend.deployment
+    - qualify
+    - --suite
+    - AIR_GAPPED
+    - --bundle
+    - runtime/qualification/gate-bundle
+    - --out
+    - runtime/qualification/final
+  - id: S01F-T05
+    description: H100 hardware qualification (real H100 only)
+    timeout_s: 7200
+    command:
+    - '{python}'
+    - -m
+    - backend.deployment
+    - qualify
+    - --suite
+    - H100
+    - --profile
+    - H100
+    - --out
+    - runtime/qualification/final
+    requires:
+    - gpu:h100
+    environment_specific: true
+  rollback: none (qualification only; disposable resources are destroyed)

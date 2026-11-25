@@ -241,6 +241,7 @@ class ExecutionGateway:
         run = self.runtime.run(ticket=ticket, mode="execute", capability_id=tool.spec.capability_id,
                                package_dir=reg.manifest.directory, expected_digest=reg.package_digest,
                                handlers=handlers, timeout_s=timeout, payload=resolved, workdir=workspace,
+                               network="host" if c.permitted_network_destinations else None,
                                context={"execution_id": execution_id, "task_id": ctx.task_id,
                                         "objective_id": ctx.objective_id, "operation": proposal.operation,
                                         "workspace": str(workspace)})
@@ -269,7 +270,7 @@ class ExecutionGateway:
         evidence = {"execution_id": execution_id, "proposal_id": proposal.proposal_id, "tool_id": proposal.tool_id,
                     "tool_string": tool.spec.string_id, "operation": proposal.operation, "arguments_hash": args_hash,
                     "state": state, "output": output, "output_hash": out_hash, "error": error, "policy": policy,
-                    "duration_s": run.duration_s, "leftovers_killed": run.leftovers_killed,
+                    "duration_s": run.duration_s, "leftovers_killed": run.leftovers_killed, "isolation": run.isolation,
                     "referenced_requirement_ids": proposal.referenced_requirement_ids}
         eid = self.store.add_evidence(ctx.objective_id, ctx.task_id, "tool_execution", evidence)
         self.store.finish_execution(execution_id, state, result=output, error=error, output_hash=out_hash)

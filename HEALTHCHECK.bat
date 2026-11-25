@@ -1,7 +1,7 @@
 @echo off
-rem Inspect actual services, ports, dependencies, model endpoints and registered capabilities. Exit 0 = healthy.
+rem Inspect activation, environment manifest, services, ports, controller and capabilities. Exit 0 = healthy.
 setlocal
 cd /d "%~dp0"
 if "%ATTA_VENV%"=="" set "ATTA_VENV=%~dp0.venv"
-"%ATTA_VENV%\Scripts\python.exe" -m backend.service_manager healthcheck %*
+"%ATTA_VENV%\Scripts\python.exe" -m backend.deployment healthcheck %*
 exit /b %ERRORLEVEL%

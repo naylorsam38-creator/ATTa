@@ -119,3 +119,13 @@ services:
     depends_on: [api]
     health: {type: http, url: "http://{api.host}:{api.port}/v1/health/controller", timeout_s: 5}
     startup_timeout_s: 60
+
+deployment:
+  profile: AUTO                       # AUTO | LOCAL_CPU | LOCAL_NVIDIA | H100 | TEST_ISOLATED | AIR_GAPPED
+  model_scan_depth: 3
+  scan_removable_media: true
+  windows_candidate_roots: ['D:\models', 'D:\']   # discovery candidates only — never required, never hardcoded paths
+  network_probe: null                 # e.g. "pypi.org:443"; null = never probe the Internet
+  runtime_preference: [llamacpp, ollama, vllm]
+  model_context_tokens: 8192
+  worker_network: host

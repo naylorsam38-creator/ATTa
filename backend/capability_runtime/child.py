@@ -71,6 +71,41 @@ class SnapshotFinder(importlib.abc.MetaPathFinder, importlib.abc.Loader):
         exec(code, module.__dict__)
 
 
+def isolate(req):
+    """Apply OS isolation BEFORE any capability code is loaded; report what was really applied (Stage 01B §17).
+    Order: join cgroup (needs privilege) -> private network namespace -> drop to the worker account -> rlimits."""
+    applied, problems = {}, []
+    iso = req.get("isolation") or {}
+    for path in iso.get("cgroup_procs") or []:
+        try:
+            with open(path, "w") as f:
+                f.write(str(os.getpid()))
+            applied.setdefault("cgroups", []).append(os.path.dirname(path))
+        except OSError as exc:
+            problems.append(f"cgroup {path}: {exc}")
+    if iso.get("network") == "none":
+        try:
+            os.unshare(os.CLONE_NEWNET)
+            applied["network"] = "private empty namespace"
+        except (AttributeError, OSError) as exc:
+            problems.append(f"network namespace unavailable: {exc}")
+    user = iso.get("user")
+    if user:
+        try:
+            import pwd
+            pw = pwd.getpwnam(user)
+            os.setgroups([])
+            os.setgid(pw.pw_gid)
+            os.setuid(pw.pw_uid)
+            applied["user"] = user
+        except (KeyError, OSError) as exc:
+            problems.append(f"cannot drop to worker account {user}: {exc}")
+    gpu = iso.get("cuda_visible_devices")
+    os.environ["CUDA_VISIBLE_DEVICES"] = gpu if gpu is not None else ""
+    applied["cuda_visible_devices"] = os.environ["CUDA_VISIBLE_DEVICES"]
+    return applied, problems
+
+
 def limits(req):
     try:
         import resource
@@ -130,7 +165,7 @@ def main():
     proto = os.fdopen(os.dup(1), "w")
     os.dup2(2, 1)                       # handler prints go to stderr, never into the protocol stream
     req = json.loads(sys.stdin.read())
-    limits(req)
+    # 1. read + verify the exact package bytes while still privileged (the worker account may not read them)
     try:
         files, digest = snapshot(req["package_dir"])
     except Exception as exc:  # noqa: BLE001
@@ -140,6 +175,13 @@ def main():
         proto.write(json.dumps({"status": "integrity_failed", "error": "package bytes differ from the trusted digest",
                                 "digest": digest}) + "\n")
         return
+    # 2. isolate (cgroup, private network, unprivileged account, no GPU) and limit, THEN load code from memory
+    applied, iso_problems = isolate(req)
+    if iso_problems and (req.get("isolation") or {}).get("required"):
+        proto.write(json.dumps({"status": "error", "error_type": "IsolationUnavailable",
+                                "error": "; ".join(iso_problems), "isolation": applied}) + "\n")
+        return
+    limits(req)
     sys.meta_path.insert(0, SnapshotFinder(files, "capability:" + req["capability_id"], req["package_dir"]))
     os.chdir(req.get("workdir") or os.getcwd())
     mode = req["mode"]
@@ -166,7 +208,7 @@ def main():
             value = fn(req["payload"], req["output"])
         else:  # reconcile
             value = fn(req["payload"], ctx)
-        text = json.dumps({"status": "ok", "value": value})
+        text = json.dumps({"status": "ok", "value": value, "isolation": applied})
     except BaseException as exc:  # noqa: BLE001
         text = json.dumps({"status": "error", "error_type": type(exc).__name__, "error": str(exc)[:2000]})
     proto.write(text + "\n")

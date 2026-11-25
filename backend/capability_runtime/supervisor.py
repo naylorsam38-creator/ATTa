@@ -53,6 +53,52 @@ def kill_descendants():
     return killed
 
 
+CGROUP_V2 = "/sys/fs/cgroup"
+CGROUP_V1 = {"memory": "/sys/fs/cgroup/memory", "pids": "/sys/fs/cgroup/pids"}
+
+
+def make_cgroups(req):
+    """Per-execution cgroups (v2 unified, else v1 memory+pids) when the host allows it. Returns (procs files, dirs)."""
+    iso = req.get("isolation") or {}
+    mem = int(iso.get("memory_mb") or req.get("memory_limit_mb") or 1024) * 1024 * 1024
+    pids = int(iso.get("pids_max") or 256)
+    name = "atta-" + str(os.getpid())
+    procs, dirs = [], []
+    try:
+        if os.path.isfile(os.path.join(CGROUP_V2, "cgroup.controllers")):
+            d = os.path.join(CGROUP_V2, name)
+            os.mkdir(d)
+            dirs.append(d)
+            for f, v in (("memory.max", mem), ("pids.max", pids)):
+                try:
+                    with open(os.path.join(d, f), "w") as fh:
+                        fh.write(str(v))
+                except OSError:
+                    pass
+            procs.append(os.path.join(d, "cgroup.procs"))
+        else:
+            for ctrl, base in CGROUP_V1.items():
+                if os.access(base, os.W_OK):
+                    d = os.path.join(base, name)
+                    os.mkdir(d)
+                    dirs.append(d)
+                    f, v = ("memory.limit_in_bytes", mem) if ctrl == "memory" else ("pids.max", pids)
+                    with open(os.path.join(d, f), "w") as fh:
+                        fh.write(str(v))
+                    procs.append(os.path.join(d, "cgroup.procs"))
+    except OSError:
+        pass
+    return procs, dirs
+
+
+def remove_cgroups(dirs):
+    for d in dirs:
+        try:
+            os.rmdir(d)
+        except OSError:
+            pass
+
+
 def emit(obj):
     sys.stdout.write(json.dumps(obj) + "\n")
     sys.stdout.flush()
@@ -77,6 +123,9 @@ def main():
                 os._exit(70)
     threading.Thread(target=watch_parent, daemon=True).start()
 
+    cg_procs, cg_dirs = make_cgroups(req) if (req.get("isolation") or {}).get("cgroups", True) else ([], [])
+    req.setdefault("isolation", {})["cgroup_procs"] = cg_procs
+    req_text = json.dumps(req)
     env = {"PATH": os.environ.get("PATH", os.defpath), "LANG": "C.UTF-8", "PYTHONDONTWRITEBYTECODE": "1",
            "HOME": req.get("workdir") or os.getcwd(), "TMPDIR": req.get("workdir") or os.getcwd()}
     child = subprocess.Popen([sys.executable, "-I", CHILD], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
@@ -101,6 +150,7 @@ def main():
         timed_out = True
     n = kill_descendants()
     _done.set()
+    remove_cgroups(cg_dirs)
     for r in readers:
         r.join(2)
     if timed_out:
@@ -113,6 +163,7 @@ def main():
     except json.JSONDecodeError:
         status = {"status": "crashed", "error": "unparseable child output"}
     status.update({"leftovers_killed": n, "subreaper": subreaper, "child_exit": child.returncode,
+                   "cgroups": cg_dirs,
                    "stderr_tail": (err or "")[-2000:]})
     emit(status)
 

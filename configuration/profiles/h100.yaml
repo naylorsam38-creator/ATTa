@@ -1,0 +1,13 @@
+# H100 — NVIDIA H100 80 GB servers. vLLM is the primary inference runtime. Controller budgets stay authoritative.
+deployment:
+  runtime_preference: [vllm, llamacpp]
+  model_context_tokens: 32768
+  gpu_visible_to_workers: false
+  worker_network: none                  # tool workers get an empty network namespace unless a task permits otherwise
+workers:
+  max_concurrency: 8
+  memory_limit_mb: 4096
+models:
+  endpoints:
+    - {name: vllm-gpu, kind: vllm, base_url: "http://127.0.0.1:8000", health_path: /health, enabled: true}
+    - {name: llamacpp-local, kind: llamacpp, base_url: "http://127.0.0.1:8080", health_path: /health}

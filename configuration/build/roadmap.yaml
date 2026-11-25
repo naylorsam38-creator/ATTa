@@ -19,9 +19,15 @@ protected_criteria:
   - "configuration/capability_trust.json"
   - "configuration/capability_trust_ed25519.pub"
   - "configuration/controller_operator_ed25519.pub"
+  - "configuration/qualification/**"
+  - "configuration/profiles/**"
+  - "configuration/locks/**"
+  - "configuration/operator.yaml"
 stages:
   - {id: S01, title: "Architecture and build infrastructure (foundation)", capabilities: [CAP-39 partial, CAP-40 partial]}
   - {id: S01A, title: "Deterministic LLM control, tool allocation and drift prevention", capabilities: [controller for all 40]}
+  - {id: S01B, title: "Adaptive deployment, isolated offline qualification and Stage 01 closure", capabilities: [CAP-40 partial, CAP-39 partial]}
+  - {id: S01F, title: "Stage 01 FINAL integration gate (S01 + S01A + S01B + existing builder)", capabilities: []}
   - {id: S02, title: "Authentication, tenant isolation, permissions, credential protection, human approvals connected to the controller", capabilities: [CAP-35, CAP-39]}
   - {id: S03, title: "Actual LLM connection (Llama, Qwen, others) through the controlled intelligence interface", capabilities: [CAP-01, CAP-02, CAP-03]}
   - {id: S04, title: "Interface: task status, assigned tools, progress, failures, verification evidence; chat management", capabilities: [CAP-04]}

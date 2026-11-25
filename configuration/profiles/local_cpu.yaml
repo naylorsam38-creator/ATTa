@@ -1,0 +1,9 @@
+# LOCAL_CPU — laptops/desktops without a usable NVIDIA GPU. Conservative by design.
+deployment:
+  runtime_preference: [llamacpp, ollama]
+  model_context_tokens: 4096
+  gpu_visible_to_workers: false
+  controller_caps: {max_active_tasks_per_objective: 4, max_concurrent_tools_per_task: 1}
+workers:
+  max_concurrency: 2
+  memory_limit_mb: 1024

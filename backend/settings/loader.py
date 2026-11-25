@@ -84,6 +84,16 @@ def _coerce(value: str) -> Any:
         return value
 
 
+def _active_profile(root: Path, environ: dict) -> str | None:
+    """Profile recorded by the last successful activation (runtime/deployment/active.json), if any."""
+    p = root / (environ.get("ATTA_DEPLOYMENT_DIR") or "runtime/deployment") / "active.json"
+    try:
+        import json
+        return json.loads(p.read_text()).get("profile")
+    except (OSError, ValueError):
+        return None
+
+
 def load_settings(environment: str | None = None, root: Path | None = None,
                   env: dict[str, str] | None = None, extra_files: list[Path] | None = None,
                   include_local_env: bool = True) -> Settings:
@@ -97,14 +107,23 @@ def load_settings(environment: str | None = None, root: Path | None = None,
     tracked = [cfg_dir / "base.yaml", cfg_dir / "environments" / f"{environment}.yaml"]
     if not tracked[1].is_file():
         problems.append(f"unknown environment '{environment}' (no {tracked[1].relative_to(root)})")
+    # Stage 01B precedence (low -> high): defaults (base + environment) -> discovered values -> deployment profile ->
+    # local environment configuration (local.yaml, local.env, ATTA__ variables) -> trusted operator overrides.
+    discovered = root / (environ.get("ATTA_DEPLOYMENT_DIR") or "runtime/deployment") / "discovered.yaml"
+    profile = (environ.get("ATTA_PROFILE") or _active_profile(root, environ) or "").lower()
+    profile_file = cfg_dir / "profiles" / f"{profile}.yaml" if profile and profile != "auto" else None
+    if profile_file is not None and not profile_file.is_file():
+        problems.append(f"unknown deployment profile '{profile}'")
     data: dict = {}
-    for f in tracked:
+    layers = tracked + ([discovered] if discovered.is_file() else []) + \
+        ([profile_file] if profile_file is not None and profile_file.is_file() else [])
+    for f in layers:
         layer = _read_yaml(f)
         for (section, key) in SECRET_FIELDS:
             if layer.get(section, {}).get(key) not in (None, ""):
                 problems.append(f"{f.relative_to(root)} sets secret {section}.{key}; use {SECRET_FIELDS[(section, key)]}")
         data = _merge(data, layer)
-    for f in [cfg_dir / "local.yaml", *(extra_files or [])]:  # untracked operator overrides
+    for f in [cfg_dir / "local.yaml", *(extra_files or [])]:  # untracked local configuration
         data = _merge(data, _read_yaml(f))
     data["environment"] = environment
 
@@ -121,6 +140,15 @@ def load_settings(environment: str | None = None, root: Path | None = None,
             data.setdefault(section, {})[key] = environ[var]
     if environ.get("ATTA_MODEL_PATHS"):
         data.setdefault("models", {})["storage_paths"] = [p for p in environ["ATTA_MODEL_PATHS"].split(os.pathsep) if p]
+    operator = cfg_dir / "operator.yaml"            # trusted operator overrides: highest precedence (OS-protected)
+    if operator.is_file():
+        layer = _read_yaml(operator)
+        for (section, key) in SECRET_FIELDS:
+            if layer.get(section, {}).get(key) not in (None, ""):
+                problems.append(f"operator.yaml sets secret {section}.{key}; use {SECRET_FIELDS[(section, key)]}")
+        data = _merge(data, layer)
+    if profile_file is not None:
+        data.setdefault("deployment", {})["profile"] = profile.upper()
 
     if problems:
         raise ConfigurationError(problems)

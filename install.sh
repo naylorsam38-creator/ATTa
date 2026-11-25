@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 # ATTa platform installer (Linux/macOS). Windows: INSTALL.bat
 #   ./install.sh [--with-ai] [--with-browser] [--no-node] [--with-desktop] [--with-mobile] [--install-system]
+#                [--offline-bundle DIR]  [deployment options: --profile P --approve --suite S --no-start]
 #   ATTA_VENV=/path/to/venv ./install.sh    (default: ./.venv)
-# Installs only locked, approved dependencies. Never downloads models; never starts paid infrastructure.
+# Thin launcher: bootstraps the locked dependencies (from the offline bundle when given), then hands over to the
+# deployment installer (python -m backend.deployment install): discover -> plan -> qualify -> activate.
+# Never downloads models; never starts paid infrastructure.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 VENV="${ATTA_VENV:-$ROOT/.venv}"
-WITH_AI=0; WITH_BROWSER=0; WITH_NODE=1; WITH_DESKTOP=0; WITH_MOBILE=0; INSTALL_SYSTEM=0
-for a in "$@"; do case "$a" in
+WITH_AI=0; WITH_BROWSER=0; WITH_NODE=1; WITH_DESKTOP=0; WITH_MOBILE=0; INSTALL_SYSTEM=0; BUNDLE=""; DEPLOY_ARGS=()
+while [ $# -gt 0 ]; do case "$1" in
   --with-ai) WITH_AI=1 ;; --with-browser) WITH_BROWSER=1 ;; --no-node) WITH_NODE=0 ;;
   --with-desktop) WITH_DESKTOP=1 ;; --with-mobile) WITH_MOBILE=1 ;; --install-system) INSTALL_SYSTEM=1 ;;
-  -h|--help) sed -n '2,6p' "$0"; exit 0 ;; *) echo "unknown option $a" >&2; exit 2 ;; esac; done
+  --offline-bundle) BUNDLE="$2"; DEPLOY_ARGS+=(--bundle "$2"); shift ;;
+  --profile|--suite) DEPLOY_ARGS+=("$1" "$2"); shift ;; --approve|--no-start) DEPLOY_ARGS+=("$1") ;;
+  -h|--help) sed -n '2,9p' "$0"; exit 0 ;; *) echo "unknown option $1" >&2; exit 2 ;; esac; shift; done
 say(){ printf '[install] %s\n' "$*"; }
 fail(){ printf '[install] ERROR: %s\n' "$*" >&2; exit 1; }
 
@@ -27,9 +32,14 @@ command -v git >/dev/null 2>&1 || fail "git is required"
 LOCK="$ROOT/configuration/locks/backend-core.lock.txt"
 [ "$WITH_AI$WITH_BROWSER" != "00" ] && LOCK="$ROOT/configuration/locks/backend-full.lock.txt"
 if [ ! -x "$VENV/bin/python" ]; then say "creating virtual environment $VENV"; "$PY" -m venv "$VENV"; fi
-"$VENV/bin/python" -m pip install --disable-pip-version-check -q --upgrade "pip>=25" >/dev/null
-say "installing locked backend dependencies ($(basename "$LOCK"))"
-"$VENV/bin/python" -m pip install --disable-pip-version-check -q --require-hashes --no-deps -r "$LOCK"
+if [ -n "$BUNDLE" ]; then
+  say "installing locked backend dependencies OFFLINE from $BUNDLE/wheels"
+  "$VENV/bin/python" -m pip install --disable-pip-version-check -q --no-index --find-links "$BUNDLE/wheels" --require-hashes --no-deps -r "$LOCK"
+else
+  "$VENV/bin/python" -m pip install --disable-pip-version-check -q --upgrade "pip>=25" >/dev/null
+  say "installing locked backend dependencies ($(basename "$LOCK"))"
+  "$VENV/bin/python" -m pip install --disable-pip-version-check -q --require-hashes --no-deps -r "$LOCK"
+fi
 "$VENV/bin/python" -m pip check
 SITE="$("$VENV/bin/python" -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
 printf '%s\n' "$ROOT" > "$SITE/atta_platform.pth"   # makes `backend` importable without packaging
@@ -39,7 +49,8 @@ if [ "$WITH_NODE" = 1 ]; then
   if command -v node >/dev/null 2>&1 && node -e 'process.exit(+process.versions.node.split(".")[0] >= 20 ? 0 : 1)'; then
     say "installing locked Node workspaces (npm ci)"
     if [ "$WITH_DESKTOP" = 1 ]; then unset ELECTRON_SKIP_BINARY_DOWNLOAD; else export ELECTRON_SKIP_BINARY_DOWNLOAD=1; fi
-    (cd "$ROOT" && npm ci --no-audit --no-fund --loglevel=error)
+    if [ -n "$BUNDLE" ]; then (cd "$ROOT" && npm ci --offline --cache "$BUNDLE/npm-cache" --no-audit --no-fund --loglevel=error)
+    else (cd "$ROOT" && npm ci --no-audit --no-fund --loglevel=error); fi
     if [ "$WITH_MOBILE" = 1 ]; then (cd "$ROOT/apps/mobile" && npm ci --no-audit --no-fund --loglevel=error); fi
   else
     say "WARNING: Node.js >= 20 not found — web/desktop clients skipped (backend still installs)"
@@ -71,4 +82,10 @@ rec = {"installed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
 (root / "runtime" / "install.json").write_text(json.dumps(rec, indent=2))
 PYEOF
 (cd "$ROOT" && "$VENV/bin/python" -m backend.service_manager validate)
-say "INSTALL COMPLETE"
+say "INSTALL COMPLETE: locked dependencies installed"
+# Hand over to the deployment installer (resumable): discovery, profile, plan, provisioning, qualification, activation.
+set +e
+(cd "$ROOT" && "$VENV/bin/python" -m backend.deployment install "${DEPLOY_ARGS[@]}")
+code=$?
+[ "$code" -eq 10 ] && { say "awaiting operator review of runtime/deployment/install_plan.json: re-run with --approve"; exit 0; }
+exit "$code"

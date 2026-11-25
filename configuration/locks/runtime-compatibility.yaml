@@ -1,0 +1,12 @@
+# Runtime compatibility matrix (Stage 01B §6/§11). Inference itself is Stage 03.
+formats:
+  gguf: {runtimes: [llamacpp, ollama], gpu_required: false}
+  safetensors: {runtimes: [vllm], gpu_required: true}
+  ollama: {runtimes: [ollama], gpu_required: false}
+profiles:
+  LOCAL_CPU: {runtimes: [llamacpp, ollama], gpu: none}
+  LOCAL_NVIDIA: {runtimes: [llamacpp, ollama, vllm], gpu: "NVIDIA >= 4 GB VRAM"}
+  H100: {runtimes: [vllm, llamacpp], gpu: "NVIDIA H100 80 GB", os: linux, vllm: required}
+  AIR_GAPPED: {runtimes: [llamacpp, ollama, vllm], network: none}
+  TEST_ISOLATED: {runtimes: [llamacpp, ollama], gpu: none}
+external_providers: never selected automatically (no external fallback)

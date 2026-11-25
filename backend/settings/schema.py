@@ -155,6 +155,23 @@ class ServiceSpec(_Strict):
         return self
 
 
+class DeploymentSettings(_Strict):
+    """Stage 01B adaptive deployment. `profile` AUTO = deterministic discovery; explicit choices are still validated."""
+    profile: Literal["AUTO", "LOCAL_CPU", "LOCAL_NVIDIA", "H100", "TEST_ISOLATED", "AIR_GAPPED"] = "AUTO"
+    model_scan_depth: int = Field(default=3, ge=1, le=8)
+    scan_removable_media: bool = True
+    windows_candidate_roots: list[str] = Field(default_factory=lambda: ["D:\\models", "D:\\"])
+    network_probe: str | None = None            # host:port for the optional external-network probe; None = never
+    runtime_preference: list[str] = Field(default_factory=lambda: ["llamacpp", "ollama", "vllm"])
+    model_context_tokens: int = Field(default=8192, ge=512)
+    # Controller limits may be LOWERED for a profile (never raised above configuration/controller.yaml).
+    controller_caps: dict[str, float] = Field(default_factory=dict)
+    gpu_visible_to_workers: bool = False
+    worker_network: Literal["host", "none"] = "host"   # "none": tool workers get their own empty network namespace
+    worker_user: str | None = None                      # unprivileged OS account for tool workers (when run as root)
+    health_recovery_confirmations: int = Field(default=2, ge=1, le=10)
+
+
 class RuntimeSettings(_Strict):
     directory: str = "runtime"
     monitor_interval_s: float = Field(default=2.0, gt=0)
@@ -173,6 +190,7 @@ class Settings(_Strict):
     logging: LoggingSettings = Field(default_factory=LoggingSettings)
     security: SecuritySettings = Field(default_factory=SecuritySettings)
     runtime: RuntimeSettings = Field(default_factory=RuntimeSettings)
+    deployment: DeploymentSettings = Field(default_factory=DeploymentSettings)
     services: dict[str, ServiceSpec] = Field(default_factory=dict)
 
     @field_validator("services")

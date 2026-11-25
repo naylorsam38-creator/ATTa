@@ -69,8 +69,13 @@ class ServiceRuntime:
     def pid(self) -> int | None:
         return self.process.pid if self.process else None
 
+    HEALTH_STATES = {"pending": "STARTING", "starting": "STARTING", "healthy": "HEALTHY", "restarting": "DEGRADED",
+                     "unhealthy": "UNHEALTHY", "failed": "UNHEALTHY", "stopped": "STOPPED", "disabled": "STOPPED",
+                     "unavailable": "BLOCKED"}
+
     def to_dict(self) -> dict:
         return {"name": self.name, "essential": self.spec.essential, "mode": self.spec.mode, "status": self.status,
+                "health_state": self.HEALTH_STATES.get(self.status, "UNHEALTHY"),
                 "pid": self.pid, "restarts": self.restart_total, "detail": self.detail,
                 "health": self.last_health.model_dump(mode="json") if self.last_health else None}
 

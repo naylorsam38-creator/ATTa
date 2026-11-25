@@ -1,0 +1,14 @@
+# System dependency manifest (Stage 01B §11). Versions are minimums/pins checked by `backend.deployment deps`.
+python: {min: "3.12", max_exclusive: "3.14", lock: configuration/locks/backend-core.lock.txt}
+node: {min: "20.9.0", lock: package-lock.json, mobile_lock: apps/mobile/package-lock.json}
+git: {min: "2.30"}
+postgresql: {major: 16, extensions: {vector: ">=0.6"}}
+redis: {min: "7.0"}
+nvidia_driver: {min_for: {LOCAL_NVIDIA: "535", H100: "535"}}
+cuda: {min_for: {H100: "12.1"}}
+container_images:              # tags are pinned; digests are BLOCKED until resolved on a host with registry access
+  - {image: pgvector/pgvector, tag: 0.8.1-pg16, digest: null}
+  - {image: redis, tag: 7.4-alpine, digest: null}
+  - {image: minio/minio, tag: RELEASE.2025-09-07T16-13-09Z, digest: null}
+  - {image: temporalio/temporal, tag: 1.5.1, digest: null}
+  - {image: python, tag: 3.13-slim-bookworm, digest: null}
