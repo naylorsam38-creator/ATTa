@@ -1,17 +1,17 @@
 {
-  "sealed_at": "2026-11-25T07:46:47.741Z",
+  "sealed_at": "2026-11-25T08:06:42.864Z",
   "sealed_by": "stage-01b-operator",
   "files": {
     "backend/verification/__init__.py": "27c40e3e22dd48de0e7aad9739ae9be8253bd9d0cb6279f1f3b3d6509a58fc5d",
     "backend/verification/__main__.py": "23c81d4bdcf28a86a6f43a222f3d35a0ebc6f41d977f7c6c593ca837470de704",
     "backend/verification/build_controller.py": "79b4cc8a6c567e12618f3778008c5678dbdf859d1e9a6be5fc1f17f3fa917bfa",
     "backend/verification/protection.py": "37b79a00b5110cedbcd79770cd8bfd5b29018945971fb3695a5188e8e0c4da1f",
-    "backend/verification/runner.py": "a965d79dac55b41cacea0a24170c7e358f9e440fe7a4856a8566b0597d6cd8ac",
+    "backend/verification/runner.py": "280db1000f7f3443f0210e640c441ab24508b74136c7927c3eca96328272044d",
     "backend/verification/verify.py": "8a3a84ce016939ee500a0421e345064eda17383524a09769be110a8b590f9ca7",
     "configuration/build/roadmap.yaml": "87aa23cc1d257576810bfc13eae804a0ce57cc5f1aa181f145734fcc47cb1814",
     "configuration/build/stages/S01.yaml": "b550efe154e08b772019a27fbf23fc723eef8fca50210da67ce14e78c5ecfa2b",
     "configuration/build/stages/S01A.yaml": "9b9c87f2694dc0dba749eebf5c46e25515a8d0344f105ee55c26e202ec7b8ba2",
-    "configuration/build/stages/S01B.yaml": "96cfdb52abaadacaae2de00f27de8930e2e702075cf227fbf49e39810b2cd8e1",
+    "configuration/build/stages/S01B.yaml": "98881087bddc62dc0cc697077cbd0cf7229b6f73cbee9cf70d8f60b9c6f39b44",
     "configuration/build/stages/S01F.yaml": "cd51ea4fef2629348740971444d332d6519f7feca582204f786fbf313f30c699",
     "configuration/build/verifier_ed25519.pub": "7f9c12fed7e58d628e69e00aade7246bd595b03f94627508d1c1dc9b02311aac",
     "configuration/capability_trust.json": "3edbfa737af66dff0ac885eca963dcdf233a03472a51bdc02fab59250bc5ebfc",
@@ -28,7 +28,7 @@
     "configuration/profiles/local_cpu.yaml": "765dc7612843349f32438d28ec2559d17f58dbcb6740e4012621574a9f235b93",
     "configuration/profiles/local_nvidia.yaml": "419f148794ae9249e5e30d6b2d794705f20d9720d03904593c2f73a0eb8c3b4a",
     "configuration/profiles/test_isolated.yaml": "e578288f3c45ac6169cd0e85fbfb1aef3cff435627a34cf21e08572e28dc9124",
-    "configuration/qualification/suites.yaml": "89ad22610c90b691027273931b76c1f4981f5d437885954869fb1a24893b4ff0",
+    "configuration/qualification/suites.yaml": "45f09be0ee609fbcc225de7fbaee244c694144bf37f0d18c387228c5b90ed736",
     "configuration/tool_numbers.yaml": "6ba475a0d10d012ffc4804682b26e5066d40a8595fd1b4522591ce5cd9aab104",
     "tests/acceptance/fixtures_s01a/capabilities/README.md": "1f22028fd28e13b800c4cf8fdfab04f223bc5fba5bfb566f829ec29c17482d82",
     "tests/acceptance/fixtures_s01a/capabilities/test_chained/capability.yaml": "189c9031aded17d1b7af42481d7322da614c57b6e7ce35fae54d9dbd641c85c7",
@@ -60,10 +60,10 @@
     "tests/acceptance/test_s01_acceptance.py": "d811220357740925be64e325fefd014208c092b7c5df4beb77b0c68a35fb1920",
     "tests/acceptance/test_s01a_acceptance.py": "caf3b98ba5b26ed8d53cb4f4b8fd4542fed21cb290e9246b63ed36e46036abaa",
     "tests/acceptance/test_s01a_acceptance_b.py": "9fc40e29474624e9e3a5af127ed7eee2e0480838a4689f96a5a244007b395bf6",
-    "tests/acceptance/test_s01b_acceptance.py": "93aba2a32356fce1ae4ef49d9735d4ac45fe130e3bb1cc55cbfaed6c2b7a38b5",
+    "tests/acceptance/test_s01b_acceptance.py": "d2d8d63d6769f4640a6f6fa5bedec48dc9e57d3cd713c600ec8c4b23ec967022",
     "tests/regression/legacy_baseline.json": "696887118bb51d6bfd918c2e0902852b2df87e6a78d3fa593c62c85ead364bbb"
   },
   "hmac_sha256": null,
-  "signature_ed25519": "P7BMArtUhgu0vacj6UNUutBLzdJ1h+iht7C5VJHAX86aOcXjksu2dybsmV7X4ZeliQTLnj6TECcZ/WCKgx2KCg==",
+  "signature_ed25519": "DBqDCW+wsG45TJq1f/y0VHGaEbdPqTgCvsdWZCoC5F4QCvjypXrxnPYovNB98NPS68j8L7OU4FSc9Xp1c6E/Ag==",
   "signed": true
 }
