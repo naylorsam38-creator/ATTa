@@ -64,7 +64,7 @@ if "%WITH_NODE%"=="1" (
   ) else (
     if "%WITH_DESKTOP%"=="1" (set "ELECTRON_SKIP_BINARY_DOWNLOAD=") else (set "ELECTRON_SKIP_BINARY_DOWNLOAD=1")
     echo [install] installing locked Node workspaces
-    if defined BUNDLE (call npm ci --offline --cache "%BUNDLE%\npm-cache" --no-audit --no-fund --loglevel=error || exit /b 1) else (call npm ci --no-audit --no-fund --loglevel=error || exit /b 1)
+    if defined BUNDLE (call npm ci --offline --logs-max=0 --cache "%BUNDLE%\npm-cache" --no-audit --no-fund --loglevel=error || exit /b 1) else (call npm ci --no-audit --no-fund --loglevel=error || exit /b 1)
     if "%WITH_MOBILE%"=="1" (pushd apps\mobile & call npm ci --no-audit --no-fund --loglevel=error & popd)
   )
 )

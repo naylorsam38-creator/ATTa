@@ -71,6 +71,7 @@ def create(out: Path, *, include_node: bool = True, models: list[str] | None = N
         (out / "models").mkdir(exist_ok=True)
         for m in models:                       # only on explicit operator request
             shutil.copy2(m, out / "models" / Path(m).name)
+    shutil.rmtree(out / "npm-cache" / "_logs", ignore_errors=True)    # npm debug logs are not bundle content
     files = {}
     for p in sorted(out.rglob("*")):
         if p.is_file() and p.name != "bundle_manifest.json":
@@ -134,8 +135,11 @@ def install_offline(bundle: Path, venv: Path) -> None:
         for rel in ["package.json", "package-lock.json", ".npmrc"] + [f"{w}/package.json" for w in pkg["workspaces"]]:
             (node_dir / rel).parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(REPO_ROOT / rel, node_dir / rel)
+        # npm writes logs/index entries into its cache: work on a private copy so the bundle stays byte-identical.
+        cache = venv.parent / "npm-cache-copy"
+        shutil.copytree(bundle / "npm-cache", cache, dirs_exist_ok=True)
         r = subprocess.run(["npm", "ci", "--offline", "--ignore-scripts", "--no-audit", "--no-fund", "--loglevel=error",
-                            "--cache", str((bundle / "npm-cache").resolve())], cwd=node_dir, capture_output=True,
+                            "--cache", str(cache.resolve())], cwd=node_dir, capture_output=True,
                            text=True, timeout=1800, env={**os.environ, "ELECTRON_SKIP_BINARY_DOWNLOAD": "1"})
         if r.returncode != 0:
             raise RuntimeError(f"offline npm ci failed: {r.stderr[-1500:]}")

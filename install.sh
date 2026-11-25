@@ -49,7 +49,7 @@ if [ "$WITH_NODE" = 1 ]; then
   if command -v node >/dev/null 2>&1 && node -e 'process.exit(+process.versions.node.split(".")[0] >= 20 ? 0 : 1)'; then
     say "installing locked Node workspaces (npm ci)"
     if [ "$WITH_DESKTOP" = 1 ]; then unset ELECTRON_SKIP_BINARY_DOWNLOAD; else export ELECTRON_SKIP_BINARY_DOWNLOAD=1; fi
-    if [ -n "$BUNDLE" ]; then (cd "$ROOT" && npm ci --offline --cache "$BUNDLE/npm-cache" --no-audit --no-fund --loglevel=error)
+    if [ -n "$BUNDLE" ]; then (cd "$ROOT" && npm ci --offline --logs-max=0 --cache "$BUNDLE/npm-cache" --no-audit --no-fund --loglevel=error)
     else (cd "$ROOT" && npm ci --no-audit --no-fund --loglevel=error); fi
     if [ "$WITH_MOBILE" = 1 ]; then (cd "$ROOT/apps/mobile" && npm ci --no-audit --no-fund --loglevel=error); fi
   else

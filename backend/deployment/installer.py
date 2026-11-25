@@ -241,7 +241,7 @@ class Installer:
                 if a["action"] == "npm ci (locked Node workspaces)":
                     args = ["npm", "ci", "--no-audit", "--no-fund", "--loglevel=error"]
                     if self.bundle:
-                        args += ["--offline", "--cache", str(Path(self.bundle) / "npm-cache")]
+                        args += ["--offline", "--logs-max=0", "--cache", str(Path(self.bundle) / "npm-cache")]
                     r = subprocess.run(args, cwd=REPO_ROOT, capture_output=True, text=True, timeout=1800,
                                        env={**self.env, "ELECTRON_SKIP_BINARY_DOWNLOAD": "1"})
                     if r.returncode != 0:

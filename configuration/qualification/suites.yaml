@@ -20,7 +20,9 @@ tests:
   Q-LEGACY:          {title: "Existing ATTa application builder regression suite", timeout_s: 1800,
                       command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T49_existing_atta_application_builder_regression"]}
   Q-UNIT:            {title: "Unit, integration and security suites", timeout_s: 600, command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/unit, tests/integration, tests/security]}
+  # The existing e2e spec addresses the test environment's API port 8810; inside a qualification namespace it is free.
   Q-FRONTEND:        {title: "Frontend + backend startup end-to-end in a real browser", timeout_s: 900, requires: [node],
+                      env: {ATTA__API__PORT: "8810"},
                       command: [npx, --no-install, playwright, test, -c, tests/end_to_end/playwright.config.ts]}
   Q-NETWORK-DENIED:  {title: "External network is unreachable inside the qualification namespace", builtin: network_denied, requires: [netns]}
   Q-OFFLINE-INSTALL: {title: "Clean installation from the offline dependency bundle with no network", builtin: offline_install, requires: [netns, bundle], timeout_s: 1800}

@@ -202,7 +202,8 @@ def _execute(tid: str, spec: dict, meta: dict, ws: Path, env: dict, ctx: dict) -
     else:
         cmd = [c.replace("{python}", sys.executable) for c in spec["command"]]
         try:
-            cp = subprocess.run(cmd, cwd=REPO_ROOT, env=env, capture_output=True, text=True,
+            run_env = {**env, **{k: str(v) for k, v in (spec.get("env") or {}).items()}}   # declared per-test pins
+            cp = subprocess.run(cmd, cwd=REPO_ROOT, env=run_env, capture_output=True, text=True,
                                 timeout=float(spec.get("timeout_s", 900)))
             code, out = cp.returncode, (cp.stdout or "")[-200000:] + "\n--- stderr ---\n" + (cp.stderr or "")[-100000:]
         except subprocess.TimeoutExpired:
