@@ -1,0 +1,16 @@
+{
+ "suite": "S01A-A",
+ "args": [
+  "tests/acceptance/test_s01a_acceptance.py"
+ ],
+ "exit_code": 0,
+ "started": "2026-11-25T08:14:20Z",
+ "duration_s": 97.4,
+ "counts": {
+  "passed": 27
+ },
+ "failed": [],
+ "skipped": [],
+ "output_sha256": "79ec27c201832fa8cf74f1882faddff1424240c5224d7fbe47b6129c778516d4",
+ "output_tail": "...........................                                              [100%]\n27 passed in 97.04s (0:01:37)"
+}

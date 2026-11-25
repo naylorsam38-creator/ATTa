@@ -1,0 +1,24 @@
+{
+ "suite": "S01B",
+ "args": [
+  "tests/acceptance/test_s01b_acceptance.py"
+ ],
+ "exit_code": 1,
+ "started": "2026-11-25T08:05:10Z",
+ "duration_s": 535.2,
+ "counts": {
+  "failed": 6,
+  "passed": 39
+ },
+ "failed": [
+  "tests/acceptance/test_s01b_acceptance.py::test_S01B_T36_legacy_atta_regression_suite",
+  "tests/acceptance/test_s01b_acceptance.py::test_S01B_T37_stage01_regression_suite",
+  "tests/acceptance/test_s01b_acceptance.py::test_S01B_T38_stage01a_regression_suite",
+  "tests/acceptance/test_s01b_acceptance.py::test_S01B_T41_windows_specific_tests",
+  "tests/acceptance/test_s01b_acceptance.py::test_S01B_T42_linux_specific_tests",
+  "tests/acceptance/test_s01b_acceptance.py::test_S01B_T43_h100_hardware_tests_pass_only_on_actual_hardware"
+ ],
+ "skipped": [],
+ "output_sha256": "4192873399c1f91832bd1f4e1f21cbd41a795358133a85814f6e127abaddefeb",
+ "output_tail": "user\", \"-u\", worker, \"--\", PY, \"-I\", \"-c\", f\"open({str(key)!r},'rb').read()\"],\n                                capture_output=True, text=True, timeout=60)\n            assert rd.returncode != 0 and \"PermissionError\" in rd.stderr, rd.stderr\n            from cryptography.hazmat.primitives import serialization\n            raw = key.read_bytes()\n            assert b\"ENCRYPTED PRIVATE KEY\" in raw, \"verifier signing key must be encrypted at rest\"\n            with pytest.raises(TypeError):\n                serialization.load_pem_private_key(raw, password=None)\n            keys = {\"worker_read\": \"PermissionError\", \"at_rest\": \"encrypted\", \"usable_without_passphrase\": False}\n        else:\n>           pytest.fail(f\"verifier signing key {key} not found: the build controller protection is not installed\")\nE           Failed: verifier signing key /etc/atta-verifier/build_signing_ed25519.pem not found: the build controller protection is not installed\n\ntests/acceptance/test_s01b_acceptance.py:1128: Failed\n________ test_S01B_T43_h100_hardware_tests_pass_only_on_actual_hardware ________\n\ntmp_path = PosixPath('/tmp/pytest-of-root/pytest-126/test_S01B_T43_h100_hardware_te0')\n\n    @pytest.mark.qualification_wrapper\n    def test_S01B_T43_h100_hardware_tests_pass_only_on_actual_hardware(tmp_path):\n        \"\"\"H100 only (the build controller records it BLOCKED elsewhere). Runs the real H100 qualification suite.\"\"\"\n        g = discovery.nvidia_gpus()\n        h100 = [x for x in g[\"gpus\"] if \"H100\" in x[\"name\"].upper() and x[\"vram_mb\"] >= 79 * 1024]\n        if not h100:\n>           pytest.fail(\"no H100 present: this test must be recorded BLOCKED by the verifier, never PASS\")\nE           Failed: no H100 present: this test must be recorded BLOCKED by the verifier, never PASS\n\ntests/acceptance/test_s01b_acceptance.py:1151: Failed\n=========================== short test summary info ============================\nFAILED tests/acceptance/test_s01b_acceptance.py::test_S01B_T36_legacy_atta_regression_suite\nFAILED tests/acceptance/test_s01b_acceptance.py::test_S01B_T37_stage01_regression_suite\nFAILED tests/acceptance/test_s01b_acceptance.py::test_S01B_T38_stage01a_regression_suite\nFAILED tests/acceptance/test_s01b_acceptance.py::test_S01B_T41_windows_specific_tests\nFAILED tests/acceptance/test_s01b_acceptance.py::test_S01B_T42_linux_specific_tests\nFAILED tests/acceptance/test_s01b_acceptance.py::test_S01B_T43_h100_hardware_tests_pass_only_on_actual_hardware\n6 failed, 39 passed in 534.59s (0:08:54)"
+}

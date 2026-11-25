@@ -5,13 +5,13 @@
   "--ignore=tests/integrations/test_stage12_installer.py"
  ],
  "exit_code": 0,
- "started": "2026-11-25T08:33:25Z",
- "duration_s": 539.3,
+ "started": "2026-11-25T09:32:45Z",
+ "duration_s": 516.4,
  "counts": {
   "passed": 45
  },
  "failed": [],
  "skipped": [],
- "output_sha256": "da6ff21ada198c447c24fea99b32efc2a8737b6a86a341ddd24cc2b88183f5b6",
- "output_tail": ".............................................                            [100%]\n=============================== warnings summary ===============================\n../../../home/user/ATTa/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1\n  /home/user/ATTa/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n45 passed, 1 warning in 538.67s (0:08:58)"
+ "output_sha256": "dff4750259f26736b9e462ab8a50fe7deed4ccf40dc13ca0b3f40425764c45c4",
+ "output_tail": ".............................................                            [100%]\n=============================== warnings summary ===============================\n../../../home/user/ATTa/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1\n  /home/user/ATTa/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n45 passed, 1 warning in 515.84s (0:08:35)"
 }

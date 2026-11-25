@@ -2,8 +2,8 @@
  "trial": "stage01b",
  "worker": "Worker A \u2014 Stage 01B (supplied package 416ca30)",
  "ref": "416ca300e9aa28f6e5a423b571366cbe67dc3559",
- "sidecar_commit": "a10660c0dfcb952f96d2f76d4d2131041ed54752",
- "recorded": "2026-11-25T07:55:52Z",
+ "sidecar_commit": "86ffda70ce8370604e87d48704792a4c10994ccc",
+ "recorded": "2026-11-25T08:53:51Z",
  "phases": {
   "pre": {
    "tree_commit": "416ca300e9aa28f6e5a423b571366cbe67dc3559",
@@ -16,14 +16,14 @@
       "tests/integration"
      ],
      "exit_code": 0,
-     "started": "2026-11-25T07:55:52Z",
-     "duration_s": 3.5,
+     "started": "2026-11-25T08:53:51Z",
+     "duration_s": 14.0,
      "counts": {
       "passed": 43
      },
      "failed": [],
      "skipped": [],
-     "output_sha256": "94d8d987626adf9e8a788ca6ecb4c4a5bf9db12b6c868507db174dd453bda3f3"
+     "output_sha256": "2338ff333ebe19962566457cf8bf8ba44fe9789432e83dc065bb1050c5e9f1ea"
     },
     "S01A-A": {
      "suite": "S01A-A",
@@ -31,14 +31,14 @@
       "tests/acceptance/test_s01a_acceptance.py"
      ],
      "exit_code": 0,
-     "started": "2026-11-25T07:55:56Z",
-     "duration_s": 96.0,
+     "started": "2026-11-25T08:54:05Z",
+     "duration_s": 105.1,
      "counts": {
       "passed": 27
      },
      "failed": [],
      "skipped": [],
-     "output_sha256": "01a9c99646619dfd6eecb4abdbc00f9b942f5a48acc5620df03f91b1d72249ef"
+     "output_sha256": "1ba726d3f84e2bf072042b63bef04c5102ad59d770cbc675cd0aa542e2ba1fe5"
     },
     "S01A-B": {
      "suite": "S01A-B",
@@ -46,8 +46,8 @@
       "tests/acceptance/test_s01a_acceptance_b.py"
      ],
      "exit_code": 1,
-     "started": "2026-11-25T07:57:32Z",
-     "duration_s": 294.3,
+     "started": "2026-11-25T08:55:50Z",
+     "duration_s": 310.7,
      "counts": {
       "failed": 1,
       "passed": 25
@@ -56,7 +56,7 @@
       "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T51_worker_cannot_alter_protected_verification_criteria"
      ],
      "skipped": [],
-     "output_sha256": "eb2dbaea0f76726f85d548d40983faea3200b98cd5d0553a6f328ee2592d8c76"
+     "output_sha256": "2971962994118d9ff716868b45abd87387a3562fd59b7b8808ca04f04c9e0b57"
     },
     "S01": {
      "suite": "S01",
@@ -64,8 +64,8 @@
       "tests/acceptance/test_s01_acceptance.py"
      ],
      "exit_code": 1,
-     "started": "2026-11-25T08:02:26Z",
-     "duration_s": 163.9,
+     "started": "2026-11-25T09:01:01Z",
+     "duration_s": 168.1,
      "counts": {
       "failed": 5,
       "passed": 11
@@ -78,7 +78,7 @@
       "tests/acceptance/test_s01_acceptance.py::test_S01_T13_protected_operations_default_to_deny"
      ],
      "skipped": [],
-     "output_sha256": "8844550eb2f14b28c3a578b8577bc38f5651b91233b6c54cb5edfd9700c87d1c"
+     "output_sha256": "0a5834c3c2fe41cae368a2f7474af4ad9ff3cf7914f528802a1baf375b5f18e4"
     },
     "S01B": {
      "suite": "S01B",
@@ -86,8 +86,8 @@
       "tests/acceptance/test_s01b_acceptance.py"
      ],
      "exit_code": 1,
-     "started": "2026-11-25T08:05:10Z",
-     "duration_s": 535.2,
+     "started": "2026-11-25T09:03:49Z",
+     "duration_s": 557.7,
      "counts": {
       "failed": 6,
       "passed": 39
@@ -101,7 +101,7 @@
       "tests/acceptance/test_s01b_acceptance.py::test_S01B_T43_h100_hardware_tests_pass_only_on_actual_hardware"
      ],
      "skipped": [],
-     "output_sha256": "4192873399c1f91832bd1f4e1f21cbd41a795358133a85814f6e127abaddefeb"
+     "output_sha256": "0fec995b295db9fc16544627fc562cf1d2ef05e9c2f867308fb14af345c60443"
     }
    },
    "migrate": [
@@ -119,14 +119,14 @@
       "tests/integration"
      ],
      "exit_code": 0,
-     "started": "2026-11-25T08:14:09Z",
-     "duration_s": 10.9,
+     "started": "2026-11-25T09:13:11Z",
+     "duration_s": 12.1,
      "counts": {
       "passed": 43
      },
      "failed": [],
      "skipped": [],
-     "output_sha256": "b13469cfe2a3617c1ebc35112467588b08ada5b34f3fbe9108ebbdacd8eaa522"
+     "output_sha256": "b5779de2c87b6f77c163fe35f26276372fc3022efddb55200142a3466eee41cc"
     },
     "S01A-A": {
      "suite": "S01A-A",
@@ -134,14 +134,14 @@
       "tests/acceptance/test_s01a_acceptance.py"
      ],
      "exit_code": 0,
-     "started": "2026-11-25T08:14:20Z",
-     "duration_s": 97.4,
+     "started": "2026-11-25T09:13:23Z",
+     "duration_s": 110.1,
      "counts": {
       "passed": 27
      },
      "failed": [],
      "skipped": [],
-     "output_sha256": "79ec27c201832fa8cf74f1882faddff1424240c5224d7fbe47b6129c778516d4"
+     "output_sha256": "b295f79d3b3a5214727f801b9e028d33b5232c90ee981591e31dbd163c095f5d"
     },
     "S01A-B": {
      "suite": "S01A-B",
@@ -149,8 +149,8 @@
       "tests/acceptance/test_s01a_acceptance_b.py"
      ],
      "exit_code": 1,
-     "started": "2026-11-25T08:15:58Z",
-     "duration_s": 316.4,
+     "started": "2026-11-25T09:15:13Z",
+     "duration_s": 323.8,
      "counts": {
       "failed": 1,
       "passed": 25
@@ -159,7 +159,7 @@
       "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T51_worker_cannot_alter_protected_verification_criteria"
      ],
      "skipped": [],
-     "output_sha256": "6750c20584f1109d2346d7d09d962b16181eb063b3f99e74a71c55973abc1d61"
+     "output_sha256": "f271ab1d3306b479bd16307faf3d9a830ad8f85e8e07e8864a48b1383727ad3a"
     },
     "S01": {
      "suite": "S01",
@@ -167,8 +167,8 @@
       "tests/acceptance/test_s01_acceptance.py"
      ],
      "exit_code": 1,
-     "started": "2026-11-25T08:21:14Z",
-     "duration_s": 169.3,
+     "started": "2026-11-25T09:20:37Z",
+     "duration_s": 174.9,
      "counts": {
       "failed": 5,
       "passed": 11
@@ -181,7 +181,7 @@
       "tests/acceptance/test_s01_acceptance.py::test_S01_T13_protected_operations_default_to_deny"
      ],
      "skipped": [],
-     "output_sha256": "bbdc25bbb2dff79a433134aba3596e2ca418bce9a28f6eb2255c49a22a1a9d13"
+     "output_sha256": "e6a6fb335e69f8320f7b6172790ba0425a91d68aafdedef30d9fc30e1c23df09"
     },
     "S01B": {
      "suite": "S01B",
@@ -189,16 +189,13 @@
       "tests/acceptance/test_s01b_acceptance.py"
      ],
      "exit_code": 1,
-     "started": "2026-11-25T08:24:03Z",
-     "duration_s": 561.9,
+     "started": "2026-11-25T09:23:32Z",
+     "duration_s": 553.2,
      "counts": {
-      "failed": 9,
-      "passed": 36
+      "failed": 6,
+      "passed": 39
      },
      "failed": [
-      "tests/acceptance/test_s01b_acceptance.py::test_S01B_T18_dependency_lock_validation",
-      "tests/acceptance/test_s01b_acceptance.py::test_S01B_T23_isolated_filesystem_workspace",
-      "tests/acceptance/test_s01b_acceptance.py::test_S01B_T24_production_state_remains_unchanged_by_qualification",
       "tests/acceptance/test_s01b_acceptance.py::test_S01B_T36_legacy_atta_regression_suite",
       "tests/acceptance/test_s01b_acceptance.py::test_S01B_T37_stage01_regression_suite",
       "tests/acceptance/test_s01b_acceptance.py::test_S01B_T38_stage01a_regression_suite",
@@ -207,7 +204,7 @@
       "tests/acceptance/test_s01b_acceptance.py::test_S01B_T43_h100_hardware_tests_pass_only_on_actual_hardware"
      ],
      "skipped": [],
-     "output_sha256": "f63089c2ddb79bfcf47647214fd035053519d5effc497fb7b49ee94e9ca162a9"
+     "output_sha256": "b10824699f238285d5df08ac1bf8051ef790eb560787e91275081ad0a49f9699"
     },
     "S12": {
      "suite": "S12",
@@ -216,22 +213,22 @@
       "--ignore=tests/integrations/test_stage12_installer.py"
      ],
      "exit_code": 0,
-     "started": "2026-11-25T08:33:25Z",
-     "duration_s": 539.3,
+     "started": "2026-11-25T09:32:45Z",
+     "duration_s": 516.4,
      "counts": {
       "passed": 45
      },
      "failed": [],
      "skipped": [],
-     "output_sha256": "da6ff21ada198c447c24fea99b32efc2a8737b6a86a341ddd24cc2b88183f5b6"
+     "output_sha256": "dff4750259f26736b9e462ab8a50fe7deed4ccf40dc13ca0b3f40425764c45c4"
     }
    },
    "install": {
     "target": "/tmp/atta-stage12-trials/stage01b-post",
-    "version": "12.1.0+a10660c",
+    "version": "12.1.0+86ffda7",
     "mode": "install",
     "plan": {
-     "create": 146,
+     "create": 158,
      "derived": 1,
      "gitignore": 1,
      "hunk": 19,
@@ -239,7 +236,7 @@
     },
     "migration": "database/migrations/0012_stage12_integrations.sql",
     "status": "INSTALLED",
-    "transaction": "txn-20261125T081408-25897",
+    "transaction": "txn-20261125T091310-10810",
     "exit_code": 0
    },
    "migrate": [
@@ -252,11 +249,7 @@
   "S01A-A": [],
   "S01A-B": [],
   "S01": [],
-  "S01B": [
-   "tests/acceptance/test_s01b_acceptance.py::test_S01B_T18_dependency_lock_validation",
-   "tests/acceptance/test_s01b_acceptance.py::test_S01B_T23_isolated_filesystem_workspace",
-   "tests/acceptance/test_s01b_acceptance.py::test_S01B_T24_production_state_remains_unchanged_by_qualification"
-  ]
+  "S01B": []
  },
  "fixed_or_changed": {
   "UNIT": [],

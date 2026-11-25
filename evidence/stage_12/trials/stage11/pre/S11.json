@@ -1,0 +1,16 @@
+{
+ "suite": "S11",
+ "args": [
+  "tests/research"
+ ],
+ "exit_code": 0,
+ "started": "2026-11-25T09:50:55Z",
+ "duration_s": 219.3,
+ "counts": {
+  "passed": 117
+ },
+ "failed": [],
+ "skipped": [],
+ "output_sha256": "6498d37ceb251790588e031c04a2e9c7367c2506a3e1af081d2334f68d9ff83a",
+ "output_tail": "........................................................................ [ 61%]\n.............................................                            [100%]\n=============================== warnings summary ===============================\n../../../home/user/ATTa/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1\n  /home/user/ATTa/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n117 passed, 1 warning in 218.61s (0:03:38)"
+}
