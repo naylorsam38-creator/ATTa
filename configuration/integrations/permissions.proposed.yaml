@@ -1,0 +1,14 @@
+# PROPOSED permission catalog additions for Stage 12 integrations (NOT loaded into the policy engine).
+# configuration/permissions.yaml is a protected, sealed file: these entries become real only when the operator
+# adds them there and re-seals (see STAGE_12_MERGE_MANIFEST.md). None of them is controller-granted by Stage 12;
+# medium/high/critical tools additionally need Stage 02 human approval.
+permissions:
+  integration.connector.read: Read/search data through an installed connector (READ, SEARCH)
+  integration.connector.write: Create/update data through an installed connector (CREATE, UPDATE)
+  integration.connector.delete: Delete data through an installed connector (DELETE)
+  integration.connector.send: Send messages/communications through an installed connector (SEND)
+  integration.connector.admin: Administrative operations through an installed connector (ADMINISTRATIVE)
+  integration.mcp.call: Call a tool of an installed MCP server
+  integration.mcp.resource.read: Read a resource of an installed MCP server
+  integration.plugin.execute: Execute a tool contributed by an installed plugin
+  integration.provider.execute: Execute a tool of an installed custom capability provider

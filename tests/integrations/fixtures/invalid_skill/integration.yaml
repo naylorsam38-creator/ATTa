@@ -1,0 +1,60 @@
+manifest_version: 1
+integration_id: test.broken_skill
+integration_type: SKILL
+name: Find notes skill (fixture)
+version: 1.0.0
+provider:
+  name: ATTa test fixtures
+description: Skill that searches notes with the connector.
+compatibility:
+  integration_api: '1'
+execution_mode: DECLARATIVE
+tools: []
+permissions_requested: []
+network_requirements:
+  hosts: []
+credential_requirements: []
+configuration_schema:
+  type: object
+  properties: {}
+dependencies:
+  integrations: []
+  python: []
+skill:
+  skill_id: find_notes
+  instructions: SKILL.md
+  templates:
+  - templates/report.md
+  tool_references:
+  - test.notes_connector:search
+  - test.missing_integration:tool
+  workflows:
+  - id: find_notes
+    version: 1.0.0
+    kind: script
+    description: Search the notes file for a query.
+    parameters:
+      type: object
+      additionalProperties: false
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          minLength: 1
+          maxLength: 100
+    steps:
+    - tool: test.missing_integration:tool
+      operation: search
+      arguments:
+        path: notes.json
+        query: '{{query}}'
+  validation_rules:
+  - rule: query must be non-empty
+  examples:
+  - query: budget
+capabilities: []
+integrity:
+  files:
+    SKILL.md: 6a495467f326d2dedd118934fb6d2039b6db8077795bb0b1b119ec070ce510d9
+    templates/report.md: 32c27fc7a853be90aeeb537980c68727fb58238be0455b0d1faa775032e64342

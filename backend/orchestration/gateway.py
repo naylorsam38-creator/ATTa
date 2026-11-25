@@ -16,7 +16,7 @@ import time
 from dataclasses import dataclass, field
 from datetime import timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from jsonschema import Draft202012Validator
 
@@ -78,6 +78,11 @@ class ExecutionGateway:
         self.runtime, self.config, self.attestor = runtime, config, attestor
         self.controller_id, self.workspace_root = controller_id, workspace_root
         self.drift = DriftGuard(config.limits.no_progress_window, config.protected_path_prefixes)
+        # Stage 12 extension points (empty = Stage 01A behaviour). Guards can only REFUSE an action (return a
+        # Violation); filters can only keep or REJECT a validated output (return (output, error)). Neither can skip a
+        # step, grant anything or change the contract.
+        self.guards: list[Callable[..., Violation | None]] = []
+        self.result_filters: list[Callable[..., tuple[Any, dict | None]]] = []
         self._gateway_key = Attestor()
         runtime.bind_gateway(self._gateway_key)
         policy.register_attestor(attestor)
@@ -153,6 +158,13 @@ class ExecutionGateway:
         except CapabilityNotExecutable as exc:
             return self._reject(ctx, proposal.proposal_id, [Violation("capability_unavailable", "tool_id", exc.message)],
                                 "capability not executable")
+        for guard in self.guards:     # 9b. extension guards (Stage 12: integration state, version pin, network)
+            try:
+                v = guard(ctx=ctx, contract=c, tool=tool, proposal=proposal)
+            except Exception as exc:  # noqa: BLE001 — a failing guard refuses, it never allows
+                v = Violation("guard_error", "tool_id", f"{type(exc).__name__}: {exc}"[:300])
+            if v is not None:
+                return self._reject(ctx, proposal.proposal_id, [v], f"guard refused: {v.rule}")
         # 11. budgets + deadline
         started = self._task_started(ctx.objective_id, ctx.task_id, ctx.attempt_id) or time.time()
         remaining_s = min(c.execution_deadline, self.config.limits.max_task_duration_s) - (time.time() - started)
@@ -264,6 +276,15 @@ class ExecutionGateway:
                 state, error, output = "failed", {"status": "invalid_output", "errors": errs[:5]}, None
             elif dir_size_mb(workspace) > c.resource_budget.disk_mb:
                 state, error = "failed", {"status": "disk_budget_exceeded", "limit_mb": c.resource_budget.disk_mb}
+            for flt in self.result_filters if state == "succeeded" else ():   # 16b. extension result filters
+                try:
+                    output, ferr = flt(tool=tool, proposal=proposal, output=output, execution_id=execution_id,
+                                       ctx=ctx)
+                except Exception as exc:  # noqa: BLE001 — a failing filter rejects the output
+                    ferr = {"status": "result_filter_error", "error": f"{type(exc).__name__}: {exc}"[:300]}
+                if ferr is not None:
+                    state, error, output = "failed", ferr, None
+                    break
         # 17. record result and evidence
         out_hash = canonical_hash(output) if output is not None else None
         evidence = {"execution_id": execution_id, "proposal_id": proposal.proposal_id, "tool_id": proposal.tool_id,

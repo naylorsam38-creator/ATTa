@@ -1,0 +1,198 @@
+manifest_version: 1
+integration_id: test.notes_connector
+integration_type: CONNECTOR
+name: Notes connector (fixture)
+version: 1.0.0
+provider:
+  name: ATTa test fixtures
+description: Test fixture connector over a local JSON notes file.
+compatibility:
+  integration_api: '1'
+execution_mode: SUPERVISED_PROCESS
+capabilities:
+- id: fixture
+  description: Fixture capability
+tools:
+- name: search
+  description: Search notes by text in a notes file.
+  side_effect: READ_ONLY
+  operations:
+  - search
+  task_types:
+  - connector.notes
+  input_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - path
+    - query
+    properties:
+      path: &id001
+        type: string
+        minLength: 1
+        maxLength: 200
+      query:
+        type: string
+        maxLength: 200
+  output_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - matches
+    - count
+    properties:
+      matches:
+        type: array
+        items:
+          type: object
+      count:
+        type: integer
+  error_schema: &id002
+    type: object
+    required:
+    - error
+    properties:
+      error:
+        type: string
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  handler: provider:search
+  connector_operation: SEARCH
+  resource_scope: &id003
+    resource_types:
+    - notes
+    path_arguments:
+    - path
+  capability: fixture
+- name: read
+  description: Read one note by its identifier.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types:
+  - connector.notes
+  input_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - path
+    - note_id
+    properties:
+      path: *id001
+      note_id:
+        type: string
+        maxLength: 50
+  output_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - note
+    properties:
+      note:
+        type: object
+  error_schema: *id002
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  handler: provider:read
+  connector_operation: READ
+  resource_scope: *id003
+  capability: fixture
+- name: create
+  description: Create a note in the notes file.
+  side_effect: REVERSIBLE_WRITE
+  operations:
+  - create
+  task_types:
+  - connector.notes
+  input_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - path
+    - title
+    - body
+    properties:
+      path: *id001
+      title:
+        type: string
+      body:
+        type: string
+  output_schema:
+    type: object
+    required:
+    - created
+    properties:
+      created:
+        type: string
+  error_schema: *id002
+  permissions:
+  - workspace.write
+  risk: medium
+  timeout_s: 10
+  cancellable: true
+  idempotency: non_idempotent
+  handler: provider:create
+  connector_operation: CREATE
+  resource_scope: *id003
+  capability: fixture
+- name: send
+  description: Send a note to a recipient (simulated).
+  side_effect: EXTERNAL_COMMUNICATION
+  operations:
+  - send
+  task_types:
+  - connector.notes
+  input_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - to
+    - text
+    properties:
+      to:
+        type: string
+      text:
+        type: string
+  output_schema:
+    type: object
+    required:
+    - sent
+    properties:
+      sent:
+        type: boolean
+  error_schema: *id002
+  permissions:
+  - external.simulated
+  risk: high
+  timeout_s: 10
+  cancellable: true
+  idempotency: external_uncertain
+  handler: provider:send
+  connector_operation: SEND
+  capability: fixture
+permissions_requested:
+- workspace.read
+- workspace.write
+- external.simulated
+network_requirements:
+  hosts: []
+credential_requirements: []
+configuration_schema:
+  type: object
+  properties: {}
+dependencies:
+  integrations: []
+  python: []
+health:
+  handler: provider:healthcheck
+integrity:
+  files:
+    provider.py: 49ea2cadc0c38630376e55525678e460d776705589cb4aecd9630c4a50515903

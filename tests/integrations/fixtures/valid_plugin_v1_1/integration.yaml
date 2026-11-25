@@ -1,0 +1,163 @@
+manifest_version: 1
+integration_id: test.text_plugin
+integration_type: PLUGIN
+name: Text plugin (fixture)
+version: 1.1.0
+provider:
+  name: ATTa test fixtures
+description: Test fixture plugin with text tools.
+compatibility:
+  integration_api: '1'
+execution_mode: SUPERVISED_PROCESS
+capabilities:
+- id: fixture
+  description: Fixture capability
+tools:
+- name: summarize
+  description: Summarise text to its first words.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: &id001
+  - plugin.text
+  input_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - text
+    properties:
+      text:
+        type: string
+        maxLength: 100000
+      max_words:
+        type: integer
+  output_schema: &id002
+    type: object
+    required:
+    - summary
+    - words
+    properties:
+      summary:
+        type: string
+      words:
+        type: integer
+      version:
+        type: string
+  error_schema: &id003
+    type: object
+    required:
+    - error
+    properties:
+      error:
+        type: string
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  handler: plugin:summarize
+  capability: fixture
+- name: poison
+  description: Return output containing hostile instructions.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: *id001
+  input_schema: &id004
+    type: object
+    additionalProperties: false
+    properties: {}
+  output_schema: *id002
+  error_schema: *id003
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  handler: plugin:poison
+  capability: fixture
+- name: large
+  description: Return an oversized output.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: *id001
+  input_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - size
+    properties:
+      size:
+        type: integer
+        minimum: 1
+  output_schema: *id002
+  error_schema: *id003
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  handler: plugin:large
+  max_result_bytes: 4096
+  capability: fixture
+- name: bad_output
+  description: Return output that violates its schema.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: *id001
+  input_schema: *id004
+  output_schema: *id002
+  error_schema: *id003
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  handler: plugin:bad_output
+  capability: fixture
+permissions_requested:
+- workspace.read
+network_requirements:
+  hosts: []
+credential_requirements: []
+configuration_schema:
+  type: object
+  properties: {}
+dependencies:
+  integrations: []
+  python: []
+plugin:
+  contributes:
+    ui_extensions:
+    - id: text-plugin-panel
+      slot: integration.panel
+      title: Text tools
+    workflows:
+    - id: summarise_note
+      version: 1.0.0
+      kind: workflow
+      description: Summarise a note text.
+      parameters:
+        type: object
+        properties:
+          text:
+            type: string
+      steps:
+      - tool: test.text_plugin:summarize
+        operation: read
+        arguments:
+          text: '{{text}}'
+    schemas:
+      summary: *id002
+    providers:
+    - id: text.provider
+      kind: capability_provider
+integrity:
+  files:
+    plugin.py: e66e24168c0da35dce0acf16cde703d45c585091f188faf757c51d65982ee1b6

@@ -1,0 +1,725 @@
+{
+  "AuthorizedRequest": {
+    "$defs": {
+      "OperatorAuthorizationIn": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "expires_at": {
+            "title": "Expires At",
+            "type": "number"
+          },
+          "operator": {
+            "title": "Operator",
+            "type": "string"
+          },
+          "payload_hash": {
+            "title": "Payload Hash",
+            "type": "string"
+          },
+          "signature": {
+            "title": "Signature",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "subject",
+          "payload_hash",
+          "operator",
+          "expires_at",
+          "signature"
+        ],
+        "title": "OperatorAuthorizationIn",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "authorization": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/OperatorAuthorizationIn"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "title": "AuthorizedRequest",
+    "type": "object"
+  },
+  "DisableRequest": {
+    "additionalProperties": false,
+    "properties": {
+      "reason": {
+        "default": "disabled by administrator",
+        "maxLength": 500,
+        "title": "Reason",
+        "type": "string"
+      }
+    },
+    "title": "DisableRequest",
+    "type": "object"
+  },
+  "InstallRequest": {
+    "$defs": {
+      "OperatorAuthorizationIn": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "expires_at": {
+            "title": "Expires At",
+            "type": "number"
+          },
+          "operator": {
+            "title": "Operator",
+            "type": "string"
+          },
+          "payload_hash": {
+            "title": "Payload Hash",
+            "type": "string"
+          },
+          "signature": {
+            "title": "Signature",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "subject",
+          "payload_hash",
+          "operator",
+          "expires_at",
+          "signature"
+        ],
+        "title": "OperatorAuthorizationIn",
+        "type": "object"
+      },
+      "TrustClass": {
+        "enum": [
+          "CORE",
+          "TRUSTED",
+          "RESTRICTED",
+          "UNTRUSTED",
+          "DISABLED"
+        ],
+        "title": "TrustClass",
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "authorization": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/OperatorAuthorizationIn"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "source": {
+        "title": "Source",
+        "type": "string"
+      },
+      "trust_class": {
+        "$ref": "#/$defs/TrustClass",
+        "default": "TRUSTED"
+      }
+    },
+    "required": [
+      "source"
+    ],
+    "title": "InstallRequest",
+    "type": "object"
+  },
+  "IntegrationDetail": {
+    "$defs": {
+      "ToolInfo": {
+        "additionalProperties": false,
+        "properties": {
+          "approval_required": {
+            "title": "Approval Required",
+            "type": "boolean"
+          },
+          "available": {
+            "title": "Available",
+            "type": "boolean"
+          },
+          "cancellable": {
+            "title": "Cancellable",
+            "type": "boolean"
+          },
+          "connector_operation": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Connector Operation"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "error_schema": {
+            "additionalProperties": true,
+            "title": "Error Schema",
+            "type": "object"
+          },
+          "input_schema": {
+            "additionalProperties": true,
+            "title": "Input Schema",
+            "type": "object"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "operations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Operations",
+            "type": "array"
+          },
+          "output_schema": {
+            "additionalProperties": true,
+            "title": "Output Schema",
+            "type": "object"
+          },
+          "permissions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Permissions",
+            "type": "array"
+          },
+          "risk": {
+            "title": "Risk",
+            "type": "string"
+          },
+          "side_effect": {
+            "title": "Side Effect",
+            "type": "string"
+          },
+          "string_id": {
+            "title": "String Id",
+            "type": "string"
+          },
+          "task_types": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Task Types",
+            "type": "array"
+          },
+          "timeout_s": {
+            "title": "Timeout S",
+            "type": "number"
+          },
+          "tool_id": {
+            "title": "Tool Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tool_id",
+          "string_id",
+          "name",
+          "description",
+          "side_effect",
+          "operations",
+          "task_types",
+          "risk",
+          "permissions",
+          "input_schema",
+          "output_schema",
+          "error_schema",
+          "timeout_s",
+          "cancellable",
+          "approval_required",
+          "available"
+        ],
+        "title": "ToolInfo",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "capabilities": {
+        "items": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "title": "Capabilities",
+        "type": "array"
+      },
+      "configuration_schema": {
+        "additionalProperties": true,
+        "title": "Configuration Schema",
+        "type": "object"
+      },
+      "credential_refs": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Credential Refs",
+        "type": "array"
+      },
+      "credential_requirements": {
+        "items": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "title": "Credential Requirements",
+        "type": "array"
+      },
+      "description": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Description"
+      },
+      "enabled": {
+        "title": "Enabled",
+        "type": "boolean"
+      },
+      "execution_mode": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Execution Mode"
+      },
+      "installed_at": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Installed At"
+      },
+      "integration_id": {
+        "title": "Integration Id",
+        "type": "string"
+      },
+      "integration_type": {
+        "title": "Integration Type",
+        "type": "string"
+      },
+      "integrity": {
+        "additionalProperties": true,
+        "title": "Integrity",
+        "type": "object"
+      },
+      "manifest_version": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Manifest Version"
+      },
+      "name": {
+        "title": "Name",
+        "type": "string"
+      },
+      "network_requirements": {
+        "additionalProperties": true,
+        "title": "Network Requirements",
+        "type": "object"
+      },
+      "permissions_requested": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Permissions Requested",
+        "type": "array"
+      },
+      "problems": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Problems",
+        "type": "array"
+      },
+      "provider": {
+        "title": "Provider",
+        "type": "string"
+      },
+      "risk_class": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Risk Class"
+      },
+      "state": {
+        "title": "State",
+        "type": "string"
+      },
+      "tools": {
+        "items": {
+          "$ref": "#/$defs/ToolInfo"
+        },
+        "title": "Tools",
+        "type": "array"
+      },
+      "trust_class": {
+        "title": "Trust Class",
+        "type": "string"
+      },
+      "updated_at": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Updated At"
+      },
+      "version": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Version"
+      }
+    },
+    "required": [
+      "integration_id",
+      "integration_type",
+      "name",
+      "provider",
+      "version",
+      "state",
+      "trust_class",
+      "enabled"
+    ],
+    "title": "IntegrationDetail",
+    "type": "object"
+  },
+  "IntegrationSummary": {
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "title": "Enabled",
+        "type": "boolean"
+      },
+      "installed_at": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Installed At"
+      },
+      "integration_id": {
+        "title": "Integration Id",
+        "type": "string"
+      },
+      "integration_type": {
+        "title": "Integration Type",
+        "type": "string"
+      },
+      "name": {
+        "title": "Name",
+        "type": "string"
+      },
+      "provider": {
+        "title": "Provider",
+        "type": "string"
+      },
+      "state": {
+        "title": "State",
+        "type": "string"
+      },
+      "trust_class": {
+        "title": "Trust Class",
+        "type": "string"
+      },
+      "updated_at": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Updated At"
+      },
+      "version": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Version"
+      }
+    },
+    "required": [
+      "integration_id",
+      "integration_type",
+      "name",
+      "provider",
+      "version",
+      "state",
+      "trust_class",
+      "enabled"
+    ],
+    "title": "IntegrationSummary",
+    "type": "object"
+  },
+  "OperatorAuthorizationIn": {
+    "additionalProperties": false,
+    "properties": {
+      "action": {
+        "title": "Action",
+        "type": "string"
+      },
+      "expires_at": {
+        "title": "Expires At",
+        "type": "number"
+      },
+      "operator": {
+        "title": "Operator",
+        "type": "string"
+      },
+      "payload_hash": {
+        "title": "Payload Hash",
+        "type": "string"
+      },
+      "signature": {
+        "title": "Signature",
+        "type": "string"
+      },
+      "subject": {
+        "title": "Subject",
+        "type": "string"
+      }
+    },
+    "required": [
+      "action",
+      "subject",
+      "payload_hash",
+      "operator",
+      "expires_at",
+      "signature"
+    ],
+    "title": "OperatorAuthorizationIn",
+    "type": "object"
+  },
+  "ToolInfo": {
+    "additionalProperties": false,
+    "properties": {
+      "approval_required": {
+        "title": "Approval Required",
+        "type": "boolean"
+      },
+      "available": {
+        "title": "Available",
+        "type": "boolean"
+      },
+      "cancellable": {
+        "title": "Cancellable",
+        "type": "boolean"
+      },
+      "connector_operation": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Connector Operation"
+      },
+      "description": {
+        "title": "Description",
+        "type": "string"
+      },
+      "error_schema": {
+        "additionalProperties": true,
+        "title": "Error Schema",
+        "type": "object"
+      },
+      "input_schema": {
+        "additionalProperties": true,
+        "title": "Input Schema",
+        "type": "object"
+      },
+      "name": {
+        "title": "Name",
+        "type": "string"
+      },
+      "operations": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Operations",
+        "type": "array"
+      },
+      "output_schema": {
+        "additionalProperties": true,
+        "title": "Output Schema",
+        "type": "object"
+      },
+      "permissions": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Permissions",
+        "type": "array"
+      },
+      "risk": {
+        "title": "Risk",
+        "type": "string"
+      },
+      "side_effect": {
+        "title": "Side Effect",
+        "type": "string"
+      },
+      "string_id": {
+        "title": "String Id",
+        "type": "string"
+      },
+      "task_types": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Task Types",
+        "type": "array"
+      },
+      "timeout_s": {
+        "title": "Timeout S",
+        "type": "number"
+      },
+      "tool_id": {
+        "title": "Tool Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "tool_id",
+      "string_id",
+      "name",
+      "description",
+      "side_effect",
+      "operations",
+      "task_types",
+      "risk",
+      "permissions",
+      "input_schema",
+      "output_schema",
+      "error_schema",
+      "timeout_s",
+      "cancellable",
+      "approval_required",
+      "available"
+    ],
+    "title": "ToolInfo",
+    "type": "object"
+  },
+  "ValidateRequest": {
+    "$defs": {
+      "TrustClass": {
+        "enum": [
+          "CORE",
+          "TRUSTED",
+          "RESTRICTED",
+          "UNTRUSTED",
+          "DISABLED"
+        ],
+        "title": "TrustClass",
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "source": {
+        "title": "Source",
+        "type": "string"
+      },
+      "trust_class": {
+        "$ref": "#/$defs/TrustClass",
+        "default": "TRUSTED"
+      }
+    },
+    "required": [
+      "source"
+    ],
+    "title": "ValidateRequest",
+    "type": "object"
+  },
+  "_note": {
+    "default": "DENY until Stage 02",
+    "routes": "backend/integrations/api.py",
+    "stage": "S12 sidecar"
+  }
+}

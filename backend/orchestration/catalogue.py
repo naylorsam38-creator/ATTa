@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Callable
 
 from backend.capability_registry import CapabilityRegistry, ToolSpec
 from backend.capability_registry.numbering import NumberingError, capability_number, load_numbers, reconcile_with_store
@@ -28,9 +29,28 @@ class CatalogueTool:
                 "version": s.version, "available": self.available, "availability": self.availability}
 
 
+def merge_extra_numbers(entries: dict, extra: dict) -> list[str]:
+    """Merge additional permanent numbers into `entries` (in place). Returns collisions; never re-points a number."""
+    problems = []
+    by_tool = {e.tool: n for n, e in entries.items()}
+    for n, e in sorted(extra.items()):
+        if n in entries and entries[n].tool != e.tool:
+            problems.append(f"tool number {n} is claimed by both {entries[n].tool} and {e.tool}")
+        elif e.tool in by_tool and by_tool[e.tool] != n:
+            problems.append(f"tool {e.tool} has two numbers: {by_tool[e.tool]} and {n}")
+        else:
+            entries[n] = e
+            by_tool[e.tool] = n
+    return problems
+
+
 class ToolCatalogue:
-    def __init__(self, registry: CapabilityRegistry, numbers_file: Path, db: Database, namespace: str = "default"):
+    def __init__(self, registry: CapabilityRegistry, numbers_file: Path, db: Database, namespace: str = "default",
+                 extra_numbers: Callable[[], dict] | None = None):
         self.registry, self.numbers_file, self.db, self.namespace = registry, numbers_file, db, namespace
+        # Stage 12: permanent numbers assigned to installed integration tools (TTT 500-899), merged with the operator
+        # file. None (the default) keeps the Stage 01A behaviour exactly.
+        self.extra_numbers = extra_numbers
         self.problems: list[str] = []
         self._by_number: dict[str, CatalogueTool] = {}
         self._unnumbered: list[str] = []
@@ -42,6 +62,11 @@ class ToolCatalogue:
         except NumberingError as exc:
             self.problems = [str(exc)]
             return self
+        if self.extra_numbers is not None:
+            clash = merge_extra_numbers(entries, self.extra_numbers())
+            if clash:
+                self.problems = clash
+                return self   # an inconsistent numbering makes NO tool allocatable
         with self.db.tx() as x:
             problems = reconcile_with_store(entries, x, self.namespace)
         if problems:

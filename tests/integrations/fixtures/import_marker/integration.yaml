@@ -1,0 +1,69 @@
+manifest_version: 1
+integration_id: test.import_marker
+integration_type: PLUGIN
+name: Import marker (fixture)
+version: 1.0.0
+provider:
+  name: ATTa test fixtures
+description: Test fixture whose module has an import side effect.
+compatibility:
+  integration_api: '1'
+execution_mode: SUPERVISED_PROCESS
+capabilities:
+- id: fixture
+  description: Fixture capability
+tools:
+- name: run
+  description: Run the import-marker tool.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types:
+  - plugin.marker
+  input_schema:
+    type: object
+    additionalProperties: false
+    properties: {}
+  output_schema:
+    type: object
+    required:
+    - summary
+    - words
+    properties:
+      summary:
+        type: string
+      words:
+        type: integer
+      version:
+        type: string
+  error_schema:
+    type: object
+    required:
+    - error
+    properties:
+      error:
+        type: string
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  handler: marker:run
+  capability: fixture
+permissions_requested:
+- workspace.read
+network_requirements:
+  hosts: []
+credential_requirements: []
+configuration_schema:
+  type: object
+  properties: {}
+dependencies:
+  integrations: []
+  python: []
+plugin:
+  contributes: {}
+integrity:
+  files:
+    marker.py: 42e52bb8b0a9f5d875cdccfa960370e86e29f64ea3853d296c1f38334d73d217

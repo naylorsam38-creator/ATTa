@@ -18,3 +18,5 @@ apps/web/next-env.d.ts
 .terraform/
 *.tfstate*
 test-results/
+# Stage 12 (integrations sidecar)
+configuration/integrations.local.yaml

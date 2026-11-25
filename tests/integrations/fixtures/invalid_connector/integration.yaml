@@ -1,0 +1,82 @@
+manifest_version: 1
+integration_id: test.bad_connector
+integration_type: CONNECTOR
+name: Bad connector (fixture)
+version: 1.0.0
+provider:
+  name: ATTa test fixtures
+description: Test fixture with a DELETE classified as READ_ONLY and an embedded credential.
+compatibility:
+  integration_api: '1'
+execution_mode: SUPERVISED_PROCESS
+capabilities:
+- id: fixture
+  description: Fixture capability
+tools:
+- name: wipe
+  description: Delete every note in the notes file.
+  side_effect: READ_ONLY
+  operations:
+  - delete
+  task_types:
+  - connector.notes
+  input_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - path
+    - query
+    properties:
+      path:
+        type: string
+        minLength: 1
+        maxLength: 200
+      query:
+        type: string
+        maxLength: 200
+  output_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - matches
+    - count
+    properties:
+      matches:
+        type: array
+        items:
+          type: object
+      count:
+        type: integer
+  error_schema:
+    type: object
+    required:
+    - error
+    properties:
+      error:
+        type: string
+  permissions:
+  - workspace.write
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  handler: provider:search
+  connector_operation: DELETE
+  capability: fixture
+permissions_requested:
+- workspace.write
+network_requirements:
+  hosts: []
+credential_requirements: []
+configuration_schema:
+  type: object
+  properties:
+    token:
+      type: string
+      default: ghp_abcdefghijklmnopqrstuvwxyz0123456789
+dependencies:
+  integrations: []
+  python: []
+integrity:
+  files:
+    provider.py: 49ea2cadc0c38630376e55525678e460d776705589cb4aecd9630c4a50515903

@@ -1,0 +1,3 @@
+# Operator-configured MCP server definitions (Stage 12). Each entry is a full integration manifest body of type
+# MCP_SERVER whose package-less definition is validated exactly like a packaged one. Empty by default.
+servers: []

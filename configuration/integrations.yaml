@@ -1,0 +1,15 @@
+# Stage 12 integration configuration (sidecar). Operator-controlled; NO credentials here (credential REFERENCES only).
+# Layering (until Stage 01B's hierarchy is merged): this file -> configuration/integrations.local.yaml (untracked)
+#   -> ATTA_INTEGRATIONS__<KEY>=value environment variables (e.g. ATTA_INTEGRATIONS__CONNECTIVITY=AIR_GAPPED).
+# Paths are relative to the repository root unless absolute; nothing here names a user, drive, host or tenant.
+source_directories: [integrations/available]   # discovery reads integration.yaml here; it never runs code
+install_root: runtime/integrations             # managed packages (generated capability packages live in <root>/packages)
+connectivity: ONLINE                           # ONLINE | RESTRICTED | AIR_GAPPED (Stage 01B will supply this)
+allowed_network_hosts: []                      # RESTRICTED mode: the only non-loopback hosts integrations may reach
+allowed_mcp_executables: []                    # absolute executables an MCP stdio server may use (argv only, no shells)
+mcp_definitions: configuration/integrations/mcp_servers.yaml   # operator-configured MCP server definitions
+max_result_bytes: 262144                       # hard ceiling on any integration tool result (per tool limits may be lower)
+health_max_age_s: 30                           # health older than this is re-evaluated (never a startup snapshot)
+mcp_request_timeout_s: 30
+mcp_startup_timeout_s: 10
+proposed_permissions: configuration/integrations/permissions.proposed.yaml

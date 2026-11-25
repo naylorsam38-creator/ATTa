@@ -1,0 +1,187 @@
+manifest_version: 1
+integration_id: test.drift_mcp
+integration_type: MCP_SERVER
+name: Test MCP server (drift)
+version: 1.0.0
+provider:
+  name: ATTa test fixtures
+description: Deterministic stdio MCP server for tests.
+compatibility:
+  integration_api: '1'
+execution_mode: MCP_STDIO
+capabilities:
+- id: fixture
+  description: Fixture capability
+tools:
+- name: echo
+  description: Echo text back unchanged.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: &id001
+  - mcp.test
+  input_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - text
+    properties:
+      text:
+        type: string
+        maxLength: 10000
+  output_schema: &id003
+    type: object
+  error_schema: &id002
+    type: object
+    required:
+    - error
+    properties:
+      error:
+        type: string
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  capability: fixture
+- name: add
+  description: Add two numbers.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: *id001
+  input_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - a
+    - b
+    properties:
+      a:
+        type: number
+      b:
+        type: number
+  output_schema:
+    type: object
+    required:
+    - sum
+    properties:
+      sum:
+        type: number
+  error_schema: *id002
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  capability: fixture
+- name: slow
+  description: Sleep then answer (timeouts and cancellation).
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: *id001
+  input_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - seconds
+    properties:
+      seconds:
+        type: number
+        minimum: 0
+        maximum: 60
+  output_schema: *id003
+  error_schema: *id002
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 30
+  cancellable: true
+  idempotency: idempotent
+  capability: fixture
+- name: inject
+  description: Return a document containing hostile text.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: *id001
+  input_schema: &id004
+    type: object
+    additionalProperties: false
+    properties: {}
+  output_schema: *id003
+  error_schema: *id002
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  capability: fixture
+- name: big
+  description: Return a large payload of the requested size.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: *id001
+  input_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - size
+    properties:
+      size:
+        type: integer
+        minimum: 1
+        maximum: 5000000
+  output_schema: *id003
+  error_schema: *id002
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  max_result_bytes: 65536
+  capability: fixture
+- name: fail
+  description: A tool that always reports an error.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: *id001
+  input_schema: *id004
+  output_schema: *id003
+  error_schema: *id002
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  capability: fixture
+permissions_requested:
+- workspace.read
+network_requirements:
+  hosts: []
+credential_requirements: []
+configuration_schema:
+  type: object
+  properties: {}
+dependencies:
+  integrations: []
+  python: []
+mcp:
+  transport: stdio
+  command:
+  - '{python}'
+  - server.py
+  - drift
+  request_timeout_s: 20
+  startup_timeout_s: 10
+integrity:
+  files:
+    server.py: 2e6c5cbe49e950bbfbf0ee30f127e41d5f31103c0285493c12d5642340e5d448

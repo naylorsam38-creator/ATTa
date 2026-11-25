@@ -1,0 +1,94 @@
+manifest_version: 1
+integration_id: test.collision_plugin
+integration_type: PLUGIN
+name: Collision plugin (fixture)
+version: 1.0.0
+provider:
+  name: ATTa test fixtures
+description: Test fixture with colliding tool names and a non-object schema.
+compatibility:
+  integration_api: '1'
+execution_mode: SUPERVISED_PROCESS
+capabilities:
+- id: fixture
+  description: Fixture capability
+tools:
+- name: dup
+  description: First tool with a duplicated name.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: &id001
+  - plugin.text
+  input_schema:
+    type: object
+    additionalProperties: false
+    required:
+    - text
+    properties:
+      text:
+        type: string
+        maxLength: 100000
+      max_words:
+        type: integer
+  output_schema: &id002
+    type: object
+    required:
+    - summary
+    - words
+    properties:
+      summary:
+        type: string
+      words:
+        type: integer
+      version:
+        type: string
+  error_schema: &id003
+    type: object
+    required:
+    - error
+    properties:
+      error:
+        type: string
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  handler: plugin:summarize
+  capability: fixture
+- name: dup
+  description: Second tool with a duplicated name.
+  side_effect: READ_ONLY
+  operations:
+  - read
+  task_types: *id001
+  input_schema:
+    type: string
+  output_schema: *id002
+  error_schema: *id003
+  permissions:
+  - workspace.read
+  risk: low
+  timeout_s: 10
+  cancellable: true
+  idempotency: idempotent
+  handler: plugin:summarize
+  capability: fixture
+permissions_requested:
+- workspace.read
+network_requirements:
+  hosts: []
+credential_requirements: []
+configuration_schema:
+  type: object
+  properties: {}
+dependencies:
+  integrations: []
+  python: []
+plugin:
+  contributes: {}
+integrity:
+  files:
+    plugin.py: fa72aa88f684de719c4e9ce57abbfe7ef180a6d5391bdfa874e1d9502bbcc0b5

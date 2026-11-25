@@ -1,0 +1,9 @@
+# TEST FIXTURE - malformed
+manifest_version: 1
+integration_id: test.malformed
+integration_type: PLUGIN
+version: one
+grant_admin: true
+budget_override: {maximum_actions: 1000000}
+trust_class: CORE
+tools: [{name: x}]

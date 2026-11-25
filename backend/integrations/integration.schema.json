@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atta.local/schemas/integration-manifest/1",
+  "title": "ATTa integration manifest (integration.yaml), manifest_version 1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifest_version", "integration_id", "integration_type", "name", "version", "provider", "description",
+               "compatibility", "execution_mode", "capabilities", "tools", "permissions_requested",
+               "network_requirements", "credential_requirements", "configuration_schema", "dependencies"],
+  "properties": {
+    "manifest_version": {"const": 1},
+    "integration_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$", "maxLength": 80},
+    "integration_type": {"enum": ["CONNECTOR", "MCP_SERVER", "SKILL", "PLUGIN", "CUSTOM_PROVIDER"]},
+    "name": {"type": "string", "minLength": 3, "maxLength": 120},
+    "version": {"type": "string", "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(-[0-9A-Za-z.-]+)?$"},
+    "provider": {
+      "type": "object", "additionalProperties": false, "required": ["name"],
+      "properties": {"name": {"type": "string", "minLength": 2, "maxLength": 120},
+                     "contact": {"type": "string", "maxLength": 200},
+                     "homepage": {"type": "string", "maxLength": 300}}
+    },
+    "description": {"type": "string", "minLength": 10, "maxLength": 2000},
+    "requirement": {"enum": ["CAP-21", "CAP-22", "CAP-23", "CAP-24", "CAP-40"]},
+    "compatibility": {
+      "type": "object", "additionalProperties": false, "required": ["integration_api"],
+      "properties": {"integration_api": {"type": "string", "pattern": "^[0-9]+$"},
+                     "python": {"type": "string", "maxLength": 40}}
+    },
+    "execution_mode": {"enum": ["SUPERVISED_PROCESS", "ISOLATED_SANDBOX", "MCP_STDIO", "MCP_HTTP", "DECLARATIVE"]},
+    "capabilities": {
+      "type": "array", "maxItems": 50,
+      "items": {"type": "object", "additionalProperties": false, "required": ["id", "description"],
+                "properties": {"id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$", "maxLength": 80},
+                               "description": {"type": "string", "minLength": 5, "maxLength": 1000}}}
+    },
+    "tools": {"type": "array", "maxItems": 50, "items": {"$ref": "#/$defs/tool"}},
+    "permissions_requested": {"type": "array", "uniqueItems": true, "maxItems": 50,
+                              "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"}},
+    "network_requirements": {
+      "type": "object", "additionalProperties": false, "required": ["hosts"],
+      "properties": {"hosts": {"type": "array", "uniqueItems": true, "maxItems": 20,
+                               "items": {"type": "string", "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$"}},
+                     "ports": {"type": "array", "items": {"type": "integer", "minimum": 1, "maximum": 65535}},
+                     "purpose": {"type": "string", "maxLength": 500}}
+    },
+    "credential_requirements": {
+      "type": "array", "maxItems": 10,
+      "items": {"type": "object", "additionalProperties": false, "required": ["name", "kind", "description", "required"],
+                "properties": {"name": {"type": "string", "pattern": "^[a-z][a-z0-9_]{1,40}$"},
+                               "kind": {"enum": ["api_key", "bearer_token", "oauth2", "basic", "certificate", "other"]},
+                               "description": {"type": "string", "minLength": 5, "maxLength": 500},
+                               "required": {"type": "boolean"},
+                               "scopes": {"type": "array", "items": {"type": "string", "maxLength": 200}, "maxItems": 20}}}
+    },
+    "configuration_schema": {"type": "object"},
+    "dependencies": {
+      "type": "object", "additionalProperties": false,
+      "properties": {"integrations": {"type": "array", "items": {"type": "string"}, "maxItems": 20},
+                     "python": {"type": "array", "items": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_.]*$"}, "maxItems": 20}}
+    },
+    "health": {
+      "type": "object", "additionalProperties": false,
+      "properties": {"handler": {"$ref": "#/$defs/handler"}}
+    },
+    "integrity": {
+      "type": "object", "additionalProperties": false, "required": ["files"],
+      "properties": {"files": {"type": "object", "maxProperties": 500,
+                               "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}}
+    },
+    "mcp": {
+      "type": "object", "additionalProperties": false, "required": ["transport"],
+      "properties": {
+        "transport": {"enum": ["stdio", "streamable_http"]},
+        "command": {"type": "array", "minItems": 1, "maxItems": 20, "items": {"type": "string", "maxLength": 300}},
+        "url": {"type": "string", "maxLength": 500},
+        "protocol_versions": {"type": "array", "items": {"type": "string"}, "maxItems": 5},
+        "startup_timeout_s": {"type": "number", "exclusiveMinimum": 0, "maximum": 60},
+        "request_timeout_s": {"type": "number", "exclusiveMinimum": 0, "maximum": 600}
+      }
+    },
+    "skill": {
+      "type": "object", "additionalProperties": false, "required": ["skill_id", "instructions", "tool_references"],
+      "properties": {
+        "skill_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$", "maxLength": 80},
+        "instructions": {"type": "string", "maxLength": 200},
+        "templates": {"type": "array", "items": {"type": "string", "maxLength": 200}, "maxItems": 50},
+        "schemas": {"type": "object"},
+        "tool_references": {"type": "array", "uniqueItems": true, "maxItems": 16, "items": {"type": "string", "maxLength": 200}},
+        "resource_references": {"type": "array", "items": {"type": "string", "maxLength": 200}, "maxItems": 50},
+        "workflows": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/workflow"}},
+        "validation_rules": {"type": "array", "maxItems": 50, "items": {"type": "object"}},
+        "examples": {"type": "array", "maxItems": 20, "items": {"type": "object"}}
+      }
+    },
+    "plugin": {
+      "type": "object", "additionalProperties": false, "required": ["contributes"],
+      "properties": {
+        "contributes": {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "ui_extensions": {"type": "array", "maxItems": 20, "items": {"type": "object", "additionalProperties": false,
+              "required": ["id", "slot", "title"],
+              "properties": {"id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]{1,60}$"},
+                             "slot": {"enum": ["integration.settings", "integration.panel", "task.sidebar"]},
+                             "title": {"type": "string", "maxLength": 120},
+                             "schema_ref": {"type": "string", "maxLength": 120}}}},
+            "workflows": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/workflow"}},
+            "schemas": {"type": "object"},
+            "providers": {"type": "array", "maxItems": 10, "items": {"type": "object", "additionalProperties": false,
+              "required": ["id", "kind"],
+              "properties": {"id": {"type": "string", "pattern": "^[a-z][a-z0-9_.]{1,60}$"},
+                             "kind": {"enum": ["connector_provider", "data_provider", "capability_provider"]},
+                             "description": {"type": "string", "maxLength": 500}}}}
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "handler": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)*:[A-Za-z][A-Za-z0-9_]*$"},
+    "workflow": {
+      "type": "object", "additionalProperties": false, "required": ["id", "version", "description", "parameters", "steps"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]{1,60}$"},
+        "version": {"type": "string", "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"},
+        "kind": {"enum": ["workflow", "script"]},
+        "description": {"type": "string", "minLength": 5, "maxLength": 1000},
+        "parameters": {"type": "object"},
+        "steps": {"type": "array", "minItems": 1, "maxItems": 30, "items": {"type": "object", "additionalProperties": false,
+          "required": ["tool", "operation", "arguments"],
+          "properties": {"tool": {"type": "string", "maxLength": 200},
+                         "operation": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+                         "arguments": {"type": "object"},
+                         "target_resources": {"type": "array", "items": {"type": "string"}}}}}
+      }
+    },
+    "tool": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "description", "side_effect", "operations", "task_types", "input_schema", "output_schema",
+                   "error_schema", "permissions", "risk", "timeout_s", "cancellable", "idempotency"],
+      "properties": {
+        "name": {"type": "string", "pattern": "^[a-z][a-z0-9_]{0,40}$"},
+        "mcp_name": {"type": "string", "pattern": "^[A-Za-z0-9_.-]{1,64}$"},
+        "description": {"type": "string", "minLength": 10, "maxLength": 1000},
+        "capability": {"type": "string", "maxLength": 80},
+        "connector_operation": {"enum": ["READ", "SEARCH", "CREATE", "UPDATE", "DELETE", "SEND", "EXECUTE", "ADMINISTRATIVE"]},
+        "side_effect": {"enum": ["READ_ONLY", "REVERSIBLE_WRITE", "EXTERNAL_COMMUNICATION", "DESTRUCTIVE", "FINANCIAL",
+                                 "ADMINISTRATIVE", "SECURITY_SENSITIVE", "OTHER_HIGH_RISK"]},
+        "operations": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}},
+        "task_types": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9_.]*$"}},
+        "handler": {"$ref": "#/$defs/handler"},
+        "input_schema": {"type": "object"},
+        "output_schema": {"type": "object"},
+        "error_schema": {"type": "object"},
+        "permissions": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "risk": {"enum": ["low", "medium", "high", "critical"]},
+        "resource_scope": {"type": "object", "additionalProperties": false,
+          "properties": {"resource_types": {"type": "array", "items": {"type": "string"}},
+                         "path_arguments": {"type": "array", "items": {"type": "string"}},
+                         "url_arguments": {"type": "array", "items": {"type": "string"}},
+                         "description": {"type": "string", "maxLength": 500}}},
+        "credentials": {"type": "array", "items": {"type": "string"}, "maxItems": 10},
+        "timeout_s": {"type": "number", "exclusiveMinimum": 0, "maximum": 900},
+        "cancellable": {"type": "boolean"},
+        "idempotency": {"enum": ["idempotent", "non_idempotent", "external_uncertain"]},
+        "max_result_bytes": {"type": "integer", "minimum": 256, "maximum": 4194304}
+      }
+    }
+  }
+}

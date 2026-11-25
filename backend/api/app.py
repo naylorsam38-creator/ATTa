@@ -56,6 +56,9 @@ def create_app(settings: Settings | None = None, *, policy: PolicyEngine | None 
             svc = build_controller_service(settings, policy=policy)
             app.state.controller_service = svc
             app.state.registry = svc.registry
+            # Stage 12: integrations attach to the same controller by composition; failure never blocks start.
+            from backend.integrations.service import attach_to_controller_service
+            app.state.integrations = attach_to_controller_service(svc, settings)
         log.info("api started", extra={"environment": settings.environment.value, "version": __version__})
         yield
         svc = getattr(app.state, "controller_service", None)
@@ -69,6 +72,7 @@ def create_app(settings: Settings | None = None, *, policy: PolicyEngine | None 
                   redoc_url=None)
     app.state.settings, app.state.policy, app.state.registry = settings, policy, registry
     app.state.controller_service = None
+    app.state.integrations = None
     app.state.dependency_probe = probe
 
     app.add_middleware(CORSMiddleware, allow_origins=settings.security.cors_origins, allow_credentials=False,
@@ -131,6 +135,8 @@ def create_app(settings: Settings | None = None, *, policy: PolicyEngine | None 
         return dep
 
     app.include_router(build_router(authorize), prefix="/v1")
+    from backend.integrations.api import build_integrations_router   # Stage 12 contracts (policy-protected)
+    app.include_router(build_integrations_router(authorize), prefix="/v1")
 
     @app.get("/v1/health/live", response_model=HealthReport, tags=["health"])
     def live(_: RequestContext = Depends(authorize("health.live"))):
