@@ -1,7 +1,7 @@
 # Authoritative requirement register (40 mandatory capabilities). MASTER_IMPLEMENTATION_REGISTER.md is rendered from this file.
 version: 2
 updated: '2026-11-25'
-current_stage: S01A
+current_stage: S01B
 status_vocabulary:
 - NOT_STARTED
 - PARTIAL
@@ -1194,12 +1194,14 @@ requirements:
   acceptance_tests:
   - S01-T13 (Stage 01, superseded by S01A-T31/T32/T11)
   - S01A-T10, T11, T17-T23, T31, T32, T51 (passed in Stage 01A)
+  - 'S01B-T14, T42 (secret redaction; worker OS isolation: netns, cgroups, unprivileged account)'
   - 'S02-CAP39-T01: primary user journey works end to end'
   - 'S02-CAP39-T02: security controls enforced (negative tests)'
   - 'S02-CAP39-T03: regression suite unchanged'
   status: PARTIAL
   evidence:
   - STAGE_01A_VERIFICATION.md
+  - STAGE_01B_VERIFICATION.md
   - STAGE_01_VERIFICATION.md
   - evidence/stage_01/
   - evidence/stage_01a/
@@ -1215,9 +1217,16 @@ requirements:
   source_files:
     implemented:
     - HEALTHCHECK.bat
+    - INSTALL.bat
+    - RUN.bat
     - START.bat
     - backend/api/app.py
     - backend/capability_runtime/supervisor.py
+    - backend/deployment/bundle.py
+    - backend/deployment/discovery.py
+    - backend/deployment/installer.py
+    - backend/deployment/isolation.py
+    - backend/deployment/qualification.py
     - backend/orchestration/controller.py
     - backend/orchestration/service.py
     - backend/service_manager/control.py
@@ -1225,6 +1234,9 @@ requirements:
     - backend/service_manager/manager.py
     - backend/service_manager/probes.py
     - capabilities/ops_system_status/handler.py
+    - healthcheck.sh
+    - install.sh
+    - run.sh
     - start.sh
     planned:
     - backend/service_manager/
@@ -1249,15 +1261,20 @@ requirements:
   acceptance_tests:
   - S01-T03, T04, T05, T10, T11, T14 (passed in Stage 01)
   - S01A-T28-T30, T38-T42, T50, T53 (passed in Stage 01A)
+  - S01B-T01-T45 adaptive deployment, isolated/offline qualification (Stage 01B; T41 Windows and T43 H100 BLOCKED here)
   - 'S20-CAP40-T01: primary user journey works end to end'
   - 'S20-CAP40-T02: security controls enforced (negative tests)'
   - 'S20-CAP40-T03: regression suite unchanged'
   status: PARTIAL
   evidence:
   - STAGE_01A_VERIFICATION.md
+  - STAGE_01B_VERIFICATION.md
+  - STAGE_01_FINAL_QUALIFICATION.md
   - STAGE_01_VERIFICATION.md
   - evidence/stage_01/
   - evidence/stage_01a/
+  - evidence/stage_01b/
   status_note: Stage 01 + 01A deliver the service manager (with the runtime controller as an essential service), live service
     health, controller readiness, bounded restarts, supervised process execution, checkpoints and recovery; dashboards, metrics
-    and alerting are Stage 20.
+    and alerting are Stage 20. Stage 01B adds machine discovery, deployment profiles, a resumable install/qualify/activate
+    state machine, isolated and air-gapped qualification, offline bundles and dynamic service health states.

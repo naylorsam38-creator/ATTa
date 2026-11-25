@@ -532,8 +532,8 @@ def test_S01B_T21_isolated_test_database(tmp_path):
         env = pg.env()
         with psycopg.connect(host="127.0.0.1", port=pg.port, dbname="atta", user="atta_app",
                              password=env["ATTA_DATABASE_PASSWORD"]) as c:
-            ver = c.execute("SELECT count(*) FROM schema_migrations").fetchone()[0] if c.execute(
-                "SELECT to_regclass('public.schema_migrations')").fetchone()[0] else None
+            ver = c.execute("SELECT count(*) FROM public.atta_schema_migrations").fetchone()[0]
+            assert ver >= 1, "migrations applied in the disposable cluster"
             assert c.execute("SELECT current_user").fetchone()[0] == "atta_app"
             assert c.execute("SELECT inet_server_port()").fetchone()[0] == pg.port
             with pytest.raises(psycopg.errors.InsufficientPrivilege):
@@ -927,7 +927,7 @@ def test_S01B_T40_upgrade_from_current_baseline_qualification(tmp_path):
         import psycopg
         with psycopg.connect(host="127.0.0.1", port=pg.port, dbname="atta", user="atta",
                              password=pg.env()["ATTA_DATABASE_MIGRATION_PASSWORD"]) as c:
-            old_migrations = c.execute("SELECT version, checksum FROM schema_migrations ORDER BY version").fetchall()
+            old_migrations = c.execute("SELECT name, checksum FROM public.atta_schema_migrations ORDER BY name").fetchall()
         # upgrade the same checkout to the current revision and run the new installer against the old state
         head = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
         subprocess.run(["git", "-C", str(repo), "fetch", "-q", str(ROOT), head], check=True, timeout=300)
@@ -940,7 +940,7 @@ def test_S01B_T40_upgrade_from_current_baseline_qualification(tmp_path):
         assert cp.returncode == 0, cp.stdout[-3000:] + cp.stderr[-3000:]
         with psycopg.connect(host="127.0.0.1", port=pg.port, dbname="atta", user="atta",
                              password=pg.env()["ATTA_DATABASE_MIGRATION_PASSWORD"]) as c:
-            new_migrations = c.execute("SELECT version, checksum FROM schema_migrations ORDER BY version").fetchall()
+            new_migrations = c.execute("SELECT name, checksum FROM public.atta_schema_migrations ORDER BY name").fetchall()
     assert new_migrations[:len(old_migrations)] == old_migrations, "baseline migration history must be preserved"
     assert json.loads((deploy / "install_state.json").read_text())["state"] == "READY"
     record("S01B-T40", {"baseline": baseline, "head": head, "old_migrations": len(old_migrations),

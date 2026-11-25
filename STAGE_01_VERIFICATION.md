@@ -350,3 +350,19 @@ LOG:Done writing bundle output
 * Containers, Terraform apply, Electron launch, native mobile builds, S3, Temporal, model runtimes (B-004 … B-011).
 * Any AI capability: 0 of 40 capabilities are complete. Stage 01 is a foundation, not a production-ready application.
 * The protected-criteria seal is SHA-256 only until the operator signs it (B-009).
+
+## Stage 01B addendum (2026-11-25)
+
+* **Defect found and fixed in Stage 01 code:** `database/bootstrap.sql` expected the caller to pass already-quoted
+  passwords to psql (`-v app_password="'…'"`), which broke for generated passwords and was easy to misuse. It now
+  quotes them itself with `quote_literal(:'app_password')`; `infrastructure/docker/postgres-init/01-atta-bootstrap.sh`
+  and `database/README.md` pass raw values. Found when Stage 01B's disposable qualification clusters ran the
+  bootstrap with random passwords.
+* `HEALTHCHECK.bat` / `healthcheck.sh` and `INSTALL.bat` / `install.sh` now delegate to `python -m backend.deployment`
+  (installer state machine, activation checks). `install.sh` keeps the Stage 01 output contract
+  ("INSTALL COMPLETE: locked dependencies installed") so S01-T02 is unchanged.
+* The Stage 01 acceptance files are unchanged. They are re-run by S01A-T48 (inside S01B-T37 and the Stage 01 FINAL
+  LOCAL suite, `Q-S01-REGRESSION`) and, without the five superseded tests, in the AIR_GAPPED suite (`Q-S01-OFFLINE`,
+  which also excludes S01-T02/T16 because they need package registries / the legacy suite outside the namespace).
+* Stage 01 tests run inside qualification now resolve to the disposable database through the run's own
+  `deployment/discovered.yaml` (DECISIONS D-044) instead of the production cluster.

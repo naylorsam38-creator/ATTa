@@ -133,7 +133,12 @@ def run_suite(suite: str, *, manifest: dict, profile: str, out_root: Path, bundl
                 "ATTA__RUNTIME__DIRECTORY": str(ws / "runtime"), "ATTA__LOGGING__DIRECTORY": str(ws / "runtime" / "logs"),
                 "ATTA__API__PORT": str(isolation.free_port()), "ATTA__REDIS__PORT": str(isolation.free_port()),
                 "ATTA__OBJECT_STORAGE__BUCKET": "atta-" + qid.lower().replace("_", "-"),
-                "ATTA__CAPABILITIES__CATALOGUE_NAMESPACE": qid})
+                "ATTA__CAPABILITIES__CATALOGUE_NAMESPACE": qid,
+                # Hermetic tooling: tests that create throw-away git repositories must not inherit the operator's
+                # global/system git configuration (signing programs, hooks, credential helpers, network services).
+                "GIT_CONFIG_GLOBAL": str(ws / "gitconfig"), "GIT_CONFIG_NOSYSTEM": "1"})
+    (ws / "gitconfig").write_text("[user]\n\tname = ATTa qualification\n\temail = qualification@localhost\n"
+                                  "[commit]\n\tgpgsign = false\n[tag]\n\tgpgsign = false\n")
     try:
         if not isolation.pg_bin("initdb"):
             raise isolation.IsolationUnavailable("PostgreSQL server binaries not found")
@@ -141,6 +146,21 @@ def run_suite(suite: str, *, manifest: dict, profile: str, out_root: Path, bundl
         pg.start()
         pg.migrate(env)
         env.update(pg.env())
+        # The isolated endpoints are ALSO written to this qualification's own deployment directory (configuration
+        # layer 4). Existing test helpers deliberately reset ATTA__ overrides for the platforms they start; with this
+        # file those platforms still resolve to the disposable cluster, never to the production database.
+        dep = ws / "deployment"
+        dep.mkdir(parents=True, exist_ok=True)
+        (dep / "discovered.yaml").write_text(
+            "# GENERATED for one qualification run: isolated resources only (never production)\n" + yaml.safe_dump({
+                "database": {"host": "127.0.0.1", "port": pg.port, "name": "atta", "sslmode": "disable"},
+                "redis": {"port": int(env["ATTA__REDIS__PORT"])},
+                "api": {"port": int(env["ATTA__API__PORT"])},
+                "runtime": {"directory": env["ATTA__RUNTIME__DIRECTORY"]},
+                "logging": {"directory": env["ATTA__LOGGING__DIRECTORY"]},
+                "object_storage": {"bucket": env["ATTA__OBJECT_STORAGE__BUCKET"]},
+                "capabilities": {"catalogue_namespace": env["ATTA__CAPABILITIES__CATALOGUE_NAMESPACE"]}},
+                sort_keys=True))
         isolation_detail = {"database": f"disposable cluster on 127.0.0.1:{pg.port}", "workspace": str(ws),
                             "network": "new kernel network namespace (loopback only)" if inside_netns else "host"}
     except isolation.IsolationUnavailable as exc:
@@ -148,17 +168,19 @@ def run_suite(suite: str, *, manifest: dict, profile: str, out_root: Path, bundl
     ctx["env"] = env
     meta["isolation"] = isolation_detail
     results = []
-    for tid in test_ids:
-        spec = data["tests"][tid]
-        unmet = [why for c in spec.get("requires", []) for ok, why in [condition_met(c, manifest, ctx)] if not ok]
-        if "error" in isolation_detail and not spec.get("builtin"):
-            unmet.append("isolated resources unavailable: " + isolation_detail["error"])
-        if unmet:
-            results.append(_blocked(tid, spec, meta, "; ".join(unmet)))
-            continue
-        results.append(_execute(tid, spec, meta, ws, env, ctx))
-    if pg is not None:
-        pg.stop(destroy=all(r["status"] != "FAIL" for r in results))
+    try:
+        for tid in test_ids:
+            spec = data["tests"][tid]
+            unmet = [why for c in spec.get("requires", []) for ok, why in [condition_met(c, manifest, ctx)] if not ok]
+            if "error" in isolation_detail and not spec.get("builtin"):
+                unmet.append("isolated resources unavailable: " + isolation_detail["error"])
+            if unmet:
+                results.append(_blocked(tid, spec, meta, "; ".join(unmet)))
+                continue
+            results.append(_execute(tid, spec, meta, ws, env, ctx))
+    finally:
+        if pg is not None:      # always stopped; data kept only for diagnosis when something FAILED
+            pg.stop(destroy=all(r["status"] != "FAIL" for r in results) and len(results) == len(test_ids))
     attempts = [json.loads(x) for x in netaudit.read_text().splitlines()] if netaudit.is_file() else []
     return _finish(ws, meta, results, attempts, isolation_detail)
 

@@ -2,7 +2,7 @@
 
 Generated from `documentation/requirements/requirement_register.yaml` by `python scripts/requirement_register.py render`. Edit the YAML, not this file.
 
-Register version: 2 — updated 2026-11-25 — current stage: S01A
+Register version: 2 — updated 2026-11-25 — current stage: S01B
 
 Status counts: BLOCKED 0, IMPLEMENTED 0, NOT_STARTED 38, PARTIAL 2, VERIFIED 0
 
@@ -520,17 +520,17 @@ No capability is marked IMPLEMENTED or VERIFIED until its stage gate passes with
 - **Interface controls:** Approval prompts<br>Permission review
 - **API endpoints:** **implemented:** `All protected /v1 routes return 403 permission_denied (Stage 01 default DENY)`<br>**planned:** `GET /v1/approvals`, `POST /v1/approvals/{id}/decision`
 - **Security controls:** Central policy engine on every capability execution<br>Default DENY for protected operations<br>No self-granted permissions<br>Risk classification on every capability
-- **Acceptance tests:** S01-T13 (Stage 01, superseded by S01A-T31/T32/T11)<br>S01A-T10, T11, T17-T23, T31, T32, T51 (passed in Stage 01A)<br>S02-CAP39-T01: primary user journey works end to end<br>S02-CAP39-T02: security controls enforced (negative tests)<br>S02-CAP39-T03: regression suite unchanged
-- **Evidence:** STAGE_01A_VERIFICATION.md<br>STAGE_01_VERIFICATION.md<br>evidence/stage_01/<br>evidence/stage_01a/
+- **Acceptance tests:** S01-T13 (Stage 01, superseded by S01A-T31/T32/T11)<br>S01A-T10, T11, T17-T23, T31, T32, T51 (passed in Stage 01A)<br>S01B-T14, T42 (secret redaction; worker OS isolation: netns, cgroups, unprivileged account)<br>S02-CAP39-T01: primary user journey works end to end<br>S02-CAP39-T02: security controls enforced (negative tests)<br>S02-CAP39-T03: regression suite unchanged
+- **Evidence:** STAGE_01A_VERIFICATION.md<br>STAGE_01B_VERIFICATION.md<br>STAGE_01_VERIFICATION.md<br>evidence/stage_01/<br>evidence/stage_01a/
 
 ### CAP-40 — Operational management
 
 - **Implementation stage:** S20
-- **Status:** PARTIAL — Stage 01 + 01A deliver the service manager (with the runtime controller as an essential service), live service health, controller readiness, bounded restarts, supervised process execution, checkpoints and recovery; dashboards, metrics and alerting are Stage 20.
+- **Status:** PARTIAL — Stage 01 + 01A deliver the service manager (with the runtime controller as an essential service), live service health, controller readiness, bounded restarts, supervised process execution, checkpoints and recovery; dashboards, metrics and alerting are Stage 20. Stage 01B adds machine discovery, deployment profiles, a resumable install/qualify/activate state machine, isolated and air-gapped qualification, offline bundles and dynamic service health states.
 - **Dependencies:** FOUNDATION
-- **Source files:** **implemented:** `HEALTHCHECK.bat`, `START.bat`, `backend/api/app.py`, `backend/capability_runtime/supervisor.py`, `backend/orchestration/controller.py`, `backend/orchestration/service.py`, `backend/service_manager/control.py`, `backend/service_manager/health_monitor.py`, `backend/service_manager/manager.py`, `backend/service_manager/probes.py`, `capabilities/ops_system_status/handler.py`, `start.sh`<br>**planned:** `backend/service_manager/`, `scripts/`
+- **Source files:** **implemented:** `HEALTHCHECK.bat`, `INSTALL.bat`, `RUN.bat`, `START.bat`, `backend/api/app.py`, `backend/capability_runtime/supervisor.py`, `backend/deployment/bundle.py`, `backend/deployment/discovery.py`, `backend/deployment/installer.py`, `backend/deployment/isolation.py`, `backend/deployment/qualification.py`, `backend/orchestration/controller.py`, `backend/orchestration/service.py`, `backend/service_manager/control.py`, `backend/service_manager/health_monitor.py`, `backend/service_manager/manager.py`, `backend/service_manager/probes.py`, `capabilities/ops_system_status/handler.py`, `healthcheck.sh`, `install.sh`, `run.sh`, `start.sh`<br>**planned:** `backend/service_manager/`, `scripts/`
 - **Interface controls:** Status page<br>Health dashboard
 - **API endpoints:** **implemented:** `GET /v1/health/controller`, `GET /v1/health/live`, `GET /v1/health/ready`, `GET /v1/system/version`<br>**planned:** `GET /v1/health/live`, `GET /v1/health/ready`, `GET /v1/system/version`
 - **Security controls:** Loopback binding until S02<br>Readiness from real probes<br>Structured, redacted logs
-- **Acceptance tests:** S01-T03, T04, T05, T10, T11, T14 (passed in Stage 01)<br>S01A-T28-T30, T38-T42, T50, T53 (passed in Stage 01A)<br>S20-CAP40-T01: primary user journey works end to end<br>S20-CAP40-T02: security controls enforced (negative tests)<br>S20-CAP40-T03: regression suite unchanged
-- **Evidence:** STAGE_01A_VERIFICATION.md<br>STAGE_01_VERIFICATION.md<br>evidence/stage_01/<br>evidence/stage_01a/
+- **Acceptance tests:** S01-T03, T04, T05, T10, T11, T14 (passed in Stage 01)<br>S01A-T28-T30, T38-T42, T50, T53 (passed in Stage 01A)<br>S01B-T01-T45 adaptive deployment, isolated/offline qualification (Stage 01B; T41 Windows and T43 H100 BLOCKED here)<br>S20-CAP40-T01: primary user journey works end to end<br>S20-CAP40-T02: security controls enforced (negative tests)<br>S20-CAP40-T03: regression suite unchanged
+- **Evidence:** STAGE_01A_VERIFICATION.md<br>STAGE_01B_VERIFICATION.md<br>STAGE_01_FINAL_QUALIFICATION.md<br>STAGE_01_VERIFICATION.md<br>evidence/stage_01/<br>evidence/stage_01a/<br>evidence/stage_01b/
