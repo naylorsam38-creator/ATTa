@@ -47,7 +47,7 @@ def sh(cmd, cwd, env=None, timeout=3600):
 def suite(name, args, tree: Path, env, out_dir: Path) -> dict:
     t0, started = time.monotonic(), now()
     try:
-        p = sh([PY, "-m", "pytest", "-q", "-p", "no:cacheprovider", "-rs", *args], tree, env, 3000)
+        p = sh([PY, "-m", "pytest", "-q", "-p", "no:cacheprovider", "-rfEs", *args], tree, env, 3000)
         code, text = p.returncode, p.stdout + p.stderr
     except subprocess.TimeoutExpired as exc:
         code, text = -1, f"TIMEOUT {exc}"
