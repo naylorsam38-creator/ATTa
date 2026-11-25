@@ -24,6 +24,12 @@ usermod -g atta-dev "$WORKER"
 TESTER=atta-tester
 id "$TESTER" >/dev/null 2>&1 || useradd --create-home --shell /bin/bash --gid atta-dev "$TESTER"
 su -s /bin/sh "$TESTER" -c "git config --global --add safe.directory '*'" || true
+# Build tools the qualification needs must be usable by the test identity, not only by root (e.g. uv for the bundled
+# CPython of the offline bundle): install a root-owned, world-executable copy on the system PATH.
+for tool in uv; do
+  src="$(command -v "$tool" || true)"
+  if [ -n "$src" ] && [ "$src" != "/usr/local/bin/$tool" ]; then install -m 0755 -o root -g root "$src" "/usr/local/bin/$tool"; fi
+done
 # 1. tree: group-editable for the worker
 chgrp -R atta-dev "$ROOT"
 chmod -R g+rwX "$ROOT"

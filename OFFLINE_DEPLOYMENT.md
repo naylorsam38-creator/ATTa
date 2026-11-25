@@ -76,3 +76,26 @@ verifies that no external address is reachable (`Q-NETWORK-DENIED`), then runs t
 frontend end-to-end test and the offline installation. Where no OS network isolation exists (Windows, macOS,
 unprivileged Linux) every AIR_GAPPED test is **BLOCKED** — an air-gapped PASS is never claimed on a machine that
 could still reach the Internet.
+
+## 5. Bundle inventory (measured on the delivered bundles)
+
+Primary application package: ~26 MB — source, installers, configuration templates, migrations, tests, reports and
+evidence only. **No offline bundle is needed for online installation** (`install.sh` / `INSTALL.bat` without
+`--offline-bundle` install from the hash-locked package registries; verified by S01B-T39 clean install and S01B-T40
+upgrade).
+
+| Component | Linux x86_64 bundle | Windows x64 bundle | Purpose / required? |
+|---|---|---|---|
+| `browsers/` | **680 MB**: `chromium-1243` 392 MB (headed Chromium), `chromium_headless_shell-1243` 283 MB (headless, used by the end-to-end tests), `ffmpeg-1011` 5 MB | **absent — BLOCKED** (Playwright CDN unreachable from the build machine) | end-to-end tests and the browser extra; both Chromium builds are what Playwright installs (headed + headless); this is the main reason the Linux bundle is ~1.5 GB |
+| `npm-cache/` | 225 MB (101 workspace + 466 mobile entries, 0 missing) | 173 MB (95 + 466, 0 missing) | web/desktop workspaces and the React Native mobile app |
+| `wheels/` | 161 MB, 106 wheels (largest: playwright 46 MB, litellm 36 MB, botocore 16 MB, temporalio 14 MB) | 136 MB, 107 wheels (`win_amd64`) | both Python locks (core + AI/browser extras) |
+| `python/` | 104 MB CPython 3.13.14 | 69 MB CPython 3.13.14 (Windows) | targets without a suitable Python |
+| `tools/uv` | 64 MB | absent (a Linux uv binary is useless on Windows) | bundled Python bootstrap |
+| `system/` | 58 MB, 33 `.deb` (PostgreSQL 16, pgvector, Redis, git closure) + local apt index | 37 MB PostgreSQL 16 x64 only; **pgvector, Redis/Memurai, Git for Windows BLOCKED** | system services |
+| `images/` | absent — BLOCKED (no Docker daemon) | absent — BLOCKED | Docker deployment path only |
+| `assets/` | 0.2 MB | 0.2 MB | migrations, bootstrap SQL, locks |
+
+No duplicate dependency sets, no model weights, no GPU/CUDA distributions and no operating-system images are included.
+The Windows bundle is smaller than the Linux one chiefly because its browsers (~680 MB on Linux) and uv could not be
+obtained from the build machine — **Windows offline installation is therefore NOT complete and not qualified**
+(PHYSICAL_QUALIFICATION.md §1.1, BLOCKERS B-S01B-10).
