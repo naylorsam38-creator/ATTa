@@ -103,7 +103,8 @@ def isolate(req):
     if iso.get("windows_restricted"):
         try:
             import windows_isolation          # sibling module (the child runs as a script with `python -I`)
-            applied["windows"] = windows_isolation.restrict_current_process()
+            applied["windows"] = windows_isolation.restrict_current_process(
+                allow_child_processes=bool(iso.get("windows_allow_child_processes")))
             if applied["windows"].get("integrity") != "low":
                 problems.append(f"integrity level is {applied['windows'].get('integrity')}, expected low")
         except Exception as exc:  # noqa: BLE001 — reported; refused when isolation is required

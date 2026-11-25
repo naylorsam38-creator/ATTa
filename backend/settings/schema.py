@@ -173,6 +173,10 @@ class DeploymentSettings(_Strict):
     # Windows: restricted worker identity (privileges removed, LOW integrity), workspace ACLs, Job Object limits and
     # the dedicated firewall-bound worker interpreter (runtime/worker-python/atta-worker.exe) when INSTALL created it.
     windows_worker_isolation: bool = True
+    windows_worker_child_processes: bool = False   # False: workers cannot start processes (firewall cannot be evaded)
+    # Files a LOW-integrity worker must neither read nor write (medium label, No-Read-Up/No-Write-Up), in addition to
+    # configuration/local.env and any *.pem / *.key under configuration/.
+    windows_protected_paths: list[str] = Field(default_factory=list)
 
 
 class RuntimeSettings(_Strict):

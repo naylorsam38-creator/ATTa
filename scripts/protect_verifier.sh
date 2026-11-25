@@ -54,6 +54,23 @@ install -d -m 0700 -o root -g root "$(dirname "$KEY")"
 if [ ! -f "$KEY" ]; then
   "$PY" -c "from backend.capability_registry.trust import generate_keypair; from pathlib import Path; generate_keypair(Path('$KEY'), Path('$ROOT/configuration/build/verifier_ed25519.pub'))"
 fi
+# Encrypt the private key at rest (Stage 01B): test processes run by the gate are root in this environment, so file
+# permissions alone cannot keep the key from them. The passphrase is supplied only while sealing.
+if ! grep -q "ENCRYPTED PRIVATE KEY" "$KEY"; then
+  [ -n "${ATTA_BUILD_SIGNING_KEY_PASSPHRASE:-}" ] || { echo "set ATTA_BUILD_SIGNING_KEY_PASSPHRASE (operator secret, never stored) to encrypt $KEY" >&2; exit 1; }
+  "$PY" -I - "$KEY" <<'PYEOF'
+import os, sys
+from cryptography.hazmat.primitives import serialization
+p = sys.argv[1]
+key = serialization.load_pem_private_key(open(p, "rb").read(), password=None)
+pem = key.private_bytes(serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8,
+                        serialization.BestAvailableEncryption(os.environ["ATTA_BUILD_SIGNING_KEY_PASSPHRASE"].encode()))
+tmp = p + ".enc"
+fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+os.write(fd, pem); os.close(fd); os.replace(tmp, p)
+PYEOF
+  echo "signing key encrypted at rest"
+fi
 chown root:root "$KEY" "$ROOT/configuration/build/verifier_ed25519.pub"; chmod 0600 "$KEY"; chmod 0644 "$ROOT/configuration/build/verifier_ed25519.pub"
 echo "protection applied: worker=$WORKER verifier=root key=$KEY"
 echo "verify:  $PY -m backend.verification protection"

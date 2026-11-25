@@ -215,7 +215,13 @@ def _execute(tid: str, spec: dict, meta: dict, ws: Path, env: dict, ctx: dict) -
         cmd = [c.replace("{python}", sys.executable) for c in spec["command"]]
         try:
             run_env = {**env, **{k: str(v) for k, v in (spec.get("env") or {}).items()}}   # declared per-test pins
-            cp = subprocess.run(cmd, cwd=REPO_ROOT, env=run_env, capture_output=True, text=True,
+            cwd = REPO_ROOT
+            if spec.get("source_copy"):
+                # earlier stages' unchanged tests run in a private source copy: their evidence writes land there
+                cwd = ctx.setdefault("source_copy", None) or isolation.source_copy(ws / "src")
+                ctx["source_copy"] = cwd
+                run_env["PYTHONPATH"] = run_env["PYTHONPATH"].replace(str(REPO_ROOT), str(cwd))
+            cp = subprocess.run(cmd, cwd=cwd, env=run_env, capture_output=True, text=True,
                                 timeout=float(spec.get("timeout_s", 900)))
             code, out = cp.returncode, (cp.stdout or "")[-200000:] + "\n--- stderr ---\n" + (cp.stderr or "")[-100000:]
         except subprocess.TimeoutExpired:

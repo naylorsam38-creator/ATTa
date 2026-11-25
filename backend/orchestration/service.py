@@ -96,6 +96,7 @@ def build_controller_service(settings: Settings, *, policy: PolicyEngine | None 
             worker_python, site_dirs = str(exe), windows_hardening.site_dirs()
     runtime = CapabilityRuntime(python=worker_python, site_dirs=site_dirs,
                                 windows_isolation=d.windows_worker_isolation,
+                                windows_allow_child_processes=d.windows_worker_child_processes,
                                 memory_limit_mb=settings.workers.memory_limit_mb, network=d.worker_network,
                                 worker_user=d.worker_user, cuda_visible_devices=None if not d.gpu_visible_to_workers else "0",
                                 isolation_required=d.worker_network == "none")

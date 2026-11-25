@@ -52,7 +52,7 @@ class CapabilityRuntime:
     def __init__(self, *, python: str = sys.executable, memory_limit_mb: int = 1024, attestor: Attestor | None = None,
                  network: str = "host", worker_user: str | None = None, cuda_visible_devices: str | None = None,
                  isolation_required: bool = False, site_dirs: list[str] | None = None,
-                 windows_isolation: bool = True):
+                 windows_isolation: bool = True, windows_allow_child_processes: bool = False):
         """network: 'none' gives each handler a private empty network namespace (Linux, privileged); worker_user drops
         the handler to an unprivileged account; GPUs are hidden from handlers unless cuda_visible_devices is set."""
         self.python, self.memory_limit_mb = python, memory_limit_mb
@@ -60,6 +60,7 @@ class CapabilityRuntime:
         self.isolation_required = isolation_required
         # site_dirs: package directories added explicitly when workers use a dedicated interpreter (Windows firewall)
         self.site_dirs, self.windows_isolation = list(site_dirs or []), windows_isolation
+        self.windows_allow_child_processes = windows_allow_child_processes
         self._attestor = attestor or Attestor()
         self._gateway: Attestor | None = None
         self._running: dict[str, subprocess.Popen] = {}
@@ -107,7 +108,8 @@ class CapabilityRuntime:
                "isolation": {"network": network or self.network, "user": self.worker_user,
                              "cuda_visible_devices": self.cuda_visible_devices, "memory_mb": self.memory_limit_mb,
                              "required": self.isolation_required,
-                             "windows_restricted": os.name == "nt" and self.windows_isolation},
+                             "windows_restricted": os.name == "nt" and self.windows_isolation,
+                             "windows_allow_child_processes": self.windows_allow_child_processes},
                "site_dirs": self.site_dirs}
         if os.name == "nt" and self.windows_isolation:
             from .windows_isolation import secure_workspace

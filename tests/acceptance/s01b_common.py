@@ -98,15 +98,36 @@ def junit(path: Path) -> dict[str, tuple[str, str]]:
     return res
 
 
+def source_tree(tmp: Path) -> Path:
+    """Private copy of the source tree for running earlier stages' unchanged tests (their evidence lands there)."""
+    from backend.deployment.isolation import source_copy
+    d = tmp / "src"
+    return d if (d / "tests").is_dir() else source_copy(d)
+
+
+def evidence_digest() -> str:
+    """Digest of the repository's recorded Stage 01 and 01A evidence (must never change during Stage 01B runs)."""
+    import hashlib
+    h = hashlib.sha256()
+    for d in ("evidence/stage_01", "evidence/stage_01a"):
+        for p in sorted((ROOT / d).rglob("*")):
+            if p.is_file():
+                h.update(str(p.relative_to(ROOT)).encode() + b"\0" + p.read_bytes())
+    return h.hexdigest()
+
+
 def run_s01a_isolated(tmp: Path, nodeids: list[str], profile: str, timeout: float = 1800) -> dict:
     """Run existing Stage 01A acceptance tests UNCHANGED against a disposable PostgreSQL cluster, an isolated runtime
     directory and an explicit deployment profile. Returns {test name: (status, text)}."""
     out = tmp / f"s01a-{profile}.xml"
     with disposable_pg(tmp / "pg") as pg:
+        src = source_tree(tmp)
         env = clean_env(ATTA_PROFILE=profile, ATTA__RUNTIME__DIRECTORY=str(tmp / "runtime"),
-                        ATTA__LOGGING__DIRECTORY=str(tmp / "runtime" / "logs"), **pg.env())
+                        ATTA__LOGGING__DIRECTORY=str(tmp / "runtime" / "logs"), PYTHONPATH=str(src), **pg.env())
+        before = evidence_digest()
         cp = subprocess.run([PY, "-m", "pytest", "-q", "-p", "no:cacheprovider", *nodeids, f"--junitxml={out}"],
-                            cwd=ROOT, env=env, capture_output=True, text=True, timeout=timeout)
+                            cwd=src, env=env, capture_output=True, text=True, timeout=timeout)
+        assert evidence_digest() == before, "recorded Stage 01/01A evidence changed"
         res = junit(out)
         res["__summary__"] = (str(cp.returncode), cp.stdout[-1500:])
         res["__database__"] = ("info", f"disposable cluster 127.0.0.1:{pg.port}")

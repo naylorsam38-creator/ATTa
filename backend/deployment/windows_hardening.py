@@ -118,3 +118,25 @@ def site_dirs() -> list[str]:
     """The venv's package directories, handed to workers started with the dedicated interpreter."""
     import sysconfig
     return sorted({sysconfig.get_paths()["purelib"], sysconfig.get_paths()["platlib"]})
+
+
+# ------------------------------------------------------------------------------------------------ protected secrets
+def secret_paths(root: Path, extra: list[str] | None = None) -> list[Path]:
+    """Files a LOW-integrity worker must neither read nor write: local credentials, any key material under
+    configuration/, operator-listed paths (deployment.windows_protected_paths)."""
+    cfg = root / "configuration"
+    out = [cfg / "local.env"] + sorted(p for p in cfg.rglob("*") if p.suffix in (".pem", ".key") and p.is_file())
+    for e in extra or []:
+        p = Path(e)
+        out.append(p if p.is_absolute() else root / p)
+    return [p for p in out if p.exists()]
+
+
+def label_secrets(paths: list[Path]) -> dict:
+    """Medium mandatory label with No-Read-Up/No-Write-Up/No-Execute-Up on every protected secret (Windows)."""
+    if os.name != "nt":
+        raise RuntimeError("mandatory integrity labels exist on Windows only")
+    from backend.capability_runtime.windows_isolation import SECRET_LABEL_SDDL, label_secret
+    for p in paths:
+        label_secret(str(p))
+    return {"labelled": [str(p) for p in paths], "label": SECRET_LABEL_SDDL}

@@ -281,7 +281,15 @@ class Installer:
                            text=True, timeout=600, env={**self.env, "ATTA_PROFILE": prof})
         if r.returncode != 0:
             raise InstallError(f"migrations failed: {r.stdout[-300:]} {r.stderr[-500:]}")
-        self._done("CONFIGURE", {"effective": self.state["effective_sha256"]}, {"migrate": r.stdout.strip()[-200:]})
+        secrets_labelled = None
+        if os.name == "nt":
+            s = self._resolution().settings
+            if s.deployment.windows_worker_isolation:
+                from . import windows_hardening
+                secrets_labelled = windows_hardening.label_secrets(windows_hardening.secret_paths(
+                    REPO_ROOT, s.deployment.windows_protected_paths))
+        self._done("CONFIGURE", {"effective": self.state["effective_sha256"]},
+                   {"migrate": r.stdout.strip()[-200:], "windows_secret_labels": secrets_labelled})
         self.transition("START_SERVICES", "configuration applied", {"migrations": r.stdout.strip()[-200:]})
 
     def _manager(self, cmd: str) -> subprocess.CompletedProcess:

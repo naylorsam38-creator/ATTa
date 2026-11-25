@@ -28,6 +28,7 @@ INTEGRITY_RIDS = {0x0000: "untrusted", 0x1000: "low", 0x2000: "medium", 0x2100: 
                   0x4000: "system"}
 KEEP_PRIVILEGES = {"SeChangeNotifyPrivilege"}          # bypass traverse checking: needed to open nested paths
 
+JOB_OBJECT_LIMIT_ACTIVE_PROCESS = 0x8
 JOB_OBJECT_LIMIT_PROCESS_MEMORY = 0x100
 JOB_OBJECT_LIMIT_DIE_ON_UNHANDLED_EXCEPTION = 0x400
 JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE = 0x2000
@@ -196,11 +197,61 @@ def current_integrity() -> str:
         k32.CloseHandle(tok)
 
 
-def restrict_current_process() -> dict:
-    """Called by the child BEFORE capability code is loaded. Order: privileges first (needs the medium token)."""
-    applied = remove_privileges()
+def no_child_processes() -> dict:
+    """Put THIS process into its own nested Job Object whose active-process limit is 1: the worker can start no
+    process at all, so it cannot run another executable (or a renamed copy of the interpreter) to evade the firewall
+    rules bound to the worker interpreter. The supervisor's outer job still kills everything on timeout/cancel."""
+    import ctypes
+    from ctypes import wintypes
+    k32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    k32.CreateJobObjectW.restype = wintypes.HANDLE
+    k32.GetCurrentProcess.restype = wintypes.HANDLE
+    s = _structs()
+    job = k32.CreateJobObjectW(None, None)
+    if not job:
+        raise OSError(ctypes.get_last_error(), "CreateJobObjectW failed")
+    info = s["EXT"]()
+    info.BasicLimitInformation.LimitFlags = (JOB_OBJECT_LIMIT_ACTIVE_PROCESS | JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE |
+                                             JOB_OBJECT_LIMIT_DIE_ON_UNHANDLED_EXCEPTION)
+    info.BasicLimitInformation.ActiveProcessLimit = 1
+    if not k32.SetInformationJobObject(job, JOB_EXTENDED_LIMIT_INFORMATION, ctypes.byref(info), ctypes.sizeof(info)):
+        raise OSError(ctypes.get_last_error(), "SetInformationJobObject failed")
+    if not k32.AssignProcessToJobObject(job, k32.GetCurrentProcess()):     # nested jobs: Windows 8 / Server 2012+
+        raise OSError(ctypes.get_last_error(), "AssignProcessToJobObject(self) failed")
+    return {"child_processes": "denied (nested job, active process limit 1)"}
+
+
+def restrict_current_process(allow_child_processes: bool = False) -> dict:
+    """Called by the child BEFORE capability code is loaded. Order: no-children job and privilege removal first
+    (they need the medium token), then the LOW integrity level."""
+    applied = {} if allow_child_processes else no_child_processes()
+    applied.update(remove_privileges())
     applied["integrity"] = set_low_integrity()
     return applied
+
+
+# ------------------------------------------------------------------------------------------------ secret labels
+# Mandatory label for protected secrets: MEDIUM level with No-Read-Up, No-Write-Up and No-Execute-Up. A LOW-integrity
+# worker can then neither read nor modify them, whatever their DACL says; medium processes (the API, the operator)
+# are unaffected.
+SECRET_LABEL_SDDL = "S:(ML;OICI;NRNWNX;;;ME)"
+SE_FILE_OBJECT, LABEL_SECURITY_INFORMATION = 1, 0x10
+
+
+def label_secret(path: str) -> None:
+    import ctypes
+    from ctypes import wintypes
+    adv = ctypes.WinDLL("advapi32", use_last_error=True)
+    sd = ctypes.c_void_p()
+    if not adv.ConvertStringSecurityDescriptorToSecurityDescriptorW(SECRET_LABEL_SDDL, 1, ctypes.byref(sd), None):
+        raise OSError(ctypes.get_last_error(), "ConvertStringSecurityDescriptorToSecurityDescriptorW failed")
+    present, defaulted, sacl = wintypes.BOOL(), wintypes.BOOL(), ctypes.c_void_p()
+    if not adv.GetSecurityDescriptorSacl(sd, ctypes.byref(present), ctypes.byref(sacl), ctypes.byref(defaulted)):
+        raise OSError(ctypes.get_last_error(), "GetSecurityDescriptorSacl failed")
+    err = adv.SetNamedSecurityInfoW(path, SE_FILE_OBJECT, LABEL_SECURITY_INFORMATION, None, None, None, sacl)
+    ctypes.WinDLL("kernel32").LocalFree(sd)
+    if err != 0:
+        raise OSError(err, f"SetNamedSecurityInfoW({path}) failed")
 
 
 # ------------------------------------------------------------------------------------------------ filesystem ACLs

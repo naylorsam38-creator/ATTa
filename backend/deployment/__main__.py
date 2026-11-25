@@ -59,6 +59,8 @@ def main(argv=None) -> int:
     ap.add_argument("--venv")
     ap.add_argument("--models", nargs="*")
     ap.add_argument("--require")
+    ap.add_argument("--target", default="host", choices=["host", "windows"])
+    ap.add_argument("--windows-installers")
     for flag in ("--simulate", "--no-node", "--no-python", "--no-browsers", "--no-system", "--no-images", "--full"):
         ap.add_argument(flag, action="store_true")
     ap.add_argument("--env", dest="environment")
@@ -172,7 +174,9 @@ def main(argv=None) -> int:
         from . import bundle
         if a.sub == "create":
             m = bundle.create(Path(a.out), models=a.models, include_node=not a.no_node, python_runtime=not a.no_python,
-                              browsers=not a.no_browsers, system_packages=not a.no_system, images=not a.no_images)
+                              browsers=not a.no_browsers, system_packages=not a.no_system, images=not a.no_images,
+                              target=a.target, windows_installers=Path(a.windows_installers) if a.windows_installers
+                              else None)
             print(f"bundle written: {len(m['files'])} files")
             for k, v in m["coverage"].items():
                 print(f"  {k:<17} {v.get('status', 'INCLUDED') if isinstance(v, dict) else v}"
@@ -188,7 +192,10 @@ def main(argv=None) -> int:
             print("offline install OK")
             return 0
         if a.sub == "install-system":
-            print(bundle.install_system(Path(a.bundle), simulate=a.simulate))
+            if os.name == "nt":
+                print(bundle.install_system_windows(Path(a.bundle), REPO_ROOT / "runtime" / "system"))
+            else:
+                print(bundle.install_system(Path(a.bundle), simulate=a.simulate))
             print("offline system packages OK")
             return 0
         if a.sub == "coverage":

@@ -96,6 +96,10 @@ def _locked_names(lock: Path) -> set[str]:
     return out
 
 
+IMPORT_ALIASES = {"yaml": "pyyaml", "PIL": "pillow", "dateutil": "python-dateutil", "dotenv": "python-dotenv",
+                  "jwt": "pyjwt", "google": "protobuf"}
+
+
 def import_coverage() -> dict:
     """Every top-level third-party module imported by the source must map to a distribution pinned in a lock.
     Core imports must be in backend-core.lock.txt; optional (try/except ImportError, extras) in backend-full."""
@@ -135,7 +139,9 @@ def import_coverage() -> dict:
                     seen.setdefault(top, set()).add(str(rel))
     rows, missing, optional_only = {}, [], []
     for top, files in sorted(seen.items()):
-        dists = {_norm(x) for x in dist_of.get(top, [])}
+        # Installed metadata when available; otherwise the import name itself (or a known alias) must be a locked
+        # distribution — optional extras are usually NOT installed on a core-only machine.
+        dists = {_norm(x) for x in dist_of.get(top, [])} | {_norm(IMPORT_ALIASES.get(top, top))}
         where = "core" if dists & core else ("full" if dists & full else None)
         rows[top] = {"distributions": sorted(dists), "lock": where, "files": sorted(files)[:5]}
         if where is None and top in allowed:

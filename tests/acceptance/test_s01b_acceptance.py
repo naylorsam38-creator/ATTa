@@ -19,8 +19,8 @@ from pathlib import Path
 import pytest
 import yaml
 
-from s01b_common import (PY, ROOT, clean_env, disposable_pg, junit, make_gguf, record, run_s01a_isolated,
-                         settings_with, synthetic_env)
+from s01b_common import (PY, ROOT, clean_env, disposable_pg, evidence_digest, junit, make_gguf, record,
+                         run_s01a_isolated, settings_with, source_tree, synthetic_env)
 
 from backend.deployment import (deps, discovery, isolation, manifest as mf, models as mdl, profiles, resolver,
                                 runtimes)
@@ -890,34 +890,42 @@ def test_S01B_T35_new_capability_discovery_requires_no_launcher_modification(tmp
 
 # ------------------------------------------------------------------------------------------------ T36-T40 regression
 @pytest.mark.qualification_wrapper
-def test_S01B_T36_legacy_atta_regression_suite():
+def test_S01B_T36_legacy_atta_regression_suite(tmp_path):
+    before, src = evidence_digest(), source_tree(tmp_path)
     cp = subprocess.run([PY, "-m", "pytest", "-q", "-p", "no:cacheprovider",
                          f"{S01A_B}::test_S01A_T49_existing_atta_application_builder_regression"],
-                        cwd=ROOT, capture_output=True, text=True, timeout=2400, env=clean_env())
+                        cwd=src, capture_output=True, text=True, timeout=2400, env=clean_env(PYTHONPATH=str(src)))
     assert cp.returncode == 0, cp.stdout[-3000:]
+    assert evidence_digest() == before, "recorded Stage 01/01A evidence must not change"
     record("S01B-T36", {"stdout_tail": cp.stdout[-400:]})
 
 
 @pytest.mark.qualification_wrapper
-def test_S01B_T37_stage01_regression_suite():
+def test_S01B_T37_stage01_regression_suite(tmp_path):
     # S01A-T48 runs the unchanged Stage 01 suite and proves that the superseded tests fail only because of the
     # stricter Stage 01A controls (recorded in STAGE_01A_VERIFICATION.md); nothing is rewritten to pass.
+    before, src = evidence_digest(), source_tree(tmp_path)
     cp = subprocess.run([PY, "-m", "pytest", "-q", "-p", "no:cacheprovider",
                          f"{S01A_B}::test_S01A_T48_existing_stage01_acceptance_tests"],
-                        cwd=ROOT, capture_output=True, text=True, timeout=2400, env=clean_env())
+                        cwd=src, capture_output=True, text=True, timeout=2400, env=clean_env(PYTHONPATH=str(src)))
     assert cp.returncode == 0, cp.stdout[-3000:]
+    assert evidence_digest() == before, "recorded Stage 01/01A evidence must not change"
     record("S01B-T37", {"stdout_tail": cp.stdout[-400:]})
 
 
 @pytest.mark.qualification_wrapper
 def test_S01B_T38_stage01a_regression_suite(tmp_path):
     out = tmp_path / "s01a.xml"
+    before, src = evidence_digest(), source_tree(tmp_path)
+    # T48/T49 are S01B-T37/T36; T51 checks the REAL repository's OS protection and keys, which S01B-T42 does
+    # directly (a source copy is not the protected tree).
     cp = subprocess.run([PY, "-m", "pytest", "-q", "-p", "no:cacheprovider", S01A_A, S01A_B,
-                         "-k", "not T48 and not T49", f"--junitxml={out}"],
-                        cwd=ROOT, capture_output=True, text=True, timeout=3600, env=clean_env())
+                         "-k", "not T48 and not T49 and not T51", f"--junitxml={out}"],
+                        cwd=src, capture_output=True, text=True, timeout=3600, env=clean_env(PYTHONPATH=str(src)))
+    assert evidence_digest() == before, "recorded Stage 01/01A evidence must not change"
     res = junit(out)
     failed = {n: r[1][-800:] for n, r in res.items() if r[0] != "passed"}
-    assert cp.returncode == 0 and not failed and len(res) >= 51, (len(res), failed, cp.stdout[-2000:])
+    assert cp.returncode == 0 and not failed and len(res) >= 50, (len(res), failed, cp.stdout[-2000:])
     record("S01B-T38", {"tests": len(res), "all_passed": True})
 
 
@@ -982,7 +990,7 @@ def test_S01B_T40_upgrade_from_current_baseline_qualification(tmp_path):
 
 
 # ------------------------------------------------------------------------------------------------ T41-T45 platform
-def _probe_run(pkg: str, tmp: Path, timeout_s: float, **rt_kw):
+def _probe_run(pkg: str, tmp: Path, timeout_s: float, prepare=None, **rt_kw):
     """Run a fixture package's healthcheck in the real isolated runtime; returns (result, workdir)."""
     from backend.capability_registry.package import package_digest
     from backend.capability_runtime import CapabilityRuntime
@@ -992,6 +1000,8 @@ def _probe_run(pkg: str, tmp: Path, timeout_s: float, **rt_kw):
     # the handler may run as an unprivileged worker account, which cannot enter pytest's private (0700) tmp_path
     work = Path(tempfile.mkdtemp(prefix="atta-s01b-work-"))
     os.chmod(work, 0o777)
+    if prepare is not None:
+        prepare(work)
     t = rt.issue_ticket("exe_s01b_" + os.urandom(4).hex(), "s01b." + pkg, "healthcheck")
     r = rt.run(ticket=t, mode="healthcheck", capability_id="s01b." + pkg, package_dir=d, expected_digest=package_digest(d),
                handlers={"execute": "handler:noop", "healthcheck": "handler:healthcheck", "verify": "handler:verify_any"},
@@ -1014,7 +1024,7 @@ def test_S01B_T41_windows_specific_tests():
     assert sizes == {"BASIC": 64, "IOC": 48, "EXT": 144, "LUID": 8, "LUID_AND_ATTRIBUTES": 12,
                      "SID_AND_ATTRIBUTES": 16, "TOKEN_MANDATORY_LABEL": 16}, sizes
     tmp = Path(tempfile.mkdtemp())
-    r, work = _probe_run("s01b_spawn", tmp, 3.0)
+    r, work = _probe_run("s01b_spawn", tmp, 3.0, windows_allow_child_processes=True)
     assert r.status == "timeout"
     pid = int((work / "descendant.pid").read_text())
     time.sleep(1)
@@ -1028,6 +1038,22 @@ def test_S01B_T41_windows_specific_tests():
     assert p.isolation["windows"]["privileges_kept"] == ["SeChangeNotifyPrivilege"]
     acl = subprocess.run(["icacls", str(pwork)], capture_output=True, text=True).stdout
     assert "Mandatory Label\\Low Mandatory Level" in acl and "(I)" not in acl, acl
+    # Protected secrets: a LOW-integrity worker can neither READ nor write a file carrying the secret label, while
+    # this medium-integrity test process still can (positive control).
+    secret = tmp / "test-secret.env"
+    secret.write_text("ATTA_TEST_SECRET=s01b-t41-not-a-real-secret\n")
+    wh.label_secrets([secret])
+    assert "s01b-t41" in secret.read_text()
+    targets = lambda d: (d / "probe_targets.json").write_text(json.dumps({"secret": str(secret)}))  # noqa: E731
+    e, _ = _probe_run("s01b_winprobe", tmp / "escape", 30.0, prepare=targets, isolation_required=True)
+    assert e.status == "ok", (e.status, e.error, e.stderr_tail)
+    esc = e.value["probe"]
+    assert esc["secret_read"].startswith("denied") and "PermissionError" in esc["secret_read"], esc
+    assert esc["secret_write"].startswith("denied"), esc
+    # No child processes: the worker cannot start another executable or a renamed copy of its interpreter
+    assert esc["spawn_cmd"].startswith("denied"), esc
+    assert esc["spawn_renamed_interpreter"].startswith("denied"), esc
+    assert p.isolation["windows"]["child_processes"].startswith("denied"), p.isolation
     fw = {}
     if wh.is_admin():
         exe = wh.provision_worker_interpreter(tmp / "rt")
@@ -1037,15 +1063,21 @@ def test_S01B_T41_windows_specific_tests():
             assert subprocess.run(cmd, capture_output=True).returncode == 0
         fw = wh.verify(exe)
         assert all(fw.values()), fw
-        blocked = subprocess.run([str(exe), "-I", "-c", "import socket\ntry:\n socket.create_connection(('1.1.1.1',443),"
-                                  "timeout=3); print('CONNECTED')\nexcept OSError as e: print('BLOCKED', e)"],
-                                 capture_output=True, text=True, timeout=30).stdout
+        # the real worker path: the runtime started with the firewall-bound interpreter, every escape attempted
+        fr, _ = _probe_run("s01b_winprobe", tmp / "fw", 30.0, prepare=targets, python=str(exe),
+                           site_dirs=wh.site_dirs(), isolation_required=True)
         for cmd in wh.remove_commands():
             subprocess.run(cmd, capture_output=True)
-        assert "BLOCKED" in blocked, blocked
+        assert fr.status == "ok", (fr.status, fr.error, fr.stderr_tail)
+        fesc = fr.value["probe"]
+        assert fesc["connect_external"].startswith("denied"), fesc          # firewall
+        assert fesc["spawn_cmd"].startswith("denied") and fesc["spawn_renamed_interpreter"].startswith("denied"), fesc
+        assert fesc["secret_read"].startswith("denied"), fesc
+        fw["worker_escape_attempts"] = fesc
     else:
         pytest.fail("run S01B-T41 as Administrator: the firewall part of Windows isolation must be certified too")
-    record("S01B-T41", {"descendant": pid, "windows": w, "privileges": p.isolation["windows"], "firewall": fw})
+    record("S01B-T41", {"descendant": pid, "windows": w, "privileges": p.isolation["windows"], "escape": esc,
+                        "firewall": fw})
 
 
 @pytest.mark.skipif(not LINUX, reason="Linux-specific")
@@ -1078,8 +1110,34 @@ def test_S01B_T42_linux_specific_tests(tmp_path):
     pid = int((work / "descendant.pid").read_text())
     time.sleep(0.5)
     assert not _pid_alive(pid), "detached descendant must be killed with the tree"
+    # Independent verifier keys: unreadable by the worker account, encrypted at rest (a root test process reading the
+    # file gets ciphertext only), and no verifier secret is present in this test's environment.
+    key = Path(os.environ.get("ATTA_BUILD_SIGNING_KEY_FILE", "/etc/atta-verifier/build_signing_ed25519.pem"))
+    keys = {}
+    if key.exists():
+        rd = subprocess.run(["runuser", "-u", worker, "--", PY, "-I", "-c", f"open({str(key)!r},'rb').read()"],
+                            capture_output=True, text=True, timeout=60)
+        assert rd.returncode != 0 and "PermissionError" in rd.stderr, rd.stderr
+        from cryptography.hazmat.primitives import serialization
+        raw = key.read_bytes()
+        assert b"ENCRYPTED PRIVATE KEY" in raw, "verifier signing key must be encrypted at rest"
+        with pytest.raises(TypeError):
+            serialization.load_pem_private_key(raw, password=None)
+        keys = {"worker_read": "PermissionError", "at_rest": "encrypted", "usable_without_passphrase": False}
+    else:
+        pytest.fail(f"verifier signing key {key} not found: the build controller protection is not installed")
+    assert not [k for k in os.environ if k.startswith("ATTA_BUILD_")], "verifier secrets leaked into a test process"
+    denied = {}
+    for t in ("backend/verification/build_controller.py", "configuration/build/roadmap.yaml",
+              "configuration/build/protected.lock.json", "tests/acceptance/test_s01b_acceptance.py",
+              "evidence/build_controller/ledger.jsonl", "configuration/qualification/suites.yaml"):
+        w = subprocess.run(["runuser", "-u", worker, "--", PY, "-I", "-c", f"open({str(ROOT / t)!r}, 'a')"],
+                           capture_output=True, text=True, timeout=60)
+        denied[t] = w.returncode != 0 and "PermissionError" in w.stderr
+    assert all(denied.values()), denied
     record("S01B-T42", {"probe": {k: v[k] for k in ("uid", "external_network", "cuda_visible_devices")},
-                        "isolation": r.isolation, "descendant_killed": pid})
+                        "isolation": r.isolation, "descendant_killed": pid, "verifier_key": keys,
+                        "protected_files_denied_to_worker": denied})
 
 
 @pytest.mark.qualification_wrapper

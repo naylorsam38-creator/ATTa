@@ -44,7 +44,9 @@ def pg_bin(name: str) -> str | None:
     for d in sorted(base.glob("*/bin"), reverse=True) if base.is_dir() else []:
         if (d / name).is_file():
             return str(d / name)
-    return None
+    # Windows offline installs unpack the bundled PostgreSQL here (bundle install-system)
+    win = REPO_ROOT / "runtime" / "system" / "postgresql" / "package" / "native" / "bin" / f"{name}.exe"
+    return str(win) if win.is_file() else None
 
 
 def _traversable(path: Path) -> bool:
@@ -126,6 +128,35 @@ class DisposablePostgres:
         shutil.rmtree(self.sock, ignore_errors=True)
         if destroy:
             shutil.rmtree(getattr(self, "_tmp_parent", None) or self.dir, ignore_errors=True)
+
+
+def source_copy(dest: Path, root: Path = REPO_ROOT) -> Path:
+    """A private copy of the source tree (tracked + untracked-but-not-ignored files, exactly as on disk) for running
+    earlier stages' unchanged tests: they write evidence and scratch files relative to their own location, so in a
+    copy they can never overwrite the repository's recorded gate evidence. Installed dependency trees (node_modules,
+    the built web app) are linked read-only-in-practice instead of copied."""
+    files = subprocess.run(["git", "-C", str(root), "ls-files", "-z", "--cached", "--others", "--exclude-standard"],
+                           capture_output=True, check=True).stdout.split(b"\0")
+    dest.mkdir(parents=True, exist_ok=True)
+    for raw in files:
+        if not raw:
+            continue
+        rel = raw.decode()
+        src = root / rel
+        if not src.is_file() and not src.is_symlink():
+            continue                                   # deleted in the working tree
+        target = dest / rel
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, target, follow_symlinks=False)
+    links = [p for p in root.glob("node_modules")] + list(root.glob("apps/*/node_modules")) + \
+        list(root.glob("packages/*/node_modules")) + list(root.glob("apps/web/.next"))
+    for p in links:
+        t = dest / p.relative_to(root)
+        if not t.exists():
+            t.parent.mkdir(parents=True, exist_ok=True)
+            t.symlink_to(p, target_is_directory=True)
+    subprocess.run(["git", "init", "-q", str(dest)], capture_output=True)   # tests that inspect git find a repo
+    return dest
 
 
 def netns_available() -> bool:

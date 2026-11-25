@@ -1,6 +1,6 @@
 @echo off
 rem ATTa platform installer (Windows). Linux/macOS: install.sh
-rem   INSTALL.bat [--with-ai] [--with-browser] [--no-node] [--with-desktop] [--with-mobile] [--offline-bundle DIR]
+rem   INSTALL.bat [--with-ai] [--with-browser] [--no-node] [--with-desktop] [--with-mobile] [--install-system] [--offline-bundle DIR]
 rem               [--profile P] [--approve] [--suite S] [--no-start]
 rem Thin launcher: bootstraps locked dependencies, then runs "python -m backend.deployment install".
 rem Installs only locked, approved dependencies. Never downloads models; never starts paid infrastructure.
@@ -8,7 +8,7 @@ setlocal EnableExtensions EnableDelayedExpansion
 cd /d "%~dp0"
 set "ROOT=%~dp0"
 if "%ATTA_VENV%"=="" set "ATTA_VENV=%ROOT%.venv"
-set WITH_AI=0& set WITH_BROWSER=0& set WITH_NODE=1& set WITH_DESKTOP=0& set WITH_MOBILE=0& set "BUNDLE="& set "DEPLOY_ARGS="
+set WITH_AI=0& set WITH_BROWSER=0& set WITH_NODE=1& set WITH_DESKTOP=0& set WITH_MOBILE=0& set INSTALL_SYSTEM=0& set "BUNDLE="& set "DEPLOY_ARGS="
 :args
 if "%~1"=="" goto argsdone
 if /i "%~1"=="--with-ai" set WITH_AI=1
@@ -16,6 +16,7 @@ if /i "%~1"=="--with-browser" set WITH_BROWSER=1
 if /i "%~1"=="--no-node" set WITH_NODE=0
 if /i "%~1"=="--with-desktop" set WITH_DESKTOP=1
 if /i "%~1"=="--with-mobile" set WITH_MOBILE=1
+if /i "%~1"=="--install-system" set INSTALL_SYSTEM=1
 if /i "%~1"=="--offline-bundle" (set "BUNDLE=%~2"& set "DEPLOY_ARGS=!DEPLOY_ARGS! --bundle %~2"& shift)
 if /i "%~1"=="--profile" (set "DEPLOY_ARGS=!DEPLOY_ARGS! --profile %~2"& shift)
 if /i "%~1"=="--suite" (set "DEPLOY_ARGS=!DEPLOY_ARGS! --suite %~2"& shift)
@@ -47,7 +48,7 @@ if not defined PY (
   echo [install] ERROR: Python 3.12 or 3.13 is required: https://www.python.org/downloads/windows/
   exit /b 1
 )
-where git >nul 2>&1 || (echo [install] ERROR: git is required & exit /b 1)
+where git >nul 2>&1 || echo [install] NOTE: git not found - needed only for build-controller gates and updates
 echo [install] python: %PY%
 set "LOCK=%ROOT%configuration\locks\backend-core.lock.txt"
 if "%WITH_AI%%WITH_BROWSER%" NEQ "00" set "LOCK=%ROOT%configuration\locks\backend-full.lock.txt"
@@ -67,6 +68,10 @@ if defined BUNDLE (
 "%VPY%" -m pip check || exit /b 1
 for /f "delims=" %%S in ('"%VPY%" -c "import sysconfig; print(sysconfig.get_paths()['purelib'])"') do set "SITE=%%S"
 > "%SITE%\atta_platform.pth" echo %ROOT:~0,-1%
+if defined BUNDLE if "%INSTALL_SYSTEM%"=="1" (
+  echo [install] unpacking bundled system components ^(PostgreSQL 16 for Windows^) from %BUNDLE%
+  "%VPY%" -m backend.deployment bundle install-system --bundle "%BUNDLE%" || exit /b 1
+)
 if "%WITH_NODE%"=="1" (
   where node >nul 2>&1
   if errorlevel 1 (

@@ -37,6 +37,17 @@ FULL_LOCK = LOCKS / "backend-full.lock.txt"
 SYSTEM_MANIFEST = LOCKS / "system-dependencies.yaml"
 EXCLUDE_MARKERS = (b"PRIVATE KEY-----",)
 FORMAT = "atta-offline-bundle/2"
+# Bundle targets. "host" = this machine's OS/arch; "windows" = Windows 10/11 x64, built cross-platform from here.
+TARGETS = {
+    "windows": {"os": "Windows", "machine": "AMD64", "pip_platform": "win_amd64", "npm_os": "win32", "npm_cpu": "x64",
+                "uv_python": "cpython-{ver}-windows-x86_64-none",
+                "markers": {"os_name": "nt", "sys_platform": "win32", "platform_system": "Windows",
+                            "platform_machine": "AMD64"}},
+}
+
+
+def _target(name: str) -> dict | None:
+    return None if name in (None, "", "host") else TARGETS[name]
 
 
 def _sha(p: Path) -> str:
@@ -68,37 +79,92 @@ def pip_command() -> list[str]:
 
 
 # ------------------------------------------------------------------------------------------------ components
-def _python_wheels(out: Path) -> dict:
+def target_requirements(lock: Path, markers: dict, dest: Path) -> tuple[Path, int]:
+    """The lock with environment markers evaluated for the TARGET (e.g. Windows) instead of this machine; hashes kept."""
+    from packaging.markers import Marker
+    out, block, kept = [], [], 0
+
+    def flush():
+        nonlocal kept
+        if not block:
+            return
+        head = block[0]
+        marker = head.split(";", 1)[1].rstrip(" \\").strip() if ";" in head else ""
+        if not marker or Marker(marker).evaluate(markers):
+            # markers are already evaluated FOR THE TARGET: strip them, or pip re-evaluates them for this host and
+            # silently skips target-only packages (found: colorama and tzdata missing from a Windows bundle)
+            if marker:
+                block[0] = head.split(";", 1)[0].rstrip() + (" \\" if head.rstrip().endswith("\\") else "")
+            out.extend(block)
+            kept += 1
+        block.clear()
+    for line in lock.read_text().splitlines():
+        if line and not line[0].isspace() and not line.startswith("#"):
+            flush()
+            block.append(line)
+        elif block:
+            block.append(line)
+    flush()
+    dest.write_text("\n".join(out) + "\n")
+    return dest, kept
+
+
+def _python_wheels(out: Path, target: dict | None = None) -> dict:
     cov = {}
+    ver = f"{sys.version_info.major}.{sys.version_info.minor}"
     for lock in (LOCK, FULL_LOCK):
+        req, count = lock, None
+        extra = []
+        if target:
+            req, count = target_requirements(lock, {**target["markers"], "python_version": ver,
+                                                    "python_full_version": f"{ver}.0", "implementation_name": "cpython",
+                                                    "platform_python_implementation": "CPython"},
+                                             out / f".req-{lock.name}")
+            extra = ["--platform", target["pip_platform"], "--python-version", ver, "--implementation", "cp",
+                     "--abi", f"cp{ver.replace('.', '')}"]
         r = _run(pip_command() + ["download", "--disable-pip-version-check", "-q", "--require-hashes", "--no-deps",
-                                  "--only-binary=:all:", "-r", str(lock), "-d", str(out / "wheels")], timeout=3600)
+                                  "--only-binary=:all:", *extra, "-r", str(req), "-d", str(out / "wheels")], timeout=3600)
         if r.returncode != 0:
             raise RuntimeError(f"pip download failed for {lock.name}: {r.stderr[-1500:]}")
+        if target:
+            # completeness: every requirement kept for the target must have a downloaded wheel
+            import re as _re
+            want = {_re.sub(r"[-_.]+", "-", m.group(1)).lower() for m in
+                    (_re.match(r"([A-Za-z0-9_.\-]+)==", ln) for ln in req.read_text().splitlines()) if m}
+            have = {_re.sub(r"[-_.]+", "-", w.name.split("-")[0]).lower() for w in (out / "wheels").glob("*.whl")}
+            req.unlink()
+            if want - have:
+                raise RuntimeError(f"wheels missing for the target: {sorted(want - have)}")
         from .deps import python_lock
-        cov[lock.name] = {"packages": len(python_lock(lock)), "sha256": _sha(lock)}
+        cov[lock.name] = {"packages": count if count is not None else len(python_lock(lock)), "sha256": _sha(lock)}
     cov["wheels"] = len(list((out / "wheels").glob("*.whl")))
-    cov["interpreter_tags"] = f"cp{sys.version_info.major}{sys.version_info.minor}-{platform.system().lower()}-" \
-                              f"{platform.machine().lower()}"
+    cov["interpreter_tags"] = (f"cp{ver.replace('.', '')}-{target['pip_platform']}" if target else
+                               f"cp{ver.replace('.', '')}-{platform.system().lower()}-{platform.machine().lower()}")
     return cov
 
 
-def _python_runtime(out: Path) -> dict:
+def _python_runtime(out: Path, target: dict | None = None) -> dict:
     uv = shutil.which("uv")
     if not uv:
         return {"status": "BLOCKED", "reason": "uv not installed: cannot fetch a relocatable CPython"}
     ver = f"{sys.version_info.major}.{sys.version_info.minor}"
-    r = _run([uv, "python", "install", ver, "--install-dir", str(out / "python")], timeout=1800,
+    request = target["uv_python"].format(ver=ver) if target else ver
+    r = _run([uv, "python", "install", request, "--install-dir", str(out / "python")], timeout=1800,
              env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"})
     if r.returncode != 0:
         return {"status": "BLOCKED", "reason": f"uv python install failed: {r.stderr[-400:]}"}
     (out / "tools").mkdir(exist_ok=True)
-    shutil.copy2(uv, out / "tools" / Path(uv).name)
+    if not target:
+        shutil.copy2(uv, out / "tools" / Path(uv).name)     # a host uv binary is useless on another OS
     for tmp in [p for p in (out / "python").iterdir() if p.name.startswith(".")]:
         shutil.rmtree(tmp, ignore_errors=True) if tmp.is_dir() else tmp.unlink()   # uv work files
     for link in [p for p in (out / "python").iterdir() if p.is_symlink()]:
         link.unlink()                       # minor-version alias links are not needed and are not portable files
     exe = bundled_python(out)
+    if target:          # cannot execute a Windows interpreter here: report the directory name's version
+        d = next(iter(sorted((out / "python").glob("cpython-*"))), None)
+        return {"status": "INCLUDED", "version": d.name.split("-")[1] if d else None,
+                "interpreter": str(exe.relative_to(out)) if exe else None, "uv": None}
     v = _run([str(exe), "-B", "-c", "import sys;print(sys.version.split()[0])"]).stdout.strip() if exe else None
     return {"status": "INCLUDED", "version": v, "interpreter": str(exe.relative_to(out)) if exe else None,
             "uv": f"tools/{Path(uv).name}"}
@@ -130,14 +196,15 @@ def _node_projects() -> list[tuple[str, list[str], str]]:
     return out
 
 
-def node_coverage(lock: Path, cache: Path) -> dict:
-    """Every package-lock entry needed on this platform must be present in the npm cache (by integrity hash)."""
+def node_coverage(lock: Path, cache: Path, target: dict | None = None) -> dict:
+    """Every package-lock entry needed on the target platform must be present in the npm cache (by integrity)."""
     data = json.loads(lock.read_text())
     have, missing, other_platform = 0, [], 0
     sysmap = {"linux": "linux", "darwin": "darwin", "win32": "win32"}
-    my_os = sysmap.get(sys.platform, sys.platform)
-    my_cpu = {"x86_64": "x64", "amd64": "x64", "aarch64": "arm64", "arm64": "arm64"}.get(platform.machine().lower(),
-                                                                                         platform.machine().lower())
+    my_os = target["npm_os"] if target else sysmap.get(sys.platform, sys.platform)
+    my_cpu = target["npm_cpu"] if target else \
+        {"x86_64": "x64", "amd64": "x64", "aarch64": "arm64", "arm64": "arm64"}.get(platform.machine().lower(),
+                                                                                  platform.machine().lower())
     for name, e in (data.get("packages") or {}).items():
         if not name or e.get("link") or not e.get("integrity"):
             continue
@@ -150,11 +217,12 @@ def node_coverage(lock: Path, cache: Path) -> dict:
             have += 1
         else:
             missing.append(name)
-    return {"lock": str(lock.relative_to(REPO_ROOT)), "cached": have, "missing": missing[:20],
+    return {"lock": str(lock.relative_to(REPO_ROOT)) if REPO_ROOT in lock.resolve().parents else str(lock),
+            "target": f"{my_os}-{my_cpu}", "cached": have, "missing": missing[:20],
             "missing_count": len(missing), "other_platform_optional_skipped": other_platform}
 
 
-def _node(out: Path) -> dict:
+def _node(out: Path, target: dict | None = None) -> dict:
     if not shutil.which("npm"):
         return {"status": "BLOCKED", "reason": "npm not installed"}
     cache = out / "npm-cache"
@@ -162,19 +230,33 @@ def _node(out: Path) -> dict:
     for label, files, sub in _node_projects():
         with tempfile.TemporaryDirectory() as tmp:
             _copy_node_project(Path(tmp), files)
-            r = _run(["npm", "ci", "--ignore-scripts", "--no-audit", "--no-fund", "--loglevel=error", "--logs-max=0",
-                      "--cache", str(cache)], cwd=Path(tmp) / sub, timeout=3600,
+            plat = ["--os", target["npm_os"], "--cpu", target["npm_cpu"]] if target else []
+            r = _run(["npm", "ci", *plat, "--ignore-scripts", "--no-audit", "--no-fund", "--loglevel=error",
+                      "--logs-max=0", "--cache", str(cache)], cwd=Path(tmp) / sub, timeout=3600,
                      env={**os.environ, "ELECTRON_SKIP_BINARY_DOWNLOAD": "1"})
             if r.returncode != 0:
                 raise RuntimeError(f"npm cache population failed ({label}): {r.stderr[-1500:]}")
         lock = REPO_ROOT / sub / "package-lock.json"
-        cov[label] = node_coverage(lock, cache)
+        cov[label] = node_coverage(lock, cache, target)
         if cov[label]["missing_count"]:
             raise RuntimeError(f"npm cache incomplete for {label}: {cov[label]['missing'][:5]}")
     return cov
 
 
-def _browsers(out: Path) -> dict:
+def _browsers(out: Path, target: dict | None = None) -> dict:
+    if target:
+        # Windows browser builds come from the Playwright CDN (`playwright install chromium` on a connected Windows
+        # machine, or PLAYWRIGHT_HOST_PLATFORM_OVERRIDE=win64 here); they cannot be taken from this host's builds.
+        r = _run([sys.executable, "-m", "playwright", "install", "chromium"], timeout=1800,
+                 env={**os.environ, "PLAYWRIGHT_HOST_PLATFORM_OVERRIDE": "win64",
+                      "PLAYWRIGHT_BROWSERS_PATH": str(out / "browsers")})
+        if r.returncode != 0:
+            shutil.rmtree(out / "browsers", ignore_errors=True)
+            detail = [ln.strip() for ln in (r.stderr + r.stdout).splitlines() if "Error" in ln or "error" in ln][:1]
+            return {"status": "BLOCKED", "reason": "the Playwright browser CDN (cdn.playwright.dev / playwright.download."
+                    "prss.microsoft.com) is not reachable from this build machine; run `playwright install chromium` on "
+                    "a connected Windows machine and copy ms-playwright into browsers/", "detail": detail[0][:200] if detail else ""}
+        return {"status": "INCLUDED", "builds": sorted(d.name for d in (out / "browsers").iterdir() if d.is_dir())}
     src = os.environ.get("PLAYWRIGHT_BROWSERS_PATH") or str(Path.home() / ".cache" / "ms-playwright")
     src_p = Path(src)
     if not src_p.is_dir():
@@ -215,8 +297,41 @@ def _write_apt_index(dest: Path, debs: list[Path]) -> None:
     (dest / "Packages").write_text("\n".join(entries))
 
 
-def _system_packages(out: Path) -> dict:
+def _windows_system(out: Path, spec: dict, installers: Path | None) -> dict:
+    """Windows system dependencies: PostgreSQL 16 x64 binaries from the npm registry (integrity-verified by npm);
+    components with no redistributable source reachable here (pgvector for Windows, Redis/Memurai, Git for Windows)
+    are taken from an operator-supplied directory (--windows-installers) and hashed into the manifest, or reported
+    BLOCKED with the reason."""
+    dest = out / "system" / "windows"
+    dest.mkdir(parents=True, exist_ok=True)
+    comps: dict = {}
+    pg = spec.get("postgresql_npm")
+    if pg and shutil.which("npm"):
+        r = _run(["npm", "pack", pg, "--json", "--loglevel=error", "--pack-destination", str(dest)], timeout=1800)
+        if r.returncode == 0:
+            info = json.loads(r.stdout)[0]
+            comps["postgresql"] = {"status": "INCLUDED", "package": pg, "file": f"system/windows/{info['filename']}",
+                                   "npm_integrity": info["integrity"], "contains": "PostgreSQL 16 x64 server + tools "
+                                   "(initdb.exe, pg_ctl.exe, postgres.exe, psql.exe)"}
+        else:
+            comps["postgresql"] = {"status": "BLOCKED", "reason": f"npm pack {pg} failed: {r.stderr[-300:]}"}
+    for name, meta in (spec.get("operator_supplied") or {}).items():
+        found = sorted((installers / name).glob("*")) if installers and (installers / name).is_dir() else []
+        if found:
+            (dest / name).mkdir(exist_ok=True)
+            for f in found:
+                shutil.copy2(f, dest / name / f.name)
+            comps[name] = {"status": "INCLUDED", "source": "operator-supplied", "files": [f.name for f in found]}
+        else:
+            comps[name] = {"status": "BLOCKED", "reason": meta["reason"], "expected": meta["expected"]}
+    status = "INCLUDED" if all(c["status"] == "INCLUDED" for c in comps.values()) else "PARTIAL"
+    return {"status": status, "manager": "windows", "components": comps}
+
+
+def _system_packages(out: Path, target: dict | None = None, installers: Path | None = None) -> dict:
     spec = yaml.safe_load(SYSTEM_MANIFEST.read_text()).get("offline_system_packages", {})
+    if (target and target["os"] == "Windows") or (not target and os.name == "nt"):
+        return _windows_system(out, spec.get("windows") or {}, installers)
     if sys.platform.startswith("linux") and shutil.which("apt-get") and spec.get("debian"):
         names = _apt_closure(spec["debian"])
         dest = out / "system" / "debs"
@@ -228,10 +343,6 @@ def _system_packages(out: Path) -> dict:
         _write_apt_index(dest, debs)
         return {"status": "INCLUDED", "manager": "apt", "requested": spec["debian"], "closure": len(names),
                 "debs": len(debs), "index": "system/debs/Packages"}
-    if os.name == "nt":
-        return {"status": "OPERATOR_PROVIDED", "reason": "Windows system installers (PostgreSQL 16 + pgvector, Redis "
-                "or Memurai) are not redistributable here; place them in system/windows/ before transfer",
-                "expected": spec.get("windows", [])}
     return {"status": "BLOCKED", "reason": "no supported system package manager (apt) on this machine"}
 
 
@@ -257,15 +368,18 @@ def _container_images(out: Path) -> dict:
 
 # ------------------------------------------------------------------------------------------------ create / verify
 def create(out: Path, *, include_node: bool = True, models: list[str] | None = None, python_runtime: bool = True,
-           browsers: bool = True, system_packages: bool = True, images: bool = True) -> dict:
+           browsers: bool = True, system_packages: bool = True, images: bool = True, target: str = "host",
+           windows_installers: Path | None = None) -> dict:
     out = out.resolve()                         # npm runs in a temp dir; a relative cache path would land there
     out.mkdir(parents=True, exist_ok=True)
-    cov: dict = {"python_wheels": _python_wheels(out)}
-    cov["python_runtime"] = _python_runtime(out) if python_runtime else {"status": "EXCLUDED", "reason": "--no-python"}
-    cov["node"] = _node(out) if include_node else {"status": "EXCLUDED", "reason": "--no-node"}
-    cov["browsers"] = _browsers(out) if browsers else {"status": "EXCLUDED", "reason": "--no-browsers"}
-    cov["system_packages"] = _system_packages(out) if system_packages else {"status": "EXCLUDED"}
-    cov["container_images"] = _container_images(out) if images else {"status": "EXCLUDED"}
+    t = _target(target)
+    cov: dict = {"python_wheels": _python_wheels(out, t)}
+    cov["python_runtime"] = _python_runtime(out, t) if python_runtime else {"status": "EXCLUDED", "reason": "--no-python"}
+    cov["node"] = _node(out, t) if include_node else {"status": "EXCLUDED", "reason": "--no-node"}
+    cov["browsers"] = _browsers(out, t) if browsers else {"status": "EXCLUDED", "reason": "--no-browsers"}
+    cov["system_packages"] = _system_packages(out, t, windows_installers) if system_packages else {"status": "EXCLUDED"}
+    cov["container_images"] = _container_images(out) if images else {"status": "EXCLUDED"}   # same Linux images
+                                                                       # serve Docker Desktop/WSL on Windows
     for rel in ("database", "configuration/locks"):
         shutil.copytree(REPO_ROOT / rel, out / "assets" / rel, dirs_exist_ok=True)
     cov["models"] = {"status": "EXCLUDED", "reason": "models are referenced in place; include only on request"}
@@ -282,7 +396,8 @@ def create(out: Path, *, include_node: bool = True, models: list[str] | None = N
         if p.is_file() and p.name != "bundle_manifest.json":
             files[p.relative_to(out).as_posix()] = {"sha256": _sha(p), "bytes": p.stat().st_size}
     manifest = {"format": FORMAT, "created_at": iso_utc(),
-                "platform": {"os": platform.system(), "machine": platform.machine(),
+                "target": target or "host",
+                "platform": {"os": t["os"] if t else platform.system(), "machine": t["machine"] if t else platform.machine(),
                              "python": f"{sys.version_info.major}.{sys.version_info.minor}"},
                 "python_lock_sha256": _sha(LOCK), "python_full_lock_sha256": _sha(FULL_LOCK),
                 "node_lock_sha256": _sha(REPO_ROOT / "package-lock.json"), "coverage": cov,
@@ -372,6 +487,27 @@ def install_offline(bundle: Path, venv: Path, *, full: bool = False) -> dict:
     if (bundle / "browsers").is_dir():
         result["browsers"] = str(bundle / "browsers")     # used via PLAYWRIGHT_BROWSERS_PATH, nothing to copy
     return result
+
+
+def install_system_windows(bundle: Path, dest_root: Path) -> str:
+    """Windows: unpack the bundled PostgreSQL binaries to runtime/system/postgresql (found by the qualification runner
+    and usable as the local server); operator-supplied installers are listed for the administrator to run."""
+    import tarfile
+    m = json.loads((bundle / "bundle_manifest.json").read_text())
+    comps = m["coverage"].get("system_packages", {}).get("components", {})
+    pg = comps.get("postgresql", {})
+    if pg.get("status") != "INCLUDED":
+        raise RuntimeError("bundle contains no PostgreSQL binaries for Windows")
+    dest = dest_root / "postgresql"
+    dest.mkdir(parents=True, exist_ok=True)
+    with tarfile.open(bundle / pg["file"]) as tf:
+        tf.extractall(dest, filter="data")
+    lines = [f"PostgreSQL binaries unpacked to {dest / 'package' / 'native'}"]
+    for name, c in comps.items():
+        if name != "postgresql":
+            lines.append(f"{name}: " + (f"run the installer(s) in {bundle / 'system' / 'windows' / name}"
+                                        if c.get("status") == "INCLUDED" else f"NOT IN BUNDLE — {c.get('reason')}"))
+    return "\n".join(lines)
 
 
 def install_system(bundle: Path, simulate: bool = False) -> str:

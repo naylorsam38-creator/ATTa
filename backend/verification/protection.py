@@ -98,6 +98,13 @@ def protection_problems(bc) -> list[str]:
             problems.append(f"signing key directory {key.parent} must be verifier-owned with mode 0700")
         if bc.root in key.resolve().parents:
             problems.append("signing key is inside the repository")
+        try:
+            head = key.read_bytes()[:64]
+        except OSError:
+            head = b""
+        if b"ENCRYPTED PRIVATE KEY" not in head:
+            problems.append(f"signing key {key} is not passphrase-encrypted: any root process (including gate test "
+                            "runs) could read a usable key — re-run scripts/protect_verifier.sh")
     except OSError:
         problems.append(f"signing key {key} not found")
     return problems

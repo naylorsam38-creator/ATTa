@@ -86,3 +86,35 @@ def test_windows_only_operations_refuse_elsewhere(tmp_path):
         pytest.skip("covered by S01B-T41 on Windows")
     with pytest.raises(RuntimeError):
         wh.apply(tmp_path, 8800)
+
+
+def test_secret_label_denies_read_and_write_up_for_low_integrity():
+    # Medium mandatory label with No-Read-Up, No-Write-Up, No-Execute-Up, inherited by objects and containers
+    assert wi.SECRET_LABEL_SDDL == "S:(ML;OICI;NRNWNX;;;ME)"
+    assert wi.LABEL_SECURITY_INFORMATION == 0x10 and wi.SE_FILE_OBJECT == 1
+
+
+def test_workers_get_a_no_child_process_job_by_default():
+    assert wi.JOB_OBJECT_LIMIT_ACTIVE_PROCESS == 0x8
+    import inspect
+    assert inspect.signature(wi.restrict_current_process).parameters["allow_child_processes"].default is False
+    from backend.capability_runtime.runner import CapabilityRuntime
+    assert CapabilityRuntime().windows_allow_child_processes is False
+    from backend.settings.schema import DeploymentSettings
+    assert DeploymentSettings().windows_worker_child_processes is False
+
+
+def test_secret_paths_cover_local_credentials_and_key_material(tmp_path):
+    cfg = tmp_path / "configuration"
+    (cfg / "sub").mkdir(parents=True)
+    (cfg / "local.env").write_text("ATTA_DATABASE_PASSWORD=x")
+    (cfg / "sub" / "op.pem").write_text("k")
+    (cfg / "x.key").write_text("k")
+    (cfg / "base.yaml").write_text("a: 1")
+    (tmp_path / "extra.txt").write_text("s")
+    got = {p.relative_to(tmp_path).as_posix() for p in wh.secret_paths(tmp_path, ["extra.txt", "missing.txt"])}
+    assert got == {"configuration/local.env", "configuration/sub/op.pem", "configuration/x.key", "extra.txt"}
+    import os
+    if os.name != "nt":
+        with pytest.raises(RuntimeError):
+            wh.label_secrets([tmp_path / "extra.txt"])

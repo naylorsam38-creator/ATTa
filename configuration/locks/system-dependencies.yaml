@@ -16,7 +16,19 @@ container_images:              # tags are pinned; digests are BLOCKED until reso
 # (base-system packages of priority required/important are assumed present). Windows: operator-provided installers.
 offline_system_packages:
   debian: [postgresql-16, postgresql-client-16, postgresql-16-pgvector, redis-server, git]
-  windows: ["PostgreSQL 16 x64 installer (EDB)", "pgvector for PostgreSQL 16 (Windows build)", "Memurai or Redis 7 for Windows", "Git for Windows"]
+  windows:
+    # PostgreSQL 16 x64 binaries (EDB builds repackaged on the npm registry; npm verifies the sha512 integrity)
+    postgresql_npm: "@embedded-postgres/windows-x64@16.15.0-beta.19"
+    # No redistributable Windows build is reachable from the build machine for these; the operator supplies the
+    # installers (bundle create --target windows --windows-installers DIR/<name>/...) and they are hashed into the
+    # bundle manifest. Without them the bundle reports them BLOCKED.
+    operator_supplied:
+      pgvector: {expected: "pgvector 0.6+ built for PostgreSQL 16 x64 (vector.dll, vector.control, vector--*.sql)",
+                 reason: "pgvector publishes no Windows binaries; build with MSVC (nmake /F Makefile.win) or use WSL/Docker"}
+      redis: {expected: "Memurai Developer or a Redis 7 for Windows build (MSI or ZIP)",
+              reason: "no Windows Redis build is available from the registries reachable here (memurai.com blocked)"}
+      git: {expected: "Git for Windows 64-bit installer (needed only for build-controller gates and updates)",
+            reason: "Git for Windows is distributed from github.com release assets, not reachable from this build machine"}
 # Third-party imports deliberately NOT locked (checked by `deps --check`): only Internet-dependent optional features
 # guarded by ImportError, reported OFFLINE_UNAVAILABLE. Any other unlocked import fails the dependency check.
 unlocked_optional_imports:

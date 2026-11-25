@@ -289,7 +289,22 @@ class BuildController:
         from cryptography.hazmat.primitives import serialization
         if self.root in kp.resolve().parents:
             raise ControllerError("the signing key must live outside the repository")
-        key = serialization.load_pem_private_key(kp.read_bytes(), password=None)
+        # The private key is stored ENCRYPTED; its passphrase is supplied only while sealing (never during gates,
+        # and ATTA_BUILD_* variables are removed from every test environment). Test processes — even root ones —
+        # can therefore read only ciphertext (Stage 01B: workers and tests must not obtain the signing key).
+        pw = os.environ.get("ATTA_BUILD_SIGNING_KEY_PASSPHRASE")
+        if pw is None and sys.stdin.isatty():
+            import getpass
+            pw = getpass.getpass("build signing key passphrase: ")
+        try:
+            key = serialization.load_pem_private_key(kp.read_bytes(), password=pw.encode() if pw else None)
+        except TypeError as exc:
+            raise ControllerError("the build signing key must be passphrase-encrypted (scripts/protect_verifier.sh)"
+                                  if pw else "the build signing key is encrypted: supply its passphrase "
+                                  "(ATTA_BUILD_SIGNING_KEY_PASSPHRASE or interactively)") from exc
+        if not pw:
+            raise ControllerError("refusing to sign with an unencrypted build signing key (scripts/protect_verifier.sh "
+                                  "encrypts it)")
         import base64
         return base64.b64encode(key.sign(json.dumps(payload, sort_keys=True).encode())).decode()
 
