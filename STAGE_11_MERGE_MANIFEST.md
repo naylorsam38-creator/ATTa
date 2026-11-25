@@ -8,13 +8,13 @@ Produced by Parallel Agent 3. **Not merged, not pushed to the authoritative bran
 |---|---|
 | Baseline commit | `21104c413c30a3b2714f877892970e7db19a1d19` (Stage 01A gate passed) |
 | Supplied archive | `ATTa-stage01A.zip` SHA-256 `ccf1e9435e7e3a810157fb3d5dc6588ffa0a32548a0f73cc4b9005c51f5d5592`, byte-identical to the baseline |
-| **Final Stage 11 source commit (qualified, frozen)** | `__FROZEN__` |
-| Release candidate | tag `stage11-rc1` = the evidence commit on top of `__FROZEN_SHORT__` (evidence + documentation only) |
+| **Final Stage 11 source commit (qualified, frozen)** | `098cf5283a8e8d3d60f4ecaf2ec6c85919b17b7b` |
+| Release candidate | tag `stage11-rc1` = the evidence commit on top of `098cf528` (evidence + documentation only) |
 | Branch | `claude/focused-cori-ajjjn0` (isolated; never pushed to or merged into the authoritative branch) |
 | Package | `ATTa-STAGE-11-COMPLETE.zip` (changes only; SHA-256 recorded in the hand-off and `evidence/stage_11/final/PACKAGE_SHA256.txt`) |
 | History | `history/stage11.bundle` in the package (`git fetch stage11.bundle HEAD:refs/heads/stage11` in a clone containing the baseline) |
 
-## 2. Files (baseline → final source commit `__FROZEN_SHORT__`)
+## 2. Files (baseline → final source commit `098cf528`)
 
 Totals: 90 added, 6 modified, 0 deleted (the evidence commit adds further files under `evidence/stage_11/final/`
 and updates `STAGE_11_*.md`). Per-file SHA-256: the package's `SHA256SUMS`; the Stage 11 section of `CHANGE_MANIFEST.md`.
@@ -215,8 +215,9 @@ exit codes: `packaging/stage11/INSTALL.md` (shipped as the package's INSTALL.md)
 `packaging/stage11/compat/check_compat.py` (shipped as `compat/check_compat.py`): combines the Stage 01A baseline
 with the actual Stage 01B / Stage 04 packages in a temporary repository, runs static overlap checks and this
 installer, and optionally all test suites (new failures separated from documented pre-existing ones).
-Verified here against synthetic packages only; the run against the actual packages is BLOCKED until they are
-supplied (B-S11-11).
+Run against the clean Stage 01A baseline: COMPATIBLE (STAGE_11_VERIFICATION.md run 6). Runs against the actual
+Stage 01B / Stage 04 packages are BLOCKED until they are supplied (B-S11-11); the actual Stage 12 sidecar
+(`claude/lucid-maxwell-uc91v4` @ `732ba5e`) exists but its compatibility run is still to be performed (B-S11-13).
 
 ## 15. Installation and rollback commands
 

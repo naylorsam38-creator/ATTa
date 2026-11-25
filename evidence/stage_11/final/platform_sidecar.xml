@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="104" time="486.396" timestamp="2026-11-25T09:04:35.117266+00:00" hostname="vm"><testcase classname="tests.unit.test_contracts" name="test_identifiers_are_prefixed_sortable_and_validated" time="0.001" /><testcase classname="tests.unit.test_contracts" name="test_timestamps_are_utc_and_naive_rejected" time="0.000" /><testcase classname="tests.unit.test_contracts" name="test_pagination_round_trip_and_bad_cursor" time="0.001" /><testcase classname="tests.unit.test_contracts" name="test_idempotency_same_request_replays_different_request_conflicts" time="0.000" /><testcase classname="tests.unit.test_contracts" name="test_correlation_ids_reject_injection" time="0.000" /><testcase classname="tests.unit.test_contracts" name="test_json_logging_redacts_secrets" time="0.000" /><testcase classname="tests.unit.test_contracts" name="test_task_state_machine" time="0.000" /><testcase classname="tests.unit.test_contracts" name="test_readiness_aggregation" time="0.000" /><testcase classname="tests.unit.test_contracts" name="test_settings_layering_env_overrides_and_secret_rules" time="0.044" /><testcase classname="tests.unit.test_contracts" name="test_contracts_export_is_in_sync" time="0.167" /><testcase classname="tests.unit.test_registry_and_controller" name="test_direct_execution_is_disabled" time="0.250" /><testcase classname="tests.unit.test_registry_and_controller" name="test_healthcheck_timeout_marks_unhealthy" time="0.760" /><testcase classname="tests.unit.test_registry_and_controller" name="test_untrusted_and_tampered_packages_are_never_loaded" time="0.247" /><testcase classname="tests.unit.test_registry_and_controller" name="test_package_digest_matches_isolated_child" time="0.001" /><testcase classname="tests.unit.test_registry_and_controller" name="test_dependency_cycle_is_invalid" time="0.016" /><testcase classname="tests.unit.test_registry_and_controller" name="test_glob_rules[backend/**-backend/api/app.py-True]" time="0.001" /><testcase classname="tests.unit.test_registry_and_controller" name="test_glob_rules[backend/**-backendx/a.py-False]" time="0.000" /><testcase classname="tests.unit.test_registry_and_controller" name="test_glob_rules[**/*.md-README.md-True]" time="0.000" /><testcase classname="tests.unit.test_registry_and_controller" name="test_glob_rules[**/*.md-docs/x/y.md-True]" time="0.000" /><testcase classname="tests.unit.test_registry_and_controller" name="test_glob_rules[tests/test_*.py-tests/test_a.py-True]" time="0.000" /><testcase classname="tests.unit.test_registry_and_controller" name="test_glob_rules[tests/test_*.py-tests/unit/test_a.py-False]" time="0.000" /><testcase classname="tests.unit.test_registry_and_controller" name="test_glob_rules[START.bat-START.bat-True]" time="0.001" /><testcase classname="tests.unit.test_registry_and_controller" name="test_glob_rules[*.bat-a/b.bat-False]" time="0.000" /><testcase classname="tests.security.test_security_boundaries" name="test_unhandled_errors_do_not_leak_internals" time="0.051" /><testcase classname="tests.security.test_security_boundaries" name="test_validation_errors_use_standard_envelope" time="0.029" /><testcase classname="tests.security.test_security_boundaries" name="test_cors_rejects_unknown_origins" time="0.035" /><testcase classname="tests.security.test_security_boundaries" name="test_security_headers_present" time="0.036" /><testcase classname="tests.security.test_security_boundaries" name="test_no_credentials_in_tracked_files" time="0.009" /><testcase classname="tests.security.test_security_boundaries" name="test_handler_cannot_escape_capability_directory" time="0.003" /><testcase classname="tests.integration.test_database_and_redis" name="test_migrations_are_idempotent_and_checksummed" time="0.041" /><testcase classname="tests.integration.test_database_and_redis" name="test_rls_default_deny_blocks_rows_without_policy" time="0.020" /><testcase classname="tests.integration.test_database_and_redis" name="test_redis_idempotency_store" time="0.225" /><testcase classname="tests.integration.test_service_manager_ordering" name="test_dependencies_start_before_dependents" time="0.008" /><testcase classname="tests.integration.test_service_manager_ordering" name="test_unknown_service_dependency_rejected" time="0.007" /><testcase classname="tests.integration.test_service_manager_ordering" name="test_dependency_cycle_rejected" time="0.022" /><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T01_repository_structure" time="0.005" /><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T02_clean_environment_install" time="19.395" /><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T03_start_service_manager" time="4.699" /><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T04_backend_liveness" time="5.022" /><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T05_readiness_reflects_dependency_health" time="6.173" /><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T06_discover_valid_capability_manifest" time="0.448"><failure message="assert (&lt;AvailabilityState.UNTRUSTED: 'untrusted'&gt; is &lt;AvailabilityState.AVAILABLE: 'available'&gt;)&#10; +  where &lt;AvailabilityState.UNTRUSTED: 'untrusted'&gt; = CapabilityAvailability(id='test.echo', version='1.0.0', state=&lt;AvailabilityState.UNTRUSTED: 'untrusted'&gt;, executable=F...uirement='CAP-40', risk=&lt;RiskClass.LOW: 'low'&gt;, problems=[&quot;capability 'test.echo' is not in the operator trust store&quot;]).state&#10; +  and   &lt;AvailabilityState.AVAILABLE: 'available'&gt; = AvailabilityState.AVAILABLE">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-121/test_S01_T06_discover_valid_ca0')
+
+    def test_S01_T06_discover_valid_capability_manifest(tmp_path):
+        write_capability(tmp_path, "echo", "test.echo")
+        reg = CapabilityRegistry([ROOT / "capabilities", tmp_path])
+        report = {a.id: a for a in reg.discover()}
+&gt;       assert report["test.echo"].state is AvailabilityState.AVAILABLE and report["test.echo"].executable
+E       assert (&lt;AvailabilityState.UNTRUSTED: 'untrusted'&gt; is &lt;AvailabilityState.AVAILABLE: 'available'&gt;)
+E        +  where &lt;AvailabilityState.UNTRUSTED: 'untrusted'&gt; = CapabilityAvailability(id='test.echo', version='1.0.0', state=&lt;AvailabilityState.UNTRUSTED: 'untrusted'&gt;, executable=F...uirement='CAP-40', risk=&lt;RiskClass.LOW: 'low'&gt;, problems=["capability 'test.echo' is not in the operator trust store"]).state
+E        +  and   &lt;AvailabilityState.AVAILABLE: 'available'&gt; = AvailabilityState.AVAILABLE
+
+tests/acceptance/test_s01_acceptance.py:197: AssertionError</failure></testcase><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T07_reject_invalid_capability_manifest" time="0.074"><failure message="AssertionError: ('wrong_arity', CapabilityAvailability(id='test.arity', version='1.0.0', state=&lt;AvailabilityState.UNTRUSTED: 'untruste...rement='CAP-40', risk=&lt;RiskClass.LOW: 'low'&gt;, problems=[&quot;capability 'test.arity' is not in the operator trust store&quot;]))&#10;assert &lt;AvailabilityState.UNTRUSTED: 'untrusted'&gt; is &lt;AvailabilityState.INVALID: 'invalid'&gt;&#10;[+2 more lines; full report in element text]">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-121/test_S01_T07_reject_invalid_ca0')
+
+    def test_S01_T07_reject_invalid_capability_manifest(tmp_path):
+        for name, (cid, handler, raw) in INVALID_CASES.items():
+            d = write_capability(tmp_path, name, cid, handler=handler, raw_manifest=raw,
+                                 timeout_s=99999 if name == "excessive_timeout" else 10)
+            text = (d / "capability.yaml").read_text()
+            if name == "bad_version":
+                text = text.replace("version: 1.0.0", "version: one")
+            if name == "missing_module":
+                text = text.replace("handler:execute", "nowhere:execute")
+            if name == "bad_input_schema":
+                text = text.replace("input_schema: {type: object", "input_schema: {type: notatype")
+            (d / "capability.yaml").write_text(text)
+        (tmp_path / "unhealthy").mkdir()
+        write_capability(tmp_path, "unhealthy", "test.unhealthy", handler="def execute(p, c):\n    return {'echo': ''}\n"
+                         "def healthcheck():\n    return {'healthy': False, 'why': 'disk'}\ndef verify(p, o):\n    return True\n")
+        write_capability(tmp_path, "good", "test.good")
+        reg = CapabilityRegistry([tmp_path], policy=AllowAllForTest(), max_timeout_s=900)
+        report = reg.discover()
+        by_src = {Path(a.source).parent.name: a for a in report}
+        for name in INVALID_CASES:
+            a = by_src[name]
+&gt;           assert a.state is AvailabilityState.INVALID, (name, a)
+E           AssertionError: ('wrong_arity', CapabilityAvailability(id='test.arity', version='1.0.0', state=&lt;AvailabilityState.UNTRUSTED: 'untruste...rement='CAP-40', risk=&lt;RiskClass.LOW: 'low'&gt;, problems=["capability 'test.arity' is not in the operator trust store"]))
+E           assert &lt;AvailabilityState.UNTRUSTED: 'untrusted'&gt; is &lt;AvailabilityState.INVALID: 'invalid'&gt;
+E            +  where &lt;AvailabilityState.UNTRUSTED: 'untrusted'&gt; = CapabilityAvailability(id='test.arity', version='1.0.0', state=&lt;AvailabilityState.UNTRUSTED: 'untrusted'&gt;, executable=...irement='CAP-40', risk=&lt;RiskClass.LOW: 'low'&gt;, problems=["capability 'test.arity' is not in the operator trust store"]).state
+E            +  and   &lt;AvailabilityState.INVALID: 'invalid'&gt; = AvailabilityState.INVALID
+
+tests/acceptance/test_s01_acceptance.py:242: AssertionError</failure></testcase><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T08_reject_duplicate_capability_identifiers" time="0.030"><failure message="AssertionError: assert (None is None and [] == ['test.unique']&#10; +  where None = get('test.dup')&#10; +    where get = &lt;backend.capability_registry.registry.CapabilityRegistry object at 0x7fc88d9dae40&gt;.get&#10;  &#10;  Right contains one more item: 'test.unique'&#10;  Use -v to get more diff)">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-121/test_S01_T08_reject_duplicate_0')
+
+    def test_S01_T08_reject_duplicate_capability_identifiers(tmp_path):
+        a, b = tmp_path / "dirA", tmp_path / "dirB"
+        write_capability(a, "echo_one", "test.dup")
+        write_capability(b, "echo_two", "test.dup")
+        write_capability(a, "other", "test.unique")
+        reg = CapabilityRegistry([a, b], policy=AllowAllForTest())
+        report = reg.discover()
+        dups = [x for x in report if x.id == "test.dup"]
+        assert len(dups) == 2 and all(x.state is AvailabilityState.REJECTED_DUPLICATE for x in dups)
+        assert all(not x.executable and "duplicate" in x.problems[0] for x in dups)
+&gt;       assert reg.get("test.dup") is None and reg.executable_ids() == ["test.unique"]
+E       AssertionError: assert (None is None and [] == ['test.unique']
+E        +  where None = get('test.dup')
+E        +    where get = &lt;backend.capability_registry.registry.CapabilityRegistry object at 0x7fc88d9dae40&gt;.get
+E         
+E         Right contains one more item: 'test.unique'
+E         Use -v to get more diff)
+
+tests/acceptance/test_s01_acceptance.py:266: AssertionError</failure></testcase><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T09_new_capability_registers_without_changing_start" time="4.670"><failure message="AssertionError: assert ('untrusted' == 'available'&#10;  &#10;  - available&#10;  + untrusted)">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-121/test_S01_T09_new_capability_re0')
+
+    def test_S01_T09_new_capability_registers_without_changing_start(tmp_path):
+        start_files = ["START.bat", "start.sh"]
+        before = {f: hashlib.sha256((ROOT / f).read_bytes()).hexdigest() for f in start_files}
+        capdir = tmp_path / "installed"
+        cp = subprocess.run([PY, str(ROOT / "scripts/new_capability.py"), "text.word_count", "--requirement", "CAP-40",
+                             "--dir", str(capdir)], capture_output=True, text=True)
+        assert cp.returncode == 0, cp.stderr
+        d = capdir / "text_word_count"
+        (d / "handler.py").write_text(textwrap.dedent('''\
+            def execute(payload, context):
+                return {"result": str(len(payload.get("text", "").split()))}
+    
+            def healthcheck():
+                return {"healthy": True}
+    
+            def verify(payload, output):
+                return {"verified": output["result"].isdigit()}
+            '''))
+        m = (d / "capability.yaml").read_text().replace("enabled: false", "enabled: true").replace(
+            "properties: {}}", "properties: {text: {type: string}}}")
+        (d / "capability.yaml").write_text(m)
+        env = platform_env("t09", ATTA__CAPABILITIES__DIRECTORIES=json.dumps(["capabilities", str(capdir)]))
+        start = subprocess.run(["bash", str(ROOT / "start.sh"), "--json"], cwd=ROOT, env=env, capture_output=True,
+                               text=True, timeout=180)
+        try:
+            assert start.returncode == 0, start.stdout + start.stderr
+            caps = {c["id"]: c for c in json.loads(start.stdout)["capabilities"]}
+&gt;           assert caps["text.word_count"]["state"] == "available" and caps["text.word_count"]["executable"]
+E           AssertionError: assert ('untrusted' == 'available'
+E             
+E             - available
+E             + untrusted)
+
+tests/acceptance/test_s01_acceptance.py:301: AssertionError</failure></testcase><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T10_detect_unavailable_dependency" time="0.134" /><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T11_no_false_readiness_after_essential_failure" time="13.504" /><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T12_build_controller_rejects_progression_after_failed_test" time="1.734" /><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T13_protected_operations_default_to_deny" time="0.448"><failure message="AssertionError: assert False&#10; +  where False = RegisteredCapability(id='test.sidefx', source='/tmp/pytest-of-root/pytest-121/test_S01_T13_protected_operati0/sidefx/c...True, idempotency='non_idempotent', version='1.0.0')], probe_problems=None, health_ok=None, health_at=0.0, fixed=False).executable&#10;[+2 more lines; full report in element text]">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-121/test_S01_T13_protected_operati0')
+
+    def test_S01_T13_protected_operations_default_to_deny(tmp_path):
+        from fastapi.testclient import TestClient
+        from backend.api.app import create_app
+        from backend.contracts import DependencyHealth, HealthStatus
+        marker = tmp_path / "executed.txt"
+        write_capability(tmp_path, "sidefx", "test.sidefx", handler=textwrap.dedent(f"""\
+            def execute(payload, context):
+                open({str(marker)!r}, "w").write("ran")
+                return {{"echo": "x"}}
+            def healthcheck():
+                return True
+            def verify(p, o):
+                return True
+            """))
+        engine = PolicyEngine()
+        reg = CapabilityRegistry([ROOT / "capabilities", tmp_path], policy=engine)
+        reg.discover()
+&gt;       assert reg.get("test.sidefx").executable
+E       AssertionError: assert False
+E        +  where False = RegisteredCapability(id='test.sidefx', source='/tmp/pytest-of-root/pytest-121/test_S01_T13_protected_operati0/sidefx/c...True, idempotency='non_idempotent', version='1.0.0')], probe_problems=None, health_ok=None, health_at=0.0, fixed=False).executable
+E        +    where RegisteredCapability(id='test.sidefx', source='/tmp/pytest-of-root/pytest-121/test_S01_T13_protected_operati0/sidefx/c...True, idempotency='non_idempotent', version='1.0.0')], probe_problems=None, health_ok=None, health_at=0.0, fixed=False) = get('test.sidefx')
+E        +      where get = &lt;backend.capability_registry.registry.CapabilityRegistry object at 0x7fc88d463bd0&gt;.get
+
+tests/acceptance/test_s01_acceptance.py:506: AssertionError</failure></testcase><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T14_stop_and_restart_cleanly" time="9.690" /><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T15_requirement_register_complete" time="0.122" /><testcase classname="tests.acceptance.test_s01_acceptance" name="test_S01_T16_existing_functionality_not_removed_or_downgraded" time="73.094" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T01_create_and_persist_objective_contract" time="1.882" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T02_reject_unauthorised_objective_modification" time="1.835" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T03_permanent_numbered_identifiers" time="3.257" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T04_identifiers_preserved_after_restart" time="7.683" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T05_reject_duplicate_tool_identifiers" time="2.850" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T06_generate_and_validate_task_contract" time="1.778" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T07_reject_task_with_unknown_tools" time="1.798" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T08_reject_circular_dependencies" time="1.768" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T09_allocate_only_compatible_tools" time="1.630" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T10_reject_tools_outside_pool" time="1.974" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T11_worker_cannot_increase_its_own_permissions" time="1.965" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T12_default_four_tool_limit" time="3.330" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T13_four_active_task_limit" time="2.269" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T14_concurrent_controllers_cannot_exceed_limit" time="10.696" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T15_no_execution_before_dependencies_complete" time="2.406" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T16_no_progression_after_failed_integration" time="2.841" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T17_reject_malformed_proposals" time="2.336" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T18_reject_invalid_tool_arguments" time="2.101" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T19_reject_unauthorised_resource_ids" time="1.921" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T20_reject_unauthorised_filesystem_paths" time="2.706" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T21_reject_unauthorised_network_destinations" time="2.515" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T22_reject_attempts_to_change_acceptance_criteria" time="2.366" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T23_detect_repeated_unsuccessful_patterns" time="5.489" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T24_enforce_maximum_action_budget" time="3.026" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T25_enforce_retry_limits" time="4.191" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T26_enforce_failed_step_limit" time="2.717" /><testcase classname="tests.acceptance.test_s01a_acceptance" name="test_S01A_T27_enforce_concurrent_tool_limit" time="3.392" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T28_enforce_execution_deadlines" time="5.900" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T29_process_termination_after_cancellation" time="6.688" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T30_no_local_side_effects_after_timeout" time="8.204" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T31_no_direct_tool_execution_outside_controller" time="1.696" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T32_no_unauthenticated_protected_execution" time="1.859" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T33_reject_invalid_state_transitions" time="2.468" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T34_reject_completion_without_verification" time="2.791" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T35_reject_fabricated_or_missing_evidence" time="4.983" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T36_bounded_repair_after_failed_verification" time="3.618" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T37_repair_stops_when_budget_exhausted" time="11.740" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T38_persist_and_restore_verified_checkpoint" time="5.285" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T39_consumed_budgets_survive_restart" time="4.260" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T40_no_automatic_repetition_of_uncertain_external_operations" time="7.126" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T41_dependency_failures_propagate" time="3.513" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T42_service_failure_after_startup_is_detected" time="4.731" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T43_no_untrusted_executable_imports_during_discovery" time="3.305" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T44_no_concurrent_duplicate_execution" time="2.535" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T45_context_excludes_unrelated_information" time="2.581" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T46_untrusted_tool_output_cannot_change_restrictions" time="4.074" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T47_complete_requirement_traceability" time="4.802" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T48_existing_stage01_acceptance_tests" time="73.278" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T49_existing_atta_application_builder_regression" time="78.840" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T50_automatic_controller_startup_and_capability_registration" time="5.955" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T51_worker_cannot_alter_protected_verification_criteria" time="0.006"><failure message="AssertionError: OS protection is not in place: run scripts/protect_verifier.sh&#10;  worker account 'atta-builder' does not exist: run scripts/protect_verifier.sh&#10;assert ['worker acco..._verifier.sh'] == []&#10;  &#10;  Left contains one more item: &quot;worker account 'atta-builder' does not exist: run scripts/protect_verifier.sh&quot;&#10;  Use -v to get more diff">def test_S01A_T51_worker_cannot_alter_protected_verification_criteria():
+        from backend.verification.build_controller import BuildController
+        from backend.verification.protection import protection_problems
+        bc = BuildController(ROOT)
+        problems = protection_problems(bc)
+&gt;       assert problems == [], "OS protection is not in place: run scripts/protect_verifier.sh\n" + "\n".join(problems)
+E       AssertionError: OS protection is not in place: run scripts/protect_verifier.sh
+E         worker account 'atta-builder' does not exist: run scripts/protect_verifier.sh
+E       assert ['worker acco..._verifier.sh'] == []
+E         
+E         Left contains one more item: "worker account 'atta-builder' does not exist: run scripts/protect_verifier.sh"
+E         Use -v to get more diff
+
+tests/acceptance/test_s01a_acceptance_b.py:641: AssertionError</failure></testcase><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T52_conflicting_resource_modifications_prevented" time="2.984" /><testcase classname="tests.acceptance.test_s01a_acceptance_b" name="test_S01A_T53_complete_multi_task_objective" time="8.543" /></testsuite></testsuites>

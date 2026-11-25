@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | Baseline | `21104c413c30a3b2714f877892970e7db19a1d19` (Stage 01A gate passed) |
-| **Qualified source revision (frozen)** | **`__FROZEN__`** — no source file changed during this qualification. A first frozen revision (`a29fb230`) was superseded after the compatibility run found the listing defect in §3; every suite below was re-run on the new revision |
-| Evidence commit | the commit containing this file: adds only evidence and documentation on top of `__FROZEN_SHORT__` (`git diff --stat __FROZEN_SHORT__ <evidence commit>` lists no file outside `evidence/stage_11/`, `STAGE_11_*.md`, `documentation/stage11/`, `BLOCKERS.md`) |
+| **Qualified source revision (frozen)** | **`098cf5283a8e8d3d60f4ecaf2ec6c85919b17b7b`** — no source file changed during this qualification. A first frozen revision (`a29fb230`) was superseded after the compatibility run found the listing defect in §3; every suite below was re-run on the new revision |
+| Evidence commit | the commit containing this file: removes the synthetic-compatibility test (test-only, see §8) and adds evidence and documentation on top of `098cf528` (`git diff --stat 098cf528 <evidence commit>` lists no file outside `evidence/stage_11/`, `STAGE_11_*.md`, `documentation/stage11/`, `BLOCKERS.md`) |
 | Branch / tag | `claude/focused-cori-ajjjn0` (isolated working branch; never the authoritative branch); tag `stage11-rc1` |
 | Date | 2026-11-25 (UTC) |
 | Environment | Linux 6.18 x86_64 · Python 3.13.18 · Git 2.43.0 · PostgreSQL 16.15 + pgvector · Redis 7.0.15 · fastapi 0.162.2, pydantic 2.14.3, psycopg 3.3.8, pytest 9.2.0, jsonschema 4.26.0, PyYAML 6.0.3, playwright 1.63.0 (from `configuration/locks/backend-full.lock.txt`) |
@@ -14,7 +14,7 @@
 This is not a sealed build-controller gate (the protected `configuration/build/` holds no Stage 11/S08 definition;
 see STAGE_11_REQUIREMENT_MATRIX.md for the sources audited).
 
-## 1. Final results (frozen revision `__FROZEN_SHORT__`)
+## 1. Final results (frozen revision `098cf528`)
 
 | # | Suite | Command (`.cmd` file) | Result | Exit |
 |---|---|---|---|---|
@@ -23,9 +23,10 @@ see STAGE_11_REQUIREMENT_MATRIX.md for the sources audited).
 | 3 | Legacy ATTa on the sidecar | `python -m pytest tests/test_*.py` | 255 passed, 5 skipped, 8 failed (all pre-existing, §2) | 1 |
 | 4 | Stage 01 + 01A on the **unchanged baseline** (Git clone of `21104c4`, same environment) | same as 2 | 98 passed, 6 failed | 1 |
 | 5 | Legacy ATTa on the **unchanged baseline** | same as 3 | 255 passed, 5 skipped, 8 failed | 1 |
-| 6 | Compatibility harness, clean Stage 01A baseline, installer + all suites | `compat/check_compat.py --baseline … --baseline-ref 21104c4 --run-tests` | __COMPAT_BASELINE__ |
-| 7 | Compatibility harness, baseline + synthetic Stage 01B + synthetic Stage 04, installer + all suites | `… --stage 01B=… --stage 04=… --run-tests` | __COMPAT_SYNTHETIC__ |
-| 8 | Requirement register | `python scripts/requirement_register.py check` | valid, 40 requirements | 0 |
+| 6 | Compatibility harness on a fresh Git clone of the Stage 01A baseline: installer `--check` + install, migrations, then Stage 11, Stage 01/01A and legacy suites in the installed tree | `compat/check_compat.py --baseline … --baseline-ref 21104c4 --run-tests` | **COMPATIBLE** — installer check 0, install 0; Stage 11 173 passed; Stage 01/01A 98 passed + 6 pre-existing; legacy 255 passed + 8 pre-existing; **new failures: none** | 0 |
+| 7 | Compatibility with the actual Stage 01B and Stage 04 packages | — | **BLOCKED — the real packages were not available**; no synthetic stand-in is used as evidence | — |
+| 8 | Compatibility with the actual Stage 12 sidecar (`claude/lucid-maxwell-uc91v4` @ `732ba5e`, appeared during final qualification) | `compat/check_compat.py … --stage 12=<that tree> --run-tests` | **NOT RUN** — package delivered at the user's request before this run; required follow-up (B-S11-13) | — |
+| 9 | Requirement register | `python scripts/requirement_register.py check` | valid, 40 requirements | 0 |
 
 Stage 11 tests per module: url_security 68 · installer 29 · pipeline 23 · qualification 15 · integration_kits 12 ·
 extraction_dedup 10 · contracts 9 · registration_tools 4 · api 3.
@@ -48,7 +49,7 @@ extraction_dedup 10 · contracts 9 · registration_tools 4 · api 3.
 individually: T48 re-runs the Stage 01 suite, whose T09 calls `start.sh`, which refuses with "not installed: run
 ./install.sh" in any fresh clone without its own `.venv`. Reproduced identically on a pristine baseline clone
 (`21104c4`), and T48 **passes** in the combined tree once `ATTA_VENV` points at the installed environment. The
-harness now sets `ATTA_VENV` (equivalent conditions); suites 4–7 above ran that way. Not a Stage 11 regression.
+harness now sets `ATTA_VENV` (equivalent conditions); suites 4–6 above ran that way. Not a Stage 11 regression.
 An earlier comparison run on a non-Git copy of the baseline showed 4 extra failures (T01/T16/T48/T49 read Git
 history); the Git-clone baseline above supersedes it.
 
@@ -56,7 +57,7 @@ history); the Git-clone baseline above supersedes it.
 
 | Found by | Defect | Correction | Re-verified by |
 |---|---|---|---|
-| compatibility run | package builder packaged other stages' files when run inside a combined tree | builder packages only Stage 11-owned paths | inst::test_builder_ignores_other_stages_files, run 7 |
+| compatibility run | package builder packaged other stages' files when run inside a combined tree | builder packages only Stage 11-owned paths | inst::test_builder_ignores_other_stages_files |
 | time-limit test | research deadline did not bound a task already running (slow source) | each task's Stage 01A `execution_deadline` = research time left | q::test_research_time_limit_is_enforced |
 | time-limit test | BLOCKED results dropped other limitations (e.g. exhausted time) | `_finish_blocked` includes all applicable limitations | same |
 | requirement audit | register CAP-11 "Rate limits" not implemented | per-provider `max_requests` / `rate_window_s` | q::test_provider_rate_limit |
@@ -70,9 +71,9 @@ history); the Git-clone baseline above supersedes it.
 | # | Scenario | Outcome | Test / evidence |
 |---|---|---|---|
 | 1 | Clean Stage 01A baseline | installs; tree equals the sidecar's Stage 11 files; all suites pass except pre-existing | inst::test_install_reproduces_the_sidecar…, run 6 |
-| 2 | Stage 01B candidate | **BLOCKED — actual package not supplied**; synthetic 01B tree: installs (union-merged logs) | run 7 |
-| 3 | Stage 04 candidate | **BLOCKED — actual package not supplied**; synthetic 04 tree: installs | run 7 |
-| 4 | Combined 01B + 04 | **BLOCKED — actual packages not supplied**; synthetic combined tree: installs, suites pass | run 7 |
+| 2 | Stage 01B candidate | **BLOCKED — actual package not supplied** | — |
+| 3 | Stage 04 candidate | **BLOCKED — actual package not supplied** | — |
+| 4 | Combined 01B + 04 | **BLOCKED — actual packages not supplied** | — |
 | 5 | Repeated installation | "already installed", exit 0 | inst::test_install_reproduces…_and_is_idempotent |
 | 6 | Dirty working tree | refused (exit 2), nothing changed | inst::test_dirty_tree_refused |
 | 7 | Nested repository | refused: nested target, sub-directory target, nested repo on a written path | inst::test_subdirectory_nested…, inst::test_nested_repository_on_a_written_path_refused |
@@ -122,3 +123,12 @@ ATTA_ENV=test .venv/bin/python -m pytest -q tests/unit tests/security tests/inte
 ```
 The exact commands of the recorded runs are in `evidence/stage_11/final/*.cmd`. Running the Stage 01/01A suites
 rewrites `evidence/stage_01*/acceptance/*.json`; those committed baseline files were restored after the runs.
+
+## 8. Changes after the frozen revision (no product code)
+
+At the user's instruction ("no synthetic, no mocks") the test that ran the compatibility harness on fabricated
+Stage 01B / Stage 04 trees, and its evidence run, were withdrawn. The remaining harness test
+(`test_compat_harness_detects_conflicting_packages`) only proves conflict detection and makes no compatibility claim.
+`tests/research/test_s11_installer.py` was re-run after the change: 28 passed. No file under `backend/`,
+`capabilities/`, `packaging/`, `scripts/`, `database/` or `configuration/` differs from the frozen revision
+(`git diff --stat 098cf528 stage11-rc1 -- backend capabilities packaging scripts database configuration` is empty).

@@ -1,0 +1,67 @@
+{
+  "stage11_package": "098cf5283a8e8d3d60f4ecaf2ec6c85919b17b7b",
+  "stages": [],
+  "findings": [],
+  "installer": {
+    "check": {
+      "exit": 0,
+      "output": "package verified: 114 files match SHA256SUMS (sidecar 098cf5283a8e)\nplan: 88 new files, 6 shared-file updates, 0 already present\nrehearsal passed in a temporary worktree (94 file operations verified)\ncheck passed: no conflicts; the installation would succeed (nothing was changed)\n"
+    },
+    "install": {
+      "exit": 0,
+      "output": "package verified: 114 files match SHA256SUMS (sidecar 098cf5283a8e)\nplan: 88 new files, 6 shared-file updates, 0 already present\nrehearsal passed in a temporary worktree (94 file operations verified)\ninstalled: 88 files added, 6 shared files updated (BLOCKERS.md [fast-forward], CHANGE_MANIFEST.md [fast-forward], DECISIONS.md [fast-forward], IMPLEMENTATION_PROGRESS.md [fast-forward], MASTER_IMPLEMENTATION_REGISTER.md [regenerated from the merged register YAML], documentation/requirements/requirement_register.yaml [fast-forward])\nprotected configuration verified unchanged\nnext steps (INSTALL.md): migrate the database, run the tests, then the operator integration steps\n"
+    }
+  },
+  "tests": [
+    {
+      "cmd": "/home/user/ATTa/.venv/bin/python -m backend.database migrate",
+      "exit": 0,
+      "summary": "",
+      "tail": "applied: nothing (up to date)\n",
+      "new_failures": []
+    },
+    {
+      "cmd": "/home/user/ATTa/.venv/bin/python -m pytest -q -p no:cacheprovider tests/research --junitxml=/tmp/atta-s11-compat-rxvt6re9/suite0.xml",
+      "exit": 0,
+      "summary": "173 passed in 355.63s (0:05:55)",
+      "tail": "........................................................................ [ 41%]\n........................................................................ [ 83%]\n.............................                                            [100%]\n173 passed in 355.63s (0:05:55)\n",
+      "known_preexisting": [],
+      "new_failures": []
+    },
+    {
+      "cmd": "/home/user/ATTa/.venv/bin/python -m pytest -q -p no:cacheprovider tests/unit tests/security tests/integration tests/acceptance --junitxml=/tmp/atta-s11-compat-rxvt6re9/suite1.xml",
+      "exit": 1,
+      "summary": "6 failed, 98 passed in 460.59s (0:07:40)",
+      "tail": "d_controller import BuildController\n        from backend.verification.protection import protection_problems\n        bc = BuildController(ROOT)\n        problems = protection_problems(bc)\n>       assert problems == [], \"OS protection is not in place: run scripts/protect_verifier.sh\\n\" + \"\\n\".join(problems)\nE       AssertionError: OS protection is not in place: run scripts/protect_verifier.sh\nE         worker account 'atta-builder' does not exist: run scripts/protect_verifier.sh\nE       assert ['worker acco..._verifier.sh'] == []\nE         \nE         Left contains one more item: \"worker account 'atta-builder' does not exist: run scripts/protect_verifier.sh\"\nE         Use -v to get more diff\n\ntests/acceptance/test_s01a_acceptance_b.py:641: AssertionError\n=========================== short test summary info ============================\nFAILED tests/acceptance/test_s01_acceptance.py::test_S01_T06_discover_valid_capability_manifest\nFAILED tests/acceptance/test_s01_acceptance.py::test_S01_T07_reject_invalid_capability_manifest\nFAILED tests/acceptance/test_s01_acceptance.py::test_S01_T08_reject_duplicate_capability_identifiers\nFAILED tests/acceptance/test_s01_acceptance.py::test_S01_T09_new_capability_registers_without_changing_start\nFAILED tests/acceptance/test_s01_acceptance.py::test_S01_T13_protected_operations_default_to_deny\nFAILED tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T51_worker_cannot_alter_protected_verification_criteria\n6 failed, 98 passed in 460.59s (0:07:40)\n",
+      "known_preexisting": [
+        "test_S01A_T51_worker_cannot_alter_protected_verification_criteria",
+        "test_S01_T06_discover_valid_capability_manifest",
+        "test_S01_T07_reject_invalid_capability_manifest",
+        "test_S01_T08_reject_duplicate_capability_identifiers",
+        "test_S01_T09_new_capability_registers_without_changing_start",
+        "test_S01_T13_protected_operations_default_to_deny"
+      ],
+      "new_failures": []
+    },
+    {
+      "cmd": "/home/user/ATTa/.venv/bin/python -m pytest -q -p no:cacheprovider tests/test_resilience_boundary.py tests/test_v1141_installer.py tests/test_v114_hardening.py tests/test_v115_security.py tests/test_v117_coolify.py tests/test_v118_merge.py tests/test_v119_login_proof.py tests/test_v120_stage2.py tests/test_v121_2_parallel_isolation.py tests/test_v121_3_record_diagnostic.py tests/test_v121_4_control_layer.py tests/test_v121_journey_author.py --junitxml=/tmp/atta-s11-compat-rxvt6re9/suite2.xml",
+      "exit": 1,
+      "summary": "8 failed, 255 passed, 5 skipped in 59.13s",
+      "tail": ".new_event_loop()\n                self._own_loop = True\n            if self._loop.is_running():\n>               raise Error(\n                    \"\"\"It looks like you are using Playwright Sync API inside the asyncio loop.\n    Please use the Async API instead.\"\"\"\n                )\nE               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.\nE               Please use the Async API instead.\n\n/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error\n=========================== short test summary info ============================\nFAILED tests/test_v119_login_proof.py::V119JourneyProof::test_journey_result_is_recorded_on_stage_6\nFAILED tests/test_v119_login_proof.py::V119JourneyProof::test_login_requires_a_real_test_account\nFAILED tests/test_v119_login_proof.py::V119JourneyProof::test_login_with_wrong_expectation_fails_even_though_login_worked\nFAILED tests/test_v119_login_proof.py::V119JourneyProof::test_login_without_a_post_login_expectation_is_refused\nFAILED tests/test_v119_login_proof.py::V119JourneyProof::test_page_load_without_journey_is_not_qualified\nFAILED tests/test_v119_login_proof.py::V119JourneyProof::test_real_login_journey_passes\nFAILED tests/test_v119_login_proof.py::V119JourneyProof::test_wrong_password_fails_the_journey\nFAILED tests/test_v121_journey_author.py::SubmitSelection::test_login_submit_is_inside_the_password_form\n8 failed, 255 passed, 5 skipped in 59.13s\n",
+      "known_preexisting": [
+        "test_journey_result_is_recorded_on_stage_6",
+        "test_login_requires_a_real_test_account",
+        "test_login_submit_is_inside_the_password_form",
+        "test_login_with_wrong_expectation_fails_even_though_login_worked",
+        "test_login_without_a_post_login_expectation_is_refused",
+        "test_page_load_without_journey_is_not_qualified",
+        "test_real_login_journey_passes",
+        "test_wrong_password_fails_the_journey"
+      ],
+      "new_failures": []
+    }
+  ],
+  "verdict": "COMPATIBLE",
+  "note": "pre-existing failures documented in STAGE_11_VERIFICATION.md (S01-T06..T09/T13, S01A-T51, 8 legacy Playwright tests) also fail on the unmodified baseline; compare suites before judging"
+}
+exit 0

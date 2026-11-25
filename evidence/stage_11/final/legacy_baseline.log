@@ -1,0 +1,302 @@
+...........s............................................................ [ 26%]
+........................................................................ [ 53%]
+...FFFFFFF...............................................s.............. [ 80%]
+..............................................F..sss                     [100%]
+=================================== FAILURES ===================================
+_________ V119JourneyProof.test_journey_result_is_recorded_on_stage_6 __________
+
+self = <test_v119_login_proof.V119JourneyProof testMethod=test_journey_result_is_recorded_on_stage_6>
+
+    def setUp(self):
+>       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:32: in __init__
+    self.browser = self.p.chromium.launch(headless=True, executable_path=os.environ.get("ATTA_CHROMIUM","/usr/bin/chromium"))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_generated.py:16814: in launch
+    self._sync(
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/_impl/_browser_type.py:101: in launch
+    await self._channel.send(
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7fe8a41acc20>
+cb = <function Channel.send.<locals>.<lambda> at 0x7fe8a4033380>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Failed to launch chromium because executable doesn't exist at /usr/bin/chromium
+
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/_impl/_connection.py:632: Error
+___________ V119JourneyProof.test_login_requires_a_real_test_account ___________
+
+self = <test_v119_login_proof.V119JourneyProof testMethod=test_login_requires_a_real_test_account>
+
+    def setUp(self):
+>       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:31: in __init__
+    self.p = sync_playwright().start()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:83: in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7fe8a51f1d10>
+
+        def __enter__(self) -> SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+>               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error
+_ V119JourneyProof.test_login_with_wrong_expectation_fails_even_though_login_worked _
+
+self = <test_v119_login_proof.V119JourneyProof testMethod=test_login_with_wrong_expectation_fails_even_though_login_worked>
+
+    def setUp(self):
+>       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:31: in __init__
+    self.p = sync_playwright().start()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:83: in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7fe8a4e06ad0>
+
+        def __enter__(self) -> SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+>               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error
+___ V119JourneyProof.test_login_without_a_post_login_expectation_is_refused ____
+
+self = <test_v119_login_proof.V119JourneyProof testMethod=test_login_without_a_post_login_expectation_is_refused>
+
+    def setUp(self):
+>       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:31: in __init__
+    self.p = sync_playwright().start()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:83: in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7fe89f4842b0>
+
+        def __enter__(self) -> SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+>               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error
+_______ V119JourneyProof.test_page_load_without_journey_is_not_qualified _______
+
+self = <test_v119_login_proof.V119JourneyProof testMethod=test_page_load_without_journey_is_not_qualified>
+
+    def setUp(self):
+>       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:31: in __init__
+    self.p = sync_playwright().start()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:83: in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7fe89f484fc0>
+
+        def __enter__(self) -> SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+>               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error
+_______________ V119JourneyProof.test_real_login_journey_passes ________________
+
+self = <test_v119_login_proof.V119JourneyProof testMethod=test_real_login_journey_passes>
+
+    def setUp(self):
+>       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:31: in __init__
+    self.p = sync_playwright().start()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:83: in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7fe8a41c7bf0>
+
+        def __enter__(self) -> SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+>               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error
+____________ V119JourneyProof.test_wrong_password_fails_the_journey ____________
+
+self = <test_v119_login_proof.V119JourneyProof testMethod=test_wrong_password_fails_the_journey>
+
+    def setUp(self):
+>       self.app = BrowserPage()
+                   ^^^^^^^^^^^^^
+
+tests/test_v119_login_proof.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v119_login_proof.py:31: in __init__
+    self.p = sync_playwright().start()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:83: in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7fe8a417a470>
+
+        def __enter__(self) -> SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+>               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error
+________ SubmitSelection.test_login_submit_is_inside_the_password_form _________
+
+self = <test_v121_journey_author.SubmitSelection testMethod=test_login_submit_is_inside_the_password_form>
+
+    def test_login_submit_is_inside_the_password_form(self):
+        from playwright.sync_api import sync_playwright
+        sys.modules.pop("system_watcher", None)
+        w = importlib.import_module("system_watcher")
+        exe = os.environ.get("ATTA_CHROMIUM", "/usr/bin/chromium")
+>       with sync_playwright() as p:
+             ^^^^^^^^^^^^^^^^^
+
+tests/test_v121_journey_author.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright.sync_api._context_manager.PlaywrightContextManager object at 0x7fe8a4ca9040>
+
+        def __enter__(self) -> SyncPlaywright:
+            try:
+                self._loop = asyncio.get_running_loop()
+            except RuntimeError:
+                self._loop = asyncio.new_event_loop()
+                self._own_loop = True
+            if self._loop.is_running():
+>               raise Error(
+                    """It looks like you are using Playwright Sync API inside the asyncio loop.
+    Please use the Async API instead."""
+                )
+E               playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+E               Please use the Async API instead.
+
+/home/user/ATTa/.venv/lib/python3.13/site-packages/playwright/sync_api/_context_manager.py:46: Error
+=========================== short test summary info ============================
+FAILED tests/test_v119_login_proof.py::V119JourneyProof::test_journey_result_is_recorded_on_stage_6
+FAILED tests/test_v119_login_proof.py::V119JourneyProof::test_login_requires_a_real_test_account
+FAILED tests/test_v119_login_proof.py::V119JourneyProof::test_login_with_wrong_expectation_fails_even_though_login_worked
+FAILED tests/test_v119_login_proof.py::V119JourneyProof::test_login_without_a_post_login_expectation_is_refused
+FAILED tests/test_v119_login_proof.py::V119JourneyProof::test_page_load_without_journey_is_not_qualified
+FAILED tests/test_v119_login_proof.py::V119JourneyProof::test_real_login_journey_passes
+FAILED tests/test_v119_login_proof.py::V119JourneyProof::test_wrong_password_fails_the_journey
+FAILED tests/test_v121_journey_author.py::SubmitSelection::test_login_submit_is_inside_the_password_form
+8 failed, 255 passed, 5 skipped in 59.24s
+exit 1

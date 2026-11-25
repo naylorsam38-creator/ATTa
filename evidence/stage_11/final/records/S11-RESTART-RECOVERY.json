@@ -1,0 +1,75 @@
+{
+  "checkpoint": {
+    "phase": "collect",
+    "claims": [],
+    "budgets": {
+      "tokens": {
+        "limit": 100000.0,
+        "consumed": 4634.0,
+        "remaining": 95366.0
+      },
+      "batches": {
+        "limit": 6.0,
+        "consumed": 1.0,
+        "remaining": 5.0
+      },
+      "fetches": {
+        "limit": 12.0,
+        "consumed": 0.0,
+        "remaining": 12.0
+      },
+      "queries": {
+        "limit": 8.0,
+        "consumed": 2.0,
+        "remaining": 6.0
+      },
+      "retries": {
+        "limit": 2.0,
+        "consumed": 0.0,
+        "remaining": 2.0
+      },
+      "sources": {
+        "limit": 12.0,
+        "consumed": 0.0,
+        "remaining": 12.0
+      },
+      "evidence_bytes": {
+        "limit": 67108864.0,
+        "consumed": 0.0,
+        "remaining": 67108864.0
+      },
+      "model_requests": {
+        "limit": 30.0,
+        "consumed": 0.0,
+        "remaining": 30.0
+      },
+      "network_requests": {
+        "limit": 60.0,
+        "consumed": 2.0,
+        "remaining": 58.0
+      }
+    },
+    "created_at": "2026-11-25T09:02:48.010Z",
+    "research_id": "rsr_01M88Z2WW6X5S1D1TR0SMRG42H",
+    "objective_id": "obj_01M88Z2WW63695PEGYG22697BD",
+    "contract_hash": "be8a072c637109c833cb8a859af808a5567d4064b0b9ffd603cf08820d211297",
+    "evidence_gaps": [
+      0,
+      1
+    ],
+    "pending_tasks": [],
+    "contradictions": [],
+    "ingested_tasks": [
+      "TASK-0001",
+      "TASK-0002"
+    ],
+    "contract_version": 1,
+    "queries_executed": [
+      "rqy_01M88Z2YGSNDGN0V6D1FSCYJX3",
+      "rqy_01M88Z2YHQAB7MDQ1S1EHA9WJB"
+    ],
+    "sources_collected": [],
+    "completed_subquestions": []
+  },
+  "final": "COMPLETED_WITH_LIMITATIONS"
+}

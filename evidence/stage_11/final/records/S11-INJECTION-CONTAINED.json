@@ -1,0 +1,19 @@
+{
+  "rules": [
+    [
+      "unknown_tool"
+    ],
+    [
+      "network_not_permitted"
+    ],
+    [
+      "protected_controller_state"
+    ],
+    [
+      "protected_controller_state"
+    ],
+    [
+      "tool_not_in_pool"
+    ]
+  ]
+}

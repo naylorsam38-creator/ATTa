@@ -1,6 +1,6 @@
 """Stage 11 package and transactional installer: integrity, target rules, conflicts, dry-run exit codes, rehearsal,
 rollback on failure and on hard kill, CRLF (Windows) targets, protected configuration, idempotence, and the
-compatibility harness against synthetic Stage 01B / Stage 04 packages (the actual packages were not supplied)."""
+compatibility harness's conflict detection. Compatibility with real stages is evidenced only by real packages."""
 from __future__ import annotations
 
 import hashlib
@@ -293,25 +293,8 @@ def compat(pkg, *args):
     return cp.returncode, json.loads(cp.stdout)
 
 
-def test_compat_harness_accepts_a_compatible_synthetic_01b_and_04(pkg, tmp_path):
-    s01b = _full_tree(tmp_path, "s01b")
-    (s01b / "backend" / "deployment").mkdir(parents=True)
-    (s01b / "backend" / "deployment" / "network_mode.py").write_text(
-        "class Mode:\n    AIR_GAPPED = 'AIR_GAPPED'\n\ndef current_mode():\n    return Mode.AIR_GAPPED\n")
-    (s01b / "database" / "migrations" / "0003_offline_qualification.sql").write_text("SELECT 1;\n")
-    (s01b / "DECISIONS.md").write_text((s01b / "DECISIONS.md").read_text() + "\n### Stage 01B\n\n| D-01B-01 | x | y |\n")
-    s04 = _full_tree(tmp_path, "s04")
-    shutil.copytree(s01b, s04, dirs_exist_ok=True)
-    (s04 / "apps" / "web" / "research.tsx").write_text("export const x = 1;\n")
-    (s04 / "BLOCKERS.md").write_text((s04 / "BLOCKERS.md").read_text() + "\n### Stage 04\n")
-    code, rep = compat(pkg, "--baseline", str(ROOT), "--baseline-ref", BASELINE, "--stage", f"01B={s01b}",
-                       "--stage", f"04={s04}")
-    assert code == 0 and rep["verdict"] == "COMPATIBLE", json.dumps(rep, indent=1)[:3000]
-    assert rep["installer"]["install"]["exit"] == 0
-    assert any(f["check"] == "integration_hook" and "found in" in f["detail"] for f in rep["findings"])
-
-
-def test_compat_harness_reports_real_conflicts(pkg, tmp_path):
+def test_compat_harness_detects_conflicting_packages(pkg, tmp_path):
+    """Self-test of the harness's conflict detection only — NOT a compatibility claim for any real stage."""
     bad = _full_tree(tmp_path, "s04bad")
     (bad / "backend" / "research").mkdir(parents=True)
     (bad / "backend" / "research" / "api.py").write_text("# Stage 04's own research API\n")

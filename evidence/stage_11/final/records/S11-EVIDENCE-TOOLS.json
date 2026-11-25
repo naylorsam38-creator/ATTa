@@ -1,0 +1,32 @@
+{
+  "pools": {
+    "TASK-0001": [
+      "011.002",
+      "011.003",
+      "011.006"
+    ],
+    "TASK-0002": [
+      "012.003",
+      "012.004"
+    ],
+    "TASK-0003": [
+      "011.004",
+      "012.001"
+    ]
+  },
+  "draft": {
+    "start": 41,
+    "end": 149,
+    "quote": "Documents seen by the Coastal Times show the Rivertown bridge repairs cost 15 million euros, not 12 million.",
+    "quote_sha256": "09de1b8237b49f06a136c806936f185b3f3588b16e92177cd037ce4aa7000b50",
+    "block": 1,
+    "text_sha256": "8e253a658d5608699b4caa57531d2d97d0dee8fff07a856b854146e3055ebf42",
+    "content_sha256": "2d4ac9fd0081a51d87552853ac6988e6f6d326f81ce2175146a86bc5e6d230f9",
+    "locator": "chars 41-149, block 1",
+    "url": "http://127.0.0.1:42057/page/c.html",
+    "title": "Bridge repair bill higher than reported",
+    "author": "Lee Ortiz",
+    "published_at": "2026-11-23T09:04:24Z",
+    "retrieved_at": "2026-11-25T09:04:25Z"
+  }
+}

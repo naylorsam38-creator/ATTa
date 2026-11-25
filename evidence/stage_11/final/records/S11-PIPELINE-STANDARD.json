@@ -1,0 +1,778 @@
+{
+  "result": {
+    "research_id": "rsr_01M88YXRB5NBQ51H29B3P9AB9G",
+    "objective": "When did the Rivertown bridge reopen and what did the repairs cost?",
+    "scope": "",
+    "research_type": "STANDARD_RESEARCH",
+    "contract_version": 1,
+    "contract_hash": "3716d8f507058dc0025a7bb670462e74e91f395036e5b2e1c54397897fc38d6f",
+    "summary": {
+      "type": "deterministic_structured_summary",
+      "note": "assembled deterministically from stored records; a model-written synthesis appears only in `synthesis`, and only after validation against verified citations",
+      "subquestions": 2,
+      "queries": 2,
+      "sources": {
+        "total": 3,
+        "extracted": 3,
+        "duplicates": 1,
+        "independent_groups": 1
+      },
+      "claims": {
+        "total": 3,
+        "verified": 3
+      },
+      "contradictions": 1,
+      "comparisons": [],
+      "budgets": {
+        "batches": {
+          "limit": 6.0,
+          "consumed": 2.0,
+          "remaining": 4.0
+        },
+        "evidence_bytes": {
+          "limit": 67108864.0,
+          "consumed": 3296.0,
+          "remaining": 67105568.0
+        },
+        "fetches": {
+          "limit": 12.0,
+          "consumed": 3.0,
+          "remaining": 9.0
+        },
+        "model_requests": {
+          "limit": 30.0,
+          "consumed": 0.0,
+          "remaining": 30.0
+        },
+        "network_requests": {
+          "limit": 60.0,
+          "consumed": 5.0,
+          "remaining": 55.0
+        },
+        "queries": {
+          "limit": 8.0,
+          "consumed": 2.0,
+          "remaining": 6.0
+        },
+        "retries": {
+          "limit": 2.0,
+          "consumed": 0.0,
+          "remaining": 2.0
+        },
+        "sources": {
+          "limit": 12.0,
+          "consumed": 3.0,
+          "remaining": 9.0
+        },
+        "tokens": {
+          "limit": 100000.0,
+          "consumed": 24274.0,
+          "remaining": 75726.0
+        }
+      }
+    },
+    "findings": [
+      {
+        "type": "subquestion",
+        "index": 0,
+        "subquestion": "Rivertown bridge reopen date",
+        "status": "answered",
+        "claims": [
+          {
+            "claim_id": "clm_01M88YXYPZPMFCKCJ753M01N6G",
+            "text": "The Rivertown bridge reopened on Monday after eight months of repairs.",
+            "support_status": "supported",
+            "verification_status": "VERIFIED",
+            "citation_ids": [
+              "cit_01M88YXYR7BMZTSV9EMYFAZMBP"
+            ]
+          }
+        ],
+        "source_ids": [
+          "src_01M88YXXMCVCAGEGCK3TWMTKME",
+          "src_01M88YXXRH98NZRM72EHH2J6WZ",
+          "src_01M88YXXXFZV1M9PAVK65X1D1Y"
+        ]
+      },
+      {
+        "type": "subquestion",
+        "index": 1,
+        "subquestion": "Rivertown bridge repair cost",
+        "status": "contested",
+        "claims": [
+          {
+            "claim_id": "clm_01M88YXYT98T6CAQD6BS5EZSGH",
+            "text": "The repairs cost 12 million euros.",
+            "support_status": "contested",
+            "verification_status": "VERIFIED",
+            "citation_ids": [
+              "cit_01M88YXYVJN6AZH8JZ7NT2PD5R"
+            ]
+          },
+          {
+            "claim_id": "clm_01M88YXYXET0ZVFCAHJGW0742A",
+            "text": "The repairs cost 15 million euros.",
+            "support_status": "contested",
+            "verification_status": "VERIFIED",
+            "citation_ids": [
+              "cit_01M88YXYYT7ZBCN0K7Q2JDBR9P"
+            ]
+          }
+        ],
+        "source_ids": []
+      }
+    ],
+    "claims": [
+      {
+        "claim_id": "clm_01M88YXYPZPMFCKCJ753M01N6G",
+        "research_id": "rsr_01M88YXRB5NBQ51H29B3P9AB9G",
+        "claim_text": "The Rivertown bridge reopened on Monday after eight months of repairs.",
+        "material": true,
+        "subquestion_index": 0,
+        "structured": {},
+        "support_status": "supported",
+        "contradiction_status": "none",
+        "confidence": {
+          "stated_by_builder": null,
+          "independent_supporting_sources": 1
+        },
+        "verification_status": "VERIFIED",
+        "builder": "explicit-test",
+        "created_at": "2026-11-25 09:00:04.199520+00:00"
+      },
+      {
+        "claim_id": "clm_01M88YXYT98T6CAQD6BS5EZSGH",
+        "research_id": "rsr_01M88YXRB5NBQ51H29B3P9AB9G",
+        "claim_text": "The repairs cost 12 million euros.",
+        "material": true,
+        "subquestion_index": 1,
+        "structured": {
+          "value": "12 million euros",
+          "subject": "Rivertown bridge repairs",
+          "attribute": "cost"
+        },
+        "support_status": "contested",
+        "contradiction_status": "unresolved",
+        "confidence": {
+          "stated_by_builder": null,
+          "independent_supporting_sources": 1
+        },
+        "verification_status": "VERIFIED",
+        "builder": "explicit-test",
+        "created_at": "2026-11-25 09:00:04.307321+00:00"
+      },
+      {
+        "claim_id": "clm_01M88YXYXET0ZVFCAHJGW0742A",
+        "research_id": "rsr_01M88YXRB5NBQ51H29B3P9AB9G",
+        "claim_text": "The repairs cost 15 million euros.",
+        "material": true,
+        "subquestion_index": 1,
+        "structured": {
+          "value": "15 million euros",
+          "subject": "Rivertown bridge repairs",
+          "attribute": "cost"
+        },
+        "support_status": "contested",
+        "contradiction_status": "unresolved",
+        "confidence": {
+          "stated_by_builder": null,
+          "independent_supporting_sources": 1
+        },
+        "verification_status": "VERIFIED",
+        "builder": "explicit-test",
+        "created_at": "2026-11-25 09:00:04.408727+00:00"
+      }
+    ],
+    "citations": [
+      {
+        "citation_id": "cit_01M88YXYR7BMZTSV9EMYFAZMBP",
+        "research_id": "rsr_01M88YXRB5NBQ51H29B3P9AB9G",
+        "claim_id": "clm_01M88YXYPZPMFCKCJ753M01N6G",
+        "source_id": "src_01M88YXXMCVCAGEGCK3TWMTKME",
+        "evidence_id": "rev_01M88YXYP5PXMHXXCJQPKJBFNK",
+        "span_start": 40,
+        "span_end": 98,
+        "quote_sha256": "ff0b56b68a39bd7627e7bbc639913c48c3a6ddec8a2d09f62056e6cd9f10e48a",
+        "text_sha256": "cbb15bf75fa1c4bbdc5ca0cb5dc852dd9d9d93c3a9677f6f2ad41c5542523ad8",
+        "locator": "chars 40-98",
+        "metadata": {
+          "url": "http://127.0.0.1:45353/page/a.html?utm_source=x",
+          "title": "Rivertown bridge reopens after repairs",
+          "author": "Dana Field",
+          "publisher": "Rivertown Gazette",
+          "content_hash": "f75a11f49cc8726fe82d16844ec5be214df62a54ae741bc8f04efdc01d0b6124",
+          "published_at": "2026-11-23T08:59:56Z",
+          "retrieved_at": "2026-11-25 09:00:01+00:00"
+        },
+        "verified": true,
+        "verification": {
+          "problems": [],
+          "verified": true,
+          "verifier": "research-verifier/1",
+          "citation_id": "cit_01M88YXYR7BMZTSV9EMYFAZMBP"
+        },
+        "created_at": "2026-11-25 09:00:04.243459+00:00"
+      },
+      {
+        "citation_id": "cit_01M88YXYVJN6AZH8JZ7NT2PD5R",
+        "research_id": "rsr_01M88YXRB5NBQ51H29B3P9AB9G",
+        "claim_id": "clm_01M88YXYT98T6CAQD6BS5EZSGH",
+        "source_id": "src_01M88YXXMCVCAGEGCK3TWMTKME",
+        "evidence_id": "rev_01M88YXYSHEC190MHQVHA1SXYT",
+        "span_start": 146,
+        "span_end": 179,
+        "quote_sha256": "b3635cf2437ec81867dad97d8b94dca5519d7de72d56450c9d6ba6bbd2d00536",
+        "text_sha256": "cbb15bf75fa1c4bbdc5ca0cb5dc852dd9d9d93c3a9677f6f2ad41c5542523ad8",
+        "locator": "chars 146-179",
+        "metadata": {
+          "url": "http://127.0.0.1:45353/page/a.html?utm_source=x",
+          "title": "Rivertown bridge reopens after repairs",
+          "author": "Dana Field",
+          "publisher": "Rivertown Gazette",
+          "content_hash": "f75a11f49cc8726fe82d16844ec5be214df62a54ae741bc8f04efdc01d0b6124",
+          "published_at": "2026-11-23T08:59:56Z",
+          "retrieved_at": "2026-11-25 09:00:01+00:00"
+        },
+        "verified": true,
+        "verification": {
+          "problems": [],
+          "verified": true,
+          "verifier": "research-verifier/1",
+          "citation_id": "cit_01M88YXYVJN6AZH8JZ7NT2PD5R"
+        },
+        "created_at": "2026-11-25 09:00:04.348813+00:00"
+      },
+      {
+        "citation_id": "cit_01M88YXYYT7ZBCN0K7Q2JDBR9P",
+        "research_id": "rsr_01M88YXRB5NBQ51H29B3P9AB9G",
+        "claim_id": "clm_01M88YXYXET0ZVFCAHJGW0742A",
+        "source_id": "src_01M88YXXXFZV1M9PAVK65X1D1Y",
+        "evidence_id": "rev_01M88YXYWR5S34XR6H29JMYCXQ",
+        "span_start": 103,
+        "span_end": 148,
+        "quote_sha256": "4f459387eb6bc4baeaab705694a66371cdd3d2fd8e559f8b97dd85338fa9ad4a",
+        "text_sha256": "8e253a658d5608699b4caa57531d2d97d0dee8fff07a856b854146e3055ebf42",
+        "locator": "chars 103-148",
+        "metadata": {
+          "url": "http://127.0.0.1:45353/page/c.html",
+          "title": "Bridge repair bill higher than reported",
+          "author": "Lee Ortiz",
+          "publisher": "Coastal Times",
+          "content_hash": "f53c4d5de7e55dd1d6e2a2241d5ace48ee4439686e9f062d688a79e047603d4e",
+          "published_at": "2026-11-23T08:59:56Z",
+          "retrieved_at": "2026-11-25 09:00:01+00:00"
+        },
+        "verified": true,
+        "verification": {
+          "problems": [],
+          "verified": true,
+          "verifier": "research-verifier/1",
+          "citation_id": "cit_01M88YXYYT7ZBCN0K7Q2JDBR9P"
+        },
+        "created_at": "2026-11-25 09:00:04.453322+00:00"
+      }
+    ],
+    "sources": [
+      {
+        "source_id": "src_01M88YXXMCVCAGEGCK3TWMTKME",
+        "kind": "web",
+        "original_url": "http://127.0.0.1:45353/page/a.html?utm_source=x",
+        "canonical_url": "http://127.0.0.1:45353/page/a.html",
+        "final_url": "http://127.0.0.1:45353/page/a.html?utm_source=x",
+        "domain": "127.0.0.1",
+        "title": "Rivertown bridge reopens after repairs",
+        "publisher": "Rivertown Gazette",
+        "author": "Dana Field",
+        "published_at": "2026-11-23T08:59:56Z",
+        "modified_at": null,
+        "retrieved_at": "2026-11-25 09:00:01+00:00",
+        "content_type": "text/html",
+        "content_hash": "f75a11f49cc8726fe82d16844ec5be214df62a54ae741bc8f04efdc01d0b6124",
+        "text_hash": "cbb15bf75fa1c4bbdc5ca0cb5dc852dd9d9d93c3a9677f6f2ad41c5542523ad8",
+        "extraction_status": "extracted",
+        "error_code": null,
+        "quality": {
+          "notes": [
+            "primary/secondary not determined (needs claim-level judgement: Stage 03 or reviewer)"
+          ],
+          "primary": null,
+          "official": false,
+          "has_citations": true,
+          "author_identified": true,
+          "independence_group": "0.1",
+          "retrieval_complete": true,
+          "publication_date_known": true,
+          "publication_identified": true
+        },
+        "snapshot_id": "snp_01M88YXXKZKFYK5SDAKZGJC6K5",
+        "citation_metadata": {
+          "url": "http://127.0.0.1:45353/page/a.html?utm_source=x",
+          "title": "Rivertown bridge reopens after repairs",
+          "author": "Dana Field",
+          "publisher": "Rivertown Gazette",
+          "published_at": "2026-11-23T08:59:56Z",
+          "retrieved_at": "2026-11-25T09:00:01Z",
+          "content_sha256": "f75a11f49cc8726fe82d16844ec5be214df62a54ae741bc8f04efdc01d0b6124"
+        },
+        "metadata_provenance": {
+          "title": "html:title",
+          "author": "meta:author",
+          "language": "html:lang",
+          "publisher": "meta:og:site_name",
+          "published_at": "meta:article:published_time",
+          "canonical_url": "html:link[rel=canonical]"
+        },
+        "duplicate_of": null,
+        "duplicate_relation": null,
+        "independence_group": "0.1",
+        "depth": 0,
+        "discovered_by": "rqy_01M88YXT6N4CC5XTKXKHNQD3S2",
+        "task_id": "TASK-0003",
+        "execution_id": "exe_01M88YXVKS4HVAKRJH7QNAE2DH"
+      },
+      {
+        "source_id": "src_01M88YXXRH98NZRM72EHH2J6WZ",
+        "kind": "web",
+        "original_url": "http://127.0.0.1:45353/page/b.html",
+        "canonical_url": "http://127.0.0.1:45353/page/b.html",
+        "final_url": "http://127.0.0.1:45353/page/b.html",
+        "domain": "127.0.0.1",
+        "title": "Rivertown bridge reopens after repairs",
+        "publisher": "Valley Wire",
+        "author": "Valley Wire staff",
+        "published_at": "2026-11-23T08:59:56Z",
+        "modified_at": null,
+        "retrieved_at": "2026-11-25 09:00:01+00:00",
+        "content_type": "text/html",
+        "content_hash": "abdb2af8e2650c07e2c2940a20a665201c427c5423d6aa5894be248c78261cd6",
+        "text_hash": "cbb15bf75fa1c4bbdc5ca0cb5dc852dd9d9d93c3a9677f6f2ad41c5542523ad8",
+        "extraction_status": "extracted",
+        "error_code": null,
+        "quality": {
+          "notes": [
+            "primary/secondary not determined (needs claim-level judgement: Stage 03 or reviewer)"
+          ],
+          "primary": null,
+          "official": false,
+          "has_citations": true,
+          "author_identified": true,
+          "independence_group": "0.1",
+          "retrieval_complete": true,
+          "publication_date_known": true,
+          "publication_identified": true
+        },
+        "snapshot_id": "snp_01M88YXXQVSN7AY2D35WDB383N",
+        "citation_metadata": {
+          "url": "http://127.0.0.1:45353/page/b.html",
+          "title": "Rivertown bridge reopens after repairs",
+          "author": "Valley Wire staff",
+          "publisher": "Valley Wire",
+          "published_at": "2026-11-23T08:59:56Z",
+          "retrieved_at": "2026-11-25T09:00:01Z",
+          "content_sha256": "abdb2af8e2650c07e2c2940a20a665201c427c5423d6aa5894be248c78261cd6"
+        },
+        "metadata_provenance": {
+          "title": "html:title",
+          "author": "meta:author",
+          "language": "html:lang",
+          "publisher": "meta:og:site_name",
+          "published_at": "meta:article:published_time",
+          "canonical_url": "html:link[rel=canonical]"
+        },
+        "duplicate_of": "src_01M88YXXMCVCAGEGCK3TWMTKME",
+        "duplicate_relation": "near_duplicate",
+        "independence_group": "0.1",
+        "depth": 0,
+        "discovered_by": "rqy_01M88YXT6N4CC5XTKXKHNQD3S2",
+        "task_id": "TASK-0004",
+        "execution_id": "exe_01M88YXVM876FMDXX9E7SY67AP"
+      },
+      {
+        "source_id": "src_01M88YXXXFZV1M9PAVK65X1D1Y",
+        "kind": "web",
+        "original_url": "http://127.0.0.1:45353/page/c.html",
+        "canonical_url": "http://127.0.0.1:45353/page/c.html",
+        "final_url": "http://127.0.0.1:45353/page/c.html",
+        "domain": "127.0.0.1",
+        "title": "Bridge repair bill higher than reported",
+        "publisher": "Coastal Times",
+        "author": "Lee Ortiz",
+        "published_at": "2026-11-23T08:59:56Z",
+        "modified_at": null,
+        "retrieved_at": "2026-11-25 09:00:01+00:00",
+        "content_type": "text/html",
+        "content_hash": "f53c4d5de7e55dd1d6e2a2241d5ace48ee4439686e9f062d688a79e047603d4e",
+        "text_hash": "8e253a658d5608699b4caa57531d2d97d0dee8fff07a856b854146e3055ebf42",
+        "extraction_status": "extracted",
+        "error_code": null,
+        "quality": {
+          "notes": [
+            "primary/secondary not determined (needs claim-level judgement: Stage 03 or reviewer)"
+          ],
+          "primary": null,
+          "official": false,
+          "has_citations": false,
+          "author_identified": true,
+          "independence_group": "0.1",
+          "retrieval_complete": true,
+          "publication_date_known": true,
+          "publication_identified": true
+        },
+        "snapshot_id": "snp_01M88YXXWCP621VR5QSJ40RYWA",
+        "citation_metadata": {
+          "url": "http://127.0.0.1:45353/page/c.html",
+          "title": "Bridge repair bill higher than reported",
+          "author": "Lee Ortiz",
+          "publisher": "Coastal Times",
+          "published_at": "2026-11-23T08:59:56Z",
+          "retrieved_at": "2026-11-25T09:00:01Z",
+          "content_sha256": "f53c4d5de7e55dd1d6e2a2241d5ace48ee4439686e9f062d688a79e047603d4e"
+        },
+        "metadata_provenance": {
+          "title": "html:title",
+          "author": "json-ld:author",
+          "publisher": "json-ld:publisher",
+          "published_at": "json-ld:datePublished"
+        },
+        "duplicate_of": null,
+        "duplicate_relation": null,
+        "independence_group": "0.1",
+        "depth": 0,
+        "discovered_by": "rqy_01M88YXT6N4CC5XTKXKHNQD3S2",
+        "task_id": "TASK-0005",
+        "execution_id": "exe_01M88YXVMDBMRB14VQ75CZFAVZ"
+      }
+    ],
+    "contradictions": [
+      {
+        "contradiction_id": "cdn_01M88YXZ15N5QANJ0M6RXX1CBQ",
+        "research_id": "rsr_01M88YXRB5NBQ51H29B3P9AB9G",
+        "claim_id": "clm_01M88YXYT98T6CAQD6BS5EZSGH",
+        "other_claim_id": "clm_01M88YXYXET0ZVFCAHJGW0742A",
+        "supporting_source_ids": [
+          "src_01M88YXXMCVCAGEGCK3TWMTKME"
+        ],
+        "contradicting_source_ids": [
+          "src_01M88YXXXFZV1M9PAVK65X1D1Y"
+        ],
+        "date_differences": {
+          "src_01M88YXXMCVCAGEGCK3TWMTKME": {
+            "published_at": "2026-11-23T08:59:56Z",
+            "retrieved_at": "2026-11-25 09:00:01+00:00"
+          },
+          "src_01M88YXXXFZV1M9PAVK65X1D1Y": {
+            "published_at": "2026-11-23T08:59:56Z",
+            "retrieved_at": "2026-11-25 09:00:01+00:00"
+          }
+        },
+        "scope_differences": {
+          "a": {
+            "as_of": null,
+            "scope": null
+          },
+          "b": {
+            "as_of": null,
+            "scope": null
+          }
+        },
+        "status": "unresolved",
+        "detail": "'rivertown bridge repairs' cost: '12 million euros' vs '15 million euros' \u2014 unresolved disagreement between sources",
+        "detected_by": "structured-claim-comparison/1",
+        "created_at": "2026-11-25 09:00:04.528686+00:00"
+      }
+    ],
+    "limitations": [
+      {
+        "code": "UNRESOLVED_CONTRADICTION",
+        "detail": "1 disagreement(s) between sources are exposed and not resolved automatically"
+      },
+      {
+        "code": "BLOCKED_DEPENDENCY",
+        "detail": "natural-language synthesis needs the Stage 03 Hub; the summary is a deterministic structured summary",
+        "dependency": "S03"
+      }
+    ],
+    "unresolved_questions": [
+      "contradiction cdn_01M88YXZ15N5QANJ0M6RXX1CBQ: 'rivertown bridge repairs' cost: '12 million euros' vs '15 million euros' \u2014 unresolved disagreement between sources"
+    ],
+    "research_status": "COMPLETED_WITH_LIMITATIONS",
+    "verification_status": "VERIFIED",
+    "verification": {
+      "verifier": "research-verifier/1",
+      "passed": true,
+      "status": "VERIFIED",
+      "citations": [
+        {
+          "citation_id": "cit_01M88YXYR7BMZTSV9EMYFAZMBP",
+          "verified": true,
+          "problems": []
+        },
+        {
+          "citation_id": "cit_01M88YXYVJN6AZH8JZ7NT2PD5R",
+          "verified": true,
+          "problems": []
+        },
+        {
+          "citation_id": "cit_01M88YXYYT7ZBCN0K7Q2JDBR9P",
+          "verified": true,
+          "problems": []
+        }
+      ],
+      "claims": [
+        {
+          "claim_id": "clm_01M88YXYPZPMFCKCJ753M01N6G",
+          "status": "VERIFIED"
+        },
+        {
+          "claim_id": "clm_01M88YXYT98T6CAQD6BS5EZSGH",
+          "status": "VERIFIED"
+        },
+        {
+          "claim_id": "clm_01M88YXYXET0ZVFCAHJGW0742A",
+          "status": "VERIFIED"
+        }
+      ],
+      "uncited_material_claims": [],
+      "freshness": {
+        "required": false,
+        "met": true,
+        "reference_time": "2026-11-25T09:00:04.809878+00:00",
+        "sources": {
+          "src_01M88YXXMCVCAGEGCK3TWMTKME": {
+            "fresh": null,
+            "reason": "no freshness requirement",
+            "age_days": null
+          },
+          "src_01M88YXXXFZV1M9PAVK65X1D1Y": {
+            "fresh": null,
+            "reason": "no freshness requirement",
+            "age_days": null
+          }
+        }
+      },
+      "contradictions_exposed": 1,
+      "problems": [],
+      "stage01a_trace": {
+        "status": "completed",
+        "gaps": []
+      }
+    },
+    "error": null,
+    "generated_at": "2026-11-25T09:00:05.490Z",
+    "synthesis": {
+      "natural_language": null,
+      "status": "BLOCKED",
+      "dependency": "S03",
+      "reason": "Stage 03 Hub/model interface not integrated"
+    }
+  },
+  "trace": {
+    "research_id": "rsr_01M88YXRB5NBQ51H29B3P9AB9G",
+    "objective_id": "obj_01M88YXRB5H4BK03734P4ADEDK",
+    "contract_versions": [
+      {
+        "version": 1,
+        "contract_hash": "3716d8f507058dc0025a7bb670462e74e91f395036e5b2e1c54397897fc38d6f",
+        "reason": "created",
+        "authorised_by": null,
+        "created_at": "2026-11-25 08:59:57.694452+00:00"
+      }
+    ],
+    "queries": [
+      {
+        "query_id": "rqy_01M88YXT6N4CC5XTKXKHNQD3S2",
+        "provider_id": "fixture-searx",
+        "task_id": "TASK-0001",
+        "execution_id": "exe_01M88YXSBP4M9VSXQF6Q8YDHZR",
+        "status": "executed",
+        "error_code": null,
+        "result_count": 4
+      },
+      {
+        "query_id": "rqy_01M88YXT7VBKY2S4JBZ0METSQW",
+        "provider_id": "fixture-searx",
+        "task_id": "TASK-0002",
+        "execution_id": "exe_01M88YXSBRRGMGRSWHXNKQ7TEB",
+        "status": "executed",
+        "error_code": null,
+        "result_count": 4
+      }
+    ],
+    "sources": [
+      {
+        "source_id": "src_01M88YXXMCVCAGEGCK3TWMTKME",
+        "discovered_by": "rqy_01M88YXT6N4CC5XTKXKHNQD3S2",
+        "task_id": "TASK-0003",
+        "execution_id": "exe_01M88YXVKS4HVAKRJH7QNAE2DH",
+        "content_hash": "f75a11f49cc8726fe82d16844ec5be214df62a54ae741bc8f04efdc01d0b6124",
+        "snapshot_id": "snp_01M88YXXKZKFYK5SDAKZGJC6K5",
+        "duplicate_of": null
+      },
+      {
+        "source_id": "src_01M88YXXRH98NZRM72EHH2J6WZ",
+        "discovered_by": "rqy_01M88YXT6N4CC5XTKXKHNQD3S2",
+        "task_id": "TASK-0004",
+        "execution_id": "exe_01M88YXVM876FMDXX9E7SY67AP",
+        "content_hash": "abdb2af8e2650c07e2c2940a20a665201c427c5423d6aa5894be248c78261cd6",
+        "snapshot_id": "snp_01M88YXXQVSN7AY2D35WDB383N",
+        "duplicate_of": "src_01M88YXXMCVCAGEGCK3TWMTKME"
+      },
+      {
+        "source_id": "src_01M88YXXXFZV1M9PAVK65X1D1Y",
+        "discovered_by": "rqy_01M88YXT6N4CC5XTKXKHNQD3S2",
+        "task_id": "TASK-0005",
+        "execution_id": "exe_01M88YXVMDBMRB14VQ75CZFAVZ",
+        "content_hash": "f53c4d5de7e55dd1d6e2a2241d5ace48ee4439686e9f062d688a79e047603d4e",
+        "snapshot_id": "snp_01M88YXXWCP621VR5QSJ40RYWA",
+        "duplicate_of": null
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "rev_01M88YXXMTQGF25505G5926FFM",
+        "source_id": "src_01M88YXXMCVCAGEGCK3TWMTKME",
+        "snapshot_id": "snp_01M88YXXKZKFYK5SDAKZGJC6K5",
+        "task_id": "TASK-0003",
+        "execution_id": "exe_01M88YXWGSK9WQV5HBWP0R3JS5",
+        "purpose": "candidate"
+      },
+      {
+        "evidence_id": "rev_01M88YXXN7N4XZX60YR2MTT9S9",
+        "source_id": "src_01M88YXXMCVCAGEGCK3TWMTKME",
+        "snapshot_id": "snp_01M88YXXKZKFYK5SDAKZGJC6K5",
+        "task_id": "TASK-0003",
+        "execution_id": "exe_01M88YXWGSK9WQV5HBWP0R3JS5",
+        "purpose": "candidate"
+      },
+      {
+        "evidence_id": "rev_01M88YXXNNYA84S97C84ZW8685",
+        "source_id": "src_01M88YXXMCVCAGEGCK3TWMTKME",
+        "snapshot_id": "snp_01M88YXXKZKFYK5SDAKZGJC6K5",
+        "task_id": "TASK-0003",
+        "execution_id": "exe_01M88YXWGSK9WQV5HBWP0R3JS5",
+        "purpose": "candidate"
+      },
+      {
+        "evidence_id": "rev_01M88YXXP2EHN5KG236YMSE875",
+        "source_id": "src_01M88YXXMCVCAGEGCK3TWMTKME",
+        "snapshot_id": "snp_01M88YXXKZKFYK5SDAKZGJC6K5",
+        "task_id": "TASK-0003",
+        "execution_id": "exe_01M88YXWGSK9WQV5HBWP0R3JS5",
+        "purpose": "candidate"
+      },
+      {
+        "evidence_id": "rev_01M88YXXS9TGK9SS8D8YX4PP17",
+        "source_id": "src_01M88YXXRH98NZRM72EHH2J6WZ",
+        "snapshot_id": "snp_01M88YXXQVSN7AY2D35WDB383N",
+        "task_id": "TASK-0004",
+        "execution_id": "exe_01M88YXWJ6BH7Z5WWPSNX1YRZG",
+        "purpose": "candidate"
+      },
+      {
+        "evidence_id": "rev_01M88YXXSN80VYEHMSQFGB3QKY",
+        "source_id": "src_01M88YXXRH98NZRM72EHH2J6WZ",
+        "snapshot_id": "snp_01M88YXXQVSN7AY2D35WDB383N",
+        "task_id": "TASK-0004",
+        "execution_id": "exe_01M88YXWJ6BH7Z5WWPSNX1YRZG",
+        "purpose": "candidate"
+      },
+      {
+        "evidence_id": "rev_01M88YXXT21XMK7BSFK1DG4PQR",
+        "source_id": "src_01M88YXXRH98NZRM72EHH2J6WZ",
+        "snapshot_id": "snp_01M88YXXQVSN7AY2D35WDB383N",
+        "task_id": "TASK-0004",
+        "execution_id": "exe_01M88YXWJ6BH7Z5WWPSNX1YRZG",
+        "purpose": "candidate"
+      },
+      {
+        "evidence_id": "rev_01M88YXXTFDRNNRRZT9QH81RBM",
+        "source_id": "src_01M88YXXRH98NZRM72EHH2J6WZ",
+        "snapshot_id": "snp_01M88YXXQVSN7AY2D35WDB383N",
+        "task_id": "TASK-0004",
+        "execution_id": "exe_01M88YXWJ6BH7Z5WWPSNX1YRZG",
+        "purpose": "candidate"
+      },
+      {
+        "evidence_id": "rev_01M88YXXXZA38G8KWT4FY7G3P4",
+        "source_id": "src_01M88YXXXFZV1M9PAVK65X1D1Y",
+        "snapshot_id": "snp_01M88YXXWCP621VR5QSJ40RYWA",
+        "task_id": "TASK-0005",
+        "execution_id": "exe_01M88YXWJ7FH44JRM5YPZ1TD13",
+        "purpose": "candidate"
+      },
+      {
+        "evidence_id": "rev_01M88YXXZ4VEMB4WVTA2MDQE4C",
+        "source_id": "src_01M88YXXXFZV1M9PAVK65X1D1Y",
+        "snapshot_id": "snp_01M88YXXWCP621VR5QSJ40RYWA",
+        "task_id": "TASK-0005",
+        "execution_id": "exe_01M88YXWJ7FH44JRM5YPZ1TD13",
+        "purpose": "candidate"
+      },
+      {
+        "evidence_id": "rev_01M88YXYP5PXMHXXCJQPKJBFNK",
+        "source_id": "src_01M88YXXMCVCAGEGCK3TWMTKME",
+        "snapshot_id": "snp_01M88YXXKZKFYK5SDAKZGJC6K5",
+        "task_id": null,
+        "execution_id": null,
+        "purpose": "support"
+      },
+      {
+        "evidence_id": "rev_01M88YXYSHEC190MHQVHA1SXYT",
+        "source_id": "src_01M88YXXMCVCAGEGCK3TWMTKME",
+        "snapshot_id": "snp_01M88YXXKZKFYK5SDAKZGJC6K5",
+        "task_id": null,
+        "execution_id": null,
+        "purpose": "support"
+      },
+      {
+        "evidence_id": "rev_01M88YXYWR5S34XR6H29JMYCXQ",
+        "source_id": "src_01M88YXXXFZV1M9PAVK65X1D1Y",
+        "snapshot_id": "snp_01M88YXXWCP621VR5QSJ40RYWA",
+        "task_id": null,
+        "execution_id": null,
+        "purpose": "support"
+      }
+    ],
+    "claims": [
+      {
+        "claim_id": "clm_01M88YXYPZPMFCKCJ753M01N6G",
+        "builder": "explicit-test",
+        "verification_status": "VERIFIED"
+      },
+      {
+        "claim_id": "clm_01M88YXYT98T6CAQD6BS5EZSGH",
+        "builder": "explicit-test",
+        "verification_status": "VERIFIED"
+      },
+      {
+        "claim_id": "clm_01M88YXYXET0ZVFCAHJGW0742A",
+        "builder": "explicit-test",
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "citations": [
+      {
+        "citation_id": "cit_01M88YXYR7BMZTSV9EMYFAZMBP",
+        "claim_id": "clm_01M88YXYPZPMFCKCJ753M01N6G",
+        "source_id": "src_01M88YXXMCVCAGEGCK3TWMTKME",
+        "evidence_id": "rev_01M88YXYP5PXMHXXCJQPKJBFNK",
+        "verified": true
+      },
+      {
+        "citation_id": "cit_01M88YXYVJN6AZH8JZ7NT2PD5R",
+        "claim_id": "clm_01M88YXYT98T6CAQD6BS5EZSGH",
+        "source_id": "src_01M88YXXMCVCAGEGCK3TWMTKME",
+        "evidence_id": "rev_01M88YXYSHEC190MHQVHA1SXYT",
+        "verified": true
+      },
+      {
+        "citation_id": "cit_01M88YXYYT7ZBCN0K7Q2JDBR9P",
+        "claim_id": "clm_01M88YXYXET0ZVFCAHJGW0742A",
+        "source_id": "src_01M88YXXXFZV1M9PAVK65X1D1Y",
+        "evidence_id": "rev_01M88YXYWR5S34XR6H29JMYCXQ",
+        "verified": true
+      }
+    ],
+    "result": "4329059d6ca1aecc18793fe2a35b3e5dcf3c23d7b932490e9361997b75c351c2"
+  }
+}

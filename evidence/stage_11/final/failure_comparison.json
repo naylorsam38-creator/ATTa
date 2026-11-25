@@ -1,0 +1,46 @@
+{
+ "platform": {
+  "sidecar": {
+   "tests.acceptance.test_s01_acceptance::test_S01_T06_discover_valid_capability_manifest": "assert (<AvailabilityState.UNTRUSTED: 'untrusted'> is <AvailabilityState.AVAILABLE: 'available'>)",
+   "tests.acceptance.test_s01_acceptance::test_S01_T07_reject_invalid_capability_manifest": "AssertionError: ('wrong_arity', CapabilityAvailability(id='test.arity', version='1.0.0', state=<AvailabilityState.UNTRUSTED: 'untruste...rement='CAP-40', risk=<RiskClass.LOW: '",
+   "tests.acceptance.test_s01_acceptance::test_S01_T08_reject_duplicate_capability_identifiers": "AssertionError: assert (None is None and [] == ['test.unique']",
+   "tests.acceptance.test_s01_acceptance::test_S01_T09_new_capability_registers_without_changing_start": "AssertionError: assert ('untrusted' == 'available'",
+   "tests.acceptance.test_s01_acceptance::test_S01_T13_protected_operations_default_to_deny": "AssertionError: assert False",
+   "tests.acceptance.test_s01a_acceptance_b::test_S01A_T51_worker_cannot_alter_protected_verification_criteria": "AssertionError: OS protection is not in place: run scripts/protect_verifier.sh"
+  },
+  "baseline": {
+   "tests.acceptance.test_s01_acceptance::test_S01_T06_discover_valid_capability_manifest": "assert (<AvailabilityState.UNTRUSTED: 'untrusted'> is <AvailabilityState.AVAILABLE: 'available'>)",
+   "tests.acceptance.test_s01_acceptance::test_S01_T07_reject_invalid_capability_manifest": "AssertionError: ('wrong_arity', CapabilityAvailability(id='test.arity', version='1.0.0', state=<AvailabilityState.UNTRUSTED: 'untruste...rement='CAP-40', risk=<RiskClass.LOW: '",
+   "tests.acceptance.test_s01_acceptance::test_S01_T08_reject_duplicate_capability_identifiers": "AssertionError: assert (None is None and [] == ['test.unique']",
+   "tests.acceptance.test_s01_acceptance::test_S01_T09_new_capability_registers_without_changing_start": "AssertionError: assert ('untrusted' == 'available'",
+   "tests.acceptance.test_s01_acceptance::test_S01_T13_protected_operations_default_to_deny": "AssertionError: assert False",
+   "tests.acceptance.test_s01a_acceptance_b::test_S01A_T51_worker_cannot_alter_protected_verification_criteria": "AssertionError: OS protection is not in place: run scripts/protect_verifier.sh"
+  },
+  "new_in_sidecar": [],
+  "fixed_in_sidecar": []
+ },
+ "legacy": {
+  "sidecar": {
+   "tests.test_v119_login_proof.V119JourneyProof::test_journey_result_is_recorded_on_stage_6": "playwright._impl._errors.Error: BrowserType.launch: Failed to launch chromium because executable doesn't exist at /usr/bin/chromium",
+   "tests.test_v119_login_proof.V119JourneyProof::test_login_requires_a_real_test_account": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.",
+   "tests.test_v119_login_proof.V119JourneyProof::test_login_with_wrong_expectation_fails_even_though_login_worked": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.",
+   "tests.test_v119_login_proof.V119JourneyProof::test_login_without_a_post_login_expectation_is_refused": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.",
+   "tests.test_v119_login_proof.V119JourneyProof::test_page_load_without_journey_is_not_qualified": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.",
+   "tests.test_v119_login_proof.V119JourneyProof::test_real_login_journey_passes": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.",
+   "tests.test_v119_login_proof.V119JourneyProof::test_wrong_password_fails_the_journey": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.",
+   "tests.test_v121_journey_author.SubmitSelection::test_login_submit_is_inside_the_password_form": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop."
+  },
+  "baseline": {
+   "tests.test_v119_login_proof.V119JourneyProof::test_journey_result_is_recorded_on_stage_6": "playwright._impl._errors.Error: BrowserType.launch: Failed to launch chromium because executable doesn't exist at /usr/bin/chromium",
+   "tests.test_v119_login_proof.V119JourneyProof::test_login_requires_a_real_test_account": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.",
+   "tests.test_v119_login_proof.V119JourneyProof::test_login_with_wrong_expectation_fails_even_though_login_worked": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.",
+   "tests.test_v119_login_proof.V119JourneyProof::test_login_without_a_post_login_expectation_is_refused": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.",
+   "tests.test_v119_login_proof.V119JourneyProof::test_page_load_without_journey_is_not_qualified": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.",
+   "tests.test_v119_login_proof.V119JourneyProof::test_real_login_journey_passes": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.",
+   "tests.test_v119_login_proof.V119JourneyProof::test_wrong_password_fails_the_journey": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.",
+   "tests.test_v121_journey_author.SubmitSelection::test_login_submit_is_inside_the_password_form": "playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop."
+  },
+  "new_in_sidecar": [],
+  "fixed_in_sidecar": []
+ }
+}

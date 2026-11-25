@@ -1,0 +1,33 @@
+{
+  "result_status": "CANCELLED",
+  "unfinished": {
+    "code": "CANCELLED",
+    "detail": "4 planned task(s) did not complete",
+    "unfinished": [
+      {
+        "task_id": "TASK-0003",
+        "kind": "retrieve",
+        "state": "CANCELLED",
+        "target": "http://127.0.0.1:32893/page/a.html?utm_source=x"
+      },
+      {
+        "task_id": "TASK-0004",
+        "kind": "retrieve",
+        "state": "CANCELLED",
+        "target": "http://127.0.0.1:32893/slow"
+      },
+      {
+        "task_id": "TASK-0005",
+        "kind": "retrieve",
+        "state": "CANCELLED",
+        "target": "http://127.0.0.1:32893/page/b.html"
+      },
+      {
+        "task_id": "TASK-0006",
+        "kind": "retrieve",
+        "state": "CANCELLED",
+        "target": "http://127.0.0.1:32893/page/c.html"
+      }
+    ]
+  }
+}

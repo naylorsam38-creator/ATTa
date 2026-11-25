@@ -1,0 +1,205 @@
+........................................FFFF...F........................ [ 69%]
+.............................F..                                         [100%]
+=================================== FAILURES ===================================
+_______________ test_S01_T06_discover_valid_capability_manifest ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-21/test_S01_T06_discover_valid_ca0')
+
+    def test_S01_T06_discover_valid_capability_manifest(tmp_path):
+        write_capability(tmp_path, "echo", "test.echo")
+        reg = CapabilityRegistry([ROOT / "capabilities", tmp_path])
+        report = {a.id: a for a in reg.discover()}
+>       assert report["test.echo"].state is AvailabilityState.AVAILABLE and report["test.echo"].executable
+E       assert (<AvailabilityState.UNTRUSTED: 'untrusted'> is <AvailabilityState.AVAILABLE: 'available'>)
+E        +  where <AvailabilityState.UNTRUSTED: 'untrusted'> = CapabilityAvailability(id='test.echo', version='1.0.0', state=<AvailabilityState.UNTRUSTED: 'untrusted'>, executable=F...uirement='CAP-40', risk=<RiskClass.LOW: 'low'>, problems=["capability 'test.echo' is not in the operator trust store"]).state
+E        +  and   <AvailabilityState.AVAILABLE: 'available'> = AvailabilityState.AVAILABLE
+
+tests/acceptance/test_s01_acceptance.py:197: AssertionError
+----------------------------- Captured stderr call -----------------------------
+------------------------------ Captured log call -------------------------------
+INFO     atta.capabilities:registry.py:237 capability research.evidence available -> untrusted
+INFO     atta.capabilities:registry.py:237 capability research.web available -> untrusted
+INFO     atta.capabilities:registry.py:237 capability test.echo available -> untrusted
+INFO     atta.capabilities:registry.py:143 capability ops.system_status: available
+INFO     atta.capabilities:registry.py:143 capability research.evidence: untrusted
+INFO     atta.capabilities:registry.py:143 capability research.web: untrusted
+INFO     atta.capabilities:registry.py:143 capability test.echo: untrusted
+_______________ test_S01_T07_reject_invalid_capability_manifest ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-21/test_S01_T07_reject_invalid_ca0')
+
+    def test_S01_T07_reject_invalid_capability_manifest(tmp_path):
+        for name, (cid, handler, raw) in INVALID_CASES.items():
+            d = write_capability(tmp_path, name, cid, handler=handler, raw_manifest=raw,
+                                 timeout_s=99999 if name == "excessive_timeout" else 10)
+            text = (d / "capability.yaml").read_text()
+            if name == "bad_version":
+                text = text.replace("version: 1.0.0", "version: one")
+            if name == "missing_module":
+                text = text.replace("handler:execute", "nowhere:execute")
+            if name == "bad_input_schema":
+                text = text.replace("input_schema: {type: object", "input_schema: {type: notatype")
+            (d / "capability.yaml").write_text(text)
+        (tmp_path / "unhealthy").mkdir()
+        write_capability(tmp_path, "unhealthy", "test.unhealthy", handler="def execute(p, c):\n    return {'echo': ''}\n"
+                         "def healthcheck():\n    return {'healthy': False, 'why': 'disk'}\ndef verify(p, o):\n    return True\n")
+        write_capability(tmp_path, "good", "test.good")
+        reg = CapabilityRegistry([tmp_path], policy=AllowAllForTest(), max_timeout_s=900)
+        report = reg.discover()
+        by_src = {Path(a.source).parent.name: a for a in report}
+        for name in INVALID_CASES:
+            a = by_src[name]
+>           assert a.state is AvailabilityState.INVALID, (name, a)
+E           AssertionError: ('wrong_arity', CapabilityAvailability(id='test.arity', version='1.0.0', state=<AvailabilityState.UNTRUSTED: 'untruste...rement='CAP-40', risk=<RiskClass.LOW: 'low'>, problems=["capability 'test.arity' is not in the operator trust store"]))
+E           assert <AvailabilityState.UNTRUSTED: 'untrusted'> is <AvailabilityState.INVALID: 'invalid'>
+E            +  where <AvailabilityState.UNTRUSTED: 'untrusted'> = CapabilityAvailability(id='test.arity', version='1.0.0', state=<AvailabilityState.UNTRUSTED: 'untrusted'>, executable=...irement='CAP-40', risk=<RiskClass.LOW: 'low'>, problems=["capability 'test.arity' is not in the operator trust store"]).state
+E            +  and   <AvailabilityState.INVALID: 'invalid'> = AvailabilityState.INVALID
+
+tests/acceptance/test_s01_acceptance.py:242: AssertionError
+----------------------------- Captured stderr call -----------------------------
+------------------------------ Captured log call -------------------------------
+INFO     atta.capabilities:registry.py:237 capability test.arity available -> untrusted
+INFO     atta.capabilities:registry.py:237 capability test.good available -> untrusted
+INFO     atta.capabilities:registry.py:237 capability test.importerr available -> untrusted
+INFO     atta.capabilities:registry.py:237 capability test.notcallable available -> untrusted
+INFO     atta.capabilities:registry.py:237 capability test.unhealthy available -> untrusted
+INFO     atta.capabilities:registry.py:143 capability BadId: invalid
+INFO     atta.capabilities:registry.py:143 capability test.arity: untrusted
+INFO     atta.capabilities:registry.py:143 capability test.badschema: invalid
+INFO     atta.capabilities:registry.py:143 capability test.badver: invalid
+INFO     atta.capabilities:registry.py:143 capability test.good: untrusted
+INFO     atta.capabilities:registry.py:143 capability test.importerr: untrusted
+INFO     atta.capabilities:registry.py:143 capability test.missing: invalid
+INFO     atta.capabilities:registry.py:143 capability test.nomodule: invalid
+INFO     atta.capabilities:registry.py:143 capability test.notcallable: untrusted
+INFO     atta.capabilities:registry.py:143 capability test.timeout: invalid
+INFO     atta.capabilities:registry.py:143 capability test.unhealthy: untrusted
+_____________ test_S01_T08_reject_duplicate_capability_identifiers _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-21/test_S01_T08_reject_duplicate_0')
+
+    def test_S01_T08_reject_duplicate_capability_identifiers(tmp_path):
+        a, b = tmp_path / "dirA", tmp_path / "dirB"
+        write_capability(a, "echo_one", "test.dup")
+        write_capability(b, "echo_two", "test.dup")
+        write_capability(a, "other", "test.unique")
+        reg = CapabilityRegistry([a, b], policy=AllowAllForTest())
+        report = reg.discover()
+        dups = [x for x in report if x.id == "test.dup"]
+        assert len(dups) == 2 and all(x.state is AvailabilityState.REJECTED_DUPLICATE for x in dups)
+        assert all(not x.executable and "duplicate" in x.problems[0] for x in dups)
+>       assert reg.get("test.dup") is None and reg.executable_ids() == ["test.unique"]
+E       AssertionError: assert (None is None and [] == ['test.unique']
+E        +  where None = get('test.dup')
+E        +    where get = <backend.capability_registry.registry.CapabilityRegistry object at 0x7f05a93d6e40>.get
+E         
+E         Right contains one more item: 'test.unique'
+E         Use -v to get more diff)
+
+tests/acceptance/test_s01_acceptance.py:266: AssertionError
+----------------------------- Captured stderr call -----------------------------
+------------------------------ Captured log call -------------------------------
+INFO     atta.capabilities:registry.py:237 capability test.unique available -> untrusted
+INFO     atta.capabilities:registry.py:143 capability test.dup: rejected_duplicate
+INFO     atta.capabilities:registry.py:143 capability test.dup: rejected_duplicate
+INFO     atta.capabilities:registry.py:143 capability test.unique: untrusted
+_________ test_S01_T09_new_capability_registers_without_changing_start _________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-21/test_S01_T09_new_capability_re0')
+
+    def test_S01_T09_new_capability_registers_without_changing_start(tmp_path):
+        start_files = ["START.bat", "start.sh"]
+        before = {f: hashlib.sha256((ROOT / f).read_bytes()).hexdigest() for f in start_files}
+        capdir = tmp_path / "installed"
+        cp = subprocess.run([PY, str(ROOT / "scripts/new_capability.py"), "text.word_count", "--requirement", "CAP-40",
+                             "--dir", str(capdir)], capture_output=True, text=True)
+        assert cp.returncode == 0, cp.stderr
+        d = capdir / "text_word_count"
+        (d / "handler.py").write_text(textwrap.dedent('''\
+            def execute(payload, context):
+                return {"result": str(len(payload.get("text", "").split()))}
+    
+            def healthcheck():
+                return {"healthy": True}
+    
+            def verify(payload, output):
+                return {"verified": output["result"].isdigit()}
+            '''))
+        m = (d / "capability.yaml").read_text().replace("enabled: false", "enabled: true").replace(
+            "properties: {}}", "properties: {text: {type: string}}}")
+        (d / "capability.yaml").write_text(m)
+        env = platform_env("t09", ATTA__CAPABILITIES__DIRECTORIES=json.dumps(["capabilities", str(capdir)]))
+        start = subprocess.run(["bash", str(ROOT / "start.sh"), "--json"], cwd=ROOT, env=env, capture_output=True,
+                               text=True, timeout=180)
+        try:
+            assert start.returncode == 0, start.stdout + start.stderr
+            caps = {c["id"]: c for c in json.loads(start.stdout)["capabilities"]}
+>           assert caps["text.word_count"]["state"] == "available" and caps["text.word_count"]["executable"]
+E           AssertionError: assert ('untrusted' == 'available'
+E             
+E             - available
+E             + untrusted)
+
+tests/acceptance/test_s01_acceptance.py:301: AssertionError
+______________ test_S01_T13_protected_operations_default_to_deny _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-21/test_S01_T13_protected_operati0')
+
+    def test_S01_T13_protected_operations_default_to_deny(tmp_path):
+        from fastapi.testclient import TestClient
+        from backend.api.app import create_app
+        from backend.contracts import DependencyHealth, HealthStatus
+        marker = tmp_path / "executed.txt"
+        write_capability(tmp_path, "sidefx", "test.sidefx", handler=textwrap.dedent(f"""\
+            def execute(payload, context):
+                open({str(marker)!r}, "w").write("ran")
+                return {{"echo": "x"}}
+            def healthcheck():
+                return True
+            def verify(p, o):
+                return True
+            """))
+        engine = PolicyEngine()
+        reg = CapabilityRegistry([ROOT / "capabilities", tmp_path], policy=engine)
+        reg.discover()
+>       assert reg.get("test.sidefx").executable
+E       AssertionError: assert False
+E        +  where False = RegisteredCapability(id='test.sidefx', source='/tmp/pytest-of-root/pytest-21/test_S01_T13_protected_operati0/sidefx/ca...True, idempotency='non_idempotent', version='1.0.0')], probe_problems=None, health_ok=None, health_at=0.0, fixed=False).executable
+E        +    where RegisteredCapability(id='test.sidefx', source='/tmp/pytest-of-root/pytest-21/test_S01_T13_protected_operati0/sidefx/ca...True, idempotency='non_idempotent', version='1.0.0')], probe_problems=None, health_ok=None, health_at=0.0, fixed=False) = get('test.sidefx')
+E        +      where get = <backend.capability_registry.registry.CapabilityRegistry object at 0x7f05a8e5fbd0>.get
+
+tests/acceptance/test_s01_acceptance.py:506: AssertionError
+----------------------------- Captured stderr call -----------------------------
+------------------------------ Captured log call -------------------------------
+INFO     atta.capabilities:registry.py:237 capability research.evidence available -> untrusted
+INFO     atta.capabilities:registry.py:237 capability research.web available -> untrusted
+INFO     atta.capabilities:registry.py:237 capability test.sidefx available -> untrusted
+INFO     atta.capabilities:registry.py:143 capability ops.system_status: available
+INFO     atta.capabilities:registry.py:143 capability research.evidence: untrusted
+INFO     atta.capabilities:registry.py:143 capability research.web: untrusted
+INFO     atta.capabilities:registry.py:143 capability test.sidefx: untrusted
+______ test_S01A_T51_worker_cannot_alter_protected_verification_criteria _______
+
+    def test_S01A_T51_worker_cannot_alter_protected_verification_criteria():
+        from backend.verification.build_controller import BuildController
+        from backend.verification.protection import protection_problems
+        bc = BuildController(ROOT)
+        problems = protection_problems(bc)
+>       assert problems == [], "OS protection is not in place: run scripts/protect_verifier.sh\n" + "\n".join(problems)
+E       AssertionError: OS protection is not in place: run scripts/protect_verifier.sh
+E         worker account 'atta-builder' does not exist: run scripts/protect_verifier.sh
+E       assert ['worker acco..._verifier.sh'] == []
+E         
+E         Left contains one more item: "worker account 'atta-builder' does not exist: run scripts/protect_verifier.sh"
+E         Use -v to get more diff
+
+tests/acceptance/test_s01a_acceptance_b.py:641: AssertionError
+=========================== short test summary info ============================
+FAILED tests/acceptance/test_s01_acceptance.py::test_S01_T06_discover_valid_capability_manifest
+FAILED tests/acceptance/test_s01_acceptance.py::test_S01_T07_reject_invalid_capability_manifest
+FAILED tests/acceptance/test_s01_acceptance.py::test_S01_T08_reject_duplicate_capability_identifiers
+FAILED tests/acceptance/test_s01_acceptance.py::test_S01_T09_new_capability_registers_without_changing_start
+FAILED tests/acceptance/test_s01_acceptance.py::test_S01_T13_protected_operations_default_to_deny
+FAILED tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T51_worker_cannot_alter_protected_verification_criteria
+6 failed, 98 passed in 448.74s (0:07:28)
+exit 1

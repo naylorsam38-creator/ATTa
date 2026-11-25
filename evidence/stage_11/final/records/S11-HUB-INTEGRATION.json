@@ -1,0 +1,18 @@
+{
+  "synthesis": {
+    "natural_language": "The bridge reopened on Monday [cit_01M88YX5YTQCX82W7XB2XJKD3K].",
+    "status": "MODEL",
+    "citation_ids": [
+      "cit_01M88YX5YTQCX82W7XB2XJKD3K"
+    ],
+    "hub": "fake-test-hub",
+    "validated_by": "hub.validate_synthesis/1"
+  },
+  "calls": [
+    "plan",
+    "('query', 0)",
+    "('query', 0)",
+    "('query', 0)",
+    "('query', 0)"
+  ]
+}
