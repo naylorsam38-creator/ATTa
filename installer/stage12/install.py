@@ -411,7 +411,7 @@ def apply(target: Path, payload: Path, m: dict, pl: dict, record: dict | None, p
             r = subprocess.run([python, "-c", "import backend.integrations.service, backend.integrations.api, "
                                 "backend.orchestration.gateway, backend.orchestration.catalogue, backend.api.app"],
                                cwd=target, capture_output=True, text=True, timeout=300,
-                               env={**os.environ, "PYTHONPATH": str(target)})
+                               env={**os.environ, "PYTHONPATH": str(target), "PYTHONDONTWRITEBYTECODE": "1"})
             if r.returncode != 0:
                 problems.append(f"import check failed: {(r.stdout + r.stderr)[-800:]}")
         if problems:
@@ -549,6 +549,8 @@ def main(argv=None) -> int:
                 python = str(c)
                 break
     python = python or sys.executable
+    if os.sep in python or (os.altsep and os.altsep in python):
+        python = os.path.abspath(python)         # relative to the caller (never resolve(): venv symlinks matter)
     rec_path = target / STATE_DIR / "installed.json"
     recovered = recover(target)
     if recovered:
