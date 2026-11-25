@@ -4,10 +4,12 @@
 |---|---|---|---|
 | **S01** | Architecture and build infrastructure | **GATE PASSED** 2026-11-25 (run `run_01M88CEBEHP90WASN470WNT557`, 9/9 tasks, 25/25 tests); verified checkpoint `checkpoint-S01-70WNT557` at `fa406b3` | STAGE_01_VERIFICATION.md, `evidence/build_controller/` |
 | **S01A** | Deterministic LLM control, tool allocation and drift prevention | **GATE PASSED** 2026-11-25 (run `run_01M88H4W3NJ3NSPWSHPV29RR48`, 10/10 tasks incl. Checkpoints A and B, 61/61 test entries; an earlier run FAILED and was fixed — see report); verified checkpoint `checkpoint-S01A-PV29RR48` at `5662dd2` | `evidence/build_controller/`, `evidence/stage_01a/` |
+| **S01B** | Adaptive deployment, isolated offline qualification | **GATE PASSED** 2026-11-25 (gate run 5 `run_01M88Z4MBQAZEHH2SC614682YJ` at `42edea8`: 43 PASS, 0 FAIL, 2 BLOCKED — T41 Windows, T43 H100; runs 1–2 FAILED, runs 3–4 passed on earlier revisions — all in the ledger); non-privileged tests ran as `atta-tester` | STAGE_01B_VERIFICATION.md, `evidence/build_controller/`, `evidence/stage_01b/` |
+| **S01F** | Stage 01 FINAL integration gate | **NOT YET PASSED** — 3 runs: 1–2 aborted on qualification-environment defects (fixed), 3 stopped externally (LOCAL: 9 PASS, Q-FRONTEND FAIL on a stale folder — re-verified PASS individually; AIR_GAPPED partial, all completed steps PASS) | STAGE_01_FINAL_QUALIFICATION.md |
 | S02 | Authentication, tenant isolation, permissions, credential protection, human approvals → controller | NOT STARTED — not to be started in this stage | — |
 | S03 – S20 | revised roadmap: `configuration/build/roadmap.yaml` | NOT STARTED | — |
 
-**The application is not production-ready.** Stages 01 and 01A deliver infrastructure and the runtime control
+**The application is not production-ready.** Stages 01, 01A and 01B deliver infrastructure and the runtime control
 foundation only; 0 of 40 capabilities are complete (CAP-39 and CAP-40 are PARTIAL foundations). No model
 inference exists yet (Stage 03). See MASTER_IMPLEMENTATION_REGISTER.md.
 

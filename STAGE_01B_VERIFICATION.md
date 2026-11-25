@@ -1,14 +1,15 @@
 # STAGE 01B VERIFICATION — adaptive deployment, isolated offline qualification
 
-**Result: STAGE S01B GATE PASSED** — run `run_01M88VWJP33FAQN0VZEPVXRNCV` at commit `70778c95c0a585734c20a00ff8535fca7d884286`, base `21104c413c`.
-43 acceptance tests PASSED, 0 failed, 2 environment-specific tests **BLOCKED
-(not executed)**: S01B-T41 (Windows only) and S01B-T43 (NVIDIA H100 only). BLOCKED is never counted as PASS; both
-implementations are present and unchanged (see PHYSICAL_QUALIFICATION.md). Verified checkpoint `checkpoint-S01B-EPVXRNCV`.
+**Result: STAGE S01B GATE PASSED** — run `run_01M88Z4MBQAZEHH2SC614682YJ` (gate run 5), qualified source revision `42edea8ad5c04e29212c0d05ee4192fc4ad4c80e`, base
+`21104c413c`. 43 acceptance tests PASSED, 0 failed, 2 environment-specific tests
+**BLOCKED (not executed)**: S01B-T41 (Windows only) and S01B-T43 (NVIDIA H100 only). BLOCKED is never counted as PASS;
+both implementations are present and unchanged (PHYSICAL_QUALIFICATION.md). Verified checkpoint
+`checkpoint-S01B-614682YJ`.
 
 Executed by the independent build controller (`python -I -P backend/verification/verify.py verify-stage S01B`) under the
 Ed25519-signed seal of the protected criteria, with OS protection verified before the run. Every result is appended to
 the hash-chained ledger `evidence/build_controller/ledger.jsonl`; the per-test evidence files (command, cwd, identity,
-UTC start/finish, exit code, output and its SHA-256) are in `evidence/build_controller/runs/run_01M88VWJP33FAQN0VZEPVXRNCV/`.
+UTC start/finish, exit code, output and its SHA-256) are in `evidence/build_controller/runs/run_01M88Z4MBQAZEHH2SC614682YJ/`.
 
 ## Environment
 
@@ -20,63 +21,65 @@ rest and unreadable by `atta-tester` and the worker account (S01B-T42).
 
 Example command (each row's exact command is in its evidence file): `/usr/sbin/runuser -u atta-tester -- /home/user/ATTa/.venv/bin/python -m pytest -q -p no:cacheprovider tests/acceptance/test_s01b_acceptance.py::test_S01B_T01_environment_discovery_on_supported_os`
 
-## Results — run `run_01M88VWJP33FAQN0VZEPVXRNCV`
+## Results — run `run_01M88Z4MBQAZEHH2SC614682YJ`
 
 | Test | Requirement | Package | Status | Identity | Started (UTC) | Finished (UTC) | Exit | Evidence (file, SHA-256) |
 |---|---|---|---|---|---|---|---|---|
-| S01B-T01 | environment discovery on supported os | S01B-PKG01 | PASS | atta-tester | 2026-11-25T08:06:53.431Z | 2026-11-25T08:06:56.176Z | 0 | `S01B-T01.json` `14e3ad3bc00f…` |
-| S01B-T02 | deterministic profile selection | S01B-PKG01 | PASS | atta-tester | 2026-11-25T08:06:56.179Z | 2026-11-25T08:06:58.488Z | 0 | `S01B-T02.json` `9deb7cb5aefd…` |
-| S01B-T03 | explicit profile override validation | S01B-PKG01 | PASS | atta-tester | 2026-11-25T08:06:58.490Z | 2026-11-25T08:07:02.976Z | 0 | `S01B-T03.json` `430fd996193c…` |
-| S01B-T04 | reject incompatible h100 profile | S01B-PKG01 | PASS | atta-tester | 2026-11-25T08:07:02.982Z | 2026-11-25T08:07:05.385Z | 0 | `S01B-T04.json` `6decf765d78f…` |
-| S01B-T05 | environment manifest persistence | S01B-PKG01 | PASS | atta-tester | 2026-11-25T08:07:05.388Z | 2026-11-25T08:07:07.560Z | 0 | `S01B-T05.json` `47a2fe0ab65b…` |
-| S01B-T06 | manifest integrity validation | S01B-PKG01 | PASS | atta-tester | 2026-11-25T08:07:07.562Z | 2026-11-25T08:07:09.901Z | 0 | `S01B-T06.json` `3543503d065d…` |
-| S01B-T07 | model discovery from configured path | S01B-PKG01 | PASS | atta-tester | 2026-11-25T08:07:09.906Z | 2026-11-25T08:07:11.292Z | 0 | `S01B-T07.json` `360f32975cf7…` |
-| S01B-T08 | removable model path discovery | S01B-PKG01 | PASS | atta-tester | 2026-11-25T08:07:11.295Z | 2026-11-25T08:07:12.660Z | 0 | `S01B-T08.json` `999402697a78…` |
-| S01B-T09 | no unnecessary model copying | S01B-PKG01 | PASS | atta-tester | 2026-11-25T08:07:12.664Z | 2026-11-25T08:07:13.896Z | 0 | `S01B-T09.json` `36c4e442d87d…` |
-| S01B-T10 | missing model returns blocked | S01B-PKG01 | PASS | atta-tester | 2026-11-25T08:07:13.898Z | 2026-11-25T08:07:17.374Z | 0 | `S01B-T10.json` `00dcd53fd710…` |
-| S01B-T11 | runtime discovery | S01B-PKG01 | PASS | atta-tester | 2026-11-25T08:07:17.378Z | 2026-11-25T08:07:20.039Z | 0 | `S01B-T11.json` `8f3daf069ab5…` |
-| S01B-T12 | port conflict detection | S01B-PKG02 | PASS | atta-tester | 2026-11-25T08:07:20.048Z | 2026-11-25T08:07:31.202Z | 0 | `S01B-T12.json` `425aa69a8917…` |
-| S01B-T13 | configuration precedence | S01B-PKG02 | PASS | atta-tester | 2026-11-25T08:07:31.205Z | 2026-11-25T08:07:32.834Z | 0 | `S01B-T13.json` `18c313b517ec…` |
-| S01B-T14 | secret exclusion from generated reports | S01B-PKG02 | PASS | atta-tester | 2026-11-25T08:07:32.837Z | 2026-11-25T08:07:36.173Z | 0 | `S01B-T14.json` `e40145a8fdd6…` |
-| S01B-T15 | installation plan generation | S01B-PKG02 | PASS | atta-tester | 2026-11-25T08:07:36.175Z | 2026-11-25T08:07:38.682Z | 0 | `S01B-T15.json` `8717976dcc6d…` |
-| S01B-T16 | resumable installation | S01B-PKG02 | PASS | atta-tester | 2026-11-25T08:07:38.684Z | 2026-11-25T08:07:43.426Z | 0 | `S01B-T16.json` `3a896a69df6f…` |
-| S01B-T17 | rollback after controlled failure | S01B-PKG02 | PASS | atta-tester | 2026-11-25T08:07:43.429Z | 2026-11-25T08:08:02.614Z | 0 | `S01B-T17.json` `cf8fca58221d…` |
-| S01B-T34 | thin launcher test | S01B-PKG02 | PASS | atta-tester | 2026-11-25T08:08:02.616Z | 2026-11-25T08:08:04.492Z | 0 | `S01B-T34.json` `a3b42e19b4a7…` |
-| S01B-T35 | new capability discovery requires no launcher modification | S01B-PKG02 | PASS | atta-tester | 2026-11-25T08:08:04.495Z | 2026-11-25T08:08:06.430Z | 0 | `S01B-T35.json` `eb35568e6b79…` |
-| S01B-T18 | dependency lock validation | S01B-PKG03 | PASS | atta-tester | 2026-11-25T08:08:06.437Z | 2026-11-25T08:08:11.201Z | 0 | `S01B-T18.json` `a8dfc4c0070e…` |
-| S01B-T19 | offline dependency manifest validation | S01B-PKG03 | PASS | atta-tester | 2026-11-25T08:08:11.203Z | 2026-11-25T08:08:52.552Z | 0 | `S01B-T19.json` `9c5c11a1f5eb…` |
-| S01B-T20 | core frontend contains no mandatory external assets | S01B-PKG03 | PASS | atta-tester | 2026-11-25T08:08:52.555Z | 2026-11-25T08:08:53.979Z | 0 | `S01B-T20.json` `170fa7c74248…` |
-| S01B-T21 | isolated test database | S01B-PKG04 | PASS | atta-tester | 2026-11-25T08:08:53.988Z | 2026-11-25T08:08:57.646Z | 0 | `S01B-T21.json` `a727a6a80682…` |
-| S01B-T22 | isolated redis state | S01B-PKG04 | PASS | atta-tester | 2026-11-25T08:08:57.650Z | 2026-11-25T08:09:07.722Z | 0 | `S01B-T22.json` `b57b4a8dd7fb…` |
-| S01B-T23 | isolated filesystem workspace | S01B-PKG04 | PASS | atta-tester | 2026-11-25T08:09:07.726Z | 2026-11-25T08:09:13.168Z | 0 | `S01B-T23.json` `42a2d9ee2688…` |
-| S01B-T24 | production state remains unchanged by qualification | S01B-PKG04 | PASS | atta-tester | 2026-11-25T08:09:13.171Z | 2026-11-25T08:09:19.280Z | 0 | `S01B-T24.json` `c049d9818611…` |
-| S01B-T25 | external network denial detection | S01B-PKG04 | PASS | root | 2026-11-25T08:09:19.284Z | 2026-11-25T08:09:28.763Z | 0 | `S01B-T25.json` `bf3eece87785…` |
-| S01B-T26 | offline core startup | S01B-PKG04 | PASS | root | 2026-11-25T08:09:28.766Z | 2026-11-25T08:09:38.039Z | 0 | `S01B-T26.json` `3b36ec7b7663…` |
-| S01B-T27 | dynamic dependency failure propagation | S01B-PKG04 | PASS | atta-tester | 2026-11-25T08:09:38.044Z | 2026-11-25T08:09:41.514Z | 0 | `S01B-T27.json` `7283762c0c15…` |
-| S01B-T28 | service recovery revalidation | S01B-PKG04 | PASS | atta-tester | 2026-11-25T08:09:41.518Z | 2026-11-25T08:09:45.684Z | 0 | `S01B-T28.json` `e7bbdf2fe309…` |
-| S01B-T41 | windows specific tests | S01B-PKG04 | BLOCKED | — | — | — | not executed | `S01B-T41.json` `971200cf9a84…` |
-| S01B-T42 | linux specific tests | S01B-PKG04 | PASS | root | 2026-11-25T08:09:45.688Z | 2026-11-25T08:09:51.045Z | 0 | `S01B-T42.json` `efc7ba077d17…` |
-| S01B-T29 | stage01a controller works under local cpu profile | S01B-PKG05 | PASS | atta-tester | 2026-11-25T08:09:51.053Z | 2026-11-25T08:10:12.105Z | 0 | `S01B-T29.json` `5c3cbd047c65…` |
-| S01B-T30 | focus4 works in isolated qualification | S01B-PKG05 | PASS | atta-tester | 2026-11-25T08:10:12.108Z | 2026-11-25T08:10:35.398Z | 0 | `S01B-T30.json` `569c73eac40b…` |
-| S01B-T31 | drift guard works in isolated qualification | S01B-PKG05 | PASS | atta-tester | 2026-11-25T08:10:35.401Z | 2026-11-25T08:10:54.821Z | 0 | `S01B-T31.json` `d9e55d9a59b0…` |
-| S01B-T32 | cancellation leaves no subsequent local side effects | S01B-PKG05 | PASS | atta-tester | 2026-11-25T08:10:54.825Z | 2026-11-25T08:11:17.197Z | 0 | `S01B-T32.json` `117e3c7d4bd1…` |
-| S01B-T33 | restart restores verified state | S01B-PKG05 | PASS | atta-tester | 2026-11-25T08:11:17.201Z | 2026-11-25T08:11:47.720Z | 0 | `S01B-T33.json` `e5aa9cd4c81d…` |
-| S01B-T36 | legacy atta regression suite | S01B-PKG06 | PASS | root | 2026-11-25T08:11:47.727Z | 2026-11-25T08:13:18.285Z | 0 | `S01B-T36.json` `5c5928c6fb80…` |
-| S01B-T37 | stage01 regression suite | S01B-PKG06 | PASS | atta-tester | 2026-11-25T08:13:18.287Z | 2026-11-25T08:14:54.737Z | 0 | `S01B-T37.json` `a5fc3096d39c…` |
-| S01B-T38 | stage01a regression suite | S01B-PKG06 | PASS | atta-tester | 2026-11-25T08:14:54.739Z | 2026-11-25T08:19:13.344Z | 0 | `S01B-T38.json` `5c4be08d277c…` |
-| S01B-T39 | clean installation qualification | S01B-PKG06 | PASS | atta-tester | 2026-11-25T08:19:13.347Z | 2026-11-25T08:19:47.204Z | 0 | `S01B-T39.json` `fd44ee5f4645…` |
-| S01B-T40 | upgrade from current baseline qualification | S01B-PKG06 | PASS | atta-tester | 2026-11-25T08:19:47.208Z | 2026-11-25T08:20:06.837Z | 0 | `S01B-T40.json` `3ec86ea6ad72…` |
-| S01B-T43 | h100 hardware tests pass only on actual hardware | S01B-PKG06 | BLOCKED | — | — | — | not executed | `S01B-T43.json` `23a57b10d5d6…` |
-| S01B-T44 | unavailable h100 tests remain blocked elsewhere | S01B-PKG06 | PASS | atta-tester | 2026-11-25T08:20:06.845Z | 2026-11-25T08:20:13.718Z | 0 | `S01B-T44.json` `b0e4b10389c9…` |
-| S01B-T45 | complete requirement to evidence traceability | S01B-PKG06 | PASS | atta-tester | 2026-11-25T08:20:13.720Z | 2026-11-25T08:20:14.871Z | 0 | `S01B-T45.json` `6a9aa1191869…` |
+| S01B-T01 | environment discovery on supported os | S01B-PKG01 | PASS | atta-tester | 2026-11-25T09:03:43.013Z | 2026-11-25T09:03:45.123Z | 0 | `S01B-T01.json` `4b8a58e3f05a…` |
+| S01B-T02 | deterministic profile selection | S01B-PKG01 | PASS | atta-tester | 2026-11-25T09:03:45.126Z | 2026-11-25T09:03:46.950Z | 0 | `S01B-T02.json` `921ee25a6b40…` |
+| S01B-T03 | explicit profile override validation | S01B-PKG01 | PASS | atta-tester | 2026-11-25T09:03:46.953Z | 2026-11-25T09:03:48.846Z | 0 | `S01B-T03.json` `b4011a554d58…` |
+| S01B-T04 | reject incompatible h100 profile | S01B-PKG01 | PASS | atta-tester | 2026-11-25T09:03:48.849Z | 2026-11-25T09:03:54.892Z | 0 | `S01B-T04.json` `4f36857a8f7d…` |
+| S01B-T05 | environment manifest persistence | S01B-PKG01 | PASS | atta-tester | 2026-11-25T09:03:54.897Z | 2026-11-25T09:03:56.817Z | 0 | `S01B-T05.json` `7141a4f638ef…` |
+| S01B-T06 | manifest integrity validation | S01B-PKG01 | PASS | atta-tester | 2026-11-25T09:03:56.820Z | 2026-11-25T09:03:58.931Z | 0 | `S01B-T06.json` `ae19692bf95e…` |
+| S01B-T07 | model discovery from configured path | S01B-PKG01 | PASS | atta-tester | 2026-11-25T09:03:58.934Z | 2026-11-25T09:04:00.072Z | 0 | `S01B-T07.json` `20b9bba9586f…` |
+| S01B-T08 | removable model path discovery | S01B-PKG01 | PASS | atta-tester | 2026-11-25T09:04:00.075Z | 2026-11-25T09:04:01.231Z | 0 | `S01B-T08.json` `7010b4daa786…` |
+| S01B-T09 | no unnecessary model copying | S01B-PKG01 | PASS | atta-tester | 2026-11-25T09:04:01.235Z | 2026-11-25T09:04:02.646Z | 0 | `S01B-T09.json` `fa01055b0f74…` |
+| S01B-T10 | missing model returns blocked | S01B-PKG01 | PASS | atta-tester | 2026-11-25T09:04:02.650Z | 2026-11-25T09:04:05.974Z | 0 | `S01B-T10.json` `32b33f981d12…` |
+| S01B-T11 | runtime discovery | S01B-PKG01 | PASS | atta-tester | 2026-11-25T09:04:05.979Z | 2026-11-25T09:04:07.964Z | 0 | `S01B-T11.json` `222c2dde4870…` |
+| S01B-T12 | port conflict detection | S01B-PKG02 | PASS | atta-tester | 2026-11-25T09:04:07.973Z | 2026-11-25T09:04:18.208Z | 0 | `S01B-T12.json` `e8faba6ee415…` |
+| S01B-T13 | configuration precedence | S01B-PKG02 | PASS | atta-tester | 2026-11-25T09:04:18.211Z | 2026-11-25T09:04:19.403Z | 0 | `S01B-T13.json` `2011f50b5895…` |
+| S01B-T14 | secret exclusion from generated reports | S01B-PKG02 | PASS | atta-tester | 2026-11-25T09:04:19.407Z | 2026-11-25T09:04:21.828Z | 0 | `S01B-T14.json` `e79d54f62d30…` |
+| S01B-T15 | installation plan generation | S01B-PKG02 | PASS | atta-tester | 2026-11-25T09:04:21.834Z | 2026-11-25T09:04:25.410Z | 0 | `S01B-T15.json` `fed2fa517091…` |
+| S01B-T16 | resumable installation | S01B-PKG02 | PASS | atta-tester | 2026-11-25T09:04:25.414Z | 2026-11-25T09:04:29.348Z | 0 | `S01B-T16.json` `b6aac1a95ccb…` |
+| S01B-T17 | rollback after controlled failure | S01B-PKG02 | PASS | atta-tester | 2026-11-25T09:04:29.351Z | 2026-11-25T09:04:47.715Z | 0 | `S01B-T17.json` `0cc89ba5cf8f…` |
+| S01B-T34 | thin launcher test | S01B-PKG02 | PASS | atta-tester | 2026-11-25T09:04:47.718Z | 2026-11-25T09:04:48.970Z | 0 | `S01B-T34.json` `86ff2f973980…` |
+| S01B-T35 | new capability discovery requires no launcher modification | S01B-PKG02 | PASS | atta-tester | 2026-11-25T09:04:48.975Z | 2026-11-25T09:04:50.490Z | 0 | `S01B-T35.json` `0df1edeb9259…` |
+| S01B-T18 | dependency lock validation | S01B-PKG03 | PASS | atta-tester | 2026-11-25T09:04:50.499Z | 2026-11-25T09:04:54.305Z | 0 | `S01B-T18.json` `39a917d9a215…` |
+| S01B-T19 | offline dependency manifest validation | S01B-PKG03 | PASS | atta-tester | 2026-11-25T09:04:54.308Z | 2026-11-25T09:05:29.120Z | 0 | `S01B-T19.json` `745c3c33557a…` |
+| S01B-T20 | core frontend contains no mandatory external assets | S01B-PKG03 | PASS | atta-tester | 2026-11-25T09:05:29.123Z | 2026-11-25T09:05:30.200Z | 0 | `S01B-T20.json` `fdbb72b9f365…` |
+| S01B-T21 | isolated test database | S01B-PKG04 | PASS | atta-tester | 2026-11-25T09:05:30.210Z | 2026-11-25T09:05:33.323Z | 0 | `S01B-T21.json` `4c142e9d9cba…` |
+| S01B-T22 | isolated redis state | S01B-PKG04 | PASS | atta-tester | 2026-11-25T09:05:33.326Z | 2026-11-25T09:05:41.156Z | 0 | `S01B-T22.json` `36cd691dd33f…` |
+| S01B-T23 | isolated filesystem workspace | S01B-PKG04 | PASS | atta-tester | 2026-11-25T09:05:41.161Z | 2026-11-25T09:05:45.683Z | 0 | `S01B-T23.json` `311d404ea995…` |
+| S01B-T24 | production state remains unchanged by qualification | S01B-PKG04 | PASS | atta-tester | 2026-11-25T09:05:45.687Z | 2026-11-25T09:05:50.996Z | 0 | `S01B-T24.json` `f60808640577…` |
+| S01B-T25 | external network denial detection | S01B-PKG04 | PASS | root | 2026-11-25T09:05:51.002Z | 2026-11-25T09:05:55.732Z | 0 | `S01B-T25.json` `c1d12593d89c…` |
+| S01B-T26 | offline core startup | S01B-PKG04 | PASS | root | 2026-11-25T09:05:55.736Z | 2026-11-25T09:06:03.883Z | 0 | `S01B-T26.json` `b4631d88b577…` |
+| S01B-T27 | dynamic dependency failure propagation | S01B-PKG04 | PASS | atta-tester | 2026-11-25T09:06:03.887Z | 2026-11-25T09:06:07.501Z | 0 | `S01B-T27.json` `82aaf87d5d08…` |
+| S01B-T28 | service recovery revalidation | S01B-PKG04 | PASS | atta-tester | 2026-11-25T09:06:07.505Z | 2026-11-25T09:06:11.084Z | 0 | `S01B-T28.json` `9ec7d85e1da1…` |
+| S01B-T41 | windows specific tests | S01B-PKG04 | BLOCKED | — | — | — | not executed | `S01B-T41.json` `8968e81ef4e9…` |
+| S01B-T42 | linux specific tests | S01B-PKG04 | PASS | root | 2026-11-25T09:06:11.094Z | 2026-11-25T09:06:16.274Z | 0 | `S01B-T42.json` `bcd031affba3…` |
+| S01B-T29 | stage01a controller works under local cpu profile | S01B-PKG05 | PASS | atta-tester | 2026-11-25T09:06:16.282Z | 2026-11-25T09:06:33.679Z | 0 | `S01B-T29.json` `e33073af148d…` |
+| S01B-T30 | focus4 works in isolated qualification | S01B-PKG05 | PASS | atta-tester | 2026-11-25T09:06:33.683Z | 2026-11-25T09:06:52.319Z | 0 | `S01B-T30.json` `2d8d001f5e31…` |
+| S01B-T31 | drift guard works in isolated qualification | S01B-PKG05 | PASS | atta-tester | 2026-11-25T09:06:52.322Z | 2026-11-25T09:07:09.433Z | 0 | `S01B-T31.json` `5299f238150b…` |
+| S01B-T32 | cancellation leaves no subsequent local side effects | S01B-PKG05 | PASS | atta-tester | 2026-11-25T09:07:09.437Z | 2026-11-25T09:07:29.235Z | 0 | `S01B-T32.json` `463afbc57cb0…` |
+| S01B-T33 | restart restores verified state | S01B-PKG05 | PASS | atta-tester | 2026-11-25T09:07:29.238Z | 2026-11-25T09:07:53.026Z | 0 | `S01B-T33.json` `3a9a6a8d551f…` |
+| S01B-T36 | legacy atta regression suite | S01B-PKG06 | PASS | root | 2026-11-25T09:07:53.035Z | 2026-11-25T09:09:16.474Z | 0 | `S01B-T36.json` `ecc46f910ff1…` |
+| S01B-T37 | stage01 regression suite | S01B-PKG06 | PASS | atta-tester | 2026-11-25T09:09:16.479Z | 2026-11-25T09:10:34.911Z | 0 | `S01B-T37.json` `89bcb065cc86…` |
+| S01B-T38 | stage01a regression suite | S01B-PKG06 | PASS | atta-tester | 2026-11-25T09:10:34.914Z | 2026-11-25T09:13:56.054Z | 0 | `S01B-T38.json` `8ed522b97630…` |
+| S01B-T39 | clean installation qualification | S01B-PKG06 | PASS | atta-tester | 2026-11-25T09:13:56.059Z | 2026-11-25T09:14:21.810Z | 0 | `S01B-T39.json` `69ac267efde5…` |
+| S01B-T40 | upgrade from current baseline qualification | S01B-PKG06 | PASS | atta-tester | 2026-11-25T09:14:21.814Z | 2026-11-25T09:14:38.210Z | 0 | `S01B-T40.json` `4485da4faa74…` |
+| S01B-T43 | h100 hardware tests pass only on actual hardware | S01B-PKG06 | BLOCKED | — | — | — | not executed | `S01B-T43.json` `b07b9335e73d…` |
+| S01B-T44 | unavailable h100 tests remain blocked elsewhere | S01B-PKG06 | PASS | atta-tester | 2026-11-25T09:14:38.216Z | 2026-11-25T09:14:44.332Z | 0 | `S01B-T44.json` `d44f18ff79a0…` |
+| S01B-T45 | complete requirement to evidence traceability | S01B-PKG06 | PASS | atta-tester | 2026-11-25T09:14:44.335Z | 2026-11-25T09:14:45.306Z | 0 | `S01B-T45.json` `ae01220116d1…` |
 
-## Gate history (all runs kept in the ledger)
+## Gate history (every run is kept in the ledger)
 
-| Run | Gate | Commit | Packages |
+| # | Run | Gate | Commit |
 |---|---|---|---|
-| run_01M88SX6G9K5GJ8WJN0FYAYG8J | FAILED | `006ff39403` | S01B-PKG01=PASSED, S01B-PKG02=PASSED, S01B-PKG03=PASSED, S01B-PKG04=FAILED, S01B-PKG05=BLOCKED, S01B-PKG06=BLOCKED |
-| run_01M88T3976DA0CFMNV76HY9MQY | FAILED | `416ca300e9` | S01B-PKG01=PASSED, S01B-PKG02=PASSED, S01B-PKG03=PASSED, S01B-PKG04=PASSED, S01B-PKG05=PASSED, S01B-PKG06=FAILED |
-| run_01M88VWJP33FAQN0VZEPVXRNCV | PASSED | `70778c95c0` | S01B-PKG01=PASSED, S01B-PKG02=PASSED, S01B-PKG03=PASSED, S01B-PKG04=PASSED, S01B-PKG05=PASSED, S01B-PKG06=PASSED |
+| 1 | `run_01M88SX6G9K5GJ8WJN0FYAYG8J` | FAILED | `006ff39403` |
+| 2 | `run_01M88T3976DA0CFMNV76HY9MQY` | FAILED | `416ca300e9` |
+| 3 | `run_01M88VWJP33FAQN0VZEPVXRNCV` | PASSED | `70778c95c0` |
+| 4 | `run_01M88XAQFVJ9Q4B1Y1YXKX1H1E` | PASSED | `efc81d5ad3` |
+| 5 | `run_01M88Z4MBQAZEHH2SC614682YJ` | PASSED | `42edea8ad5` |
 
 * **Run 1 FAILED** — S01B-T42's check for leaked verifier variables also matched `ATTA_BUILD_CONTROLLER_RUN`, the
   non-secret run id the verifier passes on; narrowed to secret-bearing variables. PKG05/PKG06 were BLOCKED behind it.
@@ -87,7 +90,12 @@ Example command (each row's exact command is in its evidence file): `/usr/sbin/r
 * Pre-checks for run 3 (unprivileged identity) found and fixed: the proxy CA bundle of this build machine is under
   `/root` and unreadable by `atta-tester` (public certificate bundles are now shared read-only with the test identity;
   files containing private keys never are); the legacy suite changes file ownership and therefore runs privileged.
-* **Run 3 PASSED** (this report).
+* **Run 3 PASSED** at `70778c9`; the Stage 01 FINAL gate then found qualification-environment defects (relative
+  isolation-overlay path; nested isolation contexts; S01-T11 closed-port setting overridden by the overlay; the nested
+  air-gap run re-reading a manifest another test had overwritten; S01B-T15 depending on the outer database). Each was
+  reproduced individually and corrected; S01B was re-qualified:
+* **Run 4 PASSED** at `efc81d5` (after the overlay-path fix) and **run 5 PASSED** at `42edea8` (after the remaining
+  fixes) — this report.
 
 ## Superseded tests
 
