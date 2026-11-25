@@ -1,5 +1,5 @@
 {
-  "sealed_at": "2026-11-25T08:06:42.864Z",
+  "sealed_at": "2026-11-25T08:31:47.231Z",
   "sealed_by": "stage-01b-operator",
   "files": {
     "backend/verification/__init__.py": "27c40e3e22dd48de0e7aad9739ae9be8253bd9d0cb6279f1f3b3d6509a58fc5d",
@@ -64,6 +64,6 @@
     "tests/regression/legacy_baseline.json": "696887118bb51d6bfd918c2e0902852b2df87e6a78d3fa593c62c85ead364bbb"
   },
   "hmac_sha256": null,
-  "signature_ed25519": "DBqDCW+wsG45TJq1f/y0VHGaEbdPqTgCvsdWZCoC5F4QCvjypXrxnPYovNB98NPS68j8L7OU4FSc9Xp1c6E/Ag==",
+  "signature_ed25519": "nD0dR1iwSqwzcA3Qoc+XUH1D/6ZrufrdaDEZaQHeCwh6qEAfS46a0nu3vXf9sxUi3rCOOKAQe93MHnQM8r7AAQ==",
   "signed": true
 }
