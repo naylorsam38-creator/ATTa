@@ -1,0 +1,22 @@
+{
+  "test_id": "S01B-T43",
+  "status": "BLOCKED",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T43_h100_hardware_tests_pass_only_on_actual_hardware"
+  ],
+  "requires": [
+    "gpu:h100"
+  ],
+  "reasons": [
+    "an NVIDIA H100 (>= 79 GB) is required; none found on this host"
+  ],
+  "environment_specific": true,
+  "recorded_at": "2026-11-25T08:43:20.938Z",
+  "executed": false
+}

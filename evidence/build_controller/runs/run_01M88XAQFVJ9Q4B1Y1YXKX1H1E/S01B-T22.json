@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T22",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T22_isolated_redis_state"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T08:33:49.306Z",
+  "finished_at": "2026-11-25T08:33:56.083Z",
+  "duration_s": 6.778,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 5.86s\n",
+  "stderr": "",
+  "output_sha256": "91c4a47d0cbd8b67a9c101fa2186961621f6f96a4a3abd1bc4f45f7586412b47"
+}

@@ -1,24 +1,24 @@
 {
   "transitions": [
     {
-      "at": "2026-11-25T08:07:41.264Z",
-      "run_id": "run_01M88VY1EGNQJX8CHV9QE7F39Q",
+      "at": "2026-11-25T08:32:42.329Z",
+      "run_id": "run_01M88XBVASYZ5GM4SEJ979AS7C",
       "from": "NEW",
       "to": "DISCOVER",
       "reason": "installation started",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T08:07:42.012Z",
-      "run_id": "run_01M88VY1EGNQJX8CHV9QE7F39Q",
+      "at": "2026-11-25T08:32:43.013Z",
+      "run_id": "run_01M88XBVASYZ5GM4SEJ979AS7C",
       "from": "DISCOVER",
       "to": "VALIDATE",
       "reason": "discovered; profile LOCAL_CPU",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T08:07:42.042Z",
-      "run_id": "run_01M88VY1EGNQJX8CHV9QE7F39Q",
+      "at": "2026-11-25T08:32:43.038Z",
+      "run_id": "run_01M88XBVASYZ5GM4SEJ979AS7C",
       "from": "VALIDATE",
       "to": "PLAN",
       "reason": "configuration valid",
@@ -27,36 +27,36 @@
       }
     },
     {
-      "at": "2026-11-25T08:07:42.175Z",
-      "run_id": "run_01M88VY1EGNQJX8CHV9QE7F39Q",
+      "at": "2026-11-25T08:32:43.133Z",
+      "run_id": "run_01M88XBVASYZ5GM4SEJ979AS7C",
       "from": "PLAN",
       "to": "AWAITING_OPERATOR_ACTION",
       "reason": "review install_plan.json, then re-run with --approve",
       "evidence": {
-        "plan_sha256": "4d48b8f4c191a4d7573a0f492d9baa3211e94e04ffe1eb031bff236467f80ea3"
+        "plan_sha256": "f47d9b4e69bb358264bb3bf1ec8d70db6ca9fc1ea0d7011d27bd434f91b203b1"
       }
     },
     {
-      "at": "2026-11-25T08:07:42.261Z",
-      "run_id": "run_01M88VY1EGNQJX8CHV9QE7F39Q",
+      "at": "2026-11-25T08:32:43.215Z",
+      "run_id": "run_01M88XBVASYZ5GM4SEJ979AS7C",
       "from": "AWAITING_OPERATOR_ACTION",
       "to": "PROVISION",
       "reason": "operator approved the plan",
       "evidence": {
-        "plan_sha256": "4d48b8f4c191a4d7573a0f492d9baa3211e94e04ffe1eb031bff236467f80ea3"
+        "plan_sha256": "f47d9b4e69bb358264bb3bf1ec8d70db6ca9fc1ea0d7011d27bd434f91b203b1"
       }
     },
     {
-      "at": "2026-11-25T08:07:42.262Z",
-      "run_id": "run_01M88VY1EGNQJX8CHV9QE7F39Q",
+      "at": "2026-11-25T08:32:43.216Z",
+      "run_id": "run_01M88XBVASYZ5GM4SEJ979AS7C",
       "from": "PROVISION",
       "to": "CONFIGURE",
       "reason": "dependencies provisioned",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T08:07:42.655Z",
-      "run_id": "run_01M88VY1EGNQJX8CHV9QE7F39Q",
+      "at": "2026-11-25T08:32:43.603Z",
+      "run_id": "run_01M88XBVASYZ5GM4SEJ979AS7C",
       "from": "CONFIGURE",
       "to": "START_SERVICES",
       "reason": "configuration applied",
@@ -65,16 +65,16 @@
       }
     },
     {
-      "at": "2026-11-25T08:07:42.656Z",
-      "run_id": "run_01M88VY1EGNQJX8CHV9QE7F39Q",
+      "at": "2026-11-25T08:32:43.604Z",
+      "run_id": "run_01M88XBVASYZ5GM4SEJ979AS7C",
       "from": "START_SERVICES",
       "to": "QUALIFY",
       "reason": "service start skipped",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T08:07:42.658Z",
-      "run_id": "run_01M88VY1EGNQJX8CHV9QE7F39Q",
+      "at": "2026-11-25T08:32:43.607Z",
+      "run_id": "run_01M88XBVASYZ5GM4SEJ979AS7C",
       "from": "QUALIFY",
       "to": "ACTIVATE",
       "reason": "qualification passed",
@@ -83,26 +83,26 @@
       }
     },
     {
-      "at": "2026-11-25T08:07:42.659Z",
-      "run_id": "run_01M88VY1EGNQJX8CHV9QE7F39Q",
+      "at": "2026-11-25T08:32:43.608Z",
+      "run_id": "run_01M88XBVASYZ5GM4SEJ979AS7C",
       "from": "ACTIVATE",
       "to": "READY",
       "reason": "activated",
       "evidence": {
-        "environment_id": "env_01M88VY25VTBM5RQMS7DKBDXVV"
+        "environment_id": "env_01M88XBW04T1SZR0R9MRGAGV6C"
       }
     },
     {
-      "at": "2026-11-25T08:07:42.661Z",
-      "run_id": "run_01M88VY1EGNQJX8CHV9QE7F39Q",
+      "at": "2026-11-25T08:32:43.610Z",
+      "run_id": "run_01M88XBVASYZ5GM4SEJ979AS7C",
       "from": "START_SERVICES",
       "to": "QUALIFY",
       "reason": "service start skipped",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T08:07:42.662Z",
-      "run_id": "run_01M88VY1EGNQJX8CHV9QE7F39Q",
+      "at": "2026-11-25T08:32:43.611Z",
+      "run_id": "run_01M88XBVASYZ5GM4SEJ979AS7C",
       "from": "QUALIFY",
       "to": "ACTIVATE",
       "reason": "qualification passed",
@@ -111,13 +111,13 @@
       }
     },
     {
-      "at": "2026-11-25T08:07:42.663Z",
-      "run_id": "run_01M88VY1EGNQJX8CHV9QE7F39Q",
+      "at": "2026-11-25T08:32:43.612Z",
+      "run_id": "run_01M88XBVASYZ5GM4SEJ979AS7C",
       "from": "ACTIVATE",
       "to": "READY",
       "reason": "activated",
       "evidence": {
-        "environment_id": "env_01M88VY25VTBM5RQMS7DKBDXVV"
+        "environment_id": "env_01M88XBW04T1SZR0R9MRGAGV6C"
       }
     }
   ]

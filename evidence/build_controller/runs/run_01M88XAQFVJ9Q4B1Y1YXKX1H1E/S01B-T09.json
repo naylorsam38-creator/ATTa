@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T09",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T09_no_unnecessary_model_copying"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T08:32:18.754Z",
+  "finished_at": "2026-11-25T08:32:19.709Z",
+  "duration_s": 0.955,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 0.12s\n",
+  "stderr": "",
+  "output_sha256": "73d4d8b192e2c74d554cf598efce4710c14b941b1e1ac00305d27f010b1fc84b"
+}

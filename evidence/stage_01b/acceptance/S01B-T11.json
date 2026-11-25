@@ -16,7 +16,7 @@
     "status": "SELECTED",
     "model_id": "tiny",
     "runtime": "llamacpp",
-    "model_path": "/tmp/pytest-of-atta-tester/pytest-47/test_S01B_T11_runtime_discover0/m/tiny.gguf",
+    "model_path": "/tmp/pytest-of-atta-tester/pytest-102/test_S01B_T11_runtime_discover0/m/tiny.gguf",
     "reason": "gguf via llamacpp (profile LOCAL_CPU)"
   }
 }

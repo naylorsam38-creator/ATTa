@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T11",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T11_runtime_discovery"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T08:32:22.451Z",
+  "finished_at": "2026-11-25T08:32:24.529Z",
+  "duration_s": 2.078,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 0.88s\n",
+  "stderr": "",
+  "output_sha256": "740992b44033a7a54b5591b383e79fa0695cee2c5a7068899fe61db0e22f0072"
+}

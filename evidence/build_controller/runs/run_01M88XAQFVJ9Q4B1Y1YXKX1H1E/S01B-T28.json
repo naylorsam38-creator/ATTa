@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T28",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T28_service_recovery_revalidation"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T08:34:20.529Z",
+  "finished_at": "2026-11-25T08:34:23.777Z",
+  "duration_s": 3.248,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.24s\n",
+  "stderr": "",
+  "output_sha256": "b34ffbf6f30838a46bb9072e41419cc4081d6f906d07ca2fb36766f21381f04a"
+}

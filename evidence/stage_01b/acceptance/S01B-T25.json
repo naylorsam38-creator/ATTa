@@ -6,13 +6,13 @@
   },
   "audit": [
     {
-      "pid": 30426,
+      "pid": 32402,
       "argv0": "-c",
       "kind": "dns",
       "target": "1.1.1.1"
     },
     {
-      "pid": 30426,
+      "pid": 32402,
       "argv0": "-c",
       "kind": "connect",
       "target": "1.1.1.1:443"

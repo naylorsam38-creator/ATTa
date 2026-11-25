@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T04",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T04_reject_incompatible_h100_profile"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T08:32:11.476Z",
+  "finished_at": "2026-11-25T08:32:13.398Z",
+  "duration_s": 1.922,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 0.90s\n",
+  "stderr": "",
+  "output_sha256": "b306d0986b8fc827f6a4240996df64eb35dde981b6ff7add42183943e8c5e3ff"
+}
