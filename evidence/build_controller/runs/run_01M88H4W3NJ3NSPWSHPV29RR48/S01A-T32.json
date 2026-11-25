@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T32",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T32_no_unauthenticated_protected_execution"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T05:01:08.363Z",
+  "finished_at": "2026-11-25T05:01:11.365Z",
+  "duration_s": 3.002,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.13s\n",
+  "stderr": "",
+  "output_sha256": "7ab7a543c204ec294715d36d0c28152a9a30fdc7256dfeaf99743c6ef1165418"
+}

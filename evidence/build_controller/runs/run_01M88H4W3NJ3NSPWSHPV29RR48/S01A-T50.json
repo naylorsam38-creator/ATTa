@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T50",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T50_automatic_controller_startup_and_capability_registration"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T05:04:25.336Z",
+  "finished_at": "2026-11-25T05:04:32.559Z",
+  "duration_s": 7.223,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 6.20s\n",
+  "stderr": "",
+  "output_sha256": "25c9550294d8eb034c5a93b6076745952cea33cb9c43727f1605045c1a0f2c41"
+}

@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T48",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T48_existing_stage01_acceptance_tests"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T05:04:50.477Z",
+  "finished_at": "2026-11-25T05:06:03.508Z",
+  "duration_s": 73.032,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 71.97s (0:01:11)\n",
+  "stderr": "",
+  "output_sha256": "a7ecf2214cfa48928efc3497430793cc8051e85fdb5fe0e6b9c0215564691205"
+}

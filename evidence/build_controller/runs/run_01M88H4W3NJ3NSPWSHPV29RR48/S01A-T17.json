@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T17",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T17_reject_malformed_proposals"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T05:00:42.124Z",
+  "finished_at": "2026-11-25T05:00:45.646Z",
+  "duration_s": 3.521,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.58s\n",
+  "stderr": "",
+  "output_sha256": "43649647366e871cf3cfb8f0b40a1c2f81d30658e565128da52d98486398a2c6"
+}

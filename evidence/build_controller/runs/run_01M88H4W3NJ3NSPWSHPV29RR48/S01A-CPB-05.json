@@ -1,0 +1,22 @@
+{
+  "test_id": "S01A-CPB-05",
+  "command": [
+    "npx",
+    "--no-install",
+    "playwright",
+    "test",
+    "-c",
+    "tests/end_to_end/playwright.config.ts"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T05:09:42.047Z",
+  "finished_at": "2026-11-25T05:09:49.334Z",
+  "duration_s": 7.287,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": "\nRunning 2 tests using 1 worker\n\n  \u2713  1 tests/end_to_end/status.spec.ts:3:5 \u203a web status page shows live readiness from the real backend (410ms)\n  \u2713  2 tests/end_to_end/status.spec.ts:16:5 \u203a protected API operations are denied by default (17ms)\n\n  2 passed (6.5s)\n",
+  "stderr": "",
+  "output_sha256": "91a1d9989cbab2fab420b514076b34c04c450e1d933f7b9d354b67297a4bf466"
+}

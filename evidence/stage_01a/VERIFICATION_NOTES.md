@@ -16,3 +16,11 @@
   to subvert a test process. Independent review of implementation changes remains required.
 * Not covered: Windows `.bat` execution, Windows process-tree control, network isolation of handlers, Docker,
   Terraform validate, native mobile builds (BLOCKERS).
+
+## Gate history (append-only ledger)
+
+* `run_01M88GJKMJR17ATCGEZQ6JDW8X` — **FAILED**: S01A-T48 failed because the gate leaked `ATTA_BUILD_SIGNING_KEY_FILE`
+  into test subprocesses (S01-T12's temporary repositories were signed without a matching public key and correctly
+  refused). CHECKPOINT-B was BLOCKED and no checkpoint was written — the controller prevented progression.
+  Fixed in `5662dd2` (runner scrubs `ATTA_BUILD_*` from test environments); seal re-signed.
+* `run_01M88H4W3NJ3NSPWSHPV29RR48` — **PASSED** (this report).

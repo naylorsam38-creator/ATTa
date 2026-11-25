@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T37",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T37_repair_stops_when_budget_exhausted"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T05:03:51.596Z",
+  "finished_at": "2026-11-25T05:04:06.388Z",
+  "duration_s": 14.792,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 13.72s\n",
+  "stderr": "",
+  "output_sha256": "4f5981a4c505c5160c11b30767abc6a3c47671a2182e6578ff2a08b4d89aeff1"
+}

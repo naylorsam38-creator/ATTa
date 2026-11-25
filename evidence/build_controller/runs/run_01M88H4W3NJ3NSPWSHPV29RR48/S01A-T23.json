@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T23",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance.py::test_S01A_T23_detect_repeated_unsuccessful_patterns"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T05:00:59.147Z",
+  "finished_at": "2026-11-25T05:01:05.354Z",
+  "duration_s": 6.207,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 5.32s\n",
+  "stderr": "",
+  "output_sha256": "208f3a213ba687b2b5492aa6626f23bdadcd5516d646c57617595fc34db7b0aa"
+}

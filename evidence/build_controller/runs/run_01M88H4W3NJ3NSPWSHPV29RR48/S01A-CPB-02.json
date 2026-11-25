@@ -1,0 +1,20 @@
+{
+  "test_id": "S01A-CPB-02",
+  "command": [
+    "npx",
+    "--no-install",
+    "vitest",
+    "run"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T05:09:32.260Z",
+  "finished_at": "2026-11-25T05:09:33.552Z",
+  "duration_s": 1.292,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": "\n RUN  v4.1.12 /home/user/ATTa\n\n\n Test Files  6 passed (6)\n      Tests  23 passed (23)\n   Start at  05:09:32\n   Duration  549ms (transform 183ms, setup 0ms, import 423ms, tests 113ms, environment 1ms)\n\n",
+  "stderr": "",
+  "output_sha256": "08432fd74a3d5fbf5ecb29ea252ae220d997558f590bc088fdf1c0b94de2e039"
+}

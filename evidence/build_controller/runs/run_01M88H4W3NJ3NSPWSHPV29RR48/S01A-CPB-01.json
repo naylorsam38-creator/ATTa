@@ -1,0 +1,25 @@
+{
+  "test_id": "S01A-CPB-01",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py",
+    "-k",
+    "not T48 and not T49"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T05:07:36.019Z",
+  "finished_at": "2026-11-25T05:09:32.258Z",
+  "duration_s": 116.239,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": "........................                                                 [100%]\n24 passed, 2 deselected in 115.11s (0:01:55)\n",
+  "stderr": "",
+  "output_sha256": "f9deaf75ade3e7101c18b6b0f41cd88f2d8eccdaa29e85b43d5db0f129fa5e43"
+}

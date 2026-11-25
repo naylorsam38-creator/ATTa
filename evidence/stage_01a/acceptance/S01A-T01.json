@@ -4,13 +4,13 @@
       "version": 1,
       "approval_status": "draft",
       "approved_by": null,
-      "contract_hash": "aad6a2ba1e3b319c88814c0fb270cc2dc34026b7a8121f8cc1d93783a5fc9dcb"
+      "contract_hash": "cff24338dc820803a8343bc1322c97ce68ebdb8fe193870756ff93afdfc0bc1d"
     },
     {
       "version": 2,
       "approval_status": "approved",
       "approved_by": "test-operator",
-      "contract_hash": "9c706743011cfbc736e2ea85fe66d955299ed350805148f2538cb3c12dd83a4e"
+      "contract_hash": "d937ce174f986c25cb60a886fa329a899927769478b58b86425ab46a65984e9e"
     }
   ]
 }

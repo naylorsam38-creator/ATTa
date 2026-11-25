@@ -1,0 +1,19 @@
+{
+  "test_id": "S01A-CPB-04",
+  "command": [
+    "npm",
+    "run",
+    "build:web"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T05:09:37.938Z",
+  "finished_at": "2026-11-25T05:09:42.045Z",
+  "duration_s": 4.107,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": "\n> atta-platform@0.1.0 build:web\n> npm run build --workspace apps/web\n\n\n> @atta/web@0.1.0 build\n> next build\n\n\u25b2 Next.js 16.4.6 (Turbopack)\n\u2713 Running next.config.ts took 68ms\n\n  Creating an optimized production build ...\n\u2713 Compiled successfully in 245ms\n  Running TypeScript ...\n  Finished TypeScript in 1737ms ...\n  Collecting page data using 3 workers ...\n  Generating static pages using 3 workers (0/2) ...\n\u2713 Generating static pages using 3 workers (2/2) in 155ms\n  Finalizing page optimization ...\n\nRoute (app)\n\u250c \u0192 /\n\u2514 \u25cb /_not-found\n\n\n\u25cb  (Static)   prerendered as static content\n\u0192  (Dynamic)  server-rendered on demand\n\n",
+  "stderr": "",
+  "output_sha256": "4b944c8f5bd0a2ef70b43f6b50bf99880f19067e29ddffc0ddf20f85193b53c3"
+}

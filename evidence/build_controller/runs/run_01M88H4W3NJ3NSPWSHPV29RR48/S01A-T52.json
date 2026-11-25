@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T52",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T52_conflicting_resource_modifications_prevented"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T05:00:32.037Z",
+  "finished_at": "2026-11-25T05:00:35.948Z",
+  "duration_s": 3.911,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 3.05s\n",
+  "stderr": "",
+  "output_sha256": "0069a6ef2723a7c9142193c3c9f396c85ac1de4d021de96fac8efcc3d4c55518"
+}

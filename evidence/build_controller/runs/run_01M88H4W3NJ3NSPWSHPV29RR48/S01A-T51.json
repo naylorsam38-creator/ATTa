@@ -1,0 +1,23 @@
+{
+  "test_id": "S01A-T51",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T51_worker_cannot_alter_protected_verification_criteria"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T05:04:48.606Z",
+  "finished_at": "2026-11-25T05:04:50.475Z",
+  "duration_s": 1.869,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 0.87s\n",
+  "stderr": "",
+  "output_sha256": "3ed8564787755bbdc892fed9188d9d0587859a4e3d2afcca79655101902c67ed"
+}

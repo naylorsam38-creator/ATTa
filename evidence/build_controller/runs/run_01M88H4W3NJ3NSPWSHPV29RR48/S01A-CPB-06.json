@@ -1,0 +1,21 @@
+{
+  "test_id": "S01A-CPB-06",
+  "command": [
+    "npm",
+    "--prefix",
+    "apps/mobile",
+    "run",
+    "typecheck"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T05:09:49.337Z",
+  "finished_at": "2026-11-25T05:09:50.469Z",
+  "duration_s": 1.132,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": "\n> atta-mobile@0.1.0 typecheck\n> tsc --noEmit -p tsconfig.json\n\n",
+  "stderr": "",
+  "output_sha256": "604c7e3d5ff7db40d67620d72016b423a52948cef9a837e98aefcc6ad977553c"
+}
