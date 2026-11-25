@@ -218,7 +218,7 @@ def run_suite(suite: str, *, manifest: dict, profile: str, out_root: Path, bundl
         return json.loads((ws / "results.json").read_text())
     ctx = {"bundle": bundle, "workspace": str(ws)}
     pg = None
-    env = {k: v for k, v in os.environ.items() if not k.startswith(("ATTA__", "ATTA_BUILD_"))}
+    env = {k: v for k, v in os.environ.items() if not k.startswith(("ATTA__", "ATTA_BUILD_", "ATTA_ISOLATION_FILE"))}
     netaudit = ws / "network_audit.jsonl"
     env.update({"ATTA_ENV": "test", "ATTA_PROFILE": "TEST_ISOLATED", "ATTA_DEPLOYMENT_DIR": str(ws / "deployment"),
                 "ATTA_NET_AUDIT_LOG": str(netaudit), "NEXT_TELEMETRY_DISABLED": "1",
@@ -234,7 +234,8 @@ def run_suite(suite: str, *, manifest: dict, profile: str, out_root: Path, bundl
                 # global/system git configuration (signing programs, hooks, credential helpers, network services).
                 "GIT_CONFIG_GLOBAL": str(ws / "gitconfig"), "GIT_CONFIG_NOSYSTEM": "1"})
     (ws / "gitconfig").write_text("[user]\n\tname = ATTa qualification\n\temail = qualification@localhost\n"
-                                  "[commit]\n\tgpgsign = false\n[tag]\n\tgpgsign = false\n")
+                                  "[commit]\n\tgpgsign = false\n[tag]\n\tgpgsign = false\n"
+                                  "[safe]\n\tdirectory = *\n")        # this run's own copies, whichever identity
     try:
         if not isolation.pg_bin("initdb"):
             raise isolation.IsolationUnavailable("PostgreSQL server binaries not found")

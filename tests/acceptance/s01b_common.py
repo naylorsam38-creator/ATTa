@@ -27,7 +27,7 @@ def record(test_id: str, data) -> None:
 def clean_env(**extra: str) -> dict[str, str]:
     """Process environment without inherited ATTa overrides or verifier configuration."""
     env = {k: v for k, v in os.environ.items() if not k.startswith(("ATTA__", "ATTA_BUILD_", "ATTA_DEPLOYMENT_DIR",
-                                                                     "ATTA_PROFILE"))}
+                                                                     "ATTA_PROFILE", "ATTA_ISOLATION_FILE"))}
     env.update({"ATTA_ENV": "test", "PYTHONPATH": str(ROOT)})
     env.update(extra)
     return env

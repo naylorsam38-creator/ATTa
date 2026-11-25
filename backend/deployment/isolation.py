@@ -117,8 +117,10 @@ class DisposablePostgres:
                 "ATTA_DATABASE_PASSWORD": self.app_pw, "ATTA_DATABASE_MIGRATION_PASSWORD": self.migration_pw}
 
     def migrate(self, extra_env: dict) -> None:
+        # a disposable cluster is its own isolation context: an inherited outer overlay must not redirect it
+        base = {k: v for k, v in {**os.environ, **extra_env}.items() if k != "ATTA_ISOLATION_FILE"}
         r = subprocess.run([sys.executable, "-m", "backend.database", "migrate"], cwd=REPO_ROOT, capture_output=True,
-                           text=True, timeout=300, env={**os.environ, **extra_env, **self.env()})
+                           text=True, timeout=300, env={**base, **self.env()})
         if r.returncode != 0:
             raise IsolationUnavailable(f"migrations failed in the disposable cluster: {r.stdout[-400:]} {r.stderr[-800:]}")
 
