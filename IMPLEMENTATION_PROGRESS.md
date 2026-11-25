@@ -2,8 +2,8 @@
 
 | Stage | Title | Status | Gate evidence |
 |---|---|---|---|
-| **S01** | Architecture and build infrastructure | **Gate recorded — see STAGE_01_VERIFICATION.md** | `evidence/build_controller/ledger.jsonl` |
-| S02 | Authentication, authorisation, accounts, approvals | NOT STARTED (controller refuses until the S01 gate passed) | — |
+| **S01** | Architecture and build infrastructure | **GATE PASSED** 2026-11-25 (run `run_01M88CEBEHP90WASN470WNT557`, 9/9 tasks, 25/25 tests); verified checkpoint `checkpoint-S01-70WNT557` at `fa406b3` | STAGE_01_VERIFICATION.md, `evidence/build_controller/` |
+| S02 | Authentication, authorisation, accounts, approvals | NOT STARTED — not to be started in this stage | — |
 | S03 – S20 | see `configuration/build/roadmap.yaml` | NOT STARTED | — |
 
 **The application is not production-ready.** Stage 01 delivers infrastructure only; 0 of 40 capabilities are

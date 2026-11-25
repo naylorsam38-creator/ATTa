@@ -1,0 +1,60 @@
+{
+  "public": {
+    "/v1/health/live": 200,
+    "/v1/health/ready": 200,
+    "/v1/system/version": 200
+  },
+  "protected": {
+    "GET /v1/capabilities []": 403,
+    "POST /v1/capabilities/test.sidefx/executions []": 403,
+    "POST /v1/capabilities/ops.system_status/executions []": 403,
+    "GET /v1/capabilities ['Authorization']": 403,
+    "POST /v1/capabilities/test.sidefx/executions ['Authorization']": 403,
+    "POST /v1/capabilities/ops.system_status/executions ['Authorization']": 403,
+    "GET /v1/capabilities ['X-Atta-Permissions']": 403,
+    "POST /v1/capabilities/test.sidefx/executions ['X-Atta-Permissions']": 403,
+    "POST /v1/capabilities/ops.system_status/executions ['X-Atta-Permissions']": 403
+  },
+  "audit_tail": [
+    {
+      "decision": "deny",
+      "reason": "grant 'capability.execute' refused: agent principals may never grant permissions",
+      "operation": "policy.grant",
+      "resource": "p1",
+      "principal_id": "p1",
+      "decided_at": "2026-11-25T03:37:40.510Z"
+    },
+    {
+      "decision": "deny",
+      "reason": "grant 'capability.execute' refused: capability principals may never grant permissions",
+      "operation": "policy.grant",
+      "resource": "p1",
+      "principal_id": "p1",
+      "decided_at": "2026-11-25T03:37:40.510Z"
+    },
+    {
+      "decision": "deny",
+      "reason": "grant 'capability.execute' refused: worker principals may never grant permissions",
+      "operation": "policy.grant",
+      "resource": "p1",
+      "principal_id": "p1",
+      "decided_at": "2026-11-25T03:37:40.510Z"
+    },
+    {
+      "decision": "deny",
+      "reason": "grant 'capability.execute' refused: principals may not grant permissions to themselves",
+      "operation": "policy.grant",
+      "resource": "p1",
+      "principal_id": "p1",
+      "decided_at": "2026-11-25T03:37:40.510Z"
+    },
+    {
+      "decision": "deny",
+      "reason": "grant 'x' refused: no authorisation authority exists before Stage 02",
+      "operation": "policy.grant",
+      "resource": "u2",
+      "principal_id": "admin",
+      "decided_at": "2026-11-25T03:37:40.510Z"
+    }
+  ]
+}

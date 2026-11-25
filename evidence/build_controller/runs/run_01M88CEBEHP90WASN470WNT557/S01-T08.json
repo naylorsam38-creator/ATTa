@@ -1,0 +1,23 @@
+{
+  "test_id": "S01-T08",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01_acceptance.py::test_S01_T08_reject_duplicate_capability_identifiers"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T03:37:38.351Z",
+  "finished_at": "2026-11-25T03:37:39.437Z",
+  "duration_s": 1.086,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 0.21s\n",
+  "stderr": "",
+  "output_sha256": "ba505d63b0048d7408ec41519a89a3d55ccfe8d46605b2a18af66b38aa60e0bf"
+}

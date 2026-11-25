@@ -1,0 +1,16 @@
+{
+  "start_hashes": {
+    "START.bat": "0f389d1e87c3b56ef754b17d8ad8d7c014f9cffe55efc143cd8ffc9056dd63e1",
+    "start.sh": "33f27ea1f5a14b223d1425b9975ae8fe7f560856111ed1a45c6e13ca5200ad76"
+  },
+  "registered": {
+    "id": "text.word_count",
+    "version": "0.1.0",
+    "state": "available",
+    "executable": true,
+    "source": "/tmp/pytest-of-root/pytest-17/test_S01_T09_new_capability_re0/installed/text_word_count/capability.yaml",
+    "requirement": "CAP-40",
+    "risk": "low",
+    "problems": []
+  }
+}

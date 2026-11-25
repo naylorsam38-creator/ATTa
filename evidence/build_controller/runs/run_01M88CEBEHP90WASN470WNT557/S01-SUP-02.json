@@ -1,0 +1,20 @@
+{
+  "test_id": "S01-SUP-02",
+  "command": [
+    "npx",
+    "--no-install",
+    "vitest",
+    "run"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T03:38:16.600Z",
+  "finished_at": "2026-11-25T03:38:17.615Z",
+  "duration_s": 1.015,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": "\n RUN  v4.1.12 /home/user/ATTa\n\n\n Test Files  6 passed (6)\n      Tests  22 passed (22)\n   Start at  03:38:17\n   Duration  482ms (transform 181ms, setup 0ms, import 375ms, tests 83ms, environment 1ms)\n\n",
+  "stderr": "",
+  "output_sha256": "f2c5c3e09bdf2854a139a38eb0ab790ff092d853eb9fb716930ef9933c982a28"
+}

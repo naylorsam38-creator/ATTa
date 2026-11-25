@@ -1,0 +1,25 @@
+{
+  "test_id": "S01-SUP-01",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/unit",
+    "tests/integration",
+    "tests/security"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T03:37:28.768Z",
+  "finished_at": "2026-11-25T03:37:35.622Z",
+  "duration_s": 6.854,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".................................                                        [100%]\n33 passed in 5.83s\n",
+  "stderr": "",
+  "output_sha256": "a17d0022239aa30fd5bca97da666ac2d716ce1dfd8f7499b963413e938863e52"
+}

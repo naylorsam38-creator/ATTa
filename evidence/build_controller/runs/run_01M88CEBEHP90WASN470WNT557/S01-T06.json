@@ -1,0 +1,23 @@
+{
+  "test_id": "S01-T06",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01_acceptance.py::test_S01_T06_discover_valid_capability_manifest"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T03:37:35.626Z",
+  "finished_at": "2026-11-25T03:37:36.593Z",
+  "duration_s": 0.967,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 0.14s\n",
+  "stderr": "",
+  "output_sha256": "275d9d855db044e072a0b499a7375038afb0a6223d08545d356258d163a46047"
+}

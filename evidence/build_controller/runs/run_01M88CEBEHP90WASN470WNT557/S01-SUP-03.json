@@ -1,0 +1,19 @@
+{
+  "test_id": "S01-SUP-03",
+  "command": [
+    "npm",
+    "run",
+    "typecheck"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T03:38:17.616Z",
+  "finished_at": "2026-11-25T03:38:20.948Z",
+  "duration_s": 3.332,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": "\n> atta-platform@0.1.0 typecheck\n> tsc -p tsconfig.json --noEmit && npm run typecheck --workspace apps/web && npm run typecheck --workspace apps/desktop\n\n\n> @atta/web@0.1.0 typecheck\n> tsc --noEmit -p tsconfig.json\n\n\n> @atta/desktop@0.1.0 typecheck\n> tsc --noEmit -p tsconfig.json\n\n",
+  "stderr": "",
+  "output_sha256": "fd61ff4de7d8981bff05eefb8d1153325b911ed435abf65fcbcba08867295852"
+}

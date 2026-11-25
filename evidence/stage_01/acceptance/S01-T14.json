@@ -1,0 +1,22 @@
+{
+  "cycles": [
+    {
+      "start_state": "degraded",
+      "pids": [
+        18196,
+        18200,
+        18205
+      ],
+      "stop": "stopped cleanly"
+    },
+    {
+      "start_state": "degraded",
+      "pids": [
+        18224,
+        18229,
+        18234
+      ],
+      "stop": "stopped cleanly"
+    }
+  ]
+}

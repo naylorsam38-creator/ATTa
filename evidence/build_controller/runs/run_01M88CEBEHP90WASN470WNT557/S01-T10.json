@@ -1,0 +1,23 @@
+{
+  "test_id": "S01-T10",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01_acceptance.py::test_S01_T10_detect_unavailable_dependency"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T03:37:50.025Z",
+  "finished_at": "2026-11-25T03:37:51.664Z",
+  "duration_s": 1.639,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 0.55s\n",
+  "stderr": "",
+  "output_sha256": "930671af81d03620eb9063e4b7cf2942a80cfcb2a4dbcfaf3405471b443ba931"
+}

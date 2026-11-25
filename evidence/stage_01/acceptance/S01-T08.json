@@ -1,0 +1,38 @@
+{
+  "report": [
+    {
+      "id": "test.dup",
+      "version": null,
+      "state": "rejected_duplicate",
+      "executable": false,
+      "source": "/tmp/pytest-of-root/pytest-15/test_S01_T08_reject_duplicate_0/dirA/echo_one/capability.yaml",
+      "requirement": null,
+      "risk": null,
+      "problems": [
+        "duplicate capability id 'test.dup' in: /tmp/pytest-of-root/pytest-15/test_S01_T08_reject_duplicate_0/dirA/echo_one/capability.yaml, /tmp/pytest-of-root/pytest-15/test_S01_T08_reject_duplicate_0/dirB/echo_two/capability.yaml"
+      ]
+    },
+    {
+      "id": "test.dup",
+      "version": null,
+      "state": "rejected_duplicate",
+      "executable": false,
+      "source": "/tmp/pytest-of-root/pytest-15/test_S01_T08_reject_duplicate_0/dirB/echo_two/capability.yaml",
+      "requirement": null,
+      "risk": null,
+      "problems": [
+        "duplicate capability id 'test.dup' in: /tmp/pytest-of-root/pytest-15/test_S01_T08_reject_duplicate_0/dirA/echo_one/capability.yaml, /tmp/pytest-of-root/pytest-15/test_S01_T08_reject_duplicate_0/dirB/echo_two/capability.yaml"
+      ]
+    },
+    {
+      "id": "test.unique",
+      "version": "1.0.0",
+      "state": "available",
+      "executable": true,
+      "source": "/tmp/pytest-of-root/pytest-15/test_S01_T08_reject_duplicate_0/dirA/other/capability.yaml",
+      "requirement": "CAP-40",
+      "risk": "low",
+      "problems": []
+    }
+  ]
+}

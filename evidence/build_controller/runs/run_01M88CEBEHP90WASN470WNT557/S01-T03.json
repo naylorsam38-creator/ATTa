@@ -1,0 +1,23 @@
+{
+  "test_id": "S01-T03",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01_acceptance.py::test_S01_T03_start_service_manager"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T03:37:40.842Z",
+  "finished_at": "2026-11-25T03:37:45.896Z",
+  "duration_s": 5.053,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 4.21s\n",
+  "stderr": "",
+  "output_sha256": "8ede46295b68bf208aba616256af20d839cbff006cd47aa70e20772988bf8ee8"
+}

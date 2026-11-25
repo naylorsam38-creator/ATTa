@@ -1,0 +1,23 @@
+{
+  "test_id": "S01-T02",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01_acceptance.py::test_S01_T02_clean_environment_install"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T03:37:00.576Z",
+  "finished_at": "2026-11-25T03:37:18.958Z",
+  "duration_s": 18.382,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 17.57s\n",
+  "stderr": "",
+  "output_sha256": "f645130500a78824d94845f070803c119b3bc065680652d334756ed2b995cb18"
+}

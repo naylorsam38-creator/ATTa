@@ -1,0 +1,7 @@
+{
+  "failing_stage": "TASK-A         FAILED\n    T-A        FAIL exit=1 0.027s  evidence/build_controller/runs/run_01M88CGMG6AHZ17R6TVMTGGRE6/T-A.json\n    ! acceptance test T-A failed (exit 1)\nTASK-B         BLOCKED\n    ! dependency TASK-A is FAILED\nSTAGE S01 GATE: FAILED  run=run_01M88CGMG6AHZ17R6TVMTGGRE6\n",
+  "tamper_refusal": "BUILD CONTROLLER REFUSED: refusing to verify stage:\n  - integrity: protected file modified: configuration/build/stages/S01.yaml\n",
+  "ledger_tamper": "ledger record 1 hash mismatch (edited)\nledger record 3 hash mismatch (edited)\n",
+  "unauthorised": "TASK-A         PASSED\n    T-A        PASS exit=0 0.037s  evidence/build_controller/runs/run_01M88CGPNSWSZR60XK9M328RBQ/T-A.json\nTASK-B         PASSED\n    T-B        PASS exit=0 0.026s  evidence/build_controller/runs/run_01M88CGPNSWSZR60XK9M328RBQ/T-B.json\n  ! protected path changed (M): README\n  ! unauthorised change (A?): rogue.txt\nSTAGE S01 GATE: FAILED  run=run_01M88CGPNSWSZR60XK9M328RBQ\n",
+  "passing_control": "TASK-A         PASSED\n    T-A        PASS exit=0 0.031s  evidence/build_controller/runs/run_01M88CGQ9C5YTR7Z6P9CXG44AM/T-A.json\nTASK-B         PASSED\n    T-B        PASS exit=0 0.028s  evidence/build_controller/runs/run_01M88CGQ9C5YTR7Z6P9CXG44AM/T-B.json\nSTAGE S01 GATE: PASSED  run=run_01M88CGQ9C5YTR7Z6P9CXG44AM\ncheckpoint: {\"stage\": \"S01\", \"status\": \"DEFERRED\", \"reason\": \"working tree has uncommitted changes; commit and re-run verify-stage so the checkpoint names exactly the verified code\"}\n"
+}

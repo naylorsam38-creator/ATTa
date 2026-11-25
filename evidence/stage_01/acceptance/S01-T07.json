@@ -1,0 +1,145 @@
+{
+  "report": [
+    {
+      "id": "BadId",
+      "version": null,
+      "state": "invalid",
+      "executable": false,
+      "source": "/tmp/pytest-of-root/pytest-14/test_S01_T07_reject_invalid_ca0/bad_id/capability.yaml",
+      "requirement": null,
+      "risk": null,
+      "problems": [
+        "id: 'BadId' does not match '^[a-z][a-z0-9_]*(\\\\.[a-z][a-z0-9_]*)+$'"
+      ]
+    },
+    {
+      "id": "test.arity",
+      "version": null,
+      "state": "invalid",
+      "executable": false,
+      "source": "/tmp/pytest-of-root/pytest-14/test_S01_T07_reject_invalid_ca0/wrong_arity/capability.yaml",
+      "requirement": null,
+      "risk": null,
+      "problems": [
+        "execute handler 'handler:execute' must accept exactly 2 positional argument(s)"
+      ]
+    },
+    {
+      "id": "test.badschema",
+      "version": null,
+      "state": "invalid",
+      "executable": false,
+      "source": "/tmp/pytest-of-root/pytest-14/test_S01_T07_reject_invalid_ca0/bad_input_schema/capability.yaml",
+      "requirement": null,
+      "risk": null,
+      "problems": [
+        "input_schema is not a valid JSON Schema: 'notatype' is not valid under any of the given schemas"
+      ]
+    },
+    {
+      "id": "test.badver",
+      "version": null,
+      "state": "invalid",
+      "executable": false,
+      "source": "/tmp/pytest-of-root/pytest-14/test_S01_T07_reject_invalid_ca0/bad_version/capability.yaml",
+      "requirement": null,
+      "risk": null,
+      "problems": [
+        "version: 'one' does not match '^(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)(-[0-9A-Za-z.-]+)?$'"
+      ]
+    },
+    {
+      "id": "test.good",
+      "version": "1.0.0",
+      "state": "available",
+      "executable": true,
+      "source": "/tmp/pytest-of-root/pytest-14/test_S01_T07_reject_invalid_ca0/good/capability.yaml",
+      "requirement": "CAP-40",
+      "risk": "low",
+      "problems": []
+    },
+    {
+      "id": "test.importerr",
+      "version": null,
+      "state": "invalid",
+      "executable": false,
+      "source": "/tmp/pytest-of-root/pytest-14/test_S01_T07_reject_invalid_ca0/import_error/capability.yaml",
+      "requirement": null,
+      "risk": null,
+      "problems": [
+        "execute handler 'handler:execute' failed to import: RuntimeError: boom at import",
+        "healthcheck handler 'handler:healthcheck' failed to import: RuntimeError: boom at import",
+        "verify handler 'handler:verify' failed to import: RuntimeError: boom at import"
+      ]
+    },
+    {
+      "id": "test.missing",
+      "version": null,
+      "state": "invalid",
+      "executable": false,
+      "source": "/tmp/pytest-of-root/pytest-14/test_S01_T07_reject_invalid_ca0/missing_fields/capability.yaml",
+      "requirement": null,
+      "risk": null,
+      "problems": [
+        "<root>: 'description' is a required property",
+        "<root>: 'handlers' is a required property",
+        "<root>: 'input_schema' is a required property",
+        "<root>: 'output_schema' is a required property",
+        "<root>: 'permissions' is a required property",
+        "<root>: 'risk' is a required property",
+        "<root>: 'dependencies' is a required property",
+        "<root>: 'timeout_s' is a required property",
+        "<root>: 'enabled' is a required property"
+      ]
+    },
+    {
+      "id": "test.nomodule",
+      "version": null,
+      "state": "invalid",
+      "executable": false,
+      "source": "/tmp/pytest-of-root/pytest-14/test_S01_T07_reject_invalid_ca0/missing_module/capability.yaml",
+      "requirement": null,
+      "risk": null,
+      "problems": [
+        "execute handler 'nowhere:execute' failed to import: ImportError: handler module 'nowhere' not found inside missing_module/"
+      ]
+    },
+    {
+      "id": "test.notcallable",
+      "version": null,
+      "state": "invalid",
+      "executable": false,
+      "source": "/tmp/pytest-of-root/pytest-14/test_S01_T07_reject_invalid_ca0/not_callable/capability.yaml",
+      "requirement": null,
+      "risk": null,
+      "problems": [
+        "execute handler 'handler:execute' is not a callable"
+      ]
+    },
+    {
+      "id": "test.timeout",
+      "version": null,
+      "state": "invalid",
+      "executable": false,
+      "source": "/tmp/pytest-of-root/pytest-14/test_S01_T07_reject_invalid_ca0/excessive_timeout/capability.yaml",
+      "requirement": null,
+      "risk": null,
+      "problems": [
+        "timeout_s: 99999 is greater than the maximum of 3600",
+        "timeout_s 99999 exceeds the configured maximum 900"
+      ]
+    },
+    {
+      "id": "test.unhealthy",
+      "version": "1.0.0",
+      "state": "unhealthy",
+      "executable": false,
+      "source": "/tmp/pytest-of-root/pytest-14/test_S01_T07_reject_invalid_ca0/unhealthy/capability.yaml",
+      "requirement": "CAP-40",
+      "risk": "low",
+      "problems": [
+        "healthcheck reported unhealthy: {'healthy': False, 'why': 'disk'}"
+      ]
+    }
+  ]
+}

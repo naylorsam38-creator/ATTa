@@ -1,0 +1,23 @@
+{
+  "test_id": "S01-T04",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01_acceptance.py::test_S01_T04_backend_liveness"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T03:37:18.962Z",
+  "finished_at": "2026-11-25T03:37:23.406Z",
+  "duration_s": 4.444,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 3.59s\n",
+  "stderr": "",
+  "output_sha256": "9495eef7b26164e4f95cbcdca1ee23a850d7e302d82da36bced9703911ba6052"
+}

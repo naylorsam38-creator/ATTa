@@ -1,0 +1,92 @@
+{
+  "healthy": {
+    "ready": true,
+    "status": "degraded",
+    "environment": "test",
+    "dependencies": [
+      {
+        "name": "postgres",
+        "essential": true,
+        "status": "healthy",
+        "latency_ms": 12.29,
+        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0",
+        "checked_at": "2026-11-25T03:37:26.399463Z"
+      },
+      {
+        "name": "redis",
+        "essential": true,
+        "status": "healthy",
+        "latency_ms": 3.12,
+        "detail": "Redis 7.0.15 at 127.0.0.1:33255",
+        "checked_at": "2026-11-25T03:37:26.390998Z"
+      },
+      {
+        "name": "object_storage",
+        "essential": false,
+        "status": "unhealthy",
+        "latency_ms": 0.02,
+        "detail": "RuntimeError: object storage credentials not configured (ATTA_S3_ACCESS_KEY_ID / ATTA_S3_SECRET_ACCESS_KEY)",
+        "checked_at": "2026-11-25T03:37:26.388315Z"
+      },
+      {
+        "name": "temporal",
+        "essential": false,
+        "status": "unhealthy",
+        "latency_ms": 1.66,
+        "detail": "ConnectionRefusedError: [Errno 111] Connection refused",
+        "checked_at": "2026-11-25T03:37:26.390118Z"
+      }
+    ],
+    "capabilities": {
+      "available": 1
+    },
+    "reasons": [],
+    "checked_at": "2026-11-25T03:37:26.399978Z"
+  },
+  "redis_down": {
+    "ready": false,
+    "status": "unhealthy",
+    "environment": "test",
+    "dependencies": [
+      {
+        "name": "postgres",
+        "essential": true,
+        "status": "healthy",
+        "latency_ms": 12.89,
+        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0",
+        "checked_at": "2026-11-25T03:37:28.393461Z"
+      },
+      {
+        "name": "redis",
+        "essential": true,
+        "status": "unhealthy",
+        "latency_ms": 2.47,
+        "detail": "ConnectionError: Error 111 connecting to 127.0.0.1:52747. Connection refused.",
+        "checked_at": "2026-11-25T03:37:28.383788Z"
+      },
+      {
+        "name": "object_storage",
+        "essential": false,
+        "status": "unhealthy",
+        "latency_ms": 0.02,
+        "detail": "RuntimeError: object storage credentials not configured (ATTA_S3_ACCESS_KEY_ID / ATTA_S3_SECRET_ACCESS_KEY)",
+        "checked_at": "2026-11-25T03:37:28.381840Z"
+      },
+      {
+        "name": "temporal",
+        "essential": false,
+        "status": "unhealthy",
+        "latency_ms": 1.55,
+        "detail": "ConnectionRefusedError: [Errno 111] Connection refused",
+        "checked_at": "2026-11-25T03:37:28.383604Z"
+      }
+    ],
+    "capabilities": {
+      "available": 1
+    },
+    "reasons": [
+      "essential dependency 'redis' is unhealthy: ConnectionError: Error 111 connecting to 127.0.0.1:52747. Connection refused."
+    ],
+    "checked_at": "2026-11-25T03:37:28.393990Z"
+  }
+}

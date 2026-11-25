@@ -1,0 +1,23 @@
+{
+  "test_id": "S01-T09",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01_acceptance.py::test_S01_T09_new_capability_registers_without_changing_start"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T03:37:45.897Z",
+  "finished_at": "2026-11-25T03:37:50.024Z",
+  "duration_s": 4.127,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 3.27s\n",
+  "stderr": "",
+  "output_sha256": "a359614059c50dff813dbfc7f03cad8a61e54b2c390bc5b6028c0304f9942378"
+}

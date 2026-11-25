@@ -1,0 +1,70 @@
+===== $ ./start.sh   (2026-11-25T03:40:07Z)
+state: degraded  ready: True
+  service postgres        healthy     essential=True pid=None PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0
+  service redis           healthy     essential=True pid=22586 Redis 7.0.15 at 127.0.0.1:6380
+  service object_storage  unhealthy   essential=False pid=None RuntimeError: object storage credentials not configured (ATTA_S3_ACCESS_KEY_ID / ATTA_S3_SECRET_ACCE
+  service temporal        unhealthy   essential=False pid=None ConnectionRefusedError: [Errno 111] Connection refused
+  service api             healthy     essential=True pid=22591 HTTP 200 from http://127.0.0.1:8800/v1/health/live
+  capability ops.system_status              available            
+READY
+===== exit=0
+
+===== $ ./healthcheck.sh   (2026-11-25T03:40:09Z)
+2026-11-25T03:40:10.319Z INFO    atta.capabilities [-] capability ops.system_status: available
+[PASS] python: 3.13.18
+[PASS] binary:git: /usr/bin/git
+[PASS] binary:node: /opt/node22/bin/node
+[PASS] binary:redis-server: /usr/bin/redis-server
+[PASS] service_manager: pid 22583, state degraded
+[PASS] service:postgres: port 5432: PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0
+[PASS] service:redis: port 6380: Redis 7.0.15 at 127.0.0.1:6380
+[WARN] service:object_storage: RuntimeError: object storage credentials not configured (ATTA_S3_ACCESS_KEY_ID / ATTA_S3_SECRET_ACCESS_KEY)
+[WARN] service:temporal: port 7233: ConnectionRefusedError: [Errno 111] Connection refused
+[PASS] service:api: port 8800: HTTP 200 from http://127.0.0.1:8800/v1/health/live
+[PASS] api:/v1/health/live: HTTP 200 {"status": "healthy", "service": "atta-api", "version": "0.1.0", "checked_at": "2026-11-25T03:40:10.284268Z"}
+[PASS] api:/v1/health/ready: HTTP 200 {"ready": true, "status": "degraded", "environment": "development", "dependencies": [{"name": "postgres", "essential": true, "status": "healthy", "latency_ms": 12.68, "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0", "checked_at": "2026-11-25T03:40:10.306366Z"}, {"name": 
+[PASS] capability:ops.system_status: available
+[WARN] model:ollama-local: ConnectError: [Errno 111] Connection refused
+[WARN] model:llamacpp-local: ConnectError: [Errno 111] Connection refused
+HEALTHY
+===== exit=0
+
+===== $ curl -s -i http://127.0.0.1:8800/v1/capabilities   (2026-11-25T03:40:10Z)
+HTTP/1.1 403 Forbidden
+date: Wed, 25 Nov 2026 03:40:09 GMT
+server: uvicorn
+content-length: 263
+content-type: application/json
+vary: Origin
+x-correlation-id: cor_01M88CM6V8FXC0F4PTERRZ787D
+x-request-id: req_01M88CM6V8V093Z5KN8QVD7ZAQ
+x-content-type-options: nosniff
+cache-control: no-store
+
+{"error":{"code":"permission_denied","message":"protected operation denied by default: authentication and authorisation are not available until Stage 02","correlation_id":"cor_01M88CM6V8FXC0F4PTERRZ787D","details":{"operation":"capability.list","resource":null}}}
+===== exit=0
+
+===== $ ./stop.sh   (2026-11-25T03:40:10Z)
+stopped cleanly
+===== exit=0
+
+===== $ ./healthcheck.sh   (2026-11-25T03:40:12Z)
+2026-11-25T03:40:12.892Z INFO    atta.capabilities [-] capability ops.system_status: available
+[PASS] python: 3.13.18
+[PASS] binary:git: /usr/bin/git
+[PASS] binary:node: /opt/node22/bin/node
+[PASS] binary:redis-server: /usr/bin/redis-server
+[FAIL] service_manager: pid None, state stopped
+[PASS] service:postgres: port 5432: PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.6.0
+[FAIL] service:redis: port 6380: ConnectionError: Error 111 connecting to 127.0.0.1:6380. Connection refused.
+[WARN] service:object_storage: RuntimeError: object storage credentials not configured (ATTA_S3_ACCESS_KEY_ID / ATTA_S3_SECRET_ACCESS_KEY)
+[WARN] service:temporal: port 7233: ConnectionRefusedError: [Errno 111] Connection refused
+[FAIL] service:api: port 8800: ConnectError: [Errno 111] Connection refused
+[FAIL] api:/v1/health/live: ConnectError: [Errno 111] Connection refused
+[FAIL] api:/v1/health/ready: ConnectError: [Errno 111] Connection refused
+[PASS] capability:ops.system_status: available
+[WARN] model:ollama-local: ConnectError: [Errno 111] Connection refused
+[WARN] model:llamacpp-local: ConnectError: [Errno 111] Connection refused
+UNHEALTHY
+===== exit=1
+

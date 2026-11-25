@@ -1,0 +1,19 @@
+{
+  "test_id": "S01-SUP-04",
+  "command": [
+    "npm",
+    "run",
+    "build:web"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T03:38:20.949Z",
+  "finished_at": "2026-11-25T03:38:24.799Z",
+  "duration_s": 3.85,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": "\n> atta-platform@0.1.0 build:web\n> npm run build --workspace apps/web\n\n\n> @atta/web@0.1.0 build\n> next build\n\n\u25b2 Next.js 16.4.6 (Turbopack)\n\u2713 Running next.config.ts took 72ms\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n\n  Creating an optimized production build ...\n\u2713 Compiled successfully in 385ms\n  Running TypeScript ...\n  Finished TypeScript in 1504ms ...\n  Collecting page data using 3 workers ...\n  Generating static pages using 3 workers (0/2) ...\n\u2713 Generating static pages using 3 workers (2/2) in 103ms\n  Finalizing page optimization ...\n\nRoute (app)\n\u250c \u0192 /\n\u2514 \u25cb /_not-found\n\n\n\u25cb  (Static)   prerendered as static content\n\u0192  (Dynamic)  server-rendered on demand\n\n",
+  "stderr": "",
+  "output_sha256": "2270f1031fe242d7e38e6d035b9646587e144567adddc2411aef006bf73b51fb"
+}

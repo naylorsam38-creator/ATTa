@@ -1,0 +1,24 @@
+{
+  "availability": [
+    {
+      "id": "ops.system_status",
+      "version": "1.0.0",
+      "state": "available",
+      "executable": true,
+      "source": "/home/user/ATTa/capabilities/ops_system_status/capability.yaml",
+      "requirement": "CAP-40",
+      "risk": "low",
+      "problems": []
+    },
+    {
+      "id": "test.echo",
+      "version": "1.0.0",
+      "state": "available",
+      "executable": true,
+      "source": "/tmp/pytest-of-root/pytest-13/test_S01_T06_discover_valid_ca0/echo/capability.yaml",
+      "requirement": "CAP-40",
+      "risk": "low",
+      "problems": []
+    }
+  ]
+}

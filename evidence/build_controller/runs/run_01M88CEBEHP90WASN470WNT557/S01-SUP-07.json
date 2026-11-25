@@ -1,0 +1,21 @@
+{
+  "test_id": "S01-SUP-07",
+  "command": [
+    "npm",
+    "--prefix",
+    "apps/mobile",
+    "run",
+    "bundle:android"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T03:38:31.501Z",
+  "finished_at": "2026-11-25T03:38:32.516Z",
+  "duration_s": 1.015,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": "\n> atta-mobile@0.1.0 bundle:android\n> react-native bundle --platform android --dev false --entry-file index.js --bundle-output dist/index.android.bundle\n\n\n                        \u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592\n                     \u2592\u2593\u2593\u2593\u2592\u2592\u2591\u2591\u2592\u2592\u2593\u2593\u2593\u2592\n                  \u2592\u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2592\u2592\u2592\u2592\u2591\u2591\u2591\u2593\u2593\u2593\u2593\u2592\n                 \u2593\u2593\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2592\u2592\u2592\u2593\u2593\n                 \u2593\u2593\u2591\u2591\u2591\u2591\u2591\u2592\u2593\u2593\u2593\u2593\u2593\u2593\u2592\u2591\u2591\u2591\u2591\u2591\u2593\u2593\n                 \u2593\u2593\u2591\u2591\u2593\u2593\u2592\u2591\u2591\u2591\u2592\u2592\u2591\u2591\u2591\u2592\u2593\u2592\u2591\u2591\u2593\u2593\n                 \u2593\u2593\u2591\u2591\u2593\u2593\u2593\u2593\u2593\u2592\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2591\u2591\u2593\u2593\n                 \u2593\u2593\u2591\u2591\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2592\u2591\u2591\u2593\u2593\n                 \u2593\u2593\u2592\u2591\u2591\u2592\u2592\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u2592\u2591\u2591\u2591\u2592\u2593\u2593\n                  \u2592\u2593\u2593\u2593\u2592\u2591\u2591\u2591\u2592\u2593\u2593\u2592\u2591\u2591\u2591\u2592\u2593\u2593\u2593\u2592\n                     \u2592\u2593\u2593\u2593\u2592\u2591\u2591\u2591\u2591\u2592\u2593\u2593\u2593\u2592\n                        \u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592\n\n\n                Welcome to Metro v0.87.3\n              Fast - Scalable - Integrated\n\n\nLOG:Writing bundle output to: dist/index.android.bundle\nLOG:Done writing bundle output\n",
+  "stderr": "Warning: Assets destination folder is not set, skipping...\n",
+  "output_sha256": "b1fcc9b781baef1f7ff4e0019114406fa20398a51615a885c716bab3b9f4b0da"
+}

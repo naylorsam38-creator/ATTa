@@ -1,0 +1,23 @@
+{
+  "test_id": "S01-T11",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01_acceptance.py::test_S01_T11_no_false_readiness_after_essential_failure"
+  ],
+  "cwd": "/home/user/ATTa",
+  "started_at": "2026-11-25T03:37:51.666Z",
+  "finished_at": "2026-11-25T03:38:03.932Z",
+  "duration_s": 12.266,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 11.39s\n",
+  "stderr": "",
+  "output_sha256": "1a42e464cf37cff3e4c15b96cf01f4116b49d857a1cb50505bf3d95165666a7a"
+}
