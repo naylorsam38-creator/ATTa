@@ -1,0 +1,12 @@
+# Permission catalog (security configuration — operator-controlled). A tool may only declare permissions listed
+# here. There are no wildcards and no direct grants.
+permissions:
+  ops.system.read: Read host/runtime status (ops.system_status)
+  workspace.read: Read files inside the task's own workspace
+  workspace.write: Create or modify files inside the task's own workspace
+  external.simulated: Record an operation in the local test ledger that stands in for an external system (tests only)
+# Stage 01A: the runtime controller may exercise ONLY these permissions, and only for LOW-risk tools.
+# Stage 02 replaces this with authenticated users, tenant roles and human approvals.
+controller_granted_permissions: [ops.system.read, workspace.read, workspace.write, external.simulated]
+# Risk levels that need a human approval. No approval mechanism exists before Stage 02, so these are DENIED.
+approval_required_risks: [medium, high, critical]

@@ -16,5 +16,6 @@ from .capability import RiskClass, AvailabilityState, CapabilityAvailability
 from .tasks import TaskState, TERMINAL_STATES, ALLOWED_TRANSITIONS, InvalidTransition, assert_transition
 from .events import ExecutionEvent, EventType
 from .evidence import VerificationEvidence, EvidenceOutcome
+from .canonical import canonical_json, canonical_hash
 
 __all__ = [n for n in dir() if not n.startswith("_")]

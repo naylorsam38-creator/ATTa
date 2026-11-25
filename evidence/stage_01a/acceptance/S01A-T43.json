@@ -1,0 +1,12 @@
+{
+  "states": {
+    "test.chained": "dependency_missing",
+    "test.external": "available",
+    "test.malicious": "untrusted",
+    "test.needs_redis": "available",
+    "test.ops": "available",
+    "test.risky": "available",
+    "test.text": "integrity_failed",
+    "test.unhealthy": "unhealthy"
+  }
+}

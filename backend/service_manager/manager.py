@@ -239,8 +239,11 @@ class ServiceManager:
         return rt is not None and rt.status == "healthy"
 
     def discover_capabilities(self) -> list:
+        from backend.capability_registry import TrustStore
         dirs = [resolve_path(d, self.root) for d in self.settings.capabilities.directories]
-        self.registry = CapabilityRegistry(dirs, service_available=self._service_available,
+        trust = TrustStore.load(resolve_path(self.settings.capabilities.trust_store, self.root),
+                                resolve_path(self.settings.capabilities.trust_public_key, self.root))
+        self.registry = CapabilityRegistry(dirs, service_available=self._service_available, trust=trust,
                                            healthcheck_timeout_s=self.settings.capabilities.healthcheck_timeout_s,
                                            max_timeout_s=self.settings.deadlines.max_execution_timeout_s)
         self.capability_report = self.registry.discover()
@@ -304,6 +307,8 @@ class ServiceManager:
                 continue
             if exited or rt.consecutive_failures >= self.FAILURE_THRESHOLD:
                 self._restart(rt)
+        if self.registry is not None:   # correction 3: capabilities follow CURRENT service health
+            self.capability_report = self.registry.refresh_dependencies()
         self._evaluate()
 
     def _restart(self, rt: ServiceRuntime) -> None:

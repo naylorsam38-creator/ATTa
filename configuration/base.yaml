@@ -11,7 +11,8 @@ database:
   host: 127.0.0.1
   port: 5432
   name: atta
-  user: atta
+  user: atta_app          # runtime role (data only); migrations use migration_user
+  migration_user: atta
   sslmode: prefer
   connect_timeout_s: 3
   require_pgvector: true
@@ -40,6 +41,13 @@ models:
 capabilities:
   directories: [capabilities]           # every <dir>/*/capability.yaml is discovered automatically
   healthcheck_timeout_s: 5
+  trust_store: configuration/capability_trust.json        # operator-signed trusted packages
+  trust_public_key: configuration/capability_trust_ed25519.pub
+  tool_numbers: configuration/tool_numbers.yaml          # permanent CCC.TTT tool identifiers
+  catalogue_namespace: default
+  service_health_max_age_s: 5           # capability service dependencies use health no older than this
+  execution_lease_s: 900
+
 
 workers:
   max_concurrency: 4
@@ -104,3 +112,10 @@ services:
     health: {type: http, url: "http://{api.host}:{api.port}/v1/health/live", timeout_s: 2}
     startup_timeout_s: 30
     max_restarts: 3
+  controller:
+    essential: true
+    mode: external          # runs inside the API process; probed through its own readiness endpoint
+    description: "Runtime intelligence controller (Stage 01A); essential - no autonomous execution without it"
+    depends_on: [api]
+    health: {type: http, url: "http://{api.host}:{api.port}/v1/health/controller", timeout_s: 5}
+    startup_timeout_s: 60

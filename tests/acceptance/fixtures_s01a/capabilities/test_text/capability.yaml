@@ -1,0 +1,44 @@
+manifest_version: 1
+id: test.text
+version: 1.0.0
+description: TEST FIXTURE - writes, reads, appends, validates and counts UTF-8 text files inside the task workspace.
+requirement: CAP-14
+handlers: {execute: handler:write_text, healthcheck: handler:healthcheck, verify: handler:verify_write}
+input_schema: {type: object}
+output_schema: {type: object}
+permissions: [workspace.read, workspace.write]
+risk: low
+dependencies: {capabilities: [], services: [], python: []}
+timeout_s: 10
+enabled: true
+tools:
+  - {name: write_text, description: Create or replace a UTF-8 text file in the workspace., task_types: [document.text],
+     operations: [write], handler: "handler:write_text", verify: "handler:verify_write", path_arguments: [path],
+     input_schema: {type: object, additionalProperties: false, required: [path, text], properties: {path: {type: string}, text: {type: string, maxLength: 100000}}},
+     output_schema: {type: object, additionalProperties: false, required: [path, sha256, bytes], properties: {path: {type: string}, sha256: {type: string}, bytes: {type: integer}}},
+     permissions: [workspace.write], risk: low, resource_types: [file], timeout_s: 10, cancellable: true, idempotency: idempotent}
+  - {name: read_text, description: Read a UTF-8 text file from the workspace., task_types: [document.text],
+     operations: [read], handler: "handler:read_text", verify: "handler:verify_any", path_arguments: [path],
+     input_schema: {type: object, additionalProperties: false, required: [path], properties: {path: {type: string}}},
+     output_schema: {type: object, additionalProperties: false, required: [text, sha256], properties: {text: {type: string}, sha256: {type: string}}},
+     permissions: [workspace.read], risk: low, resource_types: [file], timeout_s: 10, cancellable: true, idempotency: idempotent}
+  - {name: append_text, description: Append UTF-8 text to a file in the workspace., task_types: [document.text],
+     operations: [edit], handler: "handler:append_text", verify: "handler:verify_any", path_arguments: [path],
+     input_schema: {type: object, additionalProperties: false, required: [path, text], properties: {path: {type: string}, text: {type: string}}},
+     output_schema: {type: object, additionalProperties: false, required: [path, sha256, bytes], properties: {path: {type: string}, sha256: {type: string}, bytes: {type: integer}}},
+     permissions: [workspace.write], risk: low, resource_types: [file], timeout_s: 10, cancellable: true, idempotency: non_idempotent}
+  - {name: validate_text, description: Report whether a workspace text file contains required phrases., task_types: [document.text],
+     operations: [validate], handler: "handler:validate_text", verify: "handler:verify_any", path_arguments: [path],
+     input_schema: {type: object, additionalProperties: false, required: [path, must_contain], properties: {path: {type: string}, must_contain: {type: array, items: {type: string}}}},
+     output_schema: {type: object, additionalProperties: false, required: [valid, missing], properties: {valid: {type: boolean}, missing: {type: array}}},
+     permissions: [workspace.read], risk: low, resource_types: [file], timeout_s: 10, cancellable: true, idempotency: idempotent}
+  - {name: count_words, description: Count whitespace-separated words in a workspace text file., task_types: [document.text],
+     operations: [count], handler: "handler:count_words", verify: "handler:verify_any", path_arguments: [path],
+     input_schema: {type: object, additionalProperties: false, required: [path], properties: {path: {type: string}}},
+     output_schema: {type: object, additionalProperties: false, required: [words], properties: {words: {type: integer}}},
+     permissions: [workspace.read], risk: low, resource_types: [file], timeout_s: 10, cancellable: true, idempotency: idempotent}
+  - {name: fail_always, description: Always raises an error (used to exercise retry and failure limits)., task_types: [document.text],
+     operations: [fail], handler: "handler:fail_always", verify: "handler:verify_any",
+     input_schema: {type: object, additionalProperties: false, properties: {n: {type: integer}}},
+     output_schema: {type: object},
+     permissions: [workspace.read], risk: low, timeout_s: 10, cancellable: true, idempotency: idempotent}

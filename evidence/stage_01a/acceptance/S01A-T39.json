@@ -1,0 +1,14 @@
+{
+  "before": {
+    "limit": 30.0,
+    "consumed": 2.0,
+    "reserved": 0.0,
+    "remaining": 28.0
+  },
+  "after": {
+    "limit": 30.0,
+    "consumed": 2.0,
+    "reserved": 0.0,
+    "remaining": 28.0
+  }
+}

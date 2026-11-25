@@ -1,0 +1,16 @@
+{
+  "entries": {
+    "ops.system_status": {
+      "package_digest": "333d4edf08537ce0e3266cd779ef3eddb4dc8e7b219e0131ac25c0f42a5502a9",
+      "permissions": [
+        "ops.system.read"
+      ],
+      "risk": "low",
+      "trusted_at": "2026-11-25T04:02:41+00:00",
+      "trusted_by": "root@build-host (sandbox operator, see BLOCKERS)",
+      "version": "1.0.0"
+    }
+  },
+  "format": "atta-capability-trust/1",
+  "signature_ed25519": "/AjUXCxFjwQ0aTrj7XqWv+XHaAnPeHZt1bhYFQ3wvITVOPjWEoyaCVJDyXpaXdotrTlCNealyGetLDO9DRRbAg=="
+}

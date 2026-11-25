@@ -1,10 +1,17 @@
-"""The single capability registry.
+"""The single capability registry (Stage 01 + Stage 01A corrections 2, 3 and 4).
 
-discover() scans every configured capability directory for <dir>/<name>/capability.yaml, validates each manifest,
-rejects duplicate identifiers, resolves dependencies (capabilities, services, Python modules) in topological order,
-runs health checks with a timeout and records availability. Only capabilities in state AVAILABLE are executable,
-and every execution is evaluated by the central policy engine first.
-"""
+discover():
+  1. parses every <dir>/*/capability.yaml — schema validation only, NO capability code is imported here;
+  2. rejects every copy of a duplicated id;
+  3. walks capabilities in TOPOLOGICAL order, so a dependency's final state (including its health) is known
+     before its dependents are evaluated and failures propagate to every dependent;
+  4. per capability: disabled? -> capability/service/python dependencies -> operator trust + package digest ->
+     isolated probe (imports + handler signatures, in a separate process) -> isolated health check.
+Service availability is read from a live callable (the HealthMonitor), never a startup snapshot, and
+refresh_dependencies() re-evaluates states whenever service health changes. revalidate() repeats the integrity,
+trust, dependency and service checks immediately before any execution.
+
+Execution is NOT offered here: tools run only through the runtime controller's execution gateway."""
 from __future__ import annotations
 
 import importlib.util
@@ -12,15 +19,16 @@ import threading
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable, Iterable
+from typing import Callable, Iterable
 
-from jsonschema import Draft202012Validator
+from backend.capability_runtime import CapabilityRuntime
+from backend.contracts import (ApiError, AvailabilityState, CapabilityAvailability, ErrorCode, get_logger, iso_utc,
+                               new_id)
+from backend.policy_engine import Catalog, PolicyEngine, get_policy_engine
 
-from backend.contracts import (AvailabilityState, CapabilityAvailability, ErrorCode, ApiError, RequestContext,
-                               get_logger, iso_utc)
-from backend.policy_engine import PolicyEngine, PolicyRequest, get_policy_engine
-
-from .manifest import MANIFEST_FILENAME, CapabilityManifest, ManifestError, load_manifest_file
+from .manifest import MANIFEST_FILENAME, CapabilityManifest, ManifestError, ToolSpec, load_manifest_file, tools_of
+from .package import PackageError, package_digest
+from .trust import TrustStore
 
 log = get_logger("atta.capabilities")
 
@@ -37,8 +45,14 @@ class RegisteredCapability:
     state: AvailabilityState
     manifest: CapabilityManifest | None = None
     problems: list[str] = field(default_factory=list)
-    health_detail: Any = None
+    health_detail: object = None
     checked_at: str | None = None
+    package_digest: str | None = None
+    tools: list[ToolSpec] = field(default_factory=list)
+    probe_problems: list[str] | None = None      # cached isolated probe result for this digest
+    health_ok: bool | None = None
+    health_at: float = 0.0
+    fixed: bool = False      # invalid for structural reasons (parse/tools/package/cycle): never re-evaluated
 
     @property
     def executable(self) -> bool:
@@ -52,46 +66,34 @@ class RegisteredCapability:
                                       problems=list(self.problems))
 
 
-@dataclass
-class ExecutionResult:
-    capability_id: str
-    output: dict
-    verified: bool
-    verification_detail: Any
-    duration_ms: float
-
-
-def run_with_timeout(fn: Callable, args: tuple, timeout_s: float) -> Any:
-    """Run fn(*args) in a daemon thread; raise TimeoutError if it does not finish in time."""
-    box: dict[str, Any] = {}
-
-    def target():
-        try:
-            box["value"] = fn(*args)
-        except BaseException as exc:  # noqa: BLE001
-            box["error"] = exc
-
-    t = threading.Thread(target=target, daemon=True, name="capability-call")
-    t.start()
-    t.join(timeout_s)
-    if t.is_alive():
-        raise TimeoutError(f"exceeded {timeout_s}s")
-    if "error" in box:
-        raise box["error"]
-    return box.get("value")
+def _default_trust() -> TrustStore:
+    from backend.settings import load_settings
+    from backend.settings.loader import resolve_path
+    try:
+        s = load_settings()
+    except Exception as exc:  # noqa: BLE001
+        return TrustStore.empty(f"settings unavailable: {exc}")
+    return TrustStore.load(resolve_path(s.capabilities.trust_store), resolve_path(s.capabilities.trust_public_key))
 
 
 class CapabilityRegistry:
     def __init__(self, directories: Iterable[Path], *, policy: PolicyEngine | None = None,
                  service_available: Callable[[str], bool] | None = None, healthcheck_timeout_s: float = 5.0,
-                 max_timeout_s: float = 3600.0):
+                 max_timeout_s: float = 3600.0, trust: TrustStore | None = None,
+                 runtime: CapabilityRuntime | None = None, catalog: Catalog | None = None,
+                 health_max_age_s: float = 30.0):
         self.directories = [Path(d) for d in directories]
         self.policy = policy or get_policy_engine()
+        self.catalog = catalog or self.policy.catalog
         self.service_available = service_available or (lambda name: False)
         self.healthcheck_timeout_s = healthcheck_timeout_s
         self.max_timeout_s = max_timeout_s
+        self.trust = trust if trust is not None else _default_trust()
+        self.runtime = runtime or CapabilityRuntime()
+        self.health_max_age_s = health_max_age_s
         self._caps: dict[str, RegisteredCapability] = {}
         self._rejected: list[RegisteredCapability] = []
+        self._order: list[str] = []
         self._lock = threading.RLock()
         self.discovered_at: str | None = None
 
@@ -117,25 +119,25 @@ class CapabilityRegistry:
         for m in loaded:
             by_id.setdefault(m.id, []).append(m)
         for cid, ms in by_id.items():
-            if len(ms) > 1:  # ambiguous identity: none of them may execute
+            if len(ms) > 1:   # ambiguous identity: none of them may execute
                 srcs = ", ".join(str(m.source) for m in ms)
-                for m in ms:
-                    rejected.append(RegisteredCapability(id=cid, source=str(m.source), manifest=None,
-                                                         state=AvailabilityState.REJECTED_DUPLICATE,
-                                                         problems=[f"duplicate capability id '{cid}' in: {srcs}"]))
-            else:
-                m = ms[0]
-                caps[cid] = RegisteredCapability(id=cid, source=str(m.source), manifest=m,
-                                                 state=AvailabilityState.AVAILABLE if m.enabled
-                                                 else AvailabilityState.DISABLED,
-                                                 problems=[] if m.enabled else ["disabled in manifest"])
-        self._resolve_dependencies(caps)
-        for c in caps.values():
-            if c.state is AvailabilityState.AVAILABLE:
-                self._healthcheck(c)
+                rejected += [RegisteredCapability(id=cid, source=str(m.source), state=AvailabilityState.REJECTED_DUPLICATE,
+                                                  problems=[f"duplicate capability id '{cid}' in: {srcs}"]) for m in ms]
+                continue
+            m = ms[0]
+            rc = RegisteredCapability(id=cid, source=str(m.source), state=AvailabilityState.AVAILABLE, manifest=m)
+            try:
+                rc.tools = tools_of(m)
+                rc.package_digest = package_digest(m.directory)
+            except (ManifestError, PackageError) as exc:
+                rc.state, rc.fixed = AvailabilityState.INVALID, True
+                rc.problems = getattr(exc, "problems", [str(exc)])
+            caps[cid] = rc
+        order = self._topological(caps)
         with self._lock:
-            self._caps, self._rejected = caps, rejected
-            self.discovered_at = iso_utc()
+            self._caps, self._rejected, self._order = caps, rejected, order
+        self._evaluate(run_isolated=True)
+        self.discovered_at = iso_utc()
         report = self.availability()
         for a in report:
             log.info("capability %s: %s", a.id, a.state.value, extra={"capability": a.id, "state": a.state.value,
@@ -153,81 +155,121 @@ class CapabilityRegistry:
             pass
         return f"<invalid:{path.parent.name}>"
 
-    def _resolve_dependencies(self, caps: dict[str, RegisteredCapability]) -> None:
-        # Topological pass (Kahn). Cycles and missing/unavailable dependencies make a capability unavailable.
-        order: list[str] = []
+    @staticmethod
+    def _topological(caps: dict[str, RegisteredCapability]) -> list[str]:
         indeg = {cid: 0 for cid in caps}
         users: dict[str, list[str]] = {cid: [] for cid in caps}
         for cid, c in caps.items():
-            for dep in c.manifest.capability_dependencies:
-                if dep in caps:
-                    indeg[cid] += 1
-                    users[dep].append(cid)
-        ready = sorted(cid for cid, n in indeg.items() if n == 0)
+            if c.manifest:
+                for dep in c.manifest.capability_dependencies:
+                    if dep in caps:
+                        indeg[cid] += 1
+                        users[dep].append(cid)
+        ready, order = sorted(cid for cid, n in indeg.items() if n == 0), []
         while ready:
             cid = ready.pop(0)
             order.append(cid)
-            for u in users[cid]:
+            for u in sorted(users[cid]):
                 indeg[u] -= 1
                 if indeg[u] == 0:
                     ready.append(u)
         for cid in caps:
             if cid not in order:
-                caps[cid].state = AvailabilityState.INVALID
-                caps[cid].problems.append("capability dependency cycle")
+                caps[cid].state, caps[cid].fixed = AvailabilityState.INVALID, True
+                caps[cid].problems = ["capability dependency cycle"]
+        return order
+
+    def _evaluate(self, run_isolated: bool) -> None:
+        """One topological pass. Dependencies are final before dependents, so failures propagate transitively."""
+        with self._lock:
+            caps, order = self._caps, list(self._order)
         for cid in order:
             c = caps[cid]
-            if c.state is not AvailabilityState.AVAILABLE:
+            if c.manifest is None or c.fixed:
                 continue
             m = c.manifest
-            missing = []
-            for dep in m.capability_dependencies:
-                if dep not in caps:
-                    missing.append(f"capability '{dep}' is not installed")
-                elif not caps[dep].executable:
-                    missing.append(f"capability '{dep}' is {caps[dep].state.value}")
-            for svc in m.service_dependencies:
-                try:
-                    ok = bool(self.service_available(svc))
-                except Exception:  # noqa: BLE001
-                    ok = False
-                if not ok:
-                    missing.append(f"service '{svc}' is unavailable")
-            for mod in m.python_dependencies:
-                try:
-                    found = importlib.util.find_spec(mod) is not None
-                except (ImportError, ValueError):
-                    found = False
-                if not found:
-                    missing.append(f"python module '{mod}' is not installed")
-            if missing:
-                c.state = AvailabilityState.DEPENDENCY_MISSING
-                c.problems.extend(missing)
+            state, problems = AvailabilityState.AVAILABLE, []
+            if not m.enabled:
+                state, problems = AvailabilityState.DISABLED, ["disabled in manifest"]
+            else:
+                missing = []
+                for dep in m.capability_dependencies:
+                    if dep not in caps:
+                        missing.append(f"capability '{dep}' is not installed")
+                    elif not caps[dep].executable:
+                        missing.append(f"capability '{dep}' is {caps[dep].state.value}")
+                for svc in m.service_dependencies:
+                    try:
+                        ok = bool(self.service_available(svc))
+                    except Exception:  # noqa: BLE001
+                        ok = False
+                    if not ok:
+                        missing.append(f"service '{svc}' is unavailable")
+                for mod in m.python_dependencies:
+                    try:   # top-level lookup only: find_spec of a top-level name runs no module code
+                        found = importlib.util.find_spec(mod.split(".")[0]) is not None
+                    except (ImportError, ValueError):
+                        found = False
+                    if not found:
+                        missing.append(f"python module '{mod}' is not installed")
+                unknown_perms = sorted(p for t in c.tools for p in t.permissions if p not in self.catalog.permissions)
+                if missing:
+                    state, problems = AvailabilityState.DEPENDENCY_MISSING, missing
+                else:
+                    t_state, t_problems = self.trust.check(m, c.package_digest or "")
+                    if t_state is not None:
+                        state, problems = AvailabilityState(t_state), t_problems
+                    elif unknown_perms:
+                        state, problems = AvailabilityState.INVALID, [f"permissions not in the catalog: {unknown_perms}"]
+                    else:
+                        if c.probe_problems is None and run_isolated:
+                            c.probe_problems = self._isolated(c, "probe").get("problems", ["probe failed"])
+                        if c.probe_problems:
+                            state, problems = AvailabilityState.INVALID, list(c.probe_problems)
+                        else:
+                            stale = time.time() - c.health_at > self.health_max_age_s
+                            if run_isolated or c.health_ok is None or stale:
+                                self._healthcheck(c)
+                            if not c.health_ok:
+                                state = AvailabilityState.UNHEALTHY
+                                problems = [f"healthcheck reported unhealthy: {c.health_detail!r}"]
+            if state is not c.state:
+                log.info("capability %s %s -> %s", cid, c.state.value, state.value, extra={"problems": problems})
+            c.state, c.problems = state, problems
+
+    def _isolated(self, c: RegisteredCapability, mode: str) -> dict:
+        ticket = self.runtime.issue_ticket(new_id("exe"), c.id, mode)
+        tool_handlers = [[t.name, kind, ref] for t in c.tools for kind, ref in (("execute", t.handler), ("verify", t.verify))]
+        r = self.runtime.run(ticket=ticket, mode=mode, capability_id=c.id, package_dir=c.manifest.directory,
+                             expected_digest=c.package_digest or "", handlers=c.manifest.handler_refs,
+                             timeout_s=self.healthcheck_timeout_s, tool_handlers=tool_handlers)
+        if r.status == "ok":
+            return r.value if isinstance(r.value, dict) else {"value": r.value}
+        return {"problems": [f"isolated {mode} {r.status}: {r.error or ''}".strip()], "status": r.status}
 
     def _healthcheck(self, c: RegisteredCapability) -> None:
-        c.checked_at = iso_utc()
-        try:
-            result = run_with_timeout(c.manifest.handlers["healthcheck"], (), self.healthcheck_timeout_s)
-        except TimeoutError as exc:
-            c.state, c.problems = AvailabilityState.UNHEALTHY, [f"healthcheck timed out: {exc}"]
+        c.checked_at, c.health_at = iso_utc(), time.time()
+        ticket = self.runtime.issue_ticket(new_id("exe"), c.id, "healthcheck")
+        r = self.runtime.run(ticket=ticket, mode="healthcheck", capability_id=c.id, package_dir=c.manifest.directory,
+                             expected_digest=c.package_digest or "", handlers=c.manifest.handler_refs,
+                             timeout_s=self.healthcheck_timeout_s)
+        if r.status != "ok":
+            c.health_ok, c.health_detail = False, f"{r.status}: {r.error or ''}".strip()
             return
-        except Exception as exc:  # noqa: BLE001
-            c.state, c.problems = AvailabilityState.UNHEALTHY, [f"healthcheck raised {type(exc).__name__}: {exc}"]
-            return
-        healthy = result.get("healthy") is True if isinstance(result, dict) else result is True
-        c.health_detail = result
-        if not healthy:
-            c.state = AvailabilityState.UNHEALTHY
-            c.problems.append(f"healthcheck reported unhealthy: {result!r}")
+        v = r.value
+        c.health_ok = (v.get("healthy") is True) if isinstance(v, dict) else v is True
+        c.health_detail = v
+
+    def refresh_dependencies(self) -> list[CapabilityAvailability]:
+        """Re-evaluate states without re-probing (called when service health changes)."""
+        self._evaluate(run_isolated=False)
+        return self.availability()
 
     def recheck_health(self) -> list[CapabilityAvailability]:
         with self._lock:
-            caps = list(self._caps.values())
-        for c in caps:
-            if c.manifest and c.manifest.enabled and c.state in (AvailabilityState.AVAILABLE,
-                                                                 AvailabilityState.UNHEALTHY):
-                c.state, c.problems = AvailabilityState.AVAILABLE, []
-                self._healthcheck(c)
+            for c in self._caps.values():
+                c.health_at = 0.0
+        self._evaluate(run_isolated=False)
         return self.availability()
 
     # ---------------------------------------------------------------- queries
@@ -244,39 +286,39 @@ class CapabilityRegistry:
         with self._lock:
             return sorted(cid for cid, c in self._caps.items() if c.executable)
 
-    # ---------------------------------------------------------------- execution
-    def execute(self, cap_id: str, payload: dict, ctx: RequestContext, timeout_s: float | None = None
-                ) -> ExecutionResult:
-        cap = self.get(cap_id)
-        decision = self.policy.evaluate(PolicyRequest(
-            principal=ctx.principal, operation="capability.execute", resource=cap_id,
-            risk=cap.manifest.risk if cap and cap.manifest else None,
-            required_permissions=cap.manifest.permissions if cap and cap.manifest else frozenset()))
-        if not decision.allowed:
-            raise ApiError(ErrorCode.PERMISSION_DENIED, decision.reason, details={"operation": "capability.execute",
-                                                                                  "resource": cap_id})
-        if cap is None:
+    def all_tools(self) -> list[ToolSpec]:
+        with self._lock:
+            return [t for c in self._caps.values() for t in c.tools]
+
+    def tool(self, string_id: str) -> tuple[RegisteredCapability, ToolSpec] | None:
+        cid = string_id.split(":")[0]
+        c = self.get(cid)
+        if c is None:
+            return None
+        for t in c.tools:
+            if t.string_id == string_id:
+                return c, t
+        return None
+
+    def revalidate(self, cap_id: str) -> RegisteredCapability:
+        """Immediately before execution: package bytes, trust, dependencies and live service health again."""
+        c = self.get(cap_id)
+        if c is None:
             raise ApiError(ErrorCode.NOT_FOUND, f"capability '{cap_id}' is not registered")
-        if not cap.executable:
-            raise CapabilityNotExecutable(cap_id, f"{cap.state.value}: {'; '.join(cap.problems)}")
-        m = cap.manifest
-        errs = [e.message for e in Draft202012Validator(m.input_schema).iter_errors(payload)]
-        if errs:
-            raise ApiError(ErrorCode.VALIDATION_FAILED, "input does not match the capability input schema",
-                           details=errs)
-        limit = min(timeout_s or m.timeout_s, m.timeout_s)
-        start = time.perf_counter()
         try:
-            output = run_with_timeout(m.handlers["execute"], (payload, ctx), limit)
-        except TimeoutError as exc:
-            raise ApiError(ErrorCode.TIMEOUT, f"capability '{cap_id}' {exc}") from exc
-        duration = (time.perf_counter() - start) * 1000
-        if not isinstance(output, dict):
-            raise ApiError(ErrorCode.INTERNAL, f"capability '{cap_id}' returned {type(output).__name__}, not object")
-        errs = [e.message for e in Draft202012Validator(m.output_schema).iter_errors(output)]
-        if errs:
-            raise ApiError(ErrorCode.INTERNAL, "capability output failed its output schema", details=errs)
-        verdict = run_with_timeout(m.handlers["verify"], (payload, output), self.healthcheck_timeout_s)
-        verified = verdict.get("verified") is True if isinstance(verdict, dict) else verdict is True
-        return ExecutionResult(capability_id=cap_id, output=output, verified=verified, verification_detail=verdict,
-                               duration_ms=round(duration, 2))
+            now_digest = package_digest(c.manifest.directory)
+        except (PackageError, OSError) as exc:
+            c.state, c.problems = AvailabilityState.INTEGRITY_FAILED, [str(exc)]
+            raise CapabilityNotExecutable(cap_id, str(exc)) from exc
+        if now_digest != c.package_digest:
+            c.state, c.problems = AvailabilityState.INTEGRITY_FAILED, ["package changed on disk since discovery"]
+            raise CapabilityNotExecutable(cap_id, "package changed on disk since discovery")
+        self._evaluate(run_isolated=False)
+        if not c.executable:
+            raise CapabilityNotExecutable(cap_id, f"{c.state.value}: {'; '.join(c.problems)}")
+        return c
+
+    def execute(self, *args, **kwargs):
+        """Removed in Stage 01A: direct execution would bypass task contracts, drift checks and budgets."""
+        raise CapabilityNotExecutable(str(args[0]) if args else "?", "direct execution is disabled; tools run only "
+                                      "through the runtime controller's execution gateway")

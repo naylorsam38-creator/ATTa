@@ -1,14 +1,12 @@
-"""Capability manifest model, validation and handler resolution."""
+"""Capability manifest parsing and validation — WITHOUT importing any capability code (correction 4).
+
+Handler modules are only located (must exist inside the package, no symlinks). Importing them, and checking that
+each handler is a callable with the right signature, happens only inside the isolated runtime (probe mode)."""
 from __future__ import annotations
 
-import hashlib
-import importlib.util
-import inspect
 import json
-import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable
 
 import yaml
 from jsonschema import Draft202012Validator
@@ -18,8 +16,8 @@ from backend.contracts import RiskClass
 
 MANIFEST_FILENAME = "capability.yaml"
 _META = Draft202012Validator(json.loads((Path(__file__).with_name("manifest.schema.json")).read_text()))
-# Handler signatures: name -> number of required positional parameters.
-HANDLER_ARITY = {"execute": 2, "healthcheck": 0, "verify": 2}
+# Handler signatures: name -> number of required positional parameters (checked in the isolated probe).
+HANDLER_ARITY = {"execute": 2, "healthcheck": 0, "verify": 2, "reconcile": 2}
 
 
 class ManifestError(Exception):
@@ -46,46 +44,29 @@ class CapabilityManifest:
     enabled: bool
     source: Path
     handler_refs: dict[str, str]
-    handlers: dict[str, Callable[..., Any]] = field(default_factory=dict)
     digest: str = ""
+    handlers: dict = field(default_factory=dict)   # never populated in the API process (kept for compatibility)
+
+    @property
+    def directory(self) -> Path:
+        return self.source.parent
 
 
-def _load_module(cap_dir: Path, module: str, unique: str):
+def _module_file(cap_dir: Path, module: str) -> Path | None:
     rel = Path(*module.split("."))
-    candidates = [cap_dir / rel.with_suffix(".py"), cap_dir / rel / "__init__.py"]
-    path = next((c for c in candidates if c.is_file()), None)
-    if path is None:
-        raise ImportError(f"handler module '{module}' not found inside {cap_dir.name}/")
-    resolved = path.resolve()
-    if cap_dir.resolve() not in resolved.parents:
-        raise ImportError(f"handler module '{module}' resolves outside the capability directory")
-    mod_name = f"atta_capability_{unique}_{module.replace('.', '_')}"
-    spec = importlib.util.spec_from_file_location(mod_name, resolved)
-    mod = importlib.util.module_from_spec(spec)
-    sys.modules[mod_name] = mod
-    try:
-        spec.loader.exec_module(mod)  # type: ignore[union-attr]
-    except BaseException:
-        sys.modules.pop(mod_name, None)
-        raise
-    return mod
-
-
-def _check_arity(fn: Callable, required: int) -> str | None:
-    try:
-        sig = inspect.signature(fn)
-    except (TypeError, ValueError):
-        return "signature cannot be inspected"
-    params = [p for p in sig.parameters.values() if p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD)]
-    has_var = any(p.kind is p.VAR_POSITIONAL for p in sig.parameters.values())
-    req = [p for p in params if p.default is p.empty]
-    if len(req) > required or (len(params) < required and not has_var):
-        return f"must accept exactly {required} positional argument(s)"
+    for c in (cap_dir / rel.with_suffix(".py"), cap_dir / rel / "__init__.py"):
+        if c.is_symlink():
+            raise ValueError(f"handler module '{module}' is a symlink and resolves outside the capability directory")
+        if c.is_file():
+            if cap_dir.resolve() not in c.resolve().parents:
+                raise ValueError(f"handler module '{module}' resolves outside the capability directory")
+            return c
     return None
 
 
 def load_manifest_file(path: Path, max_timeout_s: float = 3600.0) -> CapabilityManifest:
-    """Parse + validate a manifest and resolve its handlers. Raises ManifestError listing every problem."""
+    """Parse + validate a manifest and locate (not import) its handlers. Raises ManifestError listing problems."""
+    import hashlib
     src = str(path)
     try:
         raw_bytes = path.read_bytes()
@@ -106,39 +87,86 @@ def load_manifest_file(path: Path, max_timeout_s: float = 3600.0) -> CapabilityM
         problems.append(f"timeout_s {data['timeout_s']} exceeds the configured maximum {max_timeout_s}")
     if problems:
         raise ManifestError(src, problems)
-
+    for kind, ref in data["handlers"].items():
+        module = ref.split(":")[0]
+        try:
+            if _module_file(path.parent, module) is None:
+                problems.append(f"{kind} handler '{ref}': module '{module}' not found inside {path.parent.name}/")
+        except ValueError as exc:
+            problems.append(f"{kind} handler '{ref}': {exc}")
+    if problems:
+        raise ManifestError(src, problems)
     deps = data.get("dependencies") or {}
-    manifest = CapabilityManifest(
+    return CapabilityManifest(
         id=data["id"], version=data["version"], description=data["description"],
         requirement=data.get("requirement"), input_schema=data["input_schema"], output_schema=data["output_schema"],
         permissions=frozenset(data["permissions"]), risk=RiskClass(data["risk"]),
         capability_dependencies=tuple(deps.get("capabilities", [])),
         service_dependencies=tuple(deps.get("services", [])), python_dependencies=tuple(deps.get("python", [])),
         timeout_s=float(data["timeout_s"]), enabled=bool(data["enabled"]), source=path,
-        handler_refs=dict(data["handlers"]), digest=hashlib.sha256(raw_bytes).hexdigest(),
-    )
-    unique = hashlib.sha256(str(path.resolve()).encode()).hexdigest()[:10]
-    modules: dict[str, Any] = {}
-    for kind, ref in manifest.handler_refs.items():
-        module, func = ref.split(":")
-        try:
-            if module not in modules:
-                modules[module] = _load_module(path.parent, module, unique)
-            fn = getattr(modules[module], func, None)
-        except Exception as exc:  # noqa: BLE001 — any import failure makes the capability invalid
-            problems.append(f"{kind} handler '{ref}' failed to import: {type(exc).__name__}: {exc}")
-            continue
-        if fn is None or not callable(fn):
-            problems.append(f"{kind} handler '{ref}' is not a callable")
-            continue
-        if inspect.iscoroutinefunction(fn):
-            problems.append(f"{kind} handler '{ref}' must be synchronous in manifest_version 1")
-            continue
-        bad = _check_arity(fn, HANDLER_ARITY[kind])
-        if bad:
-            problems.append(f"{kind} handler '{ref}' {bad}")
-            continue
-        manifest.handlers[kind] = fn
-    if problems:
-        raise ManifestError(src, problems)
-    return manifest
+        handler_refs=dict(data["handlers"]), digest=hashlib.sha256(raw_bytes).hexdigest())
+
+
+@dataclass(frozen=True)
+class ToolSpec:
+    """One executable tool of a capability (Stage 01A §5). `string_id` = '<capability id>:<tool name>'."""
+    string_id: str
+    capability_id: str
+    name: str
+    description: str
+    task_types: tuple[str, ...]
+    operations: tuple[str, ...]
+    handler: str
+    verify: str
+    input_schema: dict
+    output_schema: dict
+    permissions: frozenset[str]
+    risk: RiskClass
+    resource_types: tuple[str, ...]
+    path_arguments: tuple[str, ...]
+    url_arguments: tuple[str, ...]
+    timeout_s: float
+    resource_limits: dict
+    cancellable: bool
+    idempotency: str
+    version: str
+
+
+def tools_of(m: CapabilityManifest, raw: dict | None = None) -> list[ToolSpec]:
+    """Tools declared by a manifest; a manifest without `tools` exposes one implicit tool named 'default'."""
+    if raw is None:
+        raw = yaml.safe_load(m.source.read_bytes())
+    declared = raw.get("tools")
+    if not declared:
+        declared = [{"name": "default", "description": m.description, "task_types": [m.id], "operations": ["execute"],
+                     "handler": m.handler_refs["execute"], "verify": m.handler_refs["verify"],
+                     "input_schema": m.input_schema, "output_schema": m.output_schema,
+                     "permissions": sorted(m.permissions), "risk": m.risk.value, "timeout_s": m.timeout_s,
+                     "cancellable": True, "idempotency": "non_idempotent"}]
+    out, names = [], set()
+    for t in declared:
+        if t["name"] in names:
+            raise ManifestError(str(m.source), [f"duplicate tool name '{t['name']}'"])
+        names.add(t["name"])
+        extra = set(t["permissions"]) - set(m.permissions)
+        if extra:
+            raise ManifestError(str(m.source), [f"tool '{t['name']}' requires permissions the capability does not "
+                                                f"declare: {sorted(extra)}"])
+        for key in ("input_schema", "output_schema"):
+            try:
+                Draft202012Validator.check_schema(t[key])
+            except SchemaError as exc:
+                raise ManifestError(str(m.source), [f"tool '{t['name']}' {key} invalid: {exc.message}"]) from exc
+        for ref in (t["handler"], t["verify"]):
+            if _module_file(m.directory, ref.split(":")[0]) is None:
+                raise ManifestError(str(m.source), [f"tool '{t['name']}' handler module for '{ref}' not found"])
+        out.append(ToolSpec(
+            string_id=f"{m.id}:{t['name']}", capability_id=m.id, name=t["name"], description=t["description"],
+            task_types=tuple(t.get("task_types") or [m.id]), operations=tuple(t["operations"]), handler=t["handler"],
+            verify=t["verify"], input_schema=t["input_schema"], output_schema=t["output_schema"],
+            permissions=frozenset(t["permissions"]), risk=RiskClass(t["risk"]),
+            resource_types=tuple(t.get("resource_types") or []), path_arguments=tuple(t.get("path_arguments") or []),
+            url_arguments=tuple(t.get("url_arguments") or []), timeout_s=float(t["timeout_s"]),
+            resource_limits=dict(t.get("resource_limits") or {}), cancellable=bool(t["cancellable"]),
+            idempotency=t["idempotency"], version=m.version))
+    return out

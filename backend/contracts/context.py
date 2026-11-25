@@ -19,9 +19,16 @@ class Principal(BaseModel):
     model_config = ConfigDict(frozen=True)
     id: str
     kind: PrincipalKind
-    # Permissions are issued by the authentication service only (Stage 02). Nothing else may populate this.
+    # Permissions are issued by the authentication service only. The policy engine trusts a principal only if
+    # `attestation` is a valid, unexpired signature from this process's authenticator over every field below,
+    # so a Principal constructed anywhere else (agent, capability, worker, test) carries no authority.
     permissions: frozenset[str] = Field(default_factory=frozenset)
     authenticated: bool = False
+    tenant_id: str | None = None
+    role: str | None = None
+    session_id: str | None = None
+    expires_at: float | None = None
+    attestation: str | None = None
 
     @classmethod
     def anonymous(cls) -> "Principal":

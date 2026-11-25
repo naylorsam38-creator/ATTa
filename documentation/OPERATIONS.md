@@ -53,3 +53,36 @@ START again — the start scripts never change.
 
 Then INSTALL and START. Your previous work is recoverable with `git stash list` / `git stash pop`. A checkpoint
 older than the database's applied migrations is refused: restore a database backup first.
+
+## Runtime controller (Stage 01A)
+
+The controller runs inside the API process and is registered with the service manager as the essential service
+`controller` (probe: `GET /v1/health/controller`). START reports READY only when it is healthy; HEALTHCHECK lists
+every component (registry, contract storage, checkpoint storage, numbered catalogue, verification service,
+execution worker, security enforcement) and the active/blocked task counts.
+
+Operator duties (all keys live OUTSIDE the repository):
+
+    # capability trust (Ed25519). The API only holds the public key.
+    python -m backend.capability_registry keygen --private /etc/atta-operator/capability_trust_ed25519.pem \
+           --public configuration/capability_trust_ed25519.pub
+    python -m backend.capability_registry trust capabilities/<dir> --key /etc/atta-operator/capability_trust_ed25519.pem --operator NAME
+    python -m backend.capability_registry list
+
+    # permanent tool numbers: edit configuration/tool_numbers.yaml (never delete a number: set retired: true)
+
+    # controller operator authorisations (objective approval/amendment, re-attempts) use
+    #   /etc/atta-operator/controller_operator_ed25519.pem  (public key: configuration/controller_operator_ed25519.pub)
+
+A new capability is discovered automatically at START, but it is reported `untrusted` and never loaded until the
+operator trusts it and gives each tool a number. START.bat / start.sh never change.
+
+## Verification boundary (correction 8)
+
+    sudo scripts/protect_verifier.sh          # worker account atta-builder; verifier = root; signing key in /etc/atta-verifier
+    ATTA_BUILD_SIGNING_KEY_FILE=/etc/atta-verifier/build_signing_ed25519.pem .venv/bin/python -m backend.verification seal --operator NAME
+    .venv/bin/python -m backend.verification protection      # must print OS PROTECTION INTACT and a valid Ed25519 seal
+
+Run implementation work (people or LLM agents) as `atta-builder`, never as root. Re-run the script after every
+checkout/pull — git does not preserve ownership. From Stage 01A on the build controller refuses to run a stage
+gate with an unsigned seal or without OS protection.

@@ -1,0 +1,340 @@
+{
+  "states": {
+    "TASK-0001": "COMPLETED",
+    "TASK-0002": "COMPLETED",
+    "TASK-0003": "COMPLETED",
+    "TASK-0004": "COMPLETED",
+    "TASK-0005": "COMPLETED",
+    "TASK-0006": "COMPLETED",
+    "TASK-0007": "COMPLETED"
+  },
+  "peak_active": 4,
+  "batches": [
+    [
+      "TASK-0001",
+      "TASK-0002",
+      "TASK-0003",
+      "TASK-0004"
+    ],
+    [
+      "TASK-0005"
+    ],
+    [
+      "TASK-0006"
+    ]
+  ],
+  "trace": {
+    "objective_id": "obj_01M88FPW4FVZ7BFN46FCQVEGDZ",
+    "objective_version": 2,
+    "original_instructions_sha256": "5bfbdbc361d8c687d8eefb4b02f89f75f3f40745467b5cdbdf45ae6e7f51a08f",
+    "requirements": {
+      "FR-01": [
+        {
+          "task_id": "TASK-0001",
+          "tool_pool": [
+            "014.001",
+            "014.003",
+            "014.004"
+          ],
+          "contract_hash": "1e30ee5fe496eb88d03bbe16222d67afa1824d759aaf6f36e29cf9ada0b4256d",
+          "proposals": [
+            "p-TASK-0001-7a0e71c4"
+          ],
+          "policy_decisions": [
+            {
+              "reason": "low-risk tool within the controller's granted permissions",
+              "binding": {
+                "tool_id": "014.001",
+                "execution_id": "exe_01M88FPX2RADWFQ2HCM0YG884B",
+                "contract_hash": "1e30ee5fe496eb88d03bbe16222d67afa1824d759aaf6f36e29cf9ada0b4256d",
+                "arguments_hash": "5342227f12cb614ffb8de0b931a7b24bab064f937149cf74deb67b536d5630dc"
+              },
+              "decision": "allow"
+            }
+          ],
+          "executions": [
+            "exe_01M88FPX2RADWFQ2HCM0YG884B"
+          ],
+          "resulting_state": "COMPLETED",
+          "verifications": [
+            {
+              "criterion_id": "TC-01",
+              "passed": true,
+              "evidence_id": "evd_01M88FPXKEME2B5QG1GVKAY7FY"
+            },
+            {
+              "criterion_id": "TC-02",
+              "passed": true,
+              "evidence_id": "evd_01M88FPXMPJVQ467227F332B1D"
+            }
+          ],
+          "missing": []
+        }
+      ],
+      "FR-02": [
+        {
+          "task_id": "TASK-0002",
+          "tool_pool": [
+            "014.001",
+            "014.003",
+            "014.004"
+          ],
+          "contract_hash": "a92cceb625d32c062af8678174fce5718be6b862301c4c13a1acc272b147d2e6",
+          "proposals": [
+            "p-TASK-0002-7a1a8f65"
+          ],
+          "policy_decisions": [
+            {
+              "reason": "low-risk tool within the controller's granted permissions",
+              "binding": {
+                "tool_id": "014.001",
+                "execution_id": "exe_01M88FPX1KGJ5ACYCNPRDGKMTM",
+                "contract_hash": "a92cceb625d32c062af8678174fce5718be6b862301c4c13a1acc272b147d2e6",
+                "arguments_hash": "bd301c9f803abd11542d88a7c073285f19365209b459d1065ceb2601da07e7ee"
+              },
+              "decision": "allow"
+            }
+          ],
+          "executions": [
+            "exe_01M88FPX1KGJ5ACYCNPRDGKMTM"
+          ],
+          "resulting_state": "COMPLETED",
+          "verifications": [
+            {
+              "criterion_id": "TC-01",
+              "passed": true,
+              "evidence_id": "evd_01M88FPYMHWBV2BP5SB8H8QRRF"
+            },
+            {
+              "criterion_id": "TC-02",
+              "passed": true,
+              "evidence_id": "evd_01M88FPYN7RBE555DTHH3EZFZR"
+            }
+          ],
+          "missing": []
+        },
+        {
+          "task_id": "TASK-0007",
+          "tool_pool": [
+            "014.003"
+          ],
+          "contract_hash": "76dc309e417dcae715e81490e0cac6d60a356e6535b101a77d514c119c2d79ec",
+          "proposals": [],
+          "policy_decisions": [
+            {
+              "reason": "low-risk tool within the controller's granted permissions",
+              "binding": {
+                "tool_id": "014.003",
+                "execution_id": "exe_01M88FPY06HRVEZXBP2FMTC5S6",
+                "contract_hash": "76dc309e417dcae715e81490e0cac6d60a356e6535b101a77d514c119c2d79ec",
+                "arguments_hash": "4a8c173a2f011c8ac98b6c6fd3f1ccd93a32b7dd6b7583834944a7e9851a5c1a"
+              },
+              "decision": "allow"
+            }
+          ],
+          "executions": [
+            "exe_01M88FPY06HRVEZXBP2FMTC5S6"
+          ],
+          "resulting_state": "COMPLETED",
+          "verifications": [
+            {
+              "criterion_id": "TC-02",
+              "passed": true,
+              "evidence_id": "evd_01M88FPYEPXE8P278WJKB1P6J6"
+            }
+          ],
+          "missing": [
+            "no accepted proposal"
+          ]
+        }
+      ],
+      "FR-03": [
+        {
+          "task_id": "TASK-0003",
+          "tool_pool": [
+            "014.001",
+            "014.003",
+            "014.004"
+          ],
+          "contract_hash": "7135cc07b27ee365a958db63f16774808a239e85b54cb2f8ca11ada2f825f18e",
+          "proposals": [
+            "p-TASK-0003-7dc84836"
+          ],
+          "policy_decisions": [
+            {
+              "reason": "low-risk tool within the controller's granted permissions",
+              "binding": {
+                "tool_id": "014.001",
+                "execution_id": "exe_01M88FPX1RJ6PYTZGTFGDNR13E",
+                "contract_hash": "7135cc07b27ee365a958db63f16774808a239e85b54cb2f8ca11ada2f825f18e",
+                "arguments_hash": "4becc6bc547491c5d270a9b764b50de540db87f5ded730d8bc5f0da2d27b9f27"
+              },
+              "decision": "allow"
+            }
+          ],
+          "executions": [
+            "exe_01M88FPX1RJ6PYTZGTFGDNR13E"
+          ],
+          "resulting_state": "COMPLETED",
+          "verifications": [
+            {
+              "criterion_id": "TC-01",
+              "passed": true,
+              "evidence_id": "evd_01M88FPXK3XGWHS5H3CWKJ9FP1"
+            },
+            {
+              "criterion_id": "TC-02",
+              "passed": true,
+              "evidence_id": "evd_01M88FPXM8XARWHV5SPTM6ZTTZ"
+            }
+          ],
+          "missing": []
+        }
+      ],
+      "FR-04": [
+        {
+          "task_id": "TASK-0004",
+          "tool_pool": [
+            "014.001",
+            "014.003",
+            "014.004"
+          ],
+          "contract_hash": "c1032d4fd56b221c3eb07d62c7886f4b30d5b0473b51a0709bd3cc21ae92ab21",
+          "proposals": [
+            "p-TASK-0004-02411866"
+          ],
+          "policy_decisions": [
+            {
+              "reason": "low-risk tool within the controller's granted permissions",
+              "binding": {
+                "tool_id": "014.001",
+                "execution_id": "exe_01M88FPX2JBWR556N4K77DV6GC",
+                "contract_hash": "c1032d4fd56b221c3eb07d62c7886f4b30d5b0473b51a0709bd3cc21ae92ab21",
+                "arguments_hash": "8893458fabd29c0bece92f1b691a82e897a04989b04558fd456fa8673e9ed23e"
+              },
+              "decision": "allow"
+            }
+          ],
+          "executions": [
+            "exe_01M88FPX2JBWR556N4K77DV6GC"
+          ],
+          "resulting_state": "COMPLETED",
+          "verifications": [
+            {
+              "criterion_id": "TC-01",
+              "passed": true,
+              "evidence_id": "evd_01M88FPXKH4HBEF12K330QV2TK"
+            },
+            {
+              "criterion_id": "TC-02",
+              "passed": true,
+              "evidence_id": "evd_01M88FPXMNXFWZ0W445565C0CY"
+            }
+          ],
+          "missing": []
+        }
+      ],
+      "FR-05": [
+        {
+          "task_id": "TASK-0005",
+          "tool_pool": [
+            "014.001",
+            "014.003",
+            "014.004"
+          ],
+          "contract_hash": "aece196feb5dd3d4d019ae01d34445b4bcfe7b574da39979515cd7bf9c2a823c",
+          "proposals": [
+            "p-TASK-0005-2fc65b25"
+          ],
+          "policy_decisions": [
+            {
+              "reason": "low-risk tool within the controller's granted permissions",
+              "binding": {
+                "tool_id": "014.001",
+                "execution_id": "exe_01M88FQ0ZXC8XXC7CAFV1TKWKP",
+                "contract_hash": "aece196feb5dd3d4d019ae01d34445b4bcfe7b574da39979515cd7bf9c2a823c",
+                "arguments_hash": "ef2d44e5cc83378fba8fab02cdd9faae54ede08f95754bf5c0a1b9eb4fb2ff3e"
+              },
+              "decision": "allow"
+            }
+          ],
+          "executions": [
+            "exe_01M88FQ0ZXC8XXC7CAFV1TKWKP"
+          ],
+          "resulting_state": "COMPLETED",
+          "verifications": [
+            {
+              "criterion_id": "TC-01",
+              "passed": true,
+              "evidence_id": "evd_01M88FQ1DSSX0AT51WV2M5YNJQ"
+            },
+            {
+              "criterion_id": "TC-02",
+              "passed": true,
+              "evidence_id": "evd_01M88FQ1EQ0MPPYFFA094J2743"
+            }
+          ],
+          "missing": []
+        }
+      ],
+      "FR-06": [
+        {
+          "task_id": "TASK-0006",
+          "tool_pool": [
+            "014.001",
+            "014.003",
+            "014.004"
+          ],
+          "contract_hash": "6837c39e63285c9014389b4baba42265bb59b2455d69a1964093c09f7c678682",
+          "proposals": [
+            "p-TASK-0006-ee3db124"
+          ],
+          "policy_decisions": [
+            {
+              "reason": "low-risk tool within the controller's granted permissions",
+              "binding": {
+                "tool_id": "014.001",
+                "execution_id": "exe_01M88FQ22H776ES14S25VWG62K",
+                "contract_hash": "6837c39e63285c9014389b4baba42265bb59b2455d69a1964093c09f7c678682",
+                "arguments_hash": "2d5e80aeb9e649cf214cd114411d5711eb6719f11d6374ad8b41809aa56a7223"
+              },
+              "decision": "allow"
+            }
+          ],
+          "executions": [
+            "exe_01M88FQ22H776ES14S25VWG62K"
+          ],
+          "resulting_state": "COMPLETED",
+          "verifications": [
+            {
+              "criterion_id": "TC-01",
+              "passed": true,
+              "evidence_id": "evd_01M88FQ2F7N661CFYQW6TKKY45"
+            },
+            {
+              "criterion_id": "TC-02",
+              "passed": true,
+              "evidence_id": "evd_01M88FQ2FX4E4X1RPVRSM96DRJ"
+            }
+          ],
+          "missing": []
+        }
+      ]
+    },
+    "deliverables": {
+      "DEL-01": {
+        "requirement_ids": [
+          "FR-01",
+          "FR-02",
+          "FR-03",
+          "FR-04",
+          "FR-05",
+          "FR-06"
+        ],
+        "verified": true
+      }
+    },
+    "gaps": [],
+    "complete": true
+  }
+}

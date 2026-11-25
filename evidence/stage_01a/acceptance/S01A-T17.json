@@ -1,0 +1,53 @@
+{
+  "feedback": [
+    [
+      {
+        "field": "<root>",
+        "message": "not JSON: Expecting value",
+        "permitted": [
+          "a JSON object: ToolProposal or CompletionClaim"
+        ]
+      }
+    ],
+    [
+      {
+        "field": "contract_version",
+        "message": "Field required",
+        "permitted": []
+      },
+      {
+        "field": "tool_id",
+        "message": "Field required",
+        "permitted": [
+          "014.001",
+          "014.003",
+          "014.004"
+        ]
+      },
+      {
+        "field": "operation",
+        "message": "Field required",
+        "permitted": [
+          "edit",
+          "validate",
+          "write"
+        ]
+      },
+      {
+        "field": "arguments",
+        "message": "Field required",
+        "permitted": []
+      },
+      {
+        "field": "expected_result",
+        "message": "Field required",
+        "permitted": []
+      },
+      {
+        "field": "referenced_requirement_ids",
+        "message": "Field required",
+        "permitted": []
+      }
+    ]
+  ]
+}

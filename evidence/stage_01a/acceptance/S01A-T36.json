@@ -1,0 +1,82 @@
+{
+  "repair_contract": {
+    "task_id": "TASK-0002",
+    "parent_objective_id": "obj_01M88FPCN9N5PZYK6ZKTQKJ08X",
+    "parent_task_id": "TASK-0001",
+    "contract_version": 1,
+    "contract_hash": "b683cd6897e08f73b7660bf2a2fe7d1e2bc4df24c972180b2f0762429d846961",
+    "requirement_ids": [
+      "FR-01"
+    ],
+    "task_type": "document.text",
+    "task_description": "REPAIR of TASK-0001: satisfy ['TC-02'] without changing other outputs",
+    "required_outcome": "a.txt contains alpha",
+    "permitted_inputs": [],
+    "input_checksums": {},
+    "required_outputs": [
+      {
+        "id": "OUT-01",
+        "path": "a.txt",
+        "description": "text file"
+      }
+    ],
+    "output_schemas": {},
+    "permitted_tool_ids": [
+      "014.003"
+    ],
+    "permitted_resource_ids": [
+      "file:a.txt"
+    ],
+    "permitted_filesystem_paths": [
+      "a.txt"
+    ],
+    "permitted_network_destinations": [],
+    "permitted_operations": [
+      "write",
+      "edit",
+      "validate"
+    ],
+    "prohibited_operations": [],
+    "dependency_task_ids": [],
+    "acceptance_criteria": [
+      {
+        "id": "TC-02",
+        "description": "phrase present",
+        "requirement_ids": [
+          "FR-01"
+        ],
+        "verifier": "text_contains",
+        "params": {
+          "all": [
+            "alpha"
+          ],
+          "path": "a.txt"
+        },
+        "repair_tool_ids": [
+          "014.003"
+        ]
+      }
+    ],
+    "verification_handler_ids": [
+      "text_contains"
+    ],
+    "maximum_actions": 29,
+    "maximum_retries": 2,
+    "maximum_failed_steps": 3,
+    "maximum_parallel_tools": 2,
+    "execution_deadline": 1800.0,
+    "resource_budget": {
+      "tokens": 200000,
+      "cpu_seconds": 600.0,
+      "memory_mb": 1024,
+      "disk_mb": 256.0,
+      "network_requests": 0,
+      "external_api_calls": 0,
+      "spend_cents": 0
+    },
+    "approval_requirements": [],
+    "rollback_procedure": "discard the task workspace outputs; restore the last verified checkpoint",
+    "assigned_worker": "worker-1",
+    "task_status": "CREATED"
+  }
+}

@@ -1,0 +1,873 @@
+# Stage 01A task definitions (PROTECTED). Packages 01-08 with CHECKPOINT A (after 04) and CHECKPOINT B (all).
+stage: S01A
+title: Deterministic LLM control, tool allocation and drift prevention
+base_commit: b4f5c2570f259c37e69a2c6905a41f47cff9c08b
+protected_paths:
+- 01-specs/**
+- 02-front-door/**
+- 03-ui-skins-capability-package/**
+- 04-deployment/**
+- 05-coolify/**
+- docs/**
+- tests/test_*.py
+- tests/fixtures/**
+- run
+- Dockerfile
+- docker-compose.coolify.yml
+- release.json
+- START-HERE.txt
+- .dockerignore
+- tests/acceptance/test_s01_acceptance.py
+- tests/acceptance/s01_helpers.py
+- tests/regression/legacy_baseline.json
+tasks:
+- id: S01A-PKG01
+  objective: Objective contracts, task contracts, shared schemas and persistence
+  depends_on: []
+  permitted_paths:
+  - backend/orchestration/contracts.py
+  - backend/orchestration/store.py
+  - backend/orchestration/states.py
+  - backend/orchestration/authorization.py
+  - backend/orchestration/config.py
+  - database/**
+  - backend/database/**
+  - backend/contracts/**
+  - backend/settings/**
+  - configuration/base.yaml
+  - configuration/local.env.example
+  - configuration/environments/**
+  - infrastructure/**
+  required_changes:
+  - persistent versioned outcome contracts
+  - 31-field task contracts with integrity hashes
+  - append-only control schema
+  acceptance_tests:
+  - id: S01A-T01
+    description: create and persist objective contract
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T01_create_and_persist_objective_contract
+  - id: S01A-T02
+    description: reject unauthorised objective modification
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T02_reject_unauthorised_objective_modification
+  - id: S01A-T06
+    description: generate and validate task contract
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T06_generate_and_validate_task_contract
+  - id: S01A-T07
+    description: reject task with unknown tools
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T07_reject_task_with_unknown_tools
+  - id: S01A-T08
+    description: reject circular dependencies
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T08_reject_circular_dependencies
+  - id: S01A-T22
+    description: reject attempts to change acceptance criteria
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T22_reject_attempts_to_change_acceptance_criteria
+  rollback: git revert the package's commits; controller state is append-only and versioned
+  verification_evidence: evidence/build_controller/runs/<run>/<test>.json
+- id: S01A-PKG02
+  objective: Numbered capability catalogue, tool discovery, tool allocation and context assembly
+  depends_on:
+  - S01A-PKG01
+  permitted_paths:
+  - backend/capability_registry/**
+  - backend/orchestration/catalogue.py
+  - backend/orchestration/allocation.py
+  - backend/orchestration/context.py
+  - configuration/tool_numbers.yaml
+  - configuration/capability_trust.json
+  - configuration/capability_trust_ed25519.pub
+  - capabilities/**
+  required_changes:
+  - permanent CCC.TTT identifiers
+  - deterministic filtering
+  - per-task pools (max 4)
+  - trusted/untrusted context
+  acceptance_tests:
+  - id: S01A-T03
+    description: permanent numbered identifiers
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T03_permanent_numbered_identifiers
+  - id: S01A-T04
+    description: identifiers preserved after restart
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T04_identifiers_preserved_after_restart
+  - id: S01A-T05
+    description: reject duplicate tool identifiers
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T05_reject_duplicate_tool_identifiers
+  - id: S01A-T09
+    description: allocate only compatible tools
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T09_allocate_only_compatible_tools
+  - id: S01A-T12
+    description: default four tool limit
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T12_default_four_tool_limit
+  - id: S01A-T45
+    description: context excludes unrelated information
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T45_context_excludes_unrelated_information
+  - id: S01A-T46
+    description: untrusted tool output cannot change restrictions
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T46_untrusted_tool_output_cannot_change_restrictions
+  rollback: git revert the package's commits; controller state is append-only and versioned
+  verification_evidence: evidence/build_controller/runs/<run>/<test>.json
+- id: S01A-PKG03
+  objective: Focus-4 controller, dependency management and persistent task states
+  depends_on:
+  - S01A-PKG01
+  - S01A-PKG02
+  permitted_paths:
+  - backend/orchestration/controller.py
+  - backend/orchestration/traceability.py
+  required_changes:
+  - Focus-4 release under row locks
+  - dependency readiness
+  - state machine in code and database
+  acceptance_tests:
+  - id: S01A-T13
+    description: four active task limit
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T13_four_active_task_limit
+  - id: S01A-T14
+    description: concurrent controllers cannot exceed limit
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T14_concurrent_controllers_cannot_exceed_limit
+  - id: S01A-T15
+    description: no execution before dependencies complete
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T15_no_execution_before_dependencies_complete
+  - id: S01A-T16
+    description: no progression after failed integration
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T16_no_progression_after_failed_integration
+  - id: S01A-T33
+    description: reject invalid state transitions
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T33_reject_invalid_state_transitions
+  - id: S01A-T52
+    description: conflicting resource modifications prevented
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T52_conflicting_resource_modifications_prevented
+  rollback: git revert the package's commits; controller state is append-only and versioned
+  verification_evidence: evidence/build_controller/runs/<run>/<test>.json
+- id: S01A-PKG04
+  objective: Execution gateway, structural validation and drift guard
+  depends_on:
+  - S01A-PKG03
+  permitted_paths:
+  - backend/orchestration/gateway.py
+  - backend/orchestration/drift.py
+  - backend/orchestration/proposals.py
+  - backend/policy_engine/**
+  - backend/authentication/**
+  - configuration/permissions.yaml
+  required_changes:
+  - 18-step gateway
+  - structured proposals
+  - deterministic drift rules
+  - argument-bound policy
+  acceptance_tests:
+  - id: S01A-T10
+    description: reject tools outside pool
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T10_reject_tools_outside_pool
+  - id: S01A-T11
+    description: worker cannot increase its own permissions
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T11_worker_cannot_increase_its_own_permissions
+  - id: S01A-T17
+    description: reject malformed proposals
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T17_reject_malformed_proposals
+  - id: S01A-T18
+    description: reject invalid tool arguments
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T18_reject_invalid_tool_arguments
+  - id: S01A-T19
+    description: reject unauthorised resource ids
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T19_reject_unauthorised_resource_ids
+  - id: S01A-T20
+    description: reject unauthorised filesystem paths
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T20_reject_unauthorised_filesystem_paths
+  - id: S01A-T21
+    description: reject unauthorised network destinations
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T21_reject_unauthorised_network_destinations
+  - id: S01A-T23
+    description: detect repeated unsuccessful patterns
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T23_detect_repeated_unsuccessful_patterns
+  - id: S01A-T31
+    description: no direct tool execution outside controller
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T31_no_direct_tool_execution_outside_controller
+  - id: S01A-T32
+    description: no unauthenticated protected execution
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T32_no_unauthenticated_protected_execution
+  rollback: git revert the package's commits; controller state is append-only and versioned
+  verification_evidence: evidence/build_controller/runs/<run>/<test>.json
+- id: S01A-CHECKPOINT-A
+  objective: Integrate and verify packages 01-04
+  depends_on:
+  - S01A-PKG01
+  - S01A-PKG02
+  - S01A-PKG03
+  - S01A-PKG04
+  permitted_paths: []
+  required_changes:
+  - all package 01-04 tests pass together
+  acceptance_tests:
+  - id: S01A-CPA-01
+    description: S01A T01-T27 together
+    timeout_s: 1200
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py
+  - id: S01A-CPA-02
+    description: unit, integration and security suites
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/unit
+    - tests/integration
+    - tests/security
+  rollback: git revert the package's commits; controller state is append-only and versioned
+  verification_evidence: evidence/build_controller/runs/<run>/<test>.json
+- id: S01A-PKG05
+  objective: Execution budgets, process supervision, cancellation and idempotency
+  depends_on:
+  - S01A-CHECKPOINT-A
+  permitted_paths:
+  - backend/capability_runtime/**
+  - configuration/controller.yaml
+  required_changes:
+  - atomic persistent budgets
+  - subreaper supervisor + tree kill
+  - persistent idempotent executions
+  acceptance_tests:
+  - id: S01A-T24
+    description: enforce maximum action budget
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T24_enforce_maximum_action_budget
+  - id: S01A-T25
+    description: enforce retry limits
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T25_enforce_retry_limits
+  - id: S01A-T26
+    description: enforce failed step limit
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T26_enforce_failed_step_limit
+  - id: S01A-T27
+    description: enforce concurrent tool limit
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance.py::test_S01A_T27_enforce_concurrent_tool_limit
+  - id: S01A-T28
+    description: enforce execution deadlines
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T28_enforce_execution_deadlines
+  - id: S01A-T29
+    description: process termination after cancellation
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T29_process_termination_after_cancellation
+  - id: S01A-T30
+    description: no local side effects after timeout
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T30_no_local_side_effects_after_timeout
+  - id: S01A-T40
+    description: no automatic repetition of uncertain external operations
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T40_no_automatic_repetition_of_uncertain_external_operations
+  - id: S01A-T44
+    description: no concurrent duplicate execution
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T44_no_concurrent_duplicate_execution
+  rollback: git revert the package's commits; controller state is append-only and versioned
+  verification_evidence: evidence/build_controller/runs/<run>/<test>.json
+- id: S01A-PKG06
+  objective: Independent verification, bounded repair and requirement traceability
+  depends_on:
+  - S01A-PKG05
+  permitted_paths:
+  - backend/orchestration/verification.py
+  required_changes:
+  - independent verifiers
+  - bounded repair tasks
+  - traceability chain
+  acceptance_tests:
+  - id: S01A-T34
+    description: reject completion without verification
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T34_reject_completion_without_verification
+  - id: S01A-T35
+    description: reject fabricated or missing evidence
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T35_reject_fabricated_or_missing_evidence
+  - id: S01A-T36
+    description: bounded repair after failed verification
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T36_bounded_repair_after_failed_verification
+  - id: S01A-T37
+    description: repair stops when budget exhausted
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T37_repair_stops_when_budget_exhausted
+  - id: S01A-T47
+    description: complete requirement traceability
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T47_complete_requirement_traceability
+  rollback: git revert the package's commits; controller state is append-only and versioned
+  verification_evidence: evidence/build_controller/runs/<run>/<test>.json
+- id: S01A-PKG07
+  objective: Checkpoints, recovery, startup integration and model adapter interfaces
+  depends_on:
+  - S01A-PKG06
+  permitted_paths:
+  - backend/orchestration/service.py
+  - backend/orchestration/models.py
+  - backend/orchestration/__init__.py
+  - backend/orchestration/__main__.py
+  - backend/api/**
+  - backend/service_manager/**
+  - configuration/controller_operator_ed25519.pub
+  required_changes:
+  - verified checkpoints
+  - restart recovery
+  - controller as essential service
+  - model adapter protocol
+  acceptance_tests:
+  - id: S01A-T38
+    description: persist and restore verified checkpoint
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T38_persist_and_restore_verified_checkpoint
+  - id: S01A-T39
+    description: consumed budgets survive restart
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T39_consumed_budgets_survive_restart
+  - id: S01A-T50
+    description: automatic controller startup and capability registration
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T50_automatic_controller_startup_and_capability_registration
+  rollback: git revert the package's commits; controller state is append-only and versioned
+  verification_evidence: evidence/build_controller/runs/<run>/<test>.json
+- id: S01A-PKG08
+  objective: Foundation defect corrections, security tests, regression tests and final integration
+  depends_on:
+  - S01A-PKG07
+  permitted_paths:
+  - backend/verification/**
+  - configuration/build/**
+  - scripts/**
+  - tests/acceptance/**
+  - tests/unit/**
+  - tests/integration/**
+  - tests/security/**
+  - tests/end_to_end/**
+  - pyproject.toml
+  - uv.lock
+  - configuration/locks/**
+  - packages/**
+  - apps/**
+  - documentation/**
+  - README.md
+  - .gitignore
+  - MASTER_IMPLEMENTATION_REGISTER.md
+  - IMPLEMENTATION_PROGRESS.md
+  - DECISIONS.md
+  - BLOCKERS.md
+  - CHANGE_MANIFEST.md
+  - STAGE_01A_VERIFICATION.md
+  - STAGE_01_VERIFICATION.md
+  required_changes:
+  - live service health
+  - topological propagation
+  - no untrusted imports
+  - DB privilege separation
+  - signed seal + OS protection
+  acceptance_tests:
+  - id: S01A-T41
+    description: dependency failures propagate
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T41_dependency_failures_propagate
+  - id: S01A-T42
+    description: service failure after startup is detected
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T42_service_failure_after_startup_is_detected
+  - id: S01A-T43
+    description: no untrusted executable imports during discovery
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T43_no_untrusted_executable_imports_during_discovery
+  - id: S01A-T51
+    description: worker cannot alter protected verification criteria
+    timeout_s: 600
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T51_worker_cannot_alter_protected_verification_criteria
+  - id: S01A-T48
+    description: existing stage01 acceptance tests
+    timeout_s: 2400
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T48_existing_stage01_acceptance_tests
+  - id: S01A-T49
+    description: existing atta application builder regression
+    timeout_s: 1800
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T49_existing_atta_application_builder_regression
+  rollback: git revert the package's commits; controller state is append-only and versioned
+  verification_evidence: evidence/build_controller/runs/<run>/<test>.json
+- id: S01A-CHECKPOINT-B
+  objective: Integrate and verify the entire Stage 01 + Stage 01A application
+  depends_on:
+  - S01A-PKG05
+  - S01A-PKG06
+  - S01A-PKG07
+  - S01A-PKG08
+  permitted_paths: []
+  required_changes:
+  - everything passes together
+  acceptance_tests:
+  - id: S01A-T53
+    description: complete multi task objective
+    timeout_s: 900
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py::test_S01A_T53_complete_multi_task_objective
+  - id: S01A-CPB-01
+    description: S01A T28-T53 together (excluding the long regression runs)
+    timeout_s: 1800
+    command:
+    - '{python}'
+    - -m
+    - pytest
+    - -q
+    - -p
+    - no:cacheprovider
+    - tests/acceptance/test_s01a_acceptance_b.py
+    - -k
+    - not T48 and not T49
+  - id: S01A-CPB-02
+    description: Vitest (TypeScript packages and apps)
+    timeout_s: 300
+    command:
+    - npx
+    - --no-install
+    - vitest
+    - run
+  - id: S01A-CPB-03
+    description: TypeScript type checking
+    timeout_s: 300
+    command:
+    - npm
+    - run
+    - typecheck
+  - id: S01A-CPB-04
+    description: Next.js production build
+    timeout_s: 600
+    command:
+    - npm
+    - run
+    - build:web
+  - id: S01A-CPB-05
+    description: Full-stack browser end-to-end
+    timeout_s: 600
+    command:
+    - npx
+    - --no-install
+    - playwright
+    - test
+    - -c
+    - tests/end_to_end/playwright.config.ts
+  - id: S01A-CPB-06
+    description: Mobile type check
+    timeout_s: 300
+    command:
+    - npm
+    - --prefix
+    - apps/mobile
+    - run
+    - typecheck
+  rollback: git revert the package's commits; controller state is append-only and versioned
+  verification_evidence: evidence/build_controller/runs/<run>/<test>.json

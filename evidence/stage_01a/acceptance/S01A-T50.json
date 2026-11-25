@@ -1,0 +1,41 @@
+{
+  "controller": {
+    "ready": true,
+    "components": {
+      "controller": {
+        "ok": true,
+        "detail": "svc_01M88FVXXY6G5T7AAQTTRNTKD5"
+      },
+      "capability_registry": {
+        "ok": true,
+        "detail": "1 executable"
+      },
+      "contract_storage": {
+        "ok": true,
+        "detail": "control schema reachable"
+      },
+      "checkpoint_storage": {
+        "ok": true,
+        "detail": "control.checkpoints reachable"
+      },
+      "tool_catalogue": {
+        "ok": true,
+        "detail": "1 numbered tools, 0 unnumbered"
+      },
+      "verification_service": {
+        "ok": true,
+        "detail": "independent-verifier/1"
+      },
+      "execution_worker": {
+        "ok": true,
+        "detail": "supervised process runtime"
+      },
+      "security_enforcement": {
+        "ok": true,
+        "detail": "anonymous tool.execute is denied"
+      }
+    },
+    "active_tasks": 59,
+    "blocked_tasks": 21
+  }
+}

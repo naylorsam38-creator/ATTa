@@ -19,6 +19,12 @@ class ErrorCode(str, Enum):
     TIMEOUT = "timeout"
     RATE_LIMITED = "rate_limited"
     INTERNAL = "internal_error"
+    APPROVAL_INVALID = "approval_invalid"
+    EXECUTION_IN_PROGRESS = "execution_in_progress"
+    OUTCOME_UNKNOWN = "outcome_unknown"
+    VERIFICATION_FAILED = "verification_failed"
+    EXECUTION_FAILED = "execution_failed"
+    CANCELLED = "cancelled"
 
 
 HTTP_STATUS = {
@@ -26,6 +32,9 @@ HTTP_STATUS = {
     ErrorCode.PERMISSION_DENIED: 403, ErrorCode.CONFLICT: 409, ErrorCode.IDEMPOTENCY_CONFLICT: 409,
     ErrorCode.NOT_READY: 503, ErrorCode.CAPABILITY_UNAVAILABLE: 503, ErrorCode.TIMEOUT: 504,
     ErrorCode.RATE_LIMITED: 429, ErrorCode.INTERNAL: 500,
+    ErrorCode.APPROVAL_INVALID: 409, ErrorCode.EXECUTION_IN_PROGRESS: 409,
+    ErrorCode.OUTCOME_UNKNOWN: 409, ErrorCode.VERIFICATION_FAILED: 502, ErrorCode.EXECUTION_FAILED: 502,
+    ErrorCode.CANCELLED: 409,
 }
 
 

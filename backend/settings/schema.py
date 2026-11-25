@@ -30,17 +30,24 @@ class DatabaseSettings(_Strict):
     host: str = "127.0.0.1"
     port: int = Field(default=5432, ge=1, le=65535)
     name: str = "atta"
-    user: str = "atta"
+    user: str = "atta_app"              # runtime role: data access only (D-024)
     password: SecretStr | None = None
+    migration_user: str = "atta"        # schema owner, used only by `python -m backend.database migrate`
+    migration_password: SecretStr | None = None
     sslmode: Literal["disable", "allow", "prefer", "require", "verify-ca", "verify-full"] = "prefer"
     connect_timeout_s: int = Field(default=3, ge=1, le=60)
     require_pgvector: bool = True
 
-    def conninfo(self) -> str:
-        parts = {"host": self.host, "port": str(self.port), "dbname": self.name, "user": self.user,
-                 "sslmode": self.sslmode, "connect_timeout": str(self.connect_timeout_s)}
-        if self.password is not None:
-            parts["password"] = self.password.get_secret_value()
+    def conninfo(self, *, migration: bool = False, read_only: bool = False) -> str:
+        user = self.migration_user if migration else self.user
+        secret = self.migration_password if migration else self.password
+        parts = {"host": self.host, "port": str(self.port), "dbname": self.name, "user": user,
+                 "sslmode": self.sslmode, "connect_timeout": str(self.connect_timeout_s),
+                 "application_name": "atta-migrate" if migration else "atta-runtime"}
+        if read_only:
+            parts["options"] = "-c default_transaction_read_only=on"
+        if secret is not None:
+            parts["password"] = secret.get_secret_value()
         return " ".join(f"{k}='{v.replace(chr(39), chr(92) + chr(39))}'" for k, v in parts.items())
 
 
@@ -79,6 +86,13 @@ class ModelSettings(_Strict):
 class CapabilitySettings(_Strict):
     directories: list[str] = Field(default_factory=lambda: ["capabilities"])
     healthcheck_timeout_s: float = Field(default=5.0, gt=0, le=120)
+    # Operator-signed list of trusted capability packages (id, version, package digest, approved permissions).
+    trust_store: str = "configuration/capability_trust.json"
+    trust_public_key: str = "configuration/capability_trust_ed25519.pub"
+    tool_numbers: str = "configuration/tool_numbers.yaml"
+    catalogue_namespace: str = "default"
+    service_health_max_age_s: float = Field(default=5.0, gt=0, le=300)
+    execution_lease_s: float = Field(default=900.0, gt=0)
 
 
 class WorkerSettings(_Strict):
@@ -105,10 +119,11 @@ class LoggingSettings(_Strict):
 
 
 class SecuritySettings(_Strict):
-    # Stage 01: protected operations are denied until Stage 02 authentication/authorisation exists.
+    # Anything the policy engine cannot positively authorise is denied.
     default_decision: Literal["deny"] = "deny"
     cors_origins: list[str] = Field(default_factory=lambda: ["http://127.0.0.1:3000", "http://localhost:3000"])
     allow_paid_infrastructure: bool = False
+    permissions_file: str = "configuration/permissions.yaml"
 
 
 class HealthProbeSpec(_Strict):
@@ -172,8 +187,8 @@ class Settings(_Strict):
     @model_validator(mode="after")
     def _security(self):
         if self.api.host not in ("127.0.0.1", "localhost", "::1") and not self.api.public_bind_allowed:
-            raise ValueError(f"api.host={self.api.host} would expose unfinished endpoints; set "
-                             "api.public_bind_allowed only once Stage 02 authentication is in place")
+            raise ValueError(f"api.host={self.api.host} exposes the API beyond this machine; set "
+                             "api.public_bind_allowed explicitly (and terminate TLS in front of it)")
         if self.environment == Environment.PRODUCTION:
             if self.database.password is None:
                 raise ValueError("production requires database.password (ATTA_DATABASE_PASSWORD)")

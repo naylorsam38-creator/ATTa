@@ -30,7 +30,7 @@ SERVICE_NAME = "atta-api"
 
 
 def default_dependency_probe(settings: Settings) -> Callable[[], list[DependencyHealth]]:
-    items = [(n, s) for n, s in settings.services.items() if s.mode != "disabled" and n != "api"]
+    items = [(n, s) for n, s in settings.services.items() if s.mode != "disabled" and n not in ("api", "controller")]
 
     def probe() -> list[DependencyHealth]:
         # Probes run concurrently so readiness latency is bounded by the slowest probe, not their sum.
@@ -51,15 +51,16 @@ def create_app(settings: Settings | None = None, *, policy: PolicyEngine | None 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         if app.state.registry is None:
-            initial = {d.name: d.status is HealthStatus.HEALTHY for d in probe()}
-            app.state.registry = CapabilityRegistry(
-                [resolve_path(d) for d in settings.capabilities.directories], policy=policy,
-                service_available=lambda n: initial.get(n, False),
-                healthcheck_timeout_s=settings.capabilities.healthcheck_timeout_s,
-                max_timeout_s=settings.deadlines.max_execution_timeout_s)
-            app.state.registry.discover()
+            # One registry, one controller, live service health (correction 3) — built by the single factory.
+            from backend.orchestration.service import build_controller_service
+            svc = build_controller_service(settings, policy=policy)
+            app.state.controller_service = svc
+            app.state.registry = svc.registry
         log.info("api started", extra={"environment": settings.environment.value, "version": __version__})
         yield
+        svc = getattr(app.state, "controller_service", None)
+        if svc and svc.monitor:
+            svc.monitor.stop()
         log.info("api stopping")
 
     dev = settings.environment.value in ("development", "test")
@@ -67,6 +68,7 @@ def create_app(settings: Settings | None = None, *, policy: PolicyEngine | None 
                   openapi_url="/v1/openapi.json" if dev else None, docs_url="/v1/docs" if dev else None,
                   redoc_url=None)
     app.state.settings, app.state.policy, app.state.registry = settings, policy, registry
+    app.state.controller_service = None
     app.state.dependency_probe = probe
 
     app.add_middleware(CORSMiddleware, allow_origins=settings.security.cors_origins, allow_credentials=False,
@@ -146,8 +148,19 @@ def create_app(settings: Settings | None = None, *, policy: PolicyEngine | None 
         report = ReadinessReport.from_dependencies(settings.environment.value, deps, caps)
         return JSONResponse(report.model_dump(mode="json"), status_code=200 if report.ready else 503)
 
+    @app.get("/v1/health/controller", tags=["health"])
+    def controller_health(request: Request, _: RequestContext = Depends(authorize("health.controller"))):
+        """Runtime controller readiness (Stage 01A §23). 503 = autonomous execution is unavailable."""
+        svc = request.app.state.controller_service
+        if svc is None:
+            body = {"ready": False, "components": {"controller": {"ok": False, "detail": "not started"}},
+                    "active_tasks": None, "blocked_tasks": None}
+        else:
+            body = svc.health()
+        return JSONResponse(body, status_code=200 if body["ready"] else 503)
+
     @app.get("/v1/system/version", tags=["system"])
     def version(_: RequestContext = Depends(authorize("system.version"))):
-        return {"service": SERVICE_NAME, "version": __version__, "api_version": "v1", "stage": "S01"}
+        return {"service": SERVICE_NAME, "version": __version__, "api_version": "v1", "stage": "S01A"}
 
     return app

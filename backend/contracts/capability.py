@@ -20,6 +20,8 @@ class AvailabilityState(str, Enum):
     DEPENDENCY_MISSING = "dependency_missing"
     UNHEALTHY = "unhealthy"
     REJECTED_DUPLICATE = "rejected_duplicate"
+    UNTRUSTED = "untrusted"              # not in the operator-signed trust store (handlers never loaded)
+    INTEGRITY_FAILED = "integrity_failed"  # package bytes differ from the trusted digest
 
 
 class CapabilityAvailability(BaseModel):

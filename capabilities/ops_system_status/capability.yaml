@@ -32,3 +32,30 @@ dependencies:
   python: [psutil]
 timeout_s: 10
 enabled: true
+tools:
+  - name: report
+    description: Report platform, Python version, CPU count, memory and free disk space of one directory's volume.
+    task_types: [ops.system_status]
+    operations: [read]
+    handler: handler:execute
+    verify: handler:verify
+    input_schema: {type: object, additionalProperties: false, properties: {path: {type: string}}}
+    output_schema:
+      type: object
+      additionalProperties: false
+      required: [platform, python, cpu_count, memory_total_mb, disk_free_mb, disk_total_mb, checked_at]
+      properties:
+        platform: {type: string}
+        python: {type: string}
+        cpu_count: {type: integer, minimum: 1}
+        memory_total_mb: {type: integer, minimum: 1}
+        disk_free_mb: {type: integer, minimum: 0}
+        disk_total_mb: {type: integer, minimum: 1}
+        checked_at: {type: string}
+    permissions: [ops.system.read]
+    risk: low
+    resource_types: [host]
+    path_arguments: [path]
+    timeout_s: 10
+    cancellable: true
+    idempotency: idempotent

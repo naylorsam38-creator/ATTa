@@ -1,0 +1,14 @@
+{
+  "violations": [
+    {
+      "rule": "unknown_tool",
+      "field": "tool_id",
+      "detail": "039.123 is not a registered tool",
+      "permitted": [
+        "014.001",
+        "014.003",
+        "014.004"
+      ]
+    }
+  ]
+}

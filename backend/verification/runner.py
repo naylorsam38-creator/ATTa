@@ -9,7 +9,18 @@ import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-from backend.contracts import iso_utc
+
+
+def iso_utc() -> str:
+    from datetime import datetime, timezone
+    return datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+
+
+def new_id(prefix: str) -> str:
+    """Same '<prefix>_<ULID>' shape as backend.contracts.identifiers, without importing worker-editable code."""
+    alphabet = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"
+    value = (int(time.time() * 1000) << 80) | int.from_bytes(os.urandom(10), "big")
+    return prefix + "_" + "".join(alphabet[(value >> (5 * i)) & 31] for i in reversed(range(26)))
 
 MAX_CAPTURE = 200_000  # characters kept per stream (tail); the hash covers the full output
 

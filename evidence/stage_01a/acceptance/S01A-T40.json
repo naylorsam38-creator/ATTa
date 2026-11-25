@@ -1,0 +1,23 @@
+{
+  "recovery": {
+    "checkpoint": null,
+    "actions": [
+      {
+        "execution": "exe_01M88FK1MSH65H4ZZGJ6M6V47N",
+        "state": "outcome_unknown"
+      },
+      {
+        "task": "TASK-0001",
+        "state": "BLOCKED"
+      }
+    ]
+  },
+  "reconcile": {
+    "execution_id": "exe_01M88FK1MSH65H4ZZGJ6M6V47N",
+    "state": "outcome_unknown",
+    "reconciled": true,
+    "observed": {
+      "applied": true
+    }
+  }
+}

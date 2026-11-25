@@ -1,0 +1,13 @@
+manifest_version: 1
+id: test.chained
+version: 1.0.0
+description: TEST FIXTURE - depends on test.unhealthy; must be unavailable because its dependency is unhealthy.
+requirement: CAP-40
+handlers: {execute: handler:noop, healthcheck: handler:healthcheck, verify: handler:verify}
+input_schema: {type: object}
+output_schema: {type: object}
+permissions: [workspace.read]
+risk: low
+dependencies: {capabilities: [test.unhealthy], services: [], python: []}
+timeout_s: 10
+enabled: true

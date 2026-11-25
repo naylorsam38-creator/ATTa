@@ -1,0 +1,17 @@
+manifest_version: 1
+id: test.needs_redis
+version: 1.0.0
+description: TEST FIXTURE - depends on the redis service; must become unavailable when redis fails after startup.
+requirement: CAP-40
+handlers: {execute: handler:noop, healthcheck: handler:healthcheck, verify: handler:verify}
+input_schema: {type: object}
+output_schema: {type: object}
+permissions: [workspace.read]
+risk: low
+dependencies: {capabilities: [], services: [redis], python: []}
+timeout_s: 10
+enabled: true
+tools:
+  - {name: noop, description: Harmless no-op that needs redis to be healthy., task_types: [redis.test], operations: [noop],
+     handler: "handler:noop", verify: "handler:verify", input_schema: {type: object}, output_schema: {type: object},
+     permissions: [workspace.read], risk: low, timeout_s: 5, cancellable: true, idempotency: idempotent}

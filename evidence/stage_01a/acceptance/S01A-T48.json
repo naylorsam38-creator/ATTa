@@ -1,0 +1,56 @@
+{
+  "results": {
+    "test_S01_T01_repository_structure": "passed",
+    "test_S01_T02_clean_environment_install": "passed",
+    "test_S01_T03_start_service_manager": "passed",
+    "test_S01_T04_backend_liveness": "passed",
+    "test_S01_T05_readiness_reflects_dependency_health": "passed",
+    "test_S01_T06_discover_valid_capability_manifest": "failed",
+    "test_S01_T07_reject_invalid_capability_manifest": "failed",
+    "test_S01_T08_reject_duplicate_capability_identifiers": "failed",
+    "test_S01_T09_new_capability_registers_without_changing_start": "failed",
+    "test_S01_T10_detect_unavailable_dependency": "passed",
+    "test_S01_T11_no_false_readiness_after_essential_failure": "passed",
+    "test_S01_T12_build_controller_rejects_progression_after_failed_test": "passed",
+    "test_S01_T13_protected_operations_default_to_deny": "failed",
+    "test_S01_T14_stop_and_restart_cleanly": "passed",
+    "test_S01_T15_requirement_register_complete": "passed"
+  },
+  "with_trust_satisfied": {
+    "test_S01_T06_discover_valid_capability_manifest": "failed",
+    "test_S01_T07_reject_invalid_capability_manifest": "failed",
+    "test_S01_T08_reject_duplicate_capability_identifiers": "failed",
+    "test_S01_T13_protected_operations_default_to_deny": "failed"
+  },
+  "causes": {
+    "test_S01_T06_discover_valid_capability_manifest": "with trust satisfied, fails only where it inspects in-process handler objects: handlers are never imported into the API process any more (correction 4, S01A-T43)",
+    "test_S01_T07_reject_invalid_capability_manifest": "with trust satisfied, fails only at reg.execute(): direct execution was removed (correction: gateway-only execution, S01A-T31)",
+    "test_S01_T08_reject_duplicate_capability_identifiers": "with trust satisfied, fails only at reg.execute(): direct execution was removed (correction: gateway-only execution, S01A-T31)",
+    "test_S01_T13_protected_operations_default_to_deny": "with trust satisfied, fails only at reg.execute(): direct execution was removed (correction: gateway-only execution, S01A-T31)",
+    "test_S01_T09_new_capability_registers_without_changing_start": "new capability registers automatically but is reported 'untrusted' until the operator trusts it"
+  },
+  "superseded_by": {
+    "test_S01_T06_discover_valid_capability_manifest": [
+      "S01A-T43",
+      "S01A-T03",
+      "unit:test_untrusted_and_tampered"
+    ],
+    "test_S01_T07_reject_invalid_capability_manifest": [
+      "S01A-T05",
+      "S01A-T43",
+      "S01A-T31"
+    ],
+    "test_S01_T08_reject_duplicate_capability_identifiers": [
+      "S01A-T05",
+      "S01A-T31"
+    ],
+    "test_S01_T09_new_capability_registers_without_changing_start": [
+      "S01A-T50"
+    ],
+    "test_S01_T13_protected_operations_default_to_deny": [
+      "S01A-T31",
+      "S01A-T32",
+      "S01A-T11"
+    ]
+  }
+}

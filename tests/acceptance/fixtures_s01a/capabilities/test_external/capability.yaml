@@ -1,0 +1,19 @@
+manifest_version: 1
+id: test.external
+version: 1.0.0
+description: TEST FIXTURE - records a message in a local ledger file that stands in for an external system.
+requirement: CAP-21
+handlers: {execute: handler:send, healthcheck: handler:healthcheck, verify: handler:verify, reconcile: handler:reconcile}
+input_schema: {type: object}
+output_schema: {type: object}
+permissions: [external.simulated]
+risk: low
+dependencies: {capabilities: [], services: [], python: []}
+timeout_s: 10
+enabled: true
+tools:
+  - {name: send, description: Append a message to the stand-in external ledger then wait., task_types: [external.test],
+     operations: [send], handler: "handler:send", verify: "handler:verify", path_arguments: [ledger],
+     input_schema: {type: object, additionalProperties: false, required: [ledger, message, sleep], properties: {ledger: {type: string}, message: {type: string}, sleep: {type: number}}},
+     output_schema: {type: object, required: [sent], properties: {sent: {type: boolean}}},
+     permissions: [external.simulated], risk: low, timeout_s: 2, cancellable: true, idempotency: external_uncertain}

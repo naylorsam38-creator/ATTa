@@ -1,0 +1,109 @@
+{
+  "trace": {
+    "objective_id": "obj_01M88FKRYKRNCFKRPC2SYD3RG9",
+    "objective_version": 2,
+    "original_instructions_sha256": "5bfbdbc361d8c687d8eefb4b02f89f75f3f40745467b5cdbdf45ae6e7f51a08f",
+    "requirements": {
+      "FR-01": [
+        {
+          "task_id": "TASK-0001",
+          "tool_pool": [
+            "014.001",
+            "014.003",
+            "014.004"
+          ],
+          "contract_hash": "e5eae025bfed4c2596928488a293cb02bf9c8aa3b44e84aca901a5870863fcb1",
+          "proposals": [
+            "p-TASK-0001-e3c1cc65"
+          ],
+          "policy_decisions": [
+            {
+              "reason": "low-risk tool within the controller's granted permissions",
+              "binding": {
+                "tool_id": "014.001",
+                "execution_id": "exe_01M88FKSDJAR90AS7JHPGFAB72",
+                "contract_hash": "e5eae025bfed4c2596928488a293cb02bf9c8aa3b44e84aca901a5870863fcb1",
+                "arguments_hash": "b86f71abe48a5e51bbc752b090b7b7e79f67f658b4834543531e884135da4c38"
+              },
+              "decision": "allow"
+            }
+          ],
+          "executions": [
+            "exe_01M88FKSDJAR90AS7JHPGFAB72"
+          ],
+          "resulting_state": "COMPLETED",
+          "verifications": [
+            {
+              "criterion_id": "TC-01",
+              "passed": true,
+              "evidence_id": "evd_01M88FKSRA6TF93FXJHS1GH05Z"
+            },
+            {
+              "criterion_id": "TC-02",
+              "passed": true,
+              "evidence_id": "evd_01M88FKSS3EZCZA8A937MAJKES"
+            }
+          ],
+          "missing": []
+        }
+      ],
+      "FR-02": [
+        {
+          "task_id": "TASK-0002",
+          "tool_pool": [
+            "014.001",
+            "014.003",
+            "014.004"
+          ],
+          "contract_hash": "f7d1e12ee50d11c723e80898b79b5394e2484621a3adaeac797557746333cd93",
+          "proposals": [
+            "p-TASK-0002-330d634d"
+          ],
+          "policy_decisions": [
+            {
+              "reason": "low-risk tool within the controller's granted permissions",
+              "binding": {
+                "tool_id": "014.001",
+                "execution_id": "exe_01M88FKT5NG62SM35F21VFH4XX",
+                "contract_hash": "f7d1e12ee50d11c723e80898b79b5394e2484621a3adaeac797557746333cd93",
+                "arguments_hash": "5fba35ef19d54e1d1ad347982d39280c4a0645cc99e09833c603d407ad6d2902"
+              },
+              "decision": "allow"
+            }
+          ],
+          "executions": [
+            "exe_01M88FKT5NG62SM35F21VFH4XX"
+          ],
+          "resulting_state": "COMPLETED",
+          "verifications": [
+            {
+              "criterion_id": "TC-01",
+              "passed": true,
+              "evidence_id": "evd_01M88FKTGN86RV9D9267N5124Y"
+            },
+            {
+              "criterion_id": "TC-02",
+              "passed": true,
+              "evidence_id": "evd_01M88FKTHERXKS1M07WFNWXPC0"
+            }
+          ],
+          "missing": []
+        }
+      ]
+    },
+    "deliverables": {
+      "DEL-01": {
+        "requirement_ids": [
+          "FR-01",
+          "FR-02"
+        ],
+        "verified": true
+      }
+    },
+    "gaps": [],
+    "complete": true
+  },
+  "gap_example": [
+    "FR-02 has no assigned task"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "repeated": [
+    "repeated_failure"
+  ],
+  "circular": [
+    "circular_pattern"
+  ],
+  "no_progress": [
+    "no_progress"
+  ]
+}

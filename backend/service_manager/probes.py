@@ -34,21 +34,56 @@ def probe_http(url: str, timeout: float) -> str:
     return f"HTTP {r.status_code} from {url}"
 
 
+PRIVILEGE_CHECK = """
+SELECT r.rolsuper, r.rolbypassrls, r.rolcreaterole, r.rolcreatedb,
+       has_database_privilege(current_user, current_database(), 'CREATE'),
+       has_schema_privilege(current_user, 'platform', 'CREATE'),
+       has_schema_privilege(current_user, 'public', 'CREATE'),
+       has_schema_privilege(current_user, 'control', 'CREATE'),
+       has_table_privilege(current_user, 'public.atta_schema_migrations', 'INSERT,UPDATE,DELETE,TRUNCATE'),
+       (SELECT count(*) FROM pg_tables WHERE schemaname IN ('platform', 'public', 'control')
+          AND pg_has_role(current_user, tableowner, 'USAGE'))
+FROM pg_roles r WHERE r.rolname = current_user
+"""
+PRIVILEGE_NAMES = ("is superuser", "can bypass row-level security", "can create roles", "can create databases",
+                   "can create schemas", "can create objects in schema platform", "can create objects in schema public",
+                   "can create objects in schema control",
+                   "can modify migration records", "owns (or inherits ownership of) application tables")
+
+
+def runtime_privilege_problems(conn) -> list[str]:
+    """Correction 7: the runtime role must not be able to alter schemas, disable RLS or touch migration records.
+    Owning a table is what allows ALTER TABLE ... DISABLE ROW LEVEL SECURITY, so ownership counts as a problem."""
+    row = conn.execute(PRIVILEGE_CHECK).fetchone()
+    return [name for name, bad in zip(PRIVILEGE_NAMES, row) if bad]
+
+
 def probe_postgres(settings: Settings, timeout: float) -> str:
     import psycopg
+    from backend.database.migrate import expected
     db = settings.database
-    with psycopg.connect(db.conninfo(), connect_timeout=max(1, int(timeout))) as conn:
+    with psycopg.connect(db.conninfo(read_only=True), connect_timeout=max(1, int(timeout))) as conn:
         version = conn.execute("SELECT current_setting('server_version')").fetchone()[0]
+        detail = f"PostgreSQL {version}"
         if db.require_pgvector:
             row = conn.execute("SELECT installed_version, default_version FROM pg_available_extensions "
                                "WHERE name = 'vector'").fetchone()
             if row is None:
-                raise RuntimeError(f"PostgreSQL {version} reachable but the pgvector extension is not available")
+                raise RuntimeError(f"{detail} reachable but the pgvector extension is not available")
             if row[0] is None:
                 raise RuntimeError(f"pgvector {row[1]} available but not installed in database '{db.name}' "
-                                   "(apply database/migrations)")
-            return f"PostgreSQL {version}, pgvector {row[0]}"
-        return f"PostgreSQL {version}"
+                                   "(run database/bootstrap.sql)")
+            detail += f", pgvector {row[0]}"
+        if conn.execute("SELECT to_regclass('public.atta_schema_migrations')").fetchone()[0] is None:
+            raise RuntimeError(f"{detail}: schema not migrated (python -m backend.database migrate)")
+        applied = dict(conn.execute("SELECT name, checksum FROM public.atta_schema_migrations").fetchall())
+        pending = [n for n, d in expected() if applied.get(n) != d]
+        if pending:
+            raise RuntimeError(f"{detail}: migrations pending or altered: {', '.join(pending)}")
+        problems = runtime_privilege_problems(conn)
+        if problems:
+            raise RuntimeError(f"runtime database role '{db.user}' is over-privileged: {'; '.join(problems)}")
+        return f"{detail}, schema current ({len(applied)} migrations), runtime role '{db.user}' least-privileged"
 
 
 def probe_redis(settings: Settings, timeout: float) -> str:

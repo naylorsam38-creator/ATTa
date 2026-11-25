@@ -1,0 +1,12 @@
+{
+  "blocked": [
+    "task needs 5 tools; limit is 4 \u2014 decompose the task or configure a trusted exception"
+  ],
+  "exception_pool": [
+    "014.001",
+    "014.002",
+    "014.003",
+    "014.004",
+    "014.005"
+  ]
+}

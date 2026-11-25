@@ -1,7 +1,7 @@
 # Authoritative requirement register (40 mandatory capabilities). MASTER_IMPLEMENTATION_REGISTER.md is rendered from this file.
-version: 1
+version: 2
 updated: '2026-11-25'
-current_stage: S01
+current_stage: S01A
 status_vocabulary:
 - NOT_STARTED
 - PARTIAL
@@ -38,6 +38,8 @@ requirements:
   - Per-tenant isolation (RLS)
   - Prompt/response size limits
   - Output streamed through policy engine
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S03-CAP01-T01: primary user journey works end to end'
   - 'S03-CAP01-T02: security controls enforced (negative tests)'
@@ -67,14 +69,16 @@ requirements:
   - Only operator-registered endpoints selectable
   - API keys read from env/secret store only
   - Paid endpoints require allow_paid_infrastructure
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S03-CAP02-T01: primary user journey works end to end'
   - 'S03-CAP02-T02: security controls enforced (negative tests)'
   - 'S03-CAP02-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
-  status_note: Stage 01 only configures model endpoints (Ollama, llama.cpp, vLLM) and probes their health; no selection logic
-    yet.
+  status_note: Stage 01 configures model endpoints and probes their health; Stage 01A defines the model-independent adapter
+    interface (backend/orchestration/models.py). No inference or selection logic exists yet (Stage 03).
 - id: CAP-03
   title: Extended thinking
   implementation_stage: S03
@@ -95,6 +99,8 @@ requirements:
   security_controls:
   - Thinking budget bounded by deadlines
   - Reasoning content tenant-scoped
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S03-CAP03-T01: primary user journey works end to end'
   - 'S03-CAP03-T02: security controls enforced (negative tests)'
@@ -125,6 +131,8 @@ requirements:
   - Owner-only access
   - Soft delete with retention policy
   - Idempotent mutations
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S04-CAP04-T01: primary user journey works end to end'
   - 'S04-CAP04-T02: security controls enforced (negative tests)'
@@ -155,6 +163,8 @@ requirements:
   - User-controlled opt-in
   - Per-user encryption scope
   - Forget is verifiable deletion
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S05-CAP05-T01: primary user journey works end to end'
   - 'S05-CAP05-T02: security controls enforced (negative tests)'
@@ -183,6 +193,8 @@ requirements:
   security_controls:
   - Instructions treated as user data, never as system policy
   - Length limits
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S05-CAP06-T01: primary user journey works end to end'
   - 'S05-CAP06-T02: security controls enforced (negative tests)'
@@ -211,6 +223,8 @@ requirements:
   security_controls:
   - Project membership checks
   - Tenant RLS
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S06-CAP07-T01: primary user journey works end to end'
   - 'S06-CAP07-T02: security controls enforced (negative tests)'
@@ -240,6 +254,8 @@ requirements:
   - Ingestion in sandboxed worker
   - Content-type validation
   - Embeddings tenant-scoped (pgvector + RLS)
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S06-CAP08-T01: primary user journey works end to end'
   - 'S06-CAP08-T02: security controls enforced (negative tests)'
@@ -270,6 +286,8 @@ requirements:
   - Malware scanning hook
   - Pre-signed URLs with short expiry
   - S3 bucket private by default
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S06-CAP09-T01: primary user journey works end to end'
   - 'S06-CAP09-T02: security controls enforced (negative tests)'
@@ -296,6 +314,8 @@ requirements:
   security_controls:
   - Image re-encoding to strip active content
   - EXIF location stripped
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S07-CAP10-T01: primary user journey works end to end'
   - 'S07-CAP10-T02: security controls enforced (negative tests)'
@@ -323,6 +343,8 @@ requirements:
   - Egress allow-list
   - Result content treated as untrusted data
   - Rate limits
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S08-CAP11-T01: primary user journey works end to end'
   - 'S08-CAP11-T02: security controls enforced (negative tests)'
@@ -352,6 +374,8 @@ requirements:
   - Temporal workflow with budget limits
   - Per-task cost ceiling
   - Untrusted-content isolation
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S08-CAP12-T01: primary user journey works end to end'
   - 'S08-CAP12-T02: security controls enforced (negative tests)'
@@ -381,6 +405,8 @@ requirements:
   security_controls:
   - Sandboxed iframe with CSP
   - No ambient credentials in artifact runtime
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S09-CAP13-T01: primary user journey works end to end'
   - 'S09-CAP13-T02: security controls enforced (negative tests)'
@@ -406,6 +432,8 @@ requirements:
   security_controls:
   - Generated files scanned before download
   - Template injection guards
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S10-CAP14-T01: primary user journey works end to end'
   - 'S10-CAP14-T02: security controls enforced (negative tests)'
@@ -431,6 +459,8 @@ requirements:
   security_controls:
   - Formula injection (CSV) neutralised
   - Size limits
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S10-CAP15-T01: primary user journey works end to end'
   - 'S10-CAP15-T02: security controls enforced (negative tests)'
@@ -456,6 +486,8 @@ requirements:
   security_controls:
   - Embedded media validated
   - Size limits
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S10-CAP16-T01: primary user journey works end to end'
   - 'S10-CAP16-T02: security controls enforced (negative tests)'
@@ -485,6 +517,8 @@ requirements:
   security_controls:
   - Sandboxed rendering
   - Asset upload via CAP-09 controls
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S09-CAP17-T01: primary user journey works end to end'
   - 'S09-CAP17-T02: security controls enforced (negative tests)'
@@ -515,6 +549,8 @@ requirements:
   - Builds in isolated containers
   - Qualification gate before deploy (existing ATTa QUALIFIED gate)
   - Deployment needs approval
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S11-CAP18-T01: primary user journey works end to end'
   - 'S11-CAP18-T02: security controls enforced (negative tests)'
@@ -543,6 +579,8 @@ requirements:
   - Container/microVM sandbox, no host mounts
   - CPU/memory/time limits from workers settings
   - No network by default
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S11-CAP19-T01: primary user journey works end to end'
   - 'S11-CAP19-T02: security controls enforced (negative tests)'
@@ -551,7 +589,7 @@ requirements:
   evidence: []
 - id: CAP-20
   title: Coding agent
-  implementation_stage: S12
+  implementation_stage: S15
   dependencies:
   - CAP-19
   - CAP-26
@@ -573,15 +611,17 @@ requirements:
   - Writes limited to approved workspace
   - Every file change reviewed/approved
   - Build-controller style protected tests
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S12-CAP20-T01: primary user journey works end to end'
-  - 'S12-CAP20-T02: security controls enforced (negative tests)'
-  - 'S12-CAP20-T03: regression suite unchanged'
+  - 'S15-CAP20-T01: primary user journey works end to end'
+  - 'S15-CAP20-T02: security controls enforced (negative tests)'
+  - 'S15-CAP20-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-21
   title: Connectors
-  implementation_stage: S13
+  implementation_stage: S18
   dependencies:
   - CAP-35
   - CAP-39
@@ -602,15 +642,17 @@ requirements:
   - OAuth with PKCE
   - Tokens encrypted at rest
   - Least-privilege scopes
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S13-CAP21-T01: primary user journey works end to end'
-  - 'S13-CAP21-T02: security controls enforced (negative tests)'
-  - 'S13-CAP21-T03: regression suite unchanged'
+  - 'S18-CAP21-T01: primary user journey works end to end'
+  - 'S18-CAP21-T02: security controls enforced (negative tests)'
+  - 'S18-CAP21-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-22
   title: MCP
-  implementation_stage: S13
+  implementation_stage: S18
   dependencies:
   - CAP-21
   - CAP-39
@@ -630,15 +672,17 @@ requirements:
   - Tool calls pass policy engine
   - Server allow-list
   - Tool output treated as untrusted
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S13-CAP22-T01: primary user journey works end to end'
-  - 'S13-CAP22-T02: security controls enforced (negative tests)'
-  - 'S13-CAP22-T03: regression suite unchanged'
+  - 'S18-CAP22-T01: primary user journey works end to end'
+  - 'S18-CAP22-T02: security controls enforced (negative tests)'
+  - 'S18-CAP22-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-23
   title: Skills
-  implementation_stage: S14
+  implementation_stage: S12
   dependencies:
   - CAP-24
   - CAP-39
@@ -658,15 +702,17 @@ requirements:
   security_controls:
   - Manifest validation (S01 registry)
   - Signed skill packages
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S14-CAP23-T01: primary user journey works end to end'
-  - 'S14-CAP23-T02: security controls enforced (negative tests)'
-  - 'S14-CAP23-T03: regression suite unchanged'
+  - 'S12-CAP23-T01: primary user journey works end to end'
+  - 'S12-CAP23-T02: security controls enforced (negative tests)'
+  - 'S12-CAP23-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-24
   title: Plugins
-  implementation_stage: S14
+  implementation_stage: S12
   dependencies:
   - CAP-23
   - CAP-39
@@ -686,15 +732,17 @@ requirements:
   - Signature verification
   - Permission review at install
   - No self-granted permissions (S01 policy rule)
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S14-CAP24-T01: primary user journey works end to end'
-  - 'S14-CAP24-T02: security controls enforced (negative tests)'
-  - 'S14-CAP24-T03: regression suite unchanged'
+  - 'S12-CAP24-T01: primary user journey works end to end'
+  - 'S12-CAP24-T02: security controls enforced (negative tests)'
+  - 'S12-CAP24-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-25
   title: Cowork
-  implementation_stage: S15
+  implementation_stage: S14
   dependencies:
   - CAP-26
   - CAP-29
@@ -715,15 +763,17 @@ requirements:
   security_controls:
   - Human approval for side effects
   - Workspace-scoped file access
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S15-CAP25-T01: primary user journey works end to end'
-  - 'S15-CAP25-T02: security controls enforced (negative tests)'
-  - 'S15-CAP25-T03: regression suite unchanged'
+  - 'S14-CAP25-T01: primary user journey works end to end'
+  - 'S14-CAP25-T02: security controls enforced (negative tests)'
+  - 'S14-CAP25-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-26
   title: Parallel agents
-  implementation_stage: S15
+  implementation_stage: S14
   dependencies:
   - CAP-01
   - CAP-40
@@ -743,10 +793,12 @@ requirements:
   - Per-agent permission scoping
   - Concurrency limits (workers.max_concurrency)
   - Temporal durable state
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S15-CAP26-T01: primary user journey works end to end'
-  - 'S15-CAP26-T02: security controls enforced (negative tests)'
-  - 'S15-CAP26-T03: regression suite unchanged'
+  - 'S14-CAP26-T01: primary user journey works end to end'
+  - 'S14-CAP26-T02: security controls enforced (negative tests)'
+  - 'S14-CAP26-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-27
@@ -771,6 +823,8 @@ requirements:
   - Isolated browser profile
   - Navigation allow-list
   - Approval for form submission and purchases
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S16-CAP27-T01: primary user journey works end to end'
   - 'S16-CAP27-T02: security controls enforced (negative tests)'
@@ -779,7 +833,7 @@ requirements:
   evidence: []
 - id: CAP-28
   title: Computer control
-  implementation_stage: S16
+  implementation_stage: S17
   dependencies:
   - CAP-39
   - CAP-27
@@ -798,15 +852,17 @@ requirements:
   - Explicit per-session consent
   - Critical-risk actions always require approval
   - Kill switch
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S16-CAP28-T01: primary user journey works end to end'
-  - 'S16-CAP28-T02: security controls enforced (negative tests)'
-  - 'S16-CAP28-T03: regression suite unchanged'
+  - 'S17-CAP28-T01: primary user journey works end to end'
+  - 'S17-CAP28-T02: security controls enforced (negative tests)'
+  - 'S17-CAP28-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-29
   title: Local file access
-  implementation_stage: S16
+  implementation_stage: S17
   dependencies:
   - CAP-39
   source_files:
@@ -824,15 +880,17 @@ requirements:
   - User-granted folders only
   - Path traversal prevention
   - Read-only by default
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S16-CAP29-T01: primary user journey works end to end'
-  - 'S16-CAP29-T02: security controls enforced (negative tests)'
-  - 'S16-CAP29-T03: regression suite unchanged'
+  - 'S17-CAP29-T01: primary user journey works end to end'
+  - 'S17-CAP29-T02: security controls enforced (negative tests)'
+  - 'S17-CAP29-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-30
   title: Scheduling
-  implementation_stage: S17
+  implementation_stage: S18
   dependencies:
   - CAP-26
   - CAP-31
@@ -852,15 +910,17 @@ requirements:
   security_controls:
   - Scheduled runs re-checked against current permissions
   - Temporal schedules
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S17-CAP30-T01: primary user journey works end to end'
-  - 'S17-CAP30-T02: security controls enforced (negative tests)'
-  - 'S17-CAP30-T03: regression suite unchanged'
+  - 'S18-CAP30-T01: primary user journey works end to end'
+  - 'S18-CAP30-T02: security controls enforced (negative tests)'
+  - 'S18-CAP30-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-31
   title: Notifications
-  implementation_stage: S17
+  implementation_stage: S18
   dependencies:
   - CAP-35
   source_files:
@@ -878,10 +938,12 @@ requirements:
   security_controls:
   - No sensitive content in push payloads
   - Per-channel opt-in
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S17-CAP31-T01: primary user journey works end to end'
-  - 'S17-CAP31-T02: security controls enforced (negative tests)'
-  - 'S17-CAP31-T03: regression suite unchanged'
+  - 'S18-CAP31-T01: primary user journey works end to end'
+  - 'S18-CAP31-T02: security controls enforced (negative tests)'
+  - 'S18-CAP31-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-32
@@ -904,6 +966,8 @@ requirements:
   security_controls:
   - Microphone consent
   - Audio retention policy
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S07-CAP32-T01: primary user journey works end to end'
   - 'S07-CAP32-T02: security controls enforced (negative tests)'
@@ -933,6 +997,8 @@ requirements:
   - Role-based sharing
   - Link expiry
   - Audit trail
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S18-CAP33-T01: primary user journey works end to end'
   - 'S18-CAP33-T02: security controls enforced (negative tests)'
@@ -960,6 +1026,8 @@ requirements:
   security_controls:
   - Device registration and revocation
   - Cursor-based, tenant-scoped change feed
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S18-CAP34-T01: primary user journey works end to end'
   - 'S18-CAP34-T02: security controls enforced (negative tests)'
@@ -992,6 +1060,8 @@ requirements:
   - MFA (TOTP/WebAuthn)
   - Session rotation
   - Rate-limited login
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
   - 'S02-CAP35-T01: primary user journey works end to end'
   - 'S02-CAP35-T02: security controls enforced (negative tests)'
@@ -1000,7 +1070,7 @@ requirements:
   evidence: []
 - id: CAP-36
   title: Subscription management
-  implementation_stage: S19
+  implementation_stage: S12
   dependencies:
   - CAP-35
   - CAP-37
@@ -1019,15 +1089,17 @@ requirements:
   security_controls:
   - Payment provider webhooks verified by signature
   - No card data stored
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S19-CAP36-T01: primary user journey works end to end'
-  - 'S19-CAP36-T02: security controls enforced (negative tests)'
-  - 'S19-CAP36-T03: regression suite unchanged'
+  - 'S12-CAP36-T01: primary user journey works end to end'
+  - 'S12-CAP36-T02: security controls enforced (negative tests)'
+  - 'S12-CAP36-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-37
   title: Administration
-  implementation_stage: S19
+  implementation_stage: S12
   dependencies:
   - CAP-35
   - CAP-39
@@ -1048,15 +1120,17 @@ requirements:
   - Admin role required
   - All admin actions audited
   - Break-glass procedure
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S19-CAP37-T01: primary user journey works end to end'
-  - 'S19-CAP37-T02: security controls enforced (negative tests)'
-  - 'S19-CAP37-T03: regression suite unchanged'
+  - 'S12-CAP37-T01: primary user journey works end to end'
+  - 'S12-CAP37-T02: security controls enforced (negative tests)'
+  - 'S12-CAP37-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-38
   title: Data management
-  implementation_stage: S19
+  implementation_stage: S12
   dependencies:
   - CAP-35
   - CAP-09
@@ -1076,10 +1150,12 @@ requirements:
   security_controls:
   - Verified deletion across Postgres, Redis, S3
   - Export encryption
+  - Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway,
+    independent verification)
   acceptance_tests:
-  - 'S19-CAP38-T01: primary user journey works end to end'
-  - 'S19-CAP38-T02: security controls enforced (negative tests)'
-  - 'S19-CAP38-T03: regression suite unchanged'
+  - 'S12-CAP38-T01: primary user journey works end to end'
+  - 'S12-CAP38-T02: security controls enforced (negative tests)'
+  - 'S12-CAP38-T03: regression suite unchanged'
   status: NOT_STARTED
   evidence: []
 - id: CAP-39
@@ -1089,8 +1165,14 @@ requirements:
   - FOUNDATION
   source_files:
     implemented:
-    - backend/policy_engine/engine.py
     - backend/authentication/__init__.py
+    - backend/authentication/attestation.py
+    - backend/capability_registry/trust.py
+    - backend/orchestration/authorization.py
+    - backend/orchestration/drift.py
+    - backend/orchestration/gateway.py
+    - backend/policy_engine/engine.py
+    - configuration/permissions.yaml
     - database/policies/0001_default_deny.sql
     planned:
     - backend/policy_engine/engine.py
@@ -1110,16 +1192,21 @@ requirements:
   - No self-granted permissions
   - Risk classification on every capability
   acceptance_tests:
-  - 'S01-T13: protected operations default to DENY (passed in Stage 01)'
+  - S01-T13 (Stage 01, superseded by S01A-T31/T32/T11)
+  - S01A-T10, T11, T17-T23, T31, T32, T51 (passed in Stage 01A)
   - 'S02-CAP39-T01: primary user journey works end to end'
   - 'S02-CAP39-T02: security controls enforced (negative tests)'
   - 'S02-CAP39-T03: regression suite unchanged'
   status: PARTIAL
-  evidence: &id001
+  evidence:
+  - STAGE_01A_VERIFICATION.md
   - STAGE_01_VERIFICATION.md
   - evidence/stage_01/
-  status_note: Stage 01 delivers the central policy interface with default DENY and the no-self-grant rule; authentication,
-    authorisation and approvals are Stage 02.
+  - evidence/stage_01a/
+  status_note: Stage 01 + 01A deliver the central policy engine (default DENY for every user-facing protected operation; tool.execute
+    only for the attested runtime controller, LOW risk, argument-bound), no self-grant, the deterministic drift guard, operator-signed
+    capability trust and Ed25519 operator authorisations. Authenticated users, tenant isolation and human approvals are Stage
+    02.
 - id: CAP-40
   title: Operational management
   implementation_stage: S20
@@ -1127,14 +1214,18 @@ requirements:
   - FOUNDATION
   source_files:
     implemented:
-    - backend/service_manager/manager.py
-    - backend/service_manager/control.py
-    - backend/service_manager/probes.py
+    - HEALTHCHECK.bat
+    - START.bat
     - backend/api/app.py
+    - backend/capability_runtime/supervisor.py
+    - backend/orchestration/controller.py
+    - backend/orchestration/service.py
+    - backend/service_manager/control.py
+    - backend/service_manager/health_monitor.py
+    - backend/service_manager/manager.py
+    - backend/service_manager/probes.py
     - capabilities/ops_system_status/handler.py
     - start.sh
-    - START.bat
-    - HEALTHCHECK.bat
     planned:
     - backend/service_manager/
     - scripts/
@@ -1143,6 +1234,7 @@ requirements:
   - Health dashboard
   api_endpoints:
     implemented:
+    - GET /v1/health/controller
     - GET /v1/health/live
     - GET /v1/health/ready
     - GET /v1/system/version
@@ -1155,11 +1247,17 @@ requirements:
   - Readiness from real probes
   - Structured, redacted logs
   acceptance_tests:
-  - S01-T03, S01-T04, S01-T05, S01-T10, S01-T11, S01-T14 (passed in Stage 01)
+  - S01-T03, T04, T05, T10, T11, T14 (passed in Stage 01)
+  - S01A-T28-T30, T38-T42, T50, T53 (passed in Stage 01A)
   - 'S20-CAP40-T01: primary user journey works end to end'
   - 'S20-CAP40-T02: security controls enforced (negative tests)'
   - 'S20-CAP40-T03: regression suite unchanged'
   status: PARTIAL
-  evidence: *id001
-  status_note: Stage 01 delivers the service manager, liveness/readiness, healthcheck, structured logging, bounded restarts
-    and the ops.system_status capability; dashboards, metrics and alerting are Stage 20.
+  evidence:
+  - STAGE_01A_VERIFICATION.md
+  - STAGE_01_VERIFICATION.md
+  - evidence/stage_01/
+  - evidence/stage_01a/
+  status_note: Stage 01 + 01A deliver the service manager (with the runtime controller as an essential service), live service
+    health, controller readiness, bounded restarts, supervised process execution, checkpoints and recovery; dashboards, metrics
+    and alerting are Stage 20.

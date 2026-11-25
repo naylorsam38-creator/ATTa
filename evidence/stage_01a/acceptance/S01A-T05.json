@@ -1,0 +1,8 @@
+{
+  "test.text": [
+    "invalid",
+    [
+      "duplicate tool name 'write_text'"
+    ]
+  ]
+}

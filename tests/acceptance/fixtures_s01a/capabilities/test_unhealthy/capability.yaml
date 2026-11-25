@@ -1,0 +1,13 @@
+manifest_version: 1
+id: test.unhealthy
+version: 1.0.0
+description: TEST FIXTURE - its health check always reports unhealthy (dependency-failure propagation tests).
+requirement: CAP-40
+handlers: {execute: handler:noop, healthcheck: handler:healthcheck, verify: handler:verify}
+input_schema: {type: object}
+output_schema: {type: object}
+permissions: [workspace.read]
+risk: low
+dependencies: {capabilities: [], services: [], python: []}
+timeout_s: 10
+enabled: true

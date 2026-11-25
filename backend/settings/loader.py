@@ -34,6 +34,7 @@ REPO_ROOT = find_repo_root()
 # Secret fields: (path in settings, environment variable). Tracked YAML may not set these.
 SECRET_FIELDS = {
     ("database", "password"): "ATTA_DATABASE_PASSWORD",
+    ("database", "migration_password"): "ATTA_DATABASE_MIGRATION_PASSWORD",
     ("redis", "password"): "ATTA_REDIS_PASSWORD",
     ("object_storage", "access_key_id"): "ATTA_S3_ACCESS_KEY_ID",
     ("object_storage", "secret_access_key"): "ATTA_S3_SECRET_ACCESS_KEY",

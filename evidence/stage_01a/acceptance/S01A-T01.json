@@ -1,0 +1,16 @@
+{
+  "versions": [
+    {
+      "version": 1,
+      "approval_status": "draft",
+      "approved_by": null,
+      "contract_hash": "194f72c234170ff357575f6c7d6d8c8c1c62b177985ec35679947b0c3a5a9d4d"
+    },
+    {
+      "version": 2,
+      "approval_status": "approved",
+      "approved_by": "test-operator",
+      "contract_hash": "5068699a3a750b6b5d418355b8367e1cf7de27f305b3c899090164078c2de99f"
+    }
+  ]
+}

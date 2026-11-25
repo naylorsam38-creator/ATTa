@@ -1,5 +1,84 @@
 {
   "api_version": "v1",
+  "controller_task_transitions": {
+    "AWAITING_APPROVAL": [
+      "BLOCKED",
+      "CANCELLED",
+      "READY"
+    ],
+    "BLOCKED": [
+      "CANCELLED",
+      "PLANNING"
+    ],
+    "CANCELLED": [
+      "QUEUED"
+    ],
+    "COMPLETED": [],
+    "CREATED": [
+      "BLOCKED",
+      "CANCELLED",
+      "VALIDATING"
+    ],
+    "FAILED": [],
+    "PLANNING": [
+      "AWAITING_APPROVAL",
+      "BLOCKED",
+      "CANCELLED",
+      "READY",
+      "WAITING_FOR_DEPENDENCY"
+    ],
+    "QUEUED": [
+      "CANCELLED",
+      "RECOVERING",
+      "RUNNING",
+      "WAITING_FOR_DEPENDENCY"
+    ],
+    "READY": [
+      "BLOCKED",
+      "CANCELLED",
+      "QUEUED",
+      "WAITING_FOR_DEPENDENCY"
+    ],
+    "RECOVERING": [
+      "BLOCKED",
+      "FAILED",
+      "QUEUED",
+      "RUNNING",
+      "VERIFYING"
+    ],
+    "RETRYING": [
+      "BLOCKED",
+      "CANCELLED",
+      "FAILED",
+      "RECOVERING",
+      "RUNNING"
+    ],
+    "RUNNING": [
+      "BLOCKED",
+      "CANCELLED",
+      "FAILED",
+      "RECOVERING",
+      "RETRYING",
+      "VERIFYING"
+    ],
+    "VALIDATING": [
+      "BLOCKED",
+      "FAILED",
+      "PLANNING"
+    ],
+    "VERIFYING": [
+      "BLOCKED",
+      "COMPLETED",
+      "FAILED",
+      "RECOVERING",
+      "RETRYING"
+    ],
+    "WAITING_FOR_DEPENDENCY": [
+      "BLOCKED",
+      "CANCELLED",
+      "READY"
+    ]
+  },
   "enums": {
     "AvailabilityState": [
       "available",
@@ -7,7 +86,9 @@
       "invalid",
       "dependency_missing",
       "unhealthy",
-      "rejected_duplicate"
+      "rejected_duplicate",
+      "untrusted",
+      "integrity_failed"
     ],
     "ErrorCode": [
       "validation_failed",
@@ -20,7 +101,13 @@
       "capability_unavailable",
       "timeout",
       "rate_limited",
-      "internal_error"
+      "internal_error",
+      "approval_invalid",
+      "execution_in_progress",
+      "outcome_unknown",
+      "verification_failed",
+      "execution_failed",
+      "cancelled"
     ],
     "EventType": [
       "task.state_changed",
@@ -71,7 +158,9 @@
             "invalid",
             "dependency_missing",
             "unhealthy",
-            "rejected_duplicate"
+            "rejected_duplicate",
+            "untrusted",
+            "integrity_failed"
           ],
           "title": "AvailabilityState",
           "type": "string"
@@ -215,7 +304,13 @@
             "capability_unavailable",
             "timeout",
             "rate_limited",
-            "internal_error"
+            "internal_error",
+            "approval_invalid",
+            "execution_in_progress",
+            "outcome_unknown",
+            "verification_failed",
+            "execution_failed",
+            "cancelled"
           ],
           "title": "ErrorCode",
           "type": "string"

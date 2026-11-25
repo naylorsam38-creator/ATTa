@@ -1,0 +1,7 @@
+{
+  "repairs": [
+    "TASK-0002",
+    "TASK-0003"
+  ],
+  "reason": "repair budget exhausted; unresolved criteria: TC-02"
+}

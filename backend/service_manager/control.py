@@ -156,13 +156,19 @@ def healthcheck(settings: Settings, root: Path = REPO_ROOT) -> tuple[int, dict]:
         check(f"service:{name}", h.status is HealthStatus.HEALTHY,
               (f"port {port}: " if port else "") + (h.detail or ""), mgr.services[name].spec.essential)
     base = f"http://{settings.api.host}:{settings.api.port}"
-    for path in ("/v1/health/live", "/v1/health/ready"):
+    for path in ("/v1/health/live", "/v1/health/ready", "/v1/health/controller"):
         try:
             r = httpx.get(base + path, timeout=3, trust_env=False)
             body = r.json()
             check(f"api:{path}", r.status_code == 200, f"HTTP {r.status_code} {json.dumps(body)[:300]}")
             if path.endswith("ready"):
                 report["readiness"] = body
+            if path.endswith("controller"):
+                report["controller"] = body
+                for name, comp in (body.get("components") or {}).items():
+                    check(f"controller:{name}", comp["ok"], comp.get("detail", ""))
+                check("controller:tasks", True, f"active {body.get('active_tasks')}, blocked {body.get('blocked_tasks')}",
+                      False)
         except Exception as exc:  # noqa: BLE001
             check(f"api:{path}", False, f"{type(exc).__name__}: {exc}")
     caps = mgr.discover_capabilities()

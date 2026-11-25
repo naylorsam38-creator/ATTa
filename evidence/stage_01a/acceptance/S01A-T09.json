@@ -1,0 +1,29 @@
+{
+  "allocated": [
+    "014.004"
+  ],
+  "blocked": {
+    "status": "BLOCKED",
+    "task_id": "TASK-0001",
+    "missing": [
+      "no available tool provides operation 'translate' for task type 'document.text'"
+    ],
+    "compatible_tools": [],
+    "excluded": {
+      "014.001": "no required operation",
+      "014.002": "no required operation",
+      "014.003": "no required operation",
+      "014.004": "no required operation",
+      "014.005": "no required operation",
+      "014.006": "no required operation",
+      "019.001": "different task type",
+      "021.001": "different task type",
+      "040.901": "different task type",
+      "040.902": "different task type",
+      "040.903": "different task type",
+      "040.904": "different task type",
+      "040.905": "different task type",
+      "040.906": "different task type"
+    }
+  }
+}

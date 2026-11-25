@@ -1,0 +1,3 @@
+{
+  "conflict": "locked by another task: ['file:shared.txt (held by TASK-0001)']"
+}

@@ -8,6 +8,7 @@ import time
 _CROCKFORD = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"
 ID_PREFIXES = frozenset({
     "usr", "ten", "req", "cor", "tsk", "evt", "evd", "cap", "svc", "idm", "chk", "run", "ses", "prj", "fil", "msg",
+    "exe", "apv", "aud", "obj", "prp",
 })
 _ID_RE = re.compile(r"^([a-z]{3})_([0-9A-HJKMNP-TV-Z]{26})$")
 

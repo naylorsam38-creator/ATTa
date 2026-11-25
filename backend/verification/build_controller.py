@@ -30,9 +30,12 @@ from typing import Any
 
 import yaml
 
-from backend.contracts import iso_utc, new_id
-
-from .runner import CommandEvidence, run_command
+# Self-contained on purpose (correction 8): the verifier must not import worker-editable modules
+# (backend/__init__.py, backend.contracts, backend.settings ...). Only stdlib, yaml, cryptography and siblings.
+try:
+    from .runner import CommandEvidence, iso_utc, new_id, run_command
+except ImportError:  # loaded as a top-level module by verify.py
+    from runner import CommandEvidence, iso_utc, new_id, run_command
 
 LEDGER_GENESIS = "0" * 64
 EVIDENCE_DIR = "evidence/build_controller"
@@ -188,7 +191,7 @@ class BuildController:
                               permitted_paths=list(t["permitted_paths"]), required_changes=list(t["required_changes"]),
                               acceptance_tests=tests, rollback=t["rollback"],
                               verification_evidence=t.get("verification_evidence", "")))
-        number = int(re.sub(r"\D", "", stage_id))
+        number = int(re.sub(r"\D", "", stage_id) or 0)
         return Stage(id=stage_id, number=number, title=d.get("title", ""), base_commit=d.get("base_commit"),
                      protected_paths=list(d.get("protected_paths", [])), tasks=tasks, source=path)
 
@@ -219,15 +222,62 @@ class BuildController:
             return None
         return hmac.new(key, json.dumps(payload, sort_keys=True).encode(), hashlib.sha256).hexdigest()
 
+    # ------------------------------------------------------------------ Ed25519 seal (correction 8)
+    @property
+    def verifier_public_key(self) -> Path:
+        return self.build_dir / "verifier_ed25519.pub"
+
+    @staticmethod
+    def _signing_key_path() -> Path | None:
+        p = os.environ.get("ATTA_BUILD_SIGNING_KEY_FILE")
+        return Path(p).expanduser() if p else None
+
+    def _ed25519_sign(self, payload: dict) -> str | None:
+        kp = self._signing_key_path()
+        if kp is None:
+            return None
+        from cryptography.hazmat.primitives import serialization
+        if self.root in kp.resolve().parents:
+            raise ControllerError("the signing key must live outside the repository")
+        key = serialization.load_pem_private_key(kp.read_bytes(), password=None)
+        import base64
+        return base64.b64encode(key.sign(json.dumps(payload, sort_keys=True).encode())).decode()
+
+    def _ed25519_ok(self, payload: dict, sig: str) -> bool:
+        import base64
+        from cryptography.exceptions import InvalidSignature
+        from cryptography.hazmat.primitives import serialization
+        if not self.verifier_public_key.is_file():
+            return False
+        try:
+            serialization.load_pem_public_key(self.verifier_public_key.read_bytes()).verify(
+                base64.b64decode(sig), json.dumps(payload, sort_keys=True).encode())
+            return True
+        except (InvalidSignature, ValueError):
+            return False
+
     def seal(self, operator: str) -> dict:
         key_path = os.environ.get("ATTA_BUILD_OPERATOR_KEY_FILE")
         if key_path and self.root in Path(key_path).expanduser().resolve().parents:
             raise ControllerError("the operator key must live outside the repository")
         payload = {"sealed_at": iso_utc(), "sealed_by": operator, "files": self._digests()}
         sig = self._sign(payload)
-        lock = {**payload, "hmac_sha256": sig, "signed": sig is not None}
+        ed = self._ed25519_sign(payload)
+        lock = {**payload, "hmac_sha256": sig, "signature_ed25519": ed, "signed": sig is not None or ed is not None}
         self.lock_file.write_text(json.dumps(lock, indent=2) + "\n")
         return lock
+
+    def signature_status(self) -> tuple[bool, str]:
+        """(qualifies, detail): only a valid Ed25519 signature by the verifier key is production-grade."""
+        if not self.lock_file.is_file():
+            return False, "no seal"
+        lock = json.loads(self.lock_file.read_text())
+        payload = {k: lock[k] for k in ("sealed_at", "sealed_by", "files")}
+        if lock.get("signature_ed25519") and self._ed25519_ok(payload, lock["signature_ed25519"]):
+            return True, "Ed25519 signature by the verifier key is valid"
+        if lock.get("signature_ed25519"):
+            return False, "Ed25519 signature present but INVALID"
+        return False, "seal is not signed by the verifier key (an unsigned seal is not production-grade protection)"
 
     def check_integrity(self) -> list[str]:
         """Return problems with the protected acceptance criteria (empty list = intact)."""
@@ -237,7 +287,11 @@ class BuildController:
         problems = []
         payload = {k: lock[k] for k in ("sealed_at", "sealed_by", "files")}
         key = self._operator_key()
-        if lock.get("signed"):
+        if lock.get("signature_ed25519"):
+            if not self._ed25519_ok(payload, lock["signature_ed25519"]):
+                problems.append("Ed25519 seal signature invalid: protected.lock.json was altered or re-sealed "
+                                "without the verifier key")
+        elif lock.get("signed") and lock.get("hmac_sha256"):
             if key is None:
                 problems.append("lock is HMAC-signed but ATTA_BUILD_OPERATOR_KEY_FILE is not configured to verify it")
             elif not hmac.compare_digest(self._sign(payload) or "", lock.get("hmac_sha256") or ""):
@@ -351,6 +405,16 @@ class BuildController:
         problems = [f"integrity: {p}" for p in self.check_integrity()]
         problems += [f"ledger: {p}" for p in self.verify_ledger()]
         ids = self.stage_ids()
+        if self._requires(stage.id, "require_signed_seal_from"):
+            ok, detail = self.signature_status()
+            if not ok:
+                problems.append(f"integrity: {detail}")
+        if self._requires(stage.id, "require_os_protection_from"):
+            try:
+                from .protection import protection_problems
+            except ImportError:
+                from protection import protection_problems
+            problems += [f"os-protection: {p}" for p in protection_problems(self)]
         if stage.id not in ids:
             problems.append(f"{stage.id} is not in the roadmap")
         else:
@@ -358,6 +422,11 @@ class BuildController:
             if idx > 0 and not self.stage_gate_passed(ids[idx - 1]):
                 problems.append(f"previous stage {ids[idx - 1]} has not passed its gate")
         return problems
+
+    def _requires(self, stage_id: str, key: str) -> bool:
+        start = self.roadmap.get(key)
+        ids = self.stage_ids()
+        return bool(start) and start in ids and stage_id in ids and ids.index(stage_id) >= ids.index(start)
 
     def begin_task(self, stage_id: str, task_id: str) -> dict:
         stage = self.load_stage(stage_id)

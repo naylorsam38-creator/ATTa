@@ -1,0 +1,14 @@
+{
+  "denied": {
+    "tests/acceptance/test_s01a_acceptance.py": 1,
+    "tests/acceptance/test_s01_acceptance.py": 1,
+    "backend/verification/build_controller.py": 1,
+    "configuration/build/roadmap.yaml": 1,
+    "configuration/build/protected.lock.json": 1,
+    "configuration/controller.yaml": 1,
+    "configuration/permissions.yaml": 1,
+    "configuration/capability_trust.json": 1,
+    "evidence/build_controller/ledger.jsonl": 1
+  },
+  "seal": "Ed25519 signature by the verifier key is valid"
+}

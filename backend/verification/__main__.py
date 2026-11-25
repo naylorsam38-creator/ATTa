@@ -7,17 +7,23 @@ import json
 import sys
 from pathlib import Path
 
-from backend.settings import REPO_ROOT
+import subprocess
 
-from .build_controller import BuildController, ControllerError, recover
+try:
+    from .build_controller import BuildController, ControllerError, recover
+except ImportError:   # loaded by verify.py without the backend package
+    from build_controller import BuildController, ControllerError, recover
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 def _applied_migrations() -> list[str] | None:
+    """Asked in a SEPARATE process: application code never runs inside the verifier."""
     try:
-        from backend.database.migrate import status
-        from backend.settings import load_settings
-        return [s["name"].split(":", 1)[1] for s in status(load_settings()) if s["applied"]
-                and s["name"].startswith("migration:")]
+        cp = subprocess.run([sys.executable, "-m", "backend.database", "status"], cwd=REPO_ROOT, capture_output=True,
+                            text=True, timeout=60)
+        rows = json.loads(cp.stdout)
+        return [r["name"].split(":", 1)[1] for r in rows if r["applied"] and r["name"].startswith("migration:")]
     except Exception:  # noqa: BLE001 — database unreachable: compatibility judged on code only
         return None
 
@@ -41,6 +47,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--base")
     sub.add_parser("seal").add_argument("--operator", default=getpass.getuser())
     sub.add_parser("integrity")
+    sub.add_parser("protection")
     sub.add_parser("checkpoints")
     p = sub.add_parser("recover")
     p.add_argument("--checkpoint")
@@ -84,6 +91,16 @@ def main(argv: list[str] | None = None) -> int:
             problems = bc.check_integrity() + bc.verify_ledger()
             print("INTACT" if not problems else "\n".join(problems))
             return 0 if not problems else 1
+        if a.cmd == "protection":
+            try:
+                from .protection import protection_problems
+            except ImportError:
+                from protection import protection_problems
+            problems = protection_problems(bc)
+            ok, detail = bc.signature_status()
+            print(f"seal: {detail}")
+            print("OS PROTECTION INTACT" if not problems else "OS PROTECTION PROBLEMS:\n  - " + "\n  - ".join(problems))
+            return 0 if not problems and ok else 1
         if a.cmd == "checkpoints":
             print(json.dumps(bc.checkpoints(), indent=2))
             return 0

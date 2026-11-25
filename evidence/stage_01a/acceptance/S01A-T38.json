@@ -1,0 +1,16 @@
+{
+  "checkpoint": "chk_01M88FJQWPBP87D9D9NH4S1VKM",
+  "recovery": {
+    "checkpoint": "chk_01M88FJQWPBP87D9D9NH4S1VKM",
+    "actions": [
+      {
+        "check_output": "TASK-0001/OUT-01",
+        "intact": false
+      },
+      {
+        "check_output": "TASK-0002/OUT-01",
+        "intact": true
+      }
+    ]
+  }
+}

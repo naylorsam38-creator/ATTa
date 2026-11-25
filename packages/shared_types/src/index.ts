@@ -4,7 +4,8 @@
  */
 export const ERROR_CODES = [
   "validation_failed", "not_found", "unauthenticated", "permission_denied", "conflict", "idempotency_conflict",
-  "not_ready", "capability_unavailable", "timeout", "rate_limited", "internal_error",
+  "not_ready", "capability_unavailable", "timeout", "rate_limited", "internal_error", "approval_invalid",
+  "execution_in_progress", "outcome_unknown", "verification_failed", "execution_failed", "cancelled",
 ] as const;
 export type ErrorCode = (typeof ERROR_CODES)[number];
 
@@ -15,7 +16,8 @@ export const TASK_STATES = [
 export type TaskState = (typeof TASK_STATES)[number];
 
 export const AVAILABILITY_STATES = [
-  "available", "disabled", "invalid", "dependency_missing", "unhealthy", "rejected_duplicate",
+  "available", "disabled", "invalid", "dependency_missing", "unhealthy", "rejected_duplicate", "untrusted",
+  "integrity_failed",
 ] as const;
 export type AvailabilityState = (typeof AVAILABILITY_STATES)[number];
 
@@ -76,3 +78,17 @@ export interface VersionInfo { service: string; version: string; api_version: st
 
 export const CORRELATION_HEADER = "X-Correlation-ID";
 export const IDEMPOTENCY_HEADER = "Idempotency-Key";
+
+/** Stage 01A runtime controller task states (backend/orchestration/states.py). */
+export const CONTROLLER_TASK_STATES = [
+  "CREATED", "VALIDATING", "PLANNING", "READY", "AWAITING_APPROVAL", "QUEUED", "RUNNING", "WAITING_FOR_DEPENDENCY",
+  "RETRYING", "VERIFYING", "COMPLETED", "FAILED", "BLOCKED", "CANCELLED", "RECOVERING",
+] as const;
+export type ControllerTaskState = (typeof CONTROLLER_TASK_STATES)[number];
+
+export interface ControllerHealth {
+  ready: boolean;
+  components: Record<string, { ok: boolean; detail: string }>;
+  active_tasks: number | null;
+  blocked_tasks: number | null;
+}

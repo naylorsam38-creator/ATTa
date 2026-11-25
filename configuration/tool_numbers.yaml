@@ -1,0 +1,7 @@
+# Permanent numbered tool identifiers (Stage 01A §5) — operator-controlled.
+# Number = CCC.TTT: CCC is the requirement-register capability (CAP-40 -> 040), TTT the tool within it.
+# Rules (enforced against control.tool_identifiers in the database):
+#   * a number never changes tool and a tool never changes number;
+#   * numbers are never deleted — set `retired: true`; retired numbers are never reassigned or reactivated.
+tools:
+  "040.001": {tool: "ops.system_status:report"}

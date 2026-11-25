@@ -1,0 +1,6 @@
+{
+  "rejected": [
+    "contract_hash does not match the contract body",
+    "TC-02 repair tool 014.003 is not in the task pool"
+  ]
+}

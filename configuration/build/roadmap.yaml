@@ -1,28 +1,43 @@
-# 20-stage implementation roadmap (PROTECTED — sealed in protected.lock.json).
+# Implementation roadmap (PROTECTED — sealed in protected.lock.json). Revised at Stage 01A (DECISIONS D-030).
 # A stage may start only after the previous stage's gate has PASSED in the build-controller ledger.
-checkpoint_every: 4          # verified recovery checkpoints: S01 baseline, then S04, S08, S12, S16, S20
+# Every LLM-requested executable capability, in every stage, runs through the Stage 01A runtime controller
+# (task contract -> numbered tool pool -> drift guard -> policy -> gateway -> independent verification).
+checkpoint_every: 4          # verified recovery checkpoints: S01 baseline, S01A, then S04, S08, S12, S16, S20
+require_signed_seal_from: S01A      # unsigned seals do not qualify from Stage 01A on
+require_os_protection_from: S01A    # verifier files must be protected from the worker account by the OS
+verifier_user: root
+worker_user: atta-builder
+signing_key_path: /etc/atta-verifier/build_signing_ed25519.pem
 protected_criteria:
   - "configuration/build/**"
   - "tests/acceptance/**"
   - "tests/regression/legacy_baseline.json"
+  - "backend/verification/**"
+  - "configuration/controller.yaml"
+  - "configuration/permissions.yaml"
+  - "configuration/tool_numbers.yaml"
+  - "configuration/capability_trust.json"
+  - "configuration/capability_trust_ed25519.pub"
+  - "configuration/controller_operator_ed25519.pub"
 stages:
-  - {id: S01, title: "Architecture and build infrastructure", capabilities: [CAP-39 (partial), CAP-40 (partial)]}
-  - {id: S02, title: "Authentication, authorisation, accounts, approvals", capabilities: [CAP-35, CAP-39]}
-  - {id: S03, title: "Model gateway and conversation engine", capabilities: [CAP-01, CAP-02, CAP-03]}
-  - {id: S04, title: "Chat management and client shells", capabilities: [CAP-04]}
-  - {id: S05, title: "Memory and personalisation", capabilities: [CAP-05, CAP-06]}
+  - {id: S01, title: "Architecture and build infrastructure (foundation)", capabilities: [CAP-39 partial, CAP-40 partial]}
+  - {id: S01A, title: "Deterministic LLM control, tool allocation and drift prevention", capabilities: [controller for all 40]}
+  - {id: S02, title: "Authentication, tenant isolation, permissions, credential protection, human approvals connected to the controller", capabilities: [CAP-35, CAP-39]}
+  - {id: S03, title: "Actual LLM connection (Llama, Qwen, others) through the controlled intelligence interface", capabilities: [CAP-01, CAP-02, CAP-03]}
+  - {id: S04, title: "Interface: task status, assigned tools, progress, failures, verification evidence; chat management", capabilities: [CAP-04]}
+  - {id: S05, title: "Memory and personalisation (through the controller)", capabilities: [CAP-05, CAP-06]}
   - {id: S06, title: "Projects, knowledge base, file uploads", capabilities: [CAP-07, CAP-08, CAP-09]}
   - {id: S07, title: "Vision and voice", capabilities: [CAP-10, CAP-32]}
   - {id: S08, title: "Web search and deep research", capabilities: [CAP-11, CAP-12]}
   - {id: S09, title: "Artifacts and design workspace", capabilities: [CAP-13, CAP-17]}
   - {id: S10, title: "Document, spreadsheet and presentation creation", capabilities: [CAP-14, CAP-15, CAP-16]}
   - {id: S11, title: "Code execution sandbox and application creation", capabilities: [CAP-19, CAP-18]}
-  - {id: S12, title: "Coding agent", capabilities: [CAP-20]}
-  - {id: S13, title: "Connectors and MCP", capabilities: [CAP-21, CAP-22]}
-  - {id: S14, title: "Skills and plugins", capabilities: [CAP-23, CAP-24]}
-  - {id: S15, title: "Parallel agents and Cowork", capabilities: [CAP-26, CAP-25]}
-  - {id: S16, title: "Browser control, computer control, local file access", capabilities: [CAP-27, CAP-28, CAP-29]}
-  - {id: S17, title: "Scheduling and notifications", capabilities: [CAP-30, CAP-31]}
-  - {id: S18, title: "Collaboration and cross-device synchronisation", capabilities: [CAP-33, CAP-34]}
-  - {id: S19, title: "Subscription, administration, data management", capabilities: [CAP-36, CAP-37, CAP-38]}
-  - {id: S20, title: "Operational management, hardening, production acceptance", capabilities: [CAP-40, CAP-39]}
+  - {id: S12, title: "Skills, plugins, subscription, administration and data management", capabilities: [CAP-23, CAP-24, CAP-36, CAP-37, CAP-38]}
+  - {id: S13, title: "Durable autonomous execution (Temporal) extending the controller", capabilities: []}
+  - {id: S14, title: "Advanced multi-agent coordination, Cowork and Big Builds extending Focus-4", capabilities: [CAP-25, CAP-26]}
+  - {id: S15, title: "Coding agent under controller limits", capabilities: [CAP-20]}
+  - {id: S16, title: "Browser automation under controller limits", capabilities: [CAP-27]}
+  - {id: S17, title: "Desktop automation and local file access under controller limits", capabilities: [CAP-28, CAP-29]}
+  - {id: S18, title: "Connectors, MCP, scheduling, notifications, collaboration and cross-device execution", capabilities: [CAP-21, CAP-22, CAP-30, CAP-31, CAP-33, CAP-34]}
+  - {id: S19, title: "Independent testing of model drift, permission violations, malicious inputs, limits and recovery", capabilities: []}
+  - {id: S20, title: "Complete wiring, qualification and release: every LLM-requested capability uses the controller", capabilities: [CAP-40, CAP-39 final]}

@@ -10,6 +10,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${ATTA_POSTGRES_SUPERUSER_PASSWORD:?set ATTA_POSTGRES_SUPERUSER_PASSWORD in configuration/local.env}
       ATTA_DATABASE_PASSWORD: ${ATTA_DATABASE_PASSWORD:?set ATTA_DATABASE_PASSWORD in configuration/local.env}
+      ATTA_DATABASE_MIGRATION_PASSWORD: ${ATTA_DATABASE_MIGRATION_PASSWORD:?set ATTA_DATABASE_MIGRATION_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ../../database/bootstrap.sql:/atta/bootstrap.sql:ro

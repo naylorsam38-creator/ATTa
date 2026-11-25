@@ -1,11 +1,13 @@
-"""Authentication boundary. Stage 01 provides the interface only: every caller is ANONYMOUS and carries no
-permissions. Credentials presented in requests are ignored (never trusted) until Stage 02 implements
-verified authentication. Status: BLOCKED on Stage 02 (see BLOCKERS.md B-001)."""
+"""Authentication boundary. Stage 01A: there are no user accounts yet (Stage 02, BLOCKERS B-001) — every API
+caller is ANONYMOUS and presented credentials are ignored. The only authenticated principal is the runtime
+controller, attested by `attestation.Attestor`; the policy engine rejects any principal it did not sign."""
 from __future__ import annotations
 
 from typing import Mapping, Protocol
 
 from backend.contracts import Principal
+
+from .attestation import Attestor, get_attestor
 
 
 class Authenticator(Protocol):
@@ -21,3 +23,6 @@ class Stage01Authenticator:
 
 def get_authenticator() -> Authenticator:
     return Stage01Authenticator()
+
+
+__all__ = ["Attestor", "get_attestor", "Authenticator", "Stage01Authenticator", "get_authenticator"]

@@ -1,0 +1,9 @@
+{
+  "timeout": {
+    "status": "timeout",
+    "error_type": null,
+    "error": null,
+    "leftovers_killed": 6,
+    "survivors": []
+  }
+}

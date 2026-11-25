@@ -1,0 +1,36 @@
+{
+  "transitions": [
+    [
+      null,
+      "CREATED"
+    ],
+    [
+      "CREATED",
+      "VALIDATING"
+    ],
+    [
+      "VALIDATING",
+      "PLANNING"
+    ],
+    [
+      "PLANNING",
+      "READY"
+    ],
+    [
+      "READY",
+      "QUEUED"
+    ],
+    [
+      "QUEUED",
+      "RUNNING"
+    ],
+    [
+      "RUNNING",
+      "VERIFYING"
+    ],
+    [
+      "VERIFYING",
+      "COMPLETED"
+    ]
+  ]
+}

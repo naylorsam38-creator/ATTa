@@ -1,0 +1,18 @@
+manifest_version: 1
+id: test.risky
+version: 1.0.0
+description: TEST FIXTURE - medium-risk tool; must be denied until Stage 02 human approvals exist.
+requirement: CAP-19
+handlers: {execute: handler:run, healthcheck: handler:healthcheck, verify: handler:verify}
+input_schema: {type: object}
+output_schema: {type: object}
+permissions: [workspace.write]
+risk: medium
+dependencies: {capabilities: [], services: [], python: []}
+timeout_s: 10
+enabled: true
+tools:
+  - {name: run, description: Writes a marker if it is ever executed (it must not be)., task_types: [risky.test],
+     operations: [run], handler: "handler:run", verify: "handler:verify", path_arguments: [marker],
+     input_schema: {type: object, additionalProperties: false, required: [marker], properties: {marker: {type: string}}},
+     output_schema: {type: object}, permissions: [workspace.write], risk: medium, timeout_s: 10, cancellable: true, idempotency: idempotent}

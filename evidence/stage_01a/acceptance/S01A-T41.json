@@ -1,0 +1,5 @@
+{
+  "chained": [
+    "capability 'test.unhealthy' is unhealthy"
+  ]
+}

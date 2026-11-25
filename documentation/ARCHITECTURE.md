@@ -1,4 +1,9 @@
-# Architecture (Stage 01)
+# Architecture (Stage 01 + Stage 01A)
+
+> Stage 01A adds the runtime intelligence controller — see [RUNTIME_INTELLIGENCE_CONTROL.md](RUNTIME_INTELLIGENCE_CONTROL.md).
+> Since Stage 01A: capability code is never imported into the API process (isolated supervised processes),
+> packages execute only when operator-trusted, service health is live, the database runtime role is
+> least-privileged, and tools run only through the controller's execution gateway.
 
 > Stage 01 is the foundation. It is **not** a production-ready application: no conversation, authentication or
 > AI capability exists yet. What exists is real and tested: the service manager, the capability registry, the
@@ -58,7 +63,10 @@
 13. STOP writes a stop request; the manager stops services in reverse order (SIGTERM, then SIGKILL after grace),
    records `stopped`, removes its PID file. STOP falls back to terminating recorded PIDs if the manager is gone.
 
-## Request flow for a capability execution (contract fixed now, allowed from Stage 02)
+## Request flow for a capability execution (Stage 01 design — superseded in Stage 01A)
+
+Since Stage 01A there is no direct execution route; the description below is historical. Executions are
+controller tasks and run only through the gateway (RUNTIME_INTELLIGENCE_CONTROL.md).
 
 `POST /v1/capabilities/{id}/executions` → authenticate → **policy.evaluate(capability.execute, id, risk,
 permissions)** → idempotency lookup → registry: must be `available` → input JSON-Schema validation → handler with

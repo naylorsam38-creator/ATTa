@@ -1,0 +1,16 @@
+{
+  "released": [
+    "TASK-0001",
+    "TASK-0002",
+    "TASK-0003",
+    "TASK-0004"
+  ],
+  "states": {
+    "TASK-0001": "QUEUED",
+    "TASK-0002": "QUEUED",
+    "TASK-0003": "QUEUED",
+    "TASK-0004": "QUEUED",
+    "TASK-0005": "READY",
+    "TASK-0006": "READY"
+  }
+}

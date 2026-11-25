@@ -1,0 +1,12 @@
+{
+  "first": {
+    "status": "timeout",
+    "error_type": null,
+    "error": null,
+    "leftovers_killed": 6,
+    "survivors": []
+  },
+  "second": [
+    "deadline_exceeded"
+  ]
+}
