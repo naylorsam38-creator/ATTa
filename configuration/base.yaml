@@ -1,0 +1,106 @@
+# ATTa platform configuration — base layer (tracked; NO credentials here).
+# Layering: base.yaml -> environments/<ATTA_ENV>.yaml -> local.yaml (untracked) -> ATTA__SECTION__KEY env vars.
+# Secrets come only from environment variables or configuration/local.env (untracked). See local.env.example.
+api:
+  host: 127.0.0.1          # loopback only until Stage 02 authentication is complete
+  port: 8800
+  public_bind_allowed: false
+  request_timeout_s: 30
+
+database:
+  host: 127.0.0.1
+  port: 5432
+  name: atta
+  user: atta
+  sslmode: prefer
+  connect_timeout_s: 3
+  require_pgvector: true
+
+redis:
+  host: 127.0.0.1
+  port: 6380               # the platform's own Redis, separate from any system Redis on 6379
+  db: 0
+
+object_storage:
+  endpoint_url: http://127.0.0.1:9000   # any S3-compatible store (MinIO, Garage, AWS S3)
+  bucket: atta-dev
+  region: us-east-1
+
+models:
+  # Model files are never required on the Windows system drive. Point these at D:\models, an external USB
+  # drive (E:\models) or a Linux mount. Override with ATTA_MODEL_PATHS (os.pathsep-separated).
+  storage_paths: []
+  allow_model_downloads: false          # large downloads need explicit operator authorisation
+  default_endpoint: ollama-local
+  endpoints:
+    - {name: ollama-local, kind: ollama, base_url: "http://127.0.0.1:11434", health_path: /api/tags}
+    - {name: llamacpp-local, kind: llamacpp, base_url: "http://127.0.0.1:8080", health_path: /health}
+    - {name: vllm-gpu, kind: vllm, base_url: "http://127.0.0.1:8000", health_path: /health, enabled: false}
+
+capabilities:
+  directories: [capabilities]           # every <dir>/*/capability.yaml is discovered automatically
+  healthcheck_timeout_s: 5
+
+workers:
+  max_concurrency: 4
+  cpu_limit: 2.0
+  memory_limit_mb: 2048
+
+deadlines:
+  default_execution_timeout_s: 60
+  max_execution_timeout_s: 900
+
+logging:
+  level: INFO
+  format: json
+  directory: runtime/logs
+
+security:
+  default_decision: deny
+  cors_origins: ["http://127.0.0.1:3000", "http://localhost:3000"]
+  allow_paid_infrastructure: false
+
+runtime:
+  directory: runtime
+  monitor_interval_s: 2
+
+# Services the central service manager knows about. essential=true services gate readiness.
+# Placeholders: {python} {repo_root} {runtime_dir} {api.host} {api.port} {redis.port} {redis.host}
+services:
+  postgres:
+    essential: true
+    mode: external          # run via infrastructure/docker/compose.yaml or a local PostgreSQL 16 + pgvector
+    description: PostgreSQL 16 with pgvector — system of record
+    health: {type: postgres, timeout_s: 3}
+    startup_timeout_s: 20
+  redis:
+    essential: true
+    mode: managed
+    description: Redis — coordination, idempotency, locks
+    requires_binary: redis-server
+    command: [redis-server, --port, "{redis.port}", --bind, "{redis.host}", --dir, "{runtime_dir}/redis",
+              --save, "", --appendonly, "no", --protected-mode, "yes"]
+    health: {type: redis, timeout_s: 2}
+    startup_timeout_s: 15
+    max_restarts: 3
+    restart_window_s: 300
+  object_storage:
+    essential: false
+    mode: external
+    description: S3-compatible object storage
+    health: {type: s3, timeout_s: 3}
+  temporal:
+    essential: false
+    mode: external
+    description: Temporal durable workflows (wired in a later stage)
+    health: {type: tcp, host: 127.0.0.1, port: 7233, timeout_s: 1}
+  api:
+    essential: true
+    mode: managed
+    description: FastAPI /v1 backend
+    command: ["{python}", -m, uvicorn, "backend.api.app:create_app", --factory, --host, "{api.host}",
+              --port, "{api.port}", --no-access-log]
+    depends_on: [postgres, redis]
+    health: {type: http, url: "http://{api.host}:{api.port}/v1/health/live", timeout_s: 2}
+    startup_timeout_s: 30
+    max_restarts: 3

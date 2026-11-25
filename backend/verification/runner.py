@@ -1,0 +1,57 @@
+"""Run a command and capture verifiable evidence: argv, cwd, UTC start/finish, exit code, output and its hash."""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import subprocess
+import time
+from dataclasses import asdict, dataclass
+from pathlib import Path
+
+from backend.contracts import iso_utc
+
+MAX_CAPTURE = 200_000  # characters kept per stream (tail); the hash covers the full output
+
+
+@dataclass
+class CommandEvidence:
+    test_id: str
+    command: list[str]
+    cwd: str
+    started_at: str
+    finished_at: str
+    duration_s: float
+    exit_code: int | None
+    expected_exit_code: int
+    passed: bool
+    timed_out: bool
+    stdout: str
+    stderr: str
+    output_sha256: str
+
+    def to_json(self) -> str:
+        return json.dumps(asdict(self), indent=2)
+
+
+def run_command(test_id: str, command: list[str], cwd: Path, expected_exit_code: int = 0, timeout_s: float = 600,
+                env: dict[str, str] | None = None) -> CommandEvidence:
+    started, t0 = iso_utc(), time.monotonic()
+    timed_out = False
+    try:
+        cp = subprocess.run(command, cwd=str(cwd), capture_output=True, text=True, timeout=timeout_s,
+                            env={**os.environ, **(env or {})}, encoding="utf-8", errors="replace")
+        code, out, err = cp.returncode, cp.stdout, cp.stderr
+    except subprocess.TimeoutExpired as exc:
+        timed_out, code = True, None
+        out = (exc.stdout or b"").decode("utf-8", "replace") if isinstance(exc.stdout, bytes) else (exc.stdout or "")
+        err = ((exc.stderr or b"").decode("utf-8", "replace") if isinstance(exc.stderr, bytes) else (exc.stderr or "")) \
+            + f"\n[build-controller] TIMEOUT after {timeout_s}s"
+    except FileNotFoundError as exc:
+        code, out, err = None, "", f"[build-controller] cannot execute: {exc}"
+    digest = hashlib.sha256(out.encode() + b"\0" + err.encode()).hexdigest()
+    return CommandEvidence(test_id=test_id, command=command, cwd=str(cwd), started_at=started, finished_at=iso_utc(),
+                           duration_s=round(time.monotonic() - t0, 3), exit_code=code,
+                           expected_exit_code=expected_exit_code, passed=(code == expected_exit_code and not timed_out),
+                           timed_out=timed_out, stdout=out[-MAX_CAPTURE:], stderr=err[-MAX_CAPTURE:],
+                           output_sha256=digest)

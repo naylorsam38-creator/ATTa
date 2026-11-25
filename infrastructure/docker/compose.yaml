@@ -1,0 +1,72 @@
+# ATTa platform dependencies for local/dev hosts (Windows Docker Desktop, Linux).
+#   docker compose -f infrastructure/docker/compose.yaml --env-file configuration/local.env up -d postgres redis
+# Optional profiles: storage (MinIO S3), workflows (Temporal dev server), app (API container).
+# Every port is published on 127.0.0.1 only. Credentials come from configuration/local.env (never committed).
+name: atta
+services:
+  postgres:
+    image: pgvector/pgvector:0.8.1-pg16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${ATTA_POSTGRES_SUPERUSER_PASSWORD:?set ATTA_POSTGRES_SUPERUSER_PASSWORD in configuration/local.env}
+      ATTA_DATABASE_PASSWORD: ${ATTA_DATABASE_PASSWORD:?set ATTA_DATABASE_PASSWORD in configuration/local.env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../../database/bootstrap.sql:/atta/bootstrap.sql:ro
+      - ./postgres-init:/docker-entrypoint-initdb.d:ro
+    ports: ["127.0.0.1:5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d atta"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    ports: ["127.0.0.1:6380:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  minio:
+    profiles: [storage]
+    image: minio/minio:RELEASE.2025-09-07T16-13-09Z
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: ${ATTA_S3_ACCESS_KEY_ID:?set ATTA_S3_ACCESS_KEY_ID}
+      MINIO_ROOT_PASSWORD: ${ATTA_S3_SECRET_ACCESS_KEY:?set ATTA_S3_SECRET_ACCESS_KEY}
+    volumes: [miniodata:/data]
+    ports: ["127.0.0.1:9000:9000", "127.0.0.1:9001:9001"]
+  temporal:
+    profiles: [workflows]
+    image: temporalio/temporal:1.5.1
+    command: ["server", "start-dev", "--ip", "0.0.0.0", "--db-filename", "/data/temporal.db"]
+    volumes: [temporaldata:/data]
+    ports: ["127.0.0.1:7233:7233", "127.0.0.1:8233:8233"]
+  api:
+    profiles: [app]
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/api.Dockerfile
+    environment:
+      ATTA_ENV: development
+      ATTA_DATABASE_PASSWORD: ${ATTA_DATABASE_PASSWORD}
+      ATTA__DATABASE__HOST: postgres
+      ATTA__REDIS__HOST: redis
+      ATTA__REDIS__PORT: "6379"
+      ATTA__SERVICES__REDIS__MODE: external
+      # The container binds 0.0.0.0 inside its own network namespace; the host publish below is loopback-only,
+      # so the Stage 01 "no public exposure" rule still holds.
+      ATTA__API__HOST: 0.0.0.0
+      ATTA__API__PUBLIC_BIND_ALLOWED: "true"
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    ports: ["127.0.0.1:8800:8800"]
+volumes:
+  pgdata: {}
+  miniodata: {}
+  temporaldata: {}

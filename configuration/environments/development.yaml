@@ -1,0 +1,3 @@
+# Local development on a workstation (Windows or Linux).
+logging:
+  format: text

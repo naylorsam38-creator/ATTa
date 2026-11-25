@@ -1,0 +1,28 @@
+{
+  "name": "atta-platform",
+  "private": true,
+  "version": "0.1.0",
+  "description": "ATTa platform clients and shared TypeScript packages (Stage 01 foundation)",
+  "engines": { "node": ">=20.9.0" },
+  "workspaces": [
+    "packages/shared_types",
+    "packages/api_client",
+    "packages/design_system",
+    "packages/capability_sdk",
+    "apps/web",
+    "apps/desktop"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit && npm run typecheck --workspace apps/web && npm run typecheck --workspace apps/desktop",
+    "build:web": "npm run build --workspace apps/web",
+    "build:desktop": "npm run build --workspace apps/desktop",
+    "test:e2e": "playwright test -c tests/end_to_end/playwright.config.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "22.20.5",
+    "typescript": "5.9.3",
+    "vitest": "4.1.12"
+  }
+}

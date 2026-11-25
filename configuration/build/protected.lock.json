@@ -1,0 +1,13 @@
+{
+  "sealed_at": "2026-11-25T03:36:52.241Z",
+  "sealed_by": "stage01-builder (unsigned, see BLOCKERS B-009)",
+  "files": {
+    "configuration/build/roadmap.yaml": "df6a9e82623372060b2d678623774c1e55c71eb2b808822cfd8fe5fd32f8a0cb",
+    "configuration/build/stages/S01.yaml": "b550efe154e08b772019a27fbf23fc723eef8fca50210da67ce14e78c5ecfa2b",
+    "tests/acceptance/s01_helpers.py": "fbbb16aba4022301d68f423581b707d1f8f344cc935159895e9c65ad3da8427c",
+    "tests/acceptance/test_s01_acceptance.py": "d811220357740925be64e325fefd014208c092b7c5df4beb77b0c68a35fb1920",
+    "tests/regression/legacy_baseline.json": "696887118bb51d6bfd918c2e0902852b2df87e6a78d3fa593c62c85ead364bbb"
+  },
+  "hmac_sha256": null,
+  "signed": false
+}

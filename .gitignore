@@ -2,3 +2,19 @@
 appengine-generated/
 __pycache__/
 *.pyc
+atta_platform.egg-info/
+# ATTa platform (Stage 01)
+.venv/
+runtime/
+configuration/local.env
+configuration/local.yaml
+node_modules/
+.next/
+apps/*/dist/
+.pytest_cache/
+*.tsbuildinfo
+apps/web/next-env.d.ts
+*.tfvars
+.terraform/
+*.tfstate*
+test-results/

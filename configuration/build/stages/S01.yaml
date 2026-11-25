@@ -1,0 +1,162 @@
+# Stage 01 task definitions (PROTECTED). Acceptance tests are executed by the build controller, never self-reported.
+stage: S01
+title: Architecture and build infrastructure
+base_commit: cef732913714fdcc5e58ae35ce4c484032289ec0   # ATTa v121.5, the state before Stage 01
+# Existing working functionality: Stage 01 may not modify any of it.
+protected_paths:
+  - "01-specs/**"
+  - "02-front-door/**"
+  - "03-ui-skins-capability-package/**"
+  - "04-deployment/**"
+  - "05-coolify/**"
+  - "docs/**"
+  - "tests/test_*.py"
+  - "tests/fixtures/**"
+  - "run"
+  - "Dockerfile"
+  - "docker-compose.coolify.yml"
+  - "release.json"
+  - "START-HERE.txt"
+  - ".dockerignore"
+tasks:
+  - id: S01-TASK-01
+    objective: Repository structure, authoritative records and the 40-capability requirement register.
+    depends_on: []
+    permitted_paths: ["README.md", ".gitignore", ".gitattributes", "documentation/**", "workers/**",
+                      "MASTER_IMPLEMENTATION_REGISTER.md", "IMPLEMENTATION_PROGRESS.md", "DECISIONS.md", "BLOCKERS.md",
+                      "CHANGE_MANIFEST.md", "STAGE_01_VERIFICATION.md", "scripts/requirement_register.py",
+                      "scripts/generate_change_manifest.py", "scripts/stage_verification_report.py", "tests/unit/**", "tests/integration/**", "tests/security/**"]
+    required_changes:
+      - Mandated directory tree exists and is tracked
+      - documentation/requirements/requirement_register.yaml lists CAP-01..CAP-40 with every required field
+      - MASTER_IMPLEMENTATION_REGISTER.md rendered from the register
+    acceptance_tests:
+      - {id: S01-T01, description: Verify repository structure, timeout_s: 60,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T01_repository_structure"],
+         expected_result: every mandated directory and record present; legacy files intact}
+      - {id: S01-T15, description: Verify all 40 requirements exist in the requirement register, timeout_s: 60,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T15_requirement_register_complete"],
+         expected_result: 40 entries, all fields, none falsely complete}
+    rollback: git revert the commits touching the permitted paths; legacy files are untouched by this task.
+    verification_evidence: evidence/build_controller/runs/<run>/S01-T01.json, S01-T15.json
+
+  - id: S01-TASK-02
+    objective: Select, lock and install dependencies (Python hash-locked, Node lockfiles).
+    depends_on: [S01-TASK-01]
+    permitted_paths: ["pyproject.toml", "uv.lock", "configuration/locks/**", "package.json", "package-lock.json",
+                      ".npmrc", "tsconfig.json", "tsconfig.base.json", "vitest.config.mts", "install.sh", "INSTALL.bat"]
+    required_changes: [pyproject + uv.lock, exported --require-hashes lockfiles, npm lockfiles, INSTALL.bat and install.sh]
+    acceptance_tests:
+      - {id: S01-T02, description: Install dependencies from a clean environment, timeout_s: 1500,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T02_clean_environment_install"],
+         expected_result: fresh venv + npm ci from lockfiles succeed with exactly the locked versions}
+    rollback: restore the previous lockfiles from git and re-run INSTALL.
+    verification_evidence: evidence/build_controller/runs/<run>/S01-T02.json
+
+  - id: S01-TASK-03
+    objective: Configuration management, shared backend contracts, database migrations and the /v1 API.
+    depends_on: [S01-TASK-02]
+    permitted_paths: ["backend/__init__.py", "backend/contracts/**", "backend/settings/**", "backend/api/**",
+                      "backend/authentication/**", "backend/database/**", "configuration/base.yaml",
+                      "configuration/environments/**", "configuration/local.env.example", "database/**",
+                      "scripts/export_contracts.py"]
+    required_changes: [typed validated settings, contracts package, /v1 liveness and readiness, migrations]
+    acceptance_tests:
+      - {id: S01-T04, description: Verify actual backend liveness, timeout_s: 240,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T04_backend_liveness"]}
+      - {id: S01-T05, description: Verify readiness reflects dependency health, timeout_s: 240,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T05_readiness_reflects_dependency_health"]}
+      - {id: S01-SUP-01, description: Unit, integration and security suites, timeout_s: 300,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, tests/unit, tests/integration, tests/security]}
+    rollback: git revert; database migrations are additive (drop schema platform to undo 0001 on a dev database).
+    verification_evidence: evidence/build_controller/runs/<run>/S01-T04.json, S01-T05.json, S01-SUP-01.json
+
+  - id: S01-TASK-04
+    objective: Central capability registry with automatic discovery, validation, dependency resolution and health.
+    depends_on: [S01-TASK-03]
+    permitted_paths: ["backend/capability_registry/**", "capabilities/**", "scripts/new_capability.py"]
+    required_changes: [manifest schema, discovery, duplicate rejection, dependency resolution, health checks]
+    acceptance_tests:
+      - {id: S01-T06, description: Discover a valid capability manifest, timeout_s: 120,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T06_discover_valid_capability_manifest"]}
+      - {id: S01-T07, description: Reject an invalid capability manifest, timeout_s: 120,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T07_reject_invalid_capability_manifest"]}
+      - {id: S01-T08, description: Reject duplicate capability identifiers, timeout_s: 120,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T08_reject_duplicate_capability_identifiers"]}
+    rollback: git revert; capability directories are data and can be removed individually.
+    verification_evidence: evidence/build_controller/runs/<run>/S01-T06..T08.json
+
+  - id: S01-TASK-05
+    objective: Security boundary — central policy interface, default DENY, no self-granted permissions.
+    depends_on: [S01-TASK-03]
+    permitted_paths: ["backend/policy_engine/**"]
+    required_changes: [PolicyEngine.evaluate on every protected operation, grant refusal rules, RLS default deny]
+    acceptance_tests:
+      - {id: S01-T13, description: Verify protected operations default to DENY, timeout_s: 120,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T13_protected_operations_default_to_deny"]}
+    rollback: git revert (reverting leaves protected routes without a policy gate — never deploy that state).
+    verification_evidence: evidence/build_controller/runs/<run>/S01-T13.json
+
+  - id: S01-TASK-06
+    objective: Central service manager and the START/STOP/HEALTHCHECK/RECOVERY entry points.
+    depends_on: [S01-TASK-04, S01-TASK-05]
+    permitted_paths: ["backend/service_manager/**", "backend/model_gateway/**", "backend/task_manager/**",
+                      "backend/orchestration/**", "start.sh", "stop.sh", "healthcheck.sh", "recovery.sh",
+                      "START.bat", "STOP.bat", "HEALTHCHECK.bat", "RECOVERY.bat", "infrastructure/**"]
+    required_changes: [ordered start, health, bounded restarts, clean shutdown, readiness gating, operator scripts]
+    acceptance_tests:
+      - {id: S01-T03, description: Start the service manager, timeout_s: 240,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T03_start_service_manager"]}
+      - {id: S01-T09, description: Register a new capability without changing START.bat, timeout_s: 240,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T09_new_capability_registers_without_changing_start"]}
+      - {id: S01-T10, description: Detect an unavailable dependency, timeout_s: 180,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T10_detect_unavailable_dependency"]}
+      - {id: S01-T11, description: Prevent false readiness following an essential service failure, timeout_s: 300,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T11_no_false_readiness_after_essential_failure"]}
+      - {id: S01-T14, description: Stop and restart services cleanly, timeout_s: 300,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T14_stop_and_restart_cleanly"]}
+    rollback: STOP, then git revert; runtime/ holds only regenerable state.
+    verification_evidence: evidence/build_controller/runs/<run>/S01-T03,T09,T10,T11,T14.json
+
+  - id: S01-TASK-07
+    objective: Deterministic build controller (dependency order, file authorisation, real tests, sealed criteria).
+    depends_on: [S01-TASK-06]
+    permitted_paths: ["backend/verification/**", "configuration/build/**", "tests/acceptance/**"]
+    required_changes: [task model, ledger, seal/integrity, stage gates, checkpoints, recovery]
+    acceptance_tests:
+      - {id: S01-T12, description: Build controller rejects progression after a failed acceptance test, timeout_s: 300,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T12_build_controller_rejects_progression_after_failed_test"]}
+    rollback: git revert; the ledger is append-only evidence and is never rewritten.
+    verification_evidence: evidence/build_controller/runs/<run>/S01-T12.json
+
+  - id: S01-TASK-08
+    objective: Client foundations — shared TypeScript packages, Next.js web, Electron desktop, React Native mobile.
+    depends_on: [S01-TASK-02, S01-TASK-03]
+    permitted_paths: ["apps/**", "packages/**", "tests/end_to_end/**"]
+    required_changes: [shared_types mirror, api_client, design_system, capability_sdk, web status page, desktop shell, mobile app]
+    acceptance_tests:
+      - {id: S01-SUP-02, description: Vitest unit tests for all TypeScript packages and apps, timeout_s: 300,
+         command: [npx, --no-install, vitest, run]}
+      - {id: S01-SUP-03, description: TypeScript type checking (packages, web, desktop), timeout_s: 300,
+         command: [npm, run, typecheck]}
+      - {id: S01-SUP-04, description: Production build of the Next.js web app, timeout_s: 600,
+         command: [npm, run, build:web]}
+      - {id: S01-SUP-05, description: Full-stack browser end-to-end (service manager + API + web + Chromium), timeout_s: 600,
+         command: [npx, --no-install, playwright, test, -c, tests/end_to_end/playwright.config.ts]}
+      - {id: S01-SUP-06, description: "Mobile app type-checks against React Native 0.88 (needs INSTALL --with-mobile)", timeout_s: 300,
+         command: [npm, --prefix, apps/mobile, run, typecheck]}
+      - {id: S01-SUP-07, description: Mobile JavaScript bundle builds with Metro (no native SDK required), timeout_s: 600,
+         command: [npm, --prefix, apps/mobile, run, "bundle:android"]}
+    rollback: git revert; clients hold no server state.
+    verification_evidence: evidence/build_controller/runs/<run>/S01-SUP-02..05.json
+
+  - id: S01-TASK-09
+    objective: Regression protection — existing ATTa functionality not removed or downgraded.
+    depends_on: [S01-TASK-01, S01-TASK-02, S01-TASK-03, S01-TASK-04, S01-TASK-05, S01-TASK-06, S01-TASK-07, S01-TASK-08]
+    permitted_paths: ["tests/regression/**"]
+    required_changes: [baseline of the legacy suite at the base commit, comparison test]
+    acceptance_tests:
+      - {id: S01-T16, description: Verify existing functionality has not been removed or downgraded, timeout_s: 1800,
+         command: ["{python}", -m, pytest, -q, -p, no:cacheprovider, "tests/acceptance/test_s01_acceptance.py::test_S01_T16_existing_functionality_not_removed_or_downgraded"]}
+    rollback: not applicable (test-only task).
+    verification_evidence: evidence/build_controller/runs/<run>/S01-T16.json

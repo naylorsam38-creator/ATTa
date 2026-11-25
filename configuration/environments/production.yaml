@@ -1,0 +1,12 @@
+# Production. Requires ATTA_DATABASE_PASSWORD, TLS to PostgreSQL and credentials for object storage.
+# Public binding stays disabled until Stage 02 (authentication) passes its gate.
+database:
+  sslmode: require
+logging:
+  level: INFO
+  format: json
+services:
+  object_storage:
+    essential: true
+    mode: external
+    health: {type: s3, timeout_s: 3}

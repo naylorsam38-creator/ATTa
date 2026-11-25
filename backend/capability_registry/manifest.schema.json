@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atta.local/schemas/capability-manifest/v1",
+  "title": "ATTa capability manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manifest_version", "id", "version", "description", "handlers", "input_schema", "output_schema",
+               "permissions", "risk", "dependencies", "timeout_s", "enabled"],
+  "properties": {
+    "manifest_version": {"const": 1},
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$", "maxLength": 100},
+    "version": {"type": "string", "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(-[0-9A-Za-z.-]+)?$"},
+    "description": {"type": "string", "minLength": 10, "maxLength": 2000},
+    "requirement": {"type": "string", "pattern": "^CAP-(0[1-9]|[1-3][0-9]|40)$"},
+    "handlers": {
+      "type": "object", "additionalProperties": false,
+      "required": ["execute", "healthcheck", "verify"],
+      "properties": {
+        "execute": {"$ref": "#/$defs/handler"},
+        "healthcheck": {"$ref": "#/$defs/handler"},
+        "verify": {"$ref": "#/$defs/handler"}
+      }
+    },
+    "input_schema": {"type": "object"},
+    "output_schema": {"type": "object"},
+    "permissions": {"type": "array", "uniqueItems": true,
+                    "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_*]*)+$"}},
+    "risk": {"enum": ["low", "medium", "high", "critical"]},
+    "dependencies": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "capabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "services": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "python": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_.]*$"}}
+      }
+    },
+    "timeout_s": {"type": "number", "exclusiveMinimum": 0, "maximum": 3600},
+    "enabled": {"type": "boolean"}
+  },
+  "$defs": {
+    "handler": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*(\\.[A-Za-z_][A-Za-z0-9_]*)*:[A-Za-z_][A-Za-z0-9_]*$"}
+  }
+}

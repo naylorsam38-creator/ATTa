@@ -1,0 +1,50 @@
+[project]
+name = "atta-platform"
+version = "0.1.0"
+description = "ATTa AI platform foundation (Stage 01): service manager, capability registry, policy engine, build controller, v1 API."
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "fastapi>=0.120,<1",
+  "uvicorn[standard]>=0.38,<1",
+  "pydantic>=2.12,<3",
+  "PyYAML>=6.0.2,<7",
+  "httpx>=0.28,<1",
+  "redis>=6,<8",
+  "psycopg[binary]>=3.2.10,<4",
+  "jsonschema>=4.25,<5",
+  "boto3>=1.40,<2",
+  "psutil>=7,<8",
+]
+
+[project.optional-dependencies]
+# AI engine stack. Locked now, wired from Stage 03 onward (DECISIONS.md D-007).
+# litellm 1.82.7 and 1.82.8 were compromised releases on PyPI (2026-03) and are excluded explicitly.
+ai = [
+  "litellm>=1.80,!=1.82.7,!=1.82.8",
+  "langgraph>=1.0,<2",
+  "temporalio>=1.18,<2",
+  "pgvector>=0.4,<1",
+]
+browser = ["playwright==1.63.0"]
+dev = [
+  "pytest>=8.4,<10",
+  "pytest-timeout>=2.4,<3",
+]
+
+[tool.uv]
+# Only resolve releases at least two weeks old at lock time (supply-chain cool-down). Bump deliberately.
+exclude-newer = "2026-11-10T00:00:00Z"
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["backend*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "acceptance: Stage acceptance tests (protected, sealed by the build controller)",
+  "requires_services: needs PostgreSQL and Redis reachable as configured",
+]

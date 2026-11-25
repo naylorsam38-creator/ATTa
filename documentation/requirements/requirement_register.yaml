@@ -1,0 +1,1165 @@
+# Authoritative requirement register (40 mandatory capabilities). MASTER_IMPLEMENTATION_REGISTER.md is rendered from this file.
+version: 1
+updated: '2026-11-25'
+current_stage: S01
+status_vocabulary:
+- NOT_STARTED
+- PARTIAL
+- IMPLEMENTED
+- VERIFIED
+- BLOCKED
+requirements:
+- id: CAP-01
+  title: AI conversation
+  implementation_stage: S03
+  dependencies:
+  - FOUNDATION
+  - CAP-02
+  - CAP-35
+  - CAP-39
+  source_files:
+    implemented: []
+    planned:
+    - backend/orchestration/conversation_graph.py
+    - backend/model_gateway/gateway.py
+    - apps/web/app/chat/
+  interface_controls:
+  - Chat composer
+  - Streaming message list
+  - Stop / regenerate controls
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/conversations
+    - POST /v1/conversations/{id}/messages
+    - GET /v1/conversations/{id}/stream (SSE)
+  security_controls:
+  - Authenticated principal required
+  - Per-tenant isolation (RLS)
+  - Prompt/response size limits
+  - Output streamed through policy engine
+  acceptance_tests:
+  - 'S03-CAP01-T01: primary user journey works end to end'
+  - 'S03-CAP01-T02: security controls enforced (negative tests)'
+  - 'S03-CAP01-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-02
+  title: Model selection
+  implementation_stage: S03
+  dependencies:
+  - FOUNDATION
+  - CAP-39
+  source_files:
+    implemented: []
+    planned:
+    - backend/model_gateway/gateway.py
+    - backend/model_gateway/catalog.py
+  interface_controls:
+  - Model picker
+  - Per-conversation model badge
+  api_endpoints:
+    implemented: []
+    planned:
+    - GET /v1/models
+    - PATCH /v1/conversations/{id} {model}
+  security_controls:
+  - Only operator-registered endpoints selectable
+  - API keys read from env/secret store only
+  - Paid endpoints require allow_paid_infrastructure
+  acceptance_tests:
+  - 'S03-CAP02-T01: primary user journey works end to end'
+  - 'S03-CAP02-T02: security controls enforced (negative tests)'
+  - 'S03-CAP02-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+  status_note: Stage 01 only configures model endpoints (Ollama, llama.cpp, vLLM) and probes their health; no selection logic
+    yet.
+- id: CAP-03
+  title: Extended thinking
+  implementation_stage: S03
+  dependencies:
+  - CAP-01
+  - CAP-02
+  source_files:
+    implemented: []
+    planned:
+    - backend/orchestration/thinking.py
+  interface_controls:
+  - Thinking toggle and budget
+  - Collapsible reasoning display
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/conversations/{id}/messages {thinking}
+  security_controls:
+  - Thinking budget bounded by deadlines
+  - Reasoning content tenant-scoped
+  acceptance_tests:
+  - 'S03-CAP03-T01: primary user journey works end to end'
+  - 'S03-CAP03-T02: security controls enforced (negative tests)'
+  - 'S03-CAP03-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-04
+  title: Chat management
+  implementation_stage: S04
+  dependencies:
+  - CAP-01
+  - CAP-35
+  source_files:
+    implemented: []
+    planned:
+    - backend/api/routes_conversations.py
+    - apps/web/app/(chat)/sidebar.tsx
+  interface_controls:
+  - Sidebar history
+  - Rename, star, delete, search
+  api_endpoints:
+    implemented: []
+    planned:
+    - GET /v1/conversations
+    - PATCH /v1/conversations/{id}
+    - DELETE /v1/conversations/{id}
+  security_controls:
+  - Owner-only access
+  - Soft delete with retention policy
+  - Idempotent mutations
+  acceptance_tests:
+  - 'S04-CAP04-T01: primary user journey works end to end'
+  - 'S04-CAP04-T02: security controls enforced (negative tests)'
+  - 'S04-CAP04-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-05
+  title: Memory
+  implementation_stage: S05
+  dependencies:
+  - CAP-01
+  - CAP-38
+  source_files:
+    implemented: []
+    planned:
+    - backend/orchestration/memory.py
+    - database/migrations/ (memory tables, pgvector)
+  interface_controls:
+  - Memory settings panel
+  - View / edit / forget memories
+  api_endpoints:
+    implemented: []
+    planned:
+    - GET /v1/memory
+    - DELETE /v1/memory/{id}
+    - PATCH /v1/settings/memory
+  security_controls:
+  - User-controlled opt-in
+  - Per-user encryption scope
+  - Forget is verifiable deletion
+  acceptance_tests:
+  - 'S05-CAP05-T01: primary user journey works end to end'
+  - 'S05-CAP05-T02: security controls enforced (negative tests)'
+  - 'S05-CAP05-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-06
+  title: Personalisation
+  implementation_stage: S05
+  dependencies:
+  - CAP-35
+  - CAP-05
+  source_files:
+    implemented: []
+    planned:
+    - backend/api/routes_preferences.py
+  interface_controls:
+  - Profile preferences
+  - Custom instructions
+  - Style selection
+  api_endpoints:
+    implemented: []
+    planned:
+    - GET /v1/preferences
+    - PUT /v1/preferences
+  security_controls:
+  - Instructions treated as user data, never as system policy
+  - Length limits
+  acceptance_tests:
+  - 'S05-CAP06-T01: primary user journey works end to end'
+  - 'S05-CAP06-T02: security controls enforced (negative tests)'
+  - 'S05-CAP06-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-07
+  title: Projects
+  implementation_stage: S06
+  dependencies:
+  - CAP-04
+  - CAP-35
+  source_files:
+    implemented: []
+    planned:
+    - backend/api/routes_projects.py
+  interface_controls:
+  - Project list
+  - Project workspace with instructions and files
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/projects
+    - GET /v1/projects
+    - PATCH /v1/projects/{id}
+  security_controls:
+  - Project membership checks
+  - Tenant RLS
+  acceptance_tests:
+  - 'S06-CAP07-T01: primary user journey works end to end'
+  - 'S06-CAP07-T02: security controls enforced (negative tests)'
+  - 'S06-CAP07-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-08
+  title: Knowledge base
+  implementation_stage: S06
+  dependencies:
+  - CAP-07
+  - CAP-09
+  source_files:
+    implemented: []
+    planned:
+    - workers/ingestion/
+    - backend/orchestration/retrieval.py
+  interface_controls:
+  - Project knowledge panel
+  - Source citations in answers
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/projects/{id}/knowledge
+    - GET /v1/projects/{id}/knowledge
+  security_controls:
+  - Ingestion in sandboxed worker
+  - Content-type validation
+  - Embeddings tenant-scoped (pgvector + RLS)
+  acceptance_tests:
+  - 'S06-CAP08-T01: primary user journey works end to end'
+  - 'S06-CAP08-T02: security controls enforced (negative tests)'
+  - 'S06-CAP08-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-09
+  title: File uploads
+  implementation_stage: S06
+  dependencies:
+  - CAP-35
+  - CAP-39
+  source_files:
+    implemented: []
+    planned:
+    - backend/api/routes_files.py
+    - backend/storage/object_store.py
+  interface_controls:
+  - Drag-and-drop upload
+  - Attachment chips
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/files (multipart)
+    - GET /v1/files/{id}
+  security_controls:
+  - Size and type limits
+  - Malware scanning hook
+  - Pre-signed URLs with short expiry
+  - S3 bucket private by default
+  acceptance_tests:
+  - 'S06-CAP09-T01: primary user journey works end to end'
+  - 'S06-CAP09-T02: security controls enforced (negative tests)'
+  - 'S06-CAP09-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-10
+  title: Vision
+  implementation_stage: S07
+  dependencies:
+  - CAP-09
+  - CAP-02
+  source_files:
+    implemented: []
+    planned:
+    - backend/model_gateway/multimodal.py
+  interface_controls:
+  - Image attachment preview
+  - Image understanding in chat
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/conversations/{id}/messages (image parts)
+  security_controls:
+  - Image re-encoding to strip active content
+  - EXIF location stripped
+  acceptance_tests:
+  - 'S07-CAP10-T01: primary user journey works end to end'
+  - 'S07-CAP10-T02: security controls enforced (negative tests)'
+  - 'S07-CAP10-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-11
+  title: Web search
+  implementation_stage: S08
+  dependencies:
+  - CAP-01
+  - CAP-39
+  source_files:
+    implemented: []
+    planned:
+    - capabilities/web_search/
+  interface_controls:
+  - Search toggle
+  - Inline citations
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/capabilities/web.search/executions
+  security_controls:
+  - Egress allow-list
+  - Result content treated as untrusted data
+  - Rate limits
+  acceptance_tests:
+  - 'S08-CAP11-T01: primary user journey works end to end'
+  - 'S08-CAP11-T02: security controls enforced (negative tests)'
+  - 'S08-CAP11-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-12
+  title: Deep research
+  implementation_stage: S08
+  dependencies:
+  - CAP-11
+  - CAP-26
+  source_files:
+    implemented: []
+    planned:
+    - backend/orchestration/research_graph.py
+    - workers/research/
+  interface_controls:
+  - Research progress view
+  - Report with sources
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/research
+    - GET /v1/research/{id}
+  security_controls:
+  - Temporal workflow with budget limits
+  - Per-task cost ceiling
+  - Untrusted-content isolation
+  acceptance_tests:
+  - 'S08-CAP12-T01: primary user journey works end to end'
+  - 'S08-CAP12-T02: security controls enforced (negative tests)'
+  - 'S08-CAP12-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-13
+  title: Artifacts
+  implementation_stage: S09
+  dependencies:
+  - CAP-01
+  source_files:
+    implemented: []
+    planned:
+    - backend/api/routes_artifacts.py
+    - apps/web/app/artifacts/
+  interface_controls:
+  - Artifact side panel
+  - Versions
+  - Share link
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/artifacts
+    - GET /v1/artifacts/{id}
+    - GET /v1/artifacts/{id}/versions
+  security_controls:
+  - Sandboxed iframe with CSP
+  - No ambient credentials in artifact runtime
+  acceptance_tests:
+  - 'S09-CAP13-T01: primary user journey works end to end'
+  - 'S09-CAP13-T02: security controls enforced (negative tests)'
+  - 'S09-CAP13-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-14
+  title: Document creation
+  implementation_stage: S10
+  dependencies:
+  - CAP-13
+  source_files:
+    implemented: []
+    planned:
+    - capabilities/document_create/
+  interface_controls:
+  - Document artifact editor
+  - Export DOCX/PDF/MD
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/capabilities/document.create/executions
+  security_controls:
+  - Generated files scanned before download
+  - Template injection guards
+  acceptance_tests:
+  - 'S10-CAP14-T01: primary user journey works end to end'
+  - 'S10-CAP14-T02: security controls enforced (negative tests)'
+  - 'S10-CAP14-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-15
+  title: Spreadsheet creation
+  implementation_stage: S10
+  dependencies:
+  - CAP-13
+  source_files:
+    implemented: []
+    planned:
+    - capabilities/spreadsheet_create/
+  interface_controls:
+  - Spreadsheet artifact grid
+  - Export XLSX/CSV
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/capabilities/spreadsheet.create/executions
+  security_controls:
+  - Formula injection (CSV) neutralised
+  - Size limits
+  acceptance_tests:
+  - 'S10-CAP15-T01: primary user journey works end to end'
+  - 'S10-CAP15-T02: security controls enforced (negative tests)'
+  - 'S10-CAP15-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-16
+  title: Presentation creation
+  implementation_stage: S10
+  dependencies:
+  - CAP-13
+  source_files:
+    implemented: []
+    planned:
+    - capabilities/presentation_create/
+  interface_controls:
+  - Slide artifact viewer
+  - Export PPTX/PDF
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/capabilities/presentation.create/executions
+  security_controls:
+  - Embedded media validated
+  - Size limits
+  acceptance_tests:
+  - 'S10-CAP16-T01: primary user journey works end to end'
+  - 'S10-CAP16-T02: security controls enforced (negative tests)'
+  - 'S10-CAP16-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-17
+  title: Design workspace
+  implementation_stage: S09
+  dependencies:
+  - CAP-13
+  - CAP-10
+  source_files:
+    implemented: []
+    planned:
+    - apps/web/app/design/
+    - packages/design_system/
+  interface_controls:
+  - Canvas
+  - Component palette
+  - Design tokens
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/designs
+    - GET /v1/designs/{id}
+  security_controls:
+  - Sandboxed rendering
+  - Asset upload via CAP-09 controls
+  acceptance_tests:
+  - 'S09-CAP17-T01: primary user journey works end to end'
+  - 'S09-CAP17-T02: security controls enforced (negative tests)'
+  - 'S09-CAP17-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-18
+  title: Application creation
+  implementation_stage: S11
+  dependencies:
+  - CAP-13
+  - CAP-19
+  - CAP-20
+  source_files:
+    implemented: []
+    planned:
+    - capabilities/app_create/
+    - 04-deployment/ (ATTa app builder pipeline, existing)
+  interface_controls:
+  - App builder flow
+  - Preview and deploy status
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/apps
+    - GET /v1/apps/{id}
+  security_controls:
+  - Builds in isolated containers
+  - Qualification gate before deploy (existing ATTa QUALIFIED gate)
+  - Deployment needs approval
+  acceptance_tests:
+  - 'S11-CAP18-T01: primary user journey works end to end'
+  - 'S11-CAP18-T02: security controls enforced (negative tests)'
+  - 'S11-CAP18-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-19
+  title: Code execution
+  implementation_stage: S11
+  dependencies:
+  - CAP-39
+  - CAP-40
+  source_files:
+    implemented: []
+    planned:
+    - workers/sandbox/
+    - capabilities/code_execute/
+  interface_controls:
+  - Code cell output
+  - Execution log
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/capabilities/code.execute/executions
+  security_controls:
+  - Container/microVM sandbox, no host mounts
+  - CPU/memory/time limits from workers settings
+  - No network by default
+  acceptance_tests:
+  - 'S11-CAP19-T01: primary user journey works end to end'
+  - 'S11-CAP19-T02: security controls enforced (negative tests)'
+  - 'S11-CAP19-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-20
+  title: Coding agent
+  implementation_stage: S12
+  dependencies:
+  - CAP-19
+  - CAP-26
+  - CAP-29
+  source_files:
+    implemented: []
+    planned:
+    - backend/orchestration/coding_agent_graph.py
+  interface_controls:
+  - Agent task view
+  - Diff review
+  - Approve changes
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/agents/coding/tasks
+    - GET /v1/agents/coding/tasks/{id}
+  security_controls:
+  - Writes limited to approved workspace
+  - Every file change reviewed/approved
+  - Build-controller style protected tests
+  acceptance_tests:
+  - 'S12-CAP20-T01: primary user journey works end to end'
+  - 'S12-CAP20-T02: security controls enforced (negative tests)'
+  - 'S12-CAP20-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-21
+  title: Connectors
+  implementation_stage: S13
+  dependencies:
+  - CAP-35
+  - CAP-39
+  source_files:
+    implemented: []
+    planned:
+    - backend/connectors/
+  interface_controls:
+  - Connector gallery
+  - OAuth connect/disconnect
+  api_endpoints:
+    implemented: []
+    planned:
+    - GET /v1/connectors
+    - POST /v1/connectors/{id}/connect
+    - DELETE /v1/connectors/{id}
+  security_controls:
+  - OAuth with PKCE
+  - Tokens encrypted at rest
+  - Least-privilege scopes
+  acceptance_tests:
+  - 'S13-CAP21-T01: primary user journey works end to end'
+  - 'S13-CAP21-T02: security controls enforced (negative tests)'
+  - 'S13-CAP21-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-22
+  title: MCP
+  implementation_stage: S13
+  dependencies:
+  - CAP-21
+  - CAP-39
+  source_files:
+    implemented: []
+    planned:
+    - backend/connectors/mcp_client.py
+  interface_controls:
+  - MCP server management
+  - Tool approval prompts
+  api_endpoints:
+    implemented: []
+    planned:
+    - GET /v1/mcp/servers
+    - POST /v1/mcp/servers
+  security_controls:
+  - Tool calls pass policy engine
+  - Server allow-list
+  - Tool output treated as untrusted
+  acceptance_tests:
+  - 'S13-CAP22-T01: primary user journey works end to end'
+  - 'S13-CAP22-T02: security controls enforced (negative tests)'
+  - 'S13-CAP22-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-23
+  title: Skills
+  implementation_stage: S14
+  dependencies:
+  - CAP-24
+  - CAP-39
+  source_files:
+    implemented: []
+    planned:
+    - backend/capability_registry/ (skill manifests)
+    - capabilities/
+  interface_controls:
+  - Skill library
+  - Enable/disable per user
+  api_endpoints:
+    implemented: []
+    planned:
+    - GET /v1/skills
+    - PATCH /v1/skills/{id}
+  security_controls:
+  - Manifest validation (S01 registry)
+  - Signed skill packages
+  acceptance_tests:
+  - 'S14-CAP23-T01: primary user journey works end to end'
+  - 'S14-CAP23-T02: security controls enforced (negative tests)'
+  - 'S14-CAP23-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-24
+  title: Plugins
+  implementation_stage: S14
+  dependencies:
+  - CAP-23
+  - CAP-39
+  source_files:
+    implemented: []
+    planned:
+    - backend/capability_registry/plugins.py
+  interface_controls:
+  - Plugin marketplace
+  - Install/uninstall
+  api_endpoints:
+    implemented: []
+    planned:
+    - GET /v1/plugins
+    - POST /v1/plugins/{id}/install
+  security_controls:
+  - Signature verification
+  - Permission review at install
+  - No self-granted permissions (S01 policy rule)
+  acceptance_tests:
+  - 'S14-CAP24-T01: primary user journey works end to end'
+  - 'S14-CAP24-T02: security controls enforced (negative tests)'
+  - 'S14-CAP24-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-25
+  title: Cowork
+  implementation_stage: S15
+  dependencies:
+  - CAP-26
+  - CAP-29
+  - CAP-33
+  source_files:
+    implemented: []
+    planned:
+    - backend/orchestration/cowork.py
+    - apps/desktop/
+  interface_controls:
+  - Cowork task board
+  - Shared agent workspace
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/cowork/sessions
+    - GET /v1/cowork/sessions/{id}
+  security_controls:
+  - Human approval for side effects
+  - Workspace-scoped file access
+  acceptance_tests:
+  - 'S15-CAP25-T01: primary user journey works end to end'
+  - 'S15-CAP25-T02: security controls enforced (negative tests)'
+  - 'S15-CAP25-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-26
+  title: Parallel agents
+  implementation_stage: S15
+  dependencies:
+  - CAP-01
+  - CAP-40
+  source_files:
+    implemented: []
+    planned:
+    - backend/orchestration/parallel.py
+    - workers/agents/
+  interface_controls:
+  - Parallel task monitor
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/agents/batches
+    - GET /v1/agents/batches/{id}
+  security_controls:
+  - Per-agent permission scoping
+  - Concurrency limits (workers.max_concurrency)
+  - Temporal durable state
+  acceptance_tests:
+  - 'S15-CAP26-T01: primary user journey works end to end'
+  - 'S15-CAP26-T02: security controls enforced (negative tests)'
+  - 'S15-CAP26-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-27
+  title: Browser control
+  implementation_stage: S16
+  dependencies:
+  - CAP-39
+  - CAP-19
+  source_files:
+    implemented: []
+    planned:
+    - workers/browser/ (Playwright)
+    - capabilities/browser_control/
+  interface_controls:
+  - Live browser view
+  - Step approvals
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/capabilities/browser.control/executions
+  security_controls:
+  - Isolated browser profile
+  - Navigation allow-list
+  - Approval for form submission and purchases
+  acceptance_tests:
+  - 'S16-CAP27-T01: primary user journey works end to end'
+  - 'S16-CAP27-T02: security controls enforced (negative tests)'
+  - 'S16-CAP27-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-28
+  title: Computer control
+  implementation_stage: S16
+  dependencies:
+  - CAP-39
+  - CAP-27
+  source_files:
+    implemented: []
+    planned:
+    - apps/desktop/computer_control/
+  interface_controls:
+  - Screen view
+  - Action approvals
+  api_endpoints:
+    implemented: []
+    planned:
+    - Desktop IPC only (no public endpoint)
+  security_controls:
+  - Explicit per-session consent
+  - Critical-risk actions always require approval
+  - Kill switch
+  acceptance_tests:
+  - 'S16-CAP28-T01: primary user journey works end to end'
+  - 'S16-CAP28-T02: security controls enforced (negative tests)'
+  - 'S16-CAP28-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-29
+  title: Local file access
+  implementation_stage: S16
+  dependencies:
+  - CAP-39
+  source_files:
+    implemented: []
+    planned:
+    - apps/desktop/local_files/
+  interface_controls:
+  - Folder grant dialog
+  - File browser
+  api_endpoints:
+    implemented: []
+    planned:
+    - Desktop IPC only (no public endpoint)
+  security_controls:
+  - User-granted folders only
+  - Path traversal prevention
+  - Read-only by default
+  acceptance_tests:
+  - 'S16-CAP29-T01: primary user journey works end to end'
+  - 'S16-CAP29-T02: security controls enforced (negative tests)'
+  - 'S16-CAP29-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-30
+  title: Scheduling
+  implementation_stage: S17
+  dependencies:
+  - CAP-26
+  - CAP-31
+  source_files:
+    implemented: []
+    planned:
+    - backend/task_manager/scheduler.py
+  interface_controls:
+  - Scheduled tasks list
+  - Cron editor
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/schedules
+    - GET /v1/schedules
+    - DELETE /v1/schedules/{id}
+  security_controls:
+  - Scheduled runs re-checked against current permissions
+  - Temporal schedules
+  acceptance_tests:
+  - 'S17-CAP30-T01: primary user journey works end to end'
+  - 'S17-CAP30-T02: security controls enforced (negative tests)'
+  - 'S17-CAP30-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-31
+  title: Notifications
+  implementation_stage: S17
+  dependencies:
+  - CAP-35
+  source_files:
+    implemented: []
+    planned:
+    - backend/notifications/
+  interface_controls:
+  - Notification centre
+  - Preferences
+  api_endpoints:
+    implemented: []
+    planned:
+    - GET /v1/notifications
+    - PATCH /v1/notifications/{id}
+  security_controls:
+  - No sensitive content in push payloads
+  - Per-channel opt-in
+  acceptance_tests:
+  - 'S17-CAP31-T01: primary user journey works end to end'
+  - 'S17-CAP31-T02: security controls enforced (negative tests)'
+  - 'S17-CAP31-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-32
+  title: Voice
+  implementation_stage: S07
+  dependencies:
+  - CAP-01
+  source_files:
+    implemented: []
+    planned:
+    - backend/model_gateway/speech.py
+    - apps/mobile/
+  interface_controls:
+  - Push-to-talk
+  - Voice mode
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/voice/sessions (WebRTC/WebSocket)
+  security_controls:
+  - Microphone consent
+  - Audio retention policy
+  acceptance_tests:
+  - 'S07-CAP32-T01: primary user journey works end to end'
+  - 'S07-CAP32-T02: security controls enforced (negative tests)'
+  - 'S07-CAP32-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-33
+  title: Collaboration
+  implementation_stage: S18
+  dependencies:
+  - CAP-07
+  - CAP-35
+  source_files:
+    implemented: []
+    planned:
+    - backend/collaboration/
+  interface_controls:
+  - Share dialog
+  - Presence
+  - Comments
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/shares
+    - GET /v1/shares/{id}
+  security_controls:
+  - Role-based sharing
+  - Link expiry
+  - Audit trail
+  acceptance_tests:
+  - 'S18-CAP33-T01: primary user journey works end to end'
+  - 'S18-CAP33-T02: security controls enforced (negative tests)'
+  - 'S18-CAP33-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-34
+  title: Cross-device synchronisation
+  implementation_stage: S18
+  dependencies:
+  - CAP-04
+  - CAP-35
+  source_files:
+    implemented: []
+    planned:
+    - backend/sync/
+    - packages/api_client/
+  interface_controls:
+  - Sync status indicator
+  api_endpoints:
+    implemented: []
+    planned:
+    - GET /v1/sync/changes?cursor=
+    - WebSocket /v1/sync/stream
+  security_controls:
+  - Device registration and revocation
+  - Cursor-based, tenant-scoped change feed
+  acceptance_tests:
+  - 'S18-CAP34-T01: primary user journey works end to end'
+  - 'S18-CAP34-T02: security controls enforced (negative tests)'
+  - 'S18-CAP34-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-35
+  title: Account management
+  implementation_stage: S02
+  dependencies:
+  - FOUNDATION
+  - CAP-39
+  source_files:
+    implemented: []
+    planned:
+    - backend/authentication/
+    - backend/api/routes_accounts.py
+  interface_controls:
+  - Sign up / sign in
+  - Profile
+  - Sessions and devices
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/auth/sessions
+    - DELETE /v1/auth/sessions/{id}
+    - GET /v1/accounts/me
+  security_controls:
+  - Argon2id password hashing
+  - MFA (TOTP/WebAuthn)
+  - Session rotation
+  - Rate-limited login
+  acceptance_tests:
+  - 'S02-CAP35-T01: primary user journey works end to end'
+  - 'S02-CAP35-T02: security controls enforced (negative tests)'
+  - 'S02-CAP35-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-36
+  title: Subscription management
+  implementation_stage: S19
+  dependencies:
+  - CAP-35
+  - CAP-37
+  source_files:
+    implemented: []
+    planned:
+    - backend/billing/
+  interface_controls:
+  - Plan and usage page
+  - Upgrade/downgrade
+  api_endpoints:
+    implemented: []
+    planned:
+    - GET /v1/billing/subscription
+    - POST /v1/billing/checkout
+  security_controls:
+  - Payment provider webhooks verified by signature
+  - No card data stored
+  acceptance_tests:
+  - 'S19-CAP36-T01: primary user journey works end to end'
+  - 'S19-CAP36-T02: security controls enforced (negative tests)'
+  - 'S19-CAP36-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-37
+  title: Administration
+  implementation_stage: S19
+  dependencies:
+  - CAP-35
+  - CAP-39
+  source_files:
+    implemented: []
+    planned:
+    - backend/admin/
+    - apps/web/app/admin/
+  interface_controls:
+  - Admin console
+  - User and tenant management
+  api_endpoints:
+    implemented: []
+    planned:
+    - GET /v1/admin/users
+    - PATCH /v1/admin/users/{id}
+  security_controls:
+  - Admin role required
+  - All admin actions audited
+  - Break-glass procedure
+  acceptance_tests:
+  - 'S19-CAP37-T01: primary user journey works end to end'
+  - 'S19-CAP37-T02: security controls enforced (negative tests)'
+  - 'S19-CAP37-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-38
+  title: Data management
+  implementation_stage: S19
+  dependencies:
+  - CAP-35
+  - CAP-09
+  source_files:
+    implemented: []
+    planned:
+    - backend/data_management/
+  interface_controls:
+  - Export my data
+  - Delete account
+  - Retention settings
+  api_endpoints:
+    implemented: []
+    planned:
+    - POST /v1/data/exports
+    - DELETE /v1/accounts/me
+  security_controls:
+  - Verified deletion across Postgres, Redis, S3
+  - Export encryption
+  acceptance_tests:
+  - 'S19-CAP38-T01: primary user journey works end to end'
+  - 'S19-CAP38-T02: security controls enforced (negative tests)'
+  - 'S19-CAP38-T03: regression suite unchanged'
+  status: NOT_STARTED
+  evidence: []
+- id: CAP-39
+  title: Security and approvals
+  implementation_stage: S02
+  dependencies:
+  - FOUNDATION
+  source_files:
+    implemented:
+    - backend/policy_engine/engine.py
+    - backend/authentication/__init__.py
+    - database/policies/0001_default_deny.sql
+    planned:
+    - backend/policy_engine/engine.py
+    - backend/authentication/
+  interface_controls:
+  - Approval prompts
+  - Permission review
+  api_endpoints:
+    implemented:
+    - All protected /v1 routes return 403 permission_denied (Stage 01 default DENY)
+    planned:
+    - GET /v1/approvals
+    - POST /v1/approvals/{id}/decision
+  security_controls:
+  - Central policy engine on every capability execution
+  - Default DENY for protected operations
+  - No self-granted permissions
+  - Risk classification on every capability
+  acceptance_tests:
+  - 'S01-T13: protected operations default to DENY (passed in Stage 01)'
+  - 'S02-CAP39-T01: primary user journey works end to end'
+  - 'S02-CAP39-T02: security controls enforced (negative tests)'
+  - 'S02-CAP39-T03: regression suite unchanged'
+  status: PARTIAL
+  evidence: &id001
+  - STAGE_01_VERIFICATION.md
+  - evidence/stage_01/
+  status_note: Stage 01 delivers the central policy interface with default DENY and the no-self-grant rule; authentication,
+    authorisation and approvals are Stage 02.
+- id: CAP-40
+  title: Operational management
+  implementation_stage: S20
+  dependencies:
+  - FOUNDATION
+  source_files:
+    implemented:
+    - backend/service_manager/manager.py
+    - backend/service_manager/control.py
+    - backend/service_manager/probes.py
+    - backend/api/app.py
+    - capabilities/ops_system_status/handler.py
+    - start.sh
+    - START.bat
+    - HEALTHCHECK.bat
+    planned:
+    - backend/service_manager/
+    - scripts/
+  interface_controls:
+  - Status page
+  - Health dashboard
+  api_endpoints:
+    implemented:
+    - GET /v1/health/live
+    - GET /v1/health/ready
+    - GET /v1/system/version
+    planned:
+    - GET /v1/health/live
+    - GET /v1/health/ready
+    - GET /v1/system/version
+  security_controls:
+  - Loopback binding until S02
+  - Readiness from real probes
+  - Structured, redacted logs
+  acceptance_tests:
+  - S01-T03, S01-T04, S01-T05, S01-T10, S01-T11, S01-T14 (passed in Stage 01)
+  - 'S20-CAP40-T01: primary user journey works end to end'
+  - 'S20-CAP40-T02: security controls enforced (negative tests)'
+  - 'S20-CAP40-T03: regression suite unchanged'
+  status: PARTIAL
+  evidence: *id001
+  status_note: Stage 01 delivers the service manager, liveness/readiness, healthcheck, structured logging, bounded restarts
+    and the ops.system_status capability; dashboards, metrics and alerting are Stage 20.

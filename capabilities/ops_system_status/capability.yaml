@@ -1,0 +1,34 @@
+manifest_version: 1
+id: ops.system_status
+version: 1.0.0
+description: Reports the host platform, Python runtime, CPU count, memory and free disk space of the runtime volume.
+requirement: CAP-40
+handlers:
+  execute: handler:execute
+  healthcheck: handler:healthcheck
+  verify: handler:verify
+input_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    path: {type: string, description: "Directory whose volume free space is reported (default: repository root)"}
+output_schema:
+  type: object
+  additionalProperties: false
+  required: [platform, python, cpu_count, memory_total_mb, disk_free_mb, disk_total_mb, checked_at]
+  properties:
+    platform: {type: string}
+    python: {type: string}
+    cpu_count: {type: integer, minimum: 1}
+    memory_total_mb: {type: integer, minimum: 1}
+    disk_free_mb: {type: integer, minimum: 0}
+    disk_total_mb: {type: integer, minimum: 1}
+    checked_at: {type: string}
+permissions: [ops.system.read]
+risk: low
+dependencies:
+  capabilities: []
+  services: []
+  python: [psutil]
+timeout_s: 10
+enabled: true

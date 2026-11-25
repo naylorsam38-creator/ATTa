@@ -1,0 +1,421 @@
+{
+  "api_version": "v1",
+  "enums": {
+    "AvailabilityState": [
+      "available",
+      "disabled",
+      "invalid",
+      "dependency_missing",
+      "unhealthy",
+      "rejected_duplicate"
+    ],
+    "ErrorCode": [
+      "validation_failed",
+      "not_found",
+      "unauthenticated",
+      "permission_denied",
+      "conflict",
+      "idempotency_conflict",
+      "not_ready",
+      "capability_unavailable",
+      "timeout",
+      "rate_limited",
+      "internal_error"
+    ],
+    "EventType": [
+      "task.state_changed",
+      "capability.requested",
+      "capability.denied",
+      "capability.started",
+      "capability.completed",
+      "capability.failed",
+      "service.started",
+      "service.failed",
+      "service.restarted",
+      "service.stopped",
+      "policy.decision"
+    ],
+    "HealthStatus": [
+      "healthy",
+      "degraded",
+      "unhealthy",
+      "unknown"
+    ],
+    "RiskClass": [
+      "low",
+      "medium",
+      "high",
+      "critical"
+    ],
+    "TaskState": [
+      "pending",
+      "queued",
+      "awaiting_approval",
+      "running",
+      "verifying",
+      "succeeded",
+      "failed",
+      "cancelled",
+      "timed_out",
+      "blocked"
+    ]
+  },
+  "generated_by": "scripts/export_contracts.py",
+  "schemas": {
+    "CapabilityAvailability": {
+      "$defs": {
+        "AvailabilityState": {
+          "enum": [
+            "available",
+            "disabled",
+            "invalid",
+            "dependency_missing",
+            "unhealthy",
+            "rejected_duplicate"
+          ],
+          "title": "AvailabilityState",
+          "type": "string"
+        },
+        "RiskClass": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ],
+          "title": "RiskClass",
+          "type": "string"
+        }
+      },
+      "properties": {
+        "executable": {
+          "title": "Executable",
+          "type": "boolean"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "problems": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Problems",
+          "type": "array"
+        },
+        "requirement": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Requirement"
+        },
+        "risk": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RiskClass"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/$defs/AvailabilityState"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        }
+      },
+      "required": [
+        "id",
+        "state",
+        "executable",
+        "source"
+      ],
+      "title": "CapabilityAvailability",
+      "type": "object"
+    },
+    "ErrorEnvelope": {
+      "$defs": {
+        "ErrorBody": {
+          "properties": {
+            "code": {
+              "$ref": "#/$defs/ErrorCode"
+            },
+            "correlation_id": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Correlation Id"
+            },
+            "details": {
+              "anyOf": [
+                {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                {
+                  "items": {},
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Details"
+            },
+            "message": {
+              "title": "Message",
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message"
+          ],
+          "title": "ErrorBody",
+          "type": "object"
+        },
+        "ErrorCode": {
+          "enum": [
+            "validation_failed",
+            "not_found",
+            "unauthenticated",
+            "permission_denied",
+            "conflict",
+            "idempotency_conflict",
+            "not_ready",
+            "capability_unavailable",
+            "timeout",
+            "rate_limited",
+            "internal_error"
+          ],
+          "title": "ErrorCode",
+          "type": "string"
+        }
+      },
+      "properties": {
+        "error": {
+          "$ref": "#/$defs/ErrorBody"
+        }
+      },
+      "required": [
+        "error"
+      ],
+      "title": "ErrorEnvelope",
+      "type": "object"
+    },
+    "HealthReport": {
+      "$defs": {
+        "HealthStatus": {
+          "enum": [
+            "healthy",
+            "degraded",
+            "unhealthy",
+            "unknown"
+          ],
+          "title": "HealthStatus",
+          "type": "string"
+        }
+      },
+      "properties": {
+        "checked_at": {
+          "format": "date-time",
+          "title": "Checked At",
+          "type": "string"
+        },
+        "service": {
+          "title": "Service",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/HealthStatus"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "service",
+        "version"
+      ],
+      "title": "HealthReport",
+      "type": "object"
+    },
+    "ReadinessReport": {
+      "$defs": {
+        "DependencyHealth": {
+          "properties": {
+            "checked_at": {
+              "format": "date-time",
+              "title": "Checked At",
+              "type": "string"
+            },
+            "detail": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Detail"
+            },
+            "essential": {
+              "title": "Essential",
+              "type": "boolean"
+            },
+            "latency_ms": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Latency Ms"
+            },
+            "name": {
+              "title": "Name",
+              "type": "string"
+            },
+            "status": {
+              "$ref": "#/$defs/HealthStatus"
+            }
+          },
+          "required": [
+            "name",
+            "essential",
+            "status"
+          ],
+          "title": "DependencyHealth",
+          "type": "object"
+        },
+        "HealthStatus": {
+          "enum": [
+            "healthy",
+            "degraded",
+            "unhealthy",
+            "unknown"
+          ],
+          "title": "HealthStatus",
+          "type": "string"
+        }
+      },
+      "properties": {
+        "capabilities": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Capabilities",
+          "type": "object"
+        },
+        "checked_at": {
+          "format": "date-time",
+          "title": "Checked At",
+          "type": "string"
+        },
+        "dependencies": {
+          "items": {
+            "$ref": "#/$defs/DependencyHealth"
+          },
+          "title": "Dependencies",
+          "type": "array"
+        },
+        "environment": {
+          "title": "Environment",
+          "type": "string"
+        },
+        "ready": {
+          "title": "Ready",
+          "type": "boolean"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/$defs/HealthStatus"
+        }
+      },
+      "required": [
+        "ready",
+        "status",
+        "environment",
+        "dependencies"
+      ],
+      "title": "ReadinessReport",
+      "type": "object"
+    }
+  },
+  "task_transitions": {
+    "awaiting_approval": [
+      "cancelled",
+      "running"
+    ],
+    "blocked": [
+      "cancelled",
+      "queued"
+    ],
+    "cancelled": [],
+    "failed": [],
+    "pending": [
+      "blocked",
+      "cancelled",
+      "queued"
+    ],
+    "queued": [
+      "awaiting_approval",
+      "cancelled",
+      "running"
+    ],
+    "running": [
+      "cancelled",
+      "failed",
+      "timed_out",
+      "verifying"
+    ],
+    "succeeded": [],
+    "timed_out": [],
+    "verifying": [
+      "failed",
+      "succeeded"
+    ]
+  }
+}

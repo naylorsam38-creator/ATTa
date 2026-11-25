@@ -1,3 +1,16 @@
+# ATTa platform (Stage 01 foundation) — new
+
+This repository now also contains the foundation of the ATTa AI platform: a FastAPI `/v1` backend, a central
+service manager, a capability registry, a default-deny policy engine, a deterministic build controller and
+Next.js / Electron / React Native client shells. Start with `INSTALL.bat` + `START.bat` (Windows) or
+`./install.sh` + `./start.sh` (Linux), and read [documentation/README.md](documentation/README.md).
+Stage status: [IMPLEMENTATION_PROGRESS.md](IMPLEMENTATION_PROGRESS.md) · evidence:
+[STAGE_01_VERIFICATION.md](STAGE_01_VERIFICATION.md). Stage 01 is a foundation, not a finished application.
+
+Everything below describes the existing ATTa app builder, which is unchanged and still runs with `bash run`.
+
+---
+
 # APP Builder
 
 People log in, describe the app they want on the Front Door page, and builds run through a

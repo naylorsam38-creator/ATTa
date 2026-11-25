@@ -1,0 +1,12 @@
+# Automated test runs. Ports are offset so tests never collide with a running development instance.
+api:
+  port: 8810
+redis:
+  port: 6390
+logging:
+  level: INFO
+  format: json
+  directory: runtime/test/logs
+runtime:
+  directory: runtime/test
+  monitor_interval_s: 0.5

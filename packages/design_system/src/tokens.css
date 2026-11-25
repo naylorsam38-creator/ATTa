@@ -1,0 +1,13 @@
+:root {
+  --atta-bg: #faf9f5; --atta-surface: #ffffff; --atta-text: #1f1e1d; --atta-muted: #6b6a68; --atta-border: #e5e2da;
+  --atta-accent: #c96442; --atta-ok: #2e7d4f; --atta-warn: #a86b00; --atta-danger: #b3261e;
+  --atta-font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --atta-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --atta-radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --atta-bg: #1f1e1d; --atta-surface: #2a2927; --atta-text: #f5f4ef; --atta-muted: #a8a69f; --atta-border: #3d3b38;
+    --atta-accent: #d97757; --atta-ok: #5fbf86; --atta-warn: #e0a940; --atta-danger: #f2766b;
+  }
+}

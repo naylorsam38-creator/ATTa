@@ -1,0 +1,31 @@
+{
+  "name": "atta-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ATTa React Native client. Own lockfile: React Native's Metro bundler does not support the root npm workspace hoisting.",
+  "scripts": {
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "bundle:android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output dist/index.android.bundle"
+  },
+  "dependencies": {
+    "@atta/api_client": "file:../../packages/api_client",
+    "@atta/design_system": "file:../../packages/design_system",
+    "@atta/shared_types": "file:../../packages/shared_types",
+    "react": "19.3.1",
+    "react-native": "0.88.1"
+  },
+  "devDependencies": {
+    "@react-native-community/cli": "20.2.0",
+    "@react-native/babel-preset": "0.88.1",
+    "@react-native/metro-config": "0.88.1",
+    "@react-native/typescript-config": "0.88.1",
+    "@types/react": "19.3.0",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=20.19.4"
+  }
+}
