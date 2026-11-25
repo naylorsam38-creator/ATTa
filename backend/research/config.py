@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Literal
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from backend.settings import REPO_ROOT
 
@@ -19,6 +19,19 @@ class ProviderConfig(BaseModel):
     endpoint: str = Field(min_length=8, max_length=2048)
     max_results: int = Field(10, ge=1, le=50)
     enabled: bool = True
+    # Stage 02 credential contract: a REFERENCE resolved by Stage 02 credential protection at execution time.
+    # Key values are never accepted here (unknown fields such as api_key are rejected by extra="forbid").
+    credential_ref: str | None = Field(None, pattern=r"^cred://[a-z0-9][a-z0-9._/-]{2,120}$")
+    # Rate limit (register CAP-11 security control): at most max_requests per rate_window_s for this provider,
+    # counted across ALL research runs; planning waits (bounded by the research deadline, cancellable).
+    max_requests: int = Field(30, ge=1, le=10000)
+    rate_window_s: float = Field(60.0, gt=0, le=86400)
+
+    @model_validator(mode="after")
+    def _credentials(self):
+        if self.kind == "brave" and self.credential_ref is None:
+            raise ValueError("provider kind 'brave' needs credential_ref (cred://...) resolved by Stage 02")
+        return self
 
     @field_validator("endpoint")
     @classmethod

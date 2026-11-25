@@ -79,15 +79,15 @@ def test_package_layout_and_windows_wrappers(pkg):
     src = (pkg / "install.py").read_text()
     for posix_only in ("os.fork", "os.getuid", "fcntl", "termios", "/bin/sh", "shell=True"):
         assert posix_only not in src, posix_only
-    zf = pkg.parent / "ATTa-stage11-additions.zip"
+    zf = pkg.parent / f"{builder.NAME}.zip"
     with zipfile.ZipFile(zf) as z:
-        assert all(n.startswith("ATTa-stage11-additions/") for n in z.namelist())
+        assert all(n.startswith(builder.NAME + "/") for n in z.namelist())
 
 
 def test_package_build_is_deterministic(pkg, tmp_path):
     again = builder.build(tmp_path)
-    a = (pkg.parent / "ATTa-stage11-additions.zip").read_bytes()
-    b = (again.parent / "ATTa-stage11-additions.zip").read_bytes()
+    a = (pkg.parent / f"{builder.NAME}.zip").read_bytes()
+    b = (again.parent / f"{builder.NAME}.zip").read_bytes()
     assert hashlib.sha256(a).digest() == hashlib.sha256(b).digest()
 
 
@@ -272,7 +272,8 @@ def test_installed_tree_imports_and_unit_tests_pass(pkg, target):
     assert install(pkg, target)[0] == 0
     cp = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
                          "tests/research/test_s11_contracts.py", "tests/research/test_s11_extraction_dedup.py"],
-                        cwd=target, capture_output=True, text=True, env={**os.environ, "ATTA_ENV": "test"})
+                        cwd=target, capture_output=True, text=True,
+                        env={**{k: v for k, v in os.environ.items() if k != "ATTA_REQUIRE_DB"}, "ATTA_ENV": "test"})
     assert cp.returncode == 0, cp.stdout[-2000:]
 
 
@@ -322,3 +323,71 @@ def test_compat_harness_reports_real_conflicts(pkg, tmp_path):
     assert code == 1 and rep["verdict"] == "INCOMPATIBLE"
     assert {"path_overlap", "migration_number", "schema_research", "tool_number"} <= kinds, kinds
     assert rep["installer"]["check"]["exit"] == 3
+
+
+def test_builder_ignores_other_stages_files(tmp_path):
+    """Built inside a combined tree (Stage 11 + another stage), the package contains only Stage 11's files."""
+    clone = tmp_path / "combined"
+    subprocess.run(["git", "clone", "-q", str(ROOT), str(clone)], check=True)
+    for rel in json.loads((builder.build(tmp_path / "ref") / "PACKAGE.json").read_text())["added"]:
+        (clone / rel).parent.mkdir(parents=True, exist_ok=True)     # current Stage 11 files of this working tree
+        shutil.copyfile(ROOT / rel, clone / rel)
+    for rel in ("BLOCKERS.md", "CHANGE_MANIFEST.md", "DECISIONS.md", "IMPLEMENTATION_PROGRESS.md",
+                "MASTER_IMPLEMENTATION_REGISTER.md", "documentation/requirements/requirement_register.yaml"):
+        shutil.copyfile(ROOT / rel, clone / rel)
+    (clone / "backend" / "deployment").mkdir(parents=True)
+    (clone / "backend" / "deployment" / "network_mode.py").write_text("# Stage 01B\n")
+    (clone / "database" / "migrations" / "0003_offline.sql").write_text("SELECT 1;\n")
+    out = tmp_path / "out"
+    cp = subprocess.run([sys.executable, str(clone / "scripts" / "build_stage11_package.py"), "--out", str(out)],
+                        capture_output=True, text=True)
+    assert cp.returncode == 0, cp.stdout + cp.stderr
+    added = json.loads((out / builder.NAME / "PACKAGE.json").read_text())["added"]
+    assert "backend/deployment/network_mode.py" not in added and "database/migrations/0003_offline.sql" not in added
+    assert "backend/research/service.py" in added
+
+
+@pytest.mark.parametrize("kind", ["migration", "tool_number", "capability_id"])
+def test_registry_conflicts_detected_before_installation(pkg, target, kind):
+    if kind == "migration":
+        (target / "database" / "migrations" / "0011_other_stage.sql").write_text("SELECT 1;\n")
+        expect = "migration number 0011"
+    elif kind == "tool_number":
+        tn = target / "configuration" / "tool_numbers.yaml"
+        tn.write_text(tn.read_text() + '  "011.001": {tool: "connector.search:query"}\n')
+        expect = "011.001 is assigned to connector.search:query"
+    else:
+        d = target / "capabilities" / "web_search"
+        d.mkdir()
+        (d / "capability.yaml").write_text("manifest_version: 1\nid: research.web\n")
+        expect = "declares capability id research.web"
+    commit(target, kind)
+    before = snapshot(target)
+    for args in (["--check"], []):
+        code, out = install(pkg, target, *args)
+        assert code == 3 and expect in out, out
+        assert snapshot(target) == before
+
+
+def test_installation_evidence_report(pkg, target, tmp_path):
+    rep = tmp_path / "install-report.json"
+    code, _ = install(pkg, target, "--report", str(rep))
+    assert code == 0
+    data = json.loads(rep.read_text())
+    assert data["exit_code"] == 0 and data["mode"] == "install" and data["package"] and data["target_head"]
+    assert len(data["written_sha256"]) == len(json.loads((pkg / "PACKAGE.json").read_text())["added"]) + 6
+    gd = Path(git(target, "rev-parse", "--absolute-git-dir").strip())
+    assert json.loads((gd / "atta-stage11-install-report.json").read_text())["exit_code"] == 0
+    code, out = install(pkg, target, "--check", "--report", str(target / "inside.json"))
+    assert code == 2 and "outside the target" in out
+
+
+def test_secret_scan_blocks_keys_and_credentials(pkg, tmp_path):
+    assert builder.secret_scan(pkg) == []
+    bad = tmp_path / "bad"
+    shutil.copytree(pkg, bad)
+    (bad / "overlay" / "operator.pem").write_text("x")
+    (bad / "overlay" / "notes.txt").write_bytes(b"-----" + b"BEGIN OPENSSH " + b"PRIVATE KEY-----\nabc\n")
+    (bad / "overlay" / "local.env").write_text("A=1")
+    found = builder.secret_scan(bad)
+    assert len(found) == 3, found

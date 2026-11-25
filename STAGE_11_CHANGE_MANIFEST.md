@@ -37,6 +37,16 @@ Parallel Agent 3 — Stage 11 web search and deep research. Working branch `stag
    `test_s11_installer.py`; `ATTA_REQUIRE_DB=1` makes DB-backed tests fail instead of skipping.
    No functionality was removed or disabled. Commits preserved on the isolated branch `claude/focused-cori-ajjjn0`.
 
+10. **Final implementation and qualification (continuation assignment):** requirement audit
+   (`STAGE_11_REQUIREMENT_MATRIX.md`); CAP-11 rate limits; research deadline bounding running tasks; credential
+   references (`cred://`) with Stage 02 `CredentialResolver` contract; evidence-storage and model-request budgets;
+   operator revocation; URL credential redaction; BLOCKED results keep all limitations; installer conflict detection
+   for migration numbers / tool numbers / capability ids and JSON installation evidence; Stage 04 additive
+   `app.py` patch; Stage 03 model-gateway requirements; package renamed `ATTa-STAGE-11-COMPLETE` with Git bundle,
+   dependency manifest and secret scan; qualification tests (`test_s11_qualification.py`). The compatibility harness
+   now sets `ATTA_VENV` so fresh trees run under equivalent conditions (S01A-T48 investigation, STAGE_11_VERIFICATION
+   §2). No functionality removed.
+
 The complete file list with hashes is in STAGE_11_MERGE_MANIFEST.md and in the Stage 11 section of
 CHANGE_MANIFEST.md.
 

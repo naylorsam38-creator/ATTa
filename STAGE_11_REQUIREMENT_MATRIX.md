@@ -1,0 +1,90 @@
+# STAGE 11 REQUIREMENT TRACEABILITY MATRIX
+
+REQUIREMENT → COMPONENT → OPERATION → TEST → EVIDENCE → STATUS
+
+**Authoritative sources audited.** No protected Stage 11 / S08 specification file exists (`configuration/build/stages/`
+holds only `S01.yaml` and `S01A.yaml`). The requirements are therefore taken from:
+* **REG**: the protected requirement register, entries CAP-11 (Web search) and CAP-12 (Deep research);
+* **RM**: the protected roadmap, entry `S08 Web search and deep research [CAP-11, CAP-12]`;
+* **B§n**: the Stage 11 assignment (sections 1–41);
+* **C§n**: the Stage 11 continuation assignment (sections 01–40).
+
+**Status vocabulary.** **VERIFIED** — implemented and passed by a recorded test in this sidecar.
+**IMPLEMENTED — QUALIFICATION PENDING** — implemented; the qualifying test needs something unavailable here.
+**BLOCKED** — needs another stage or an external resource. **FAILED** — none.
+
+Test files are in `tests/research/`. *pl* = `test_s11_pipeline.py`, *url* = `test_s11_url_security.py`,
+*ex* = `test_s11_extraction_dedup.py`, *ct* = `test_s11_contracts.py`, *api* = `test_s11_api.py`,
+*reg* = `test_s11_registration_tools.py`, *kit* = `test_s11_integration_kits.py`, *inst* = `test_s11_installer.py`,
+*q* = `test_s11_qualification.py`. Evidence: `evidence/stage_11/` (JUnit XML + logs in `runs/`, JSON records).
+
+## Register (REG) and roadmap (RM)
+
+| ID | Requirement | Component | Operation | Test | Evidence | Status |
+|---|---|---|---|---|---|---|
+| REG-11-SC1 | CAP-11 egress allow-list | task `permitted_network_destinations` + drift guard; `netguard.py` | destination check per proposal and per hop | url::test_unsafe_urls…, pl::test_compromised_worker…, url::test_unsafe_redirects_refused | runs/s11.xml, S11-INJECTION-CONTAINED.json | VERIFIED |
+| REG-11-SC2 | CAP-11 result content treated as untrusted data | context packet `untrusted`, extract.py, gateway | provenance-tagged data only | pl::test_prompt_injection…, pl::test_compromised_worker…, ex::test_hidden_injection… | runs/s11.xml | VERIFIED |
+| REG-11-SC3 | CAP-11 rate limits | `ProviderConfig.max_requests/rate_window_s`, `ResearchService._rate_ok`, research budgets | per-provider window across all research; count budgets | q::test_provider_rate_limit, pl::test_query_budget_enforced | runs/s11.xml | VERIFIED |
+| REG-11-SC4 | CAP-11 executes only through the Stage 01A controller | `ResearchService` → `RuntimeController.plan/release/run_task` → gateway | every tool call | pl::test_standard_research_end_to_end… (pools, policy decisions), reg::test_evidence_tools_through_the_gateway | S11-PIPELINE-STANDARD.json | VERIFIED |
+| REG-11-T01 | S08-CAP11-T01 primary user journey works end to end | whole pipeline | QUICK_SEARCH / STANDARD against deterministic fixtures | pl::test_quick_search…, pl::test_standard_research… | runs/s11.xml | VERIFIED (deterministic) · live provider: BLOCKED (B-S11-01) |
+| REG-11-T02 | S08-CAP11-T02 security controls enforced (negative tests) | netguard, drift guard, policy, API policy | denials | url::* (77 cases), pl::test_unsafe_search_results…, api::test_every_research_operation_denied…, q::test_cross_task… | runs/s11.xml | VERIFIED |
+| REG-11-T03 | S08-CAP11-T03 regression suite unchanged | — | Stage 01/01A + legacy suites vs baseline | runs/platform_*.log, runs/legacy_*.log | STAGE_11_VERIFICATION.md §1 | VERIFIED |
+| REG-11-IF | CAP-11 interface: search toggle, inline citations | Stage 04 UI; API contracts `backend/research/api.py` | — | api::test_openapi_schema… | STAGE_11_MERGE_MANIFEST.md §7 | IMPLEMENTED — QUALIFICATION PENDING (Stage 04 UI) |
+| REG-11-API | CAP-11 planned `POST /v1/capabilities/web.search/executions` | superseded by Stage 01A gateway-only execution (`routes.py` refuses direct capability execution); research API `/v1/research` | — | api::* | DECISIONS D-S11-13 | VERIFIED (contract) — route mounting BLOCKED on Stage 04, use BLOCKED on Stage 02 |
+| REG-12-SC1 | CAP-12 Temporal workflow with budget limits | durable state = PostgreSQL checkpoints + research budgets; Temporal itself is Stage 13 | checkpoint / resume / budgets | pl::test_checkpoint_and_restart_recovery, budget tests | S11-RESTART-RECOVERY.json | VERIFIED (budgets, durable recovery) · Temporal: BLOCKED (Stage 13, B-008) |
+| REG-12-SC2 | CAP-12 per-task cost ceiling | Stage 01A per-task budgets (actions, tokens, CPU, spend 0) + research budgets | reserve/settle; `consume` | pl::test_budget_ceiling_and_db_guards, q::test_model_request_budget, q::test_evidence_storage_budget | runs/s11.xml | VERIFIED |
+| REG-12-SC3 | CAP-12 untrusted-content isolation | isolated handler processes, clean env, untrusted packet section | — | q::test_handlers_cannot_access_credentials, pl::test_prompt_injection… | S11-CREDENTIAL-ISOLATION.json | VERIFIED |
+| REG-12-T01 | S08-CAP12-T01 primary journey end to end | deep research pipeline | DEEP_RESEARCH Focus-4 batches, claims, citations, verification | pl::test_deep_research_uses_focus4…, pl::test_standard_research… | runs/s11.xml | VERIFIED (deterministic, explicit-fixture claims) · live model: BLOCKED (Stage 03) |
+| REG-12-T02 | S08-CAP12-T02 security negative tests | see C§33 rows | | | | VERIFIED |
+| REG-12-T03 | S08-CAP12-T03 regression unchanged | as REG-11-T03 | | | | VERIFIED |
+| REG-12-IF | CAP-12 interface: progress view, report with sources | `Progress`, `ResearchResult` contracts | — | kit::test_wiring_end_to_end… | — | IMPLEMENTED — QUALIFICATION PENDING (Stage 04 UI) |
+| RM-S08 | Stage S08 = CAP-11 + CAP-12 through the controller | all of the above | | | | VERIFIED except the BLOCKED items listed |
+
+## Stage 11 assignment (B§) and continuation (C§)
+
+| ID | Requirement | Component | Operation | Test | Evidence | Status |
+|---|---|---|---|---|---|---|
+| B§4 / C§26 | Registration through the existing registry; permanent tool ids; no duplicates; one registry/catalogue/controller | `capabilities/research_*`, `documentation/stage11/tool_numbers.stage11.yaml`, `operator_config.py` | discovery, numbering reconcile, conflict detection | reg::test_production_registry_discovers…, reg::test_proposed_numbers_reconcile…, kit::test_operator_config_*, inst::test_registry_conflicts_detected… | runs/s11.xml | VERIFIED · production activation BLOCKED on operator signing (B-S11-02) |
+| B§5 / C§08 | Task-specific tool pools; no self-expansion; Focus-4 | Stage 01A allocator (≤ 4 tools), Focus-4 slots | allocate, release | pl::test_standard_research… (pools), reg::test_evidence_tools… (exact pools), pl::test_deep_research…, q::test_cross_task… | runs/s11.xml | VERIFIED |
+| B§6 / C§10 | Typed, versioned research contract (all listed fields) | `contracts.ResearchContract`, `research.contract_versions` | create, amend (operator-authorised) | ct::test_contract_has_all_required_fields…, ct::test_contract_rejects…, pl::test_contract_changes_are_versioned… | runs/s11.xml | VERIFIED |
+| B§7 | Modes QUICK / STANDARD / DEEP / SOURCE_COMPARISON / FACT_VERIFICATION; bounded | `config` ceilings, service | — | ct::test_all_five_modes…, pl::test_quick_search…, pl::test_fact_verification_and_source_comparison_modes, pl::test_deep_research… | runs/s11.xml | VERIFIED |
+| B§8 / C§04 / C§05 | Provider-independent search interface; normalised results; ranking; duplicate removal; explicit providers; no fabrication; credentials via Stage 02 references | `providers.py`, `config.ProviderConfig`, `provider_check.py`, `security.CredentialResolver` | search, normalise, rank, dedupe | pl::test_provider_unavailable_never_fabricates, pl::test_broken_provider_and_credentialed_provider, kit::test_provider_check, q::test_provider_credentials_are_references_only | runs/s11.xml | VERIFIED (SearXNG adapter vs fixture) · live provider BLOCKED (B-S11-01) · credentialed providers BLOCKED (Stage 02 injection, B-S11-04) |
+| B§9 / C§28 | Offline: OFFLINE_UNAVAILABLE for external, local sources work, stored evidence usable | `network.py`, service | mode check before planning | pl::test_offline_mode…[AIR_GAPPED/OFFLINE], q::test_previously_retrieved_evidence_usable_offline | S11-OFFLINE-*.json | VERIFIED · Stage 01B provider: integration pending (B-S11-10) |
+| B§10 / C§06 / C§17 | Controlled retrieval: scheme, destination, redirects, content type, size, timeouts; SSRF, localhost, private networks, metadata, unsafe redirects | `netguard.py`, `retrieval_policy.py`, `urls.py` | fetch | url::* | runs/s11.xml | VERIFIED |
+| B§11 / C§16 | Untrusted web content cannot change instructions/contracts/tools/budgets/criteria/approvals/secrets | context packet, gateway, DB triggers | — | pl::test_prompt_injection…, pl::test_compromised_worker…, q::test_handlers_cannot_access_credentials | S11-INJECTION-CONTAINED.json | VERIFIED |
+| B§12 / C§12 | Typed extraction with metadata provenance; nothing invented; PDF where approved | `extract.py` | extract | ex::test_html_extraction…, ex::test_missing_metadata_is_never_invented, ex::test_plain_text_json_and_pdf_handling | runs/s11.xml | VERIFIED · PDF text BLOCKED (no approved parser, B-S11-08) |
+| B§13 / C§20 | Canonical source record; content hash, not URL, as evidence | `research.sources`, `research.snapshots` | ingest | pl::test_standard_research…, pl::test_tampered_evidence… | runs/s11.xml | VERIFIED |
+| B§14 | Deduplication incl. syndication; independence groups | `dedup.py` | find_duplicate | ex::test_duplicate_detection_relations, pl::test_standard_research… | runs/s11.xml | VERIFIED |
+| B§15 / C§11 | Source-quality factors, no truth score, uncertainty preserved | `quality.py` | assess | ex::test_quality_is_factors_not_a_truth_score | runs/s11.xml | VERIFIED |
+| B§16 / C§12 | Structured claims bound to sources/evidence | `claims.bind_claims`, `research.claims/claim_sources` | bind | pl::test_standard_research…, pl::test_invalid_citations_are_rejected | runs/s11.xml | VERIFIED |
+| B§17 / C§13 | Citation binding to stored evidence; no invented ids | `bind_claims` (minted `cit_` ids) | bind | pl::test_invalid_citations_are_rejected, kit::test_hub_integration_end_to_end… | runs/s11.xml | VERIFIED |
+| B§18 / C§15 | Independent citation verification; uncited material claims detected | `verification.ResearchVerifier` + Stage 01A `final_verification` | verify | pl::test_uncited_material_claim_fails_verification, pl::test_tampered_evidence…, q::test_verification_tampering… | runs/s11.xml | VERIFIED |
+| B§19 / C§14 | Contradictions recorded with sources, dates, scope; never hidden | `claims.analyse_contradictions` | record | pl::test_standard_research…, pl::test_fact_verification… | runs/s11.xml | VERIFIED |
+| B§20 | Freshness represented; stale evidence never silently satisfies | `quality.freshness_of`, verifier | evaluate | pl::test_freshness_requirement…, ex::test_freshness_never… | runs/s11.xml | VERIFIED |
+| B§21 / C§07 | Bounded deep research via Focus-4; checkpoint; evidence gaps; next batch | service batch loop, planner | — | pl::test_deep_research_uses_focus4_bounded_batches, q::test_evidence_gap_triggers_one_bounded_reformulated_query | runs/s11.xml | VERIFIED |
+| B§22 / C§18 | Budgets: queries, sources, fetches, depth, time, tokens, network requests, retries, parallel ops, download size, model requests, evidence storage; explicit exhaustion; no self-increase | `research.budgets` + trigger, Stage 01A budgets, retrieval policy size cap, Focus-4 | consume | pl::test_query_budget…, pl::test_source_and_fetch_budgets…, pl::test_link_depth_limit, pl::test_budget_ceiling_and_db_guards, q::test_evidence_storage_budget, q::test_model_request_budget, url::test_response_size_limits | runs/s11.xml | VERIFIED (incl. q::test_research_time_limit_is_enforced: the deadline also bounds running tasks) |
+| B§23 | Context management: evidence selection with provenance | `evidence.select_passages` | select | kit::test_hub_integration… (packet), pl::test_standard_research… | runs/s11.xml | VERIFIED |
+| B§24 / C§19 | Checkpoints; restart recovery | `ResearchService.checkpoint/resume` + controller recover | — | pl::test_checkpoint_and_restart_recovery | S11-RESTART-RECOVERY.json | VERIFIED |
+| B§25 / C§19 | Real cancellation; evidence kept; never "completed"; revocation | `cancel`, `revoke`, DB trigger | — | pl::test_cancellation…, q::test_authority_revocation_stops_research | S11-CANCELLATION.json | VERIFIED |
+| B§26 | Structured result; no claimed model synthesis | `ResearchResult` | assemble | pl::test_standard_research… | S11-PIPELINE-STANDARD.json | VERIFIED |
+| B§27 | Local/project research interfaces (Stage 07) | `local_sources.py`, `attach_local_source` | — | pl::test_offline_mode… (local) | S11-OFFLINE-*.json | VERIFIED (attachments) · Stage 07 store BLOCKED (B-S11-06) |
+| B§28 / C§23 / C§27 | Stage 04 contracts; API router with typed contracts; auth enforced; additive app.py patch | `api.py`, `wiring.py`, `stage04_app_wiring.patch` | — | api::*, kit::test_wiring_*, q::test_stage04_app_patch… | runs/s11.xml | VERIFIED (contracts + wiring) · actual Stage 04 package: BLOCKED (not supplied, B-S11-11) |
+| B§29 / C§24 | Stage 02 contract (principal, tenant, permissions, credentials, approvals, audit, revocation) without a second security system | `security.py`, `stage02_research_permissions.yaml`, `operator_config.py`, `research.events`, `revoke` | — | kit::test_stage02_permission_registration…, kit::test_operator_config_*, q::test_authority_revocation… | runs/s11.xml | IMPLEMENTED — QUALIFICATION PENDING (Stage 02) |
+| B§30 / C§09 / C§25 | Stage 03 model contract; model independence; deterministic vs live distinguished | `hub.py`, `worker_factory`, `documentation/stage11/STAGE03_MODEL_GATEWAY_REQUIREMENTS.md` | validated hub calls | kit::test_hub_*, kit::test_validate_synthesis_rules | S11-HUB-INTEGRATION.json | VERIFIED (contract with labelled test hub) · live model BLOCKED (Stage 03) |
+| B§31 / C§06 | No browser automation; interactive pages → dependency | limitation `interactive-browser` | — | q::test_interactive_page_reported_as_browser_dependency | runs/s11.xml | VERIFIED · browser execution itself: BLOCKED (Stage 15 / roadmap S16) |
+| B§32 / C§20 / C§21 | Persistence tables; sequential, merge-safe migration; fresh, upgrade, repeat, failure recovery; no overwrite of unrelated structures | `0011_stage11_research.sql` | migrate | q::test_migration_fresh_upgrade_repeat_and_failure_recovery | S11-MIGRATION.json | VERIFIED · upgrade from Stage 01B candidate: BLOCKED (not supplied) |
+| B§33 | API contracts (create, get, list, start/resume, cancel, progress, queries, sources, source, claims, citations, result) | `api.py` | — | api::test_openapi_schema…, kit::test_wiring_end_to_end… | runs/s11.xml | VERIFIED (start = Stage 02 approval) |
+| B§34 | Audit chain with execution identifiers | `research.events`, `ResearchService.trace` | trace | pl::test_standard_research… | S11-PIPELINE-STANDARD.json | VERIFIED |
+| B§35 | Distinct error codes | `errors.py` | — | ct::test_error_model_is_distinct_codes | runs/s11.xml | VERIFIED |
+| B§37 | Read-only; no side-effecting operations | tool set (GET only), objective restrictions | — | reg (pool/operation sets), url | — | VERIFIED |
+| C§20 | No plaintext credentials in research records | `urls.redact_url`, credential references | — | q::test_no_plaintext_credentials_in_research_records, q::test_provider_credentials_are_references_only | runs/s11.xml | VERIFIED |
+| C§22 | Stage 01B compatibility with the actual package | `compat/check_compat.py` | combined tree + installer + suites | inst::test_compat_harness_* (synthetic) | runs2/compat_synthetic.json | BLOCKED — actual 01B package not supplied (B-S11-11) |
+| C§23 | Stage 04 compatibility with the actual package | same | same | same | same | BLOCKED — actual 04 package not supplied (B-S11-11) |
+| C§26 | Stage 12 compatibility (connectors/MCP/skills/plugins) | harness checks (tool numbers, capability ids, hook scan) | — | inst::test_registry_conflicts_detected…, inst::test_compat_harness_reports_real_conflicts | runs/s11.xml | IMPLEMENTED — QUALIFICATION PENDING (Worker 4 package not supplied) |
+| C§29 / C§32 | Transactional installer: checksums, target, baseline, existing files, nested repos, dirty tree, migration and tool-number conflicts, dry run, stop on conflicts, preserve unrelated changes, rollback, repeat, evidence | `packaging/stage11/install.py` | check / install / rollback | inst::* (29 tests) | runs/s11.xml | VERIFIED on Stage 01A baseline + synthetic stages · actual 01B/04/combined: BLOCKED |
+| C§30 | Windows + Linux entry points, shared logic | `install.py` + `.bat`/`.ps1`/`.sh` | — | inst::test_package_layout_and_windows_wrappers, inst::test_crlf_target_windows_checkout | runs/s11.xml | VERIFIED on Linux · Windows execution: IMPLEMENTED — QUALIFICATION PENDING (B-S11-12) |
+| C§31 | Shared documents merged additively; derived register regenerated | merge rules (union / 3-way / regenerated) | — | inst::test_shared_logs_merge_with_other_stage_sections, inst::test_conflicting_register_yaml_fails_check | runs/s11.xml | VERIFIED |
+| C§33 | Security qualification (unauthorised execution, unassigned capability, network violation, credential access, malicious instructions, invalid citations, fabricated evidence, budget expansion, cancellation bypass, cross-task, verification tampering, invalid API) | gateway, policy, DB triggers, verifier | denial + authorised paths | pl::test_unapproved_research_does_not_execute, q::test_cross_task_and_unassigned_capability_denied, url::*, q::test_handlers_cannot_access_credentials, pl::test_prompt_injection…, pl::test_invalid_citations…, pl::test_budget_ceiling_and_db_guards, pl::test_cancellation… (no restart), q::test_verification_tampering…, api::test_validation… + authorised: pl::test_standard_research…, kit::test_wiring_end_to_end… | runs/s11.xml | VERIFIED |
+
+**Outstanding implementation work: none identified.** Every row not VERIFIED is blocked by another stage, an
+unavailable package or an unavailable platform/resource, as recorded in BLOCKERS.md (B-S11-01 … B-S11-14).

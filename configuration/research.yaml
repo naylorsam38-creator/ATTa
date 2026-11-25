@@ -27,8 +27,8 @@ evidence_selection:
 
 # Mode defaults (= trusted ceilings for that mode).
 modes:
-  QUICK_SEARCH:      {max_queries: 2,  max_sources: 5,  max_fetches: 3,  max_depth: 0, max_subquestions: 1,  max_batches: 2, time_limit_s: 120,  token_limit: 20000,  context_tokens_per_task: 4096, network_requests: 12,  max_retries: 1}
-  STANDARD_RESEARCH: {max_queries: 8,  max_sources: 12, max_fetches: 12, max_depth: 1, max_subquestions: 4,  max_batches: 6, time_limit_s: 900,  token_limit: 100000, context_tokens_per_task: 8192, network_requests: 60,  max_retries: 2}
-  DEEP_RESEARCH:     {max_queries: 24, max_sources: 40, max_fetches: 40, max_depth: 2, max_subquestions: 12, max_batches: 16, time_limit_s: 3600, token_limit: 400000, context_tokens_per_task: 8192, network_requests: 200, max_retries: 2}
-  SOURCE_COMPARISON: {max_queries: 0,  max_sources: 8,  max_fetches: 8,  max_depth: 0, max_subquestions: 1,  max_batches: 3, time_limit_s: 600,  token_limit: 60000,  context_tokens_per_task: 8192, network_requests: 30,  max_retries: 1}
-  FACT_VERIFICATION: {max_queries: 6,  max_sources: 10, max_fetches: 10, max_depth: 1, max_subquestions: 4,  max_batches: 6, time_limit_s: 900,  token_limit: 80000,  context_tokens_per_task: 8192, network_requests: 50,  max_retries: 2}
+  QUICK_SEARCH:      {max_queries: 2,  max_sources: 5,  max_fetches: 3,  max_depth: 0, max_subquestions: 1,  max_batches: 2, time_limit_s: 120,  token_limit: 20000,  context_tokens_per_task: 4096, network_requests: 12,  max_retries: 1, max_evidence_kb: 16384, max_model_requests: 4}
+  STANDARD_RESEARCH: {max_queries: 8,  max_sources: 12, max_fetches: 12, max_depth: 1, max_subquestions: 4,  max_batches: 6, time_limit_s: 900,  token_limit: 100000, context_tokens_per_task: 8192, network_requests: 60,  max_retries: 2, max_evidence_kb: 65536, max_model_requests: 30}
+  DEEP_RESEARCH:     {max_queries: 24, max_sources: 40, max_fetches: 40, max_depth: 2, max_subquestions: 12, max_batches: 16, time_limit_s: 3600, token_limit: 400000, context_tokens_per_task: 8192, network_requests: 200, max_retries: 2, max_evidence_kb: 262144, max_model_requests: 120}
+  SOURCE_COMPARISON: {max_queries: 0,  max_sources: 8,  max_fetches: 8,  max_depth: 0, max_subquestions: 1,  max_batches: 3, time_limit_s: 600,  token_limit: 60000,  context_tokens_per_task: 8192, network_requests: 30,  max_retries: 1, max_evidence_kb: 65536, max_model_requests: 20}
+  FACT_VERIFICATION: {max_queries: 6,  max_sources: 10, max_fetches: 10, max_depth: 1, max_subquestions: 4,  max_batches: 6, time_limit_s: 900,  token_limit: 80000,  context_tokens_per_task: 8192, network_requests: 50,  max_retries: 2, max_evidence_kb: 65536, max_model_requests: 30}

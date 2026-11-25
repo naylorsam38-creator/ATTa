@@ -1,9 +1,9 @@
 {
   "synthesis": {
-    "natural_language": "The bridge reopened on Monday [cit_01M88S1ATWG5R45BWKWV3M25B4].",
+    "natural_language": "The bridge reopened on Monday [cit_01M88SJBCTVX2TW1YAD43ET4TG].",
     "status": "MODEL",
     "citation_ids": [
-      "cit_01M88S1ATWG5R45BWKWV3M25B4"
+      "cit_01M88SJBCTVX2TW1YAD43ET4TG"
     ],
     "hub": "fake-test-hub",
     "validated_by": "hub.validate_synthesis/1"

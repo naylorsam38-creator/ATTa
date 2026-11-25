@@ -15,6 +15,7 @@ from __future__ import annotations
 import hashlib
 import json
 import threading
+import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
@@ -39,7 +40,7 @@ from .planner import DeterministicPlanner, ResearchPlanner
 from .quality import assess_quality, parse_time
 from .security import ResearchSecurityContext, stage01a_context
 from .store import ResearchStore
-from .urls import canonicalize_url, check_scope, host_of, precheck_url, registrable_group
+from .urls import canonicalize_url, check_scope, host_of, precheck_url, redact_url, registrable_group
 from .verification import ResearchVerifier
 from .worker import DeterministicResearchWorker
 
@@ -123,6 +124,8 @@ class ResearchService:
         contract = ResearchContract.model_validate(draft.model_dump(mode="json") | stored)
         self.store.create_run(contract, self._budget_limits(eb), principal_id=sec.principal_id,
                               tenant_id=sec.tenant_id)
+        if isinstance(self.planner, HubPlanner) and not subquestions:
+            self.store.consume(research_id, "model_requests", 1)      # the model decomposition above
         self.store.event(research_id, "objective.created", {"objective_id": objective.objective_id,
                                                             "objective_hash": objective.hash(),
                                                             "subquestions": subs, "planner": self.planner.name},
@@ -133,7 +136,8 @@ class ResearchService:
     def _budget_limits(eb: ExecutionBudget) -> dict[str, float]:
         return {"queries": eb.max_queries, "sources": eb.max_sources, "fetches": eb.max_fetches,
                 "network_requests": eb.network_requests, "tokens": eb.token_limit, "retries": eb.max_retries,
-                "batches": eb.max_batches}
+                "batches": eb.max_batches, "evidence_bytes": eb.max_evidence_kb * 1024,
+                "model_requests": eb.max_model_requests}
 
     def approval_payload(self, research_id: str) -> dict:
         """What the operator signs (Stage 01A objective approval) before research may execute."""
@@ -255,6 +259,14 @@ class ResearchService:
             self._finish_cancelled(research_id, c)
         return {"research_id": research_id, "status": self.store.run(research_id)["status"], "stopped_tasks": stopped}
 
+    def revoke(self, research_id: str, auth: OperatorAuthorization | None, reason: str = "authority revoked") -> dict:
+        """Operator-authorised revocation of the research authority: stops all work like cancel; the run can never
+        continue (cancel_requested is permanent in the database)."""
+        c = self.store.contract(research_id)
+        operator = self.controller.authorizer.verify(auth, "revoke_research", research_id, c.hash())
+        self.store.event(research_id, "authority.revoked", {"operator": operator, "reason": reason})
+        return self.cancel(research_id, f"authority revoked by {operator}: {reason}")
+
     def _running(self, research_id: str) -> bool:
         with self._lock:
             return research_id in self._active_runs
@@ -271,7 +283,9 @@ class ResearchService:
             if self.store.cancel_requested(research_id):
                 return self._finish_cancelled(research_id, c)
             if self.store.deadline_passed(research_id):
-                self.store.event(research_id, "budget.exhausted", {"metric": "time_limit_s"})
+                if not any(e["detail"].get("metric") == "time_limit_s"
+                           for e in self.store.events(research_id, ("budget.exhausted",))):
+                    self.store.event(research_id, "budget.exhausted", {"metric": "time_limit_s"})
                 break
             planned = self._plan_next(research_id, c)
             pending = [t for t in self.controller.store.tasks(oid) if t["state"] not in TERMINAL_TASK]
@@ -347,6 +361,11 @@ class ResearchService:
             state = self.controller.store.task(oid, tid)["state"]
             self.store.event(research_id, "task.interrupted", {"error": f"{type(exc).__name__}: {exc}",
                                                                "state": state}, objective_id=oid, task_id=tid)
+        left = self.store.seconds_left(research_id)
+        if state != "COMPLETED" and left is not None and left <= 1.0 and not any(
+                e["detail"].get("metric") == "time_limit_s" for e in self.store.events(research_id, ("budget.exhausted",))):
+            self.store.event(research_id, "budget.exhausted", {"metric": "time_limit_s", "task_state": state},
+                             objective_id=oid, task_id=tid)
         b = self.controller.store.budgets(oid, tid).get("tokens")
         if b and b["consumed"] > 0 and not self.store.consume(research_id, "tokens", b["consumed"]):
             self.store.event(research_id, "budget.exhausted", {"metric": "tokens"}, task_id=tid)
@@ -359,9 +378,24 @@ class ResearchService:
         return [f"TASK-{start + i:04d}" for i in range(n)]
 
     def _providers(self, c: ResearchContract) -> list:
+        """Configured, enabled providers usable NOW. A credentialed provider is never used before Stage 02 can inject
+        its key inside the isolated handler (a key must never travel in worker-visible tool arguments): it is
+        recorded as a refused query with BLOCKED_DEPENDENCY, and nothing switches silently to another provider."""
         ids = c.network_policy.provider_ids
         provs = [p for p in self.config.providers if p.enabled and (not ids or p.id in ids)]
-        return provs
+        usable = []
+        for p in provs:
+            if p.credential_ref is None:
+                usable.append(p)
+                continue
+            if not any(e["detail"].get("provider") == p.id for e in self.store.events(c.research_id,
+                                                                                         ("provider.blocked",))):
+                self.store.event(c.research_id, "provider.blocked", {"provider": p.id, "code": "BLOCKED_DEPENDENCY",
+                                 "credential_ref": p.credential_ref, "dependency": "S02 credential injection"})
+                self.store.add_query(c.research_id, subquestion_index=None, query_text=c.question[:500],
+                                     provider_id=p.id, provider_kind=p.kind, objective_id=c.objective_id,
+                                     status="refused", error_code="BLOCKED_DEPENDENCY", results=[])
+        return usable
 
     def _plan_next(self, research_id: str, c: ResearchContract, dry_run: bool = False) -> list[str]:
         oid = c.objective_id
@@ -375,6 +409,7 @@ class ResearchService:
         if dry_run:
             return [x["kind"] for x in candidates[:free]]
         specs, details = [], []
+        in_pass: dict[str, int] = {}
         numbers = self._tool_numbers()
         for cand in candidates:
             if len(specs) >= free:
@@ -384,6 +419,10 @@ class ResearchService:
                        "compare": []}[cand["kind"]]
             if cand.get("retry"):
                 metrics = metrics + ["retries"]
+            if cand["kind"] == "search":
+                if not self._rate_ok(research_id, cand["provider_id"], in_pass.get(cand["provider_id"], 0)):
+                    continue
+                in_pass[cand["provider_id"]] = in_pass.get(cand["provider_id"], 0) + 1
             if not self._consume_all(research_id, metrics):
                 self.store.event(research_id, "plan.skipped", {"kind": cand["kind"], "reason": "budget exhausted",
                                                                "metrics": metrics})
@@ -404,6 +443,25 @@ class ResearchService:
             self.store.event(research_id, "task.planned", {"kind": cand["kind"], "order": order,
                              **{k: v for k, v in cand.items() if k not in ("kind",)}}, objective_id=oid, task_id=tid)
         return [s.task_id for s in specs]
+
+    def _rate_ok(self, research_id: str, provider_id: str, in_pass: int = 0) -> bool:
+        """Wait (cancellable, bounded by the research deadline) until the provider's rate window has room.
+        Searches already chosen in this planning pass count too; those are deferred to the next pass, not awaited."""
+        prov = self.config.provider(provider_id)
+        if prov is None:
+            return False
+        waited = False
+        while self.store.provider_requests_since(provider_id, prov.rate_window_s) + in_pass >= prov.max_requests:
+            if in_pass:
+                return False
+            if not waited:
+                self.store.event(research_id, "provider.rate_limited", {"provider": provider_id,
+                                 "max_requests": prov.max_requests, "window_s": prov.rate_window_s})
+                waited = True
+            if self.store.cancel_requested(research_id) or self.store.deadline_passed(research_id):
+                return False
+            time.sleep(min(1.0, prov.rate_window_s / 4))
+        return True
 
     def _consume_all(self, research_id: str, metrics: list[str]) -> bool:
         b = self.store.budgets(research_id)
@@ -447,12 +505,14 @@ class ResearchService:
                              "reported hashes", "requirement_ids": [req], "verifier": "tool_verify",
                              "params": {"tool_id": tool}})
         paths = ["research"] + ([cand["path"]] if kind == "local" else [])
+        left = self.store.seconds_left(c.research_id)
+        deadline = None if left is None else max(1.0, min(left, self.controller.config.limits.max_task_duration_s))
         spec = TaskSpec(task_id=tid, requirement_ids=[req], task_type=ttype,
                         description=f"{kind} for research {c.research_id}"[:200],
                         required_outcome=f"{kind} outcome recorded as research evidence", operations=ops,
                         acceptance_criteria=criteria, permitted_filesystem_paths=paths,
                         permitted_network_destinations=dests, assigned_worker=f"research-worker-{tid}",
-                        maximum_actions=10, prohibited_operations=[])
+                        maximum_actions=10, prohibited_operations=[], execution_deadline=deadline)
         return spec, order
 
     def _candidates(self, research_id: str, c: ResearchContract, planned: dict[str, dict]) -> list[dict]:
@@ -482,14 +542,15 @@ class ResearchService:
                 p_urls.add(canonicalize_url(url))
         # searches: attempt 0 for every subquestion
         providers = self._providers(c)
-        if c.research_type is not ResearchMode.SOURCE_COMPARISON and not providers and subs:
+        if c.research_type is not ResearchMode.SOURCE_COMPARISON and not providers and subs and \
+                not c.source_requirements.seed_urls:
             if not any(e for e in self.store.events(research_id, ("provider.unavailable",))):
                 self.store.event(research_id, "provider.unavailable", {"reason": "no search provider is configured"})
         if providers:
             prov = providers[0]
             for i, s in enumerate(subs):
                 if (i, 0) not in p_queries:
-                    q = self.planner.query_for(c, s, 0)
+                    q = self._query(research_id, c, s, 0)
                     if q:
                         out.append(self._search_candidate(prov, q, i, 0, c))
         # retrieval of search results (round-robin by rank across subquestions)
@@ -521,7 +582,7 @@ class ResearchService:
             covered = self._covered_subquestions(research_id)
             for i, s in enumerate(subs):
                 if i not in covered and (i, 0) in p_queries and (i, 1) not in p_queries:
-                    q = self.planner.query_for(c, s, 1)
+                    q = self._query(research_id, c, s, 1)
                     if q:
                         out.append(self._search_candidate(providers[0], q, i, 1, c))
                         self.store.event(research_id, "gap.identified", {"subquestion_index": i, "query": q})
@@ -531,6 +592,11 @@ class ResearchService:
         if not out:
             out += self._compare_candidate(research_id, c, planned)
         return out
+
+    def _query(self, research_id: str, c: ResearchContract, sub: str, attempt: int) -> str | None:
+        if isinstance(self.planner, HubPlanner) and not self.store.consume(research_id, "model_requests", 1):
+            return None                    # budget exhausted: recorded by the store, no model call is made
+        return self.planner.query_for(c, sub, attempt)
 
     def _search_candidate(self, prov, query: str, subq: int, attempt: int, c: ResearchContract) -> dict:
         precheck_url(prov.endpoint, self._test_ports)
@@ -553,8 +619,9 @@ class ResearchService:
             check_scope(url, c.domain_restrictions.allowed_domains, c.domain_restrictions.excluded_domains,
                         c.excluded_sources)
         except ResearchError as exc:
-            if not any(e["detail"].get("url") == url for e in self.store.events(research_id, ("source.refused",))):
-                self.store.event(research_id, "source.refused", {"url": url[:2048], "code": exc.code.value,
+            if not any(e["detail"].get("url") == redact_url(url) for e in self.store.events(research_id,
+                                                                                           ("source.refused",))):
+                self.store.event(research_id, "source.refused", {"url": redact_url(url)[:2048], "code": exc.code.value,
                                                                  "reason": exc.message})
             return None
         if canon in p_urls:
@@ -717,6 +784,12 @@ class ResearchService:
         doc = self._read_extracted(ws, er["extracted_path"])
         if kind == "web" and doc["content_sha256"] != base.get("content_hash"):
             raise ResearchError(ResearchErrorCode.EXTRACTION_FAILED, "extraction does not belong to the fetched bytes")
+        size = (ws / "research" / "snapshots" / f"{doc['content_sha256']}.raw").stat().st_size + \
+            len(doc["text"].encode("utf-8"))
+        if not self.store.consume(research_id, "evidence_bytes", size):
+            self.store.add_source(research_id, **base, extraction_status="failed", error_code="BUDGET_EXHAUSTED",
+                                  citation_metadata={"detail": f"evidence storage budget exhausted ({size} bytes)"})
+            return
         meta = doc["metadata"]
         if kind == "local":
             base["retrieved_at"] = doc.get("retrieved_at")
@@ -829,9 +902,11 @@ class ResearchService:
 
     def _finish_blocked(self, research_id: str, c: ResearchContract, exc: ResearchError,
                         limitations: list[dict] | None = None) -> dict:
+        known = self._limitations(research_id, c, {})          # budgets, refused sources, providers ... still apply
         result = self._assemble(research_id, c, ResearchStatus.BLOCKED, VerificationStatus.NOT_VERIFIED,
                                 {"verifier": None, "passed": None, "reason": exc.message},
-                                (limitations or []) + [{"code": exc.code.value, "detail": exc.message}], exc.as_dict())
+                                (limitations or []) + [{"code": exc.code.value, "detail": exc.message}] + known,
+                                exc.as_dict())
         self.store.set_status(research_id, ResearchStatus.BLOCKED, reason=exc.message, phase="blocked",
                               error=exc.as_dict())
         return result
@@ -846,6 +921,11 @@ class ResearchService:
         if exhausted:
             lim.append({"code": "BUDGET_EXHAUSTED", "detail": f"research budgets exhausted: {exhausted}",
                         "metrics": exhausted})
+        for e in ev:
+            if e["kind"] == "provider.blocked":
+                lim.append({"code": "BLOCKED_DEPENDENCY", "detail": f"provider {e['detail']['provider']} needs a "
+                            "credential that only Stage 02 credential injection can supply; it was not used",
+                            "dependency": "S02"})
         if any(e["kind"] == "provider.unavailable" for e in ev):
             lim.append({"code": "PROVIDER_UNAVAILABLE", "detail": "no configured search provider: web search was not "
                         "performed (results are never fabricated)"})
@@ -934,9 +1014,12 @@ class ResearchService:
                           self.store, research_id, s, max_passages=sel.max_passages_per_task,
                           max_chars=sel.max_passage_chars, subquestion_index=None)} for i, s in enumerate(subs)]}
             try:
+                if isinstance(builder, _HubClaims) and not self.store.consume(research_id, "model_requests", 1):
+                    raise ResearchError(ResearchErrorCode.BUDGET_EXHAUSTED, "model request budget exhausted before "
+                                        "claim construction")
                 inputs = builder.build(c, packet)
             except ResearchError as exc:
-                if exc.code is ResearchErrorCode.BLOCKED_DEPENDENCY:
+                if exc.code in (ResearchErrorCode.BLOCKED_DEPENDENCY, ResearchErrorCode.BUDGET_EXHAUSTED):
                     self.checkpoint(research_id)
                     return self._finish_blocked(research_id, c, exc)
                 raise
@@ -986,6 +1069,9 @@ class ResearchService:
                     "contradictions": [{"detail": x["detail"], "status": x["status"]}
                                        for x in self.store.contradictions(research_id)],
                     "instruction": "cite only the given citation ids as [cit_...]; do not add facts"}
+        if not self.store.consume(research_id, "model_requests", 1):
+            return {"natural_language": None, "status": "BLOCKED", "dependency": "budget",
+                    "reason": "model request budget exhausted"}
         try:
             raw = self.hub.synthesise(c, material)
         except Exception as exc:  # noqa: BLE001

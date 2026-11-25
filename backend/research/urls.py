@@ -114,3 +114,15 @@ def check_scope(url: str, allowed: list[str], excluded: list[str], excluded_urls
         raise ResearchError(ResearchErrorCode.NETWORK_DENIED, f"{host} is in an excluded domain")
     if allowed and not any(domain_matches(host, d) for d in allowed):
         raise ResearchError(ResearchErrorCode.NETWORK_DENIED, f"{host} is outside the allowed domains")
+
+
+def redact_url(url: str) -> str:
+    """Remove userinfo (user:password@) before a URL is stored or logged; research records never hold credentials."""
+    try:
+        p = urlsplit(url)
+    except ValueError:
+        return "(unparseable URL)"
+    if "@" not in p.netloc:
+        return url
+    host = p.netloc.rsplit("@", 1)[1]
+    return urlunsplit((p.scheme, "[redacted]@" + host, p.path, p.query, p.fragment))

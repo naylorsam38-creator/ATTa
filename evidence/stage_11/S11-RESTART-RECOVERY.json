@@ -39,10 +39,10 @@
         "remaining": 58.0
       }
     },
-    "created_at": "2026-11-25T06:44:50.441Z",
-    "research_id": "rsr_01M88Q698Z4NEXYH5TGC89BJQK",
-    "objective_id": "obj_01M88Q6990SMCDJQCBH26MYWNC",
-    "contract_hash": "fac41ff31bee03c3890f3dcbdc5b99e891d957f0e13b804356da53c6d1a218dc",
+    "created_at": "2026-11-25T07:29:21.768Z",
+    "research_id": "rsr_01M88SQSYZD0YM8Q3VSFNQWR70",
+    "objective_id": "obj_01M88SQSYZYF6Z6WXYYE27N0J4",
+    "contract_hash": "b2b2ecbbb2311116ad51850eafdebf613f2b0359355b804a2525de912e77e714",
     "evidence_gaps": [
       0,
       1
@@ -55,8 +55,8 @@
     ],
     "contract_version": 1,
     "queries_executed": [
-      "rqy_01M88Q6AYF36CBNJQJ7FR54R9F",
-      "rqy_01M88Q6AZF4G6CEA6C0953RNK0"
+      "rqy_01M88SQVN3VQ9K50WFWGPQSEDF",
+      "rqy_01M88SQVP4ZPK61YY5KPNA6FQ5"
     ],
     "sources_collected": [],
     "completed_subquestions": []

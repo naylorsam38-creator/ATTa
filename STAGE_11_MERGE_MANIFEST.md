@@ -193,7 +193,7 @@ Then, after the operator actions of §5: discover the production registry and co
 
 ## 13. Installation package (transactional)
 
-`ATTa-stage11-additions.zip`, built deterministically by `scripts/build_stage11_package.py --release` from the
+`ATTa-STAGE-11-COMPLETE.zip`, built deterministically by `scripts/build_stage11_package.py --release` from the
 sidecar commit. Installer `install.py` (+ `install.bat`, `install.ps1`, `install.sh`): checksum verification of
 every package file → target rules (top level of a clean, non-nested Git repository with Stage 01A) → plan
 (conflicts = exit 3, also in `--check`) → full rehearsal in a temporary `git worktree` → journal + backups →

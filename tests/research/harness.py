@@ -77,7 +77,8 @@ def test_catalog() -> Catalog:
 
 def build(tmp: Path, *, port: int | None, providers: list[dict] | None = None, mode: NetworkMode = NetworkMode.ONLINE,
           production_policy: bool = False, numbers: dict | None = None, grant: bool = True,
-          reuse: RH | None = None, claim_builder=None, hub=None, **cfg_overrides) -> RH:
+          reuse: RH | None = None, claim_builder=None, hub=None, extra_capabilities: dict | None = None,
+          **cfg_overrides) -> RH:
     if reuse is not None:
         root, caps, key, ns = reuse.root, reuse.caps, reuse.operator_key, reuse.namespace
     else:
@@ -96,11 +97,14 @@ def build(tmp: Path, *, port: int | None, providers: list[dict] | None = None, m
         keys.mkdir()
         generate_keypair(keys / "trust.pem", keys / "trust.pub")
         generate_keypair(keys / "operator.pem", root / "operator.pub")
-        for pkg in PACKAGES:
+        for src, (_number, _tool) in (extra_capabilities or {}).items():      # test fixture capabilities
+            shutil.copytree(src, caps / Path(src).name, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+        for pkg in PACKAGES + [Path(s).name for s in (extra_capabilities or {})]:
             trust_package(caps / pkg, root / "trust.json", keys / "trust.pem", "test-operator")
         key = keys / "operator.pem"
         ns = f"test-s11-{uuid.uuid4().hex[:10]}"
         table = dict(numbers if numbers is not None else {k: v["tool"] for k, v in STAGE11_NUMBERS.items()})
+        table.update({num: tool for num, tool in (extra_capabilities or {}).values()})
         (root / "tool_numbers.yaml").write_text(yaml.safe_dump({"tools": {k: {"tool": v} for k, v in table.items()}}))
     settings = load_settings("test")
     policy = PolicyEngine(catalog=test_catalog() if grant else load_catalog(ROOT / "configuration" / "permissions.yaml"))

@@ -1,4 +1,4 @@
-# ATTa Stage 11 additions — web search and deep research (CAP-11, CAP-12)
+# ATTa-STAGE-11-COMPLETE — web search and deep research (CAP-11, CAP-12): changes-only package
 
 Drop-in package for an ATTa repository at the Stage 01A baseline (`21104c4`) or later (also after Stage 01B /
 Stage 04 have been merged). It contains only what Stage 11 adds or changes. **Final merge approval is pending; do
@@ -13,6 +13,8 @@ not install into the authoritative repository before it is granted.**
 | `patches/` | the same edits as a unified diff; `stage11-full.mbox` = the Stage 11 commits (`git am` onto `21104c4`) |
 | `compat/check_compat.py` | compatibility check against the actual Stage 01B and Stage 04 packages |
 | `PACKAGE.json` | metadata: baseline, sidecar commit, file lists, protected paths, merge rules |
+| `DEPENDENCIES.json` | dependency manifest (no new Python/Node packages or services) |
+| `history/stage11.bundle` | recoverable Git history of the Stage 11 commits (`history/README.txt`) |
 | `SHA256SUMS` | SHA-256 of every other file; verified by the installer before anything else |
 
 No existing runtime source file and no protected file is changed. No new Python or Node dependency.
@@ -37,6 +39,12 @@ Same command without `--check`. Requirements enforced (the installer refuses oth
 * the working tree is **clean** (no modified, staged or untracked files) and no merge/rebase is in progress;
 * the Stage 01A runtime is present (and the baseline commit is in HEAD's history when that object exists).
 
+Conflicts detected before anything is written (exit 3, also in `--check`): an existing file that differs; a file or
+directory in the way; a nested repository on a written path; a protected path; a migration with the same number as
+`0011` (e.g. another stage's `0011_*.sql`); a tool number `011.xxx`/`012.xxx` assigned to another tool, or a
+Stage 11 tool already numbered elsewhere; another capability declaring `research.web` / `research.evidence`; an
+unresolvable merge of a shared document.
+
 Transaction: the installer plans everything (an existing file that differs is a conflict, exit 3), rehearses,
 backs up the shared documents and writes a journal in `.git/atta-stage11-install/`, applies, then verifies every
 written file, that `git status` shows exactly the planned paths, and that protected configuration is unchanged.
@@ -55,6 +63,16 @@ Exit codes: 0 ok / already installed · 2 refused · 3 conflicts · 4 rehearsal 
 6 rollback incomplete · 7 package integrity failure.
 
 After a successful install, review and commit: `git add -A && git commit -m "Stage 11 additions"`.
+
+Installation evidence: a JSON report (mode, package and target revisions, plan, merges, SHA-256 of every written
+file, exit code) is written to `.git/atta-stage11-install-report.json`; add `--report <path outside the tree>` for a
+copy.
+
+**Undo after a successful but uncommitted install:** `git checkout -- <MODIFIED_FILES.txt>` and delete the files in
+`ADDED_FILES.txt` (or `git stash -u`), then `git status` must be clean. **After committing:** `git revert <commit>`.
+**Database:** before Stage 11 data matters, `DROP SCHEMA research CASCADE;` as the migration role and
+`DELETE FROM public.atta_schema_migrations WHERE name = 'migration:0011_stage11_research.sql';` — this removes only
+Stage 11 tables (the migration creates nothing outside schema `research`).
 
 ## 4. Database and tests
 ```

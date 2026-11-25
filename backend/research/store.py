@@ -126,6 +126,12 @@ class ResearchStore:
             return bool(x.execute("SELECT cancel_requested FROM research.runs WHERE research_id = %s",
                                   (research_id,)).fetchone()["cancel_requested"])
 
+    def seconds_left(self, research_id: str) -> float | None:
+        with self.db.tx() as x:
+            r = x.execute("SELECT EXTRACT(EPOCH FROM (deadline_at - now())) AS s FROM research.runs WHERE "
+                          "research_id = %s", (research_id,)).fetchone()
+        return None if r["s"] is None else float(r["s"])
+
     def deadline_passed(self, research_id: str) -> bool:
         with self.db.tx() as x:
             r = x.execute("SELECT deadline_at IS NOT NULL AND now() > deadline_at AS late FROM research.runs WHERE "
@@ -170,6 +176,18 @@ class ResearchStore:
                         objective_id=f.get("objective_id"), task_id=f.get("task_id"),
                         execution_id=f.get("execution_id"), query_id=qid)
         return qid
+
+    def provider_requests_since(self, provider_id: str, seconds: float) -> int:
+        """Search requests (executed, failed or planned) sent to a provider within the window, across all research."""
+        with self.db.tx() as x:
+            done = x.execute("SELECT count(*) AS n FROM research.queries WHERE provider_id = %s AND status <> 'refused' "
+                             "AND executed_at > now() - make_interval(secs => %s)", (provider_id, seconds)).fetchone()["n"]
+            planned = x.execute("SELECT count(*) AS n FROM research.events e WHERE kind = 'task.planned' AND "
+                                "detail->>'kind' = 'search' AND detail->>'provider_id' = %s AND at > now() - "
+                                "make_interval(secs => %s) AND NOT EXISTS (SELECT 1 FROM research.events i WHERE "
+                                "i.research_id = e.research_id AND i.kind = 'task.ingested' AND i.task_id = e.task_id)",
+                                (provider_id, seconds)).fetchone()["n"]
+        return int(done) + int(planned)
 
     def queries(self, research_id: str) -> list[dict]:
         with self.db.tx() as x:

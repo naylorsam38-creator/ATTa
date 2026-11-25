@@ -174,7 +174,8 @@ def test_broken_provider_and_credentialed_provider(tmp_path, fx):
     assert q and q[0]["status"] == "failed" and q[0]["error_code"] == "PROVIDER_UNAVAILABLE" and q[0]["results"] == []
     assert r["research_status"] == "BLOCKED"
     h2 = build(tmp_path, port=fx.port, providers=[{"id": "brave", "kind": "brave",
-                                                    "endpoint": f"http://127.0.0.1:{fx.port}/brave"}])
+                                                    "endpoint": f"http://127.0.0.1:{fx.port}/brave",
+                                                    "credential_ref": "cred://stage02/search/brave"}])
     c2, r2 = run(h2, "Rivertown bridge", "QUICK_SEARCH")
     assert h2.store.queries(c2.research_id)[0]["error_code"] == "BLOCKED_DEPENDENCY"
 

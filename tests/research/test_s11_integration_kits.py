@@ -218,5 +218,6 @@ def test_provider_check(tmp_path):
         assert not provider_check.check(bad)["valid"], providers
     brave = tmp_path / "brave.yaml"
     brave.write_text(yaml.safe_dump(base | {"providers": [{"id": "brave-x", "kind": "brave",
-                                                           "endpoint": "https://api.search.brave.com/x"}]}))
+                                                           "endpoint": "https://api.search.brave.com/x",
+                                                           "credential_ref": "cred://stage02/search/brave"}]}))
     assert provider_check.check(brave)["providers"][0]["status"] == "BLOCKED"

@@ -203,7 +203,9 @@ def static_checks(repo: Path, label: str, ch: dict) -> list[dict]:
     if "configuration/research.yaml" in touched:
         add("error", "config", f"{label} changes configuration/research.yaml")
     hooks = {"01B": (r"AIR_GAPPED|current_mode|NetworkMode", "network-mode provider for backend/research/network.py"),
-             "04": (r"wire_research_api|build_research_router|research_service", "Stage 04 research API wiring")}
+             "04": (r"wire_research_api|build_research_router|research_service", "Stage 04 research API wiring"),
+             "12": (r"(?i)mcp|connector|skill|plugin", "Stage 12 connector/MCP/skill/plugin registration (must use the "
+                    "one capability registry and tool catalogue)")}
     for key, (pat, what) in hooks.items():
         if label.upper().startswith(key):
             hits = scan_text(repo, py, pat)
@@ -268,7 +270,10 @@ def main(argv=None) -> int:
             real = subprocess.run(inst, capture_output=True, text=True)
             report["installer"]["install"] = {"exit": real.returncode, "output": real.stdout[-3000:]}
         if a.run_tests and report["installer"].get("install", {}).get("exit") == 0:
-            env = dict(os.environ, ATTA_ENV="test", ATTA_REQUIRE_DB="1")
+            prefix = subprocess.run([a.python, "-c", "import sys; print(sys.prefix)"], capture_output=True,
+                                    text=True).stdout.strip()
+            # equivalent conditions: fresh trees have no .venv of their own; start.sh/tests use ATTA_VENV
+            env = dict(os.environ, ATTA_ENV="test", ATTA_REQUIRE_DB="1", ATTA_VENV=prefix)
             local_env = Path(a.baseline) / "configuration" / "local.env"
             if local_env.is_file():
                 shutil.copyfile(local_env, repo / "configuration" / "local.env")

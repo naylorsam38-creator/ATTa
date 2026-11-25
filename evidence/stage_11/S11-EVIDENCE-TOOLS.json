@@ -21,12 +21,12 @@
     "quote_sha256": "09de1b8237b49f06a136c806936f185b3f3588b16e92177cd037ce4aa7000b50",
     "block": 1,
     "text_sha256": "8e253a658d5608699b4caa57531d2d97d0dee8fff07a856b854146e3055ebf42",
-    "content_sha256": "da14a4793522f6f314598b5acdfb8890aeece61b93e64dba743531ef838394f3",
+    "content_sha256": "5f7c905f5321fa622f64a1a6767d15cb7864f6b7a5d98d023c3919ea918c21a6",
     "locator": "chars 41-149, block 1",
-    "url": "http://127.0.0.1:43973/page/c.html",
+    "url": "http://127.0.0.1:42229/page/c.html",
     "title": "Bridge repair bill higher than reported",
     "author": "Lee Ortiz",
-    "published_at": "2026-11-23T06:45:02Z",
-    "retrieved_at": "2026-11-25T06:45:03Z"
+    "published_at": "2026-11-23T07:29:34Z",
+    "retrieved_at": "2026-11-25T07:29:35Z"
   }
 }

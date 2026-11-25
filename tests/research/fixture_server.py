@@ -70,7 +70,10 @@ def search_results(base: str, query: str) -> list[dict]:
         return [{"url": "http://169.254.169.254/latest/meta-data/", "title": "metadata", "engine": "fixture"},
                 {"url": f"{base}/redirect-metadata", "title": "redirect", "engine": "fixture"},
                 {"url": "file:///etc/passwd", "title": "file", "engine": "fixture"},
+                {"url": "http://admin:hunter2@example.org/private", "title": "credentials", "engine": "fixture"},
                 {"url": f"{base}/page/a.html", "title": "ok", "engine": "fixture"}]
+    if "javascript" in q:
+        return [{"url": f"{base}/page/app.html", "title": "App shell", "engine": "fixture"}]
     if "slow" in q:
         return [{"url": f"{base}/slow", "title": "slow", "engine": "fixture"}]
     return [{"url": f"{base}/page/a.html?utm_source=x", "title": "Rivertown bridge reopens", "engine": "fixture",
@@ -114,7 +117,9 @@ class FixtureServer:
                     .replace("{{", "{").replace("}}", "}")  # noqa: E731
                 pages = {"/page/a.html": ARTICLE_A, "/page/b.html": ARTICLE_B, "/page/c.html": ARTICLE_C,
                          "/page/council.html": COUNCIL, "/page/inject.html": INJECTION, "/page/old.html": OLD,
-                         "/page/nodate.html": NODATE}
+                         "/page/nodate.html": NODATE,
+                         "/page/app.html": '<html><head><title>App</title></head><body><div id="root"></div>'
+                                           '<script>render()</script></body></html>'}
                 if p == "/searx/search":
                     q = parse_qs(u.query).get("q", [""])[0]
                     if parse_qs(u.query).get("format") != ["json"]:

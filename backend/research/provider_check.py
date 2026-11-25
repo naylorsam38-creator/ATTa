@@ -26,7 +26,8 @@ from .errors import ResearchError
 from .urls import precheck_url
 
 SUPPORTED = {"searxng": "USABLE", "brave": "BLOCKED"}
-BLOCK_REASON = {"brave": "needs an API key delivered by Stage 02 credential protection (BLOCKED_DEPENDENCY)"}
+BLOCK_REASON = {"brave": "credential_ref is resolved and injected only by Stage 02 credential protection "
+                         "(BLOCKED_DEPENDENCY); key values are never stored in configuration"}
 
 
 def check(path: Path) -> dict:
@@ -44,7 +45,11 @@ def check(path: Path) -> dict:
         report["valid"] = False
         report["errors"].append(f"duplicate provider ids: {dup}")
     for p in cfg.providers:
-        entry = {"id": p.id, "kind": p.kind, "enabled": p.enabled, "status": SUPPORTED.get(p.kind, "INVALID")}
+        entry = {"id": p.id, "kind": p.kind, "enabled": p.enabled, "status": SUPPORTED.get(p.kind, "INVALID"),
+                 "credential_ref": p.credential_ref}
+        if p.credential_ref and entry["status"] == "USABLE":
+            entry["status"] = "BLOCKED"
+            BLOCK_REASON.setdefault(p.kind, BLOCK_REASON["brave"])
         try:
             precheck_url(p.endpoint)
         except ResearchError as exc:

@@ -132,6 +132,8 @@ class ExecutionBudget(_Strict):
     context_tokens_per_task: int = Field(ge=256)
     network_requests: int = Field(ge=0)
     max_retries: int = Field(ge=0)
+    max_evidence_kb: int = Field(65536, ge=1)       # stored snapshot bytes + extracted text (KiB)
+    max_model_requests: int = Field(50, ge=0)       # Stage 03 hub calls (planning, queries, claims, synthesis)
 
 
 class NetworkPolicy(_Strict):

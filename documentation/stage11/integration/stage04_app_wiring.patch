@@ -1,0 +1,11 @@
+--- a/backend/api/app.py
++++ b/backend/api/app.py
+@@ -131,6 +131,8 @@
+         return dep
+ 
+     app.include_router(build_router(authorize), prefix="/v1")
++    from backend.research.wiring import wire_research_api   # Stage 11 research API (policy-gated; DENIED until Stage 02)
++    wire_research_api(app)
+ 
+     @app.get("/v1/health/live", response_model=HealthReport, tags=["health"])
+     def live(_: RequestContext = Depends(authorize("health.live"))):

@@ -1,0 +1,19 @@
+manifest_version: 1
+id: test.envprobe
+version: 1.0.0
+description: TEST FIXTURE - reports which environment variables and credential files a handler process can see.
+requirement: CAP-40
+handlers: {execute: handler:probe, healthcheck: handler:healthcheck, verify: handler:verify}
+input_schema: {type: object}
+output_schema: {type: object}
+permissions: [workspace.read]
+risk: low
+dependencies: {capabilities: [], services: [], python: []}
+timeout_s: 10
+enabled: true
+tools:
+  - {name: probe, description: Return the environment variable names visible to the handler process., task_types: [test.envprobe],
+     operations: [inspect], handler: "handler:probe", verify: "handler:verify",
+     input_schema: {type: object, additionalProperties: false, properties: {}},
+     output_schema: {type: object, required: [keys, leaked], properties: {keys: {type: array}, leaked: {type: array}}},
+     permissions: [workspace.read], risk: low, timeout_s: 10, cancellable: true, idempotency: idempotent}

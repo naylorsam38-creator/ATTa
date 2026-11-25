@@ -4,5 +4,7 @@
 providers:
   # Self-hosted SearXNG with the JSON output format enabled (settings.yml: search.formats: [html, json]).
   - {id: searxng-main, kind: searxng, endpoint: "https://search.example.org", max_results: 10, enabled: true}
-  # Brave Search API: BLOCKED until Stage 02 credential protection can inject the API key into the handler.
-  - {id: brave, kind: brave, endpoint: "https://api.search.brave.com/res/v1/web/search", max_results: 10, enabled: false}
+  # Brave Search API: the key is NEVER written here. credential_ref names a Stage 02 credential; the provider stays
+  # BLOCKED_DEPENDENCY until Stage 02 can inject the key inside the isolated handler (not through tool arguments).
+  - {id: brave, kind: brave, endpoint: "https://api.search.brave.com/res/v1/web/search", max_results: 10,
+     credential_ref: "cred://stage02/search/brave", enabled: false}

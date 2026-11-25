@@ -32,3 +32,20 @@ def stage01a_context() -> ResearchSecurityContext:
     policy-checked tool executions after operator approval of the research objective."""
     return ResearchSecurityContext(principal_id=None, tenant_id=None, network_permitted=True,
                                    approval_requirements=("operator_objective_approval",))
+
+
+@runtime_checkable
+class CredentialResolver(Protocol):
+    """Stage 02 credential contract for search providers. Resolves a `cred://` reference for ONE execution and
+    injects it into the provider request inside the isolated handler; research records only ever hold the reference."""
+    def resolve(self, credential_ref: str, *, principal_id: str | None, tenant_id: str | None,
+                purpose: str) -> object: ...
+
+
+class UnavailableCredentialResolver:
+    """Default until Stage 02: no credential is ever released (credentialed providers stay BLOCKED_DEPENDENCY)."""
+
+    def resolve(self, credential_ref, *, principal_id, tenant_id, purpose):
+        from .errors import ResearchError, ResearchErrorCode
+        raise ResearchError(ResearchErrorCode.BLOCKED_DEPENDENCY, "credential resolution is provided by Stage 02 "
+                            "credential protection, which is not integrated", {"credential_ref": credential_ref})

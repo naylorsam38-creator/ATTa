@@ -34,6 +34,8 @@ import hashlib
 import json
 import os
 import py_compile
+import re
+import time
 import shutil
 import subprocess
 import sys
@@ -218,8 +220,44 @@ def merge3(current: bytes, base: bytes, ours: bytes, union: bool = False) -> tup
     return (cp.stdout if cp.returncode == 0 else None), cp.returncode
 
 
+TOOL_ENTRY = re.compile(r'"?(\d{3}\.\d{3})"?\s*:\s*\{\s*tool\s*:\s*"?([^"}\s,]+)')
+CAP_ID = re.compile(r"(?m)^id:\s*([\w.]+)")
+
+
+def registry_conflicts(target: Path, meta: dict) -> list[str]:
+    """Migration numbers, permanent tool numbers and capability ids already used by something else in the target."""
+    out = []
+    ours = {PurePosixPath(r).name for r in meta["added"] if r.startswith("database/migrations/")}
+    mig_dir = target / "database" / "migrations"
+    existing = sorted(p.name for p in mig_dir.glob("*.sql")) if mig_dir.is_dir() else []
+    for m in ours:
+        for x in existing:
+            if x != m and x[:4] == m[:4]:
+                out.append(f"database/migrations/{x}: migration number {m[:4]} is already used (Stage 11 ships {m}); "
+                           "renumber one of them before installing")
+    owned_caps = {"research.web": "research.web:", "research.evidence": "research.evidence:"}
+    tn = target / "configuration" / "tool_numbers.yaml"
+    if tn.is_file():
+        for num, tool in TOOL_ENTRY.findall(tn.read_text(encoding="utf-8", errors="replace")):
+            if num[:3] in ("011", "012") and not tool.startswith(tuple(owned_caps.values())):
+                out.append(f"configuration/tool_numbers.yaml: {num} is assigned to {tool}; 011.xxx/012.xxx are the "
+                           "permanent Stage 11 numbers")
+            elif tool.startswith(tuple(owned_caps.values())) and num[:3] not in ("011", "012"):
+                out.append(f"configuration/tool_numbers.yaml: {tool} already has number {num}")
+    caps = target / "capabilities"
+    if caps.is_dir():
+        mine = {f"capabilities/{PurePosixPath(r).parts[1]}" for r in meta["added"] if r.startswith("capabilities/")}
+        for man in caps.glob("*/capability.yaml"):
+            rel = man.parent.relative_to(target).as_posix()
+            m = CAP_ID.search(man.read_text(encoding="utf-8", errors="replace"))
+            if m and m.group(1) in owned_caps and rel not in mine:
+                out.append(f"{rel}: declares capability id {m.group(1)}, which Stage 11 provides")
+    return out
+
+
 def plan(target: Path, meta: dict) -> dict:
     actions, conflicts, already = [], [], []
+    conflicts += registry_conflicts(target, meta)
     protected = meta.get("protected_paths", [])
     for rel in meta["added"]:
         src = rel_to_path(PKG / "overlay", rel)
@@ -489,15 +527,47 @@ def install(target: Path, meta: dict, steps: dict) -> int:
 
 
 # ------------------------------------------------------------------------------------------------ main
+REPORT = {"tool": "atta-stage11-install/2", "started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+
+
+def write_report(target: Path, code: int, extra_path: str | None) -> None:
+    """Installation evidence: written inside the repository's .git directory (never into the working tree) and,
+    optionally, to --report PATH outside the working tree."""
+    REPORT.update(exit_code=code, finished=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
+    text = json.dumps(REPORT, indent=1, default=str)
+    try:
+        gd = git_dir(target)
+        (gd / "atta-stage11-install-report.json").write_text(text, encoding="utf-8")
+        REPORT["report_written"] = str(gd / "atta-stage11-install-report.json")
+    except Exception:  # noqa: BLE001 — refused targets may not be repositories
+        pass
+    if extra_path:
+        Path(extra_path).write_text(text, encoding="utf-8")
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Install the ATTa Stage 11 additions (transactional).")
     ap.add_argument("target", help="ATTa repository root (top level of a clean Git working tree)")
     ap.add_argument("--check", action="store_true", help="dry run: verify and rehearse, change nothing")
     ap.add_argument("--rollback-interrupted", action="store_true", help="undo an installation that was killed")
+    ap.add_argument("--report", help="also write the JSON installation evidence here (outside the working tree)")
     a = ap.parse_args(argv)
     target = Path(a.target).resolve()
+    if a.report:
+        rp = Path(a.report).resolve()
+        if target == rp or target in rp.parents:
+            say("REFUSED: --report must be outside the target working tree")
+            return EXIT_REFUSED
+    REPORT.update(target=str(target), mode="check" if a.check else "rollback" if a.rollback_interrupted else "install")
+    code = _main(a, target)
+    write_report(target, code, a.report)
+    return code
+
+
+def _main(a, target: Path) -> int:
     try:
         meta = verify_package()
+        REPORT.update(package=meta.get("sidecar_commit"), baseline=meta.get("baseline_commit"))
         if a.rollback_interrupted:
             check_target(target, meta, allow_journal=True)
             jdir = git_dir(target) / JOURNAL_DIR
@@ -511,7 +581,11 @@ def main(argv: list[str] | None = None) -> int:
             say("interrupted installation rolled back; the working tree is clean")
             return EXIT_OK
         check_target(target, meta)
+        REPORT["target_head"] = git(target, "rev-parse", "HEAD").stdout.strip()
         steps = plan(target, meta)
+        REPORT["plan"] = {"create": [x["rel"] for x in steps["actions"] if x["kind"] == "create"],
+                          "update": {x["rel"]: x["merge"] for x in steps["actions"] if x["kind"] == "update"},
+                          "already": steps["already"], "conflicts": steps["conflicts"]}
         if steps["conflicts"]:
             say(f"UNRESOLVED CONFLICTS ({len(steps['conflicts'])}) — nothing was changed:\n  " +
                 "\n  ".join(steps["conflicts"]))
@@ -526,9 +600,14 @@ def main(argv: list[str] | None = None) -> int:
         if a.check:
             say("check passed: no conflicts; the installation would succeed (nothing was changed)")
             return EXIT_OK
-        return install(target, meta, steps)
+        code = install(target, meta, steps)
+        if code == EXIT_OK:
+            REPORT["written_sha256"] = {x["rel"]: hashlib.sha256(x["data"]).hexdigest() for x in steps["actions"]}
+            REPORT["update_merges"] = {x["rel"]: x["merge"] for x in steps["actions"] if x["kind"] == "update"}
+        return code
     except Refused as exc:
         say(f"REFUSED: {exc}")
+        REPORT["refused"] = str(exc)
         return exc.code
 
 
