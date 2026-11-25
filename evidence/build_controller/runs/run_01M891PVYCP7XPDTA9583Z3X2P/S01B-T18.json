@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T18",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T18_dependency_lock_validation"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T09:49:41.808Z",
+  "finished_at": "2026-11-25T09:49:45.815Z",
+  "duration_s": 4.006,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 3.10s\n",
+  "stderr": "",
+  "output_sha256": "034875ef7324c35fe792f6ad4c8cab3097034ac7ef6370dacf3ddecb3ce65fa2"
+}

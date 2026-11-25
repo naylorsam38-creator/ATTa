@@ -1,24 +1,24 @@
 {
   "transitions": [
     {
-      "at": "2026-11-25T09:04:27.558Z",
-      "run_id": "run_01M88Z5ZX6WMGH22D4EJGKZG61",
+      "at": "2026-11-25T09:49:18.548Z",
+      "run_id": "run_01M891R3TMYJK30C3NBR30C8XP",
       "from": "NEW",
       "to": "DISCOVER",
       "reason": "installation started",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T09:04:28.174Z",
-      "run_id": "run_01M88Z5ZX6WMGH22D4EJGKZG61",
+      "at": "2026-11-25T09:49:19.273Z",
+      "run_id": "run_01M891R3TMYJK30C3NBR30C8XP",
       "from": "DISCOVER",
       "to": "VALIDATE",
       "reason": "discovered; profile LOCAL_CPU",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T09:04:28.201Z",
-      "run_id": "run_01M88Z5ZX6WMGH22D4EJGKZG61",
+      "at": "2026-11-25T09:49:19.308Z",
+      "run_id": "run_01M891R3TMYJK30C3NBR30C8XP",
       "from": "VALIDATE",
       "to": "PLAN",
       "reason": "configuration valid",
@@ -27,36 +27,36 @@
       }
     },
     {
-      "at": "2026-11-25T09:04:28.304Z",
-      "run_id": "run_01M88Z5ZX6WMGH22D4EJGKZG61",
+      "at": "2026-11-25T09:49:19.411Z",
+      "run_id": "run_01M891R3TMYJK30C3NBR30C8XP",
       "from": "PLAN",
       "to": "AWAITING_OPERATOR_ACTION",
       "reason": "review install_plan.json, then re-run with --approve",
       "evidence": {
-        "plan_sha256": "35cb5f8fd20236aa586c3b2c84813b19efa81d015c5a4b49afebde47bf6c1522"
+        "plan_sha256": "4c3a95f48389b39efb13940f557cf56a9473e261ea5dfbe8792d4698ece058d8"
       }
     },
     {
-      "at": "2026-11-25T09:04:28.388Z",
-      "run_id": "run_01M88Z5ZX6WMGH22D4EJGKZG61",
+      "at": "2026-11-25T09:49:19.504Z",
+      "run_id": "run_01M891R3TMYJK30C3NBR30C8XP",
       "from": "AWAITING_OPERATOR_ACTION",
       "to": "PROVISION",
       "reason": "operator approved the plan",
       "evidence": {
-        "plan_sha256": "35cb5f8fd20236aa586c3b2c84813b19efa81d015c5a4b49afebde47bf6c1522"
+        "plan_sha256": "4c3a95f48389b39efb13940f557cf56a9473e261ea5dfbe8792d4698ece058d8"
       }
     },
     {
-      "at": "2026-11-25T09:04:28.389Z",
-      "run_id": "run_01M88Z5ZX6WMGH22D4EJGKZG61",
+      "at": "2026-11-25T09:49:19.505Z",
+      "run_id": "run_01M891R3TMYJK30C3NBR30C8XP",
       "from": "PROVISION",
       "to": "CONFIGURE",
       "reason": "dependencies provisioned",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T09:04:28.720Z",
-      "run_id": "run_01M88Z5ZX6WMGH22D4EJGKZG61",
+      "at": "2026-11-25T09:49:19.903Z",
+      "run_id": "run_01M891R3TMYJK30C3NBR30C8XP",
       "from": "CONFIGURE",
       "to": "START_SERVICES",
       "reason": "configuration applied",
@@ -65,16 +65,16 @@
       }
     },
     {
-      "at": "2026-11-25T09:04:28.721Z",
-      "run_id": "run_01M88Z5ZX6WMGH22D4EJGKZG61",
+      "at": "2026-11-25T09:49:19.903Z",
+      "run_id": "run_01M891R3TMYJK30C3NBR30C8XP",
       "from": "START_SERVICES",
       "to": "QUALIFY",
       "reason": "service start skipped",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T09:04:28.722Z",
-      "run_id": "run_01M88Z5ZX6WMGH22D4EJGKZG61",
+      "at": "2026-11-25T09:49:19.908Z",
+      "run_id": "run_01M891R3TMYJK30C3NBR30C8XP",
       "from": "QUALIFY",
       "to": "ACTIVATE",
       "reason": "qualification passed",
@@ -83,26 +83,26 @@
       }
     },
     {
-      "at": "2026-11-25T09:04:28.723Z",
-      "run_id": "run_01M88Z5ZX6WMGH22D4EJGKZG61",
+      "at": "2026-11-25T09:49:19.908Z",
+      "run_id": "run_01M891R3TMYJK30C3NBR30C8XP",
       "from": "ACTIVATE",
       "to": "READY",
       "reason": "activated",
       "evidence": {
-        "environment_id": "env_01M88Z60GDXQMHD83JFS9RVXMZ"
+        "environment_id": "env_01M891R4H8F5ZYVA8RZZE20W1G"
       }
     },
     {
-      "at": "2026-11-25T09:04:28.724Z",
-      "run_id": "run_01M88Z5ZX6WMGH22D4EJGKZG61",
+      "at": "2026-11-25T09:49:19.910Z",
+      "run_id": "run_01M891R3TMYJK30C3NBR30C8XP",
       "from": "START_SERVICES",
       "to": "QUALIFY",
       "reason": "service start skipped",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T09:04:28.724Z",
-      "run_id": "run_01M88Z5ZX6WMGH22D4EJGKZG61",
+      "at": "2026-11-25T09:49:19.911Z",
+      "run_id": "run_01M891R3TMYJK30C3NBR30C8XP",
       "from": "QUALIFY",
       "to": "ACTIVATE",
       "reason": "qualification passed",
@@ -111,13 +111,13 @@
       }
     },
     {
-      "at": "2026-11-25T09:04:28.725Z",
-      "run_id": "run_01M88Z5ZX6WMGH22D4EJGKZG61",
+      "at": "2026-11-25T09:49:19.911Z",
+      "run_id": "run_01M891R3TMYJK30C3NBR30C8XP",
       "from": "ACTIVATE",
       "to": "READY",
       "reason": "activated",
       "evidence": {
-        "environment_id": "env_01M88Z60GDXQMHD83JFS9RVXMZ"
+        "environment_id": "env_01M891R4H8F5ZYVA8RZZE20W1G"
       }
     }
   ]

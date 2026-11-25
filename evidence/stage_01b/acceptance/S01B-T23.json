@@ -1,8 +1,8 @@
 {
-  "workspace": "/tmp/pytest-of-atta-tester/pytest-180/test_S01B_T23_isolated_filesys0/qual/qual_01M88Z88G8TBDK1DGZAZ0ZC512",
+  "workspace": "/tmp/pytest-of-atta-tester/pytest-240/test_S01B_T23_isolated_filesys0/qual/qual_01M891TDPZZC99DSN75FZE2ZB8",
   "isolation": {
-    "database": "disposable cluster on 127.0.0.1:42381",
-    "workspace": "/tmp/pytest-of-atta-tester/pytest-180/test_S01B_T23_isolated_filesys0/qual/qual_01M88Z88G8TBDK1DGZAZ0ZC512",
+    "database": "disposable cluster on 127.0.0.1:47891",
+    "workspace": "/tmp/pytest-of-atta-tester/pytest-240/test_S01B_T23_isolated_filesys0/qual/qual_01M891TDPZZC99DSN75FZE2ZB8",
     "network": "host",
     "test_identity": "atta-tester"
   },

@@ -6,14 +6,14 @@
   },
   "isolation": {
     "cgroups": [
-      "/sys/fs/cgroup/memory/atta-13591",
-      "/sys/fs/cgroup/pids/atta-13591"
+      "/sys/fs/cgroup/memory/atta-1898",
+      "/sys/fs/cgroup/pids/atta-1898"
     ],
     "network": "private empty namespace",
     "user": "atta-builder",
     "cuda_visible_devices": ""
   },
-  "descendant_killed": 13602,
+  "descendant_killed": 1909,
   "verifier_key": {
     "worker_read": "PermissionError",
     "at_rest": "encrypted",

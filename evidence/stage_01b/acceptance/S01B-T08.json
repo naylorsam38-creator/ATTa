@@ -1,11 +1,11 @@
 {
   "removable_roots": [
-    "/tmp/pytest-of-atta-tester/pytest-164/test_S01B_T08_removable_model_0/usb-stick"
+    "/tmp/pytest-of-atta-tester/pytest-224/test_S01B_T08_removable_model_0/usb-stick"
   ],
   "model": {
     "model_id": "portable",
     "display_name": "Portable Model",
-    "path": "/tmp/pytest-of-atta-tester/pytest-164/test_S01B_T08_removable_model_0/usb-stick/models/portable.gguf",
+    "path": "/tmp/pytest-of-atta-tester/pytest-224/test_S01B_T08_removable_model_0/usb-stick/models/portable.gguf",
     "format": "gguf",
     "size_bytes": 4304,
     "fingerprint": "sha256-partial:73059a2d0bc15c16bc62057e4f20f817861a435c82b9cc03685247bbdd45aab5",
@@ -17,8 +17,8 @@
     "context_length": 4096,
     "architecture": "llama",
     "status": "AVAILABLE",
-    "last_verified": "2026-11-25T09:04:00.939Z",
-    "mtime_ns": 1795597440919714033,
+    "last_verified": "2026-11-25T09:48:52.357Z",
+    "mtime_ns": 1795600132343833014,
     "removable": true,
     "extra": {
       "gguf_version": 3

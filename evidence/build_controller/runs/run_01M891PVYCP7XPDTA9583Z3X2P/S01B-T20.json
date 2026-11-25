@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T20",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T20_core_frontend_contains_no_mandatory_external_assets"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T09:50:19.171Z",
+  "finished_at": "2026-11-25T09:50:20.144Z",
+  "duration_s": 0.973,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 0.09s\n",
+  "stderr": "",
+  "output_sha256": "aad8699d0e301d42887b189e9b9e446fdad5f468d51bb887f7a9fc4435cc4127"
+}

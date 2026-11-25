@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T16",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T16_resumable_installation"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T09:49:16.385Z",
+  "finished_at": "2026-11-25T09:49:20.692Z",
+  "duration_s": 4.307,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 3.14s\n",
+  "stderr": "",
+  "output_sha256": "87546302620035a09d19a520cccb5191e4519a9dfaf8eec1aa8da82158284e89"
+}

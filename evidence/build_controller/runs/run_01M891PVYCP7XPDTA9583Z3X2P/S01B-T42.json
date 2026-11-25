@@ -1,0 +1,24 @@
+{
+  "test_id": "S01B-T42",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T42_linux_specific_tests"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "root",
+  "started_at": "2026-11-25T09:51:00.552Z",
+  "finished_at": "2026-11-25T09:51:05.845Z",
+  "duration_s": 5.293,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 4.35s\n",
+  "stderr": "",
+  "output_sha256": "c67bfa3a749182bdeab0c1602214d654432b9aeee673910355fd954930c52601"
+}

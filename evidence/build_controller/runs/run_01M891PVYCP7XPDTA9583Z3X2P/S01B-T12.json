@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T12",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T12_port_conflict_detection"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T09:48:58.431Z",
+  "finished_at": "2026-11-25T09:49:09.200Z",
+  "duration_s": 10.769,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 9.58s\n",
+  "stderr": "",
+  "output_sha256": "3fde1fbd17570eea26c5092cf6a0e83366a4bd8119517fac3e74109803fcf7e9"
+}

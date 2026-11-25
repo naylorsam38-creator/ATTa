@@ -1,16 +1,16 @@
 {
   "transitions": [
     {
-      "at": "2026-11-25T09:04:32.969Z",
-      "run_id": "run_01M88Z64TPTCA13ED0W9VF7BSS",
+      "at": "2026-11-25T09:49:24.327Z",
+      "run_id": "run_01M891R91JZVTRZH8DM6YKYMXX",
       "from": "PROVISION",
       "to": "CONFIGURE",
       "reason": "dependencies provisioned",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T09:04:33.300Z",
-      "run_id": "run_01M88Z64TPTCA13ED0W9VF7BSS",
+      "at": "2026-11-25T09:49:24.650Z",
+      "run_id": "run_01M891R91JZVTRZH8DM6YKYMXX",
       "from": "CONFIGURE",
       "to": "START_SERVICES",
       "reason": "configuration applied",
@@ -19,24 +19,24 @@
       }
     },
     {
-      "at": "2026-11-25T09:04:46.619Z",
-      "run_id": "run_01M88Z64TPTCA13ED0W9VF7BSS",
+      "at": "2026-11-25T09:49:38.087Z",
+      "run_id": "run_01M891R91JZVTRZH8DM6YKYMXX",
       "from": "START_SERVICES",
       "to": "FAILED",
-      "reason": "InstallError: service start failed:     {\n      \"name\": \"model:ollama-local\",\n      \"essential\": false,\n      \"status\": \"unhealthy\",\n      \"latency_ms\": 6.93,\n      \"detail\": \"ConnectError: [Errno 111] Connection refused\",\n      \"checked_at\": \"2026-11-25T09:04:41.391605Z\"\n    },\n    {\n      \"name\": \"model:llamacpp-local\",\n      \"essential\": false,\n      \"status\": \"unhealthy\",\n      \"latency_ms\": 6.63,\n      \"detail\": \"ConnectError: [Errno 111] Connection refused\",\n      \"checked_at\": \"2026-11-25",
+      "reason": "InstallError: service start failed:     {\n      \"name\": \"model:ollama-local\",\n      \"essential\": false,\n      \"status\": \"unhealthy\",\n      \"latency_ms\": 6.79,\n      \"detail\": \"ConnectError: [Errno 111] Connection refused\",\n      \"checked_at\": \"2026-11-25T09:49:32.979495Z\"\n    },\n    {\n      \"name\": \"model:llamacpp-local\",\n      \"essential\": false,\n      \"status\": \"unhealthy\",\n      \"latency_ms\": 6.11,\n      \"detail\": \"ConnectError: [Errno 111] Connection refused\",\n      \"checked_at\": \"2026-11-25",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T09:04:46.620Z",
-      "run_id": "run_01M88Z64TPTCA13ED0W9VF7BSS",
+      "at": "2026-11-25T09:49:38.088Z",
+      "run_id": "run_01M891R91JZVTRZH8DM6YKYMXX",
       "from": "FAILED",
       "to": "ROLLING_BACK",
-      "reason": "service start failed:     {\n      \"name\": \"model:ollama-local\",\n      \"essential\": false,\n      \"status\": \"unhealthy\",\n      \"latency_ms\": 6.93,\n      \"detail\": \"ConnectError: [Errno 111] Connection refused\",\n      \"checked_at\": \"2026-11-25T09:04:41.391605Z\"\n    },\n    {\n      \"name\": \"model:llamacp",
+      "reason": "service start failed:     {\n      \"name\": \"model:ollama-local\",\n      \"essential\": false,\n      \"status\": \"unhealthy\",\n      \"latency_ms\": 6.79,\n      \"detail\": \"ConnectError: [Errno 111] Connection refused\",\n      \"checked_at\": \"2026-11-25T09:49:32.979495Z\"\n    },\n    {\n      \"name\": \"model:llamacp",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T09:04:46.996Z",
-      "run_id": "run_01M88Z64TPTCA13ED0W9VF7BSS",
+      "at": "2026-11-25T09:49:38.442Z",
+      "run_id": "run_01M891R91JZVTRZH8DM6YKYMXX",
       "from": "ROLLING_BACK",
       "to": "ROLLED_BACK",
       "reason": "previous activation restored",
