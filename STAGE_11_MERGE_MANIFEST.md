@@ -8,12 +8,25 @@ Produced by Parallel Agent 3. **Not merged, not pushed to the authoritative bran
 |---|---|
 | Baseline commit | `21104c413c30a3b2714f877892970e7db19a1d19` (Stage 01A gate passed) |
 | Supplied archive | `ATTa-stage01A.zip` SHA-256 `ccf1e9435e7e3a810157fb3d5dc6588ffa0a32548a0f73cc4b9005c51f5d5592`, byte-identical to the commit |
-| Sidecar branch | `stage-11-research-sidecar` (local), commit listed in STAGE_11_VERIFICATION.md |
+| Sidecar branch | `stage-11-research-sidecar` (local only; not pushed) — the commit containing this file |
 | Merge method | the sidecar commit applies on top of `21104c4` without conflicts; against a tree that already merged 01B/04, see §11 |
 
 ## 2. Files
 
-__FILE_TABLE__
+Totals: 64 added, 6 modified, 0 deleted. SHA-256 of every added/modified file: `evidence/stage_11/SHA256SUMS`; per-file hashes also in the Stage 11 section of `CHANGE_MANIFEST.md`.
+
+| Area | Added | Modified |
+|---|---|---|
+| `(root)` | `STAGE_11_CHANGE_MANIFEST.md`<br>`STAGE_11_MERGE_MANIFEST.md`<br>`STAGE_11_VERIFICATION.md` | `BLOCKERS.md`<br>`CHANGE_MANIFEST.md`<br>`DECISIONS.md`<br>`IMPLEMENTATION_PROGRESS.md`<br>`MASTER_IMPLEMENTATION_REGISTER.md` |
+| `backend/research` | `backend/research/__init__.py`<br>`backend/research/api.py`<br>`backend/research/claims.py`<br>`backend/research/config.py`<br>`backend/research/contracts.py`<br>`backend/research/dedup.py`<br>`backend/research/errors.py`<br>`backend/research/evidence.py`<br>`backend/research/ids.py`<br>`backend/research/local_sources.py`<br>`backend/research/network.py`<br>`backend/research/planner.py`<br>`backend/research/quality.py`<br>`backend/research/security.py`<br>`backend/research/service.py`<br>`backend/research/store.py`<br>`backend/research/urls.py`<br>`backend/research/verification.py`<br>`backend/research/worker.py` | — |
+| `capabilities/research_evidence` | `capabilities/research_evidence/capability.yaml`<br>`capabilities/research_evidence/handler.py` | — |
+| `capabilities/research_web` | `capabilities/research_web/capability.yaml`<br>`capabilities/research_web/extract.py`<br>`capabilities/research_web/handler.py`<br>`capabilities/research_web/netguard.py`<br>`capabilities/research_web/providers.py`<br>`capabilities/research_web/retrieval_policy.py` | — |
+| `configuration` | `configuration/research.yaml` | — |
+| `database` | `database/migrations/0011_stage11_research.sql` | — |
+| `documentation` | — | `documentation/requirements/requirement_register.yaml` |
+| `documentation/stage11` | `documentation/stage11/CITATION_MODEL.md`<br>`documentation/stage11/RESEARCH_ARCHITECTURE.md`<br>`documentation/stage11/RESEARCH_PROVIDER_INTERFACE.md`<br>`documentation/stage11/SOURCE_SECURITY.md`<br>`documentation/stage11/permissions.stage11.yaml`<br>`documentation/stage11/tool_numbers.stage11.yaml` | — |
+| `evidence/stage_11` | `evidence/stage_11/S11-CANCELLATION.json`<br>`evidence/stage_11/S11-EVIDENCE-TOOLS.json`<br>`evidence/stage_11/S11-INJECTION-CONTAINED.json`<br>`evidence/stage_11/S11-OFFLINE-AIR_GAPPED.json`<br>`evidence/stage_11/S11-OFFLINE-OFFLINE.json`<br>`evidence/stage_11/S11-PIPELINE-STANDARD.json`<br>`evidence/stage_11/S11-RESTART-RECOVERY.json`<br>`evidence/stage_11/runs/legacy_baseline.log`<br>`evidence/stage_11/runs/legacy_baseline.xml`<br>`evidence/stage_11/runs/legacy_sidecar.log`<br>`evidence/stage_11/runs/legacy_sidecar.xml`<br>`evidence/stage_11/runs/platform_baseline.log`<br>`evidence/stage_11/runs/platform_baseline.xml`<br>`evidence/stage_11/runs/platform_sidecar.log`<br>`evidence/stage_11/runs/platform_sidecar.xml`<br>`evidence/stage_11/runs/s11.log`<br>`evidence/stage_11/runs/s11.xml` | — |
+| `tests/research` | `tests/research/conftest.py`<br>`tests/research/fixture_server.py`<br>`tests/research/harness.py`<br>`tests/research/test_s11_api.py`<br>`tests/research/test_s11_contracts.py`<br>`tests/research/test_s11_extraction_dedup.py`<br>`tests/research/test_s11_pipeline.py`<br>`tests/research/test_s11_registration_tools.py`<br>`tests/research/test_s11_url_security.py` | — |
 
 Deleted files: **none**.
 
