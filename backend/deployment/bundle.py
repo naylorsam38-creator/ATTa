@@ -371,6 +371,10 @@ def create(out: Path, *, include_node: bool = True, models: list[str] | None = N
            browsers: bool = True, system_packages: bool = True, images: bool = True, target: str = "host",
            windows_installers: Path | None = None) -> dict:
     out = out.resolve()                         # npm runs in a temp dir; a relative cache path would land there
+    if out.exists() and any(out.iterdir()):
+        if not (out / "bundle_manifest.json").is_file():
+            raise RuntimeError(f"{out} is not empty and is not a previous bundle: refusing to overwrite it")
+        shutil.rmtree(out)                      # rebuild a previous bundle from scratch (stale files, symlinks)
     out.mkdir(parents=True, exist_ok=True)
     t = _target(target)
     cov: dict = {"python_wheels": _python_wheels(out, t)}

@@ -1,0 +1,25 @@
+{
+  "test_id": "S01F-T03",
+  "command": [
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "backend.deployment",
+    "qualify",
+    "--suite",
+    "LOCAL",
+    "--out",
+    "runtime/qualification/final"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "root",
+  "started_at": "2026-11-25T09:15:27.480Z",
+  "finished_at": "2026-11-25T09:26:00.858Z",
+  "duration_s": 633.378,
+  "exit_code": 1,
+  "expected_exit_code": 0,
+  "passed": false,
+  "timed_out": false,
+  "stdout": "{\n  \"suite\": \"LOCAL\",\n  \"results\": [\n    {\n      \"suite\": \"LOCAL\",\n      \"qualification_id\": \"qual_01M88ZT4JJCDGGEB9KYK6R57GA\",\n      \"status\": \"FAIL\",\n      \"counts\": {\n        \"PASS\": 9,\n        \"FAIL\": 1,\n        \"BLOCKED\": 1\n      }\n    }\n  ]\n}\n",
+  "stderr": "",
+  "output_sha256": "4c974582a9e87c8dedde915bb78277d9c752082c3de934d0024cfbcd9b53506e"
+}
