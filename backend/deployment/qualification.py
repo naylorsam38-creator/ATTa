@@ -198,6 +198,7 @@ def _hand_over(path: Path, pw) -> None:
 def run_suite(suite: str, *, manifest: dict, profile: str, out_root: Path, bundle: str | None = None,
               inside_netns: bool = False, qid: str | None = None) -> dict:
     data = load_suites()
+    out_root = Path(out_root).resolve()   # children run in other working directories: every path must be absolute
     test_ids, network = expand(suite, data)
     qid = qid or new_id("run").replace("run_", "qual_")
     ws = out_root / qid

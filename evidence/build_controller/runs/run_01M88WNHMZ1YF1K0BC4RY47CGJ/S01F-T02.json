@@ -1,0 +1,28 @@
+{
+  "test_id": "S01F-T02",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "backend.deployment",
+    "bundle",
+    "create",
+    "--out",
+    "runtime/qualification/gate-bundle"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T08:20:32.726Z",
+  "finished_at": "2026-11-25T08:21:33.577Z",
+  "duration_s": 60.851,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": "bundle written: 1797 files\n  python_wheels     INCLUDED\n  python_runtime    BLOCKED  (uv not installed: cannot fetch a relocatable CPython)\n  node              INCLUDED\n  browsers          INCLUDED\n  system_packages   INCLUDED\n  container_images  BLOCKED  (no Docker daemon: images cannot be pulled, resolved to digests or saved)\n  models            EXCLUDED  (models are referenced in place; include only on request)\n",
+  "stderr": "",
+  "output_sha256": "68a52f10050a95ce7d73c444c90b9f7404025a70bc159a2717bb6b851a6c0ef1"
+}

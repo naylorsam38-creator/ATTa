@@ -149,6 +149,9 @@ def load_settings(environment: str | None = None, root: Path | None = None,
         data = _merge(data, layer)
     iso = environ.get("ATTA_ISOLATION_FILE")         # qualification isolation overlay: wins over everything
     if iso:
+        if not Path(iso).is_file():                # fail closed: a named overlay that cannot be read is an error,
+            raise ConfigurationError([f"isolation overlay {iso} not found: refusing to fall back to the "
+                                      "non-isolated configuration"])   # never a silent fallback to production
         layer = _read_yaml(Path(iso))
         for section, keys in layer.items():
             allowed = ISOLATION_KEYS.get(section)
