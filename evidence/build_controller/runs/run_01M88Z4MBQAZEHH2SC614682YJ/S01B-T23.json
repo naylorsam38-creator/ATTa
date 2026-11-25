@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T23",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T23_isolated_filesystem_workspace"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T09:05:41.161Z",
+  "finished_at": "2026-11-25T09:05:45.683Z",
+  "duration_s": 4.522,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 3.61s\n",
+  "stderr": "",
+  "output_sha256": "fdc05d70470a5dcdc0f2ec90e84b1c589b120d34ac73091e9798e06c38199ec9"
+}

@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T38",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T38_stage01a_regression_suite"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T09:10:34.914Z",
+  "finished_at": "2026-11-25T09:13:56.054Z",
+  "duration_s": 201.139,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 200.27s (0:03:20)\n",
+  "stderr": "",
+  "output_sha256": "a5991be3a261775b6570d0144016d00511196f9a8c233b449e39679c42738b29"
+}

@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T30",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T30_focus4_works_in_isolated_qualification"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T09:06:33.683Z",
+  "finished_at": "2026-11-25T09:06:52.319Z",
+  "duration_s": 18.636,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 17.70s\n",
+  "stderr": "",
+  "output_sha256": "50a05ca5d9fbfa704022d10d32b671e6256fc4c507d161d652818569c9648090"
+}

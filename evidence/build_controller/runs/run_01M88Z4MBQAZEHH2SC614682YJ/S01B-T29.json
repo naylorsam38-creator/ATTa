@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T29",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T29_stage01a_controller_works_under_local_cpu_profile"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T09:06:16.282Z",
+  "finished_at": "2026-11-25T09:06:33.679Z",
+  "duration_s": 17.397,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 16.51s\n",
+  "stderr": "",
+  "output_sha256": "37d5cc191ae8d79ad56e3ec90b19ccdb46a476fbdcf692ae8dc82da6f787e554"
+}

@@ -1,5 +1,5 @@
 {
-  "isolated_port": 45013,
+  "isolated_port": 50657,
   "production_port": 6390,
   "production_checked": "production redis not running (nothing to leak into)"
 }

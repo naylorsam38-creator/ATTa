@@ -1,13 +1,13 @@
 {
   "active": {
     "profile": "LOCAL_CPU",
-    "environment_id": "env_01M88XYDCA48BV0FH8KDCHM0N5",
-    "manifest_sha256": "2cee057eff5419886c8ef390364dd7a6f7c87866e4723d2aee50b16aca31ae2a",
-    "effective_sha256": "ae11352cecf34bbd163de1c4f0bb4ba418972c08be280cda6b65047499c45ec9",
+    "environment_id": "env_01M88ZQRSC8WHZPC5ZVSAQKGSK",
+    "manifest_sha256": "262437faed8d3e6ddec8c5538b64d33ca8843ac4d67cc820d5a39f5f9dba4e4d",
+    "effective_sha256": "843c1b7e48c2b4764f2eb554100b746c799571417439a5afd4c5d76cf0a5218f",
     "qualification": [
       {
         "suite": "SMOKE",
-        "id": "qual_01M88XYQ66E3B8XG1M6EQ3083T",
+        "id": "qual_01M88ZR16DAYT8111Q6JV0JAXS",
         "status": "PASS",
         "counts": {
           "PASS": 2,
@@ -16,8 +16,8 @@
         }
       }
     ],
-    "activated_at": "2026-11-25T08:43:03.439Z",
-    "run_id": "run_01M88XYBE07Q3TWMW06E8JS4A8"
+    "activated_at": "2026-11-25T09:14:21.149Z",
+    "run_id": "run_01M88ZQQAEF1HCKWK85T87G2Q3"
   },
-  "tail": "[install] python: /usr/local/bin/python3.13 (Python 3.13.18)\n[install] creating virtual environment /tmp/pytest-of-atta-tester/pytest-135/test_S01B_T39_clean_installati0/clean/.venv\n[install] installing locked backend dependencies (backend-core.lock.txt)\nNo broken requirements found.\n[install] created configuration/local.env from the example \u2014 set ATTA_DATABASE_PASSWORD before START\nCONFIGURATION VALID\n[install] INSTALL COMPLETE: locked dependencies installed\ninstallation state: READY (log: /tmp/pytest-of-atta-tester/pytest-135/test_S01B_T39_clean_installati0/deploy/install_transitions.jsonl)\n"
+  "tail": "[install] python: /usr/local/bin/python3.13 (Python 3.13.18)\n[install] creating virtual environment /tmp/pytest-of-atta-tester/pytest-200/test_S01B_T39_clean_installati0/clean/.venv\n[install] installing locked backend dependencies (backend-core.lock.txt)\nNo broken requirements found.\n[install] created configuration/local.env from the example \u2014 set ATTA_DATABASE_PASSWORD before START\nCONFIGURATION VALID\n[install] INSTALL COMPLETE: locked dependencies installed\ninstallation state: READY (log: /tmp/pytest-of-atta-tester/pytest-200/test_S01B_T39_clean_installati0/deploy/install_transitions.jsonl)\n"
 }

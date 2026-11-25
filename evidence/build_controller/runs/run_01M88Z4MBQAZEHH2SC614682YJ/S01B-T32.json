@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T32",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T32_cancellation_leaves_no_subsequent_local_side_effects"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T09:07:09.437Z",
+  "finished_at": "2026-11-25T09:07:29.235Z",
+  "duration_s": 19.798,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 18.89s\n",
+  "stderr": "",
+  "output_sha256": "abe44dd6b7994ea02d2fbecb41924f4d85f7d36a5bcf12aad01ef5772545734b"
+}

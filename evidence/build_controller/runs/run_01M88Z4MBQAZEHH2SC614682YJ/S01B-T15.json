@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T15",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T15_installation_plan_generation"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T09:04:21.834Z",
+  "finished_at": "2026-11-25T09:04:25.410Z",
+  "duration_s": 3.576,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 2.47s\n",
+  "stderr": "",
+  "output_sha256": "19682171d1dbba6a56f73fbeed9a8323476a1d8ba2bbb98221dce42de2b55307"
+}

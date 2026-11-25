@@ -1,0 +1,28 @@
+{
+  "test_id": "S01B-T45",
+  "command": [
+    "/usr/sbin/runuser",
+    "-u",
+    "atta-tester",
+    "--",
+    "/home/user/ATTa/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01b_acceptance.py::test_S01B_T45_complete_requirement_to_evidence_traceability"
+  ],
+  "cwd": "/home/user/ATTa",
+  "run_as": "atta-tester",
+  "started_at": "2026-11-25T09:14:44.335Z",
+  "finished_at": "2026-11-25T09:14:45.306Z",
+  "duration_s": 0.971,
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "passed": true,
+  "timed_out": false,
+  "stdout": ".                                                                        [100%]\n1 passed in 0.13s\n",
+  "stderr": "",
+  "output_sha256": "0625b87faff6eb321ba6e04f0f30b01309a051ea8b978a78a873c80c59976745"
+}

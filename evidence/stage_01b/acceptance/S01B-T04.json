@@ -6,16 +6,16 @@
   "installer_exit": 11,
   "transitions": [
     {
-      "at": "2026-11-25T08:32:12.720Z",
-      "run_id": "run_01M88XAYDGVKFSX0X0D2J28XZK",
+      "at": "2026-11-25T09:03:50.297Z",
+      "run_id": "run_01M88Z4VGS9M74GARA2H63V93P",
       "from": "NEW",
       "to": "DISCOVER",
       "reason": "installation started",
       "evidence": {}
     },
     {
-      "at": "2026-11-25T08:32:12.981Z",
-      "run_id": "run_01M88XAYDGVKFSX0X0D2J28XZK",
+      "at": "2026-11-25T09:03:50.574Z",
+      "run_id": "run_01M88Z4VGS9M74GARA2H63V93P",
       "from": "DISCOVER",
       "to": "BLOCKED",
       "reason": "profile H100 incompatible with this machine",
