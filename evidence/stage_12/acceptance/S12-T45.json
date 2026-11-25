@@ -1,0 +1,40 @@
+{
+  "down": {
+    "checked_at": "2026-11-25T07:07:33.094Z",
+    "detail": {
+      "health": {
+        "detail": "McpTransportError: MCP server unreachable: <urlopen error [Errno 111] Connection refused>",
+        "healthy": false
+      },
+      "registry_state": "unhealthy"
+    },
+    "integration_id": "test.http_mcp",
+    "reasons": [
+      "healthcheck reported unhealthy: {'healthy': False, 'detail': 'McpTransportError: MCP server unreachable: <urlopen error [Errno 111] Connection refused>'}"
+    ],
+    "state": "ENABLED",
+    "status": "UNHEALTHY",
+    "trust_class": "TRUSTED",
+    "version": "1.0.0"
+  },
+  "install": {
+    "check": {
+      "malicious": [],
+      "missing": [],
+      "ok": true,
+      "rejected": {},
+      "undeclared": []
+    },
+    "protocol_version": "2025-06-18",
+    "server_info": {
+      "name": "atta-http-test",
+      "version": "1"
+    }
+  },
+  "remote": {
+    "negotiation": "deferred",
+    "reason": [
+      "mcp.example.com: OFFLINE_UNAVAILABLE: deployment is AIR_GAPPED"
+    ]
+  }
+}

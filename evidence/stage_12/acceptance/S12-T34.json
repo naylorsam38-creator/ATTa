@@ -1,0 +1,15 @@
+{
+  "invalid": {
+    "errors": [
+      "12345 is not of type 'string'",
+      "'not-a-number' is not of type 'integer'"
+    ],
+    "status": "invalid_output"
+  },
+  "oversized": {
+    "bytes": 100042,
+    "integration_id": "test.text_plugin",
+    "limit": 4096,
+    "status": "result_too_large"
+  }
+}

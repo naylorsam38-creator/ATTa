@@ -1,0 +1,15 @@
+{
+  "event_types": [
+    "disabled",
+    "enabled",
+    "install_approved",
+    "installed",
+    "validated"
+  ],
+  "health_sequence": [
+    "STOPPED",
+    "HEALTHY",
+    "STOPPED",
+    "HEALTHY"
+  ]
+}

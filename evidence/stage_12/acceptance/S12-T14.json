@@ -16,7 +16,7 @@
     "version": "1.0.0"
   },
   "restricted_connector": {
-    "checked_at": "2026-11-25T06:59:43.633Z",
+    "checked_at": "2026-11-25T07:04:45.083Z",
     "detail": {},
     "integration_id": "test.notes_connector",
     "reasons": [

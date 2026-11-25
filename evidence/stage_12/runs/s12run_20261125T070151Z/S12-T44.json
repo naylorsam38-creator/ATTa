@@ -1,0 +1,24 @@
+{
+  "id": "S12-T44",
+  "description": "test_S12_T44_mcp_failure_isolation_and_no_fallback",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_mcp.py::test_S12_T44_mcp_failure_isolation_and_no_fallback"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T07:07:02.494Z",
+  "finished": "2026-11-25T07:07:22.929Z",
+  "duration_s": 20.44,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "72e38319931c06cb7bda7ee0010643a2b84078b7721f760792fdbe815b29a006",
+  "output_tail": ".                                                                        [100%]\n1 passed in 20.00s"
+}

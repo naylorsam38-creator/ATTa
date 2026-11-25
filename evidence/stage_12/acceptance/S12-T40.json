@@ -1,0 +1,38 @@
+{
+  "capabilities": [
+    "summarise",
+    "test://notes/1",
+    "add",
+    "big",
+    "echo",
+    "fail",
+    "inject",
+    "slow"
+  ],
+  "install": {
+    "check": {
+      "malicious": [],
+      "missing": [],
+      "ok": true,
+      "rejected": {},
+      "undeclared": []
+    },
+    "protocol_version": "2025-06-18",
+    "server_info": {
+      "name": "atta-test-mcp",
+      "version": "1.0.0"
+    }
+  },
+  "result": {
+    "content": [
+      {
+        "text": "5",
+        "type": "text"
+      }
+    ],
+    "is_error": false,
+    "structured_content": {
+      "sum": 5
+    }
+  }
+}

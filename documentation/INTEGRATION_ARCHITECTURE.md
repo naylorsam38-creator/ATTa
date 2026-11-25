@@ -43,9 +43,10 @@ EXTERNAL INTEGRATION (package dir / operator MCP definition)
 | `ExecutionGateway.result_filters` (new list, default empty) | `ResultFilter`: bounded size, secret redaction, injection flags, provenance | Keep or reject only |
 | `ExecutionGateway.execute` | wrapped by `RejectionAuditor` | Audit only |
 | `RuntimeController.allocator` | wrapped by `AuditingAllocator` | Audit only (decisions unchanged) |
+| `RuntimeController.plan` / `submit_contract` | wrapped by `PlanPinner`: records `integrations.task_pins` (integration version + package digest per allocated integration tool) when the contract is created | Records only |
 
 Modified Stage 01A files: `backend/orchestration/catalogue.py` (+26 lines), `backend/orchestration/gateway.py`
-(+22 lines: two hook lists and their loops, inert when empty), `backend/api/app.py` (+7 lines: router + attach).
+(+22 lines: two hook lists and their loops, inert when empty), `backend/api/app.py` (+6 lines: router + attach).
 No protected/sealed file was modified.
 
 ## Why an integration is a capability package

@@ -1,0 +1,17 @@
+{
+  "cancelled": {
+    "error": null,
+    "error_type": null,
+    "leftovers_killed": 4,
+    "status": "cancelled",
+    "survivors": []
+  },
+  "timeout": {
+    "error": null,
+    "error_type": null,
+    "leftovers_killed": 4,
+    "status": "timeout",
+    "survivors": []
+  },
+  "timeout_seconds": 4.25
+}

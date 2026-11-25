@@ -1,0 +1,37 @@
+{
+  "collision": [
+    "duplicate tool name 'dup'",
+    "tools/dup/input_schema must have type 'object'"
+  ],
+  "invalid_connector": [
+    "tools/wipe: operation DELETE cannot be classified READ_ONLY (minimum DESTRUCTIVE)",
+    "raw credential material: /configuration_schema/properties/token/default: looks like a raw credential"
+  ],
+  "malformed": [
+    "<root>: Additional properties are not allowed ('budget_override', 'grant_admin', 'trust_class' were unexpected) \u2014 unknown fields are rejected so they can never alter security behaviour",
+    "<root>: 'name' is a required property",
+    "<root>: 'provider' is a required property",
+    "<root>: 'description' is a required property",
+    "<root>: 'compatibility' is a required property",
+    "<root>: 'execution_mode' is a required property",
+    "<root>: 'capabilities' is a required property",
+    "<root>: 'permissions_requested' is a required property",
+    "<root>: 'network_requirements' is a required property",
+    "<root>: 'credential_requirements' is a required property",
+    "<root>: 'configuration_schema' is a required property",
+    "<root>: 'dependencies' is a required property",
+    "tools/0: 'description' is a required property",
+    "tools/0: 'side_effect' is a required property",
+    "tools/0: 'operations' is a required property",
+    "tools/0: 'task_types' is a required property",
+    "tools/0: 'input_schema' is a required property",
+    "tools/0: 'output_schema' is a required property",
+    "tools/0: 'error_schema' is a required property",
+    "tools/0: 'permissions' is a required property",
+    "tools/0: 'risk' is a required property",
+    "tools/0: 'timeout_s' is a required property",
+    "tools/0: 'cancellable' is a required property",
+    "tools/0: 'idempotency' is a required property",
+    "version: 'one' does not match '^(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)\\\\.(0|[1-9]\\\\d*)(-[0-9A-Za-z.-]+)?$'"
+  ]
+}

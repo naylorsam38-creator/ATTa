@@ -1,0 +1,12 @@
+{
+  "redacted": {
+    "api_key": "[REDACTED]",
+    "nested": {
+      "note": "[REDACTED]",
+      "token": "[REDACTED]"
+    },
+    "ok": "credref://test.remote_connector/api_token",
+    "url": "https[REDACTED]host/x"
+  },
+  "ref": "credref://test.remote_connector/api_token"
+}

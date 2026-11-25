@@ -1,0 +1,54 @@
+{
+  "events": [
+    "validated",
+    "install_approved",
+    "installed",
+    "enabled",
+    "tool_allocated",
+    "task_pinned",
+    "execution_authorized_by_guard",
+    "tool_executed"
+  ],
+  "pool": [
+    "021.500"
+  ],
+  "state": "COMPLETED",
+  "verifications": [
+    {
+      "at": "2026-11-25 07:02:21.210297+00:00",
+      "attempt_id": "run_01M88R6CNXXCYG8XAX30Q52K1H",
+      "criterion_id": "TC-01",
+      "detail": {
+        "succeeded_executions": [
+          "exe_01M88R6CWASMYQJQTPA5B6PQ8Q"
+        ]
+      },
+      "evidence_id": "evd_01M88R6D862A2VQH11830TEEWW",
+      "id": 74,
+      "objective_id": "obj_01M88R6CECMT2YGWAR5DABAGWH",
+      "passed": true,
+      "task_id": "TASK-0001",
+      "verifier": "independent-verifier/1"
+    },
+    {
+      "at": "2026-11-25 07:02:21.365930+00:00",
+      "attempt_id": "run_01M88R6CNXXCYG8XAX30Q52K1H",
+      "criterion_id": "TC-02",
+      "detail": {
+        "execution_id": "exe_01M88R6CWASMYQJQTPA5B6PQ8Q",
+        "verify_result": {
+          "problems": [],
+          "verified": true,
+          "verifier": "atta-integration-verify/1"
+        },
+        "verify_status": "ok"
+      },
+      "evidence_id": "evd_01M88R6DCRZ8P8FZE6VP13QNTM",
+      "id": 75,
+      "objective_id": "obj_01M88R6CECMT2YGWAR5DABAGWH",
+      "passed": true,
+      "task_id": "TASK-0001",
+      "verifier": "independent-verifier/1"
+    }
+  ]
+}

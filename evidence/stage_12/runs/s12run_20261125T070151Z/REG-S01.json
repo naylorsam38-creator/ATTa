@@ -1,0 +1,31 @@
+{
+  "id": "REG-S01",
+  "description": "Stage 01 acceptance (5 tests superseded by Stage 01A by design \u2014 proven by S01A-T48)",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/acceptance/test_s01_acceptance.py"
+  ],
+  "exit_code": 1,
+  "result": "FAIL",
+  "started": "2026-11-25T07:14:50.988Z",
+  "finished": "2026-11-25T07:17:30.139Z",
+  "duration_s": 159.15,
+  "counts": {
+    "failed": 5,
+    "passed": 11
+  },
+  "failed_tests": [
+    "tests/acceptance/test_s01_acceptance.py::test_S01_T06_discover_valid_capability_manifest",
+    "tests/acceptance/test_s01_acceptance.py::test_S01_T07_reject_invalid_capability_manifest",
+    "tests/acceptance/test_s01_acceptance.py::test_S01_T08_reject_duplicate_capability_identifiers",
+    "tests/acceptance/test_s01_acceptance.py::test_S01_T09_new_capability_registers_without_changing_start",
+    "tests/acceptance/test_s01_acceptance.py::test_S01_T13_protected_operations_default_to_deny"
+  ],
+  "output_sha256": "53e0b02ac5a2e3791eb4612982ed0182f89b4fcd48c8a19e114b0524cd096d08",
+  "output_tail": "able\nE             + untrusted)\n\ntests/acceptance/test_s01_acceptance.py:301: AssertionError\n______________ test_S01_T13_protected_operations_default_to_deny _______________\n\ntmp_path = PosixPath('/tmp/pytest-of-root/pytest-88/test_S01_T13_protected_operati0')\n\n    def test_S01_T13_protected_operations_default_to_deny(tmp_path):\n        from fastapi.testclient import TestClient\n        from backend.api.app import create_app\n        from backend.contracts import DependencyHealth, HealthStatus\n        marker = tmp_path / \"executed.txt\"\n        write_capability(tmp_path, \"sidefx\", \"test.sidefx\", handler=textwrap.dedent(f\"\"\"\\\n            def execute(payload, context):\n                open({str(marker)!r}, \"w\").write(\"ran\")\n                return {{\"echo\": \"x\"}}\n            def healthcheck():\n                return True\n            def verify(p, o):\n                return True\n            \"\"\"))\n        engine = PolicyEngine()\n        reg = CapabilityRegistry([ROOT / \"capabilities\", tmp_path], policy=engine)\n        reg.discover()\n>       assert reg.get(\"test.sidefx\").executable\nE       AssertionError: assert False\nE        +  where False = RegisteredCapability(id='test.sidefx', source='/tmp/pytest-of-root/pytest-88/test_S01_T13_protected_operati0/sidefx/ca...True, idempotency='non_idempotent', version='1.0.0')], probe_problems=None, health_ok=None, health_at=0.0, fixed=False).executable\nE        +    where RegisteredCapability(id='test.sidefx', source='/tmp/pytest-of-root/pytest-88/test_S01_T13_protected_operati0/sidefx/ca...True, idempotency='non_idempotent', version='1.0.0')], probe_problems=None, health_ok=None, health_at=0.0, fixed=False) = get('test.sidefx')\nE        +      where get = <backend.capability_registry.registry.CapabilityRegistry object at 0x7fb4d916d0f0>.get\n\ntests/acceptance/test_s01_acceptance.py:506: AssertionError\n=============================== warnings summary ===============================\ntests/acceptance/test_s01_acceptance.py::test_S01_T13_protected_operations_default_to_deny\n  /home/user/ATTa/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nFAILED tests/acceptance/test_s01_acceptance.py::test_S01_T06_discover_valid_capability_manifest\nFAILED tests/acceptance/test_s01_acceptance.py::test_S01_T07_reject_invalid_capability_manifest\nFAILED tests/acceptance/test_s01_acceptance.py::test_S01_T08_reject_duplicate_capability_identifiers\nFAILED tests/acceptance/test_s01_acceptance.py::test_S01_T09_new_capability_registers_without_changing_start\nFAILED tests/acceptance/test_s01_acceptance.py::test_S01_T13_protected_operations_default_to_deny\n5 failed, 11 passed, 1 warning in 158.37s (0:02:38)"
+}

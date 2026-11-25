@@ -1,0 +1,72 @@
+{
+  "budgets": {
+    "actions": {
+      "consumed": 1.0,
+      "limit": 30.0,
+      "remaining": 29.0,
+      "reserved": 0.0
+    },
+    "concurrent_tools": {
+      "consumed": 0.0,
+      "limit": 2.0,
+      "remaining": 2.0,
+      "reserved": 0.0
+    },
+    "cpu_seconds": {
+      "consumed": 0.116,
+      "limit": 600.0,
+      "remaining": 599.884,
+      "reserved": 0.0
+    },
+    "external_api_calls": {
+      "consumed": 0.0,
+      "limit": 0.0,
+      "remaining": 0.0,
+      "reserved": 0.0
+    },
+    "failed_steps": {
+      "consumed": 0.0,
+      "limit": 3.0,
+      "remaining": 3.0,
+      "reserved": 0.0
+    },
+    "invalid_proposals": {
+      "consumed": 0.0,
+      "limit": 3.0,
+      "remaining": 3.0,
+      "reserved": 0.0
+    },
+    "network_requests": {
+      "consumed": 0.0,
+      "limit": 0.0,
+      "remaining": 0.0,
+      "reserved": 0.0
+    },
+    "repairs": {
+      "consumed": 0.0,
+      "limit": 2.0,
+      "remaining": 2.0,
+      "reserved": 0.0
+    },
+    "spend_cents": {
+      "consumed": 0.0,
+      "limit": 0.0,
+      "remaining": 0.0,
+      "reserved": 0.0
+    },
+    "tokens": {
+      "consumed": 1206.0,
+      "limit": 200000.0,
+      "remaining": 198794.0,
+      "reserved": 0.0
+    }
+  },
+  "contract_hash": "0c70779f3662ad0e50b64efa62c99e22a370c182dee267ecd738761a3f066fa3",
+  "flags": [
+    "budget/limit change request",
+    "instruction override",
+    "privilege escalation request",
+    "self-approval request"
+  ],
+  "state": "COMPLETED"
+}

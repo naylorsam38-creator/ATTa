@@ -1,0 +1,8 @@
+{
+  "drift": [
+    "MCP tool add: ['server inputSchema differs from the approved manifest (revalidation required)']"
+  ],
+  "malicious": [
+    "MCP server metadata is malicious: [\"tool 'echo' metadata contains instruction-like text: credential exfiltration request, instruction override, privilege escalation request\"]"
+  ]
+}

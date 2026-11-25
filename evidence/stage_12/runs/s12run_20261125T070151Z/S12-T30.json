@@ -1,0 +1,24 @@
+{
+  "id": "S12-T30",
+  "description": "test_S12_T30_end_to_end_connector_task_through_the_controller",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_execution.py::test_S12_T30_end_to_end_connector_task_through_the_controller"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T07:02:12.001Z",
+  "finished": "2026-11-25T07:02:21.758Z",
+  "duration_s": 9.76,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "7ab31553287510ace70a4dbeea7cc87336eded12c09d9213d1d2d6f88785fbc3",
+  "output_tail": ".                                                                        [100%]\n1 passed in 9.31s"
+}

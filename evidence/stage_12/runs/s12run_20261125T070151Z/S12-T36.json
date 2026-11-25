@@ -1,0 +1,24 @@
+{
+  "id": "S12-T36",
+  "description": "test_S12_T36_credential_dependent_integrations_blocked_until_stage02",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_execution.py::test_S12_T36_credential_dependent_integrations_blocked_until_stage02"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T07:03:16.982Z",
+  "finished": "2026-11-25T07:03:24.570Z",
+  "duration_s": 7.59,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "1b82a445673bf439637df73ac8a5429223a1bed555ddc9e6d80752914da245d3",
+  "output_tail": ".                                                                        [100%]\n1 passed in 7.19s"
+}

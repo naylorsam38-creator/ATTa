@@ -1,0 +1,24 @@
+{
+  "id": "S12-T45",
+  "description": "test_S12_T45_http_transport_network_policy_and_dynamic_health",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_mcp.py::test_S12_T45_http_transport_network_policy_and_dynamic_health"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T07:07:22.929Z",
+  "finished": "2026-11-25T07:07:37.863Z",
+  "duration_s": 14.93,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "8aa27e05078753ad3e37db9944206c66cad0cc4c39376439a5f54d3d04f280ed",
+  "output_tail": ".                                                                        [100%]\n1 passed in 14.52s"
+}

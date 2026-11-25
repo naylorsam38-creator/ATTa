@@ -1,0 +1,36 @@
+{
+  "id": "REG-LEGACY",
+  "description": "Existing ATTa v121.5 application suite (tests/test_*.py) vs tests/regression/legacy_baseline.json",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_resilience_boundary.py",
+    "tests/test_v1141_installer.py",
+    "tests/test_v114_hardening.py",
+    "tests/test_v115_security.py",
+    "tests/test_v117_coolify.py",
+    "tests/test_v118_merge.py",
+    "tests/test_v119_login_proof.py",
+    "tests/test_v120_stage2.py",
+    "tests/test_v121_2_parallel_isolation.py",
+    "tests/test_v121_3_record_diagnostic.py",
+    "tests/test_v121_4_control_layer.py",
+    "tests/test_v121_journey_author.py"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T07:17:30.140Z",
+  "finished": "2026-11-25T07:18:44.085Z",
+  "duration_s": 73.94,
+  "counts": {
+    "passed": 263,
+    "skipped": 5
+  },
+  "failed_tests": [],
+  "output_sha256": "6d1dada4db8e8d4ae5bc97cb990b5223137718546a7c8861658283e0252c1c13",
+  "output_tail": "...........s............................................................ [ 26%]\n........................................................................ [ 53%]\n.........................................................s.............. [ 80%]\n.................................................sss                     [100%]\n263 passed, 5 skipped in 73.39s (0:01:13)"
+}

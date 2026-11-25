@@ -4,7 +4,7 @@ Generated from `documentation/requirements/requirement_register.yaml` by `python
 
 Register version: 2 — updated 2026-11-25 — current stage: S01A
 
-Status counts: BLOCKED 0, IMPLEMENTED 0, NOT_STARTED 38, PARTIAL 2, VERIFIED 0
+Status counts: BLOCKED 0, IMPLEMENTED 0, NOT_STARTED 34, PARTIAL 6, VERIFIED 0
 
 No capability is marked IMPLEMENTED or VERIFIED until its stage gate passes with recorded evidence.
 
@@ -32,10 +32,10 @@ No capability is marked IMPLEMENTED or VERIFIED until its stage gate passes with
 | CAP-18 | Application creation | S11 | CAP-13, CAP-19, CAP-20 | **NOT_STARTED** |
 | CAP-19 | Code execution | S11 | CAP-39, CAP-40 | **NOT_STARTED** |
 | CAP-20 | Coding agent | S15 | CAP-19, CAP-26, CAP-29 | **NOT_STARTED** |
-| CAP-21 | Connectors | S18 | CAP-35, CAP-39 | **NOT_STARTED** |
-| CAP-22 | MCP | S18 | CAP-21, CAP-39 | **NOT_STARTED** |
-| CAP-23 | Skills | S12 | CAP-24, CAP-39 | **NOT_STARTED** |
-| CAP-24 | Plugins | S12 | CAP-23, CAP-39 | **NOT_STARTED** |
+| CAP-21 | Connectors | S18 | CAP-35, CAP-39 | **PARTIAL** |
+| CAP-22 | MCP | S18 | CAP-21, CAP-39 | **PARTIAL** |
+| CAP-23 | Skills | S12 | CAP-24, CAP-39 | **PARTIAL** |
+| CAP-24 | Plugins | S12 | CAP-23, CAP-39 | **PARTIAL** |
 | CAP-25 | Cowork | S14 | CAP-26, CAP-29, CAP-33 | **NOT_STARTED** |
 | CAP-26 | Parallel agents | S14 | CAP-01, CAP-40 | **NOT_STARTED** |
 | CAP-27 | Browser control | S16 | CAP-39, CAP-19 | **NOT_STARTED** |
@@ -298,50 +298,50 @@ No capability is marked IMPLEMENTED or VERIFIED until its stage gate passes with
 ### CAP-21 — Connectors
 
 - **Implementation stage:** S18
-- **Status:** NOT_STARTED
+- **Status:** PARTIAL — Stage 12 SIDECAR (branch stage-12-integrations-sidecar, NOT YET INTEGRATED): unified integration manifests, metadata-only discovery, validation, operator-signed trust/approval, transactional install, registration through the Stage 01A registry/catalogue, permanent numbers, controller-only execution, audit. Credential resolution and approvals: Stage 02; OS isolation and connectivity: Stage 01B. See STAGE_12_VERIFICATION.md.
 - **Dependencies:** CAP-35, CAP-39
-- **Source files:** **planned:** `backend/connectors/`
+- **Source files:** **implemented:** `backend/integrations/manifest.py`, `backend/integrations/credentials.py`, `backend/integrations/network.py`, `backend/integrations/manager.py`, `backend/integrations/runtime.py`<br>**planned:** `backend/connectors/`
 - **Interface controls:** Connector gallery<br>OAuth connect/disconnect
-- **API endpoints:** **planned:** `GET /v1/connectors`, `POST /v1/connectors/{id}/connect`, `DELETE /v1/connectors/{id}`
+- **API endpoints:** **implemented:** `GET/POST /v1/integrations[...] (Stage 12 sidecar; default DENY until Stage 02)`<br>**planned:** `GET /v1/connectors`, `POST /v1/connectors/{id}/connect`, `DELETE /v1/connectors/{id}`
 - **Security controls:** OAuth with PKCE<br>Tokens encrypted at rest<br>Least-privilege scopes<br>Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway, independent verification)
-- **Acceptance tests:** S18-CAP21-T01: primary user journey works end to end<br>S18-CAP21-T02: security controls enforced (negative tests)<br>S18-CAP21-T03: regression suite unchanged
-- **Evidence:** none yet
+- **Acceptance tests:** S12 sidecar tests S12-T01..T61 (tests/integrations/), passed in the sidecar<br>S18-CAP21-T01: primary user journey works end to end<br>S18-CAP21-T02: security controls enforced (negative tests)<br>S18-CAP21-T03: regression suite unchanged
+- **Evidence:** STAGE_12_VERIFICATION.md<br>evidence/stage_12/
 
 ### CAP-22 — MCP
 
 - **Implementation stage:** S18
-- **Status:** NOT_STARTED
+- **Status:** PARTIAL — Stage 12 SIDECAR (branch stage-12-integrations-sidecar, NOT YET INTEGRATED): unified integration manifests, metadata-only discovery, validation, operator-signed trust/approval, transactional install, registration through the Stage 01A registry/catalogue, permanent numbers, controller-only execution, audit. Credential resolution and approvals: Stage 02; OS isolation and connectivity: Stage 01B. See STAGE_12_VERIFICATION.md.
 - **Dependencies:** CAP-21, CAP-39
-- **Source files:** **planned:** `backend/connectors/mcp_client.py`
+- **Source files:** **implemented:** `backend/integrations/mcp/wire.py`, `backend/integrations/mcp/client.py`, `backend/integrations/mcp/validation.py`, `backend/integrations/bridges/mcp_bridge.py`<br>**planned:** `backend/connectors/mcp_client.py`
 - **Interface controls:** MCP server management<br>Tool approval prompts
-- **API endpoints:** **planned:** `GET /v1/mcp/servers`, `POST /v1/mcp/servers`
+- **API endpoints:** **implemented:** `GET /v1/mcp/servers, GET /v1/mcp/servers/{id}/capabilities (Stage 12 sidecar; default DENY)`<br>**planned:** `GET /v1/mcp/servers`, `POST /v1/mcp/servers`
 - **Security controls:** Tool calls pass policy engine<br>Server allow-list<br>Tool output treated as untrusted<br>Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway, independent verification)
-- **Acceptance tests:** S18-CAP22-T01: primary user journey works end to end<br>S18-CAP22-T02: security controls enforced (negative tests)<br>S18-CAP22-T03: regression suite unchanged
-- **Evidence:** none yet
+- **Acceptance tests:** S12 sidecar tests S12-T01..T61 (tests/integrations/), passed in the sidecar<br>S18-CAP22-T01: primary user journey works end to end<br>S18-CAP22-T02: security controls enforced (negative tests)<br>S18-CAP22-T03: regression suite unchanged
+- **Evidence:** STAGE_12_VERIFICATION.md<br>evidence/stage_12/
 
 ### CAP-23 — Skills
 
 - **Implementation stage:** S12
-- **Status:** NOT_STARTED
+- **Status:** PARTIAL — Stage 12 SIDECAR (branch stage-12-integrations-sidecar, NOT YET INTEGRATED): unified integration manifests, metadata-only discovery, validation, operator-signed trust/approval, transactional install, registration through the Stage 01A registry/catalogue, permanent numbers, controller-only execution, audit. Credential resolution and approvals: Stage 02; OS isolation and connectivity: Stage 01B. See STAGE_12_VERIFICATION.md.
 - **Dependencies:** CAP-24, CAP-39
-- **Source files:** **planned:** `backend/capability_registry/ (skill manifests)`, `capabilities/`
+- **Source files:** **implemented:** `backend/integrations/skills.py`, `backend/integrations/service.py`<br>**planned:** `backend/capability_registry/ (skill manifests)`, `capabilities/`
 - **Interface controls:** Skill library<br>Enable/disable per user
-- **API endpoints:** **planned:** `GET /v1/skills`, `PATCH /v1/skills/{id}`
+- **API endpoints:** **implemented:** `GET /v1/skills, GET /v1/skills/scripts (Stage 12 sidecar; default DENY)`<br>**planned:** `GET /v1/skills`, `PATCH /v1/skills/{id}`
 - **Security controls:** Manifest validation (S01 registry)<br>Signed skill packages<br>Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway, independent verification)
-- **Acceptance tests:** S12-CAP23-T01: primary user journey works end to end<br>S12-CAP23-T02: security controls enforced (negative tests)<br>S12-CAP23-T03: regression suite unchanged
-- **Evidence:** none yet
+- **Acceptance tests:** S12 sidecar tests S12-T01..T61 (tests/integrations/), passed in the sidecar<br>S12-CAP23-T01: primary user journey works end to end<br>S12-CAP23-T02: security controls enforced (negative tests)<br>S12-CAP23-T03: regression suite unchanged
+- **Evidence:** STAGE_12_VERIFICATION.md<br>evidence/stage_12/
 
 ### CAP-24 — Plugins
 
 - **Implementation stage:** S12
-- **Status:** NOT_STARTED
+- **Status:** PARTIAL — Stage 12 SIDECAR (branch stage-12-integrations-sidecar, NOT YET INTEGRATED): unified integration manifests, metadata-only discovery, validation, operator-signed trust/approval, transactional install, registration through the Stage 01A registry/catalogue, permanent numbers, controller-only execution, audit. Credential resolution and approvals: Stage 02; OS isolation and connectivity: Stage 01B. See STAGE_12_VERIFICATION.md.
 - **Dependencies:** CAP-23, CAP-39
-- **Source files:** **planned:** `backend/capability_registry/plugins.py`
+- **Source files:** **implemented:** `backend/integrations/packaging.py`, `backend/integrations/isolation.py`, `backend/integrations/verification.py`, `backend/integrations/bridges/verify.py`<br>**planned:** `backend/capability_registry/plugins.py`
 - **Interface controls:** Plugin marketplace<br>Install/uninstall
-- **API endpoints:** **planned:** `GET /v1/plugins`, `POST /v1/plugins/{id}/install`
+- **API endpoints:** **implemented:** `GET /v1/plugins (Stage 12 sidecar; default DENY)`<br>**planned:** `GET /v1/plugins`, `POST /v1/plugins/{id}/install`
 - **Security controls:** Signature verification<br>Permission review at install<br>No self-granted permissions (S01 policy rule)<br>Executes only through the Stage 01A runtime controller (task contract, numbered tool pool, drift guard, policy, gateway, independent verification)
-- **Acceptance tests:** S12-CAP24-T01: primary user journey works end to end<br>S12-CAP24-T02: security controls enforced (negative tests)<br>S12-CAP24-T03: regression suite unchanged
-- **Evidence:** none yet
+- **Acceptance tests:** S12 sidecar tests S12-T01..T61 (tests/integrations/), passed in the sidecar<br>S12-CAP24-T01: primary user journey works end to end<br>S12-CAP24-T02: security controls enforced (negative tests)<br>S12-CAP24-T03: regression suite unchanged
+- **Evidence:** STAGE_12_VERIFICATION.md<br>evidence/stage_12/
 
 ### CAP-25 — Cowork
 

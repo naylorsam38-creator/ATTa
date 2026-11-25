@@ -1,0 +1,24 @@
+{
+  "id": "S12-T34",
+  "description": "test_S12_T34_oversized_and_invalid_results_are_rejected_explicitly",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_execution.py::test_S12_T34_oversized_and_invalid_results_are_rejected_explicitly"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T07:02:54.228Z",
+  "finished": "2026-11-25T07:03:04.010Z",
+  "duration_s": 9.78,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "c56bd795d16a9f3cda7ff7207f8a467e0f018e49e8169dfa379ac47873caf978",
+  "output_tail": ".                                                                        [100%]\n1 passed in 9.34s"
+}

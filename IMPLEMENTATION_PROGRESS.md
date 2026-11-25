@@ -4,6 +4,7 @@
 |---|---|---|---|
 | **S01** | Architecture and build infrastructure | **GATE PASSED** 2026-11-25 (run `run_01M88CEBEHP90WASN470WNT557`, 9/9 tasks, 25/25 tests); verified checkpoint `checkpoint-S01-70WNT557` at `fa406b3` | STAGE_01_VERIFICATION.md, `evidence/build_controller/` |
 | **S01A** | Deterministic LLM control, tool allocation and drift prevention | **GATE PASSED** 2026-11-25 (run `run_01M88H4W3NJ3NSPWSHPV29RR48`, 10/10 tasks incl. Checkpoints A and B, 61/61 test entries; an earlier run FAILED and was fixed — see report); verified checkpoint `checkpoint-S01A-PV29RR48` at `5662dd2` | `evidence/build_controller/`, `evidence/stage_01a/` |
+| **S12 (sidecar)** | Connectors, MCP, skills and plugins (parallel worker 4 numbering; see DECISIONS D-S12-11) | **IMPLEMENTED IN SIDECAR, VERIFIED IN SIDECAR, NOT YET INTEGRATED** — run `s12run_20261125T070151Z` at `e137a92`: 38/38 Stage 12 tests; Stage 01/01A/legacy regressions identical to baseline | STAGE_12_VERIFICATION.md, `evidence/stage_12/` |
 | S02 | Authentication, tenant isolation, permissions, credential protection, human approvals → controller | NOT STARTED — not to be started in this stage | — |
 | S03 – S20 | revised roadmap: `configuration/build/roadmap.yaml` | NOT STARTED | — |
 
@@ -57,3 +58,18 @@ Stage 01A §24 defect corrections: 1 thread timeouts → supervised processes (T
 (T44; API-level for authenticated callers: Stage 02) · 6 argument binding in policy requests (T47 trace shows
 `arguments_hash` bound) · 7 runtime vs migration DB privileges (readiness check + T02/T22/T33/T39 SQL denials) ·
 8 Ed25519 seal + OS protection (T51; independence of keys: BLOCKERS B-009/B-016).
+
+
+## Stage 12 sidecar — what was built (NOT YET INTEGRATED)
+
+| Deliverable | Where | Verified by |
+|---|---|---|
+| Unified integration descriptor + manifest schema/validation (no code execution) | `backend/integrations/{types,manifest,content}.py`, `integration.schema.json` | S12-T01–T06 |
+| Transactional lifecycle (discover → validate → approve → install → register → verify → enable/disable/upgrade/remove), rollback, restart restore | `backend/integrations/manager.py`, `store.py`, migration `0012` | S12-T10–T13, T15–T17, T20 |
+| Trust classes, isolation contract, live trust gate on the ONE registry | `assessment.py`, `runtime.py`, `isolation.py` | S12-T14, T19 |
+| Permanent integration tool numbers in the ONE catalogue | `catalogue.extra_numbers`, `integrations.tool_numbers` | S12-T10, T12 |
+| Controller-only execution: allocation, guards, result filter, injection/secret handling, audit, version pins | `runtime.py`, gateway hooks | S12-T18, T30–T34, T37 |
+| Connectors (provider adapters, operation classes, credential references, offline) | `credentials.py`, `network.py` | S12-T06, T32, T35, T36 |
+| MCP client (stdio + Streamable HTTP), validation, lifecycle, timeouts, cancellation | `backend/integrations/mcp/`, `bridges/mcp_bridge.py` | S12-T40–T45 |
+| Skills, scripts, plugins | `skills.py`, `packaging.py`, `service.py` | S12-T50–T54 |
+| Typed API contracts + policy-protected routes | `service.py`, `api.py`, `packages/shared_types/integrations.contracts.generated.json` | S12-T60, T61 |

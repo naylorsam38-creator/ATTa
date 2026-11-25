@@ -1,0 +1,24 @@
+{
+  "id": "S12-T13",
+  "description": "test_S12_T13_enable_disable_and_no_self_enable",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_lifecycle.py::test_S12_T13_enable_disable_and_no_self_enable"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T07:04:19.479Z",
+  "finished": "2026-11-25T07:04:29.802Z",
+  "duration_s": 10.32,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "19b35a7ee686aaf128679bbafa9d34b7b9e3c98c417995f41e37e34671ffb270",
+  "output_tail": ".                                                                        [100%]\n1 passed in 9.94s"
+}

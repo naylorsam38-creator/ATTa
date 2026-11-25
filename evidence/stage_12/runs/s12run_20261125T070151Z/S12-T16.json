@@ -1,0 +1,24 @@
+{
+  "id": "S12-T16",
+  "description": "test_S12_T16_removal_handles_active_tasks_and_keeps_history",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_lifecycle.py::test_S12_T16_removal_handles_active_tasks_and_keeps_history"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T07:04:57.828Z",
+  "finished": "2026-11-25T07:05:09.086Z",
+  "duration_s": 11.26,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "d1910c96e4b162ad5afa97d9747283064a39f9f19ebccb0ee303783549766832",
+  "output_tail": ".                                                                        [100%]\n1 passed in 10.84s"
+}

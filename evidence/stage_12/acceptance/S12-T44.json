@@ -1,0 +1,13 @@
+{
+  "crashing_install": [
+    "registry state unhealthy: healthcheck reported unhealthy: {'healthy': False, 'detail': 'McpTransportError: MCP server exited (code 3); stderr: '}",
+    "MCP negotiation failed (transport): MCP server exited (code 3); stderr: "
+  ],
+  "failed_call": {
+    "error": "MCP tool reported an error: the fixture tool failed on purpose",
+    "error_type": "RuntimeError",
+    "leftovers_killed": 0,
+    "status": "error",
+    "survivors": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "S12-T02",
+  "description": "test_S12_T02_malformed_manifest_rejected_with_unknown_fields_never_granting_authority",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_manifest.py::test_S12_T02_malformed_manifest_rejected_with_unknown_fields_never_granting_authority"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T07:06:02.553Z",
+  "finished": "2026-11-25T07:06:03.338Z",
+  "duration_s": 0.79,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "3be62f393f5921607a873beb897436b1f6af7bf8e959115d728ee0ecc5bd3a34",
+  "output_tail": ".                                                                        [100%]\n1 passed in 0.35s"
+}

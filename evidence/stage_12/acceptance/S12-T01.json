@@ -1,0 +1,61 @@
+{
+  "network_connector": {
+    "digest": "de7bc2c9a2002d4b5dbdc532f46807f35ec30c24409c2d67a14b47ee7ce795f7",
+    "id": "test.remote_connector",
+    "package_digest": "f9306280ae906fd214f9c56ed18aa61916036bd5bcaa4150d7926e77aa313ca1",
+    "tools": [
+      "fetch"
+    ],
+    "type": "CONNECTOR",
+    "version": "1.0.0"
+  },
+  "valid_connector": {
+    "digest": "4ef7f1fe2ac0e0f4da52ecfac59b3b5df960fdd54cf03d5e2cb23e0ef6f9a1b7",
+    "id": "test.notes_connector",
+    "package_digest": "72f679ef8c9fe68cbf1dfb809bc44e2c52e0628090c1c72cc609dc25eb933a41",
+    "tools": [
+      "search",
+      "read",
+      "create",
+      "send"
+    ],
+    "type": "CONNECTOR",
+    "version": "1.0.0"
+  },
+  "valid_mcp": {
+    "digest": "dab2882335c2721ab1e1d30c5ca11b0a0fbcb941489b0752304aac8c1b89a4b2",
+    "id": "test.echo_mcp",
+    "package_digest": "b7291ff834c99bee92b3414c84047cdad6d81448824e221ba940e2ae03583cca",
+    "tools": [
+      "echo",
+      "add",
+      "slow",
+      "inject",
+      "big",
+      "fail"
+    ],
+    "type": "MCP_SERVER",
+    "version": "1.0.0"
+  },
+  "valid_plugin": {
+    "digest": "fbb884fcb07c12b8ffca1fa680e96a4809e03d916394f7eb43288541ef713a4e",
+    "id": "test.text_plugin",
+    "package_digest": "9559e1e2f1f490dd28b8ff299873778ac2068a14ce68ca6ef8a5c2e2f140e726",
+    "tools": [
+      "summarize",
+      "poison",
+      "large",
+      "bad_output"
+    ],
+    "type": "PLUGIN",
+    "version": "1.0.0"
+  },
+  "valid_skill": {
+    "digest": "db1bf4675297b92a5d16fcb57d520281a7c291dc5151fc71d834ec5b288e7442",
+    "id": "test.find_notes_skill",
+    "package_digest": "790e967dc150ef619324e324303ca66e8368e26c0c9ba32cb2b20933a3fd42a7",
+    "tools": [],
+    "type": "SKILL",
+    "version": "1.0.0"
+  }
+}

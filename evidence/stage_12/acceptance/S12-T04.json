@@ -1,0 +1,91 @@
+{
+  "discovered": [
+    {
+      "id": "test.bad_connector",
+      "problems": [
+        "tools/wipe: operation DELETE cannot be classified READ_ONLY (minimum DESTRUCTIVE)",
+        "raw credential material: /configuration_schema/properties/token/default: looks like a raw credential"
+      ],
+      "valid": false
+    },
+    {
+      "id": "test.broken_skill",
+      "problems": [],
+      "valid": true
+    },
+    {
+      "id": "test.collision_plugin",
+      "problems": [
+        "duplicate tool name 'dup'",
+        "tools/dup/input_schema must have type 'object'"
+      ],
+      "valid": false
+    },
+    {
+      "id": "test.drift_mcp",
+      "problems": [],
+      "valid": true
+    },
+    {
+      "id": "test.echo_mcp",
+      "problems": [],
+      "valid": true
+    },
+    {
+      "id": "test.evil_mcp",
+      "problems": [],
+      "valid": true
+    },
+    {
+      "id": "test.find_notes_skill",
+      "problems": [],
+      "valid": true
+    },
+    {
+      "id": "test.import_marker",
+      "problems": [],
+      "valid": true
+    },
+    {
+      "id": "test.malformed",
+      "problems": [
+        "<root>: Additional properties are not allowed ('budget_override', 'grant_admin', 'trust_class' were unexpected) \u2014 unknown fields are rejected so they can never alter security behaviour",
+        "<root>: 'name' is a required property",
+        "<root>: 'provider' is a required property"
+      ],
+      "valid": false
+    },
+    {
+      "id": "test.notes_connector",
+      "problems": [],
+      "valid": true
+    },
+    {
+      "id": "test.remote_connector",
+      "problems": [],
+      "valid": true
+    },
+    {
+      "id": "test.text_plugin",
+      "problems": [
+        "duplicate integration_id 'test.text_plugin' in: /tmp/pytest-of-root/pytest-67/test_S12_T04_discovery_reads_m0/h-1084da/integrations_src/escalating_plugin/integration.yaml, /tmp/pytest-of-root/pytest-67/test_S12_T04_discovery_reads_m0/h-1084da/integrations_src/valid_plugin/integration.yaml, /tmp/pytest-of-root/pytest-67/test_S12_T04_discovery_reads_m0/h-1084da/integrations_src/valid_plugin_v1_1/integration.yaml"
+      ],
+      "valid": false
+    },
+    {
+      "id": "test.text_plugin",
+      "problems": [
+        "duplicate integration_id 'test.text_plugin' in: /tmp/pytest-of-root/pytest-67/test_S12_T04_discovery_reads_m0/h-1084da/integrations_src/escalating_plugin/integration.yaml, /tmp/pytest-of-root/pytest-67/test_S12_T04_discovery_reads_m0/h-1084da/integrations_src/valid_plugin/integration.yaml, /tmp/pytest-of-root/pytest-67/test_S12_T04_discovery_reads_m0/h-1084da/integrations_src/valid_plugin_v1_1/integration.yaml"
+      ],
+      "valid": false
+    },
+    {
+      "id": "test.text_plugin",
+      "problems": [
+        "duplicate integration_id 'test.text_plugin' in: /tmp/pytest-of-root/pytest-67/test_S12_T04_discovery_reads_m0/h-1084da/integrations_src/escalating_plugin/integration.yaml, /tmp/pytest-of-root/pytest-67/test_S12_T04_discovery_reads_m0/h-1084da/integrations_src/valid_plugin/integration.yaml, /tmp/pytest-of-root/pytest-67/test_S12_T04_discovery_reads_m0/h-1084da/integrations_src/valid_plugin_v1_1/integration.yaml"
+      ],
+      "valid": false
+    }
+  ],
+  "import_markers": []
+}

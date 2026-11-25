@@ -1,0 +1,22 @@
+{
+  "DELETE /v1/integrations/test.notes_connector": 403,
+  "GET /v1/integrations": 403,
+  "GET /v1/integrations/test.notes_connector": 403,
+  "GET /v1/integrations/test.notes_connector/capabilities": 403,
+  "GET /v1/integrations/test.notes_connector/configuration-schema": 403,
+  "GET /v1/integrations/test.notes_connector/events": 403,
+  "GET /v1/integrations/test.notes_connector/health": 403,
+  "GET /v1/integrations/test.notes_connector/permissions": 403,
+  "GET /v1/integrations/test.notes_connector/tools": 403,
+  "GET /v1/mcp/servers": 403,
+  "GET /v1/mcp/servers/test.echo_mcp/capabilities": 403,
+  "GET /v1/plugins": 403,
+  "GET /v1/skills": 403,
+  "GET /v1/skills/scripts": 403,
+  "POST /v1/integrations/discover": 403,
+  "POST /v1/integrations/install": 403,
+  "POST /v1/integrations/test.notes_connector/disable": 403,
+  "POST /v1/integrations/test.notes_connector/enable": 403,
+  "POST /v1/integrations/test.notes_connector/upgrade": 403,
+  "POST /v1/integrations/validate": 403
+}

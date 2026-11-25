@@ -1,0 +1,46 @@
+{
+  "below the minimum": [
+    "tools/summarize declares risk 'low' below the minimum 'high' for DESTRUCTIVE"
+  ],
+  "cannot be classified READ_ONLY": [
+    "tools/send: operation SEND cannot be classified READ_ONLY (minimum EXTERNAL_COMMUNICATION)"
+  ],
+  "incompatible": [
+    "incompatible integration_api 9 (this ATTa supports 1)"
+  ],
+  "inline code": [
+    "mcp.command may not run inline code (-c) or arbitrary modules (-m); name a script file",
+    "mcp.command script '-c' not found inside the package"
+  ],
+  "instruction-like": [
+    "tools/summarize/description contains instruction-like text (instruction override, privilege escalation request); descriptions are data"
+  ],
+  "integrity mismatch": [
+    "integrity mismatch for 'plugin.py'"
+  ],
+  "non-local references": [
+    "tools/summarize/input_schema uses non-local references ['https://evil.example/schema.json'] (only '#/...' references are allowed)"
+  ],
+  "not covered by integrity": [
+    "files not covered by integrity metadata: ['extra.py']"
+  ],
+  "not in permissions_requested": [
+    "tools/summarize requires permissions not in permissions_requested: ['workspace.write']"
+  ],
+  "not in the operator permission catalog": [
+    "permissions_requested not in the operator permission catalog: ['admin.everything']",
+    "tools/summarize requires permissions not in permissions_requested: ['workspace.read']",
+    "tools/poison requires permissions not in permissions_requested: ['workspace.read']"
+  ],
+  "operator allowlist": [
+    "mcp.command executable '/usr/bin/python3' is not in the operator allowlist (integrations.allowed_mcp_executables)"
+  ],
+  "reserved": [
+    "package file 'capability.yaml' uses a name reserved for ATTa-generated files",
+    "files not covered by integrity metadata: ['capability.yaml']"
+  ],
+  "shell or launcher": [
+    "mcp.command executable 'bash' is a shell or launcher; argv execution only",
+    "mcp.command executable 'bash' not found inside the package"
+  ]
+}

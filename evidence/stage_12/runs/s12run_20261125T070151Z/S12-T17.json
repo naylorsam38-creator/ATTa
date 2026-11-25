@@ -1,0 +1,24 @@
+{
+  "id": "S12-T17",
+  "description": "test_S12_T17_restart_persistence",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_lifecycle.py::test_S12_T17_restart_persistence"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T07:05:09.086Z",
+  "finished": "2026-11-25T07:05:27.754Z",
+  "duration_s": 18.67,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "d5611c0041df14d3944bc44ddd69591daeab296b07c39095ae56dd5973fc51d9",
+  "output_tail": ".                                                                        [100%]\n1 passed in 18.27s"
+}

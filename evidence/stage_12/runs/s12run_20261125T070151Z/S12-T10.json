@@ -1,0 +1,24 @@
+{
+  "id": "S12-T10",
+  "description": "test_S12_T10_install_transaction_registers_in_the_existing_registry_and_catalogue",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_lifecycle.py::test_S12_T10_install_transaction_registers_in_the_existing_registry_and_catalogue"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T07:03:35.086Z",
+  "finished": "2026-11-25T07:03:43.292Z",
+  "duration_s": 8.21,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "9a78920f1b887894501c0e3832e3fb3db901ba1c9e81179dd8447c55cbbae8d5",
+  "output_tail": ".                                                                        [100%]\n1 passed in 7.73s"
+}

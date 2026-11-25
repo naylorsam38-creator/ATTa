@@ -1,0 +1,24 @@
+{
+  "id": "S12-T33",
+  "description": "test_S12_T33_prompt_injection_in_tool_output_stays_untrusted_data",
+  "command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/integrations/test_stage12_execution.py::test_S12_T33_prompt_injection_in_tool_output_stays_untrusted_data"
+  ],
+  "exit_code": 0,
+  "result": "PASS",
+  "started": "2026-11-25T07:02:44.744Z",
+  "finished": "2026-11-25T07:02:54.228Z",
+  "duration_s": 9.48,
+  "counts": {
+    "passed": 1
+  },
+  "failed_tests": [],
+  "output_sha256": "351658aafbe99a49297716a8aa915d93d63cd638addf28ee7b273cf5a20cb7d1",
+  "output_tail": ".                                                                        [100%]\n1 passed in 9.06s"
+}
